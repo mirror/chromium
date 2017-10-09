@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6c22475_bf8fd751",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-09T11:50:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6464ff7f_72ea9bab",
+      "range": {
+        "startLine": 68,
+        "startChar": 46,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "eb68f389ecdbb63c5027f8b9888fbb02a6db4d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f972a026_8d31ce9b",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-06T14:25:59Z",
       "side": 1,
       "message": "This DCHECK is only really making sure your tests do not have a main frame that is cross origin, right?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "eb68f389ecdbb63c5027f8b9888fbb02a6db4d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6824f7b9_5c00dac5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-09T11:50:30Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "f972a026_8d31ce9b",
       "range": {
         "startLine": 50,
         "startChar": 4,
