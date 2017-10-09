@@ -9,6 +9,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/task/cancelable_task_tracker.h"
+#include "components/favicon/core/fallback_url_util.h"
 #include "components/favicon/core/large_icon_service.h"
 #include "components/favicon_base/fallback_icon_style.h"
 #include "components/ntp_tiles/metrics.h"
@@ -284,18 +285,17 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   }
 }
 
-- (void)getFaviconForURL:(const GURL&)URL
-                    size:(CGFloat)size
-                useCache:(BOOL)useCache
-           imageCallback:(void (^)(UIImage* favicon))imageCallback
-        fallbackCallback:(void (^)(UIColor* textColor,
-                                   UIColor* backgroundColor,
-                                   BOOL isDefaultColor))fallbackCallback {
+- (void)getFaviconForPageURL:(const GURL&)URL
+                        size:(CGFloat)size
+                    useCache:(BOOL)useCache
+                    callback:(void (^)(FaviconAttributes*))callback {
   __weak GoogleLandingMediator* weakSelf = self;
   GURL localURL = URL;  // Persisting for use in block below.
   void (^faviconBlock)(const favicon_base::LargeIconResult&) = ^(
       const favicon_base::LargeIconResult& result) {
-    ntp_tiles::TileVisualType tileType;
+    // TODO: Why not use FaviconAttributesProvider just like many other
+    // mediators?
+    FaviconAttributes* attributes = nil;
 
     if (result.bitmap.is_valid()) {
       scoped_refptr<base::RefCountedMemory> data =
@@ -303,10 +303,10 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       UIImage* favicon = [UIImage
           imageWithData:[NSData dataWithBytes:data->front() length:data->size()]
                   scale:[UIScreen mainScreen].scale];
-      if (imageCallback) {
-        imageCallback(favicon);
+      faviconAttributes =
+          [FaviconAttributes attributesWithImage:favicon] if (callback) {
+        callback(faviconAttributes);
       }
-      tileType = ntp_tiles::TileVisualType::ICON_REAL;
     } else if (result.fallback_icon_style) {
       UIColor* backgroundColor = skia::UIColorFromSkColor(
           result.fallback_icon_style->background_color);
@@ -314,11 +314,15 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
           skia::UIColorFromSkColor(result.fallback_icon_style->text_color);
       BOOL isDefaultColor =
           result.fallback_icon_style->is_default_background_color;
-      if (fallbackCallback) {
-        fallbackCallback(textColor, backgroundColor, isDefaultColor);
+      NSString* monogram =
+          base::SysUTF16ToNSString(favicon::GetFallbackIconText(localURL));
+      faviconAttributes = [FaviconAttributes attributesWithMonogram:monogram
+            textColor:textColor
+            backgroundColor:backgroundColor
+            defaultBackgroundColor:isDefaultColor]]
+      if (callback) {
+        callback(faviconAttributes);
       }
-      tileType = isDefaultColor ? ntp_tiles::TileVisualType::ICON_DEFAULT
-                                : ntp_tiles::TileVisualType::ICON_COLOR;
     }
 
     GoogleLandingMediator* strongSelf = weakSelf;
@@ -326,7 +330,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       if (result.bitmap.is_valid() || result.fallback_icon_style) {
         [strongSelf largeIconCache]->SetCachedResult(localURL, result);
       }
-      [strongSelf faviconOfType:tileType fetchedForURL:localURL];
+      [strongSelf faviconOfType:attributes
+                  fetchedForURL:localURL
+                       iconType:result.bitmap.icon_type];
     }
   };
 
@@ -463,14 +469,18 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
 // If it is the first time we see the favicon corresponding to |URL|, we log the
 // |tileType| impression.
-- (void)faviconOfType:(ntp_tiles::TileVisualType)tileType
-        fetchedForURL:(const GURL&)URL {
+- (void)faviconOfType:(FaviconAttributes*)faviconAttributes
+        fetchedForURL:(const GURL&)URL
+             iconType:(favicon_base::IconType)iconType {
   for (size_t i = 0; i < _mostVisitedDataForLogging.size(); ++i) {
     ntp_tiles::NTPTile& ntpTile = _mostVisitedDataForLogging[i];
     if (ntpTile.url == URL) {
+      ntp_tiles::TileVisualType tileType =
+          [FaviconAttributes tileVisualTypeFromAttributes:faviconAttributes];
+
       ntp_tiles::metrics::RecordTileImpression(
           ntp_tiles::NTPTileImpression(i, ntpTile.source, ntpTile.title_source,
-                                       tileType, URL),
+                                       tileType, iconType, URL),
           GetApplicationContext()->GetRapporServiceImpl());
       // Reset the URL to be sure to log the impression only once.
       ntpTile.url = GURL();
