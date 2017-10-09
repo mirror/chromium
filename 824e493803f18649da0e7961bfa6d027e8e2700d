@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e75708d_481a16de",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T20:29:49Z",
+      "side": 0,
+      "message": "This was for obsolete base::MakeUnique and base::WrapUnique, neither of which is used in this file any more.",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "824e493803f18649da0e7961bfa6d027e8e2700d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9f8294a_ea79a3c3",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T20:29:49Z",
+      "side": 0,
+      "message": "Removing all default_url_ assignments from helper methods and from test bodies, because it is set in SetUp().",
+      "range": {
+        "startLine": 284,
+        "startChar": 25,
+        "endLine": 284,
+        "endChar": 37
+      },
+      "revId": "824e493803f18649da0e7961bfa6d027e8e2700d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8ec5635_c0bbe772",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T20:29:49Z",
+      "side": 0,
+      "message": "Removing all load_flags \u003d 0 assignments everywhere in this file, including local variables, because HttpRequestInfo constructor takes care of.",
+      "range": {
+        "startLine": 285,
+        "startChar": 19,
+        "endLine": 285,
+        "endChar": 29
+      },
+      "revId": "824e493803f18649da0e7961bfa6d027e8e2700d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19b1dba8_118299c0",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T20:29:49Z",
+      "side": 0,
+      "message": "This syntax (taking address of a function return value) is the reason for this whole CL: I\u0027m not a big fan of this, especially because HttpNetworkTransaction needs this instance to be valid after Start() returns, but it is not obvious at the call site what guarantees CreateGetRequest() provides.",
+      "range": {
+        "startLine": 461,
+        "startChar": 27,
+        "endLine": 461,
+        "endChar": 43
+      },
+      "revId": "824e493803f18649da0e7961bfa6d027e8e2700d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "464273ce_9b73652d",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T20:29:49Z",
+      "side": 0,
+      "message": "Exposing a non-const pointer to a private member is arguably not a const operation.",
+      "range": {
+        "startLine": 562,
+        "startChar": 56,
+        "endLine": 562,
+        "endChar": 61
+      },
+      "revId": "824e493803f18649da0e7961bfa6d027e8e2700d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
