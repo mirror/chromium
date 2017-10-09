@@ -22,6 +22,30 @@
       "revId": "8e9efd893cf35ac66d961e41c98c6319133bfc3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956ef434_69c18e9c",
+        "filename": "net/cert/ct_policy_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-09T20:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6e1a8a_3ac26c69",
+      "range": {
+        "startLine": 20,
+        "startChar": 30,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "8e9efd893cf35ac66d961e41c98c6319133bfc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
