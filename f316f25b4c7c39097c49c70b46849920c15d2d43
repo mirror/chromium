@@ -187,6 +187,30 @@
       "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7815ac05_7cc35001",
+        "filename": "components/offline_pages/core/offline_page_model_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-09T21:34:20Z",
+      "side": 1,
+      "message": "To add more context here: we discussed the topic offline and romax@ showed me that core/model/ folder is mainly being used for sotoring tasks while there are also significant model related files in core/ (i.e. offline_page_model.* and offline_page_model_impl.*). With that in mind having offline_page_model_utils.* in core/ doesn\u0027t seem out of place.\n\nromax@: when comments are not nits it is expected that they are addressed. Having just an ack here doesn\u0027t provide enough context for a future viewer of this CL.",
+      "parentUuid": "1f9f0390_02bffdfd",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

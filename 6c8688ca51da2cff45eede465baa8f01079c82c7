@@ -428,6 +428,30 @@
     },
     {
       "key": {
+        "uuid": "0da7403a_eb8595b2",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-09T21:34:20Z",
+      "side": 1,
+      "message": "FWIW I had seen this specific style guideline when I made the comment linked above. I don\u0027t recall though the counter argument that finally made us go with the class option instead.\n\nBut as this namespace conforms to the style guide and it fulfills dimich@\u0027s intention of not polluting the offline_pages namespace (which I was reminded of when looking back at that comment; so thanks for that!) , it does LGTM.",
+      "parentUuid": "e4644c9f_2e04116f",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a70355_1a2188f7",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
