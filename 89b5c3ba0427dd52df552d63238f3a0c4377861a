@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9b8675d_5e02d3a4",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/setOptions-reject.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-09T06:44:24Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "76d18316_ee0e14a8",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "89b5c3ba0427dd52df552d63238f3a0c4377861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe6158e_8c0ac797",
         "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
         "patchSetId": 3
