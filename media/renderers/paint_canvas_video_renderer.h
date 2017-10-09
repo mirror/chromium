@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_RENDERERS_SKCANVAS_VIDEO_RENDERER_H_
-#define MEDIA_RENDERERS_SKCANVAS_VIDEO_RENDERER_H_
+#ifndef MEDIA_RENDERERS_PAINT_CANVAS_VIDEO_RENDERER_H_
+#define MEDIA_RENDERERS_PAINT_CANVAS_VIDEO_RENDERER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -24,7 +24,6 @@
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
-
 namespace gfx {
 class RectF;
 }
@@ -35,12 +34,11 @@ struct Capabilities;
 
 namespace media {
 
-// TODO(enne): rename to PaintCanvasVideoRenderer
 // Handles rendering of VideoFrames to PaintCanvases.
-class MEDIA_EXPORT SkCanvasVideoRenderer {
+class MEDIA_EXPORT PaintCanvasVideoRenderer {
  public:
-  SkCanvasVideoRenderer();
-  ~SkCanvasVideoRenderer();
+  PaintCanvasVideoRenderer();
+  ~PaintCanvasVideoRenderer();
 
   // Paints |video_frame| on |canvas|, scaling and rotating the result to fit
   // dimensions specified by |dest_rect|.
@@ -177,9 +175,9 @@ class MEDIA_EXPORT SkCanvasVideoRenderer {
   // Used for unit test.
   SkISize last_image_dimensions_for_testing_;
 
-  DISALLOW_COPY_AND_ASSIGN(SkCanvasVideoRenderer);
+  DISALLOW_COPY_AND_ASSIGN(PaintCanvasVideoRenderer);
 };
 
 }  // namespace media
 
-#endif  // MEDIA_RENDERERS_SKCANVAS_VIDEO_RENDERER_H_
+#endif  // MEDIA_RENDERERS_PAINT_CANVAS_VIDEO_RENDERER_H_
