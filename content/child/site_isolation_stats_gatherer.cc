@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <algorithm>
+
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
@@ -25,13 +27,10 @@ static bool g_stats_gathering_enabled = false;
 bool IsRenderableStatusCode(int status_code) {
   // Chrome only uses the content of a response with one of these status codes
   // for CSS/JavaScript. For images, Chrome just ignores status code.
-  const int renderable_status_code[] = {
-      200, 201, 202, 203, 206, 300, 301, 302, 303, 305, 306, 307};
-  for (size_t i = 0; i < arraysize(renderable_status_code); ++i) {
-    if (renderable_status_code[i] == status_code)
-      return true;
-  }
-  return false;
+  const int renderable_status_code[] = {200, 201, 202, 203, 206, 300,
+                                        301, 302, 303, 305, 306, 307};
+  return std::binary_search(std::begin(renderable_status_code),
+                            std::end(renderable_status_code), status_code);
 }
 
 void IncrementHistogramCount(const std::string& name) {
@@ -52,11 +51,17 @@ void IncrementHistogramEnum(const std::string& name,
 }
 
 void HistogramCountBlockedResponse(
-    const std::string& bucket_prefix,
+    std::string* histogram_name_buffer,
     const std::unique_ptr<SiteIsolationResponseMetaData>& resp_data,
     bool nosniff_block) {
-  std::string block_label(nosniff_block ? ".NoSniffBlocked" : ".Blocked");
-  IncrementHistogramCount(bucket_prefix + block_label);
+  if (resp_data->from_chrome_extension) {
+    UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.ContentScript",
+                              resp_data->resource_type, RESOURCE_TYPE_LAST_TYPE);
+  }
+
+
+  *histogram_name_buffer += nosniff_block ? ".NoSniffBlocked" : ".Blocked";
+  IncrementHistogramCount(*histogram_name_buffer);
 
   // The content is blocked if it is sniffed as HTML/JSON/XML. When
   // the blocked response is with an error status code, it is not
@@ -71,12 +76,12 @@ void HistogramCountBlockedResponse(
       IsRenderableStatusCode(resp_data->http_status_code);
 
   if (renderable_status_code) {
-    IncrementHistogramEnum(
-        bucket_prefix + block_label + ".RenderableStatusCode2",
-        resp_data->resource_type, RESOURCE_TYPE_LAST_TYPE);
+    *histogram_name_buffer += ".RenderableStatusCode2";
+    IncrementHistogramEnum(*histogram_name_buffer, resp_data->resource_type,
+                           RESOURCE_TYPE_LAST_TYPE);
   } else {
-    IncrementHistogramCount(bucket_prefix + block_label +
-                            ".NonRenderableStatusCode");
+    *histogram_name_buffer += ".NonRenderableStatusCode";
+    IncrementHistogramCount(*histogram_name_buffer);
   }
 }
 
@@ -186,69 +191,63 @@ bool SiteIsolationStatsGatherer::OnReceivedFirstChunk(
                             CROSS_SITE_DOCUMENT_MIME_TYPE_MAX);
 
   // Store the result of cross-site document blocking analysis.
-  bool would_block = false;
   bool sniffed_as_js = SniffForJS(data);
+  bool from_isolated_world = false;
 
   // Record the number of responses whose content is sniffed for what its mime
   // type claims it to be. For example, we apply a HTML sniffer for a document
   // tagged with text/html here. Whenever this check becomes true, we'll block
   // the response.
-  if (resp_data->canonical_mime_type != CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN) {
-    std::string bucket_prefix;
-    bool sniffed_as_target_document = false;
-    if (resp_data->canonical_mime_type == CROSS_SITE_DOCUMENT_MIME_TYPE_HTML) {
-      bucket_prefix = "SiteIsolation.XSD.HTML";
-      sniffed_as_target_document =
-          CrossSiteDocumentClassifier::SniffForHTML(data);
-    } else if (resp_data->canonical_mime_type ==
-               CROSS_SITE_DOCUMENT_MIME_TYPE_XML) {
-      bucket_prefix = "SiteIsolation.XSD.XML";
-      sniffed_as_target_document =
-          CrossSiteDocumentClassifier::SniffForXML(data);
-    } else if (resp_data->canonical_mime_type ==
-               CROSS_SITE_DOCUMENT_MIME_TYPE_JSON) {
-      bucket_prefix = "SiteIsolation.XSD.JSON";
-      sniffed_as_target_document =
-          CrossSiteDocumentClassifier::SniffForJSON(data);
-    } else {
-      NOTREACHED() << "Not a blockable mime type: "
-                   << resp_data->canonical_mime_type;
-    }
+  std::string histogram_name_buffer;
+  histogram_name_buffer.reserve(kMaxHistogramNameLength);
+  histogram_name_buffer += "SiteIsolation.XSD";
 
-    if (sniffed_as_target_document) {
-      would_block = true;
-      HistogramCountBlockedResponse(bucket_prefix, resp_data, false);
-    } else {
-      if (resp_data->no_sniff) {
-        would_block = true;
-        HistogramCountBlockedResponse(bucket_prefix, resp_data, true);
-      } else {
-        HistogramCountNotBlockedResponse(bucket_prefix, sniffed_as_js);
-      }
-    }
-  } else {
-    // This block is for plain text documents. We apply our HTML, XML,
-    // and JSON sniffer to a text document in the order, and block it
-    // if any of them succeeds in sniffing.
-    std::string bucket_prefix;
-    if (CrossSiteDocumentClassifier::SniffForHTML(data))
-      bucket_prefix = "SiteIsolation.XSD.Plain.HTML";
-    else if (CrossSiteDocumentClassifier::SniffForXML(data))
-      bucket_prefix = "SiteIsolation.XSD.Plain.XML";
-    else if (CrossSiteDocumentClassifier::SniffForJSON(data))
-      bucket_prefix = "SiteIsolation.XSD.Plain.JSON";
+  base::StringPiece blockable_sniffed_type;
+  if (CrossSiteDocumentClassifier::SniffForHTML(data))
+    blockable_sniffed_type = ".HTML";
+  else if (CrossSiteDocumentClassifier::SniffForXML(data))
+    blockable_sniffed_type = ".XML";
+  else if (CrossSiteDocumentClassifier::SniffForJSON(data))
+    blockable_sniffed_type = ".JSON";
 
-    if (bucket_prefix.size() > 0) {
-      would_block = true;
-      HistogramCountBlockedResponse(bucket_prefix, resp_data, false);
-    } else if (resp_data->no_sniff) {
-      would_block = true;
-      HistogramCountBlockedResponse("SiteIsolation.XSD.Plain", resp_data, true);
-    } else {
-      HistogramCountNotBlockedResponse("SiteIsolation.XSD.Plain",
-                                       sniffed_as_js);
-    }
+  base::StringPiece response_header_content_type;
+  switch (resp_data->canonical_mime_type) {
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN:
+      response_header_content_type = ".Plain";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_XML:
+      response_header_content_type = ".XML";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_JSON:
+      response_header_content_type = ".JSON";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_HTML:
+      response_header_content_type = ".HTML";
+      break;
   }
+
+  histogram_name_buffer += response_header_content_type;
+
+  bool would_block = false;
+  bool blocking_because_nosniff = false;
+  if (resp_data->canonical_mime_type == CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN) {
+    histogram_name_buffer += blockable_sniffed_type;
+    would_block = !blockable_sniffed_type.empty() || resp_data->nosniff;
+  } else {
+    bool sniffed_type_matches_header =
+        (blockable_sniffed_type == response_header_content_type);
+    would_block = sniffed_type_matches_header || resp_data->nosniff;
+    blocking_because_nosniff =
+        resp_data->nosniff && !sniffed_type_matches_header;
+  }
+
+  if (would_block) {
+    HistogramCountBlockedResponse(&histogram_name_buffer, resp_data,
+                                  blocking_because_nosniff);
+  } else {
+    HistogramCountNotBlockedResponse(&histogram_name_buffer, sniffed_as_js);
+  }
+
 
   return would_block;
 }

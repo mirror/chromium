@@ -81,7 +81,7 @@ bool CrossSiteDocumentClassifier::IsBlockableScheme(const GURL& url) {
   // We exclude ftp:// from here. FTP doesn't provide a Content-Type
   // header which our policy depends on, so we cannot protect any
   // document from FTP servers.
-  return url.SchemeIs(url::kHttpScheme) || url.SchemeIs(url::kHttpsScheme);
+  return url.SchemeIsHTTPOrHTTPS();
 }
 
 bool CrossSiteDocumentClassifier::IsSameSite(const url::Origin& frame_origin,

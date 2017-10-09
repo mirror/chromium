@@ -59,6 +59,11 @@ struct SiteIsolationResponseMetaData {
   CrossSiteDocumentMimeType canonical_mime_type;
   int http_status_code;
   bool no_sniff;
+
+  // True if this request is from a security origin which has universal access
+  // to other origins. 
+  bool source_origin_has_universal_access;
+  bool source_origin_is_whitelisted_for_target;
 };
 
 class CONTENT_EXPORT SiteIsolationStatsGatherer {
@@ -86,6 +91,7 @@ class CONTENT_EXPORT SiteIsolationStatsGatherer {
       int length);
 
  private:
+  const int kMaxHistogramNameLength = 20;
   FRIEND_TEST_ALL_PREFIXES(SiteIsolationStatsGathererTest, SniffForJS);
 
   SiteIsolationStatsGatherer();  // Not instantiable.
