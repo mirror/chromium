@@ -84,6 +84,29 @@
       "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671e1284_1818705d",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-09T21:43:14Z",
+      "side": 1,
+      "message": "*emitted, above too",
+      "range": {
+        "startLine": 774,
+        "startChar": 65,
+        "endLine": 774,
+        "endChar": 73
+      },
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
