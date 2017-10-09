@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc27faa_c96030d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T00:10:44Z",
+      "side": 1,
+      "message": "Minor nit: \n\n@WebDisplayMode int displayMode \u003d displayModeFromString(....",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 11
+      },
+      "revId": "d3363be5b7e6e7c85e6c0fd227418a8c830ea35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0600afdd_d564f09a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T00:10:44Z",
+      "side": 1,
+      "message": "Nit: @WebDisplayMode int displayMode \u003d ...",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "d3363be5b7e6e7c85e6c0fd227418a8c830ea35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
