@@ -141,15 +141,14 @@ TEST_F(BrowserCommandsTest, ViewSource) {
   // And we should have a newly duplicated tab.
   ASSERT_EQ(2, browser()->tab_strip_model()->count());
 
-  // Verify we are viewing the source of the last committed entry.
+  // Verify that the pending entry will view the source.
   GURL view_source_url("view-source:http://foo/1");
   content::NavigationController& controller =
       browser()->tab_strip_model()->GetWebContentsAt(1)->GetController();
-  EXPECT_EQ(1, controller.GetEntryCount());
-  EXPECT_EQ(0, controller.GetCurrentEntryIndex());
-  EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
-  EXPECT_EQ(view_source_url, controller.GetEntryAtIndex(0)->GetVirtualURL());
-  EXPECT_FALSE(controller.GetPendingEntry());
+  EXPECT_EQ(0, controller.GetEntryCount());
+  ASSERT_TRUE(controller.GetPendingEntry());
+  EXPECT_EQ(url1, controller.GetPendingEntry()->GetURL());
+  EXPECT_EQ(view_source_url, controller.GetPendingEntry()->GetVirtualURL());
 }
 
 TEST_F(BrowserCommandsTest, BookmarkCurrentPage) {
