@@ -175,6 +175,24 @@
       "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8f26f7_6a5fbaa0",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "Actually, I changed my mind. I think we should use this top functionality as little as possible. The view controllers that are presented can try to present their own VCs, but won\u0027t be able to because they are already presented over.\n\nSo, I think we should keep separate APIs so that the interaction controller can use top just when it needs to present a sign in controller.\n\nOne improvement that we can make is to make an API that is for presenting just the SignInInteractionController. This API will take in as one of its params whether the ChromeIdentityManager is presenting, and if so, it will present on top.",
+      "parentUuid": "f0759e9a_acde07ad",
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

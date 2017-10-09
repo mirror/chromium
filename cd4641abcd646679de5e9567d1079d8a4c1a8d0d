@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26a30ddf_cd299a9c",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "The problem is that, generally, each time there is a sign in operation, the presentingVC might be different. The alternative (which is what was done before) is to make a new coordinator each time a sign in operation occurs, but then clients have to check whether a sign in operation is in progress before deallocating the existing coordinator. This design allows the coordinator to abstract away those issues from clients. \n\nI will also note that this is not worse than before the refactoring, as up until a few CLs ago, each sign in operation took in a VC.",
+      "parentUuid": "4da504db_b8068492",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1ef2317_e8ec2609",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-09T17:06:15Z",
       "side": 1,
       "message": "If possible, I\u0027d rather have a delegate that gets a \u0027signinInteractionDidComplate\u0027 call instead of a callback. Again, this can happen in follow-up CLs.",
+      "range": {
+        "startLine": 47,
+        "startChar": 60,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e7678d_d3dc8249",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "Just to note, we would also need to update the ShowSignInCommand to take a delegate instead of a callback.",
+      "parentUuid": "b1ef2317_e8ec2609",
       "range": {
         "startLine": 47,
         "startChar": 60,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41a28e07_527ee320",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "When the ChromeIdentityInteractionManager is presented, there is no substantive difference between cancel and cancelAndDismiss.\n\nBut, when the ChromeSignInViewController is presented, cancel stops the operation but does not dismiss the UI. This is done in places where the dismissal of much of the UI is handled elsewhere, to prevent duplicate animations. For ex, as opposed to first dismissing the ChromeSignInViewController (which is presented on top of the SettingsNavigationController) and then dismissing the SettingsNavigationController, just the SettingsNavigationController is dismissed.\n\nSince that was a behavior change, I did not want to include that in boxing. I think that because stop typically implies dismissal in a coordinator context, it is actually better to use a different naming scheme here.",
+      "parentUuid": "820c51f2_485db81b",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18a621e8_3226c6b2",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-09T17:06:15Z",
       "side": 1,
       "message": "can this just be \u0027active\u0027 or \u0027started\u0027?",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 60
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f3e34e_57713955",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "Yep, will change.",
+      "parentUuid": "18a621e8_3226c6b2",
       "range": {
         "startLine": 71,
         "startChar": 44,
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e9caf769_e42eaed3",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "Yep, this was a prototype CL. Actual CL will have comments.",
+      "parentUuid": "35ec6efb_67a0b893",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67ef8989_de8d4248",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
         "patchSetId": 5
@@ -175,6 +295,30 @@
       "writtenOn": "2017-10-09T17:06:15Z",
       "side": 1,
       "message": "Seeing a protocol containing a method that looks exactly like a UIViewController method is setting off alarm bells.",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3870d3_91834ee2",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-09T22:42:49Z",
+      "side": 1,
+      "message": "The alternative is to pass in a UIViewController. The benefit of this protocol is to split out much of the presentation/dismissal logic from the SigninInteractionController.",
+      "parentUuid": "67ef8989_de8d4248",
       "range": {
         "startLine": 23,
         "startChar": 8,
