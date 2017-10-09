@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "234f9c42_b8139c16",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T22:45:49Z",
+      "side": 1,
+      "message": "nit: s/has/is/ (and if we\u0027re lucky that gets rid of this meh formatting)",
+      "revId": "0abaef6d13f909d5b39c3472b95a435893bfc165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
