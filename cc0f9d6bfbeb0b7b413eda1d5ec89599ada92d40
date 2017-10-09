@@ -141,6 +141,30 @@
       "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8dfb1b3_39db311e",
+        "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T23:55:49Z",
+      "side": 1,
+      "message": "Good points!  I had forgotten that static allocation would run the destructor on exit, and had actually intended the semantics that Alexei is suggesting.  Per discussion with Mike, though, it seems like the it\u0027s important to run the destructor to synchronize across threads, as thread destruction order is otherwise not guaranteed.  I\u0027ve updated the code to use a \"scoped\" wrapper object, which is allocated on the stack.",
+      "parentUuid": "41843485_2ef517bb",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
