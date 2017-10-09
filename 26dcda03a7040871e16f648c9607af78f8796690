@@ -218,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "ffef5a05_4d37dcc1",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T23:20:29Z",
+      "side": 1,
+      "message": "For the case of disabling keyboard lock when a window loses focus, that seems pretty analogous to me to how DetachFromInputMethod() occurs inside of RenderWidgetHostViewAura::OnWindowFocused. We already change input event routing on focus/blur.\n\nRenderWidgetHostView, being the object that represents a platform window and receives focus/blur events from the platform, is necessarily involved when a platform window\u0027s focus changes.",
+      "parentUuid": "f44a777e_1849ed38",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6935ea9_742c49c0",
         "filename": "ui/aura/keyboard_lock/special_key_detector.h",
         "patchSetId": 18
