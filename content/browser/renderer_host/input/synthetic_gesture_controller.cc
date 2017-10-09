@@ -17,9 +17,9 @@ namespace content {
 
 SyntheticGestureController::SyntheticGestureController(
     Delegate* delegate,
-    std::unique_ptr<SyntheticGestureTarget> gesture_target)
+    base::WeakPtr<SyntheticGestureTarget> gesture_target)
     : delegate_(delegate),
-      gesture_target_(std::move(gesture_target)),
+      gesture_target_(gesture_target),
       weak_ptr_factory_(this) {
   DCHECK(delegate_);
 }
@@ -60,6 +60,9 @@ bool SyntheticGestureController::DispatchNextEvent(base::TimeTicks timestamp) {
     return false;
 
   if (!pending_gesture_queue_.is_current_gesture_complete()) {
+    if (!gesture_target_)
+      return false;
+
     SyntheticGesture::Result result =
         pending_gesture_queue_.FrontGesture()->ForwardInputEvents(
             timestamp, gesture_target_.get());

@@ -159,8 +159,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                        InputEventAckState ack_result) override;
   void ProcessAckedTouchEvent(const TouchEventWithLatencyInfo& touch,
                               InputEventAckState ack_result) override;
-  std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
-      override;
+  void InjectSyntheticTouchEvent(const blink::WebTouchEvent& web_touch,
+                                 const ui::LatencyInfo& latency_info) override;
+  void InjectSyntheticMouseWheelEvent(
+      const blink::WebMouseWheelEvent& web_wheel,
+      const ui::LatencyInfo& latency_info) override;
+  void InjectSyntheticMouseEvent(const blink::WebMouseEvent& web_mouse,
+                                 const ui::LatencyInfo& latency_info) override;
   InputEventAckState FilterInputEvent(
       const blink::WebInputEvent& input_event) override;
   InputEventAckState FilterChildGestureEvent(
@@ -285,6 +290,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // Overridden from aura::WindowTreeHostObserver:
   void OnHostMovedInPixels(aura::WindowTreeHost* host,
                            const gfx::Point& new_origin_in_pixels) override;
+
+  // Overridden from SyntheticGestureTarget:
+  SyntheticGestureParams::GestureSourceType
+  GetDefaultSyntheticGestureSourceType() const override;
+  float GetTouchSlopInDips() const override;
+  float GetMinScalingSpanInDips() const override;
 
 #if defined(OS_WIN)
   // Gets the HWND of the host window.
