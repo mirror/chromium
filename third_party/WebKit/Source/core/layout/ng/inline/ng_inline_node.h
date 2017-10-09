@@ -102,6 +102,18 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   // Returns the text content offset corresponding to the given DOM offset.
   size_t GetTextContentOffset(const Node&, unsigned);
 
+  // Starting from the given DOM offset in the node, finds the first
+  // non-collapsed character and returns its offset; Or returns the last offset
+  // in the node if such a character does not exist.
+  // TODO(xiaochengh): Sanify the API spec for blockified ::first-letter;
+  unsigned StartOfNextNonCollapsedCharacter(const Node&, unsigned offset);
+
+  // Starting from the given DOM offset in the node, reversely finds the first
+  // non-collapsed character and returns 1 + its offset; Or returns 0 if such a
+  // character does not exist.
+  // TODO(xiaochengh): Sanify the API spec for blockified ::first-letter;
+  unsigned EndOfLastNonCollapsedCharacter(const Node&, unsigned offset);
+
   // TODO(xiaochengh): Add APIs for reverse mapping.
 
  protected:
