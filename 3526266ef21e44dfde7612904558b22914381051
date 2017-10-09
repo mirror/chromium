@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65220f3a_1429b7f1",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T14:09:24Z",
+      "side": 1,
+      "message": "Isn\u0027t 1 enough? It\u0027d probably make it a bit harder to test features like snapping in multi display settings.",
+      "revId": "3526266ef21e44dfde7612904558b22914381051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
