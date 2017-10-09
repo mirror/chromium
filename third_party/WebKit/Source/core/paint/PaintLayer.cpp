@@ -1386,9 +1386,9 @@ void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
     frame_view->SetNeedsForcedCompositingUpdate();
 
   bool did_set_paint_invalidation = false;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-    DisableCompositingQueryAsserts
-        disabler;  // We need the current compositing status.
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    // We need the current compositing status.
+    DisableCompositingQueryAsserts disabler;
     if (IsPaintInvalidationContainer()) {
       // Our children will be reparented and contained by a new paint
       // invalidation container, so need paint invalidation. CompositingUpdate
@@ -1450,17 +1450,15 @@ void PaintLayer::InsertOnlyThisLayerAfterStyleChange() {
   // this object is stacked content, creating this layer may cause this object
   // and its descendants to change paint invalidation container.
   bool did_set_paint_invalidation = false;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
       !GetLayoutObject().IsLayoutView() && GetLayoutObject().IsRooted() &&
       GetLayoutObject().StyleRef().IsStacked()) {
     const LayoutBoxModelObject& previous_paint_invalidation_container =
         GetLayoutObject().Parent()->ContainerForPaintInvalidation();
     if (!previous_paint_invalidation_container.StyleRef().IsStackingContext()) {
-      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-        ObjectPaintInvalidator(GetLayoutObject())
-            .InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
-                previous_paint_invalidation_container);
-      }
+      ObjectPaintInvalidator(GetLayoutObject())
+          .InvalidatePaintIncludingNonSelfPaintingLayerDescendants(
+              previous_paint_invalidation_container);
       // Set needsRepaint along the original compositingContainer chain.
       GetLayoutObject().Parent()->EnclosingLayer()->SetNeedsRepaint();
       did_set_paint_invalidation = true;
