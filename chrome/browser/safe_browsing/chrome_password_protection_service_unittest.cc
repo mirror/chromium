@@ -25,6 +25,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/features.h"
+#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_account_fetcher_service.h"
@@ -33,6 +34,7 @@
 #include "components/sync/user_events/fake_user_event_service.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/variations/variations_params_manager.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -113,6 +115,7 @@ class ChromePasswordProtectionServiceTest
 
   void TearDown() override {
     base::RunLoop().RunUntilIdle();
+    service_->requests_.clear();
     service_.reset();
     request_ = nullptr;
     content_setting_map_->ShutdownOnUIThread();
@@ -177,6 +180,35 @@ class ChromePasswordProtectionServiceTest
         account_tracker_service->PickAccountIdForAccount(account_id, email),
         email, account_id, hosted_domain, "full_name", "given_name", "locale",
         "http://picture.example.com/picture.jpg");
+  }
+
+  void PrepareRequest(ChromePasswordProtectionService* service,
+                      const GURL& trigger_url,
+                      content::WebContents* web_contents,
+                      LoginReputationClientRequest::TriggerType trigger_type,
+                      bool is_warning_showing) {
+    scoped_refptr<PasswordProtectionRequest> request(
+        new PasswordProtectionRequest(
+            web_contents, trigger_url, GURL(), trigger_url,
+            /*match_sync_password=*/true, {}, trigger_type,
+            /*has_password_field=*/true, service, 0));
+    request->set_is_modal_warning_showing(is_warning_showing);
+    service->requests_.insert(std::move(request));
+  }
+
+  content::NavigationThrottle::ThrottleCheckResult SimulateWillStart(
+      const GURL& url) {
+    std::unique_ptr<content::NavigationHandle> test_handle =
+        content::NavigationHandle::CreateNavigationHandleForTesting(url,
+                                                                    main_rfh());
+    std::unique_ptr<PasswordProtectionNavigationThrottle> throttle =
+        service_->MaybeCreateNavigationThrottle(test_handle.get());
+    if (throttle)
+      test_handle->RegisterThrottleForTesting(std::move(throttle));
+
+    return test_handle->CallWillStartRequestForTesting(
+        /*is_post=*/false, content::Referrer(), /*has_user_gesture=*/false,
+        ui::PAGE_TRANSITION_LINK, /*is_external_protocol=*/false);
   }
 
  protected:
@@ -433,6 +465,43 @@ TEST_F(ChromePasswordProtectionServiceTest, VerifyGetChangePasswordURL) {
                  "2Fmyaccount.google.com%2Fsigninoptions%2Fpassword%3Futm_"
                  "source%3DGoogle%26utm_campaign%3DPhishGuard&hl=en"),
             service_->GetChangePasswordURL());
+}
+
+TEST_F(ChromePasswordProtectionServiceTest,
+       VerifyNavigationDuringPasswordOnFocusPingNotBlocked) {
+  GURL trigger_url("http://trigger.com");
+  NavigateAndCommit(trigger_url);
+  PrepareRequest(service_.get(), trigger_url, web_contents(),
+                 LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE,
+                 /*is_warning_showing=*/false);
+  EXPECT_EQ(content::NavigationThrottle::PROCEED,
+            SimulateWillStart(GURL("http://target.com")));
+}
+
+TEST_F(ChromePasswordProtectionServiceTest,
+       VerifyNavigationDuringPasswordReusePingDeferred) {
+  GURL trigger_url("http://trigger.com");
+  NavigateAndCommit(trigger_url);
+  // Simulate a on-going password reuse request that hasn't received
+  // verdict yet.
+  PrepareRequest(service_.get(), trigger_url, web_contents(),
+                 LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+                 /*is_warning_showing=*/false);
+  EXPECT_EQ(content::NavigationThrottle::DEFER,
+            SimulateWillStart(GURL("http://target.com")));
+}
+
+TEST_F(ChromePasswordProtectionServiceTest,
+       VerifyNavigationDuringModalWarningCanceled) {
+  GURL trigger_url("http://trigger.com");
+  NavigateAndCommit(trigger_url);
+  // Simulate a password reuse request, whose verdict is triggering a modal
+  // warning.
+  PrepareRequest(service_.get(), trigger_url, web_contents(),
+                 LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+                 /*is_warning_showing=*/true);
+  EXPECT_EQ(content::NavigationThrottle::CANCEL,
+            SimulateWillStart(GURL("http://target.com")));
 }
 
 }  // namespace safe_browsing
