@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35d25423_822940ef",
+        "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T19:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cf837ec_fe77d4ce",
+      "revId": "870148ebe37fb0c709bb8ea23f3691048bf5b7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52146c7_d8695ee4",
         "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "870148ebe37fb0c709bb8ea23f3691048bf5b7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac07fe3_d78e5384",
+        "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T19:13:10Z",
+      "side": 1,
+      "message": "Does not work, will file a bug and fix in a separate CL.",
+      "parentUuid": "a52146c7_d8695ee4",
+      "revId": "870148ebe37fb0c709bb8ea23f3691048bf5b7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
