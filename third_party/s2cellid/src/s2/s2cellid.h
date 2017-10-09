@@ -32,6 +32,10 @@
 #include "s2/s2coords.h"
 #include "s2/util/bits/bits.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4146)
+#endif
+
 class S2LatLng;
 
 // An S2CellId is a 64-bit unsigned integer that uniquely identifies a
