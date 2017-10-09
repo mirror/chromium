@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5930bc0_ea0f87f4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T17:24:14Z",
+      "side": 1,
+      "message": "1) s/Be/By/",
+      "revId": "f4404b1851cf2b0b12bf76be3f49657e9106f7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3362c1_1c73e7d8",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T17:24:14Z",
+      "side": 1,
+      "message": "few things here: \n\n1) s/Be/By/\n\n2)\nWe\u0027re trying to have all the strings used in MD Extensions be in a separate file. Please copy the string into md_extensions_strings.grdp: https://cs.chromium.org/chromium/src/chrome/app/md_extensions_strings.grdp\n\nand add a _MD_ in the name, so IDS_MD_EXTENSIONS_DISABLED_UPDATE_REQUIRED_BY_POLICY.\n\n3) Use source-\u003eAddLocalizedString like the other strings here.",
+      "revId": "f4404b1851cf2b0b12bf76be3f49657e9106f7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

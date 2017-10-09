@@ -370,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "41f931ca_96ae2a73",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T17:24:14Z",
+      "side": 1,
+      "message": "Oh, my suggestion was intending for it to be middle-aligned, but I double checked the mock and it is indeed top-aligned, so what you have is good.",
+      "parentUuid": "6bf729d2_5ba1064f",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6858ee2_7ee80426",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
