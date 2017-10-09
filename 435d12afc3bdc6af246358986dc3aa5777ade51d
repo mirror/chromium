@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9ff9b73b_af8a7e4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T17:38:26Z",
+      "side": 1,
+      "message": "SG, thanks.",
+      "parentUuid": "03824fba_cc83d6cf",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8c0bda1_6a681dbf",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 13
@@ -225,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "5e44c94d_95903e82",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T17:38:26Z",
+      "side": 1,
+      "message": "If it isn\u0027t ever null, think DCHECK makes more sense.",
+      "parentUuid": "57c06de3_d903dda3",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f76cf860_879cec7b",
         "filename": "extensions/browser/extension_prefs.cc",
         "patchSetId": 13
@@ -260,6 +308,30 @@
       "side": 1,
       "message": "The rest of the file uses std::string for the extension id.",
       "parentUuid": "f76cf860_879cec7b",
+      "range": {
+        "startLine": 1712,
+        "startChar": 49,
+        "endLine": 1712,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d006fbba_508e3388",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T17:38:26Z",
+      "side": 1,
+      "message": "Yep, prefer using ExtensionId for new ones.",
+      "parentUuid": "1ca0de17_59f3bdff",
       "range": {
         "startLine": 1712,
         "startChar": 49,
