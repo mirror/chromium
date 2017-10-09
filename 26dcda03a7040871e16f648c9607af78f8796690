@@ -200,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "f44a777e_1849ed38",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T23:03:31Z",
+      "side": 1,
+      "message": "Are you saying hiding PlatformHook implementations beneath RenderWidgetHostView? I am OK with this approach.\n\nBut if we are talking about actions, say Focus() / Show() / Hide(), and the events responding to these actions, putting the logic (e.g. enabling keyboard lock when RenderWidgetHostView::Focus() is called or disabling keyboard lock when RenderWidgetHostView::Hide() is called) into RenderWidgetHostView seems not good to me.",
+      "parentUuid": "a6170f30_bd22889e",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6935ea9_742c49c0",
         "filename": "ui/aura/keyboard_lock/special_key_detector.h",
         "patchSetId": 18
