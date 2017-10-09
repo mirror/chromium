@@ -22,6 +22,30 @@
       "revId": "8f880cfce8ad02951650b60868ce29efcf39e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a445430_311e2bd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-09T15:50:59Z",
+      "side": 1,
+      "message": "\u003e Tiny nit: If you use r\u003ccommit position\u003e (i.e. r463514), Monorail will automatically linkify it. Or https://crrev.com/463514 :)\n\nhttps://crrev.com/3135f76 I mean (although the other one will work too).",
+      "parentUuid": "eb05a82a_770e97d7",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "8f880cfce8ad02951650b60868ce29efcf39e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
