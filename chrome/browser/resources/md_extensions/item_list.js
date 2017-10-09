@@ -38,7 +38,8 @@ cr.define('extensions', function() {
      */
     computeShownItems_: function(changeRecord, filter) {
       return this.items.filter(function(item) {
-        return item.name.toLowerCase().includes(this.filter.toLowerCase());
+        return item.name.toLowerCase().includes(
+            this.filter.trim().toLowerCase());
       }, this);
     },
 
