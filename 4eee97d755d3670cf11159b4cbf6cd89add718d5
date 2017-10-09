@@ -73,6 +73,75 @@
       "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c33d90_92027a28",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-09T17:10:21Z",
+      "side": 1,
+      "message": "Since this specifically parses the reverse index file, we should call it ValidateAndParseReverseIndex.  If you want to be more verbose, we can call it ValidateAndParseReverseIndexJSON.",
+      "range": {
+        "startLine": 1052,
+        "startChar": 34,
+        "endLine": 1052,
+        "endChar": 62
+      },
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faaa86f_6dcf2c0b",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-09T17:10:21Z",
+      "side": 1,
+      "message": "This is a duplicate of ReverseLookupCallback",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643bc798_052af132",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-09T17:10:21Z",
+      "side": 1,
+      "message": "Can you leave the old name?  The functionality hasn\u0027t changed.",
+      "range": {
+        "startLine": 176,
+        "startChar": 15,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
