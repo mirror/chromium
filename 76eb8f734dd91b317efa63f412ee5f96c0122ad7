@@ -16,6 +16,24 @@
       "revId": "76eb8f734dd91b317efa63f412ee5f96c0122ad7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6845b504_b8dc6829",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-09T17:08:15Z",
+      "side": 1,
+      "message": "Ellipsis is different from hyphens in two points:\n1. It can be after atomic inlines.\n2. It should be styled using block\u0027s style (if text has different font than block).\n\nThe current engine has two code paths; one when the last item is text and font is same as the block\u0027s font. In this case, we set trunctation to the text length. In other cases, we creates an InlineTextBox with full-truncation.\n\nThis patch unifies both cases to full-truncation case, and that it\u0027s different from hyphens. If we support two code paths, the former case can share the logic with hyphens, but we still need a separate logic for the other case.\n\nThought better not to have two cases in ellipsis, WDYT?",
+      "parentUuid": "382e0f6f_2a3ba1a6",
+      "revId": "76eb8f734dd91b317efa63f412ee5f96c0122ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
