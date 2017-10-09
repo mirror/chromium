@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1e0cdcc_575c94cd",
+        "filename": "third_party/WebKit/Source/modules/broadcastchannel/BroadcastChannel.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "663b1970_27fefab5",
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad2fc42d_2a65fdd5",
         "filename": "third_party/WebKit/public/BUILD.gn",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2b7ef7b3_e000b386",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Hmm, yeah, that doesn\u0027t make much sense... To be fair it doesn\u0027t make much sense for the other targets that refer to the same comment with \"see comment above\" either...  I replaced this with the same \"See comment above\", although that of course still doesn\u0027t make sense...",
+      "parentUuid": "ad2fc42d_2a65fdd5",
+      "range": {
+        "startLine": 931,
+        "startChar": 47,
+        "endLine": 931,
+        "endChar": 67
+      },
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d74f8369_b063a2bf",
         "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
         "patchSetId": 12
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-06T08:09:12Z",
       "side": 1,
       "message": "Nit: method\n\nAlso, we could split it into distinct types, right? So broadcast channel would pass the port-less version, while the version with ports could embed the port-less version and contain the ports as an additional field.",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04181cce_95eb9b61",
+        "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "It certainly would be possible, yes... Not sure if the added complexity is completely worth it, but I do agree that it seems weird to use a struct but not let every value for that struct be valid. At least this way the weirdness is limited to the BroadcastChannel side, while otherwise every other postMessage method would have to deal with the slight awkwardness of having nested structs (although the nested structs would probably be type-mapped away into two separate structs, so maybe not too bad). I guess I\u0027ll give it a try and see what the code would end up looking like.",
+      "parentUuid": "d74f8369_b063a2bf",
       "range": {
         "startLine": 17,
         "startChar": 28,
