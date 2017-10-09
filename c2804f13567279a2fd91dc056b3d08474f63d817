@@ -16,6 +16,24 @@
       "revId": "c2804f13567279a2fd91dc056b3d08474f63d817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b373850a_66890d35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-09T17:10:39Z",
+      "side": 1,
+      "message": "Not really, just some cleanup as I\u0027m reading through for the \"move service manager out of content\" work.",
+      "parentUuid": "0a6c442b_5464ce13",
+      "revId": "c2804f13567279a2fd91dc056b3d08474f63d817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
