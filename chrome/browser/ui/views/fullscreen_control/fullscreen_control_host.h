@@ -9,7 +9,7 @@
 #include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h"
 #include "ui/events/event_handler.h"
 
-class BrowserView;
+class ExclusiveAccessContext;
 class FullscreenControlView;
 
 namespace ui {
@@ -19,15 +19,9 @@ class MouseEvent;
 class TouchEvent;
 }  // namespace ui
 
-namespace views {
-class View;
-}  // namespace views
-
 class FullscreenControlHost : public ui::EventHandler {
  public:
-  // |host_view| allows the host to control the z-order of the underlying view.
-  explicit FullscreenControlHost(BrowserView* browser_view,
-                                 views::View* host_view);
+  explicit FullscreenControlHost(ExclusiveAccessContext* context);
   ~FullscreenControlHost() override;
 
   // ui::EventHandler:
@@ -58,7 +52,7 @@ class FullscreenControlHost : public ui::EventHandler {
 
   InputEntryMethod input_entry_method_ = InputEntryMethod::NOT_ACTIVE;
 
-  BrowserView* const browser_view_;
+  ExclusiveAccessContext* const context_;
 
   FullscreenControlPopup fullscreen_control_popup_;
 

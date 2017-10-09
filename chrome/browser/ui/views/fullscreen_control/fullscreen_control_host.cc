@@ -5,7 +5,7 @@
 #include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h"
 
 #include "base/bind.h"
-#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
 #include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
@@ -38,12 +38,12 @@ constexpr float kShowFullscreenExitControlHeight = 3.f;
 
 }  // namespace
 
-FullscreenControlHost::FullscreenControlHost(BrowserView* browser_view,
-                                             views::View* host_view)
-    : browser_view_(browser_view),
-      fullscreen_control_popup_(browser_view->GetBubbleParentView(),
-                                base::Bind(&BrowserView::ExitFullscreen,
-                                           base::Unretained(browser_view))) {}
+FullscreenControlHost::FullscreenControlHost(ExclusiveAccessContext* context)
+    : context_(context),
+      fullscreen_control_popup_(
+          context->GetBubbleParentView(),
+          base::Bind(&ExclusiveAccessContext::ExitFullscreen,
+                     base::Unretained(context))) {}
 
 FullscreenControlHost::~FullscreenControlHost() = default;
 
@@ -79,7 +79,7 @@ void FullscreenControlHost::HandleFullScreenControlVisibility(
     return;
   }
 
-  if (browser_view_->IsFullscreen()) {
+  if (context_->IsFullscreen()) {
     if (IsVisible()) {
       float control_bottom = static_cast<float>(
           fullscreen_control_popup_.GetFinalBounds().bottom());
@@ -100,5 +100,5 @@ void FullscreenControlHost::HandleFullScreenControlVisibility(
 void FullscreenControlHost::ShowForInputEntryMethod(
     InputEntryMethod input_entry_method) {
   input_entry_method_ = input_entry_method;
-  fullscreen_control_popup_.Show(browser_view_->GetClientAreaBoundsInScreen());
+  fullscreen_control_popup_.Show(context_->GetClientAreaBoundsInScreen());
 }

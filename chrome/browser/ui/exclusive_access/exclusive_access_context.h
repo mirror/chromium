@@ -8,6 +8,8 @@
 #include "build/build_config.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_bubble_type.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/native_widget_types.h"
 
 class GURL;
 class Profile;
@@ -73,6 +75,12 @@ class ExclusiveAccessContext {
 
   // Hides download shelf associated with currently active window.
   virtual void HideDownloadShelf() = 0;
+
+  // Returns the view used to parent the bubble Widget.
+  virtual gfx::NativeView GetBubbleParentView() const = 0;
+
+  // Return the current bounds (not restored bounds) of the parent window.
+  virtual gfx::Rect GetClientAreaBoundsInScreen() const = 0;
 };
 
 #endif  // CHROME_BROWSER_UI_EXCLUSIVE_ACCESS_EXCLUSIVE_ACCESS_CONTEXT_H_
