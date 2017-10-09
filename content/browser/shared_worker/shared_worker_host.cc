@@ -11,6 +11,7 @@
 #include "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h"
 #include "content/browser/shared_worker/shared_worker_instance.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
+#include "content/browser/worker_binder_registry.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -56,6 +57,10 @@ void GetInterfaceImpl(const std::string& interface_name,
   auto* process = RenderProcessHost::FromID(process_id);
   if (!process)
     return;
+
+  GetWorkerBinderRegistry().BindInterface(interface_name,
+                                          std::move(interface_pipe), process,
+                                          url::Origin(instance.url()));
 }
 
 }  // namespace
