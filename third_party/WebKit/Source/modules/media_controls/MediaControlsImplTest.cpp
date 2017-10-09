@@ -25,6 +25,7 @@
 #include "modules/media_controls/MediaDownloadInProductHelpManager.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
+#include "modules/media_controls/elements/MediaControlOverflowMenuListElement.h"
 #include "modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 #include "modules/media_controls/elements/MediaControlVolumeSliderElement.h"
@@ -164,14 +165,28 @@ enum DownloadActionMetrics {
 
 }  // namespace
 
+static std::string kTimeToActionHistogramName =
+    "Media.Controls.Overflow.TimeToAction";
+
+static double g_current_time = 1000.0;
+
+static void AdvanceClock(double seconds) {
+  g_current_time += seconds;
+}
+
 class MediaControlsImplTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     // Enable the cast overlay button as this is enabled by default.
     RuntimeEnabledFeatures::SetMediaCastOverlayButtonEnabled(true);
 
+    original_time_function_ =
+        SetTimeFunctionsForTesting([] { return g_current_time; });
+
     InitializePage();
   }
+
+  void TearDown() { SetTimeFunctionsForTesting(original_time_function_); }
 
   void InitializePage() {
     Page::PageClients clients;
@@ -264,6 +279,7 @@ class MediaControlsImplTest : public ::testing::Test {
   std::unique_ptr<DummyPageHolder> page_holder_;
   Persistent<MediaControlsImpl> media_controls_;
   HistogramTester histogram_tester_;
+  TimeFunction original_time_function_;
 };
 
 void MediaControlsImplTest::MouseDownAt(WebFloatPoint pos) {
@@ -1100,6 +1116,38 @@ TEST_F(MediaControlsImplTest, InfinityDurationChangeHidesDurationField) {
   EXPECT_FALSE(duration_display->IsWanted());
   EXPECT_EQ(std::numeric_limits<double>::infinity(),
             duration_display->CurrentValue());
+}
+
+TEST_F(MediaControlsImplTest, OverflowMenuMetricsTimeToAction) {
+  GetHistogramTester().ExpectTotalCount(kTimeToActionHistogramName, 0);
+
+  // Test with the menu open for 42 seconds.
+  MediaControls().ToggleOverflowMenu();
+  AdvanceClock(42);
+  MediaControls().ToggleOverflowMenu();
+  GetHistogramTester().ExpectBucketCount(kTimeToActionHistogramName, 42, 1);
+  GetHistogramTester().ExpectTotalCount(kTimeToActionHistogramName, 1);
+
+  // Test with the menu open for 90 seconds.
+  MediaControls().ToggleOverflowMenu();
+  AdvanceClock(90);
+  MediaControls().ToggleOverflowMenu();
+  GetHistogramTester().ExpectBucketCount(kTimeToActionHistogramName, 90, 1);
+  GetHistogramTester().ExpectTotalCount(kTimeToActionHistogramName, 2);
+
+  // Test with the menu open for 42 seconds.
+  MediaControls().ToggleOverflowMenu();
+  AdvanceClock(42);
+  MediaControls().ToggleOverflowMenu();
+  GetHistogramTester().ExpectBucketCount(kTimeToActionHistogramName, 42, 2);
+  GetHistogramTester().ExpectTotalCount(kTimeToActionHistogramName, 3);
+
+  // Test with the menu open for 1000 seconds.
+  MediaControls().ToggleOverflowMenu();
+  AdvanceClock(1000);
+  MediaControls().ToggleOverflowMenu();
+  GetHistogramTester().ExpectBucketCount(kTimeToActionHistogramName, 100, 1);
+  GetHistogramTester().ExpectTotalCount(kTimeToActionHistogramName, 4);
 }
 
 }  // namespace blink
