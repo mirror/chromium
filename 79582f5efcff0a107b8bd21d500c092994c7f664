@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ddf5b99_0014b3d2",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-09T18:29:57Z",
+      "side": 1,
+      "message": "Can you fold this class into ParameterizedScrollbarsTest, or vice versa?",
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c580f17_ee7baa0b",
         "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
         "patchSetId": 2
@@ -41,6 +58,29 @@
         "startChar": 16,
         "endLine": 1169,
         "endChar": 21
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818b4e47_3e635d70",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-09T18:29:57Z",
+      "side": 1,
+      "message": "Maybe this should be:\n\nbool attempt_to_remove_scrollbars \u003d \n    in_overflow_relayout_ \u0026\u0026\n    ScrollWidth() \u003c\u003d visible_size_with_scrollbars.Width() \u0026\u0026\n    ScrollHeight() \u003c\u003d visible_size_with_scrollbars.Height() \u0026\u0026\n    h_mode \u003d\u003d kScrollbarAuto \u0026\u0026 v_mode \u003d\u003d kScrollbarAuto;\nif (attempt_to_remove_scrollbars) {\n  needs_horizontal_scrollbar \u003d needs_vertical_scrollbar \u003d false;\n}\n\nMy thinking is: the reasoning behind removing the horizontal scrollbar is that the content probably won\u0027t overflow horizontally *if* the vertical scrollbar is removed, and that can only happen if (v_mode \u003d\u003d kScrollbarAuto).  Similarly for vertical overflow and horizontal scrollbar.\n\nDoes that make sense?",
+      "range": {
+        "startLine": 1352,
+        "startChar": 9,
+        "endLine": 1352,
+        "endChar": 37
       },
       "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
