@@ -173,8 +173,10 @@ WebImage::WebImage(RefPtr<Image> image) {
   if (!image)
     return;
 
-  if (sk_sp<SkImage> sk_image = image->PaintImageForCurrentFrame().GetSkImage())
+  if (sk_sp<SkImage> sk_image =
+          image->PaintImageForCurrentFrame().GetSkImage()) {
     sk_image->asLegacyBitmap(&bitmap_, SkImage::kRO_LegacyBitmapMode);
+  }
 }
 
 }  // namespace blink
