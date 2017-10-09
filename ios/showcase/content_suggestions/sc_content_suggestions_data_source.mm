@@ -6,6 +6,7 @@
 
 #include "base/strings/sys_string_conversions.h"
 #include "base/time/time.h"
+#include "components/favicon_base/favicon_types.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_learn_more_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_sink.h"
@@ -223,7 +224,8 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
   return [FaviconAttributes attributesWithMonogram:monogram
                                          textColor:textColor
                                    backgroundColor:backgroundColor
-                            defaultBackgroundColor:NO];
+                            defaultBackgroundColor:NO
+                                          iconType:favicon_base::INVALID_ICON];
 }
 
 // Returns a random date between now and three days before now.

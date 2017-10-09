@@ -885,6 +885,7 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        /*icon_type=*/favicon_base::INVALID_ICON,
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedImpression(impression);
   }
@@ -917,6 +918,7 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        /*icon_type=*/favicon_base::INVALID_ICON,
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedNavigation(impression);
   }
