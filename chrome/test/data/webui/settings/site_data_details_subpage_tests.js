@@ -7,8 +7,9 @@ suite('SiteDataDetailsSubpage', function() {
   /** @type {?SiteDataDetailsSubpageElement} */
   var page = null;
 
-  /** @type {TestSiteSettingsPrefsBrowserProxy} */
+  /** @type {TestLocalDataBrowserProxy} */
   var browserProxy = null;
+
   /** @type {!CookieDetails} */
   var cookieDetails = {
     accessibleToScript: "Yes",
@@ -52,6 +53,7 @@ suite('SiteDataDetailsSubpage', function() {
   });
 
   test('DetailsShownForCookie', function() {
+    return;
     return browserProxy.whenCalled('getCookieDetails').then(
         function(actualSite) {
           assertEquals(site, actualSite);

@@ -8,6 +8,24 @@
  */
 
 /**
+ * @typedef {{
+ *   site: string,
+ *   id: string,
+ *   localData: string,
+ * }}
+ */
+var CookieDataSummaryItem;
+
+/**
+ * @typedef {{
+ *   id: string,
+ *   start: number,
+ *   count: number,
+ * }}
+ */
+var CookieRemovePacket;
+
+/**
  * TODO(dbeam): upstream to polymer externs?
  * @constructor
  * @extends {Event}
@@ -21,7 +39,6 @@ Polymer({
   is: 'site-data',
 
   behaviors: [
-    CookieTreeBehavior,
     I18nBehavior,
     settings.RouteObserverBehavior,
   ],
@@ -31,7 +48,7 @@ Polymer({
      * The current filter applied to the cookie data list.
      */
     filter: {
-      observer: 'onSearchChanged_',
+      observer: 'updateSiteList_',
       notify: true,
       type: String,
       value: '',
@@ -44,6 +61,13 @@ Polymer({
     },
   },
 
+  /** @override */
+  attached: function() {
+    this.browserProxy_ = settings.LocalDataBrowserProxyImpl.getInstance();
+    cr.addWebUIListener('onTreeItemRemoved', this.updateSiteList_.bind(this));
+    this.browserProxy_.reloadCookies().then(this.updateSiteList_.bind(this));
+  },
+
   /**
    * Reload cookies when the site data page is visited.
    *
@@ -52,8 +76,9 @@ Polymer({
    * @protected
    */
   currentRouteChanged: function(currentRoute) {
-    if (currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
-      this.loadCookies();
+    if (this.browserProxy_ &&
+        currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
+      this.browserProxy_.reloadCookies().then(this.updateSiteList_.bind(this));
     }
   },
 
@@ -99,22 +124,54 @@ Polymer({
     return item.site.indexOf(this.filter) > -1;
   },
 
-  /** @private */
-  onSearchChanged_: function() {
-    this.$.list.render();
+  /**
+   * Add elements to the site list until all the sites are listed.
+   * @private
+   */
+  extendSiteList_: function() {
+    let count = 100;  // Arbitrary.
+    return this.browserProxy_.getDisplayList(this.sites.length, count)
+        .then((listInfo) => {
+          if (!listInfo.items.length) {
+            this.extendSiteListTimeout_ = undefined;
+            this.fire('site-data-list-complete');
+            return;
+          }
+          this.sites = this.sites.concat(listInfo.items);
+          this.extendSiteListTimeout_ =
+              window.setTimeout(this.extendSiteList_.bind(this), 20);
+        });
+  },
+
+  /**
+   * Kick off a chain of |extendSiteList_| calls to gather all the site data.
+   * @private
+   */
+  updateSiteList_: function() {
+    if (!this.browserProxy_) {
+      return;
+    }
+    this.browserProxy_.filter(this.filter).then(() => {
+      // Cancel pending calls to |extendSiteList_|.
+      window.clearTimeout(this.extendSiteListTimeout_);
+      this.sites = [];
+      this.extendSiteListTimeout_ =
+          window.setTimeout(this.extendSiteList_.bind(this), 20);
+    });
   },
 
   /**
    * @return {boolean} Whether to show the multiple site remove button.
    * @private
    */
-  isRemoveButtonVisible_: function(sites, renderedItemCount) {
-    return renderedItemCount != 0;
+  isRemoveButtonVisible_: function() {
+    return this.sites.length != 0;
   },
 
   /**
    * Returns the string to use for the Remove label.
-   * @return {string} filter The current filter string.
+   * @param {string} filter The current filter string.
+   * @return {string}
    * @private
    */
   computeRemoveLabel_: function(filter) {
@@ -149,15 +206,10 @@ Polymer({
    */
   onConfirmDelete_: function() {
     this.$.confirmDeleteDialog.close();
-
     if (this.filter.length == 0) {
-      this.removeAllCookies();
+      this.browserProxy_.removeAll().then(this.updateSiteList_.bind(this));
     } else {
-      var items = this.$.list.items;
-      for (var i = 0; i < items.length; ++i) {
-        if (this.showItem_(items[i]))
-          this.browserProxy_.removeCookie(items[i].id);
-      }
+      this.browserProxy_.removeByFilter(this.filter);
       // We just deleted all items found by the filter, let's reset the filter.
       this.fire('clear-subpage-search');
     }
@@ -170,7 +222,7 @@ Polymer({
    */
   onRemoveSiteTap_: function(e) {
     e.stopPropagation();
-    this.browserProxy_.removeCookie(e.model.item.id);
+    this.browserProxy_.removeItem(e.model.item.site);
   },
 
   /**
