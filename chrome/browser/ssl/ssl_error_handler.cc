@@ -61,6 +61,9 @@
 
 namespace {
 
+using CertHashSet =
+    std::set<net::SHA256HashValue, net::SHA256HashValueLessThan>;
+
 const base::Feature kMITMSoftwareInterstitial{
     "MITMSoftwareInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -94,18 +97,19 @@ const int64_t kInterstitialDelayInMilliseconds = 3000;
 
 const char kHistogram[] = "interstitial.ssl_error_handler";
 
+// This is the fingerprint of the well-known Superfish certificate at
+// https://pastebin.com/WcXv8QcG. Superfish is identified by certificate
+// fingerprint rather than SPKI because net::SSLInfo does not guarantee
+// |public_key_hashes| (the SPKIs) to be populated if the certificate doesn't
+// verify successfully. It so happens that Superfish uses the same certificate
+// universally (not just the same public key), and calculating the fingerprint
+// is more convenient here than calculating the SPKI.
+const net::SHA256HashValue kSuperfishFingerprint{
+    {0xB6, 0xFE, 0x91, 0x51, 0x40, 0x2B, 0xAD, 0x1C, 0x06, 0xD7, 0xE6,
+     0x6D, 0xB6, 0x7A, 0x26, 0xAA, 0x73, 0x56, 0xF2, 0xE6, 0xC6, 0x44,
+     0xDB, 0xCF, 0x9F, 0x98, 0x96, 0x8F, 0xF6, 0x32, 0xE1, 0xB7}};
+
 bool IsSuperfish(const scoped_refptr<net::X509Certificate>& cert) {
-  // This is the fingerprint of the well-known Superfish certificate at
-  // https://pastebin.com/WcXv8QcG. Superfish is identified by certificate
-  // fingerprint rather than SPKI because net::SSLInfo does not guarantee
-  // |public_key_hashes| (the SPKIs) to be populated if the certificate doesn't
-  // verify successfully. It so happens that Superfish uses the same certificate
-  // universally (not just the same public key), and calculating the fingerprint
-  // is more convenient here than calculating the SPKI.
-  const net::SHA256HashValue kSuperfishFingerprint{
-      {0xB6, 0xFE, 0x91, 0x51, 0x40, 0x2B, 0xAD, 0x1C, 0x06, 0xD7, 0xE6,
-       0x6D, 0xB6, 0x7A, 0x26, 0xAA, 0x73, 0x56, 0xF2, 0xE6, 0xC6, 0x44,
-       0xDB, 0xCF, 0x9F, 0x98, 0x96, 0x8F, 0xF6, 0x32, 0xE1, 0xB7}};
   for (const net::X509Certificate::OSCertHandle& intermediate :
        cert->GetIntermediateCertificates()) {
     net::SHA256HashValue hash =
@@ -119,9 +123,9 @@ bool IsSuperfish(const scoped_refptr<net::X509Certificate>& cert) {
 
 // Records an UMA histogram for whether the Superfish certificate was present in
 // the certificate chain.
-void RecordSuperfishUMA(const scoped_refptr<net::X509Certificate>& cert) {
+void RecordSuperfishUMA(bool is_superfish) {
   UMA_HISTOGRAM_BOOLEAN("interstitial.ssl_error_handler.superfish",
-                        IsSuperfish(cert));
+                        is_superfish);
 }
 
 // Adds a message to console after navigation commits and then, deletes itself.
@@ -193,12 +197,18 @@ bool IsCaptivePortalInterstitialEnabled() {
 }
 #endif
 
-std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
+std::unique_ptr<CertHashSet> LoadCaptivePortalCertHashes(
     const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
+  auto hashes = base::MakeUnique<CertHashSet>();
   for (const chrome_browser_ssl::CaptivePortalCert& cert :
        proto.captive_portal_cert()) {
-    hashes.get()->insert(cert.sha256_hash());
+    net::HashValue spki_hash;
+    if (spki_hash.FromString(cert.sha256_hash())) {
+      net::SHA256HashValue sha256;
+      DCHECK_EQ(spki_hash.size(), sizeof(sha256));
+      memcpy(&sha256, spki_hash.data(), sizeof(sha256));
+      hashes->insert(sha256);
+    }
   }
   return hashes;
 }
@@ -276,7 +286,7 @@ class ConfigSingleton {
   // Returns true if any of the SHA256 hashes in |ssl_info| is of a captive
   // portal certificate. The set of captive portal hashes is loaded on first
   // use.
-  bool IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info);
+  bool IsKnownCaptivePortalCert(const CertHashSet& spki_hashes);
 
   // Returns the name of a known MITM software provider that matches the
   // certificate passed in as the |cert| parameter. Returns empty string if
@@ -341,7 +351,7 @@ class ConfigSingleton {
   // SPKI hashes belonging to certs treated as captive portals. Null until the
   // first time IsKnownCaptivePortalCert() or SetErrorAssistantProto()
   // is called.
-  std::unique_ptr<std::unordered_set<std::string>> captive_portal_spki_hashes_;
+  std::unique_ptr<CertHashSet> captive_portal_hashes_;
 };
 
 ConfigSingleton::ConfigSingleton()
@@ -379,7 +389,7 @@ void ConfigSingleton::ResetForTesting() {
   mitm_software_list_.reset();
   is_enterprise_managed_for_testing_ = ENTERPRISE_MANAGED_STATUS_NOT_SET;
   os_captive_portal_status_for_testing_ = OS_CAPTIVE_PORTAL_STATUS_NOT_SET;
-  captive_portal_spki_hashes_.reset();
+  captive_portal_hashes_.reset();
 }
 
 void ConfigSingleton::SetInterstitialDelayForTesting(
@@ -479,25 +489,20 @@ void ConfigSingleton::SetErrorAssistantProto(
 
   mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
 
-  captive_portal_spki_hashes_ =
-      LoadCaptivePortalCertHashes(*error_assistant_proto_);
+  captive_portal_hashes_ = LoadCaptivePortalCertHashes(*error_assistant_proto_);
 }
 
-bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
+bool ConfigSingleton::IsKnownCaptivePortalCert(const CertHashSet& cert_hashes) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!captive_portal_spki_hashes_) {
+  if (!captive_portal_hashes_) {
     error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
     CHECK(error_assistant_proto_);
-    captive_portal_spki_hashes_ =
+    captive_portal_hashes_ =
         LoadCaptivePortalCertHashes(*error_assistant_proto_);
   }
-
-  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
-    if (hash_value.tag != net::HASH_VALUE_SHA256) {
-      continue;
-    }
-    if (captive_portal_spki_hashes_->find(hash_value.ToString()) !=
-        captive_portal_spki_hashes_->end()) {
+  // for (const net::SHA256HashValue& hash : cert_hashes) {
+  for (const auto& hash : cert_hashes) {
+    if (captive_portal_hashes_->find(hash) != captive_portal_hashes_->end()) {
       return true;
     }
   }
@@ -873,7 +878,30 @@ SSLErrorHandler::~SSLErrorHandler() {
 void SSLErrorHandler::StartHandlingError() {
   RecordUMA(HANDLE_ALL);
 
-  RecordSuperfishUMA(ssl_info_.cert);
+  // Add certificate hashes.
+  CertHashSet cert_hashes;
+  cert_hashes.insert(net::X509Certificate::CalculateFingerprint256(
+      ssl_info_.cert->os_cert_handle()));
+  for (const net::X509Certificate::OSCertHandle& intermediate :
+       ssl_info_.cert->GetIntermediateCertificates()) {
+    cert_hashes.insert(
+        net::X509Certificate::CalculateFingerprint256(intermediate));
+  }
+
+  // Add SPKI hashes.
+  for (const auto& hash_value : ssl_info_.public_key_hashes) {
+    if (hash_value.tag != net::HASH_VALUE_SHA256) {
+      continue;
+    }
+    net::SHA256HashValue sha256;
+    DCHECK_EQ(hash_value.size(), sizeof(sha256));
+    memcpy(&sha256, hash_value.data(), sizeof(sha256));
+    cert_hashes.insert(sha256);
+  }
+
+  const bool is_superfish =
+      cert_hashes.find(kSuperfishFingerprint) != cert_hashes.end();
+  RecordSuperfishUMA(is_superfish);
 
   if (ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_) ==
       ssl_errors::ErrorInfo::CERT_DATE_INVALID) {
@@ -902,7 +930,7 @@ void SSLErrorHandler::StartHandlingError() {
   // helpful place to direct the user to go.
   if (base::FeatureList::IsEnabled(kCaptivePortalCertificateList) &&
       only_error_is_name_mismatch &&
-      g_config.Pointer()->IsKnownCaptivePortalCert(ssl_info_)) {
+      g_config.Pointer()->IsKnownCaptivePortalCert(cert_hashes)) {
     RecordUMA(CAPTIVE_PORTAL_CERT_FOUND);
     ShowCaptivePortalInterstitial(GURL());
     return;
