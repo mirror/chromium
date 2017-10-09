@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d35f4e6_3ee25c75",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "why in parens?",
+      "range": {
+        "startLine": 119,
+        "startChar": 45,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e92094_66660497",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "why not |input.IsPasswordField()|?\n\nand below?",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d0118d_35f38952",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "what is it? first bit of some mask?",
+      "range": {
+        "startLine": 191,
+        "startChar": 24,
+        "endLine": 191,
+        "endChar": 25
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5eabe6_027165fb",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "would be good to have a constant for this as well.",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ead04a_58a41697",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "nodes_for_id?",
+      "range": {
+        "startLine": 198,
+        "startChar": 30,
+        "endLine": 198,
+        "endChar": 33
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e63aa43_d43283c0",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T14:33:21Z",
+      "side": 1,
+      "message": "it doesn\u0027t list all possible types? then what types does it list?",
+      "range": {
+        "startLine": 256,
+        "startChar": 32,
+        "endLine": 256,
+        "endChar": 47
+      },
+      "revId": "fc959f03052afb132c5a4f3aa3e774295ec90b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
