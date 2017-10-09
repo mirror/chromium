@@ -81,6 +81,24 @@
       "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c71cef9_1cc452a1",
+        "filename": "components/leveldb_proto/proto_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T15:49:25Z",
+      "side": 1,
+      "message": "I\u0027m a fan for having the called function initialize \"out\" variables even on error (unless performance critical) as that simplifies the contract. In some cases I also use std::tie so that it\u0027s basically impossible to leave values uninitialized.",
+      "parentUuid": "d0be1ac7_b1f230ac",
+      "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
