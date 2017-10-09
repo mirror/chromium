@@ -22,6 +22,30 @@
       "revId": "9d9bd88c27477a873e19a7293916ffe6ca50b612",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88229b05_2a8122d4",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T14:50:28Z",
+      "side": 1,
+      "message": "No; ivars inside blocks cause the block to retain the owning object, not the ivar itself. This should still nil the ivar value correctly.",
+      "parentUuid": "1730da1b_5944f6e1",
+      "range": {
+        "startLine": 1502,
+        "startChar": 4,
+        "endLine": 1502,
+        "endChar": 39
+      },
+      "revId": "9d9bd88c27477a873e19a7293916ffe6ca50b612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
