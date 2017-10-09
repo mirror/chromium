@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38958c76_2e9ac8af",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T18:07:47Z",
+      "side": 1,
+      "message": "the name does not really match the value here.\n\nWdyt about abstracting the user session type, and using something like\n\"forceShared\", or \"shareStatus\": \"REQUIRE_SHARED\"\n\nI think that share button is disabled for kiosk sessions, too (just in that case, shared state is forced to false; https://cs.chromium.org/chromium/src/chrome/browser/chromeos/options/network_config_view.cc?rcl\u003d6a0cfac917a6c82e5fbef6daf4984b15e80c9332\u0026l\u003d288)",
+      "revId": "e10e0348afdc956551b1950c405e6a32b7d8a05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd8928b_8dd3e806",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T18:07:47Z",
+      "side": 1,
+      "message": "should this check whether the network is shared instead?\n(given that shared networks do not necessarily have access to user certs)",
+      "range": {
+        "startLine": 824,
+        "startChar": 13,
+        "endLine": 824,
+        "endChar": 20
+      },
+      "revId": "e10e0348afdc956551b1950c405e6a32b7d8a05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
