@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ef3fc8_0474e162",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:16:55Z",
+      "side": 1,
+      "message": "nit: it → iterator",
+      "range": {
+        "startLine": 652,
+        "startChar": 12,
+        "endLine": 652,
+        "endChar": 14
+      },
+      "revId": "57f57965896431c70db08fa16d5076577966fc27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7234c504_cd520e7a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:16:55Z",
+      "side": 1,
+      "message": "nit: maybe use a regular for loop with just an index\n\n  for (size_t index \u003d 0; index \u003c _bookmarkItems.size(); ++index) {\n    const BookmarkNode* node \u003d _bookmarkItems[index];\n    if (_editNodes.find(node) !\u003d _editNodes.end()) {\n      ...\n  }",
+      "revId": "57f57965896431c70db08fa16d5076577966fc27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
