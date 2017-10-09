@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a717e78a_becae5ff",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f689f1_5eb8f913",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c3683c4_e81cc29c",
         "filename": "third_party/WebKit/Source/core/html/HTMLImageElement.cpp",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97f353c_12352d10",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3683c4_e81cc29c",
+      "range": {
+        "startLine": 283,
+        "startChar": 46,
+        "endLine": 283,
+        "endChar": 63
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "aa649c56_b430a98b",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "I think the attribute is meant to affect the src image. I\u0027ve replaced this with kSyncDecode. This could also be unspecified, but it feels like if there is no way for the developer to specify a value we should be defaulting to sync.",
+      "parentUuid": "ea834866_fe637345",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57c0603_aaae326c",
         "filename": "third_party/WebKit/Source/core/paint/ListMarkerPainter.cpp",
         "patchSetId": 9
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "78a12593_38ca7eb1",
+        "filename": "third_party/WebKit/Source/core/paint/ListMarkerPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Removed as well.",
+      "parentUuid": "827ef35e_bdf9ed5e",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "148800b5_8dcbf7c9",
         "filename": "third_party/WebKit/Source/core/svg/SVGAttributeNames.json5",
         "patchSetId": 9
@@ -132,6 +210,30 @@
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c35dad_aeac800c",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAttributeNames.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Specifying async in the SVGImageElement.idl causes some autogen files (V8SVGImageElement.cpp specifically) to use SVGNames::asyncAttr...",
+      "parentUuid": "148800b5_8dcbf7c9",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a46e215b_489474fe",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ecbc75d_5c6ec652",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 39
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f0ee64c_c13ad149",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
         "patchSetId": 9
@@ -172,6 +298,24 @@
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9eb976_27d156fb",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what is a good place to share this. I\u0027ve moved this to ImageElementBase which seems like a good spot, but let me know if you had something else in mind.",
+      "parentUuid": "4f0ee64c_c13ad149",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "13a5ee8c_79b52a86",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "160edbfe_90b33d1a",
+      "range": {
+        "startLine": 149,
+        "startChar": 23,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ac27adc_974eeb65",
         "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
         "patchSetId": 9
@@ -221,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "f259f007_feba007e",
+        "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac27adc_974eeb65",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 3
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2156f160_056da334",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
         "patchSetId": 9
@@ -235,6 +427,24 @@
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405f36c0_7f9c9db7",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T21:53:45Z",
+      "side": 1,
+      "message": "Oops, it\u0027s VMPSTR so that I can fix it before uploading. I clearly failed the first time. But it should be fixed now.",
+      "parentUuid": "2156f160_056da334",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
