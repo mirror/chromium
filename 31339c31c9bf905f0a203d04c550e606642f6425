@@ -57,6 +57,29 @@
       "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76146ace_564bff2d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 13166,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T22:56:28Z",
+      "side": 1,
+      "message": "nit: Perhaps \"StartupState\" or something like that?",
+      "range": {
+        "startLine": 13166,
+        "startChar": 39,
+        "endLine": 13166,
+        "endChar": 44
+      },
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
