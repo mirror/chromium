@@ -18,9 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Restriction;
-import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.test.BottomSheetTestRule;
@@ -28,6 +26,7 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.test.util.UiRestriction;
 
 /**
@@ -36,7 +35,8 @@ import org.chromium.ui.test.util.UiRestriction;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 public class ChromeHomeAppMenuTest {
-    private static final String TEST_URL = UrlUtils.encodeHtmlDataUri("<html>foo</html>");
+    private static final String TEST_URL = "/chrome/test/data/android/test.html";
+
     private AppMenuHandler mAppMenuHandler;
     private BottomSheet mBottomSheet;
 
@@ -52,20 +52,24 @@ public class ChromeHomeAppMenuTest {
 
     @Test
     @SmallTest
-    @DisabledTest(message = "see crbug.com/772000")
     public void testPageMenu() throws IllegalArgumentException, InterruptedException {
-        mBottomSheetTestRule.loadUrl(TEST_URL);
-
+        EmbeddedTestServer testServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
+        mBottomSheetTestRule.loadUrl(testServer.getURL(TEST_URL));
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = mAppMenuHandler.getAppMenu();
         AppMenuIconRowFooter iconRow = (AppMenuIconRowFooter) appMenu.getFooterView();
 
-        assertFalse(iconRow.getForwardButtonForTests().isEnabled());
-        assertTrue(iconRow.getBookmarkButtonForTests().isEnabled());
-        // Only HTTP/S pages can be downloaded.
-        assertFalse(iconRow.getDownloadButtonForTests().isEnabled());
-        assertTrue(iconRow.getPageInfoButtonForTests().isEnabled());
-        assertTrue(iconRow.getReloadButtonForTests().isEnabled());
+        assertFalse("Forward button should not be enabled",
+                iconRow.getForwardButtonForTests().isEnabled());
+        assertTrue("Bookmark button should be enabled",
+                iconRow.getBookmarkButtonForTests().isEnabled());
+        assertTrue("Download button should be enabled",
+                iconRow.getDownloadButtonForTests().isEnabled());
+        assertTrue(
+                "Info button should be enabled", iconRow.getPageInfoButtonForTests().isEnabled());
+        assertTrue(
+                "Reload button should be enabled", iconRow.getReloadButtonForTests().isEnabled());
 
         // Navigate backward, open the menu and assert forward button is enabled.
         ThreadUtils.runOnUiThreadBlocking(() -> {
@@ -75,7 +79,10 @@ public class ChromeHomeAppMenuTest {
 
         showAppMenuAndAssertMenuShown();
         iconRow = (AppMenuIconRowFooter) appMenu.getFooterView();
-        assertTrue(iconRow.getForwardButtonForTests().isEnabled());
+        assertTrue(
+                "Forward button should be enabled", iconRow.getForwardButtonForTests().isEnabled());
+
+        testServer.stopAndDestroyServer();
     }
 
     @Test
@@ -87,7 +94,7 @@ public class ChromeHomeAppMenuTest {
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = mAppMenuHandler.getAppMenu();
 
-        assertNull(appMenu.getFooterView());
+        assertNull("Footer view should be null", appMenu.getFooterView());
         Assert.assertEquals(
                 "There should be four app menu items.", appMenu.getListView().getCount(), 4);
         Assert.assertEquals("'New tab' should be the first item", R.id.new_tab_menu_id,
@@ -110,7 +117,7 @@ public class ChromeHomeAppMenuTest {
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = mAppMenuHandler.getAppMenu();
 
-        assertNull(appMenu.getFooterView());
+        assertNull("Footer view should be null", appMenu.getFooterView());
         Assert.assertEquals(
                 "There should be four app menu items.", appMenu.getListView().getCount(), 4);
         Assert.assertEquals("'New incognito tab' should be the first item",
@@ -133,7 +140,7 @@ public class ChromeHomeAppMenuTest {
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = mAppMenuHandler.getAppMenu();
 
-        assertNull(appMenu.getFooterView());
+        assertNull("Footer view should be null", appMenu.getFooterView());
         Assert.assertEquals(
                 "There should be three app menu items.", appMenu.getListView().getCount(), 3);
         Assert.assertEquals("'New tab' should be the first item", R.id.new_tab_menu_id,
