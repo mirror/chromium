@@ -41,6 +41,18 @@ void NGInlineBoxState::AccumulateUsedFonts(const ShapeResult* shape_result,
   }
 }
 
+bool NGInlineBoxState::CanAddTextOfStyle(
+    const ComputedStyle& text_style) const {
+  if (text_style.VerticalAlign() != EVerticalAlign::kBaseline)
+    return false;
+  DCHECK(style);
+  if (style == &text_style)
+    return true;
+  if (&style->GetFont() == &text_style.GetFont())
+    return true;
+  return false;
+}
+
 NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     const ComputedStyle* line_style,
     FontBaseline baseline_type,
@@ -84,11 +96,8 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
     const NGInlineItemResult& item_result,
     NGLineBoxFragmentBuilder* line_box,
     LayoutUnit position) {
-  stack_.resize(stack_.size() + 1);
-  NGInlineBoxState* box = &stack_.back();
-  box->fragment_start = line_box->Children().size();
+  NGInlineBoxState* box = OnOpenTag(*item.Style(), line_box);
   box->item = &item;
-  box->style = item.Style();
 
   // Compute box properties regardless of needs_box_fragment since close tag may
   // also set needs_box_fragment.
@@ -99,8 +108,17 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
   return box;
 }
 
+NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
+    const ComputedStyle& style,
+    NGLineBoxFragmentBuilder* line_box) {
+  stack_.resize(stack_.size() + 1);
+  NGInlineBoxState* box = &stack_.back();
+  box->fragment_start = line_box->Children().size();
+  box->style = &style;
+  return box;
+}
+
 NGInlineBoxState* NGInlineLayoutStateStack::OnCloseTag(
-    const NGInlineItem& item,
     NGLineBoxFragmentBuilder* line_box,
     NGInlineBoxState* box,
     FontBaseline baseline_type) {

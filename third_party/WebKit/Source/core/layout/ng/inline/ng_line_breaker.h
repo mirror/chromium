@@ -120,6 +120,7 @@ class CORE_EXPORT NGLineBreaker {
   LineBreakState HandleCloseTag(const NGInlineItem&, NGInlineItemResults*);
 
   void HandleOverflow(NGLineInfo*);
+  void HandleOverflow(NGLineInfo*, LayoutUnit available_width, bool);
   void Rewind(NGLineInfo*, unsigned new_end);
 
   void SetCurrentStyle(const ComputedStyle&);
