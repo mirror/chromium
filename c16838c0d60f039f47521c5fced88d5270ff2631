@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d19ef1d4_6f6d0411",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T23:39:30Z",
+      "side": 1,
+      "message": "You\u0027re totally right - I\u0027ll fix that.",
+      "parentUuid": "94484e93_6c9b93a4",
+      "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3001b38a_8b21139f",
         "filename": "components/leveldb_proto/leveldb_database.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fa3df0_ac7fbab3",
+        "filename": "components/leveldb_proto/leveldb_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T23:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3001b38a_8b21139f",
+      "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9a048630_436a6ce6",
+        "filename": "components/leveldb_proto/leveldb_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T23:39:30Z",
+      "side": 1,
+      "message": "I writes real good.",
+      "parentUuid": "a09c1c93_265f6ecc",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f40f76d4_572848cc",
         "filename": "components/leveldb_proto/leveldb_database.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f6af8d_6a7762bd",
+        "filename": "components/leveldb_proto/leveldb_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T23:39:30Z",
+      "side": 1,
+      "message": "Sure, I went ahead and did that and added several tests for Destroy which actually found an existing bug (in ProtoDatabaseImpl\u003cT\u003e::InitWithDatabase) so thank you very much!\n\nAs an aside it would be nice for the caller of LevelDB::Init() to have some way of knowing that the entire database was deleted - right now that happens silently. Maybe a future CL?",
+      "parentUuid": "f40f76d4_572848cc",
+      "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
