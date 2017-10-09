@@ -11,11 +11,13 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
+#include "chromeos/login/login_state.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_util.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -45,6 +47,14 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
   };
   for (const auto& entry : localized_strings)
     html_source->AddLocalizedString(entry.name, entry.id);
+  // Login screen and guest users can only create shared networks.
+  // Other users default to unshared network configuration.
+  // NOTE: Public accounts can only create unshared network configurations.
+  html_source->AddBoolean("shareNetworkDefault",
+                          !LoginState::Get()->UserHasNetworkProfile());
+  // Only authenticated users can toggle the share state.
+  html_source->AddBoolean("shareNetworkEnabled",
+                          LoginState::Get()->IsUserAuthenticated());
 }
 
 }  // namespace
