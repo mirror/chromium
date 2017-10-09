@@ -326,6 +326,30 @@
       "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c5a93d_87acbb7c",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-09T09:05:57Z",
+      "side": 1,
+      "message": "For the following code I mean developers usually should not have the assumption that getRegistration must get back earlier than update.\n\n  // Use other methods to preapre a registration object named as |old_reg|.\n  navigator.serviceWorker.getRegistration(xxx).then(function(reg) \n      { XXX });\n  old_reg.update().then(function() { XXX });",
+      "parentUuid": "36c2d7df_c4216ce1",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
