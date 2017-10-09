@@ -16,6 +16,24 @@
       "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e152cc18_5f724e3f",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-09T16:52:39Z",
+      "side": 0,
+      "message": "You can look at got_clang_revision on the bots.\n\nhooks should print nothing in the \"no work was done\" common case, see linked bug. I\u0027m happy with all suggestions compatible with that :-)\n\nNote that we don\u0027t lose any information: If no output is printed, then we\u0027re using bundled clang at the revision hardcoded in update.py.",
+      "parentUuid": "859592a2_1cfef2b9",
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
