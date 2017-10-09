@@ -271,6 +271,7 @@ source_set("ui_internal") {
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
     "//ios/chrome/browser/bookmarks",
+    "//ios/chrome/browser/bookmarks:features",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/content_suggestions",
     "//ios/chrome/browser/favicon",

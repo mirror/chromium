@@ -56,6 +56,7 @@
 #include "components/toolbar/toolbar_model_impl.h"
 #include "ios/chrome/app/tests_hook.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
+#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
@@ -591,6 +592,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 @property(nonatomic, assign) BOOL hideStatusBar;
 // Whether the VoiceSearchBar should be displayed.
 @property(nonatomic, readonly) BOOL shouldShowVoiceSearchBar;
+// Whether the Bookmarks is shown in panel.
+@property(nonatomic, readonly) BOOL isBookmarksShownInPanel;
 // Coordinator for displaying a modal overlay with activity indicator to prevent
 // the user from interacting with the browser view.
 @property(nonatomic, strong)
@@ -1236,6 +1239,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return;
   _hideStatusBar = hideStatusBar;
   [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (BOOL)isBookmarksShownInPanel {
+  return (IsIPadIdiom() &&
+          !base::FeatureList::IsEnabled(kBookmarkNewGeneration));
 }
 
 #pragma mark - IBActions
@@ -3288,8 +3296,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   if (host == kChromeUIBookmarksHost) {
-    // Only allow bookmark URL on iPad.
-    return IsIPadIdiom();
+    // Only allow bookmark URL when Bookmarks is shown in panel.
+    return self.isBookmarksShownInPanel;
   }
 
   return host == kChromeUINewTabHost;
@@ -3302,7 +3310,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   id<CRWNativeContent> nativeController = nil;
   std::string url_host = url.host();
   if (url_host == kChromeUINewTabHost ||
-      (IsIPadIdiom() && url_host == kChromeUIBookmarksHost)) {
+      (url_host == kChromeUIBookmarksHost && self.isBookmarksShownInPanel)) {
     CGFloat fakeStatusBarHeight = _fakeStatusBarView.frame.size.height;
     UIEdgeInsets safeAreaInset = UIEdgeInsetsZero;
     if (@available(iOS 11.0, *)) {
