@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7682f11_3040d538",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-10-09T18:10:34Z",
+      "side": 1,
+      "message": "I would mention that order profiling only happens on bots and is never released to users somewhere here.",
+      "range": {
+        "startLine": 736,
+        "startChar": 53,
+        "endLine": 736,
+        "endChar": 54
+      },
+      "revId": "cd7fe6e3230704a3381ef4ed8fd1a94f2ee8aaad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
