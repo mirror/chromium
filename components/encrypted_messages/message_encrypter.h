@@ -14,6 +14,9 @@ namespace encrypted_messages {
 
 class EncryptedMessage;
 
+// Sets a fixed private key to be used for tests, key has to be 32 bytes long.
+void SetPrivateKeyForTesting(const uint8_t* key);
+
 // Messages are encrypted with a secret derived from a client key pair (which
 // should be generated fresh randomly for each message) and a server public
 // key. The remote message recipient can decrypt the message by performing the

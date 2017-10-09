@@ -4,6 +4,9 @@
 
 #include "components/encrypted_messages/message_encrypter.h"
 
+#include <cstring>
+#include <vector>
+
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_piece.h"
@@ -16,6 +19,11 @@
 namespace encrypted_messages {
 
 namespace {
+
+// Normally the private key used to encrypt a message is generated randomly
+// for each message, however when this variable is set it is used as the
+// private key. This should only be used for testing.
+std::vector<uint8_t> testing_private_key;
 
 bool GetHkdfSubkeySecret(size_t subkey_length,
                          const uint8_t* private_key,
@@ -37,6 +45,11 @@ bool GetHkdfSubkeySecret(size_t subkey_length,
 
 }  // namespace
 
+void SetPrivateKeyForTesting(const uint8_t* key) {
+  testing_private_key.reserve(X25519_PRIVATE_KEY_LEN);
+  memcpy(testing_private_key.data(), key, X25519_PRIVATE_KEY_LEN);
+}
+
 bool EncryptSerializedMessage(const uint8_t* server_public_key,
                               uint32_t server_public_key_version,
                               base::StringPiece hkdf_label,
@@ -46,7 +59,11 @@ bool EncryptSerializedMessage(const uint8_t* server_public_key,
   uint8_t public_key[X25519_PUBLIC_VALUE_LEN];
   uint8_t private_key[X25519_PRIVATE_KEY_LEN];
 
-  crypto::RandBytes(private_key, sizeof(private_key));
+  if (!testing_private_key.empty()) {
+    memcpy(private_key, testing_private_key.data(), sizeof(private_key));
+  } else {
+    crypto::RandBytes(private_key, sizeof(private_key));
+  }
   X25519_public_from_private(public_key, private_key);
 
   crypto::Aead aead(crypto::Aead::AES_128_CTR_HMAC_SHA256);
