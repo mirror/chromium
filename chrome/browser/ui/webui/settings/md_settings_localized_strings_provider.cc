@@ -48,6 +48,8 @@
 #include "ui/chromeos/devicetype_utils.h"
 #include "ui/chromeos/events/keyboard_layout_util.h"
 #include "ui/display/display_switches.h"
+#include "ui/events/devices/input_device_manager.h"
+#include "ui/events/devices/touchscreen_device.h"
 #else
 #include "chrome/browser/ui/webui/settings/system_handler.h"
 #endif
@@ -644,6 +646,17 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       "enableTouchCalibrationSetting",
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableTouchCalibrationSetting));
+
+  const auto& devices =
+      ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices();
+  bool has_external_touch_device = false;
+  for (const auto& device : devices) {
+    if (device.type == ui::InputDeviceType::INPUT_DEVICE_EXTERNAL) {
+      has_external_touch_device = true;
+      break;
+    }
+  }
+  html_source->AddBoolean("hasExternalTouchDevice", has_external_touch_device);
 
   html_source->AddBoolean("nightLightFeatureEnabled",
                           ash::NightLightController::IsFeatureEnabled());
