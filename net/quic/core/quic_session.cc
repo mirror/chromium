@@ -968,4 +968,6 @@ bool QuicSession::WriteStreamData(QuicStreamId id,
   return stream->WriteStreamData(offset, data_length, writer);
 }
 
+#undef ENDPOINT
+
 }  // namespace net
