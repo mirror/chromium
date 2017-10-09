@@ -2,6 +2,199 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb1ae5ea_c08a1781",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "It seems this test is removed. It would be nice to still have this kind of test around.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 49
+      },
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e25e4b2_50a1908e",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "I think this test is useful since it tests a sequence of adding and removing devices, but it is removed. It would be nice if we can keep this test around.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e987819f_59f7fa44",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "I think this test is useful and it would be nice to keep it around.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d21009_558edb9d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58411ebe_790d7616",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d215e1bc_3ce67673",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266db5b9_9980f9c3",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f79b487_6f91df35",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfc13ae_20abe41d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "ditto.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9b3c03_6ac60e8e",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "Why is this browser test removed?",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb45b9ca_248a52c5",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 0,
+      "message": "Similar to the comments at device_chooser_content_view_unittest.cc, many of the test code in this file is removed. It would be nice to keep it around since it tests different functionalities of the chooser dialog.",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95ae43ae_b697737b",
         "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
         "patchSetId": 4

@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "50f9c7a7_20532eb7",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "According to the Google C++ coding style:\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names\n\nThe member variables of struct and class have different naming style: \"They do not have the trailing underscores that data members in classes have.\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d61282ef_2dfd69ae",
         "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
         "patchSetId": 4
@@ -276,6 +299,29 @@
     },
     {
       "key": {
+        "uuid": "bc4e0a94_117aab91",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "Add comments for the boolean parameters.",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 18
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d556c394_5c72f507",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -287,6 +333,75 @@
       "writtenOn": "2017-10-08T23:52:32Z",
       "side": 1,
       "message": "accessing views::Views via reference feels peculiar - can these all return a pointer?  (I appreciate that a reference is good intrinsic documentation to say `this won\u0027t be null`, but that\u0027s just never really been adopted around views :/)",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a541fdb_36713b41",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "Maybe change the function name to be: AddNonPairedDevice() to be explicit.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c69641_94eece70",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "Add comments for the boolean parameters, something like:\nfalse /* connected */, false /* paired */",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 20
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d428dc2c_abdc71be",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "Add comments for the boolean parameters.",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 18
+      },
       "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -309,6 +424,29 @@
         "startChar": 7,
         "endLine": 85,
         "endChar": 22
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8267e3e_1201c410",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-09T18:20:52Z",
+      "side": 1,
+      "message": "Add comments for boolean parameters.",
+      "range": {
+        "startLine": 161,
+        "startChar": 10,
+        "endLine": 161,
+        "endChar": 20
       },
       "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
