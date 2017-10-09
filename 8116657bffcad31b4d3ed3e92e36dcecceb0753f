@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a800df22_57a255ef",
+        "filename": "ash/display/display_color_manager_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-09T21:25:58Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 10
+      },
+      "revId": "8116657bffcad31b4d3ed3e92e36dcecceb0753f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3746e29c_b2af989e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2560,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-09T21:25:58Z",
+      "side": 1,
+      "message": "s/specic/specific/",
+      "range": {
+        "startLine": 2560,
+        "startChar": 59,
+        "endLine": 2560,
+        "endChar": 65
+      },
+      "revId": "8116657bffcad31b4d3ed3e92e36dcecceb0753f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
