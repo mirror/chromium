@@ -197,6 +197,10 @@ public class MultiWindowUtilsTest {
                 "ChromeTabbedActivity2 should be used as the 'open in other window' activity.",
                 ChromeTabbedActivity2.class, secondActivityClass);
 
+        // Tell ChromeTabbedActivity multi-instance mode has started so that ChromeTabbedActivity2
+        // is allowed to start up.
+        ChromeTabbedActivity.onMultiInstanceModeStarted();
+
         // Create an intent and start the second ChromeTabbedActivity.
         Intent intent = new Intent(activity.getIntent());
         intent.setClass(activity, secondActivityClass);
@@ -220,6 +224,15 @@ public class MultiWindowUtilsTest {
             }
         }
         Assert.assertTrue(returnActivity != null);
+
+        final ChromeTabbedActivity2 cta2Activity = returnActivity;
+        CriteriaHelper.pollUiThread(Criteria.equals(ActivityState.RESUMED, new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return ApplicationStatus.getStateForActivity(cta2Activity);
+            }
+        }));
+
         return returnActivity;
     }
 }
