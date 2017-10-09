@@ -81,17 +81,10 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
     }
   }
 
-  BOOL initiallyCompact = NO;
-  if (@available(iOS 10, *)) {
-    initiallyCompact = [self.extensionContext widgetActiveDisplayMode] ==
-                       NCWidgetDisplayModeCompact;
-  }
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   SearchWidgetView* widgetView =
-      [[SearchWidgetView alloc] initWithActionTarget:self
-                                       compactHeight:height
-                                    initiallyCompact:initiallyCompact];
+      [[SearchWidgetView alloc] initWithActionTarget:self compactHeight:height];
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
   [self updateWidget];
@@ -114,6 +107,15 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
   [super viewWillAppear:animated];
   [self registerWidgetDisplay];
   [self updateWidget];
+
+  // |widgetActiveDisplayMode| does not contain a valid value in viewDidLoad. By
+  // the time viewWillAppear is called, it is correct, so set the mode here.
+  BOOL initiallyCompact = NO;
+  if (@available(iOS 10, *)) {
+    initiallyCompact = [self.extensionContext widgetActiveDisplayMode] ==
+                       NCWidgetDisplayModeCompact;
+  }
+  [self.widgetView showMode:initiallyCompact];
 }
 
 - (void)widgetPerformUpdateWithCompletionHandler:
@@ -158,6 +160,11 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 - (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode
                          withMaximumSize:(CGSize)maxSize
     API_AVAILABLE(ios(10.0)) {
+  // When the widget is loaded, the widgetActiveDisplayMode property in
+  // extensionContext is nil. This is bad! But this function is called so we can
+  // know the display mode, the problem is that the widget is already the right
+  // size so willtransitiontosize isn't called and therefore showMode on the
+  // widgetview isn't called either => wrong appearance!
   switch (activeDisplayMode) {
     case NCWidgetDisplayModeCompact:
       self.preferredContentSize = maxSize;
