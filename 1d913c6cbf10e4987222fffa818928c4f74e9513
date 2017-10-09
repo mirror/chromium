@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ae62f7a2_2fab2797",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-09T17:25:15Z",
+      "side": 1,
+      "message": "Sorry for late reply.\n\nThe cc file could be either in the sources list here (in this case, it will be directly merge into the mojom generated code targets which refer to these types); or in a separate target (in that case, you may want to depend on that target in the public_deps/deps field). \n\nWhich one to choose, well, could be a complex question sometimes. :( You will need to consider these struct_traits files\u0027 dependencies, how the mojom targets using these typemaps are built (as source set / component / a source set that is supposed to be part of another DLL), etc.",
+      "parentUuid": "c76491da_7a98e055",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
