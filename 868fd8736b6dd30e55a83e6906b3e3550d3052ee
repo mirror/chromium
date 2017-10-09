@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b11cdd4_bbbd4d5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T22:44:26Z",
+      "side": 1,
+      "message": "What are \"mini settings\"? Do you mean the \"system tray\" (sometimes referred to as \"quick settings\")?",
+      "revId": "868fd8736b6dd30e55a83e6906b3e3550d3052ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
