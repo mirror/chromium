@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a953ba8_a553eb19",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-09T23:14:50Z",
+      "side": 1,
+      "message": "Nit: Maybe use arrow functions were possible to avoid binding to this explicitly.",
+      "revId": "9275f4a0574753d7074200abf086097d54291dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfd8441_abbce15c",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-09T23:14:50Z",
+      "side": 1,
+      "message": "Let\u0027s call trim() on the filter outside of the iteration, so that it is only called once.",
+      "revId": "9275f4a0574753d7074200abf086097d54291dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
