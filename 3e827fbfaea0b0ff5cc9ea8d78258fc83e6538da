@@ -16,6 +16,24 @@
       "revId": "3e827fbfaea0b0ff5cc9ea8d78258fc83e6538da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7657f4_2fc0d6ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-09T17:23:01Z",
+      "side": 1,
+      "message": "var content \u003d this.isDirty() ? this.workingCopy() : await this.requestContent();",
+      "parentUuid": "b722fbb2_1d15058d",
+      "revId": "3e827fbfaea0b0ff5cc9ea8d78258fc83e6538da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
