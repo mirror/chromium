@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196a8a46_82c599a5",
+        "filename": "net/http/http_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T15:43:01Z",
+      "side": 1,
+      "message": "nit:  backslash not needed.",
+      "range": {
+        "startLine": 805,
+        "startChar": 27,
+        "endLine": 805,
+        "endChar": 28
+      },
+      "revId": "bf22c128d233355cbe8aabe63ba72e402e801f26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6760a66f_429ea325",
+        "filename": "net/http/http_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T15:43:01Z",
+      "side": 1,
+      "message": "nit:  backslash not needed.",
+      "range": {
+        "startLine": 807,
+        "startChar": 18,
+        "endLine": 807,
+        "endChar": 0
+      },
+      "revId": "bf22c128d233355cbe8aabe63ba72e402e801f26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
