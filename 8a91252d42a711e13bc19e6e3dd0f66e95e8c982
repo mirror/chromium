@@ -70,6 +70,24 @@
       "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f274c2_bb7357ba",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T19:43:33Z",
+      "side": 1,
+      "message": "Also, consider BLUETOOTH_LOG(EVENT) which will show up in chrome://device-log and in feedback reports.",
+      "parentUuid": "8ea8d601_e1e46cb8",
+      "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
