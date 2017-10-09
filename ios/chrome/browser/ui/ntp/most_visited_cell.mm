@@ -139,25 +139,24 @@ const CGFloat kMaximumHeight = 100;
   [self setURL:URL];
   __weak MostVisitedCell* weakSelf = self;
 
-  void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
+  void (^faviconAttributesBlock)(FaviconAttributes*) = ^(
+      FaviconAttributes* attributes) {
 
-    if (URL == [weakSelf URL])  // Tile has not been reused.
-      [weakSelf setImage:favicon];
+    if (URL == [weakSelf URL]) {  // Tile has not been reused.
+      if (attributes.faviconImage) {
+        [weakSelf setImage:faviconAttributes.faviconImage];
+      } else {
+        [weakSelf updateIconLabelWithColor:attributes.textColor
+                           backgroundColor:attributes.backgroundColor
+                  isDefaultBackgroundColor:attributes.defaultBackgroundColor];
+      }
+    }
   };
 
-  void (^faviconFallbackBlock)(UIColor*, UIColor*, BOOL) =
-      ^(UIColor* textColor, UIColor* backgroundColor, BOOL isDefaultColor) {
-        if (URL == [weakSelf URL])  // Tile has not been reused.
-          [weakSelf updateIconLabelWithColor:textColor
-                             backgroundColor:backgroundColor
-                    isDefaultBackgroundColor:isDefaultColor];
-      };
-
-  [_dataSource getFaviconForURL:URL
-                           size:kFaviconSize
-                       useCache:YES
-                  imageCallback:faviconImageBlock
-               fallbackCallback:faviconFallbackBlock];
+  [_dataSource getFaviconForPageURL:URL
+                               size:kFaviconSize
+                           useCache:YES
+                           callback:faviconAttributesBlock];
 }
 
 - (void)removePlaceholderImage {
