@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f12b9a71_bcec4588",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T20:51:28Z",
+      "side": 1,
+      "message": "// Prevent scrolling when expanding objects in console, but focus the prompt anyway.",
+      "revId": "6f0b1990081eb4b6448202de951846eb9c5cab47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
