@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39141ead_f1e3dc64",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-09T20:22:34Z",
+      "side": 1,
+      "message": "Good catch, I didn\u0027t notice ParameterizedScrollbarsTest. Done.",
+      "parentUuid": "1ddf5b99_0014b3d2",
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c580f17_ee7baa0b",
         "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-09T18:17:19Z",
       "side": 1,
       "message": "Can we merge this with ScrollbarsTest now that the latter is parameterized as well?",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 34
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984ef978_49a6e466",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-09T20:22:34Z",
+      "side": 1,
+      "message": "Good catch, I didn\u0027t notice ParameterizedScrollbarsTest. Done.",
+      "parentUuid": "0c580f17_ee7baa0b",
       "range": {
         "startLine": 224,
         "startChar": 6,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ed4c7790_9def2a55",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-09T20:22:34Z",
+      "side": 1,
+      "message": "Good idea. I added another test with body size \u003d\u003d window size. I don\u0027t think it\u0027s necessary to also test the case when body width \u003d\u003d window width and body height \u003d\u003d window height because the basic issue there should be covered by these first two tests.",
+      "parentUuid": "c87e8bb4_2ab4187c",
+      "range": {
+        "startLine": 1169,
+        "startChar": 16,
+        "endLine": 1169,
+        "endChar": 21
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "818b4e47_3e635d70",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-09T18:29:57Z",
       "side": 1,
       "message": "Maybe this should be:\n\nbool attempt_to_remove_scrollbars \u003d \n    in_overflow_relayout_ \u0026\u0026\n    ScrollWidth() \u003c\u003d visible_size_with_scrollbars.Width() \u0026\u0026\n    ScrollHeight() \u003c\u003d visible_size_with_scrollbars.Height() \u0026\u0026\n    h_mode \u003d\u003d kScrollbarAuto \u0026\u0026 v_mode \u003d\u003d kScrollbarAuto;\nif (attempt_to_remove_scrollbars) {\n  needs_horizontal_scrollbar \u003d needs_vertical_scrollbar \u003d false;\n}\n\nMy thinking is: the reasoning behind removing the horizontal scrollbar is that the content probably won\u0027t overflow horizontally *if* the vertical scrollbar is removed, and that can only happen if (v_mode \u003d\u003d kScrollbarAuto).  Similarly for vertical overflow and horizontal scrollbar.\n\nDoes that make sense?",
+      "range": {
+        "startLine": 1352,
+        "startChar": 9,
+        "endLine": 1352,
+        "endChar": 37
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bf6d7a_6eb03cce",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-09T20:22:34Z",
+      "side": 1,
+      "message": "I dig it.\n\nDone.",
+      "parentUuid": "818b4e47_3e635d70",
       "range": {
         "startLine": 1352,
         "startChar": 9,
