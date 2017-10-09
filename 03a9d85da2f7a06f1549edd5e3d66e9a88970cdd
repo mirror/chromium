@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61df7243_b753e4ca",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T21:03:58Z",
+      "side": 1,
+      "message": "Maybe just make the helper report the bad message directly? And call it ValidateOrigin() or something.",
+      "revId": "03a9d85da2f7a06f1549edd5e3d66e9a88970cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0da73a_a7343439",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T21:03:58Z",
+      "side": 1,
+      "message": "Nit: it would look nicer to just call GetWebDatabaseHost() below (though this will likely require some games due to the double indirection). I think it\u0027s probably worth it though, to avoid having to encode the logic to lazy init twice.",
+      "revId": "03a9d85da2f7a06f1549edd5e3d66e9a88970cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
