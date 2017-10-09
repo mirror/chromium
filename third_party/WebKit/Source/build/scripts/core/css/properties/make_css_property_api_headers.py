@@ -34,6 +34,7 @@ def apply_computed_style_builder_function_parameters(property_):
         property_['api_class'] \
         and isinstance(property_['api_class'], types.BooleanType) \
         and property_['is_property'] \
+        and not property_['priority'] == 'Animation' \
         and not property_['use_handlers_for'] \
         and not property_['longhands'] \
         and not property_['direction_aware'] \
