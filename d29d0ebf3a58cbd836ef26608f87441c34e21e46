@@ -355,6 +355,24 @@
     },
     {
       "key": {
+        "uuid": "a7ea4152_84f7fd5f",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T15:07:23Z",
+      "side": 1,
+      "message": "Just had a look at the generated code (in a release build) and the NoBarrier_Load just compiles down to a regular old MOV:\n \u003c+43\u003e:  movq   0x8e980de(%rip), %r15     ; media::(anonymous namespace)::g_resumeio_callsite\n \u003c+50\u003e:  cmpq   %r12, %r15\n \u003c+53\u003e:  je     0x1011058f3               ; \u003c+67\u003e at coreaudio_dispatch_override.cc:90\n \u003c+55\u003e:  movq   0x8e980da(%rip), %r13     ; media::(anonymous namespace)::g_pauseio_callsite\n \u003c+62\u003e:  cmpq   %r12, %r13\n \u003c+65\u003e:  jne    0x1011058ff               ; \u003c+79\u003e [inlined] media::(anonymous namespace)::AddressIsPauseOrResume(long) at coreaudio_dispatch_override.cc:89\n\nThe CompareAndExchange should happen infrequently enough (ideally just twice) to not be an issue. So, apart from some extra complexity to the code, the atomics shouldn\u0027t add any overhead in the miss-case.",
+      "parentUuid": "e90cc254_6b96b317",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ccd828b_3ec8bf2e",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
