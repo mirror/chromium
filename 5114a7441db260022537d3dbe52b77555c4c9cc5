@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d28ab99f_e6bd15c3",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-09T20:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64890c5d_3c7099ae",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 41
+      },
+      "revId": "5114a7441db260022537d3dbe52b77555c4c9cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9836919_e2443045",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5114a7441db260022537d3dbe52b77555c4c9cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e03dc31_e4578509",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-09T20:41:02Z",
+      "side": 1,
+      "message": "I had forgotten to update the CL description. There is no test to add because the behavior is the same.\n\nWith the MediaStreamTrackVectors we get exactly the same behavior as before. Creating the MediaStreamTrackVectors here instead of in the old MediaStream::Create function makes it easier to do the follow-up, I added a TODO instead of reverting.",
+      "parentUuid": "c9836919_e2443045",
+      "range": {
+        "startLine": 1460,
+        "startChar": 2,
+        "endLine": 1460,
+        "endChar": 11
+      },
+      "revId": "5114a7441db260022537d3dbe52b77555c4c9cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
