@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d573c192_9be2e560",
+        "filename": "chromeos/dbus/shill_client_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T18:24:32Z",
+      "side": 1,
+      "message": "Also maybe add a helper like GenerateVoidResponse(dbus::Response* response) to avoid this copy/paste code?",
+      "revId": "e7dddd94ebac4726b1f5c980c7d4dd8c23f28e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3f4ca9_9cfe1a3d",
+        "filename": "chromeos/dbus/shill_client_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T18:24:32Z",
+      "side": 1,
+      "message": "I the common case of void callbacks, IMHO this is less readable.\n\nHow strongly opposed are others to creating a typedef just for VoidDBusMethodCallback?",
+      "revId": "e7dddd94ebac4726b1f5c980c7d4dd8c23f28e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
