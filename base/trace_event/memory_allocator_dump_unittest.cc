@@ -105,18 +105,22 @@ TEST(MemoryAllocatorDumpTest, GuidGeneration) {
   // If the dumper does not provide a Guid, the MAD will make one up on the
   // flight. Furthermore that Guid will stay stable across across multiple
   // snapshots if the |absolute_name| of the dump doesn't change
-  mad.reset(new MemoryAllocatorDump("bar", MemoryDumpLevelOfDetail::FIRST));
+  int process_id = 1;
+  mad.reset(new MemoryAllocatorDump("bar", MemoryDumpLevelOfDetail::FIRST,
+                                    process_id));
   const MemoryAllocatorDumpGuid guid_bar = mad->guid();
   ASSERT_FALSE(guid_bar.empty());
   ASSERT_FALSE(guid_bar.ToString().empty());
   ASSERT_EQ(guid_bar, mad->guid());
-  ASSERT_EQ(guid_bar, MemoryAllocatorDump::GetDumpIdFromName("bar"));
+  ASSERT_EQ(guid_bar, MemoryAllocatorDump::GetDumpId(process_id, "bar"));
 
-  mad.reset(new MemoryAllocatorDump("bar", MemoryDumpLevelOfDetail::FIRST));
+  mad.reset(new MemoryAllocatorDump("bar", MemoryDumpLevelOfDetail::FIRST,
+                                    process_id));
   const MemoryAllocatorDumpGuid guid_bar_2 = mad->guid();
   ASSERT_EQ(guid_bar, guid_bar_2);
 
-  mad.reset(new MemoryAllocatorDump("baz", MemoryDumpLevelOfDetail::FIRST));
+  mad.reset(new MemoryAllocatorDump("baz", MemoryDumpLevelOfDetail::FIRST,
+                                    process_id));
   const MemoryAllocatorDumpGuid guid_baz = mad->guid();
   ASSERT_NE(guid_bar, guid_baz);
 }

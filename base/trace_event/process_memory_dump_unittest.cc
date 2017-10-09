@@ -13,6 +13,7 @@
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_infra_background_whitelist.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "base/trace_event/trace_log.h"
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -387,9 +388,9 @@ TEST(ProcessMemoryDumpTest, SharedMemoryOwnershipTest) {
 
   auto* client_dump2 = pmd->CreateAllocatorDump("discardable/segment2");
   auto shm_token2 = UnguessableToken::Create();
-  MemoryAllocatorDumpGuid shm_local_guid2 =
-      MemoryAllocatorDump::GetDumpIdFromName(
-          SharedMemoryTracker::GetDumpNameForTracing(shm_token2));
+  const int process_id = TraceLog::GetInstance()->process_id();
+  MemoryAllocatorDumpGuid shm_local_guid2 = MemoryAllocatorDump::GetDumpId(
+      process_id, SharedMemoryTracker::GetDumpNameForTracing(shm_token2));
   MemoryAllocatorDumpGuid shm_global_guid2 =
       SharedMemoryTracker::GetGlobalDumpIdForTracing(shm_token2);
   pmd->AddOverridableOwnershipEdge(shm_local_guid2, shm_global_guid2,
@@ -465,6 +466,34 @@ TEST(ProcessMemoryDumpTest, BackgroundModeTest) {
 
   // Check hex processing.
   ASSERT_TRUE(IsMemoryAllocatorDumpNameWhitelisted("Whitelisted/0xA1b2"));
+}
+
+TEST(ProcessMemoryDumpTest, GuidsTest) {
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::DETAILED};
+
+  ProcessMemoryDump pmd1(nullptr, dump_args);
+  MemoryAllocatorDump* mad1 = pmd1.CreateAllocatorDump("foo");
+
+  // MAD's in the same process with the same name get the same guid:
+  ProcessMemoryDump pmd2(nullptr, dump_args);
+  MemoryAllocatorDump* mad2 = pmd2.CreateAllocatorDump("foo");
+
+  // It is possible to construct a PMD for a given process:
+  const int pid = TraceLog::GetInstance()->process_id();
+  ProcessMemoryDump pmd3(nullptr, dump_args, pid);
+  MemoryAllocatorDump* mad3 = pmd3.CreateAllocatorDump("foo");
+
+  // PMD's for different processes produce different GUIDs even for the same
+  // names:
+  const int next_pid = pid + 1;
+  ProcessMemoryDump pmd4(nullptr, dump_args, next_pid);
+  MemoryAllocatorDump* mad4 = pmd4.CreateAllocatorDump("foo");
+
+  ASSERT_EQ(mad1->guid(), mad2->guid());
+  ASSERT_EQ(mad2->guid(), mad3->guid());
+  ASSERT_EQ(mad3->guid(), MemoryAllocatorDump::GetDumpId(pid, "foo"));
+
+  ASSERT_NE(mad3->guid(), mad4->guid());
 }
 
 #if defined(COUNT_RESIDENT_BYTES_SUPPORTED)

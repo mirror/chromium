@@ -17,6 +17,7 @@
 #include "base/trace_event/heap_profiler_serialization_state.h"
 #include "base/trace_event/memory_infra_background_whitelist.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "base/trace_event/trace_log.h"
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
 
@@ -187,8 +188,18 @@ base::Optional<size_t> ProcessMemoryDump::CountResidentBytesInSharedMemory(
 ProcessMemoryDump::ProcessMemoryDump(
     scoped_refptr<HeapProfilerSerializationState>
         heap_profiler_serialization_state,
+    const MemoryDumpArgs& dump_args,
+    int process_id)
+    : process_id_(process_id),
+      heap_profiler_serialization_state_(
+          std::move(heap_profiler_serialization_state)),
+      dump_args_(dump_args) {}
+ProcessMemoryDump::ProcessMemoryDump(
+    scoped_refptr<HeapProfilerSerializationState>
+        heap_profiler_serialization_state,
     const MemoryDumpArgs& dump_args)
-    : heap_profiler_serialization_state_(
+    : process_id_(TraceLog::GetInstance()->process_id()),
+      heap_profiler_serialization_state_(
           std::move(heap_profiler_serialization_state)),
       dump_args_(dump_args) {}
 ProcessMemoryDump::~ProcessMemoryDump() {}
@@ -199,7 +210,7 @@ ProcessMemoryDump& ProcessMemoryDump::operator=(ProcessMemoryDump&& other) =
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
     const std::string& absolute_name) {
   return AddAllocatorDumpInternal(std::make_unique<MemoryAllocatorDump>(
-      absolute_name, dump_args_.level_of_detail));
+      absolute_name, dump_args_.level_of_detail, process_id_));
 }
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
@@ -431,7 +442,8 @@ void ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeInternal(
 
   // The guid of the local dump created by SharedMemoryTracker for the memory
   // segment.
-  auto local_shm_guid = MemoryAllocatorDump::GetDumpIdFromName(
+  auto local_shm_guid = MemoryAllocatorDump::GetDumpId(
+      process_id_,
       SharedMemoryTracker::GetDumpNameForTracing(shared_memory_guid));
 
   // The dump guid of the global dump created by the tracker for the memory
@@ -466,8 +478,8 @@ void ProcessMemoryDump::AddSuballocation(const MemoryAllocatorDumpGuid& source,
 MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   DCHECK(is_black_hole_non_fatal_for_testing_);
   if (!black_hole_mad_)
-    black_hole_mad_.reset(
-        new MemoryAllocatorDump("discarded", dump_args_.level_of_detail));
+    black_hole_mad_.reset(new MemoryAllocatorDump(
+        "discarded", dump_args_.level_of_detail, process_id_));
   return black_hole_mad_.get();
 }
 

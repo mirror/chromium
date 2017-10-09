@@ -68,16 +68,17 @@ class BASE_EXPORT MemoryAllocatorDump {
     DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
-  // Returns the Guid of the dump for the given |absolute_name| for the
-  // current process.
-  static MemoryAllocatorDumpGuid GetDumpIdFromName(
-      const std::string& absolute_name);
+  // Returns the Guid of the dump for the given |absolute_name| for
+  // process |process_id|.
+  static MemoryAllocatorDumpGuid GetDumpId(int process_id,
+                                           const std::string& absolute_name);
 
   MemoryAllocatorDump(const std::string& absolute_name,
                       MemoryDumpLevelOfDetail,
                       const MemoryAllocatorDumpGuid&);
   MemoryAllocatorDump(const std::string& absolute_name,
-                      MemoryDumpLevelOfDetail);
+                      MemoryDumpLevelOfDetail,
+                      int process_id);
   ~MemoryAllocatorDump();
 
   // Standard attribute |name|s for the AddScalar and AddString() methods.

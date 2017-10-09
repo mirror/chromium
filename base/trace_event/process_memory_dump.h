@@ -82,6 +82,10 @@ class BASE_EXPORT ProcessMemoryDump {
 
   ProcessMemoryDump(scoped_refptr<HeapProfilerSerializationState>
                         heap_profiler_serialization_state,
+                    const MemoryDumpArgs& dump_args,
+                    int process_id);
+  ProcessMemoryDump(scoped_refptr<HeapProfilerSerializationState>
+                        heap_profiler_serialization_state,
                     const MemoryDumpArgs& dump_args);
   ProcessMemoryDump(ProcessMemoryDump&&);
   ~ProcessMemoryDump();
@@ -243,6 +247,7 @@ class BASE_EXPORT ProcessMemoryDump {
 
   MemoryAllocatorDump* GetBlackHoleMad();
 
+  int process_id_;
   AllocatorDumpsMap allocator_dumps_;
   HeapDumpsMap heap_dumps_;
 
