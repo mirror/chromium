@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b50433b9_ed344a31",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/BreakpointManager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "Let\u0027s have both hash and scriptId here instead of script. I am not sure lifetimes match.",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f4ff05_96803978",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "if (response[Protocol.Error])\n  return {breakpointId: null, locations: []};",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cd4d94_bc4cee46",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "Wow.",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba71187c_9bbc4cea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "Let\u0027s comment this is for backwards compatibility before V8 version XXXX.",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44b70b6_81642c6b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "Let\u0027s make default null, not undefined.",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1554d73b_4be9fd83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T19:28:31Z",
+      "side": 1,
+      "message": "And [] here. This way call sites are easier.",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
