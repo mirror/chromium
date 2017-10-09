@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59d278e2_48c8e59f",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-09T20:32:42Z",
+      "side": 1,
+      "message": "yes, although the lack of a delegate is usually (always?) only the case in tests",
+      "parentUuid": "0bca9d8b_506ecb1a",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2d29df3_7ee1c8e8",
         "filename": "ui/message_center/message_center_tray.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T18:07:18Z",
       "side": 1,
       "message": "Is there a tracking bug for this?",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54ae608_2e6096d4",
+        "filename": "ui/message_center/message_center_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-09T20:32:42Z",
+      "side": 1,
+      "message": "no, primarily because it\u0027s what I\u0027d consider a p4 --- not seemingly important, and also pretty inconvenient to deal with since you\u0027d need to plumb through something that knew about profiles (the NotificationUiManager).",
+      "parentUuid": "f2d29df3_7ee1c8e8",
       "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7753383_b304f4a6",
+        "filename": "ui/message_center/views/message_popup_collection.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-09T20:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd8c9e7_437a0984",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
