@@ -23,6 +23,22 @@ Polymer({
       value: chrome.networkingPrivate,
     },
 
+    /** @private */
+    shareEnabled_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('shareNetworkEnabled');
+      }
+    },
+
+    /** @private */
+    shareDefault_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('shareNetworkDefault');
+      }
+    },
+
     /**
      * The network GUID to configure, or empty when configuring a new network.
      * @private
