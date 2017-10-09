@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40f239ea_bbd4f6f0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T23:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01462eff_15398ce8",
+      "range": {
+        "startLine": 741,
+        "startChar": 27,
+        "endLine": 741,
+        "endChar": 38
+      },
+      "revId": "9ead09c2c9a3e88122a708299fed53473753e5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "224df3ad_7fec5752",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9ead09c2c9a3e88122a708299fed53473753e5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acd93ee_7571ff32",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T23:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224df3ad_7fec5752",
+      "range": {
+        "startLine": 754,
+        "startChar": 28,
+        "endLine": 754,
+        "endChar": 29
+      },
+      "revId": "9ead09c2c9a3e88122a708299fed53473753e5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
