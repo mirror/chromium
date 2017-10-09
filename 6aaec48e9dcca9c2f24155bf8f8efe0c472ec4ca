@@ -16,6 +16,24 @@
       "revId": "6aaec48e9dcca9c2f24155bf8f8efe0c472ec4ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92c13f4_1d1ddd8c",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T17:32:34Z",
+      "side": 1,
+      "message": "I agree with you, but this was a specific UX request so... *shrug*.",
+      "parentUuid": "e931963a_259e61bb",
+      "revId": "6aaec48e9dcca9c2f24155bf8f8efe0c472ec4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
