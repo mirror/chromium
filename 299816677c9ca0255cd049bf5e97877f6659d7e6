@@ -16,6 +16,24 @@
       "revId": "299816677c9ca0255cd049bf5e97877f6659d7e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebb7e2f_9ab37f85",
+        "filename": "components/certificate_transparency/log_dns_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-10-09T15:53:07Z",
+      "side": 1,
+      "message": "At the end of the sentence you just quoted: \"it is irrelevant if there are no ADDRESS bits\". There are no address bits set in this option (see the last comment in this func). It does, however, have to be valid (either 1 or 2; IPv4 or IPv6). I did look into setting it to the transport over which the query will be sent, but that information isn\u0027t remotely available at this level, since it depends on which resolver the query ends up getting sent to. Since the RFC says \"SHOULD\", rather than \"MUST\", and the purpose of the \"family\" field is to identify the family of the *empty* address field, it seems reasonable to just set this to IPv4 no matter what.",
+      "parentUuid": "6d581558_a5b6a28a",
+      "revId": "299816677c9ca0255cd049bf5e97877f6659d7e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
