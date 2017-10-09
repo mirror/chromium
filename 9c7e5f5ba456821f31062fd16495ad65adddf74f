@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca9208b_12cb25ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "I don\u0027t think this is true anymore.",
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c7d19b_8f462179",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f703e5e2_a660b71e",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9ea893_1c471dd0",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31b3a25_e1745dfc",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Can we move this to AddObserver()?",
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e601791c_73c3f892",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Since this is only called from the destructor, please inline it.",
+      "range": {
+        "startLine": 358,
+        "startChar": 26,
+        "endLine": 358,
+        "endChar": 40
+      },
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15a77aa_defac5b9",
+        "filename": "content/browser/renderer_host/web_database_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Don\u0027t need explicit anymore.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3847e51_ec67f7ec",
+        "filename": "content/child/web_database_observer_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "Take a scoped_refptr\u003cmojom::ThreadSafeWebDatabaseHostPtr\u003e and name it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 35,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7244b0fc_38a0771c",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-09T00:09:40Z",
+      "side": 1,
+      "message": "\u003d std::make_unique\u003c",
+      "range": {
+        "startLine": 737,
+        "startChar": 31,
+        "endLine": 738,
+        "endChar": 12
+      },
+      "revId": "9c7e5f5ba456821f31062fd16495ad65adddf74f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
