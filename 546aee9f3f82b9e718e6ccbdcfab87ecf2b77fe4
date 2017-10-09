@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c09ab6bb_cb31bb23",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-09T21:34:00Z",
+      "side": 1,
+      "message": "... This does unfortunately fail in cases where different mojom types map to the same target type, because we end up emitting duplicate definitions of the same specialization.\n\nI\u0027m not sure how to deal with that.",
+      "parentUuid": "68efaf5a_e1e505f5",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb5f3f3_1d12fe4b",
         "filename": "mojo/public/cpp/test_support/waiter.h",
         "patchSetId": 5
