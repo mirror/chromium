@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3d556d_79e346c3",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-09T23:03:18Z",
+      "side": 1,
+      "message": "This seem like the inverse of the function above.\nIt would make sense to me if the function above (the filter) called into this new function. That would share code more and be more readable, in my opinion.",
+      "revId": "d26dea56eacb0f1bdedc8154150000765e08c64d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
