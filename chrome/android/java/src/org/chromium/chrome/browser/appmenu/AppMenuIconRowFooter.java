@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge;
@@ -128,6 +129,7 @@ public class AppMenuIconRowFooter
     }
 
     private void updateBookmarkMenuItem(BookmarkBridge bookmarkBridge, Tab currentTab) {
+        Log.w("TMP", "isEditBookmarksEnableD? " + bookmarkBridge.isEditBookmarksEnabled());
         mBookmarkButton.setEnabled(bookmarkBridge.isEditBookmarksEnabled());
 
         if (currentTab.getBookmarkId() != Tab.INVALID_BOOKMARK_ID) {
