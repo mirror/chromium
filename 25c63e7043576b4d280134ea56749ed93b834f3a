@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98db0c35_ea56a086",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:22:32Z",
+      "side": 1,
+      "message": "In concept I\u0027m okay with this, but why does only this test need to wait for animations to finish at the beginning of the test?",
+      "range": {
+        "startLine": 375,
+        "startChar": 7,
+        "endLine": 375,
+        "endChar": 33
+      },
+      "revId": "25c63e7043576b4d280134ea56749ed93b834f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
