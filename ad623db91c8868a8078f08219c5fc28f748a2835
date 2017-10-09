@@ -16,6 +16,24 @@
       "revId": "ad623db91c8868a8078f08219c5fc28f748a2835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e3119a_b553f3f4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-09T19:18:28Z",
+      "side": 1,
+      "message": "The test added in ContentViewCoreSelectionTest.java in this CL is covering the new if (Selection().ShouldShrinkNextTap()) part.",
+      "parentUuid": "d443e827_bf931e3f",
+      "revId": "ad623db91c8868a8078f08219c5fc28f748a2835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
