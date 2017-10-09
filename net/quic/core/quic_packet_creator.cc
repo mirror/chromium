@@ -519,6 +519,7 @@ bool QuicPacketCreator::ShouldRetransmit(const QuicFrame& frame) {
     case PADDING_FRAME:
     case STOP_WAITING_FRAME:
     case MTU_DISCOVERY_FRAME:
+    case CONNECTIVITY_PROBING_FRAME:
       return false;
     default:
       return true;

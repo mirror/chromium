@@ -202,6 +202,30 @@ void QuicPacketGenerator::GenerateMtuDiscoveryPacket(
   SetMaxPacketLength(current_mtu);
 }
 
+void QuicPacketGenerator::GenerateProbingPacket(QuicByteCount packet_size) {
+  // Connectivity frames must be sent by themselves.
+  if (!packet_creator_.CanSetMaxPacketLength()) {
+    QUIC_BUG << "Connectivity probing packet should only be sent when no other "
+             << "frames needs to be sent.";
+    return;
+  }
+  const QuicByteCount current_mtu = GetCurrentMaxPacketLength();
+
+  // The connectivity probing frame is allocated on the stack, since it is going
+  // to be serialized within this function.
+  QuicConnectivityProbingFrame connectivity_probing_frame;
+  QuicFrame frame(connectivity_probing_frame);
+
+  // Send the probe packet with the new length.
+  SetMaxPacketLength(packet_size);
+  const bool success = packet_creator_.AddPaddedSavedFrame(frame);
+  packet_creator_.Flush();
+  DCHECK(success);
+
+  // Reset the packet length back.
+  SetMaxPacketLength(current_mtu);
+}
+
 bool QuicPacketGenerator::CanSendWithNextPendingFrameAddition() const {
   DCHECK(HasPendingFrames() || packet_creator_.pending_padding_bytes() > 0);
   HasRetransmittableData retransmittable =
