@@ -23,13 +23,13 @@
   <script type="text/javascript">
      function repaintTest()
      {
-         document.getElementById('a').innerHTML = 'XXXXXX';
+        document.getElementById('a').innerHTML = 'XXXXXX';
      }
   </script>
 </head>
 <body onload="runRepaintAndPixelTest();">
   
-  <div class="container">
+  <div id=target class="container">
     &nbsp;<br>
     <span id="a">x</span>
   </div>

@@ -137,7 +137,8 @@ struct SameSizeAsLayoutObject : DisplayItemClient {
   unsigned bitfields2_;
   LayoutRect visual_rect_;
   LayoutPoint paint_offset_;
-  std::unique_ptr<void*> rare_paint_data_;
+  std::unique_ptr<RarePaintData> rare_paint_data_;
+  std::unique_ptr<FragmentData> next_fragment_;
 };
 
 static_assert(sizeof(LayoutObject) == sizeof(SameSizeAsLayoutObject),
@@ -633,6 +634,15 @@ PaintLayer* LayoutObject::PaintingLayer() const {
   return nullptr;
 }
 
+bool LayoutObject::IsFixedPositionObjectInPagedMedia() const {
+  LayoutView* view = View();
+  return StyleRef().GetPosition() == EPosition::kFixed && Container() == view &&
+         view->PageLogicalHeight() &&
+         // TODO(crbug.com/619094): Figure out the correct behaviour for fixed
+         // position objects in paged media with vertical writing modes.
+         view->IsHorizontalWritingMode();
+}
+
 bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
                                        const ScrollAlignment& align_x,
                                        const ScrollAlignment& align_y,
@@ -1103,6 +1113,16 @@ String LayoutObject::DebugName() const {
   return name.ToString();
 }
 
+LayoutRect LayoutObject::VisualRect() const {
+  if (!fragment_.NextFragment())
+    return fragment_.VisualRect();
+  LayoutRect visual_rect;
+  for (auto* fragment = &fragment_; fragment;
+       fragment = fragment->NextFragment())
+    visual_rect.Unite(fragment->VisualRect());
+  return visual_rect;
+}
+
 bool LayoutObject::IsPaintInvalidationContainer() const {
   return HasLayer() &&
          ToLayoutBoxModelObject(this)->Layer()->IsPaintInvalidationContainer();
@@ -1179,10 +1199,10 @@ LayoutRect LayoutObject::VisualRectIncludingCompositedScrolling(
 }
 
 void LayoutObject::ClearPreviousVisualRects() {
-  SetVisualRect(LayoutRect());
-  if (rare_paint_data_) {
-    rare_paint_data_->SetLocationInBacking(LayoutPoint());
-    rare_paint_data_->SetSelectionVisualRect(LayoutRect());
+  fragment_.SetVisualRect(LayoutRect());
+  if (fragment_.GetRarePaintData()) {
+    fragment_.GetRarePaintData()->SetLocationInBacking(LayoutPoint());
+    fragment_.GetRarePaintData()->SetSelectionVisualRect(LayoutRect());
   }
   // Ensure check paint invalidation of subtree that would be triggered by
   // location change if we had valid previous location.
@@ -3416,8 +3436,9 @@ void LayoutObject::ClearPaintInvalidationFlags() {
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
+  if (fragment_.GetRarePaintData() &&
+      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    fragment_.GetRarePaintData()->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);
   bitfields_.SetMayNeedPaintInvalidationSubtree(false);
@@ -3464,12 +3485,6 @@ void LayoutObject::SetIsBackgroundAttachmentFixedObject(
     GetFrameView()->RemoveBackgroundAttachmentFixedObject(this);
 }
 
-RarePaintData& LayoutObject::EnsureRarePaintData() {
-  if (!rare_paint_data_)
-    rare_paint_data_ = WTF::MakeUnique<RarePaintData>(visual_rect_.Location());
-  return *rare_paint_data_.get();
-}
-
 LayoutRect LayoutObject::DebugRect() const {
   LayoutRect rect;
   LayoutBlock* block = ContainingBlock();
@@ -3479,19 +3494,8 @@ LayoutRect LayoutObject::DebugRect() const {
   return rect;
 }
 
-FragmentData* LayoutObject::MutableForPainting::FirstFragment() {
-  if (auto* paint_data = layout_object_.GetRarePaintData())
-    return paint_data->Fragment();
-  return nullptr;
-}
-
-FragmentData& LayoutObject::MutableForPainting::EnsureFirstFragment() {
-  return layout_object_.EnsureRarePaintData().EnsureFragment();
-}
-
-void LayoutObject::MutableForPainting::ClearFirstFragment() {
-  if (auto* paint_data = layout_object_.GetRarePaintData())
-    paint_data->ClearFragment();
+FragmentData& LayoutObject::MutableForPainting::FirstFragment() {
+  return layout_object_.fragment_;
 }
 
 void LayoutObject::InvalidatePaintForSelection() {

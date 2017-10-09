@@ -256,6 +256,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // FIXME: Many people call this function while it has out-of-date information.
   bool IsSelfPaintingLayer() const { return is_self_painting_layer_; }
 
+  bool IsFixedPositionObjectInPagedMedia() const;
+
   bool IsTransparent() const {
     return GetLayoutObject().IsTransparent() ||
            GetLayoutObject().Style()->HasBlendMode() ||

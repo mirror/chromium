@@ -178,7 +178,6 @@ void PrePaintTreeWalk::Walk(const LayoutObject& object,
   if (!needs_tree_builder_context_update &&
       !object.ShouldCheckForPaintInvalidation())
     return;
-
   PrePaintTreeWalkContext context(parent_context,
                                   needs_tree_builder_context_update);
 
