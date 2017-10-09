@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64a0f988_2c622832",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T04:13:15Z",
+      "side": 1,
+      "message": "This is a defensive measure in the old code (perhaps it could have been even more defensive as a NOTREACHED()).\n\nCurrently, there\u0027s no flow which would call AddToHomescreenNoTimeout *without* having resolved whether or not a site is a PWA (it\u0027s only called if the manifest is empty, the icon is empty, or if we finished the whole installable test). So it\u0027s also correct for it to be impossible to be in this state.",
+      "parentUuid": "742bdc30_02252477",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 77
+      },
+      "revId": "af953b648f8fcb136950eef7369471b58ca22418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b673a7ec_c108f9d0",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
