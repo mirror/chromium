@@ -16,6 +16,24 @@
       "revId": "911b0e2762296769afe578a68607a56ce341317a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca11d49_73108703",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-09T08:07:14Z",
+      "side": 1,
+      "message": "\u0027ambient-light-sensor\u0027 needs both flags to be set, so I\u0027d keep it here",
+      "parentUuid": "7cc1eb94_73d63826",
+      "revId": "911b0e2762296769afe578a68607a56ce341317a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
