@@ -192,6 +192,7 @@ const InterpolationTypes& CSSInterpolationTypesMap::Get(
           WTF::MakeUnique<CSSPaintInterpolationType>(used_property));
       break;
     case CSSPropertyD:
+    case CSSPropertyOffsetPath:
       applicable_types->push_back(
           WTF::MakeUnique<CSSPathInterpolationType>(used_property));
       break;

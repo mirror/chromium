@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "core/animation/PathInterpolationFunctions.h"
+#include "core/animation/PathPropertyFunctions.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPathValue.h"
 #include "core/css/resolver/StyleResolverState.h"
@@ -18,15 +19,16 @@ void CSSPathInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value,
     StyleResolverState& state) const {
-  DCHECK_EQ(CssProperty(), CSSPropertyD);
   std::unique_ptr<SVGPathByteStream> path_byte_stream =
       PathInterpolationFunctions::AppliedValue(interpolable_value,
                                                non_interpolable_value);
   if (path_byte_stream->IsEmpty()) {
-    state.Style()->SetD(nullptr);
+    PathPropertyFunctions::SetPath(CssProperty(), *state.Style(), nullptr);
     return;
   }
-  state.Style()->SetD(StylePath::Create(std::move(path_byte_stream)));
+  PathPropertyFunctions::SetPath(
+      CssProperty(), *state.Style(),
+      StylePath::Create(std::move(path_byte_stream)));
 }
 
 void CSSPathInterpolationType::Composite(
@@ -73,14 +75,13 @@ class InheritedPathChecker : public CSSInterpolationType::CSSConversionChecker {
 InterpolationValue CSSPathInterpolationType::MaybeConvertInherit(
     const StyleResolverState& state,
     ConversionCheckers& conversion_checkers) const {
-  DCHECK_EQ(CssProperty(), CSSPropertyD);
   if (!state.ParentStyle())
     return nullptr;
 
-  conversion_checkers.push_back(
-      InheritedPathChecker::Create(state.ParentStyle()->SvgStyle().D()));
+  conversion_checkers.push_back(InheritedPathChecker::Create(
+      PathPropertyFunctions::GetPath(CssProperty(), *state.ParentStyle())));
   return PathInterpolationFunctions::ConvertValue(
-      state.ParentStyle()->SvgStyle().D());
+      state.ParentStyle()->SvgStyle().D()); /* THIS LOOKS VERY WRONG */
 }
 
 InterpolationValue CSSPathInterpolationType::MaybeConvertValue(
@@ -98,8 +99,8 @@ InterpolationValue CSSPathInterpolationType::MaybeConvertValue(
 InterpolationValue
 CSSPathInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
     const ComputedStyle& style) const {
-  DCHECK_EQ(CssProperty(), CSSPropertyD);
-  return PathInterpolationFunctions::ConvertValue(style.SvgStyle().D());
+  return PathInterpolationFunctions::ConvertValue(
+      PathPropertyFunctions::GetPath(CssProperty(), style));
 }
 
 PairwiseInterpolationValue CSSPathInterpolationType::MaybeMergeSingles(
