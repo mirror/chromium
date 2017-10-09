@@ -16,6 +16,24 @@
       "revId": "dd477f781b183672bdea0552227ab804f359729a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8246e4c_5d3d8f64",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-09T17:07:54Z",
+      "side": 1,
+      "message": "\"small\" works now.\n\nYou are grammatically correct about \"checkout\" vs. \"check out\", but I don\u0027t really like how \"check_out_foo\" looks. Also, we\u0027re not actually checking things out here, we\u0027re downloading them, though in the builtin cases like checkout_linux we are also checking things out. And, I think there\u0027s value in using a consistent prefix for all of these flags. \n\n\"checkout\" is one of the better ideas we\u0027ve had thus far for all of this. Grammar aside, I\u0027m not convinced \"check_out\" is better. I would prefer to keep things consistent until we reached some sort of consensus that we should change things across the board.",
+      "parentUuid": "cd44871e_f2d3ed85",
+      "revId": "dd477f781b183672bdea0552227ab804f359729a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
