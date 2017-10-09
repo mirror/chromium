@@ -8,12 +8,11 @@ sure network traffic annoations are syntactically and semantically correct and
 all required functions are annotated.
 """
 
+import json
 import os
 import argparse
 import subprocess
 import sys
-
-
 
 
 class NetworkTrafficAnnotationChecker():
@@ -96,8 +95,7 @@ class NetworkTrafficAnnotationChecker():
     # with the current version of clang, and this test starts failing,
     # please set test_is_enabled to "False" and file a bug to get this
     # reenabled, and cc the people listed in //tools/traffic_annotation/OWNERS.
-    # TODO(rhalavati): Actually enable the check.
-    test_is_enabled = False
+    test_is_enabled = True
     if not test_is_enabled:
       return [], []
 
@@ -156,17 +154,25 @@ def main():
       '--limit', default=5,
       help='Limit for the maximum number of returned errors and warnings. '
            'Default value is 5, use 0 for unlimited.')
+  parser.add_argument(
+      '--json',
+      help='Optional path to JSON output file.')
+
   args = parser.parse_args()
 
   checker = NetworkTrafficAnnotationChecker(args.build_path)
 
   warnings, errors = checker.CheckFiles(limit=args.limit)
-  if warnings:
-    print("Warnings:\n\t%s" % "\n\t".join(warnings))
-  if errors:
-    print("Errors:\n\t%s" % "\n\t".join(errors))
+  if args.json:
+    with open(args.json, "w") as results_file:
+      json.dump({'error': errors, 'warning': warnings}, results_file)
+  else:
+    if warnings:
+      print("Warnings:\n\t%s" % "\n\t".join(warnings))
+    if errors:
+      print("Errors:\n\t%s" % "\n\t".join(errors))
 
-  return 0
+  return 1 if warnings or errors else 0
 
 
 if '__main__' == __name__:
