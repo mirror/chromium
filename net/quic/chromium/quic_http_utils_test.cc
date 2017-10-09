@@ -35,5 +35,32 @@ TEST(QuicHttpUtilsTest, ConvertQuicPriorityToRequestPriority) {
   }
 }
 
+TEST(QuicHttpUtilsTest, FilterSupportedAltSvcVersions) {
+  QuicTransportVersionVector supported_versions = {
+      QUIC_VERSION_37, QUIC_VERSION_38, QUIC_VERSION_39, QUIC_VERSION_41};
+
+  std::vector<uint32_t> alt_svc_versions_google = {
+      QUIC_VERSION_38, QUIC_VERSION_41, QUIC_VERSION_42};
+  std::vector<uint32_t> alt_svc_versions_ietf = {
+      QuicVersionToQuicVersionLabel(QUIC_VERSION_38),
+      QuicVersionToQuicVersionLabel(QUIC_VERSION_41),
+      QuicVersionToQuicVersionLabel(QUIC_VERSION_42)};
+
+  QuicTransportVersionVector supported_alt_svc_versions = {QUIC_VERSION_38,
+                                                           QUIC_VERSION_41};
+
+  EXPECT_EQ(supported_alt_svc_versions,
+            FilterSupportedAltSvcVersions("quic", alt_svc_versions_google,
+                                          supported_versions));
+
+  EXPECT_EQ(supported_alt_svc_versions,
+            FilterSupportedAltSvcVersions("hq", alt_svc_versions_ietf,
+                                          supported_versions));
+
+  EXPECT_EQ(QuicTransportVersionVector(),
+            FilterSupportedAltSvcVersions(
+                "invalid_protocol", alt_svc_versions_ietf, supported_versions));
+}
+
 }  // namespace test
 }  // namespace net
