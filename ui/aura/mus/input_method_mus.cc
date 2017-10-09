@@ -174,8 +174,9 @@ void InputMethodMus::OnDidChangeFocusedClient(
 
 void InputMethodMus::UpdateTextInputType() {
   ui::TextInputType type = GetTextInputType();
-  mojo::TextInputStatePtr state = mojo::TextInputState::New();
-  state->type = mojo::ConvertTo<mojo::TextInputType>(type);
+  ui::text::mojom::TextInputStatePtr state =
+      ui::text::mojom::TextInputState::New();
+  state->type = mojo::ConvertTo<ui::text::mojom::TextInputType>(type);
   if (window_) {
     WindowPortMus* window_impl_mus = WindowPortMus::Get(window_);
     if (type != ui::TEXT_INPUT_TYPE_NONE)

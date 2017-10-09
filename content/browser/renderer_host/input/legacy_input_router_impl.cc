@@ -36,7 +36,7 @@
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
-using base::Time;
+//using base::Time; // Collides with X11 Time typedef and is not used
 using base::TimeDelta;
 using base::TimeTicks;
 using blink::WebGestureEvent;

@@ -434,13 +434,12 @@ void InputImeAPI::Shutdown() {
   registrar_.RemoveAll();
 }
 
-static base::LazyInstance<
-    BrowserContextKeyedAPIFactory<InputImeAPI>>::DestructorAtExit g_factory =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<InputImeAPI>>::
+    DestructorAtExit g_input_ime_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<InputImeAPI>* InputImeAPI::GetFactoryInstance() {
-  return g_factory.Pointer();
+  return g_input_ime_factory.Pointer();
 }
 
 InputImeEventRouter* GetInputImeEventRouter(Profile* profile) {

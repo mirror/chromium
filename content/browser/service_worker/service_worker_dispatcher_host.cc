@@ -65,11 +65,11 @@ const char kNoActiveWorkerErrorMessage[] =
     "The registration does not have an active worker.";
 const char kDatabaseErrorMessage[] = "Failed to access storage.";
 
-const uint32_t kFilteredMessageClasses[] = {
+const uint32_t kSW2FilteredMessageClasses[] = {
     ServiceWorkerMsgStart, EmbeddedWorkerMsgStart,
 };
 
-void RunSoon(const base::Closure& callback) {
+void SWRunSoon(const base::Closure& callback) {
   if (!callback.is_null())
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
@@ -85,8 +85,8 @@ WebContents* GetWebContents(int render_process_id, int render_frame_id) {
 ServiceWorkerDispatcherHost::ServiceWorkerDispatcherHost(
     int render_process_id,
     ResourceContext* resource_context)
-    : BrowserMessageFilter(kFilteredMessageClasses,
-                           arraysize(kFilteredMessageClasses)),
+    : BrowserMessageFilter(kSW2FilteredMessageClasses,
+                           arraysize(kSW2FilteredMessageClasses)),
       BrowserAssociatedInterface<mojom::ServiceWorkerDispatcherHost>(this,
                                                                      this),
       render_process_id_(render_process_id),
@@ -685,7 +685,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
       // postMessage from keeping workers alive forever.
       base::TimeDelta timeout =
           sender_provider_host->running_hosted_version()->remaining_timeout();
-      RunSoon(base::Bind(
+      SWRunSoon(base::Bind(
           &ServiceWorkerDispatcherHost::DispatchExtendableMessageEventInternal<
               ServiceWorkerObjectInfo>,
           this, worker, message, source_origin, sent_message_ports,

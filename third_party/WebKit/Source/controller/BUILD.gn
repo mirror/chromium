@@ -58,6 +58,20 @@ group("webkit_unit_tests_data") {
 }
 
 test("webkit_unit_tests") {
+
+  data_deps = [
+    ":webkit_unit_tests_data",
+    "//content/shell:pak",
+  ]
+
+  if (is_android) {
+    deps += [
+      "//base:base_java",
+      "//content/public/android:content_java",
+      "//content/shell/android:content_shell_assets",
+      "//net/android:net_java",
+    ]
+  }
   visibility = []  # Allow re-assignment of list.
   visibility = [ "*" ]
 
@@ -88,23 +102,9 @@ test("webkit_unit_tests") {
     "//v8",
   ]
 
-  data_deps = [
-    ":webkit_unit_tests_data",
-    "//content/shell:pak",
-  ]
-
   configs += [
     "//third_party/WebKit/Source:config",
     "//third_party/WebKit/Source:inside_blink",
     "//third_party/WebKit/Source/core:blink_core_pch",
   ]
-
-  if (is_android) {
-    deps += [
-      "//base:base_java",
-      "//content/public/android:content_java",
-      "//content/shell/android:content_shell_assets",
-      "//net/android:net_java",
-    ]
-  }
 }

@@ -34,7 +34,7 @@ const uint32_t kMinDuration = 10;
 const uint32_t kDefaultDuration = 10;
 
 const int32_t kDefaultNumberOfBuffers = 4;
-const int32_t kMaxNumberOfBuffers = 1000;  // 10 sec
+const int32_t kMaxNumberOfAudioBuffers = 1000;  // 10 sec
 
 // Returns true if the |sample_rate| is supported in
 // |PP_AudioBuffer_SampleRate|, otherwise false.
@@ -342,7 +342,7 @@ int32_t PepperMediaStreamAudioTrackHost::OnHostMsgConfigure(
     return PP_ERROR_BADARGUMENT;
 
   int32_t buffers = attributes.buffers
-                        ? std::min(kMaxNumberOfBuffers, attributes.buffers)
+                        ? std::min(kMaxNumberOfAudioBuffers, attributes.buffers)
                         : kDefaultNumberOfBuffers;
   return audio_sink_.Configure(buffers, attributes.duration,
                                context->MakeReplyMessageContext());

@@ -92,7 +92,7 @@ const char kExpectCTObserved[] = "expect_ct_observed";
 const char kExpectCTEnforce[] = "expect_ct_enforce";
 const char kExpectCTReportUri[] = "expect_ct_report_uri";
 
-std::string LoadState(const base::FilePath& path) {
+std::string LoadState2(const base::FilePath& path) {
   std::string result;
   if (!base::ReadFileToString(path, &result)) {
     return "";
@@ -302,7 +302,7 @@ TransportSecurityPersister::TransportSecurityPersister(
 
   base::PostTaskAndReplyWithResult(
       background_runner_.get(), FROM_HERE,
-      base::Bind(&LoadState, writer_.path()),
+      base::Bind(&LoadState2, writer_.path()),
       base::Bind(&TransportSecurityPersister::CompleteLoad,
                  weak_ptr_factory_.GetWeakPtr()));
 }

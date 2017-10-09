@@ -313,15 +313,17 @@ void WindowTreeClient::SetCursor(WindowMus* window,
   tree_->SetCursor(change_id, window->server_id(), new_cursor);
 }
 
-void WindowTreeClient::SetWindowTextInputState(WindowMus* window,
-                                               mojo::TextInputStatePtr state) {
+void WindowTreeClient::SetWindowTextInputState(
+    WindowMus* window,
+    ui::text::mojom::TextInputStatePtr state) {
   DCHECK(tree_);
   tree_->SetWindowTextInputState(window->server_id(), std::move(state));
 }
 
-void WindowTreeClient::SetImeVisibility(WindowMus* window,
-                                        bool visible,
-                                        mojo::TextInputStatePtr state) {
+void WindowTreeClient::SetImeVisibility(
+    WindowMus* window,
+    bool visible,
+    ui::text::mojom::TextInputStatePtr state) {
   DCHECK(tree_);
   tree_->SetImeVisibility(window->server_id(), visible, std::move(state));
 }

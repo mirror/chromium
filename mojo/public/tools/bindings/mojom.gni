@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 # TODO(rockot): Maybe we can factor these dependencies out of //mojo. They're
 # used to conditionally enable message ID scrambling in a way which is
 # consistent across toolchains and which is affected by branded vs non-branded
@@ -21,6 +23,8 @@ declare_args() {
   # with typemapping disabled, so it is never valid to set this to |false| in
   # any Chromium build configuration.
   enable_mojom_typemapping = true
+
+  use_jumbo_in_mojo = true
 }
 
 # NOTE: We would like to avoid scrambling message IDs where it doesn't add
@@ -511,7 +515,11 @@ template("mojom") {
   }
 
   shared_cpp_sources_target_name = "${target_name}_shared_cpp_sources"
-  source_set(shared_cpp_sources_target_name) {
+  target_type = "source_set"
+  if (use_jumbo_in_mojo) {
+    target_type = "jumbo_" + target_type
+  }
+  target(target_type, shared_cpp_sources_target_name) {
     if (defined(invoker.testonly)) {
       testonly = invoker.testonly
     }
@@ -826,6 +834,10 @@ template("mojom") {
       output_target_type = "component"
     } else {
       output_target_type = "source_set"
+    }
+
+    if (use_jumbo_in_mojo) {
+      output_target_type = "jumbo_" + output_target_type
     }
 
     target(output_target_type, "${target_name}${variant_suffix}") {

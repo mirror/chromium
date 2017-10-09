@@ -2,13 +2,14 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/nacl/config.gni")
 
 config("proxy_implementation") {
   defines = [ "PPAPI_PROXY_IMPLEMENTATION" ]
 }
 
-component("proxy") {
+jumbo_component("proxy") {
   output_name = "ppapi_proxy"
 
   sources = [
@@ -197,6 +198,10 @@ component("proxy") {
     "vpn_provider_resource.h",
     "websocket_resource.cc",
     "websocket_resource.h",
+  ]
+  jumbo_excluded_sources = [
+    # Symbols
+    "udp_socket_resource_base.cc",
   ]
 
   if (is_nacl) {

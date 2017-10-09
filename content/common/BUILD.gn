@@ -11,6 +11,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//sandbox/features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
+import("//content/content.gni")
 if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
 }
@@ -26,7 +27,7 @@ buildflag_header("features") {
   ]
 }
 
-source_set("common") {
+content_source_set("common") {
   # Targets external to content should always link to the public API.
   # In addition, targets outside of the content component (shell and tests)
   # must not link to this because it will duplicate the code in the component
@@ -368,6 +369,28 @@ source_set("common") {
     "zygote_commands_linux.h",
   ]
 
+  jumbo_excluded_sources = [
+    # IPC Headers. Nothing more to say.
+    "content_message_generator.cc",
+    "input/input_param_traits.cc", # IPC stuff
+    "input/input_event_struct_traits.cc", # IPC stuff
+    "input/touch_action_optional_struct_traits.cc",  # IPC stuff
+    "media/media_devices_param_traits.cc", # IPC stuff
+    "resource_messages.cc", # IPC stuff
+    "swapped_out_messages.cc", # IPC stuff
+    "content_ipc_logging.cc",
+  ]
+
+  if (is_linux) {
+    jumbo_excluded_sources += [
+      # Conflicts with bpf_cros_arm_gpu_policy_linux.cc
+      "sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+
+      # Too many IsChromeOS()
+      "sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+    ]
+  }
+
   configs += [
     "//content:content_implementation",
     "//build/config:precompiled_headers",
@@ -568,6 +591,12 @@ source_set("common") {
         "sandbox_linux/sandbox_bpf_base_policy_linux.cc",
         "sandbox_linux/sandbox_bpf_base_policy_linux.h",
       ]
+
+      jumbo_excluded_sources -= [
+        # Conflicts with bpf_cros_arm_gpu_policy_linux.cc
+        "sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+      ]
+
     }
   }
 

@@ -17,6 +17,7 @@
 
 #if defined(USE_X11)
 #include <X11/Xlib.h>
+#undef None // Defined by X11/X.h to 0L which collides with other headers
 #endif
 
 namespace content {

@@ -12,8 +12,9 @@ import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
+import("//content/content.gni")
 
-source_set("browser") {
+content_source_set("browser") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
   visibility = [
@@ -1655,6 +1656,45 @@ source_set("browser") {
     "zygote_host/zygote_host_impl_linux.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Too many ANNOTATE_RWLOCK_CREATE and ANNOTATE_RWLOCK_DESTROY and
+    # ANNOTATE_RWLOCK_ACQUIRED and ANNOTATE_RWLOCK_RELEASED macros
+    # from skia and dynamic_annotations.
+    "loader/resource_dispatcher_host_impl.cc",
+
+    # Too many kPaymentAppMinimumIconSize and kPaymentAppIdealIconSize
+    "payments/payment_app_info_fetcher.cc",
+
+    # Shares constant names with dom_storage/local_storage_context_mojo.cpp
+    "dom_storage/dom_storage_context_impl.cc",
+
+    # If someone includes net/url_request/url_request_context_getter.h
+    # in this file, then Bind generation fails when binding
+    # NavigationURLLoaderImplCore::Start.
+    "loader/navigation_url_loader_impl.cc",
+
+    # Too many RecordCancelled.
+    "web_contents/aura/overscroll_navigation_overlay.cc",
+
+    # Too many GetEventAckName.
+    "renderer_host/input/legacy_input_router_impl.cc",
+
+    # Too many kNoDocumentURLErrorMessage, kShutdownErrorMessage,
+    # GetWebContents()
+    "service_worker/service_worker_provider_host.cc",
+  ]
+
+  if (is_win) {
+    jumbo_excluded_sources += [
+    # Mojo header node.h undefs SendMessage so things that include
+    # Windows headers can't be grouped with anything that might
+    # include node.h from mojo. Until we have figured out a way
+    # for mojo headers and Windows headers to live side by side.
+    "renderer_host/legacy_render_widget_host_win.cc",
+    "renderer_host/render_widget_host_view_aura.cc",
+    ]
+  }
+
   if (toolkit_views) {
     deps += [ "//ui/events" ]
   }
@@ -1790,6 +1830,9 @@ source_set("browser") {
       # This prevents the inclusion of atlhost.h which paired
       # with the windows 8 sdk it does the wrong thing.
       "__ATLHOST_H__",
+
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
     ]
     deps += [
       "//third_party/iaccessible2",
@@ -2029,6 +2072,18 @@ source_set("browser") {
       "web_contents/web_contents_view_android.h",
     ]
 
+    jumbo_excluded_sources += [
+      # Symbols
+      "accessibility/web_contents_accessibility_android.cc",
+      "android/ime_adapter_android.cc",
+      "android/java/java_method.cc",
+      "android/nfc_host.cc",
+      "android/popup_zoomer.cc",
+      "android/selection_popup_controller.cc",
+      "android/smart_selection_client.cc",
+      "web_contents/web_contents_android.cc",
+    ]
+
     set_sources_assignment_filter([])
     sources += [
       "memory/swap_metrics_driver_impl_linux.cc",
@@ -2147,6 +2202,11 @@ source_set("browser") {
       "web_contents/aura/shadow_layer_delegate.h",
       "web_contents/web_contents_view_aura.cc",
       "web_contents/web_contents_view_aura.h",
+    ]
+
+    jumbo_excluded_sources -= [
+      # Not aura
+      "web_contents/aura/overscroll_navigation_overlay.cc",
     ]
   }
 

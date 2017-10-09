@@ -67,12 +67,12 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<TracingControllerImpl>::Leaky g_controller =
+base::LazyInstance<TracingControllerImpl>::Leaky g_tracing_controller =
     LAZY_INSTANCE_INITIALIZER;
 
 const char kChromeTracingAgentName[] = "chrome";
-const char kETWTracingAgentName[] = "etw";
-const char kArcTracingAgentName[] = "arc";
+const char kETWTracingAgentNameCopy[] = "etw";
+const char kArcTracingAgentNameCopy[] = "arc";
 const char kChromeTraceLabel[] = "traceEvents";
 
 const int kStartTracingTimeoutSeconds = 30;
@@ -148,7 +148,7 @@ TracingControllerImpl::~TracingControllerImpl() {
 }
 
 TracingControllerImpl* TracingControllerImpl::GetInstance() {
-  return g_controller.Pointer();
+  return g_tracing_controller.Pointer();
 }
 
 bool TracingControllerImpl::GetCategories(
@@ -461,7 +461,7 @@ void TracingControllerImpl::AddTracingAgent(const std::string& agent_name) {
     return;
   }
 
-  if (agent_name == kArcTracingAgentName) {
+  if (agent_name == kArcTracingAgentNameCopy) {
     additional_tracing_agents_.push_back(ArcTracingAgent::GetInstance());
     return;
   }
@@ -569,11 +569,11 @@ void TracingControllerImpl::OnEndAgentTracingAcked(
 
   if (trace_data_sink_.get() && events_str_ptr &&
       !events_str_ptr->data().empty()) {
-    if (agent_name == kETWTracingAgentName) {
+    if (agent_name == kETWTracingAgentNameCopy) {
       // The Windows kernel events are kept into a JSON format stored as string
       // and must not be escaped.
       trace_data_sink_->AddAgentTrace(events_label, events_str_ptr->data());
-    } else if (agent_name == kArcTracingAgentName) {
+    } else if (agent_name == kArcTracingAgentNameCopy) {
       // The ARC events are kept into a JSON format stored as string
       // and must not be escaped.
       trace_data_sink_->AddTraceChunk(events_str_ptr->data());

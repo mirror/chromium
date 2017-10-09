@@ -1649,7 +1649,7 @@ jumbo_component("platform") {
   }
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   visibility += [ "//third_party/WebKit/*" ]
   testonly = true
 
@@ -1735,8 +1735,15 @@ static_library("test_support") {
 }
 
 test("blink_platform_unittests") {
+  deps = [
+    ":blink_platform_unittests_sources",
+  ]
+}
+
+jumbo_source_set("blink_platform_unittests_sources") {
   visibility = []  # Allow re-assignment of list.
   visibility = [ "*" ]
+  testonly = true
 
   sources = [
     "DecimalTest.cpp",
@@ -2024,7 +2031,7 @@ group("blink_platform_unittests_data") {
 }
 
 if (current_cpu == "arm") {
-  source_set("blink_arm_neon") {
+  jumbo_source_set("blink_arm_neon") {
     sources = blink_platform_neon_files
     # The *NEON.cpp files fail to compile when -mthumb is passed. Force
     # them to build in ARM mode.
@@ -2040,20 +2047,20 @@ if (current_cpu == "arm") {
 }
 
 if (current_cpu == "mipsel" || current_cpu == "mips64el") {
-  source_set("blink_mips_msa") {
+  jumbo_source_set("blink_mips_msa") {
     sources = blink_platform_msa_files
   }
 }
 
 if (current_cpu == "x86" || current_cpu == "x64") {
-  source_set("blink_x86_sse") {
+  jumbo_source_set("blink_x86_sse") {
     sources = blink_platform_sse_files
   }
 }
 
 # This source set is used for fuzzers that need an environment similar to unit
 # tests.
-source_set("blink_fuzzer_test_support") {
+jumbo_source_set("blink_fuzzer_test_support") {
   testonly = true
   visibility = []  # Allow re-assignment of list.
   visibility = [ "*" ]
@@ -2179,7 +2186,9 @@ blink_text_codec_fuzzer("WINDOWS_1252") {
 # NOTE: These are legacy unit tests and tests that require a Platform
 # object. Do not add more unless the test requires a Platform object.
 # These tests are a part of the webkit_unit_tests binary.
-source_set("unit_tests") {
+jumbo_source_set("unit_tests") {
+  # This and the jumbo_test below seems to save about 8 CPU minutes (1%
+  # of the remaining build time).
   testonly = true
   visibility = []
   visibility = [ "//third_party/WebKit/Source/*" ]

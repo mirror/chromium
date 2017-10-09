@@ -4,6 +4,7 @@
 
 import("//build/config/features.gni")
 import("//build/config/freetype/freetype.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("//printing/features/features.gni")
@@ -208,7 +209,7 @@ config("skia_library_config") {
   }
 }
 
-component("skia") {
+jumbo_component("skia") {
   sources = [
     # Chrome sources.
     "config/SkUserConfig.h",
@@ -254,6 +255,11 @@ component("skia") {
     "ext/skia_utils_win.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Macros
+    "ext/skia_histogram.cc",
+  ]
+
   if (!is_ios) {
     sources += [
       "ext/platform_canvas.cc",
@@ -289,6 +295,61 @@ component("skia") {
     "//third_party/skia/src/sfnt/SkOTTable_name.cpp",
     "//third_party/skia/src/sfnt/SkOTUtils.cpp",
   ]
+
+  jumbo_excluded_sources += [
+    # Macros
+    "//third_party/skia/src/gpu/GrMemoryPool.cpp",
+    "//third_party/skia/src/gpu/GrPathRenderingRenderTargetContext.cpp",
+    "//third_party/skia/src/gpu/GrResourceProvider.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLGpu.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLPathRendering.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLProgram.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLRenderTarget.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLTexture.cpp",
+    "//third_party/skia/src/gpu/gl/GrGLUniformHandler.cpp",
+    "//third_party/skia/src/gpu/gl/builders/GrGLProgramBuilder.cpp",
+    "//third_party/skia/src/gpu/gl/builders/GrGLShaderStringBuilder.cpp",
+    "//third_party/skia/src/sksl/SkSLString.cpp",
+
+    # Symbols
+    "//third_party/skia/src/core/SkBitmapProcState_matrixProcs.cpp",
+    "//third_party/skia/src/core/SkBlitter.cpp",
+    "//third_party/skia/src/core/SkLiteDL.cpp",
+    "//third_party/skia/src/core/SkMiniRecorder.cpp",
+    "//third_party/skia/src/core/SkPath.cpp",
+    "//third_party/skia/src/core/SkScan_DAAPath.cpp",
+    "//third_party/skia/src/core/SkScan_Hairline.cpp",
+    "//third_party/skia/src/core/SkVertices.cpp",
+    "//third_party/skia/src/effects/SkMatrixConvolutionImageFilter.cpp",
+    "//third_party/skia/src/gpu/GrRenderTargetContext.cpp",
+    "//third_party/skia/src/gpu/effects/GrRRectEffect.cpp",
+    "//third_party/skia/src/gpu/ops/GrAAConvexPathRenderer.cpp",
+    "//third_party/skia/src/gpu/ops/GrAAStrokeRectOp.cpp",
+    "//third_party/skia/src/gpu/ops/GrMSAAPathRenderer.cpp",
+    "//third_party/skia/src/gpu/ops/GrShadowRRectOp.cpp",
+    "//third_party/skia/src/gpu/ops/GrTessellatingPathRenderer.cpp",
+    "//third_party/skia/src/images/SkWebpEncoder.cpp",
+    "//third_party/skia/src/jumper/SkJumper_stages.cpp",
+    "//third_party/skia/src/pdf/SkPDFMakeCIDGlyphWidthsArray.cpp",
+    "//third_party/skia/src/ports/SkGlobalInitialization_default.cpp",
+    "//third_party/skia/src/shaders/SkPictureShader.cpp",
+    "//third_party/skia/src/sksl/SkSLLayoutLexer.cpp",
+    "//third_party/skia/src/utils/SkDashPath.cpp",
+    "//third_party/skia/src/utils/SkTextBox.cpp",
+
+    # Weird, duplicate include guards (Why no SkBlurMaskFilter)
+    "//third_party/skia/src/effects/SkBlurMaskFilter.cpp",
+    "//third_party/skia/src/effects/SkLayerDrawLooper.cpp",
+
+    # Multiple included files
+    "//third_party/skia/src/core/SkATrace.cpp",
+    "//third_party/skia/src/core/SkBigPicture.cpp",
+    "//third_party/skia/src/core/SkCanvas.cpp",
+
+    # Missing include guards
+    "//third_party/skia/src/ports/SkFontConfigInterface_direct_factory.cpp",
+  ]
+
   if (!is_ios) {
     sources += [
       "//third_party/skia/src/codec/SkBmpBaseCodec.cpp",
@@ -315,6 +376,10 @@ component("skia") {
       "//third_party/skia/src/images/SkJpegEncoder.cpp",
       "//third_party/skia/src/ports/SkImageGenerator_skia.cpp",
       "//third_party/skia/third_party/gif/SkGifImageReader.cpp",
+    ]
+    jumbo_excluded_sources += [
+      # Symbols
+      "//third_party/skia/src/codec/SkPngCodec.cpp",
     ]
   } else {
     sources += [ "//third_party/skia/src/ports/SkImageGenerator_none.cpp" ]

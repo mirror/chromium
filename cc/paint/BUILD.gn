@@ -55,6 +55,10 @@ cc_component("paint") {
     "solid_color_analyzer.h",
   ]
 
+  jumbo_excluded_sources = [
+    "paint_op_buffer.cc",
+  ]
+
   defines = [ "CC_PAINT_IMPLEMENTATION=1" ]
 
   # cc/paint is intended to be a separate component from cc that can be

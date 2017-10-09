@@ -1,9 +1,11 @@
 # Copyright 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
+
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 
-component("browser") {
+jumbo_component("browser") {
   output_name = "storage_browser"
   sources = [
     "blob/blob_data_builder.cc",
@@ -190,6 +192,19 @@ component("browser") {
     "quota/usage_tracker.cc",
     "quota/usage_tracker.h",
     "storage_browser_export.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols
+    "blob/blob_transport_request_builder.cc",
+    "fileapi/file_system_quota_client.cc",
+    "fileapi/sandbox_file_system_backend_delegate.cc",
+    "fileapi/sandbox_origin_database.cc",
+    "quota/quota_database.cc",
+
+    # Macros
+    "quota/usage_tracker.cc",
+    "quota/quota_temporary_storage_evictor.cc",
   ]
 
   defines = [ "STORAGE_BROWSER_IMPLEMENTATION" ]

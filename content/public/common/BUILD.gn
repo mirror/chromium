@@ -10,6 +10,7 @@ import("//media/media_options.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//third_party/webrtc/webrtc.gni")
+import("//content/content.gni")
 
 # See //content/BUILD.gn for how this works.
 group("common") {
@@ -102,7 +103,7 @@ source_set("static_features") {
   public_configs = [ ":static_switches_defines" ]
 }
 
-source_set("common_sources") {
+content_source_set("common_sources") {
   # External code should depend on via ":common" above.
   visibility = [ "//content/*" ]
 

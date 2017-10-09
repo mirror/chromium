@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//ppapi/features/features.gni")
+import("//content/content.gni")
 
 # See //content/BUILD.gn for how this works.
 group("child") {
@@ -23,7 +24,7 @@ group("child") {
   }
 }
 
-source_set("child_sources") {
+content_source_set("child_sources") {
   # External code should depend in via ":child" above.
   visibility = [ "//content/*" ]
 

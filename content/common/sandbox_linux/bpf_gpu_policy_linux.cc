@@ -49,7 +49,7 @@ namespace content {
 
 namespace {
 
-inline bool IsChromeOS() {
+inline bool IsChromeOSFoo() {
 #if defined(OS_CHROMEOS)
   return true;
 #else
@@ -73,7 +73,7 @@ inline bool IsArchitectureI386() {
 #endif
 }
 
-inline bool IsArchitectureArm() {
+inline bool IsArchitectureArmFoo() {
 #if defined(__arm__) || defined(__aarch64__)
   return true;
 #else
@@ -285,7 +285,7 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
 bool GpuProcessPolicy::PreSandboxHook() {
   // Warm up resources needed by the policy we're about to enable and
   // eventually start a broker process.
-  const bool chromeos_arm_gpu = IsChromeOS() && IsArchitectureArm();
+  const bool chromeos_arm_gpu = IsChromeOSFoo() && IsArchitectureArmFoo();
   // This policy is for x86 or Desktop.
   DCHECK(!chromeos_arm_gpu);
 
@@ -343,7 +343,7 @@ void GpuProcessPolicy::InitGpuBrokerProcess(
   std::vector<BrokerFilePermission> permissions;
   permissions.push_back(BrokerFilePermission::ReadOnly(kDriRcPath));
 
-  if (!IsChromeOS()) {
+  if (!IsChromeOSFoo()) {
     // For shared memory.
     permissions.push_back(
         BrokerFilePermission::ReadWriteCreateUnlinkRecursive(kDevShm));

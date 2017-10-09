@@ -7,6 +7,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -20,7 +21,7 @@ import("//v8/gni/v8.gni")
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
 
   # See comment at the top of //content/BUILD.gn for why this is disabled in
@@ -255,6 +256,19 @@ static_library("test_support") {
     "web_gesture_curve_mock.h",
   ]
 
+  jumbo_excluded_sources = [
+    # Symbols
+    "../public/test/test_fileapi_operation_waiter.cc",
+
+    # X11
+    "appcache_test_helper.cc",
+    "mock_google_streaming_server.cc",
+    "test_background_sync_context.cc",
+    "test_background_sync_manager.cc",
+    "test_blink_web_unit_test_support.cc",
+    "test_render_frame.cc",
+  ]
+
   configs += [
     "//build/config:precompiled_headers",
     "//v8:external_startup_data",
@@ -342,6 +356,9 @@ static_library("test_support") {
       "mock_google_streaming_server.cc",
       "mock_google_streaming_server.h",
     ]
+    jumbo_excluded_sources -= [
+      "mock_google_streaming_server.cc",
+    ]
     deps += [ "//mojo/android:libsystem_java" ]
   }
 
@@ -375,6 +392,12 @@ static_library("test_support") {
       "../renderer/media/mock_web_rtc_peer_connection_handler_client.h",
       "../renderer/media/webrtc/mock_peer_connection_dependency_factory.cc",
       "../renderer/media/webrtc/mock_peer_connection_dependency_factory.h",
+    ]
+
+    jumbo_excluded_sources += [
+      # X11
+      "../renderer/media/mock_peer_connection_impl.cc",
+      "../renderer/media/webrtc/mock_peer_connection_dependency_factory.cc",
     ]
 
     deps += [
@@ -1853,6 +1876,11 @@ test("content_unittests") {
     }
   }
   if (is_win) {
+    defines += [
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
+    ]
+
     deps += [ "//third_party/iaccessible2" ]
     libs = [ "dwrite.lib" ]
   }
