@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd44871e_f2d3ed85",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-09T16:58:17Z",
+      "side": 1,
+      "message": "I mean, rather than have everyone disable these individually, we should probably wait until \"small\" works?\n\nAlso, nit: The noun is \"checkout\", the verb is \"check out\", so these should probably be called \"check_out_foo\"?",
+      "revId": "dd477f781b183672bdea0552227ab804f359729a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
