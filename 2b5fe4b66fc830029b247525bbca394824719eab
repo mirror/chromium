@@ -16,6 +16,24 @@
       "revId": "2b5fe4b66fc830029b247525bbca394824719eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7d9bcd_60f3d654",
+        "filename": "testing/buildbot/chromium.mac.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1786,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-09T23:47:18Z",
+      "side": 1,
+      "message": "No, this is because this is the \"Mac10.9 Tests\" bot, and these tests will no longer run on 10.9, since we\u0027re removing support for them in this CL :).\n\nIt\u0027s on the \"Mac10.9 Tests\" bot, because that\u0027s what mac_chromium_rel_ng is mirroring; ideally mac_chromium_rel_ng would be mirroring 10.12 instead, but that\u0027s a different CL.",
+      "parentUuid": "717ddd26_f0ad2e10",
+      "revId": "2b5fe4b66fc830029b247525bbca394824719eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
