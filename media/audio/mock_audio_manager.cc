@@ -26,6 +26,7 @@ bool MockAudioManager::HasAudioOutputDevices() {
 }
 
 bool MockAudioManager::HasAudioInputDevices() {
+  DLOG(ERROR) << "***HasAudioInputDevices";
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return has_input_devices_;
 }
@@ -92,6 +93,7 @@ AudioParameters MockAudioManager::GetOutputStreamParameters(
 
 AudioParameters MockAudioManager::GetInputStreamParameters(
     const std::string& device_id) {
+  DLOG(ERROR) << "**GetInputStreamParameters";
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return input_params_;
 }
@@ -129,6 +131,7 @@ void MockAudioManager::SetMakeInputStreamCB(MakeInputStreamCallback cb) {
 }
 
 void MockAudioManager::SetInputStreamParameters(const AudioParameters& params) {
+  DLOG(ERROR) << "***SetInputStreamParameters";
   input_params_ = params;
 }
 

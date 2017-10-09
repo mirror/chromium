@@ -63,6 +63,7 @@ AudioSystemTester::AudioSystemTester(MockAudioManager* audio_manager,
 AudioSystemTester::~AudioSystemTester() = default;
 
 void AudioSystemTester::TestGetInputStreamParametersNormal() {
+  DLOG(ERROR) << "****Tester";
   base::RunLoop wait_loop;
   EXPECT_CALL(*this, AudioParametersReceived())
       .WillOnce(InvokeWithoutArgs(&wait_loop, &base::RunLoop::Quit));

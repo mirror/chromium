@@ -1,0 +1,12 @@
+{
+  "name": "audio_unittests",
+  "display_name": "Audio Unittests",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "requires": {
+        "audio": [ "tests" ],
+        "service_manager": [ "service_manager:service_manager" ]
+      }
+    }
+  }
+}
