@@ -171,6 +171,8 @@ bool ArcSessionManager::IsOobeOptInActive() {
   chromeos::LoginDisplayHost* host = chromeos::LoginDisplayHost::default_host();
   if (!host)
     return false;
+  if (!host->IsVoiceInteractionOobe())
+    return true;
   const chromeos::WizardController* wizard_controller =
       host->GetWizardController();
   if (!wizard_controller)
