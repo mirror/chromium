@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9e40d45_c30f3d8f",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-09T08:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a4762e_976e505a",
+      "range": {
+        "startLine": 206,
+        "startChar": 44,
+        "endLine": 206,
+        "endChar": 51
+      },
+      "revId": "85d81f92d17885cb3a914752d72c08e53ffa63c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141321ed_ee83b6f5",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d842d946_c33e8d74",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-09T08:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141321ed_ee83b6f5",
+      "revId": "85d81f92d17885cb3a914752d72c08e53ffa63c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b256c80b_d92f55ec",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-resource-types.js",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "85d81f92d17885cb3a914752d72c08e53ffa63c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2427eb90_12c174f9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-resource-types.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-09T08:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b256c80b_d92f55ec",
+      "revId": "85d81f92d17885cb3a914752d72c08e53ffa63c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
