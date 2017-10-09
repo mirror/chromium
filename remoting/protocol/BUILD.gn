@@ -263,6 +263,12 @@ static_library("protocol") {
     ]
     deps += [ "//remoting/codec:encoder" ]
   }
+
+  # On Windows, we use //media/gpu/MediaFoundationVideoEncodeAcceleratorWin to
+  # detect whether HW encoder is supported by the system.
+  if (is_win) {
+    deps += [ "//media" ]
+  }
 }
 
 static_library("test_support") {
