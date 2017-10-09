@@ -38,9 +38,6 @@ class PaletteDelegateChromeOS
   bool HasNoteApp() override;
   bool ShouldAutoOpenPalette() override;
   bool ShouldShowPalette() override;
-  void TakeScreenshot() override;
-  void TakePartialScreenshot(const base::Closure& done) override;
-  void CancelPartialScreenshot() override;
 
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
