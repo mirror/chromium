@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "extensions/common/api/messaging/message.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/renderer/bindings/api_binding_test.h"
@@ -37,8 +38,8 @@ class NativeExtensionBindingsSystem;
 class ScriptContext;
 class ScriptContextSet;
 struct PortId;
-struct Message;
 
+// A mocked-up IPC message sender for use in testing.
 class TestIPCMessageSender : public IPCMessageSender {
  public:
   TestIPCMessageSender();
