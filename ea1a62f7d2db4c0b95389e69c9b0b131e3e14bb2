@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "8c5aa9a2_58cd69c1",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-09T12:48:19Z",
+      "side": 1,
+      "message": "Right, sgtm.",
+      "parentUuid": "340f20dd_8125691f",
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49b4d25f_8083d31b",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "We could make |presentViewController| always present on top, but that would be a logical change from what exists now.\n\nRight now, there are two places where presentation happens: in response to an interaction manager delegate callback, and when the sign in controller is being presented. The top functionality is only used when presenting the sign in view controller and the identity manager is up.\n\nSo, this would make the top function happen for all cases. It should not be a behavior change, since present should not be called if presentingVC is not the top VC anyway.\n\nAssuming this change is ok, I will remove this API.",
       "parentUuid": "49b4d25f_8083d31b",
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd3d62d_88ac17d8",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-09T12:48:19Z",
+      "side": 1,
+      "message": "Let\u0027s leave it as-is for now and think about making the logic change in a followup CL.  That way it will be easier to revert if it turns out we missed another case.",
+      "parentUuid": "f0759e9a_acde07ad",
       "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
