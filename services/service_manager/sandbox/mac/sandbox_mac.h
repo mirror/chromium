@@ -2,27 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_SANDBOX_MAC_H_
-#define CONTENT_COMMON_SANDBOX_MAC_H_
-
-#include <map>
-#include <string>
+#ifndef SERVICE_MANAGER_SANDBOX_MAC_SANDBOX_MAC_H_
+#define SERVICE_MANAGER_SANDBOX_MAC_SANDBOX_MAC_H_
 
 #include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "content/common/content_export.h"
+#include "services/service_manager/sandbox/export.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace base {
 class FilePath;
 }
 
-namespace content {
+namespace service_manager {
 
-class CONTENT_EXPORT Sandbox {
+class SERVICE_MANAGER_SANDBOX_EXPORT Sandbox {
  public:
-
   // Warm up System APIs that empirically need to be accessed before the
   // sandbox is turned on. |sandbox_type| is the type of sandbox to warm up.
   // Valid |sandbox_type| values are defined by the enum SandboxType, or can be
@@ -71,6 +67,6 @@ class CONTENT_EXPORT Sandbox {
   DISALLOW_IMPLICIT_CONSTRUCTORS(Sandbox);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
-#endif  // CONTENT_COMMON_SANDBOX_MAC_H_
+#endif  // SERVICE_MANAGER_SANDBOX_MAC_SANDBOX_MAC_H_
