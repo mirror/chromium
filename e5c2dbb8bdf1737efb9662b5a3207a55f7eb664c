@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e139e00_a05f23d6",
+        "filename": "build/toolchain/win/midl.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-09T22:57:54Z",
+      "side": 1,
+      "message": "Does this comment need updating? The check-in comment suggests that it does.",
+      "revId": "e5c2dbb8bdf1737efb9662b5a3207a55f7eb664c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
