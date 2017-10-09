@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 
 import org.junit.Assert;
 import org.junit.runner.Description;
@@ -76,7 +77,7 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         cursor.moveToFirst();
         boolean result = false;
         while (!cursor.isAfterLast()) {
-            if (fullPath.equals(getPathFromCursor(cursor))) {
+            if (fileName.equals(getFileNameFromCursor(cursor))) {
                 if (expectedContents != null) {
                     FileInputStream stream = new FileInputStream(new File(fullPath));
                     byte[] data = new byte[expectedContents.getBytes().length];
@@ -118,12 +119,12 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             long id = cursor.getLong(idColumnIndex);
-            String fileName = getPathFromCursor(cursor);
+            String fileName = getFileNameFromCursor(cursor);
             manager.remove(id);
 
-            if (fileName != null) { // Somehow fileName can be null for some entries.
-                // manager.remove does not remove downloaded file.
-                File localFile = new File(fileName);
+            // manager.remove does not remove downloaded file.
+            if (!TextUtils.isEmpty(fileName)) {
+                File localFile = new File(DOWNLOAD_DIRECTORY, fileName);
                 if (localFile.exists()) {
                     localFile.delete();
                 }
@@ -137,26 +138,8 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
     /**
      * Retrieve the path of the downloaded file from a DownloadManager cursor.
      */
-    private String getPathFromCursor(Cursor cursor) {
-        int columnId = cursor.getColumnIndex("local_filename");
-        return cursor.getString(columnId);
-    }
-
-    private String getPathForDownload(long downloadId) {
-        DownloadManager manager =
-                (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Query query = new DownloadManager.Query();
-        query.setFilterById(downloadId);
-        Cursor cursor = null;
-        try {
-            cursor = manager.query(query);
-            if (!cursor.moveToFirst()) {
-                return null;
-            }
-            return getPathFromCursor(cursor);
-        } finally {
-            if (cursor != null) cursor.close();
-        }
+    private String getFileNameFromCursor(Cursor cursor) {
+        return cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
     }
 
     private String mLastDownloadFilePath;
