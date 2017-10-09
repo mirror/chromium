@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "263a6a11_5cdf6f6c",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_copyable_row.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-09T19:03:22Z",
+      "side": 1,
+      "message": "Should chrometint be set here too?",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "d4e20a7504de91bb1f4ac9dd7a3a1f8278946dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
