@@ -353,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "891bb2aa_09904b49",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "The fix for this just landed as https://chromium.googlesource.com/chromium/src.git/+/c84784ce85d0fada9677e00d95a25b76237b2028",
+      "parentUuid": "6801cf8a_093990eb",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f6a93c_b49a9484",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2

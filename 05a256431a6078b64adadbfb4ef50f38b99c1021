@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "44179804_442d69ec",
+        "filename": "media/mojo/services/video_decode_stats.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: Maybe just \".\" here and below?",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bc137d_e65775f7",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: \u003d default?",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb358b3_76a895c7",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: I wonder if we should also clarify that this will create a new entry if one does not already exist?",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc94fd15_441b5fd2",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: This uses \u0027:%\u0027, but for dropped we use \u0027: %\u0027. Would it look better if they\u0027re similar?",
+      "range": {
+        "startLine": 40,
+        "startChar": 61,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16eb1efc_271342e5",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
@@ -34,6 +126,184 @@
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4682d92d_7698a34e",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Got it! I\u0027ll make note of this myself. Thanks!",
+      "parentUuid": "16eb1efc_271342e5",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5434882_bb72f8f0",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Optional: I like the name in the header file better: |prev_stats_proto|. It implicitly tells me more about the state without reading more code. It would make it weird to re-use the same on line 143 when you create a new one though. So I guess, either keep as is, or do something else for the reset?",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 49
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f671f2b6_0ca4546d",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "When can this fail? If |this| is going away, wouldn\u0027t the WeakPtr be invalidated before WriteUpdatedEntry would be invoked?\nSo yeah, a DCHECK sounds reasonable here maybe?",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5b5fdf_bc4e9c28",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: std::make_unique?",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fef5ca_d67bbd91",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Should we safeguard using stats_proto with checking |success| too?\n\nI believe if the parse of the underlying proto fails, I think success will be true, found will be false, and the proto will not be populated correctly. However, in the RunGetCallback of the DB it\u0027s wrapped so that the entry you get will in fact be nullptr, which means your code does work in its current state. It just feels a little bit weird.\n\nWDYT?",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5869e48a_c0881eee",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this callback is here anymore?",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa98535_74d24b89",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: \"VideoDecodeStatsDB implementation.\"?",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7168b836_94363596",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: In the documentation for OnGotDecodeStats you use \u0027nullptr\u0027 related to std::unique_ptr, but here you use \u0027null\u0027. Does it make sense to use one of them throughout this?",
+      "range": {
+        "startLine": 82,
+        "startChar": 36,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3a52e4_70eba9c1",
+        "filename": "media/mojo/services/video_decode_stats_db_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-09T23:43:19Z",
+      "side": 1,
+      "message": "Nit: Does this still run the RunLoop quit closure?",
+      "range": {
+        "startLine": 53,
+        "startChar": 62,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
