@@ -15,7 +15,7 @@ GlobalScopeCreationParams::GlobalScopeCreationParams(
     const String& user_agent,
     const String& source_code,
     std::unique_ptr<Vector<char>> cached_meta_data,
-    WorkerThreadStartMode start_mode,
+    GlobalScopeStartMode start_mode,
     const Vector<CSPHeaderAndType>* content_security_policy_parsed_headers,
     const String& referrer_policy,
     const SecurityOrigin* starter_origin,

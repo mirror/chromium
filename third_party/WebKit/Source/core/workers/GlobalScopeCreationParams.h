@@ -37,7 +37,7 @@ struct CORE_EXPORT GlobalScopeCreationParams final {
       const String& user_agent,
       const String& source_code,
       std::unique_ptr<Vector<char>> cached_meta_data,
-      WorkerThreadStartMode,
+      GlobalScopeStartMode,
       const Vector<CSPHeaderAndType>* content_security_policy_parsed_headers,
       const String& referrer_policy,
       const SecurityOrigin*,
@@ -53,7 +53,7 @@ struct CORE_EXPORT GlobalScopeCreationParams final {
   String user_agent;
   String source_code;
   std::unique_ptr<Vector<char>> cached_meta_data;
-  WorkerThreadStartMode start_mode;
+  GlobalScopeStartMode start_mode;
   // |content_security_policy_parsed_headers| and
   // |content_security_policy_raw_headers| are mutually exclusive.
   // |content_security_policy_parsed_headers| is an empty vector

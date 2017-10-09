@@ -35,7 +35,7 @@ class CORE_EXPORT WorkerInspectorProxy final
                                            const String& message) = 0;
   };
 
-  WorkerThreadStartMode WorkerStartMode(ExecutionContext*);
+  GlobalScopeStartMode WorkerStartMode(ExecutionContext*);
   void WorkerThreadCreated(ExecutionContext*, WorkerThread*, const KURL&);
   void WorkerThreadTerminated();
   void DispatchMessageFromWorker(int session_id, const String&);

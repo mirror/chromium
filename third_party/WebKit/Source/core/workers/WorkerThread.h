@@ -58,7 +58,7 @@ class WorkerOrWorkletGlobalScope;
 class WorkerReportingProxy;
 struct GlobalScopeCreationParams;
 
-enum WorkerThreadStartMode {
+enum GlobalScopeStartMode {
   kDontPauseWorkerGlobalScopeOnStart,
   kPauseWorkerGlobalScopeOnStart
 };

@@ -50,7 +50,7 @@ const String& WorkerInspectorProxy::InspectorId() {
   return inspector_id_;
 }
 
-WorkerThreadStartMode WorkerInspectorProxy::WorkerStartMode(
+GlobalScopeStartMode WorkerInspectorProxy::WorkerStartMode(
     ExecutionContext* execution_context) {
   bool result = false;
   probe::shouldWaitForDebuggerOnWorkerStart(execution_context, &result);

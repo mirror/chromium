@@ -376,7 +376,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
                                       std::move(web_worker_fetch_context));
   }
 
-  WorkerThreadStartMode start_mode =
+  GlobalScopeStartMode start_mode =
       worker_inspector_proxy_->WorkerStartMode(document);
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::MakeUnique<WorkerSettings>(document->GetSettings());

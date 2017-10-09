@@ -401,9 +401,7 @@ void WorkerThread::InitializeOnWorkerThread(
   DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
 
   KURL script_url = global_scope_creation_params->script_url;
-  // TODO(nhiroki): Rename WorkerThreadStartMode to GlobalScopeStartMode.
-  // (https://crbug.com/710364)
-  WorkerThreadStartMode start_mode = global_scope_creation_params->start_mode;
+  GlobalScopeStartMode start_mode = global_scope_creation_params->start_mode;
   V8CacheOptions v8_cache_options =
       global_scope_creation_params->v8_cache_options;
 

@@ -59,7 +59,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
   DCHECK(csp);
 
-  WorkerThreadStartMode start_mode =
+  GlobalScopeStartMode start_mode =
       GetWorkerInspectorProxy()->WorkerStartMode(document);
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
