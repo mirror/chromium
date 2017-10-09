@@ -1,0 +1,261 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a9f45b8_64c87d8d",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "nit: you should use \u0026 with base::Bind\n\n  web::WebThread::PostTaskAndReply(\n    web::WebThread::IO, FROM_HERE,\n    base::BindOnce(\u0026ReplaceSavedFavicons, faviconsURL),\n    base::BindOnce(\u0026WriteSavedMostVisited, tiles));\n\nBTW, do you really need this code to happen on the network thread (IO does not mean disk, it mean network, I know it is confusing)? Wouldn\u0027t it be better to instead post on any sequence that can block?\n\n  base::PostTaskWithTraitsAndReply(\n    FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},\n    base::BindOnce(\u0026ReplaceSavedFavicons, faviconsURL),\n    base::BindOnce(\u0026WriteSavedMostVisited, tiles));",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d169545e_e9cb5050",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "nit: this is a C++ function, so \"faviconsURL\" should be named \"favicons_url\" instead (probably best to do in a separate CL)",
+      "range": {
+        "startLine": 83,
+        "startChar": 43,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbb7b93_b302abe3",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "nit: this is a C++ function, so variables should use cpp_naming_convention, so this should be \"most_visited_data\", \"favicon_fetcher\", \"favicons_url\", \"clear_temporary_favicon_folder\", \"temporary_favicon_url\", \"get_favicons_and_save\", ...",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ea7e3b_b5a1e3d9",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "style: avoid abbreviations, so TmpFaviconFolderPath → GetTemporaryFaviconFolderPath",
+      "range": {
+        "startLine": 100,
+        "startChar": 27,
+        "endLine": 100,
+        "endChar": 47
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb604c40_5ecb98f9",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "This lambda is too big (it was already too big before your change, sorry). Can it be extracted as a free function?",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf7cc2c_9bc1398c",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "nit:\n\n  if (mostVisitedData.empty()) {",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fd5e2f_c0f715ff",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "The comment implies that this block will return early, so maybe add an early return here or fix the comment.",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349d6a9d_406cd764",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "I think this is incorrect because base::Bind* does not retain Objective-C objects. So instead of a lambda you\u0027ll need a block here and to capture the NTPTile*/NSString*,NSURL* in the block.\n\n  base::OnceCallback\u003cvoid(BOOL\u003e) reply \u003d base::BindBlock(^(BOOL imageWriteSuccess) {\n    ...\n  });",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e89079d_c0231537",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "Ditto, does this need to be done on the network thread? If not, does it need to be in same sequence as the previous call or not. If it does, then you need to use base::CreateSequencedTaskRunnerWithTraits and post there, otherwise you can just use base::PostTaskWithTraitsAndReply.",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362950de_f11330eb",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b5fb37_0ded01f4",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef3817a_32b96312",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "Remove, the default web::TestWebThreadBundle constructor should be enough here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 57
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827979c3_308b6f0c",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:57:29Z",
+      "side": 1,
+      "message": "If you use base::PostTask API as suggested, then you\u0027ll be able to change this to base::test::ScopedTestEnvironment here.",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 42
+      },
+      "revId": "d617e5d262583242ef6f7890aeee3765b9422d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
