@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "07115641_ec75a1d3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-09T14:30:25Z",
+      "side": 1,
+      "message": "Ok!",
+      "parentUuid": "902774fa_a060c752",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a862f2_6a30bd58",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
         "patchSetId": 27
