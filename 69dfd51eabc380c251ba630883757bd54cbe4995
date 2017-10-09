@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8df0dc1a_e6ebd9db",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T16:14:28Z",
+      "side": 1,
+      "message": "Why is SettingBubbleContainer the right container to put the ime window in?",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 56
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf95eeea_5a086593",
+        "filename": "ui/chromeos/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T16:14:28Z",
+      "side": 1,
+      "message": "Are you sure you need this? I don\u0027t see any new includes of mojo/public/cpp.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580403fc_4677856d",
+        "filename": "ui/chromeos/ime/candidate_window_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T16:14:28Z",
+      "side": 1,
+      "message": "This is not the same thing as GetDsiplayNearestWindow.",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 56
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d934b68e_0e9d25a1",
+        "filename": "ui/chromeos/ime/candidate_window_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T16:14:28Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 23
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

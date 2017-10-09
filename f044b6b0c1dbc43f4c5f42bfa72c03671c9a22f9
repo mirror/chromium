@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94e1088_235ac39d",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T16:14:28Z",
+      "side": 0,
+      "message": "How do we end up here (meaning what is the call stack like)? This code really just wants to know the active display (that\u0027s what 54-58 calculates). Can the active display be injected here?",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
