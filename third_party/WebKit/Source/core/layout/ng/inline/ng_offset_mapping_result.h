@@ -106,6 +106,16 @@ class NGOffsetMappingResult {
                                                       unsigned,
                                                       unsigned) const;
 
+  // Starting from the given DOM offset in the node, finds the first
+  // non-collapsed character and returns its offset; Or returns the last offset
+  // in the node if such a character does not exist.
+  unsigned StartOfNextNonCollapsedCharacter(const Node&, unsigned offset) const;
+
+  // Starting from the given DOM offset in the node, reversely finds the first
+  // non-collapsed character and returns 1 + its offset; Or returns 0 if such a
+  // character does not exist.
+  unsigned EndOfLastNonCollapsedCharacter(const Node&, unsigned offset) const;
+
  private:
   UnitVector units_;
   RangeMap ranges_;

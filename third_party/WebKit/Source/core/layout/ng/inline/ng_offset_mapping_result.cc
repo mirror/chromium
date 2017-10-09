@@ -97,4 +97,38 @@ NGMappingUnitRange NGOffsetMappingResult::GetMappingUnitsForDOMOffsetRange(
   return {result_begin, result_end};
 }
 
+unsigned NGOffsetMappingResult::StartOfNextNonCollapsedCharacter(
+    const Node& node,
+    unsigned offset) const {
+  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
+  DCHECK(unit) << node << "@" << offset << " is an invalid position";
+  unsigned fallback = offset;
+  while (unit != units_.end() && unit->GetOwner() == node) {
+    if (unit->DOMEnd() > offset &&
+        unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
+      return std::max(offset, unit->DOMStart());
+    fallback = unit->DOMEnd();
+    ++unit;
+  }
+  return fallback;
+}
+
+unsigned NGOffsetMappingResult::EndOfLastNonCollapsedCharacter(
+    const Node& node,
+    unsigned offset) const {
+  const NGOffsetMappingUnit* unit = GetMappingUnitForDOMOffset(node, offset);
+  DCHECK(unit) << node << "@" << offset << " is an invalid position";
+  unsigned fallback = offset;
+  while (unit->GetOwner() == node) {
+    if (unit->DOMStart() < offset &&
+        unit->GetType() != NGOffsetMappingUnitType::kCollapsed)
+      return std::min(offset, unit->DOMEnd());
+    fallback = unit->DOMStart();
+    if (unit == units_.begin())
+      break;
+    --unit;
+  }
+  return fallback;
+}
+
 }  // namespace blink
