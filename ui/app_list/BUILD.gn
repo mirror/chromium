@@ -177,6 +177,7 @@ component("app_list") {
       "//mojo/public/cpp/bindings",
       "//services/ui/public/cpp",
       "//services/ui/public/interfaces",
+      "//ui/chromeos",
       "//ui/events",
       "//ui/views",
     ]

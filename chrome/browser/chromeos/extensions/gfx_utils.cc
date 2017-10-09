@@ -1,10 +1,11 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "chrome/browser/chromeos/extensions/gfx_utils.h"
 
 #include "base/lazy_instance.h"
+#include "chrome/browser/chromeos/extensions/vector_icons/vector_icons.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
@@ -14,13 +15,17 @@
 #include "components/prefs/pref_service.h"
 #include "extensions/browser/extension_registry.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/chromeos/gfx_utils.h"
 #include "ui/chromeos/resources/grit/ui_chromeos_resources.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/paint_vector_icon.h"
 
 namespace extensions {
 
 namespace {
+
+constexpr SkColor kBadgeColor = SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
 
 // The badge map between |arc_package_name| and |extension_id|. Note the mapping
 // from |extension_id| to |arc_package_name| is unique, but the mapping from
@@ -207,22 +212,11 @@ void MaybeApplyChromeBadge(content::BrowserContext* context,
   if (!registry || !registry->GetInstalledExtension(extension_id))
     return;
 
-  if (!HasEquivalentInstalledArcApp(context, extension_id))
-    return;
+  //if (!HasEquivalentInstalledArcApp(context, extension_id))
+    //return;
 
-  const gfx::ImageSkia* badge_image =
-      ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
-          IDR_ARC_DUAL_ICON_BADGE);
-  DCHECK(badge_image);
-
-  gfx::ImageSkia resized_badge_image = *badge_image;
-  if (badge_image->size() != icon_out->size()) {
-    resized_badge_image = gfx::ImageSkiaOperations::CreateResizedImage(
-        *badge_image, skia::ImageOperations::RESIZE_BEST, icon_out->size());
-  }
-  *icon_out = gfx::ImageSkiaOperations::CreateSuperimposedImage(
-      *icon_out, resized_badge_image);
-  return;
+  *icon_out = ui::CreateIconWithBadge(
+      *icon_out, gfx::CreateVectorIcon(kIcBadgeChromeIcon, 12, kBadgeColor));
 }
 
 }  // namespace util

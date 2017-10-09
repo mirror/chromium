@@ -14,6 +14,7 @@
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/search_result_container_view.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/chromeos/gfx_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
@@ -246,7 +247,7 @@ void SearchResultTileItemView::OnIconChanged() {
 }
 
 void SearchResultTileItemView::OnBadgeIconChanged() {
-  SetBadgeIcon(item_->badge_icon());
+  SetIcon(ui::CreateIconWithBadge(icon()->GetImage(), item_->badge_icon()));
   Layout();
 }
 
@@ -312,15 +313,6 @@ void SearchResultTileItemView::Layout() {
   } else if (item_->display_type() == SearchResult::DISPLAY_TILE) {
     rect.Inset(0, kSearchTileTopPadding, 0, 0);
     icon()->SetBoundsRect(rect);
-
-    if (badge()) {
-      gfx::Rect badge_rect(rect);
-      gfx::Size icon_size = icon()->GetImage().size();
-      badge_rect.Offset(
-          (icon_size.width() - kAppBadgeIconSize) / 2,
-          icon_size.height() - kBadgeBackgroundRadius - kAppBadgeIconSize / 2);
-      badge()->SetBoundsRect(badge_rect);
-    }
 
     rect.Inset(0, kGridIconDimension + kSearchTitleSpacing, 0, 0);
     rect.set_height(title()->GetPreferredSize().height());

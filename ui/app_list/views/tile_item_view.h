@@ -73,9 +73,6 @@ class APP_LIST_EXPORT TileItemView : public views::Button,
   views::ImageView* icon() const { return icon_; }
   void SetIcon(const gfx::ImageSkia& icon);
 
-  views::ImageView* badge() const { return badge_; }
-  void SetBadgeIcon(const gfx::ImageSkia& badge_icon);
-
   views::Label* title() const { return title_; }
   void SetTitle(const base::string16& title);
 
@@ -91,7 +88,6 @@ class APP_LIST_EXPORT TileItemView : public views::Button,
   std::unique_ptr<ImageShadowAnimator> image_shadow_animator_;
 
   views::ImageView* icon_;   // Owned by views hierarchy.
-  views::ImageView* badge_;  // Owned by views hierarchy.
   views::Label* title_;      // Owned by views hierarchy.
 
   bool selected_ = false;
