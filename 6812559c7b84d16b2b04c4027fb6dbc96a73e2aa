@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f709ef2b_407a8724",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T21:00:45Z",
+      "side": 1,
+      "message": "nit: EXPECT_TRUE(source) to be consistent with the rest of the file.",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece07889_32d7d6e5",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T21:00:45Z",
+      "side": 1,
+      "message": "Do we know why this is failing on ASAN/MSAN? Something we can fix, rather than adding a new test with that pre-disabled?",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66eff04f_c89a8934",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T21:00:45Z",
+      "side": 1,
+      "message": "Can you make this a PageCoordinationUnit::set_clock_for_testing() member instead, to avoid the  upcasting from the base test harness? The pagecoordinationunit unit test knows which class is instantiated.",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6ee2fb_0942cce1",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T21:00:45Z",
+      "side": 1,
+      "message": "nit: inconsistent use of brackets for single-line conditionals, at least we should be consistent within the file itself.",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec346e2_7d4b41b8",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-09T21:00:45Z",
+      "side": 1,
+      "message": "Does this need to be a member? Feels like the header could be a little cleaner if clock_ was a unique_ptr\u003cbase::TickTock\u003e which gets assigned a new DefaultTickClock in the constructor. Looks like either pattern is in use in the codebase.",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
