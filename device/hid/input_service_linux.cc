@@ -171,6 +171,12 @@ InputServiceLinux::~InputServiceLinux() {
 }
 
 // static
+void InputServiceLinux::Create(
+    device::mojom::InputDeviceManagerRequest request) {
+  GetInstance()->AddBinding(std::move(request));
+}
+
+// static
 InputServiceLinux* InputServiceLinux::GetInstance() {
   if (!HasInstance())
     g_input_service_linux = new InputServiceLinuxImpl();
@@ -191,36 +197,49 @@ void InputServiceLinux::SetForTesting(
   g_input_service_linux = service.release();
 }
 
-void InputServiceLinux::AddObserver(Observer* observer) {
-  DCHECK(CalledOnValidThread());
-  if (observer)
-    observers_.AddObserver(observer);
+void InputServiceLinux::AddBinding(
+    device::mojom::InputDeviceManagerRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
-void InputServiceLinux::RemoveObserver(Observer* observer) {
-  DCHECK(CalledOnValidThread());
-  if (observer)
-    observers_.RemoveObserver(observer);
+void InputServiceLinux::GetDevicesAndSetClient(
+    device::mojom::InputDeviceManagerClientAssociatedPtrInfo client,
+    GetDevicesCallback callback) {
+  GetDevices(std::move(callback));
+
+  if (!client.is_valid())
+    return;
+
+  device::mojom::InputDeviceManagerClientAssociatedPtr client_ptr;
+  client_ptr.Bind(std::move(client));
+  clients_.AddPtr(std::move(client_ptr));
 }
 
-void InputServiceLinux::GetDevices(
-    std::vector<device::mojom::InputDeviceInfoPtr>* devices) {
+void InputServiceLinux::GetDevices(GetDevicesCallback callback) {
   DCHECK(CalledOnValidThread());
+  std::vector<device::mojom::InputDeviceInfoPtr> devices;
   for (auto& device : devices_)
-    devices->push_back(device.second->Clone());
+    devices.push_back(device.second->Clone());
+
+  std::move(callback).Run(std::move(devices));
 }
 
 void InputServiceLinux::AddDevice(device::mojom::InputDeviceInfoPtr info) {
-  for (auto& observer : observers_)
-    observer.OnInputDeviceAdded(info->Clone());
+  auto* device_info = info.get();
+  clients_.ForAllPtrs(
+      [device_info](device::mojom::InputDeviceManagerClient* client) {
+        client->InputDeviceAdded(device_info->Clone());
+      });
 
   devices_[info->id] = std::move(info);
 }
 
 void InputServiceLinux::RemoveDevice(const std::string& id) {
   devices_.erase(id);
-  for (auto& observer : observers_)
-    observer.OnInputDeviceRemoved(id);
+
+  clients_.ForAllPtrs([id](device::mojom::InputDeviceManagerClient* client) {
+    client->InputDeviceRemoved(id);
+  });
 }
 
 bool InputServiceLinux::CalledOnValidThread() const {
