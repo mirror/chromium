@@ -22,6 +22,30 @@
       "revId": "8bb867f25bfb173e0ee4136eb4ecec9b212656f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a33e31_f5f28400",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-09T17:19:46Z",
+      "side": 1,
+      "message": "This is calculated correctly.\n\nIt\u0027s Runner.config.ARCADE_MODE_INITIAL_TOP_POSITION that isn\u0027t scaled with the devicePixelRatio.",
+      "parentUuid": "6f596cb4_348999ec",
+      "range": {
+        "startLine": 866,
+        "startChar": 29,
+        "endLine": 866,
+        "endChar": 33
+      },
+      "revId": "8bb867f25bfb173e0ee4136eb4ecec9b212656f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
