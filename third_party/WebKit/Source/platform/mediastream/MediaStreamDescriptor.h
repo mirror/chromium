@@ -41,6 +41,7 @@
 
 namespace blink {
 
+class MediaStreamObserver;
 class WebMediaStreamObserver;
 
 class PLATFORM_EXPORT MediaStreamDescriptorClient
@@ -51,6 +52,8 @@ class PLATFORM_EXPORT MediaStreamDescriptorClient
   virtual void StreamEnded() = 0;
   virtual void AddTrackByComponent(MediaStreamComponent*) = 0;
   virtual void RemoveTrackByComponent(MediaStreamComponent*) = 0;
+  virtual void RegisterObserver(MediaStreamObserver*) = 0;
+  virtual void UnregisterObserver(MediaStreamObserver*) = 0;
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };
 
@@ -106,6 +109,9 @@ class PLATFORM_EXPORT MediaStreamDescriptor final
 
   void AddObserver(WebMediaStreamObserver*);
   void RemoveObserver(WebMediaStreamObserver*);
+
+  void AddClientObserver(MediaStreamObserver*);
+  void RemoveClientObserver(MediaStreamObserver*);
 
   // |m_extraData| may hold pointers to GC objects, and it may touch them in
   // destruction.  So this class is eagerly finalized to finalize |m_extraData|

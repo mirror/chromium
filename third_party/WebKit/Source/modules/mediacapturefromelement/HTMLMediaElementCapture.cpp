@@ -45,6 +45,27 @@ class MediaElementEventListener final : public EventListener {
   HeapHashSet<WeakMember<MediaStreamSource>> sources_;
 };
 
+// Class to register to the events of a MediaStreamDescriptor, acting
+// accordingly on the tracks of |m_mediaStream|.
+class MediaElementMediaStreamObserver final
+    : public GarbageCollected<MediaElementMediaStreamObserver>,
+      public MediaStreamObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(MediaElementMediaStreamObserver);
+
+ public:
+  MediaElementMediaStreamObserver(MediaStream*);
+  ~MediaElementMediaStreamObserver() override;
+  // WebMediaStreamObserver implementation
+  void OnStreamAddTrack(MediaStream*, MediaStreamTrack*) override;
+  void OnStreamRemoveTrack(MediaStream*, MediaStreamTrack*) override;
+
+  EAGERLY_FINALIZE();
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  Member<MediaStream> media_stream_;
+};
+
 MediaElementEventListener::MediaElementEventListener(HTMLMediaElement* element,
                                                      MediaStream* stream)
     : EventListener(kCPPEventListenerType),
@@ -70,6 +91,22 @@ void MediaElementEventListener::handleEvent(ExecutionContext* context,
   }
   if (event->type() != EventTypeNames::loadedmetadata)
     return;
+
+  // If |media_element_| is a MediaStream, clone the new tracks.
+  if (media_element_->GetLoadType() == WebMediaPlayer::kLoadTypeMediaStream) {
+    MediaStreamDescriptor* const descriptor =
+        media_element_->currentSrc().IsEmpty()
+            ? media_element_->GetSrcObject()
+            : MediaStreamRegistry::Registry().LookupMediaStreamDescriptor(
+                  media_element_->currentSrc().GetString());
+    DCHECK(descriptor);
+    LOG(ERROR) << __func__;
+    media_stream_->CloneFromDescriptor(descriptor);
+    descriptor->AddClientObserver(
+        new MediaElementMediaStreamObserver(media_stream_));
+    UpdateSources(context);
+    return;
+  }
 
   WebMediaStream web_stream;
   web_stream.Initialize(WebVector<WebMediaStreamTrack>(),
@@ -118,6 +155,29 @@ DEFINE_TRACE(MediaElementEventListener) {
   EventListener::Trace(visitor);
 }
 
+MediaElementMediaStreamObserver::MediaElementMediaStreamObserver(
+    MediaStream* stream)
+    : media_stream_(stream) {}
+
+MediaElementMediaStreamObserver::~MediaElementMediaStreamObserver() {}
+
+void MediaElementMediaStreamObserver::OnStreamAddTrack(
+    MediaStream* stream,
+    MediaStreamTrack* track) {
+  media_stream_->AddTrackByComponent(track->Component());
+}
+
+void MediaElementMediaStreamObserver::OnStreamRemoveTrack(
+    MediaStream* stream,
+    MediaStreamTrack* track) {
+  media_stream_->RemoveTrackByComponent(track->Component());
+}
+
+DEFINE_TRACE(MediaElementMediaStreamObserver) {
+  visitor->Trace(media_stream_);
+  MediaStreamObserver::Trace(visitor);
+}
+
 }  // anonymous namespace
 
 // static
@@ -162,6 +222,7 @@ MediaStream* HTMLMediaElementCapture::captureStream(
             : MediaStreamRegistry::Registry().LookupMediaStreamDescriptor(
                   element.currentSrc().GetString());
     DCHECK(descriptor);
+    descriptor->AddClientObserver(new MediaElementMediaStreamObserver(stream));
     return MediaStream::Create(element.GetExecutionContext(), descriptor);
   }
 

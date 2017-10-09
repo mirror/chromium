@@ -130,6 +130,17 @@ void MediaStreamDescriptor::RemoveObserver(WebMediaStreamObserver* observer) {
   observers_.EraseAt(index);
 }
 
+void MediaStreamDescriptor::AddClientObserver(MediaStreamObserver* observer) {
+  if (client_)
+    client_->RegisterObserver(observer);
+}
+
+void MediaStreamDescriptor::RemoveClientObserver(
+    MediaStreamObserver* observer) {
+  if (client_)
+    client_->UnregisterObserver(observer);
+}
+
 MediaStreamDescriptor::MediaStreamDescriptor(
     const String& id,
     const MediaStreamSourceVector& audio_sources,

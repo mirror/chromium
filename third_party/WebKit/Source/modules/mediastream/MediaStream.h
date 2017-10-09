@@ -85,14 +85,14 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
 
   void TrackEnded();
 
-  void RegisterObserver(MediaStreamObserver*);
-  void UnregisterObserver(MediaStreamObserver*);
-
   // MediaStreamDescriptorClient implementation
   void StreamEnded() override;
   void AddTrackByComponent(MediaStreamComponent*) override;
   void RemoveTrackByComponent(MediaStreamComponent*) override;
+  void RegisterObserver(MediaStreamObserver*) override;
+  void UnregisterObserver(MediaStreamObserver*) override;
 
+  void CloneFromDescriptor(MediaStreamDescriptor*);
   MediaStreamDescriptor* Descriptor() const { return descriptor_; }
 
   // EventTarget
@@ -117,6 +117,8 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
   MediaStream(ExecutionContext*,
               const MediaStreamTrackVector& audio_tracks,
               const MediaStreamTrackVector& video_tracks);
+
+  void CloneFromDescriptor();
 
   bool EmptyOrOnlyEndedTracks();
 
