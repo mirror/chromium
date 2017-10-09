@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1320c247_3333a59e",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-09T22:54:59Z",
+      "side": 1,
+      "message": "This function is not meant to be called on the UI thread. You should use the DefaultProtocolClientWoker to determine the default state. Then the callback already clears the registration if it is determined that Chrome isn\u0027t the default handler for that protocol.",
+      "range": {
+        "startLine": 421,
+        "startChar": 29,
+        "endLine": 421,
+        "endChar": 52
+      },
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b60a6d76_62f566b6",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
         "patchSetId": 24
@@ -13,6 +36,24 @@
       "writtenOn": "2017-10-09T04:13:12Z",
       "side": 1,
       "message": "This is weird. The logic here is meant to be - if the OS handler has changed, clear the default for the handler (that way the new OS default will be used).\n\nThere is no reason to be trying to register again. AFAICT this was an unintentional change made some time ago in https://codereview.chromium.org/1701183002.\n\n+pmonette - do you remember this? Was this changed intentionally?",
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b014f21_afa676af",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-10-09T22:54:59Z",
+      "side": 1,
+      "message": "This is a mistake I did, where I changed this from checking the default state to setting the default state somewhere in the past. It should be changed back.\n\nI would change this to:\n\nbase::MakeRefCounted\u003cshell_integration::DefaultProtocolClientWorker\u003e(\n    GetDefaultWebClientCallback(protocol), protocol)\n        -\u003eStartCheckIsDefault();\n\nOr wrap it into a function similar to RegisterWithOsAsDefaultClient():\n\nvoid ProtocolHandlerRegistry::Delegate::ClearDefaultClientWithOS(\n    const std::string\u0026 protocol, ProtocolHandlerRegistry* registry) {\n  // The worker pointer is reference counted. While it is running, the\n  // sequence it runs on will hold references it will be automatically freed\n  // once all its tasks have finished.\n  base::MakeRefCounted\u003cshell_integration::DefaultProtocolClientWorker\u003e(\n      registry-\u003eGetDefaultWebClientCallback(protocol), protocol)\n      -\u003eStartCheckIsDefault();\n}\n\nSorry about this!",
+      "parentUuid": "b60a6d76_62f566b6",
       "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
