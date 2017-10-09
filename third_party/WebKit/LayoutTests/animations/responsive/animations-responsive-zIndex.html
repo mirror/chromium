@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id='container'>
+    <div id='element'></div>
+</div>
+<script>
+
+var container = document.getElementById('container');
+var element = document.getElementById('element');
+
+test(function() {
+    var keyframes = [
+        {zIndex: 'inherit'},
+        {zIndex: '20'}
+    ];
+
+    container.style.position = 'relative';
+    element.style.position = 'relative';
+
+    container.style.zIndex = '10';
+    var player = element.animate(keyframes, 10);
+
+    player.pause();
+    player.currentTime = 5;
+    container.style.zIndex = '40';
+    assert_equals(getComputedStyle(element).zIndex, '30');
+}, 'z-index responsive to inherited z-index changes');
+
+</script>
