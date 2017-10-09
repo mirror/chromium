@@ -37,14 +37,14 @@ layer at (264,260) size 32x32
   LayoutButton {INPUT} at (256,0) size 32x32
 layer at (64,276) size 107x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 107x0
-layer at (82,275) size 71x2
+layer at (82,275) size 71x2 scrollWidth 72
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 71x2 [bgcolor=#DADADA]
 layer at (203,276) size 61x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 61x0
 layer at (221,275) size 25x2
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 25x2 [bgcolor=#DADADA]
-layer at (82,275) size 71x2
-  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 71x2 [bgcolor=#5A5A5A]
+layer at (82,275) size 72x2 backgroundClip at (82,275) size 71x2 clip at (82,275) size 71x2
+  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 72x2 [bgcolor=#5A5A5A]
 layer at (82,275) size 0x2
   LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 0x2 [bgcolor=#4285F4]
 layer at (221,275) size 0x2
@@ -77,14 +77,14 @@ layer at (264,505) size 32x32
   LayoutButton {INPUT} at (256,0) size 32x32
 layer at (64,521) size 107x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 107x0
-layer at (82,520) size 71x2
+layer at (82,520) size 71x2 scrollWidth 72
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 71x2 [bgcolor=#DADADA]
 layer at (203,521) size 61x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 61x0
 layer at (221,520) size 25x2
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 25x2 [bgcolor=#DADADA]
-layer at (82,520) size 71x2
-  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 71x2 [bgcolor=#5A5A5A]
+layer at (82,520) size 72x2 backgroundClip at (82,520) size 71x2 clip at (82,520) size 71x2
+  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 72x2 [bgcolor=#5A5A5A]
 layer at (82,520) size 0x2
   LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 0x2 [bgcolor=#4285F4]
 layer at (221,520) size 0x2
@@ -119,14 +119,14 @@ layer at (264,750) size 32x32 backgroundClip at (0,0) size 0x0 clip at (0,0) siz
   LayoutButton {INPUT} at (256,0) size 32x32
 layer at (64,766) size 107x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 107x0
-layer at (82,765) size 71x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+layer at (82,765) size 71x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 scrollWidth 72
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 71x2 [bgcolor=#DADADA]
 layer at (203,766) size 61x0
   LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 61x0
 layer at (221,765) size 25x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
   LayoutBlockFlow (positioned) {DIV} at (18,-1) size 25x2 [bgcolor=#DADADA]
-layer at (82,765) size 71x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
-  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 71x2 [bgcolor=#5A5A5A]
+layer at (82,765) size 72x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 72x2 [bgcolor=#5A5A5A]
 layer at (82,765) size 0x2
   LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 0x2 [bgcolor=#4285F4]
 layer at (221,765) size 0x2

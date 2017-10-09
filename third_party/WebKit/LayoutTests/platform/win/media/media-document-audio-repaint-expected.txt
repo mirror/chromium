@@ -41,16 +41,16 @@ layer at (8,44) size 384x334
           LayoutFlexibleBox {DIV} at (0,0) size 25x2
     layer at (130,150) size 117x0
       LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 117x0
-    layer at (148,149) size 81x2
+    layer at (148,149) size 81x2 scrollWidth 82
       LayoutBlockFlow (positioned) {DIV} at (18,-1) size 81x2 [bgcolor=#DADADA]
     layer at (279,150) size 61x0
       LayoutBlockFlow (relative positioned) {DIV} at (-18,1) size 61x0
     layer at (297,149) size 25x2
       LayoutBlockFlow (positioned) {DIV} at (18,-1) size 25x2 [bgcolor=#DADADA]
-    layer at (188,149) size 40x2
-      LayoutBlockFlow (positioned) zI: 1 {DIV} at (40,0) size 40x2 [bgcolor=#5A5A5A]
-    layer at (148,149) size 40x2
-      LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 40x2 [bgcolor=#4285F4]
+    layer at (189,149) size 41x2 backgroundClip at (148,149) size 81x2 clip at (148,149) size 81x2
+      LayoutBlockFlow (positioned) zI: 1 {DIV} at (41,0) size 41x2 [bgcolor=#5A5A5A]
+    layer at (148,149) size 41x2
+      LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 41x2 [bgcolor=#4285F4]
     layer at (297,149) size 0x2
       LayoutBlockFlow (positioned) zI: 1 {DIV} at (0,0) size 0x2 [bgcolor=#5A5A5A]
     layer at (297,149) size 25x2
