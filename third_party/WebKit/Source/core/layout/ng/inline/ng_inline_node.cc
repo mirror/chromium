@@ -817,4 +817,16 @@ size_t NGInlineNode::GetTextContentOffset(const Node& node, unsigned offset) {
   return unit->ConvertDOMOffsetToTextContent(offset);
 }
 
+unsigned NGInlineNode::StartOfNextNonCollapsedCharacter(const Node& node,
+                                                        unsigned offset) {
+  const auto& result = ComputeOffsetMappingIfNeeded();
+  return result.StartOfNextNonCollapsedCharacter(node, offset);
+}
+
+unsigned NGInlineNode::EndOfLastNonCollapsedCharacter(const Node& node,
+                                                      unsigned offset) {
+  const auto& result = ComputeOffsetMappingIfNeeded();
+  return result.EndOfLastNonCollapsedCharacter(node, offset);
+}
+
 }  // namespace blink
