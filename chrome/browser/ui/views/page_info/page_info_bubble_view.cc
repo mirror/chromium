@@ -185,6 +185,14 @@ views::View* CreateSiteSettingsLink(const int side_margin,
   return link_section;
 }
 
+bool ShouldFlipButtonOrder() {
+#if defined(OS_WIN) || defined(OS_CHROMEOS)
+  return !base::i18n::IsRTL();
+#else
+  return base::i18n::IsRTL();
+#endif
+}
+
 }  // namespace
 
 // |BubbleHeaderView| is the UI element (view) that represents the header of the
@@ -297,8 +305,6 @@ BubbleHeaderView::BubbleHeaderView(
 
   layout->StartRow(0, label_column_status);
   password_reuse_button_container_ = new views::View();
-  password_reuse_button_container_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 8));
   layout->AddView(password_reuse_button_container_, 1, 1,
                   views::GridLayout::FILL, views::GridLayout::LEADING);
 
@@ -364,19 +370,44 @@ void BubbleHeaderView::AddResetDecisionsLabel() {
 
 void BubbleHeaderView::AddPasswordReuseButtons() {
   change_password_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
-      button_listener_,
-      l10n_util::GetStringUTF16(IDS_PAGE_INFO_CHANGE_PASSWORD_BUTTON));
+      button_listener_, l10n_util::GetStringUTF16(IDS_PAGE_INFO_CHANGE_PASSWORD_BUTTON));
   change_password_button_->set_id(
       PageInfoBubbleView::VIEW_ID_PAGE_INFO_BUTTON_CHANGE_PASSWORD);
   whitelist_password_reuse_button_ =
       views::MdTextButton::CreateSecondaryUiButton(
           button_listener_, l10n_util::GetStringUTF16(
-                                IDS_PAGE_INFO_WHITELIST_PASSWORD_REUSE_BUTTON));
+                               IDS_PAGE_INFO_WHITELIST_PASSWORD_REUSE_BUTTON));
   whitelist_password_reuse_button_->set_id(
       PageInfoBubbleView::VIEW_ID_PAGE_INFO_BUTTON_WHITELIST_PASSWORD_REUSE);
-  password_reuse_button_container_->AddChildView(change_password_button_);
-  password_reuse_button_container_->AddChildView(
-      whitelist_password_reuse_button_);
+
+  int kBorderWidth = 8;
+  int kSpacingBetweenButtons = 8;
+
+  // If these two buttons cannot fit into a single line, stack them vertically.
+  bool can_fit_in_one_line =
+      (password_reuse_button_container_->width() - kBorderWidth * 2 -
+       kSpacingBetweenButtons) >=
+      (change_password_button_->CalculatePreferredSize().width() +
+       whitelist_password_reuse_button_->CalculatePreferredSize().width());
+  views::BoxLayout* layout = can_fit_in_one_line ?
+      new views::BoxLayout(
+        views::BoxLayout::kHorizontal, gfx::Insets(), kSpacingBetweenButtons) :
+        new views::BoxLayout(views::BoxLayout::kVertical);
+  // Make buttons right-aligned.
+  layout->set_main_axis_alignment(
+        views::BoxLayout::MAIN_AXIS_ALIGNMENT_END);
+  password_reuse_button_container_->SetLayoutManager(layout);
+
+  if (ShouldFlipButtonOrder()) {
+    password_reuse_button_container_->AddChildView(change_password_button_);
+    password_reuse_button_container_->AddChildView(
+        whitelist_password_reuse_button_);
+  } else {
+    password_reuse_button_container_->AddChildView(
+        whitelist_password_reuse_button_);
+    password_reuse_button_container_->AddChildView(change_password_button_);
+  }
+
   password_reuse_button_container_->SetBorder(
       views::CreateEmptyBorder(8, 0, 0, 0));
 

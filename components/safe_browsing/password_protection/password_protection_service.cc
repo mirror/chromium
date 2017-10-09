@@ -154,16 +154,16 @@ bool PasswordProtectionService::ShouldShowModalWarning(
     bool matches_sync_password,
     SyncAccountType account_type,
     VerdictType verdict_type) {
-  return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
-         trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
-         matches_sync_password &&
-         account_type ==
-             LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
-         (verdict_type == LoginReputationClientResponse::PHISHING ||
-          (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
-           base::GetFieldTrialParamByFeatureAsBool(
-               kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
-               false)));
+  return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning); /* &&
+          trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
+          matches_sync_password &&
+          account_type ==
+              LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
+          (verdict_type == LoginReputationClientResponse::PHISHING ||
+           (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
+            base::GetFieldTrialParamByFeatureAsBool(
+                kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
+                false)));*/
 }
 
 void PasswordProtectionService::OnWarningShown(WebContents* web_contents,
