@@ -2,21 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_MESSAGE_H_
-#define THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_MESSAGE_H_
+#ifndef THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_CLONEABLE_MESSAGE_H_
+#define THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_CLONEABLE_MESSAGE_H_
 
 #include <vector>
 
 #include "base/containers/span.h"
-#include "mojo/public/cpp/system/message_pipe.h"
+#include "third_party/WebKit/common/common_export.h"
 
 namespace blink {
 
-// This struct represents messages as they are posted over a message port. This
-// type can be serialized as a blink::mojom::MessagePortMessage struct.
-struct MessagePortMessage {
-  MessagePortMessage();
-  ~MessagePortMessage();
+// This struct represents messages as they are posted over a broadcast channel.
+// This type can be serialized as a blink::mojom::CloneableMessage struct.
+struct BLINK_COMMON_EXPORT CloneableMessage {
+  CloneableMessage();
+  CloneableMessage(CloneableMessage&&);
+  CloneableMessage& operator=(CloneableMessage&&);
+  ~CloneableMessage();
 
   // To reduce copies when serializing |encoded_message| does not have to point
   // to |owned_encoded_message|. The serialization code completely ignores the
@@ -25,11 +27,8 @@ struct MessagePortMessage {
   // and |encoded_message| is set to point to |owned_encoded_message|.
   base::span<const uint8_t> encoded_message;
   std::vector<uint8_t> owned_encoded_message;
-
-  // Any ports being transfered as part of this message.
-  std::vector<mojo::ScopedMessagePipeHandle> ports;
 };
 
 }  // namespace blink
 
-#endif  // THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_MESSAGE_H_
+#endif  // THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_CLONEABLE_MESSAGE_H_
