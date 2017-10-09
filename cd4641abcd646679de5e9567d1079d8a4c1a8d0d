@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da504db_b8068492",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "Any way to break these up into separate configuration and start steps?\n\nFor example, it\u0027s well-established that coordinators have some kind of base view controller configured. Passing in a presentingViewController in each of these methods shouldn\u0027t be needed.\n\n(I\u0027m fine if that evolves over a few CLs, but I\u0027d like to know there\u0027s a plan to get to a better API than this).",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ef2317_e8ec2609",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "If possible, I\u0027d rather have a delegate that gets a \u0027signinInteractionDidComplate\u0027 call instead of a callback. Again, this can happen in follow-up CLs.",
+      "range": {
+        "startLine": 47,
+        "startChar": 60,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820c51f2_485db81b",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "can we use \u0027stop\u0027 instead of \u0027cancel\u0027 for more consistency with the general coordinator pattern?\n\nWhat\u0027s the use case for cancel vs cancelAndDismiss? Can they be collapsed?",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a621e8_3226c6b2",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "can this just be \u0027active\u0027 or \u0027started\u0027?",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 60
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c61625e_75e1f697",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "Should this be in a requirements/ subdirectory?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 81
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ec6efb_67a0b893",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "All of these methods need comments.",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ef8989_de8d4248",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:06:15Z",
+      "side": 1,
+      "message": "Seeing a protocol containing a method that looks exactly like a UIViewController method is setting off alarm bells.",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
