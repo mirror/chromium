@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "21bb396e_8e376c45",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "How about adding a TODO with a bug number, to remove the chromeos, so we dont\u0027 forget it.",
+      "range": {
+        "startLine": 3307,
+        "startChar": 48,
+        "endLine": 3307,
+        "endChar": 59
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a00991c_70c161fe",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "discussed off line: This should check if the given web_contents has a warning showing, not per-origin.",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "653b37d8_ede07600",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -71,6 +111,47 @@
     },
     {
       "key": {
+        "uuid": "86136c05_44b80b1f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "This should probably call a function in PasswordProtectionService to modify requests_.",
+      "parentUuid": "6775cdeb_56f61236",
+      "range": {
+        "startLine": 621,
+        "startChar": 17,
+        "endLine": 621,
+        "endChar": 26
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa38ea1_0042ffff",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "Possible alternative: use EraseIf(), if it\u0027s better. Example:\n\nhttps://cs.chromium.org/chromium/src/net/http/http_auth_cache.cc?type\u003dcs\u0026q\u003deraseif\u0026sq\u003dpackage:chromium\u0026l\u003d258",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b92f6a5_3dda3312",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -110,6 +191,29 @@
         "startChar": 4,
         "endLine": 646,
         "endChar": 14
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ce06d7_a5596ea7",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "Is checking kGoogleBrandedPhishgingWarning sufficient? Or is this feature the superset of any features that\u0027d trigger a warning here?",
+      "range": {
+        "startLine": 676,
+        "startChar": 36,
+        "endLine": 676,
+        "endChar": 63
       },
       "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -157,6 +261,131 @@
         "endLine": 686,
         "endChar": 17
       },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aefb58d_654e544b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "This seems like it\u0027d be a NOOP given that the container gets deleted on the next line.",
+      "range": {
+        "startLine": 118,
+        "startChar": 24,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e657e22_a16bc8de",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "How about a case like this but then they dismiss it and the page load continues?",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b1c2a5_eac0311e",
+        "filename": "chrome/test/data/safe_browsing/bad_login.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "nit: This is called a bad login page, but there\u0027s nothing bad about it inherently, ya?  Want to call it just login_page.html? Or is it handled specially?",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04c9674_e257fc48",
+        "filename": "components/safe_browsing/password_protection/password_protection_navigation_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "Hmm, do we want to cancel it because a dialog was shown, or cancel it only if they want to change their password?\n\nIf there were a false-positive warning, and they clicked \"ignore,\" it would be best to let the navigation continue (they\u0027re probably logging in), ya?  Otherwise, they would need to hit submit again. Actually that\u0027s not terrible.  Hmm.",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db31e569_251a67cc",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "Should there ever be more than 1 throttle? If not, you could dcheck that.",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63567698_03791971",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "nit: This is a bit confusing, as to when requests_ needs be modified, based on if there\u0027s a dialog showing.  My feeling is this is prone to error, but I can\u0027t find one or propose a better solution.\n\nOne idea (might be bad): Have two lists of requests: One that\u0027s for pending req\u0027s, one that\u0027s for dialog-showing req\u0027s, and you could move them from one to the next. That way you can clearly tell them apart.",
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7e9ae6_3a878394",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-09T23:30:33Z",
+      "side": 1,
+      "message": "Does the erase() invalidate |it|?  You may want \nit \u003d requests_.erase(it)",
       "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
