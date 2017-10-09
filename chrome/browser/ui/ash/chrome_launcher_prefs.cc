@@ -185,8 +185,10 @@ void GetAppsPinnedByPolicy(const PrefService* prefs,
   DCHECK(apps->app_list().empty());
 
   const auto* policy_apps = prefs->GetList(prefs::kPolicyPinnedLauncherApps);
+  LOG(ERROR) << "Policy apps " << policy_apps;
   if (!policy_apps)
     return;
+  LOG(ERROR) << "Policy apps size " << policy_apps->GetSize();
 
   // Obtain here all ids of ARC apps because it takes linear time, and getting
   // them in the loop bellow would lead to quadratic complexity.
@@ -245,18 +247,25 @@ std::vector<std::string> GetPinnedAppsFromPrefsLegacy(
   AppTracker apps;
   GetAppsPinnedByPolicy(prefs, helper, check_for_valid_app, &apps);
 
-  std::string app_id;
-  for (size_t i = 0; i < pinned_apps->GetSize(); ++i) {
-    // We need to position the chrome icon relative to its place in the pinned
-    // preference list - even if an item of that list isn't shown yet.
-    if (i == chrome_icon_index)
-      apps.AddApp(extension_misc::kChromeAppId);
-    const base::DictionaryValue* app_pref = nullptr;
-    if (!pinned_apps->GetDictionary(i, &app_pref)) {
-      LOG(ERROR) << "There is no dictionary for app entry.";
-      continue;
+  // If PinnedLauncherApps has default value and Apps pinned by policy exits,
+  // do not add PinnedLauncherApps.
+  bool should_add_non_policy_apps =
+      apps.app_list().empty() || prefs->HasPrefPath(prefs::kPinnedLauncherApps);
+
+  if (should_add_non_policy_apps) {
+    std::string app_id;
+    for (size_t i = 0; i < pinned_apps->GetSize(); ++i) {
+      // We need to position the chrome icon relative to its place in the pinned
+      // preference list - even if an item of that list isn't shown yet.
+      if (i == chrome_icon_index)
+        apps.AddApp(extension_misc::kChromeAppId);
+      const base::DictionaryValue* app_pref = nullptr;
+      if (!pinned_apps->GetDictionary(i, &app_pref)) {
+        LOG(ERROR) << "There is no dictionary for app entry.";
+        continue;
+      }
+      apps.MaybeAddAppFromPref(app_pref, helper, check_for_valid_app);
     }
-    apps.MaybeAddAppFromPref(app_pref, helper, check_for_valid_app);
   }
 
   // If not added yet, the chrome item will be the last item in the list.
