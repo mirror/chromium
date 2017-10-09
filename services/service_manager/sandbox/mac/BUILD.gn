@@ -23,10 +23,18 @@ action_foreach("package_sb_files") {
   ]
 }
 
-source_set("packaged_sb_files") {
-  sources = get_target_outputs(":package_sb_files")
+source_set("source_files") {
+  sources = [
+    "sandbox_mac.h",
+    "sandbox_mac.mm",
+  ]
+  sources += get_target_outputs(":package_sb_files")
   defines = [ "SERVICE_MANAGER_SANDBOX_IMPL" ]
   deps = [
     ":package_sb_files",
+    "//base",
+    "//sandbox",
+    "//services/service_manager/sandbox/export.h",
+    "//services/service_manager/sandbox/sandbox_types.h",
   ]
 }
