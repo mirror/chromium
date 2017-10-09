@@ -25,6 +25,7 @@
 
 namespace content {
 class WebContents;
+class NavigationHandle;
 }
 
 namespace history {
@@ -36,8 +37,9 @@ class HostContentSettingsMap;
 
 namespace safe_browsing {
 
-class SafeBrowsingDatabaseManager;
+class PasswordProtectionNavigationThrottle;
 class PasswordProtectionRequest;
+class SafeBrowsingDatabaseManager;
 
 // UMA metrics
 extern const char kPasswordOnFocusRequestOutcomeHistogram[];
@@ -220,6 +222,9 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   virtual bool UserClickedThroughSBInterstitial(
       content::WebContents* web_contents) = 0;
 
+  std::unique_ptr<PasswordProtectionNavigationThrottle>
+  MaybeCreateNavigationThrottle(content::NavigationHandle* navigation_handle);
+
  protected:
   friend class PasswordProtectionRequest;
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest, VerifyCanSendPing);
@@ -294,6 +299,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
  private:
   friend class PasswordProtectionServiceTest;
   friend class TestPasswordProtectionService;
+  friend class ChromePasswordProtectionService;
+  friend class ChromePasswordProtectionServiceTest;
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest,
                            TestParseInvalidVerdictEntry);
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest,
