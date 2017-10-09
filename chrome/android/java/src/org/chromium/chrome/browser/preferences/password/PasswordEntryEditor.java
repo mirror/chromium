@@ -460,7 +460,7 @@ public class PasswordEntryEditor extends Fragment {
                                  R.string.password_entry_editor_set_lock_screen, Toast.LENGTH_LONG)
                             .show();
                 } else if (passwordView.getInputType()
-                        == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                        & InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
                     hidePassword();
                 } else if (authenticationStillValid()) {
                     displayPassword();
