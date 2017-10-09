@@ -18,6 +18,28 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace chromeos {
+namespace {
+
+// Handles replies to D-Bus calls made by GetLastSyncInfo.
+void OnGetLastSyncInfo(const GetLastSyncInfoCallback& callback,
+                       dbus::Response* response) {
+  if (!response) {
+    LOG(ERROR) << system_clock::kSystemClockInterface << "."
+               << system_clock::kSystemLastSyncInfo << " request failed.";
+    return;
+  }
+  dbus::MessageReader reader(response);
+  bool network_synchronized = false;
+  if (!reader.PopBool(&network_synchronized)) {
+    LOG(ERROR) << system_clock::kSystemClockInterface << "."
+               << system_clock::kSystemLastSyncInfo
+               << " response lacks network-synchronized argument";
+    return;
+  }
+  callback.Run(network_synchronized);
+}
+
+}  // namespace
 
 // The SystemClockClient implementation used in production.
 class SystemClockClientImpl : public SystemClockClient {
@@ -54,6 +76,14 @@ class SystemClockClientImpl : public SystemClockClient {
   }
 
   bool CanSetTime() override { return can_set_time_; }
+
+  void GetLastSyncInfo(const GetLastSyncInfoCallback& callback) override {
+    dbus::MethodCall method_call(system_clock::kSystemClockInterface,
+                                 system_clock::kSystemLastSyncInfo);
+    system_clock_proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::BindOnce(OnGetLastSyncInfo, callback));
+  }
 
  protected:
   void Init(dbus::Bus* bus) override {
