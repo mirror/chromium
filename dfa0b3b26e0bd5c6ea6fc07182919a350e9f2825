@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d42636_eb35ea3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T23:10:04Z",
+      "side": 1,
+      "message": "Could you please include a link to the CL where these histograms are actually implemented?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "dfa0b3b26e0bd5c6ea6fc07182919a350e9f2825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548ea823_52e62527",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46384,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T23:10:04Z",
+      "side": 1,
+      "message": "Optional: I\u0027m not familiar with the acronym \"BSS\".  Is there a less jargon-y way of describing this that\u0027s still fairly brief and precise?",
+      "range": {
+        "startLine": 46384,
+        "startChar": 52,
+        "endLine": 46384,
+        "endChar": 55
+      },
+      "revId": "dfa0b3b26e0bd5c6ea6fc07182919a350e9f2825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e7d625_1ae28b1e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 46385,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T23:10:04Z",
+      "side": 1,
+      "message": "Please document when this is recorded.  Ditto for the other histograms.",
+      "range": {
+        "startLine": 46385,
+        "startChar": 21,
+        "endLine": 46385,
+        "endChar": 0
+      },
+      "revId": "dfa0b3b26e0bd5c6ea6fc07182919a350e9f2825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
