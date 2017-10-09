@@ -5,12 +5,16 @@
 #ifndef CSSPropertyAPIApplyAtRule_h
 #define CSSPropertyAPIApplyAtRule_h
 
+#include "build/build_config.h"
 #include "core/css/properties/CSSPropertyAPI.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace blink {
 
 class CSSPropertyAPIApplyAtRule : public CSSPropertyAPI {
  public:
+  constexpr CSSPropertyAPIApplyAtRule(CSSPropertyID id) : CSSPropertyAPI(id) {}
+
   bool IsEnabled() const override {
     return RuntimeEnabledFeatures::CSSApplyAtRulesEnabled();
   }

@@ -5,12 +5,16 @@
 #ifndef CSSPropertyAPIVariable_h
 #define CSSPropertyAPIVariable_h
 
+#include "build/build_config.h"
 #include "core/css/properties/CSSPropertyAPI.h"
+#include "platform/runtime_enabled_features.h"
 
 namespace blink {
 
 class CSSPropertyAPIVariable : public CSSPropertyAPI {
  public:
+  constexpr CSSPropertyAPIVariable(CSSPropertyID id) : CSSPropertyAPI(id) {}
+
   bool IsInherited() const override { return true; }
   bool IsAffectedByAll() const override { return false; }
 };
