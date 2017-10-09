@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5bdc1fa_5d8c4237",
+        "filename": "chrome/browser/sync/test/integration/search_engines_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "In this case the test will still crash if this is not true when the pointer is used below. In that sense is this even needed here.\n\nThe same goes for all those non-null checks.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca745c7_3ef75cf7",
+        "filename": "chrome/browser/sync/test/integration/sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Just in case you didn\u0027t know ASSERT_XXXX is eventually a log + return so asserting inside a function that is not the test body itself will not prevent the rest of the test from running. A truth I learned the hard way. So those asserts will stop the rest of the function but won\u0027t stop the rest of the tests they are called from.",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 15
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22cc5cc_538321b3",
+        "filename": "components/sync/driver/glue/sync_backend_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 79
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a065dc0_03c730f2",
+        "filename": "components/sync/driver/glue/sync_backend_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 57
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c4e687_acdc6327",
+        "filename": "components/sync/driver/sync_service_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 116,
+        "startChar": 3,
+        "endLine": 116,
+        "endChar": 52
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2578c8_2c179e66",
+        "filename": "components/sync/syncable/model_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "This will not work. DCHECKS are no-ops in release code. You need to split the function call from the DCHECK. I only noticed that here but please check all other DCHECKs to not have side effects.",
+      "range": {
+        "startLine": 501,
+        "startChar": 4,
+        "endLine": 501,
+        "endChar": 39
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a352cc73_d19dcb43",
+        "filename": "components/sync/syncable/model_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 505,
+        "startChar": 4,
+        "endLine": 505,
+        "endChar": 40
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420cac74_35d81274",
+        "filename": "components/sync/test/engine/mock_connection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 49
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcf02e6_76d3ed6a",
+        "filename": "components/sync/tools/sync_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 350,
+        "startChar": 2,
+        "endLine": 350,
+        "endChar": 45
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949d36fb_49b046b2",
+        "filename": "components/sync/tools/sync_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 438,
+        "startChar": 2,
+        "endLine": 438,
+        "endChar": 41
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe71d60_cda9b4e5",
+        "filename": "components/sync/tools/sync_listen_notifications.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-09T11:33:48Z",
+      "side": 1,
+      "message": "Side effect in DCHECK.",
+      "range": {
+        "startLine": 198,
+        "startChar": 2,
+        "endLine": 198,
+        "endChar": 41
+      },
+      "revId": "b003e25acc41a211eb6a1b8c9fb1ad4013e85c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
