@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_win.h"
+#include "services/service_manager/sandbox/win/sandbox_win.h"
 
 #include <stddef.h>
 
@@ -32,12 +32,6 @@
 #include "base/win/scoped_process_information.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
-#include "content/common/content_switches_internal.h"
-#include "content/public/common/content_client.h"
-#include "content/public/common/content_features.h"
-#include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "sandbox/win/src/process_mitigations.h"
 #include "sandbox/win/src/sandbox.h"
 #include "sandbox/win/src/sandbox_nt_util.h"
@@ -45,13 +39,9 @@
 #include "sandbox/win/src/win_utils.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
-#if !defined(NACL_WIN64)
-#include "ui/gfx/win/direct_write.h" // nogncheck: unused #ifdef NACL_WIN64
-#endif  // !defined(NACL_WIN64)
-
 static sandbox::BrokerServices* g_broker_services = NULL;
 
-namespace content {
+namespace service_manager {
 namespace {
 
 // The DLLs listed here are known (or under strong suspicion) of causing crashes
@@ -143,7 +133,9 @@ const wchar_t* const kTroublesomeDlls[] = {
 // Adds the policy rules for the path and path\ with the semantic |access|.
 // If |children| is set to true, we need to add the wildcard rules to also
 // apply the rule to the subfiles and subfolders.
-bool AddDirectory(int path, const wchar_t* sub_dir, bool children,
+bool AddDirectory(int path,
+                  const wchar_t* sub_dir,
+                  bool children,
                   sandbox::TargetPolicy::Semantics access,
                   sandbox::TargetPolicy* policy) {
   base::FilePath directory;
@@ -245,7 +237,7 @@ base::string16 PrependWindowsSessionPath(const base::char16* object) {
 
     CHECK(::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &token));
     CHECK(::GetTokenInformation(token, TokenSessionId, &session_id,
-        sizeof(session_id), &session_id_length));
+                                sizeof(session_id), &session_id_length));
     CloseHandle(token);
     if (session_id)
       s_session_id = session_id;
@@ -272,9 +264,8 @@ bool ShouldSetJobLevel(const base::CommandLine& cmd_line) {
 
   // ...or there is a job but the JOB_OBJECT_LIMIT_BREAKAWAY_OK limit is set.
   JOBOBJECT_EXTENDED_LIMIT_INFORMATION job_info = {};
-  if (!::QueryInformationJobObject(NULL,
-                                   JobObjectExtendedLimitInformation, &job_info,
-                                   sizeof(job_info), NULL)) {
+  if (!::QueryInformationJobObject(NULL, JobObjectExtendedLimitInformation,
+                                   &job_info, sizeof(job_info), NULL)) {
     NOTREACHED() << "QueryInformationJobObject failed. " << GetLastError();
     return true;
   }
@@ -334,16 +325,15 @@ sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy) {
   if (result != sandbox::SBOX_ALL_OK)
     return result;
 
-  // Add the policy for debug message only in debug
+// Add the policy for debug message only in debug
 #ifndef NDEBUG
   base::FilePath app_dir;
   if (!PathService::Get(base::DIR_MODULE, &app_dir))
     return sandbox::SBOX_ERROR_GENERIC;
 
   wchar_t long_path_buf[MAX_PATH];
-  DWORD long_path_return_value = GetLongPathName(app_dir.value().c_str(),
-                                                 long_path_buf,
-                                                 MAX_PATH);
+  DWORD long_path_return_value =
+      GetLongPathName(app_dir.value().c_str(), long_path_buf, MAX_PATH);
   if (long_path_return_value == 0 || long_path_return_value >= MAX_PATH)
     return sandbox::SBOX_ERROR_NO_SPACE;
 
@@ -356,7 +346,7 @@ sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy) {
     return result;
 #endif  // NDEBUG
 
-  // Add the policy for read-only PDB file access for stack traces.
+// Add the policy for read-only PDB file access for stack traces.
 #if !defined(OFFICIAL_BUILD)
   base::FilePath exe;
   if (!PathService::Get(base::FILE_EXE, &exe))
@@ -461,13 +451,13 @@ void ProcessDebugFlags(base::CommandLine* command_line) {
 #ifndef OFFICIAL_BUILD
 base::win::IATPatchFunction g_iat_patch_duplicate_handle;
 
-typedef BOOL (WINAPI *DuplicateHandleFunctionPtr)(HANDLE source_process_handle,
-                                                  HANDLE source_handle,
-                                                  HANDLE target_process_handle,
-                                                  LPHANDLE target_handle,
-                                                  DWORD desired_access,
-                                                  BOOL inherit_handle,
-                                                  DWORD options);
+typedef BOOL(WINAPI* DuplicateHandleFunctionPtr)(HANDLE source_process_handle,
+                                                 HANDLE source_handle,
+                                                 HANDLE target_process_handle,
+                                                 LPHANDLE target_handle,
+                                                 DWORD desired_access,
+                                                 BOOL inherit_handle,
+                                                 DWORD options);
 
 DuplicateHandleFunctionPtr g_iat_orig_duplicate_handle;
 
@@ -491,18 +481,17 @@ void CheckDuplicateHandle(HANDLE handle) {
   // Get the object basic information.
   OBJECT_BASIC_INFORMATION basic_info;
   size = sizeof(basic_info);
-  error = g_QueryObject(handle, ObjectBasicInformation, &basic_info, size,
-                        &size);
+  error =
+      g_QueryObject(handle, ObjectBasicInformation, &basic_info, size, &size);
   CHECK(NT_SUCCESS(error));
 
-  CHECK(!(basic_info.GrantedAccess & WRITE_DAC)) <<
-      kDuplicateHandleWarning;
+  CHECK(!(basic_info.GrantedAccess & WRITE_DAC)) << kDuplicateHandleWarning;
 
   if (0 == _wcsicmp(type_info->Name.Buffer, L"Process")) {
     const ACCESS_MASK kDangerousMask =
         ~static_cast<DWORD>(PROCESS_QUERY_LIMITED_INFORMATION | SYNCHRONIZE);
-    CHECK(!(basic_info.GrantedAccess & kDangerousMask)) <<
-        kDuplicateHandleWarning;
+    CHECK(!(basic_info.GrantedAccess & kDangerousMask))
+        << kDuplicateHandleWarning;
   }
 }
 
@@ -530,12 +519,9 @@ BOOL WINAPI DuplicateHandlePatch(HANDLE source_process_handle,
     // We need a handle with permission to check the job object.
     if (ERROR_ACCESS_DENIED == ::GetLastError()) {
       HANDLE temp_handle;
-      CHECK(g_iat_orig_duplicate_handle(::GetCurrentProcess(),
-                                        target_process_handle,
-                                        ::GetCurrentProcess(),
-                                        &temp_handle,
-                                        PROCESS_QUERY_INFORMATION,
-                                        FALSE, 0));
+      CHECK(g_iat_orig_duplicate_handle(
+          ::GetCurrentProcess(), target_process_handle, ::GetCurrentProcess(),
+          &temp_handle, PROCESS_QUERY_INFORMATION, FALSE, 0));
       base::win::ScopedHandle process(temp_handle);
       CHECK(::IsProcessInJob(process.Get(), NULL, &is_in_job));
     }
@@ -548,8 +534,8 @@ BOOL WINAPI DuplicateHandlePatch(HANDLE source_process_handle,
     // Duplicate the handle again, to get the final permissions.
     HANDLE temp_handle;
     CHECK(g_iat_orig_duplicate_handle(target_process_handle, *target_handle,
-                                      ::GetCurrentProcess(), &temp_handle,
-                                      0, FALSE, DUPLICATE_SAME_ACCESS));
+                                      ::GetCurrentProcess(), &temp_handle, 0,
+                                      FALSE, DUPLICATE_SAME_ACCESS));
     base::win::ScopedHandle handle(temp_handle);
 
     // Callers use CHECK macro to make sure we get the right stack.
@@ -683,15 +669,15 @@ bool InitBrokerServices(sandbox::BrokerServices* broker_services) {
   sandbox::ResultCode result = broker_services->Init();
   g_broker_services = broker_services;
 
-  // In non-official builds warn about dangerous uses of DuplicateHandle.
+// In non-official builds warn about dangerous uses of DuplicateHandle.
 #ifndef OFFICIAL_BUILD
   BOOL is_in_job = FALSE;
   CHECK(::IsProcessInJob(::GetCurrentProcess(), NULL, &is_in_job));
   // In a Syzygy-profiled binary, instrumented for import profiling, this
   // patch will end in infinite recursion on the attempted delegation to the
   // original function.
-  if (!base::debug::IsBinaryInstrumented() &&
-      !is_in_job && !g_iat_patch_duplicate_handle.is_patched()) {
+  if (!base::debug::IsBinaryInstrumented() && !is_in_job &&
+      !g_iat_patch_duplicate_handle.is_patched()) {
     HMODULE module = NULL;
     wchar_t module_name[MAX_PATH];
     CHECK(::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
@@ -701,8 +687,7 @@ bool InitBrokerServices(sandbox::BrokerServices* broker_services) {
     if (result && (result != MAX_PATH)) {
       ResolveNTFunctionPtr("NtQueryObject", &g_QueryObject);
       result = g_iat_patch_duplicate_handle.Patch(
-          module_name, "kernel32.dll", "DuplicateHandle",
-          DuplicateHandlePatch);
+          module_name, "kernel32.dll", "DuplicateHandle", DuplicateHandlePatch);
       CHECK(result == 0);
       g_iat_orig_duplicate_handle =
           reinterpret_cast<DuplicateHandleFunctionPtr>(
@@ -758,12 +743,9 @@ sandbox::ResultCode StartSandboxedProcess(
 
   // Pre-startup mitigations.
   sandbox::MitigationFlags mitigations =
-      sandbox::MITIGATION_HEAP_TERMINATE |
-      sandbox::MITIGATION_BOTTOM_UP_ASLR |
-      sandbox::MITIGATION_DEP |
-      sandbox::MITIGATION_DEP_NO_ATL_THUNK |
-      sandbox::MITIGATION_EXTENSION_POINT_DISABLE |
-      sandbox::MITIGATION_SEHOP |
+      sandbox::MITIGATION_HEAP_TERMINATE | sandbox::MITIGATION_BOTTOM_UP_ASLR |
+      sandbox::MITIGATION_DEP | sandbox::MITIGATION_DEP_NO_ATL_THUNK |
+      sandbox::MITIGATION_EXTENSION_POINT_DISABLE | sandbox::MITIGATION_SEHOP |
       sandbox::MITIGATION_NONSYSTEM_FONT_DISABLE |
       sandbox::MITIGATION_IMAGE_LOAD_NO_REMOTE |
       sandbox::MITIGATION_IMAGE_LOAD_NO_LOW_LABEL;
@@ -891,4 +873,4 @@ sandbox::ResultCode StartSandboxedProcess(
   return sandbox::SBOX_ALL_OK;
 }
 
-}  // namespace content
+}  // namespace service_manager
