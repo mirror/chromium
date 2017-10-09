@@ -22,6 +22,30 @@
       "revId": "e980955cbe27591d8ecc887f772a29ddfa063695",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217cae74_3a2f2edc",
+        "filename": "ios/chrome/browser/ui/history/history_panel_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-09T18:13:34Z",
+      "side": 1,
+      "message": "That\u0027s the end goal. But mainController currently does some bookkeeping with the settingsNavigationController that we are not yet ready to untangle. So this is the interim solution that Rohit alluded to.",
+      "parentUuid": "55657c71_7665ddc8",
+      "range": {
+        "startLine": 320,
+        "startChar": 19,
+        "endLine": 320,
+        "endChar": 66
+      },
+      "revId": "e980955cbe27591d8ecc887f772a29ddfa063695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
