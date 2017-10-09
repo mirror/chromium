@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b11ae1e9_579f8035",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-09T19:08:51Z",
+      "side": 1,
+      "message": "Do this for non-root frame for consistency with other events?",
+      "revId": "3d6b35be6fcaa53f3a2fb7bee4282c6e64f0e57c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
