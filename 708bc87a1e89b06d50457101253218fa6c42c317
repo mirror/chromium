@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74cbfd12_4df4f2ff",
+        "filename": "media/mojo/services/media_capabilities.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Removed version. Going forward we\u0027ll just use optional fields and do \"has_*\" checks.",
+      "parentUuid": "16230935_fb59d016",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff20cf16_dc71ffd8",
         "filename": "media/mojo/services/media_capabilities_database.h",
         "patchSetId": 3
@@ -74,6 +92,30 @@
       "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7db9a4_99b5222e",
+        "filename": "media/mojo/services/media_capabilities_database_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Renamed this type. What was \"entry\" is now VideoDescKey. This method is now just \"SerializeKey\"",
+      "parentUuid": "6a4f3fd1_9966787d",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4aee1aa8_1dab6770",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Done! (sorry, mixed style from two different authors)",
+      "parentUuid": "8c494bb4_6aed8e09",
+      "range": {
+        "startLine": 61,
+        "startChar": 56,
+        "endLine": 61,
+        "endChar": 63
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea798e84_fdc5f2dc",
         "filename": "media/mojo/services/media_capabilities_database_impl.h",
         "patchSetId": 3
@@ -155,6 +221,30 @@
       "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c58d395_8b6cfab4",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "This method is now deleted with the removal of the cache.",
+      "parentUuid": "ea798e84_fdc5f2dc",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "8cbaf00e_57d6c7ed",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564eeb86_4572f48b",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bce9045_99c98405",
         "filename": "media/mojo/services/media_capabilities_database_impl.h",
         "patchSetId": 3
@@ -198,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "c6be928a_e90592a8",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Deleted this cache entirely.",
+      "parentUuid": "0bce9045_99c98405",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e23bd2_52c67cc9",
         "filename": "media/mojo/services/media_capabilities_database_unittest.cc",
         "patchSetId": 3
@@ -212,6 +344,24 @@
       "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a5ad70_f896bedf",
+        "filename": "media/mojo/services/media_capabilities_database_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Done. Now injecting db_ at construction, using fake for tests.",
+      "parentUuid": "f4e23bd2_52c67cc9",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

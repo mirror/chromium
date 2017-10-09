@@ -329,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "6801cf8a_093990eb",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "93754e9c_3f3f874d",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f6a93c_b49a9484",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -443,6 +467,30 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f878bb_27e746cd",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-09T19:19:36Z",
+      "side": 1,
+      "message": "We chatted - will use the WebAPI cache. 8MB is more than enough. Removed the cache from this class",
+      "parentUuid": "b20d86af_5b336004",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 9
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
