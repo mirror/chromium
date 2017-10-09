@@ -22,6 +22,30 @@
       "revId": "ca34d4c57937f2fdc6054a32c65d96a184b226e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33c0ee9_8081fb3d",
+        "filename": "ui/display/manager/display_layout_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T13:18:16Z",
+      "side": 1,
+      "message": "\u003e Nit (optional): Reading this comment now suggests that it would be better to rename this function. Like ShouldEnterMirrorModeForDisplayList() or Something?\n\nGet/Set is better for this class because the role of this class is to store/restore (or get/set) properties. (I agree if this is delegate class)",
+      "parentUuid": "2aeca8ce_ed45e52d",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "ca34d4c57937f2fdc6054a32c65d96a184b226e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
