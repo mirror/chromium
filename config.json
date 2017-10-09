@@ -79,8 +79,6 @@
   "enabled_refglobs": [
     "refs/heads/master",
     "refs/branch-heads/2311",
-    "refs/branch-heads/2357",
-    "refs/branch-heads/3163",
-    "refs/branch-heads/3202"
+    "refs/branch-heads/2357"
   ]
 }
