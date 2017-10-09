@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1110b305_80659665",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-09T18:12:13Z",
+      "side": 1,
+      "message": "Sorry about the extra \u0027right\u0027.",
+      "parentUuid": "b52983e5_1ac4b12d",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9052693a_77231b60",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 10
