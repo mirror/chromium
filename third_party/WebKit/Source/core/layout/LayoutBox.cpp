@@ -4833,6 +4833,7 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
                         : Position());
 
   if (IsTable() && NonPseudoNode()) {
+    const Node& node = *NonPseudoNode();
     LayoutUnit right = Size().Width() - VerticalScrollbarWidth();
     LayoutUnit bottom = Size().Height() - HorizontalScrollbarHeight();
 
@@ -4840,10 +4841,9 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
         point.Y() > bottom) {
       if (point.X() <= right / 2) {
         return CreatePositionWithAffinity(
-            FirstPositionInOrBeforeNodeDeprecated(NonPseudoNode()));
+            FirstPositionInOrBeforeNode(*NonPseudoNode()));
       }
-      return CreatePositionWithAffinity(
-          LastPositionInOrAfterNodeDeprecated(NonPseudoNode()));
+      return CreatePositionWithAffinity(LastPositionInOrAfterNode(node));
     }
   }
 
