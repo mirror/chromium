@@ -160,6 +160,23 @@ def CreateNameToSymbolInfo(symbol_infos):
   return symbol_infos_by_name
 
 
+def DemangleSymbolNames(mangled_symbol_names):
+  """Return the demangled form of several mangled symbols.
+
+  Args:
+    mangled_symbol_names: ([str]) List of mangled symbols.
+
+  Returns:
+    [str] List of demangled symbols.
+  """
+  cpp_filt_path = symbol.ToolPath('c++filt')
+  p = subprocess.Popen((cpp_filt_path, '-p', '-i'), stdin=subprocess.PIPE,
+                       stdout=subprocess.PIPE)
+  all_symbols = '\n'.join(mangled_symbol_names)
+  (stdout, _) = p.communicate(all_symbols)
+  return [s.strip() for s in stdout.split('\n')]
+
+
 def DemangleSymbol(mangled_symbol):
   """Return the demangled form of mangled_symbol."""
-  return symbol.CallCppFilt(mangled_symbol)
+  return DemangleSymbolNames([mangled_symbol])
