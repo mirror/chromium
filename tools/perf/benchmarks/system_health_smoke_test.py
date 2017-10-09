@@ -72,7 +72,8 @@ _DISABLED_TESTS = frozenset({
 })
 
 
-def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
+def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test,
+                           max_values=15000):
 
   # NOTE TO SHERIFFS: DO NOT DISABLE THIS TEST.
   #
@@ -95,6 +96,18 @@ def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
         return story_set
 
     options = GenerateBenchmarkOptions(benchmark_class)
+
+    # Prevent benchmarks from accidentally trying to upload too much data to the
+    # chromeperf dashboard. The number of values uploaded is equal to (the
+    # average number of values produced by a single story) * (1 + (the number of
+    # stories)). The "1 + " accounts for values summarized across all stories.
+    # We can approximate "the average number of values produced by a single
+    # story" as the number of values produced by the given story.
+    # pageset_repeat doesn't matter because values are summarized across
+    # repetitions before uploading.
+    story_set = benchmark_class().CreateStorySet(options)
+    SinglePageBenchmark.MAX_NUM_VALUES = max_values / len(story_set.stories)
+
     possible_browser = browser_finder.FindBrowser(options)
     if possible_browser is None:
       self.skipTest('Cannot find the browser to run the test.')
