@@ -88,8 +88,8 @@ ProvisioningResult ConvertArcSignInFailureReasonToProvisioningResult(
 }
 
 mojom::ChromeAccountType GetAccountType() {
-  return IsArcKioskMode() ? mojom::ChromeAccountType::ROBOT_ACCOUNT
-                          : mojom::ChromeAccountType::USER_ACCOUNT;
+  return IsRobotAccountMode() ? mojom::ChromeAccountType::ROBOT_ACCOUNT
+                              : mojom::ChromeAccountType::USER_ACCOUNT;
 }
 
 }  // namespace
@@ -255,7 +255,7 @@ void ArcAuthService::GetAuthCodeDeprecated(
     const GetAuthCodeDeprecatedCallback& callback) {
   // For robot account we must use RequestAccountInfo because it allows
   // to specify account type.
-  DCHECK(!IsArcKioskMode());
+  DCHECK(!IsRobotAccountMode());
   RequestAccountInfoInternal(
       base::MakeUnique<ArcAuthService::AccountInfoNotifier>(callback));
 }
@@ -303,8 +303,8 @@ void ArcAuthService::RequestAccountInfoInternal(
   }
   // For non-AD enrolled devices an auth code is fetched.
   std::unique_ptr<ArcAuthCodeFetcher> auth_code_fetcher;
-  if (IsArcKioskMode()) {
-    // In Kiosk mode, use Robot auth code fetching.
+  if (IsRobotAccountMode()) {
+    // In Kiosk and public session mode, use Robot auth code fetching.
     auth_code_fetcher = base::MakeUnique<ArcRobotAuthCodeFetcher>();
   } else {
     // Optionally retrieve auth code in silent mode.

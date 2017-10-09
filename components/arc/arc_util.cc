@@ -84,12 +84,14 @@ bool IsWebstoreSearchEnabled() {
 
 bool IsPlayStoreAvailable() {
   const auto* command_line = base::CommandLine::ForCurrentProcess();
-  if (!command_line->HasSwitch(chromeos::switches::kArcStartMode))
+  if (!command_line->HasSwitch(chromeos::switches::kArcStartMode) &&
+      !IsRobotAccountMode()) {
     return true;
+  }
 
   const std::string value =
       command_line->GetSwitchValueASCII(chromeos::switches::kArcStartMode);
-  return value != kAlwaysStartWithNoPlayStore;
+  return value != kAlwaysStartWithNoPlayStore && !IsRobotAccountMode();
 }
 
 bool ShouldArcAlwaysStart() {
@@ -145,6 +147,12 @@ bool IsArcKioskMode() {
          user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp();
 }
 
+bool IsRobotAccountMode() {
+  return user_manager::UserManager::IsInitialized() &&
+         (user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp() ||
+          user_manager::UserManager::Get()->IsLoggedInAsPublicAccount());
+}
+
 bool IsArcAllowedForUser(const user_manager::User* user) {
   if (!user) {
     VLOG(1) << "No ARC for nullptr user.";
@@ -155,20 +163,15 @@ bool IsArcAllowedForUser(const user_manager::User* user) {
   // - Users have Gaia accounts;
   // - Active directory users;
   // - ARC kiosk session;
+  // - Public Session users;
   //   USER_TYPE_ARC_KIOSK_APP check is compatible with IsArcKioskMode()
   //   above because ARC kiosk user is always the primary/active user of a
-  //   user session.
+  //   user session. The same for USER_TYPE_PUBLIC_ACCOUNT.
   if (!user->HasGaiaAccount() && !user->IsActiveDirectoryUser() &&
-      user->GetType() != user_manager::USER_TYPE_ARC_KIOSK_APP) {
+      user->GetType() != user_manager::USER_TYPE_ARC_KIOSK_APP &&
+      user->GetType() != user_manager::USER_TYPE_PUBLIC_ACCOUNT) {
     VLOG(1) << "Users without GAIA or AD accounts, or not ARC kiosk apps are "
                "not supported in ARC.";
-    return false;
-  }
-
-  // Do not allow for ephemeral data user. cf) b/26402681
-  if (user_manager::UserManager::Get()->IsUserCryptohomeDataEphemeral(
-          user->GetAccountId())) {
-    VLOG(1) << "Users with ephemeral data are not supported in ARC.";
     return false;
   }
 
