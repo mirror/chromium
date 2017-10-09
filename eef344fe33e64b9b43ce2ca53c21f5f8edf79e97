@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aba16e3_6e39cab8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T19:10:00Z",
+      "side": 1,
+      "message": "You need to associate this CL with a bug so that it can be merged into M-62.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "eef344fe33e64b9b43ce2ca53c21f5f8edf79e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454dc0d7_9dbdd133",
+        "filename": "chromeos/components/tether/ble_synchronizer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T19:10:00Z",
+      "side": 1,
+      "message": "Just return this in the default case.\n\nWhat happens if this occurs? Does UMA_HISTOGRAM_ENUMERATION() fail if this were to be returned? Currently, this won\u0027t happen since you included each error code, but what happens if the Bluetooth stack adds a new error code? This situation could occur, and I\u0027m sure what the behavior would be in this case.\n\nThe same goes for your code in BluetoothLowEnergyWeaveClientConnection.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 272,
+        "endChar": 74
+      },
+      "revId": "eef344fe33e64b9b43ce2ca53c21f5f8edf79e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035e6410_a0d2c7d6",
+        "filename": "chromeos/components/tether/ble_synchronizer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T19:10:00Z",
+      "side": 1,
+      "message": "You should add this parameter to the other Invoke*Callback() methods as well. Otherwise, the helper functions have a tight coupling to how the tests below are written (e.g., InvokeUnregisterCallback() assumes that unregistering an advertisement can only occur at most once per test).",
+      "range": {
+        "startLine": 253,
+        "startChar": 37,
+        "endLine": 253,
+        "endChar": 71
+      },
+      "revId": "eef344fe33e64b9b43ce2ca53c21f5f8edf79e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab4bcea_3aeb7ccf",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T19:10:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this metric provides useful information. You don\u0027t log what the substatus was, so all we will see is that something did or did not time out, but not what that something is.\n\nWhat we really want to know is how often each type of failure occurs as part of a whole. I think it makes sense to log every possible way that a connection can succeed or fail as a single metric.\n\nFor example:\n* Success\n* Timeout: creating a GATT connection.\n* Timeout: finding GATT characteristics.\n* (repeat for each other timeout)\n* Error creating a GATT connection (no need for a different metric value for each error type since you already log this by itself).\n* Error finding GATT characteristics.\n* Error starting notify session (again, no need for different metric for each error type).\n* Device lost\n* Connection dropped\n* ...etc\n\nI would recommend implementing this by adding a parameter to DestroyConnection(). Each time DestroyConnection() is called, you\u0027d log the error. You could use a special \"success\" value that you\u0027d pass to DestroyConnection() when the connection is destroyed under normal circumstances.",
+      "range": {
+        "startLine": 906,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 80
+      },
+      "revId": "eef344fe33e64b9b43ce2ca53c21f5f8edf79e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
