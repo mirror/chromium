@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f8650a_20e615ee",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-09T18:29:27Z",
+      "side": 1,
+      "message": "Same comment with try/finally here.",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 759,
+        "endChar": 9
+      },
+      "revId": "d7573d2e4826b53b6f9ff8c034dfe7087ae0613c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
