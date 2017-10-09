@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c580f17_ee7baa0b",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-09T18:17:19Z",
+      "side": 1,
+      "message": "Can we merge this with ScrollbarsTest now that the latter is parameterized as well?",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 34
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87e8bb4_2ab4187c",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-09T18:17:19Z",
+      "side": 1,
+      "message": "Should we test exactly 800px, instead of (or in addition to) 799px?\n\n(Ditto for height)",
+      "range": {
+        "startLine": 1169,
+        "startChar": 16,
+        "endLine": 1169,
+        "endChar": 21
+      },
+      "revId": "79582f5efcff0a107b8bd21d500c092994c7f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
