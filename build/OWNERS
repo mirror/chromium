@@ -18,6 +18,12 @@ per-file package_mac_toolchain.py=justincohen@chromium.org
 per-file whitespace_file.txt=*
 per-file OWNERS.status=*
 
+# These scripts require ask users to enter sudo passwords or run as sudo.
+per-file install-build-*=set noparent
+per-file install-build-*=file://ipc/SECURITY_OWNERS
+per-file update-linux-sandbox.sh=set noparent
+per-file update-linux-sandbox.sh=file://ipc/SECURITY_OWNERS
+
 # gn-dev is probably a better team here, but the tooling won't let us
 # have more than one team per component, and infra-dev is a catch-all
 # for other build-related lists.
