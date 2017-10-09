@@ -8,11 +8,11 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
-#include "content/common/sandbox_mac.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_init.h"
 #include "media/gpu/vt_video_decode_accelerator_mac.h"
 #include "sandbox/mac/seatbelt.h"
+#include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "ui/gl/init/gl_factory.h"
 
