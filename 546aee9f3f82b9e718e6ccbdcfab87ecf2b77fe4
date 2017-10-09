@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68efaf5a_e1e505f5",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-09T20:56:53Z",
+      "side": 1,
+      "message": "I believe we can avoid the explicit CaptureNext template invocation, but we have to make some changes to the bindings generator so that we can accurately infer input types (and thus ultimately the callback signature) from output types. This means defining something like:\n\n    template \u003cT\u003e\n    struct ResponseCallbackHelper {\n      using ArgType \u003d T;\n    };\n\nand then specializing it for exceptional types like std::string, std::vector\u003cU\u003e, and std::map\u003cU\u003e. We can then also generate specializations for any typemap target types which aren\u0027t explicitly marked as pass-by-value.",
+      "parentUuid": "2a00f495_c5341130",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb5f3f3_1d12fe4b",
         "filename": "mojo/public/cpp/test_support/waiter.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T18:35:36Z",
       "side": 1,
       "message": "Even in a contrived example with short names, we\u0027re still at 4-5 lines to call a single method.",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1739c28b_88140395",
+        "filename": "mojo/public/cpp/test_support/waiter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-09T20:56:53Z",
+      "side": 1,
+      "message": "That\u0027s compared to 3 lines for an equivalent sync IPC, so the difference doesn\u0027t seem that significant. Still, I would obviously like to avoid it if possible, if for no other reason than \"mojom::Foo::DooFooCallback\" is totally redundant information to a human who is not a C++ compiler.",
+      "parentUuid": "acb5f3f3_1d12fe4b",
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
