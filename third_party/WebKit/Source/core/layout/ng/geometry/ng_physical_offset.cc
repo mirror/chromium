@@ -4,9 +4,13 @@
 
 #include "core/layout/ng/geometry/ng_physical_offset.h"
 
+#include "platform/geometry/LayoutPoint.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
+
+NGPhysicalOffset::NGPhysicalOffset(const LayoutPoint& source)
+    : left(source.X()), top(source.Y()) {}
 
 NGPhysicalOffset NGPhysicalOffset::operator+(
     const NGPhysicalOffset& other) const {

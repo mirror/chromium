@@ -11,11 +11,15 @@
 
 namespace blink {
 
+class LayoutPoint;
+
 // NGPhysicalOffset is the position of a rect (typically a fragment) relative to
 // its parent rect in the physical coordinate system.
 struct CORE_EXPORT NGPhysicalOffset {
   NGPhysicalOffset() {}
   NGPhysicalOffset(LayoutUnit left, LayoutUnit top) : left(left), top(top) {}
+
+  explicit NGPhysicalOffset(const LayoutPoint&);
 
   LayoutUnit left;
   LayoutUnit top;
