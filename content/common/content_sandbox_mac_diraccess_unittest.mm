@@ -32,8 +32,8 @@ static const char* kDeniedSuffix = "_denied";
 }  // namespace
 
 // Tests need to be in the same namespace as the Sandbox class to be useable
-// with FRIEND_TEST() declaration.
-namespace content {
+// with FRIEND_TEST_ALL_PREFIXES() declaration.
+namespace service_manager {
 
 class MacDirAccessSandboxTest : public base::MultiProcessTest {
  public:
@@ -67,8 +67,8 @@ TEST_F(MacDirAccessSandboxTest, SandboxAccess) {
   using base::CreateDirectory;
 
   base::FilePath tmp_dir;
-  ASSERT_TRUE(base::CreateNewTempDirectory(base::FilePath::StringType(),
-                                           &tmp_dir));
+  ASSERT_TRUE(
+      base::CreateNewTempDirectory(base::FilePath::StringType(), &tmp_dir));
   // This step is important on OS X since the sandbox only understands "real"
   // paths and the paths CreateNewTempDirectory() returns are empirically in
   // /var which is a symlink to /private/var .
@@ -95,8 +95,8 @@ TEST_F(MacDirAccessSandboxTest, SandboxAccess) {
     // as a substring but to which access is denied.
     std::string sibling_sandbox_dir_name_denied =
         std::string(sandbox_dir_cases[i]) + kDeniedSuffix;
-    base::FilePath sibling_sandbox_dir = tmp_dir.Append(
-                                      sibling_sandbox_dir_name_denied.c_str());
+    base::FilePath sibling_sandbox_dir =
+        tmp_dir.Append(sibling_sandbox_dir_name_denied.c_str());
     ASSERT_TRUE(CreateDirectory(sibling_sandbox_dir));
     ScopedDirectory cleanup_sandbox_sibling(&sibling_sandbox_dir);
 
@@ -105,7 +105,7 @@ TEST_F(MacDirAccessSandboxTest, SandboxAccess) {
 }
 
 MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
-  char *sandbox_allowed_dir = getenv(kSandboxAccessPathKey);
+  char* sandbox_allowed_dir = getenv(kSandboxAccessPathKey);
   if (!sandbox_allowed_dir)
     return -1;
 
@@ -135,12 +135,11 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
   // Test Sandbox.
 
   // We should be able to list the contents of the sandboxed directory.
-  DIR *file_list = NULL;
+  DIR* file_list = NULL;
   file_list = opendir(sandbox_allowed_dir);
   if (!file_list) {
     PLOG(ERROR) << "Sandbox overly restrictive: call to opendir("
-                << sandbox_allowed_dir
-                << ") failed";
+                << sandbox_allowed_dir << ") failed";
     return -1;
   }
   closedir(file_list);
@@ -156,12 +155,11 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
   base::FilePath basename = allowed_dir_path.BaseName();
   base::FilePath allowed_parent_dir = allowed_dir_path.DirName();
   std::string tricky_filename = basename.value() + "123";
-  base::FilePath denied_file2 =  allowed_parent_dir.Append(tricky_filename);
+  base::FilePath denied_file2 = allowed_parent_dir.Append(tricky_filename);
 
   if (open(allowed_file.value().c_str(), O_WRONLY | O_CREAT) <= 0) {
     PLOG(ERROR) << "Sandbox overly restrictive: failed to write ("
-                << allowed_file.value()
-                << ")";
+                << allowed_file.value() << ")";
     return -1;
   }
 
@@ -174,8 +172,7 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
         std::string(sandbox_allowed_dir) + kDeniedSuffix;
     if (stat(denied_sibling.c_str(), &tmp_stat_info) > 0) {
       PLOG(ERROR) << "Sandbox breach: was able to stat ("
-                  << denied_sibling.c_str()
-                  << ")";
+                  << denied_sibling.c_str() << ")";
       return -1;
     }
   }
@@ -185,8 +182,7 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
     struct stat tmp_stat_info;
     if (stat(allowed_parent_dir.value().c_str(), &tmp_stat_info) != 0) {
       PLOG(ERROR) << "Sandbox overly restrictive: unable to stat ("
-                  << allowed_parent_dir.value()
-                  << ")";
+                  << allowed_parent_dir.value() << ")";
       return -1;
     }
   }
@@ -196,22 +192,19 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
     struct stat tmp_stat_info;
     if (stat(denied_file1.value().c_str(), &tmp_stat_info) > 0) {
       PLOG(ERROR) << "Sandbox breach: was able to stat ("
-                  << denied_file1.value()
-                  << ")";
+                  << denied_file1.value() << ")";
       return -1;
     }
   }
 
   if (open(denied_file1.value().c_str(), O_WRONLY | O_CREAT) > 0) {
-    PLOG(ERROR) << "Sandbox breach: was able to write ("
-                << denied_file1.value()
+    PLOG(ERROR) << "Sandbox breach: was able to write (" << denied_file1.value()
                 << ")";
     return -1;
   }
 
   if (open(denied_file2.value().c_str(), O_WRONLY | O_CREAT) > 0) {
-    PLOG(ERROR) << "Sandbox breach: was able to write ("
-                << denied_file2.value()
+    PLOG(ERROR) << "Sandbox breach: was able to write (" << denied_file2.value()
                 << ")";
     return -1;
   }
@@ -219,4 +212,4 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_path_access) {
   return 0;
 }
 
-}  // namespace content
+}  // namespace service_manager
