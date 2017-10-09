@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd8cdb1_df4c059b",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T19:46:34Z",
+      "side": 1,
+      "message": "Heh, will remove this.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 8
+      },
+      "revId": "007779d40d5ba880a00983b87c6e3c0371d3943a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

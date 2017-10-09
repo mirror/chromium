@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bd19a92_c8f90830",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T19:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22063a2e_9fad7ded",
+      "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb14f925_aebbb73a",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 27
@@ -33,6 +51,24 @@
       "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55802fd_ad96897d",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T19:46:34Z",
+      "side": 1,
+      "message": "Removed no-longer-used return value.",
+      "parentUuid": "fb14f925_aebbb73a",
+      "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b0a2bc1_899ca8b3",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T19:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c2046db_a7d6f29c",
+      "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "555b4cf4_fa357f28",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 27
@@ -67,6 +121,24 @@
       "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80eccff0_d1546158",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T19:46:34Z",
+      "side": 1,
+      "message": "Done. Also did this below which caught an edge case (enabling a blocked extension led to its state changing, which is arguably wrong -- we should have to remove the extension from the blocked set first. Fixed by returning early in EnableExtension() for blocked extension)",
+      "parentUuid": "555b4cf4_fa357f28",
+      "revId": "94548ee8526960043858b0b75ae9122c0572eddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
