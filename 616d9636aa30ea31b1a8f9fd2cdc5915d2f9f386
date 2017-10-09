@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "951dfbb7_cdcc8782",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-10-09T10:00:50Z",
+      "side": 1,
+      "message": "I modified a bit.\n\nI couldn\u0027t really find it only, I remember that I tried to use inherited constructors\nand it didn\u0027t work.\n\nHere are my comments from that time:\n\n\"\"\"\n\u003e It would be nice to inherit all of these constructors.\n\u003e There are some issues with inheriting constructors on Visual Studio - but can\n\u003e you check if you bump into them?\n\u003e \n\u003e You already have a test where you use initilizer list, I would also add one\nfor\n\u003e first, last pair - because templates can expose some weird compiler bugs.\n\nI\u0027ve checked - it doesn\u0027t work - compiler doesn\u0027t do lasy initialization - so it\ntries to instantiate a copy constructor for MoveOnly types.\n\"\"\"",
+      "parentUuid": "61803eb6_5939df63",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84dd32bd_1230a3b8",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec60e08f_38c5ccf7",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-10-09T10:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84dd32bd_1230a3b8",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 34
+      },
+      "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d8dc8778_2042e7dc",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-10-09T10:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e10b6bf_1bd8f3e7",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "096b4346_bb3867de",
         "filename": "base/containers/flat_map.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c162b716_6234ff8f",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1235449
+      },
+      "writtenOn": "2017-10-09T10:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096b4346_bb3867de",
+      "range": {
+        "startLine": 172,
+        "startChar": 28,
+        "endLine": 172,
+        "endChar": 29
+      },
+      "revId": "616d9636aa30ea31b1a8f9fd2cdc5915d2f9f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
