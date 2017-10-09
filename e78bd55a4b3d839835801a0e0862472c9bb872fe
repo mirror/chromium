@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "260dc1bd_9599a077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T20:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8388a3_04d92d7c",
+      "range": {
+        "startLine": 164,
+        "startChar": 53,
+        "endLine": 164,
+        "endChar": 85
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5cafe3_1a54ab7d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T02:10:24Z",
       "side": 1,
       "message": "Does the selector need to equal null here to ensure the browser action tab model isn\u0027t still in use?",
+      "range": {
+        "startLine": 239,
+        "startChar": 12,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e810452_2639d640",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T20:55:30Z",
+      "side": 1,
+      "message": "In the latest change, we change the function name to isInitialized which checks whether the BrowserActionsTabModelSelector is null. Because BrowserActionsTabModelSelector is singleton, if it is null, it means Browser Actions model is not loaded in memory, so we need to restore and merge it from disk.",
+      "parentUuid": "9c5cafe3_1a54ab7d",
       "range": {
         "startLine": 239,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7977df7f_1bede789",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T20:55:30Z",
+      "side": 1,
+      "message": "I thought fromMerge has more cases to be handled than fromBrowserActions but looks like all the fromMerge cases can be applied to fromBrowserActions, so using fromRestore should be fine for Browser Actions.",
+      "parentUuid": "e8dfc3d2_13f1edb9",
+      "range": {
+        "startLine": 1339,
+        "startChar": 12,
+        "endLine": 1339,
+        "endChar": 57
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b848a0a5_562e5270",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ea50f6_03a5cbcf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T20:55:30Z",
+      "side": 1,
+      "message": "There are plenty variables specific for Browser Actions Activity, so adding this test only to the tab model merging test class will put lots of redundant code to it. I test put this tag only to the new test and it seems everything works fine on both N and before N.",
+      "parentUuid": "b848a0a5_562e5270",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
