@@ -255,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "c28feee3_c1a5043b",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T04:10:10Z",
+      "side": 1,
+      "message": "Do you mind posting a stack trace of how WidgetWillClose is called before OnDestruct? I\u0027d like to better understand (I had the impression that they should be called pretty close together...)",
+      "parentUuid": "4c4e39a9_c573de58",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b938e6d_afd67750",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
