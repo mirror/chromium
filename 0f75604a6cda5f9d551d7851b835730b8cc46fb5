@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "477d6128_601e7644",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T20:49:06Z",
+      "side": 1,
+      "message": "Good point - done.",
+      "parentUuid": "9ca9b6c1_c74c32ab",
+      "range": {
+        "startLine": 1373,
+        "startChar": 48,
+        "endLine": 1373,
+        "endChar": 53
+      },
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "faaebedd_7fe7759b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T20:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0325f89_9436ad6f",
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e53eaa80_bbb44b4b",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b3c2a9_62e26209",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-09T20:49:06Z",
+      "side": 1,
+      "message": "Agreed. I went with SharedReadCacheUse as they are really all the same type, just used for different things. Also tweaked a few variable names to match.",
+      "parentUuid": "e53eaa80_bbb44b4b",
+      "range": {
+        "startLine": 246,
+        "startChar": 7,
+        "endLine": 246,
+        "endChar": 22
+      },
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
