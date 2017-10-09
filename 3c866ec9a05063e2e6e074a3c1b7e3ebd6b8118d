@@ -46,6 +46,30 @@
       "revId": "3c866ec9a05063e2e6e074a3c1b7e3ebd6b8118d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d875e9a4_1762e810",
+        "filename": "tools/perf/benchmarks/media.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-09T18:11:53Z",
+      "side": 1,
+      "message": "The code should always be in a readable state so that if priorities shift and this work isn\u0027t finished then it will still be readable. Also, it may be a couple weeks before you delete those two, and we need readers of this code in the mean time to be able to understand it.",
+      "parentUuid": "ae1492b4_93acac79",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 21
+      },
+      "revId": "3c866ec9a05063e2e6e074a3c1b7e3ebd6b8118d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
