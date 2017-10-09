@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d581558_a5b6a28a",
+        "filename": "components/certificate_transparency/log_dns_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-10-09T15:33:43Z",
+      "side": 1,
+      "message": "nit: close paren)\n\nRegarding the family - where does the RFC say it\u0027s not relevant?\n\n\"If there is no ADDRESS set, i.e., SOURCE-PREFIX-LENGTH is set to 0, then FAMILY SHOULD be set to the transport over which the query is sent. This is for interoperability; at least one major authoritative server will ignore the option if FAMILY is not 1 or 2, even though it is irrelevant if there are no ADDRESS bits\"",
+      "revId": "299816677c9ca0255cd049bf5e97877f6659d7e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
