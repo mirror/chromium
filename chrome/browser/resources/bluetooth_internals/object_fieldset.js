@@ -27,6 +27,22 @@ cr.define('object_fieldset', function() {
     __proto__: HTMLFieldSetElement.prototype,
 
     /**
+     * sets the showAll varaible to display.
+     * @param {boolean} showall
+     */
+    setShowAll: function(showall) {
+      this.showAll = showall;
+    },
+
+    /**
+     * Gets the showAll variable value.
+     * @return {boolean}
+     */
+    isShowAll: function() {
+      return this.showAll;
+    },
+
+    /**
      * Decorates the element as an ObjectFieldset.
      */
     decorate: function() {
@@ -36,6 +52,8 @@ cr.define('object_fieldset', function() {
       this.value = null;
       /** @private {?Object<string, string>} */
       this.nameMap_ = null;
+      /** @private */
+      this.showAll = true;
     },
 
     /**
@@ -63,27 +81,30 @@ cr.define('object_fieldset', function() {
       this.innerHTML = '';
 
       Object.keys(this.value).forEach(function(propName) {
-        var name = this.nameMap_[propName] || propName;
         var value = this.value[propName];
-        var newField = document.createElement('div');
-        newField.classList.add('status');
+        if (value || this.showAll) {
+          var name = this.nameMap_[propName] || propName;
 
-        var nameDiv = document.createElement('div');
-        nameDiv.textContent = name + ':';
-        newField.appendChild(nameDiv);
+          var newField = document.createElement('div');
+          newField.classList.add('status');
 
-        var valueDiv = document.createElement('div');
-        valueDiv.dataset.field = propName;
+          var nameDiv = document.createElement('div');
+          nameDiv.textContent = name + ':';
+          newField.appendChild(nameDiv);
 
-        if (typeof(value) === 'boolean') {
-          valueDiv.classList.add('toggle-status');
-          valueDiv.classList.toggle('checked', value);
-        } else {
-          valueDiv.textContent = String(value);
+          var valueDiv = document.createElement('div');
+          valueDiv.dataset.field = propName;
+
+          if (typeof(value) === 'boolean') {
+            valueDiv.classList.add('toggle-status');
+            valueDiv.classList.toggle('checked', value);
+          } else {
+            valueDiv.textContent = String(value);
+          }
+
+          newField.appendChild(valueDiv);
+          this.appendChild(newField);
         }
-
-        newField.appendChild(valueDiv);
-        this.appendChild(newField);
       }, this);
     },
   };
