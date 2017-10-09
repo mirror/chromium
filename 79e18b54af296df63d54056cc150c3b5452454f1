@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7df0060_af81e688",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-09T19:36:57Z",
+      "side": 1,
+      "message": "What\u0027s the action we can take should this fail in away besides E_ACCESSDENIED?\n\nIf we are interested in this, then the check might be better placed in EnableHighDPISupport so we can also catch failures to SetProcessDPIAware.",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "79e18b54af296df63d54056cc150c3b5452454f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995da560_b23c1086",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-09T19:36:57Z",
+      "side": 1,
+      "message": "Nit: We technically look for SetProcessDpiAwarenessInternal.\n\nFeel free to update the DLOG_IF as well.",
+      "range": {
+        "startLine": 114,
+        "startChar": 46,
+        "endLine": 114,
+        "endChar": 69
+      },
+      "revId": "79e18b54af296df63d54056cc150c3b5452454f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
