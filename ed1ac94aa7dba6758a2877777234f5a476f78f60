@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7229f728_30f876e5",
+        "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-09T00:05:40Z",
+      "side": 1,
+      "message": "optional-nit: std::make_unique\u003cTaskManagerTableModel\u003e(this) ?\n\nor... it should probably just be a value-member rather than unique_ptr",
+      "range": {
+        "startLine": 543,
+        "startChar": 19,
+        "endLine": 543,
+        "endChar": 50
+      },
+      "revId": "ed1ac94aa7dba6758a2877777234f5a476f78f60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
