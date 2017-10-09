@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55657c71_7665ddc8",
+        "filename": "ios/chrome/browser/ui/history/history_panel_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:08:55Z",
+      "side": 1,
+      "message": "Since this is the only place this command is used, can we just cut to the chase and use local presentation (getting rid of the command method)?",
+      "range": {
+        "startLine": 320,
+        "startChar": 19,
+        "endLine": 320,
+        "endChar": 66
+      },
+      "revId": "e980955cbe27591d8ecc887f772a29ddfa063695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
