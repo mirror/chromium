@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c5ce5c7_56f77886",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Where is this defined?",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a51285d_ab7ece54",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Should this be Promise\u003c!LocalDataList\u003e ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04284257_4a2c539a",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Why don\u0027t the other remove* methods return a promise?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b226af20_70cdaef2",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Should this be Promise\u003c!CookieList\u003e ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 17,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ccbca9_51a22452",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "where is container defined?",
+      "range": {
+        "startLine": 37,
+        "startChar": 58,
+        "endLine": 37,
+        "endChar": 67
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71229e2_54929b08",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Would it make sense to use debounce instead of window.setTimeout?\n\nthis.debounce(\u0027extend-site-list\u0027, () \u003d\u003e {\n  this.browserProxy_.getDisplayList(this.sites.length, count)\n      .then((listInfo) \u003d\u003e {\n        if (!listInfo.items.length) {\n          this.fire(\u0027site-data-list-complete\u0027);\n          return;\n        }\n        this.sites \u003d this.sites.concat(listInfo.items);\n        this.extendSiteList_();\n      });\n}, 20);",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4cd1c4_d4dad5a4",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "Do you need to return this promise? It\u0027s not used anywhere.\nAlso, because it recursively calls itself the function isn\u0027t \"done\" when the promise is resolved which could lead to confusion if someone tags a .then(..) to this call",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 10
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a1044c_95250702",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "no need to do this if you debounce inside |extendSiteList_|",
+      "range": {
+        "startLine": 159,
+        "startChar": 10,
+        "endLine": 159,
+        "endChar": 27
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04c4bc4_8b7798af",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "removeAll() returns the new site list (empty), couldn\u0027t this line be:\n\nthis.browserProxy_.removeAll().then(sites \u003d\u003e this.sites \u003d sites);",
+      "range": {
+        "startLine": 202,
+        "startChar": 42,
+        "endLine": 202,
+        "endChar": 73
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19a1c4b_dddf19e1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data_details_subpage.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-09T23:32:46Z",
+      "side": 1,
+      "message": "\u0027cookie\u0027 is also in |categoryLabels|. Is this expected?",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 28
+      },
+      "revId": "2e326a9e6db18035c6f491394cc747e3626fa71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
