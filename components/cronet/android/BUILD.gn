@@ -909,6 +909,7 @@ test("cronet_unittests") {
     ":cronet_static",
     "//base",
     "//base/test:test_support",
+    "//components/cronet/interfaces:cronet_c_impl_tests",
     "//components/metrics",
     "//components/prefs:test_support",
     "//net",
