@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "a70d4329_0969afc7",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "nit: with only a single member in AppThemeColorInfo, and a member that will be copied anyway, do we need this singleton?  How about instead:\n\nGetThemeColor(const Extension* extension) {\n  AppThemeColorInfo* info \u003d extension-\u003eGetManifestData(...);\n  return info ? info-\u003etheme_color : base::Optional\u003cSkColor\u003e();\n}",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2aa37a_510b83e1",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "We should reach Parse() unless it has the path (unless we ever set AlwaysParseForType())",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1023d575_7eb46a06",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 15
@@ -30,6 +64,23 @@
       "writtenOn": "2017-10-08T22:51:12Z",
       "side": 1,
       "message": "What about using extensions::image_util::ParseCssColorString ?",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6531cdf3_17858658",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "/sigh, just remembered forwards compatibility.  If, hypothetically, we ever open this up to another app type in chrome M72 (arbitrary version), it means that if the user installs an app in M72 that is then synced to M71, it will completely fail to load in M71.\n\nWe can get around this by having an install warning rather than a hard error.  Something like:\n\nParse(Extension* extension, base::string16* error) {\n  // Currently, only allow the theme_color key for bookmark apps. We\u0027ll add\n  // an install warning in Validate().\n  if (!extension-\u003efrom_bookmark())\n    return true;\n\n  ....\n}\n\nValidate(Extension* extension, InstallWarnings* warnings, string16* error) {\n  if (!extension-\u003efrom_bookmark())\n    warnings-\u003epush_back(extensions::manifest_errors::kInvalidThemeColorAppType);\n\n  return true;\n}\n\nThat way, we still warn about it, but it doesn\u0027t block loading the extension.",
       "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

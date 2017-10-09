@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23774efd_c9047048",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "EXPECTs are designed for non-fatal failures, and will continue the test (which is often desired behavior, because sometimes it\u0027s nice to see *everything* that failed at once, rather than fix one bug, run the test, see the next bug, fix it, etc).  But it means that ASSERTs (which will abort the test) or graceful handling are the right fix when you\u0027re verifying something that will break if it\u0027s wrong (null pointers, list size, etc).",
+      "parentUuid": "f37fb33d_c6087a07",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10289ff0_dc37af1c",
         "filename": "chrome/browser/sync/test/integration/sync_app_helper.cc",
         "patchSetId": 13
@@ -198,6 +216,24 @@
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960a8128_43cc39ba",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "SG, thanks!",
+      "parentUuid": "1ebafb32_addad402",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +406,24 @@
       "side": 1,
       "message": "Done, but:\n\nUgh. Okay. So apparently the C++ spec says that uint-\u003eint conversion is unspecified, so it\u0027s not _totally_ safe to do this. Do you think it\u0027s worth storing this as a String of the uint value and then parsing it back out?",
       "parentUuid": "70bb9a5a_2a94845d",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5ce817_9238c00a",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T15:23:32Z",
+      "side": 1,
+      "message": "The comment in Manifest states:\n  // This is a 64 bit integer because we need to represent an error state. The\n  // color itself should only be 32 bits long if the value is not\n  // kInvalidOrMissingColor and can be safely cast to SkColor if is valid.\n  // Set to kInvalidOrMissingColor if parsing failed or field is not\n  // present.\n\nSo, *if* the color is present, it must fit within 32 bits, and the only possible value outside that is kInvalidOrMissingColor.  I think this means that when converting to a WebApplicationInfo, we can do something like:\n\nif (manifest.theme_color !\u003d kInvalidOrMissingColor) {\n  // The color must fit within a 32-bit integer.\n  DCHECK_LE(static_cast\u003cuint64_t\u003e(manifest.theme_color),\n            static_cast\u003cuint32_t\u003e(-1));\n  web_application_info.theme_color \u003d manifest.theme_color;\n}\n\nNow, because of the subtlety alone, that really might not be worth it, and the string approach might make more sense.  But this would also give you extra verification.  I\u0027ll leave it up to you - I\u0027m fine either way.  However, if you want to go with the string approach, you\u0027ll want to make some changes, because I think it\u0027s unsafe right now - I think we convert to a WebApplicationInfo first, and in that conversion, you\u0027re just assigning to theme_color directly, which performs the potentially-unsafe cast of int64_t to uint32_t. [1]\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/680677/15/chrome/browser/extensions/bookmark_app_helper.cc\n\nSide note: all of this makes me wonder what it would take to make content::Manifest::theme_color an optional\u003cSkColor\u003e, since that would solve all these issues.",
+      "parentUuid": "3377ec18_3371bdf9",
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
