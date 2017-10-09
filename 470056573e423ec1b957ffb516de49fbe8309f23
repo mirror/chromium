@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2525e5ca_06b0afd2",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-09T21:46:33Z",
+      "side": 1,
+      "message": "Add a comment explaining the rationale for the new Create method.",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "470056573e423ec1b957ffb516de49fbe8309f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
