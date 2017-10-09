@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f689f1_5eb8f913",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T18:30:13Z",
+      "side": 1,
+      "message": "Needs to be behind a flag.",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2fa4eb_7bee5a96",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T18:30:13Z",
+      "side": 1,
+      "message": "Can this ever return anything other than sync? \u003cimg\u003e and svg image\nelement\u0027s don\u0027t support this code path, do they?",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57c0603_aaae326c",
+        "filename": "third_party/WebKit/Source/core/paint/ListMarkerPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T18:30:13Z",
+      "side": 1,
+      "message": "Same question here - is it possible for it to be an \u003cimg\u003e element or\nSVG image element?",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ee64c_c13ad149",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T18:30:13Z",
+      "side": 1,
+      "message": "Share code with HTMLImageElement? Also needs a flag check.",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2156f160_056da334",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T18:30:13Z",
+      "side": 1,
+      "message": "Nit: s/VMPSTR/vmpstr/",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
