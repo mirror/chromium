@@ -29,7 +29,6 @@
 #include "extensions/common/switches.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/extension_frame_helper.h"
-#include "extensions/renderer/extension_helper.h"
 #include "extensions/renderer/extensions_render_frame_observer.h"
 #include "extensions/renderer/guest_view/extensions_guest_view_container.h"
 #include "extensions/renderer/guest_view/extensions_guest_view_container_dispatcher.h"
@@ -176,11 +175,6 @@ void ChromeExtensionsRendererClient::RenderFrameCreated(
   new extensions::ExtensionFrameHelper(render_frame,
                                        extension_dispatcher_.get());
   extension_dispatcher_->OnRenderFrameCreated(render_frame);
-}
-
-void ChromeExtensionsRendererClient::RenderViewCreated(
-    content::RenderView* render_view) {
-  new extensions::ExtensionHelper(render_view, extension_dispatcher_.get());
 }
 
 bool ChromeExtensionsRendererClient::OverrideCreatePlugin(
