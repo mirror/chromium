@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "161bd63e_4cf94982",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "I haven\u0027t noticed this before. Then using RenderFrameHost to replace WebContents is proper.",
+      "parentUuid": "612208b9_294e9980",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a0650c2_2baf1485",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 18
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-09T18:42:49Z",
       "side": 1,
       "message": "Here, it\u0027s not clear what bad things could happen if you had two RenderFrameHosts (e.g. one for the main frame, one for an \u003ciframe\u003e) that both initiated a KeyboardLockService. Because the keyboard_lock::Host is using web_contents_ as a key, it seems like one of the two KeyboardLockServiceImpls will wind up in an orphaned state.\n\nThat situation worries me, since it sounds like the setup for an exploitable use-after-free bug.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c321bfd_3599b917",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "Same as above, I will use RenderFrameHost to replace WebContents as the key.",
+      "parentUuid": "2a0650c2_2baf1485",
       "revId": "26dcda03a7040871e16f648c9607af78f8796690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "274dbf00_61229f62",
+        "filename": "ui/aura/keyboard_lock/active_client_key_event_filter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "The template parameter is used to share the logic with Mus (CLIENT_ID in Mus scenario represents a window). But considering supporting Mus is not our priority for now. The template parameter will be removed in the final version.",
+      "parentUuid": "e7ca6e51_87f10b10",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8678f6c_f253be86",
         "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
         "patchSetId": 18
@@ -110,6 +164,24 @@
     },
     {
       "key": {
+        "uuid": "9b549c1d_85f11fcc",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "\u003e At a very high level, I have an instinct here that content::RenderWidgetHostView ought to be part of the per-platform implementation strategy here.\n\u003e \n\u003e In content, RenderWidgetHostView is the fundamental class responsible for receiving input events from the surrounding environment. It already knows about focus and fullscreen. By not going through RenderWidgetHostView, you\u0027re having to approximate the events you actually care about via less precise signals (for example, the cancellation of special-key hooking whenever a main-frame navigation occurs via WebContentsObserver, seems potentially imprecise. What if the navigation becomes a download? What if you\u0027re doing an in-page navigation?)\nThis is a problem I need to care during the implementation. But I tend to prefer listener-pattern to,\n1) reduce the platform dependency: we do not need to care about which implementation is currently using.\n2) avoid duplication between platforms: enabling / disabling logic of this feature relay on the certain events instead of implementations. We do not need to implement the similar logic on different platforms.\n3) remove the feature logic from core: the core logic provides basic events to support other features instead of building the features into the core.\n\nConsidering:\n-------------\nvoid RenderWidgetHostViewMac::Focus() {\n  feature_1();\n  feature_2();\n  if (condition()) {\n    feature_3();\n  }\n}\n\nvoid RenderWidgetHostViewAura::Focus() {\n  feature_1();\n  feature_2();\n  if (condition()) {\n    feature_3();\n  }\n}\n-------------\n\nI believe the following solution would be clearer.\n-------------\nvoid RenderWidgetHostViewMac::Focus() {\n  observer.OnFocus();\n}\nvoid RenderWidgetHostViewAura::Focus() {\n  observer.OnFocus();\n}\nvoid Feature_1::OnFocus() {}\nvoid Feature_2::OnFocus() {}\nvoid Feature_3::OnFocus() {\n  if (condition()) {}\n}\n-------------\n\nI think as long as the conditions (download v.s. in-page v.s. load a different page) can be detected by //content/ logic, forwarding the information to the Observer is also achievable.\nE.g. for the download / in-page navigation, NavigationHandle::IsSameDocument() and NavigationHandle::IsDownload() can be used.\n\u003e \n\u003e I\u0027d direct your attention to RenderWidgetHostViewAura, which can already detect if it\u0027s mus (IsMus()) or not. For the non-mus case, you would forward the key interception requests to a helper PlatformHook that would be either platform_hook_win or platform_hook_x11 (using either #ifdefs, or selective compilation).\nIf Mus is used, a PlatformHookMus will be added: it does the same thing as PlatformHookWin / X11. Other logic in the keyboard lock do not need to know which PlatformHook is used.\n\u003e \n\u003e Part of the code-sharing goal here, right, is that you envision needing the X11 (and ultimately, I guess, mac/win?) implementation of PlatformHook to be usable both by mojo ui service and content? For that purpose, I might consider just putting the PlatformHookWin in ui/base/win, similar to how osk_display_manager.h works. It\u0027s not necessarily clear to me that you\u0027d need to even establish a uniform interface across platforms; though this depends on how bad the #ifdef cost actually is in the calling code.\n\u003e \n\u003e But anyhow: assuming that mus support in V1 is a non-goal, I\u0027d be okay with putting the platform_hook_win and similar code into the content/ layer directly, and figure out how to extract it out for reuse by mus as a follow-on activity. It is just a lot easier to reason about structuring code for reuse, at the point where you actually have 2 real consumers.\nYes, supporting Mus host (an XGrabKey similar API in Mus) is not our priority. Though I think everything can be shared with Mus: we only need to provide a different \"Client\" to forward key events to a \"Window of Mus\".",
+      "parentUuid": "e8678f6c_f253be86",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6935ea9_742c49c0",
         "filename": "ui/aura/keyboard_lock/special_key_detector.h",
         "patchSetId": 18
@@ -121,6 +193,24 @@
       "writtenOn": "2017-10-09T18:42:49Z",
       "side": 1,
       "message": "Should they just be arguments to the constructor then, rather than being Delegate methods? That would make this guarantee implicit.\n\nYou could potentially collect them into a struct (SpecialKeyInfo or SpecialKeyDetector::Info or something like that), and pass the struct into the ctor.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba037fbd_50521246",
+        "filename": "ui/aura/keyboard_lock/special_key_detector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "Yes, \"event\" and \"information\" should be split. I was lazy to split them when I worked on this prototype.",
+      "parentUuid": "e6935ea9_742c49c0",
       "revId": "26dcda03a7040871e16f648c9607af78f8796690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

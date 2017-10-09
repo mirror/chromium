@@ -50,6 +50,24 @@
       "revId": "39d42d62fc2f093b7bded1c4222f2055779e69fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e46157_b160e237",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-09T20:53:35Z",
+      "side": 1,
+      "message": "Even PlatformKeyEventFilter is not used, constructing a MSG from ll_hooks then converting to ui::KeyEvent is still the simplest way to avoid duplicate logic.",
+      "parentUuid": "ac66900c_87fa9c76",
+      "revId": "39d42d62fc2f093b7bded1c4222f2055779e69fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
