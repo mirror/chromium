@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c76db4_5bb2748f",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-09T16:44:36Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc72c34b_af0e56fa",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-09T16:44:36Z",
+      "side": 1,
+      "message": "do we ever use this?",
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
