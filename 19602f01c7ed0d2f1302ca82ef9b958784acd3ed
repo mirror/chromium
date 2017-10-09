@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "220da54e_0c66c8f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T05:05:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is helpful. GetData explicitly documents that the callback might not be invoked in a timely manner and this might be for reasons other than the service worker - e.g. we download multiple items off the network. It also feels a bit ugly that an option is specified outside of the params object which has everything else in it.\n\nInstead, WDYT about changing the default so that you have to explicitly set wait_for_worker \u003d true and the default is false?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1142338_fcf3e8f1",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T05:05:15Z",
+      "side": 1,
+      "message": "Nit: possibly neater as:\n\nif (params.valid_manifest \u0026\u0026 valid_manifest_-\u003eerror !\u003d NO_ERROR_DETECTED\n  return valid_manifest_-\u003eerror;\n\nif (params.has_worker \u0026\u0026 worker_-\u003eerror !\u003d NO_ERROR_DETECTED)\n  return worker_-\u003eerror;\n\nThis also solves a race condition where you have task A requesting both and failing because the manifest is valid but there isn\u0027t a worker, and then task B request just the valid manifest failing because it\u0027s also picking up the lack of worker (but task B didn\u0027t ask for that).",
+      "range": {
+        "startLine": 239,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694fc5b3_35a999e3",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T05:05:15Z",
+      "side": 1,
+      "message": "Remove this bit so this is more logical",
+      "range": {
+        "startLine": 307,
+        "startChar": 34,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04aec6f4_a6e19f5d",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T05:05:15Z",
+      "side": 1,
+      "message": "Remove this bit",
+      "range": {
+        "startLine": 405,
+        "startChar": 35,
+        "endLine": 405,
+        "endChar": 57
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
