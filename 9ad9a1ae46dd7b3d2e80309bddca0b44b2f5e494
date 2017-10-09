@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60c7329e_91b264ee",
+        "filename": "extensions/renderer/bindings/api_binding_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T16:50:32Z",
+      "side": 1,
+      "message": "Good point!  Simplified.  (Though note we actually want GetUserData \u003d\u003d nullptr)",
+      "parentUuid": "c8697864_8c4c9bd5",
+      "revId": "9ad9a1ae46dd7b3d2e80309bddca0b44b2f5e494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8d0fb90_45db660a",
         "filename": "extensions/renderer/bindings/api_binding_util.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "9ad9a1ae46dd7b3d2e80309bddca0b44b2f5e494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f958a2_14e5bd1d",
+        "filename": "extensions/renderer/bindings/api_binding_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-09T16:50:32Z",
+      "side": 1,
+      "message": "Good idea!  Done.",
+      "parentUuid": "a8d0fb90_45db660a",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "9ad9a1ae46dd7b3d2e80309bddca0b44b2f5e494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
