@@ -34,6 +34,24 @@
       "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7a75a8_f1548cb4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T18:07:00Z",
+      "side": 1,
+      "message": "You can add vmodule in production environment. (see chrome://version for vmodules we have now, and platform2/login_manager/chrome_setup.cc where they\u0027re defined)",
+      "parentUuid": "b06778b2_1997dffa",
+      "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
