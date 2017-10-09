@@ -80,7 +80,6 @@ APP_LIST_EXPORT extern const int kPreferredRowsFullscreen;
 APP_LIST_EXPORT extern const int kGridIconDimension;
 
 APP_LIST_EXPORT extern const int kAppBadgeIconSize;
-APP_LIST_EXPORT extern const int kBadgeBackgroundRadius;
 
 APP_LIST_EXPORT extern const int kListIconSize;
 APP_LIST_EXPORT extern const int kListIconSizeFullscreen;

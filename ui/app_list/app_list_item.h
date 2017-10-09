@@ -38,6 +38,9 @@ class APP_LIST_EXPORT AppListItem {
   void SetIcon(const gfx::ImageSkia& icon);
   const gfx::ImageSkia& icon() const { return icon_; }
 
+  void SetBadgeIcon(const gfx::ImageSkia& badge_icon);
+  const gfx::ImageSkia& badge_icon() const { return badge_icon_; }
+
   const std::string& GetDisplayName() const {
     return short_name_.empty() ? name_ : short_name_;
   }
@@ -118,6 +121,7 @@ class APP_LIST_EXPORT AppListItem {
   std::string folder_id_;  // Id of containing folder; empty if top level item.
   syncer::StringOrdinal position_;
   gfx::ImageSkia icon_;
+  gfx::ImageSkia badge_icon_;
 
   // The full name of an item. Used for display if |short_name_| is empty.
   std::string name_;

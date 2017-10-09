@@ -44,6 +44,8 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
   // Set the icon of this image, adding a drop shadow if |has_shadow|.
   void SetIcon(const gfx::ImageSkia& icon);
 
+  void SetBadgeIcon(const gfx::ImageSkia& badge_icon);
+
   void SetItemName(const base::string16& display_name,
                    const base::string16& full_name);
   void SetItemIsInstalling(bool is_installing);
@@ -147,6 +149,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   // AppListItemObserver overrides:
   void ItemIconChanged() override;
+  void ItemBadgeIconChanged() override;
   void ItemNameChanged() override;
   void ItemIsInstallingChanged() override;
   void ItemPercentDownloadedChanged() override;
@@ -159,6 +162,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   AppsGridView* apps_grid_view_;   // Parent view, owns this.
   views::ImageView* icon_;         // Strongly typed child view.
+  views::ImageView* badge_icon_;   // Strongly typed child view.
   views::Label* title_;            // Strongly typed child view.
   views::ProgressBar* progress_bar_;  // Strongly typed child view.
 

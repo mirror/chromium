@@ -39,11 +39,10 @@ const std::vector<std::string> GetEquivalentInstalledExtensions(
     content::BrowserContext* context,
     const std::string& arc_package_name);
 
-// May apply additional badge in order to distinguish dual apps from Chrome and
-// Android side.
-void MaybeApplyChromeBadge(content::BrowserContext* context,
-                           const std::string& extension_id,
-                           gfx::ImageSkia* icon_out);
+// Returns true to indicate applying additional badge in order to distinguish
+// dual apps from Chrome and Android side.
+bool ShouldApplyChromeBadge(content::BrowserContext* context,
+                            const std::string& extension_id);
 
 }  // namespace util
 }  // namespace extensions

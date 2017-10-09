@@ -74,6 +74,7 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
       item_weak_(item),
       apps_grid_view_(apps_grid_view),
       icon_(new views::ImageView),
+      badge_icon_(new views::ImageView),
       title_(new views::Label),
       progress_bar_(new views::ProgressBar),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
@@ -88,6 +89,8 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
 
   icon_->set_can_process_events_within_subtree(false);
   icon_->SetVerticalAlignment(views::ImageView::LEADING);
+  badge_icon_->set_can_process_events_within_subtree(false);
+  badge_icon_->SetVerticalAlignment(views::ImageView::LEADING);
 
   title_->SetBackgroundColor(SK_ColorTRANSPARENT);
   title_->SetAutoColorReadabilityEnabled(false);
@@ -108,10 +111,12 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
   SetTitleSubpixelAA();
 
   AddChildView(icon_);
+  AddChildView(badge_icon_);
   AddChildView(title_);
   AddChildView(progress_bar_);
 
   SetIcon(item->icon());
+  SetBadgeIcon(item->badge_icon());
   SetItemName(base::UTF8ToUTF16(item->GetDisplayName()),
               base::UTF8ToUTF16(item->name()));
   SetItemIsInstalling(item->is_installing());
@@ -131,7 +136,7 @@ AppListItemView::~AppListItemView() {
 void AppListItemView::SetIcon(const gfx::ImageSkia& icon) {
   // Clear icon and bail out if item icon is empty.
   if (icon.isNull()) {
-    icon_->SetImage(NULL);
+    icon_->SetImage(nullptr);
     return;
   }
 
@@ -143,6 +148,15 @@ void AppListItemView::SetIcon(const gfx::ImageSkia& icon) {
     shadow_animator_->SetOriginalImage(resized);
   else
     icon_->SetImage(resized);
+}
+
+void AppListItemView::SetBadgeIcon(const gfx::ImageSkia& badge_icon) {
+  if (badge_icon.isNull()) {
+    badge_icon_->SetImage(nullptr);
+    return;
+  }
+
+  badge_icon_->SetImage(badge_icon);
 }
 
 void AppListItemView::SetUIState(UIState ui_state) {
@@ -396,7 +410,13 @@ void AppListItemView::Layout() {
     return;
 
   if (is_fullscreen_app_list_enabled_) {
-    icon_->SetBoundsRect(GetIconBoundsForTargetViewBounds(GetContentsBounds()));
+    gfx::Rect icon_rect(GetIconBoundsForTargetViewBounds(GetContentsBounds()));
+    icon_->SetBoundsRect(icon_rect);
+    gfx::Rect badge_rect(icon_rect);
+    gfx::Size icon_size = icon_->GetImage().size();
+    badge_rect.Offset((icon_size.width() - 12) / 2,
+                      icon_size.height() - 10 - 12 / 2);
+    badge_icon_->SetBoundsRect(badge_rect);
 
     rect.Inset(kGridTitleHorizontalPadding,
                kGridIconTopPadding + kGridIconDimension + kGridTitleSpacing,
@@ -621,6 +641,10 @@ void AppListItemView::SetTitleSubpixelAA() {
 
 void AppListItemView::ItemIconChanged() {
   SetIcon(item_weak_->icon());
+}
+
+void AppListItemView::ItemBadgeIconChanged() {
+  SetBadgeIcon(item_weak_->badge_icon());
 }
 
 void AppListItemView::ItemNameChanged() {

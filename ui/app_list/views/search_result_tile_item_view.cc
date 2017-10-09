@@ -14,6 +14,7 @@
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/search_result_container_view.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/chromeos/gfx_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
@@ -316,9 +317,9 @@ void SearchResultTileItemView::Layout() {
     if (badge()) {
       gfx::Rect badge_rect(rect);
       gfx::Size icon_size = icon()->GetImage().size();
-      badge_rect.Offset(
-          (icon_size.width() - kAppBadgeIconSize) / 2,
-          icon_size.height() - kBadgeBackgroundRadius - kAppBadgeIconSize / 2);
+      badge_rect.Offset((icon_size.width() - kAppBadgeIconSize) / 2,
+                        icon_size.height() - ui::kBadgeBackgroundRadius -
+                            kAppBadgeIconSize / 2);
       badge()->SetBoundsRect(badge_rect);
     }
 

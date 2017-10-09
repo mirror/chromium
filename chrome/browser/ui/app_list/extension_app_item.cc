@@ -80,6 +80,7 @@ void ExtensionAppItem::Reload() {
 
 void ExtensionAppItem::OnIconUpdated(extensions::ChromeAppIcon* icon) {
   SetIcon(icon->IsValid() ? icon->image_skia() : installing_icon_);
+  SetBadgeIcon(icon->badge_image());
 }
 
 const Extension* ExtensionAppItem::GetExtension() const {
