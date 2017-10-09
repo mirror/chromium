@@ -656,6 +656,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   QuicPacketWriter* writer() { return writer_; }
   const QuicPacketWriter* writer() const { return writer_; }
 
+  // Sends a probing packet of size |packet_size|. If the packet is
+  // acknowledge by the peer, probing will be marked as successful.
+  void SendProbingPacket(QuicByteCount packet_size);
+
   // Sends an MTU discovery packet of size |target_mtu|.  If the packet is
   // acknowledged by the peer, the maximum packet size will be increased to
   // |target_mtu|.

@@ -123,6 +123,10 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
       QuicByteCount target_mtu,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
+  // TODO(zhongyi): figure out the packet size.
+  // Generates a connectivity probing packet of specified size.
+  void GenerateProbingPacket(QuicByteCount packet_size);
+
   // Indicates whether batch mode is currently enabled.
   bool InBatchMode();
   // Disables flushing.

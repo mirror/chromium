@@ -22,6 +22,9 @@ QuicFrame::QuicFrame(QuicAckFrame* frame) : type(ACK_FRAME), ack_frame(frame) {}
 QuicFrame::QuicFrame(QuicMtuDiscoveryFrame frame)
     : type(MTU_DISCOVERY_FRAME), mtu_discovery_frame(frame) {}
 
+QuicFrame::QuicFrame(QuicConnectivityProbingFrame frame)
+    : type(CONNECTIVITY_PROBING_FRAME), connectivity_probing_frame(frame) {}
+
 QuicFrame::QuicFrame(QuicStopWaitingFrame* frame)
     : type(STOP_WAITING_FRAME), stop_waiting_frame(frame) {}
 
@@ -49,6 +52,7 @@ void DeleteFrames(QuicFrames* frames) {
       // Frames smaller than a pointer are inlined, so don't need to be deleted.
       case PADDING_FRAME:
       case MTU_DISCOVERY_FRAME:
+      case CONNECTIVITY_PROBING_FRAME:
       case PING_FRAME:
         break;
       case STREAM_FRAME:
@@ -139,6 +143,10 @@ std::ostream& operator<<(std::ostream& os, const QuicFrame& frame) {
     }
     case MTU_DISCOVERY_FRAME: {
       os << "type { MTU_DISCOVERY_FRAME } ";
+      break;
+    }
+    case CONNECTIVITY_PROBING_FRAME: {
+      os << "type { CONNECTIVITY_PROBING_FRAME } ";
       break;
     }
     default: {
