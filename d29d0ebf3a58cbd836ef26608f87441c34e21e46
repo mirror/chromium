@@ -373,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "77f8927b_5584c0ac",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T16:05:32Z",
+      "side": 1,
+      "message": "Fair enough. I didn\u0027t realize that the symbols weren\u0027t exported -- that explains the dance.",
+      "parentUuid": "a7ea4152_84f7fd5f",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ccd828b_3ec8bf2e",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
