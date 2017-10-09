@@ -498,6 +498,7 @@ void RemoteSuggestionsProviderImpl::OnRefetchWhileDisplayingFinished(
   fetch_timeout_timer_->Stop();
   // If the fetch succeeds, it already notified new results.
   if (!status.IsSuccess()) {
+    DLOG(WARNING) << "fetch failed";
     NotifyRefetchWhileDisplayingFailedOrTimeouted();
   }
   if (callback) {
@@ -538,6 +539,8 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     fetch_when_ready_callback_ = std::move(callback);
     return;
   }
+
+  DLOG(WARNING) << "fetch initiated";
 
   MarkEmptyCategoriesAsLoading();
 
@@ -643,6 +646,7 @@ void RemoteSuggestionsProviderImpl::NotifyRefetchWhileDisplayingStarted() {
   DCHECK(articles_it != category_contents_.end());
   CategoryContent& content = articles_it->second;
   DCHECK_EQ(content.status, CategoryStatus::AVAILABLE);
+  DLOG(WARNING) << "fetch articles stale";
   UpdateCategoryStatus(articles_it->first, CategoryStatus::AVAILABLE_LOADING);
 }
 
@@ -652,6 +656,7 @@ void RemoteSuggestionsProviderImpl::
   DCHECK(articles_it != category_contents_.end());
   CategoryContent& content = articles_it->second;
   DCHECK_EQ(content.status, CategoryStatus::AVAILABLE_LOADING);
+  DLOG(WARNING) << "fetch articles not stale any more";
   UpdateCategoryStatus(articles_it->first, CategoryStatus::AVAILABLE);
   // TODO(jkrcal): Technically, we have no new suggestions; we should not
   // notify. This is a work-around before crbug.com/768410 gets fixed.
@@ -1018,6 +1023,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+    DLOG(WARNING) << "fetch category available " << category.id();
     // TODO(sfiera): notify only when a category changed above.
     NotifyNewSuggestions(category, item.second.suggestions);
 

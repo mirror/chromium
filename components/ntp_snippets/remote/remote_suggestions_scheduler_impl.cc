@@ -67,11 +67,11 @@ enum class FetchingInterval {
 // defined by the enum FetchingInterval. The default time intervals defined in
 // the arrays can be overridden using different variation parameters.
 const double kDefaultFetchingIntervalHoursRareNtpUser[] = {192.0, 96.0, 48.0,
-                                                           48.0,  10.0, 10.0};
+                                                           48.0,  0.01, 0.01};
 const double kDefaultFetchingIntervalHoursActiveNtpUser[] = {96.0, 48.0, 24.0,
-                                                             24.0, 10.0, 10.0};
+                                                             24.0, 0.01, 0.01};
 const double kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[] = {
-    48.0, 24.0, 12.0, 12.0, 1.0, 1.0};
+    48.0, 24.0, 12.0, 12.0, 0.01, 0.01};
 
 // For a simple comparison: fetching intervals that emulate the state really
 // rolled out to 100% M58 Stable. Used for evaluation of later changes. DBL_MAX
@@ -421,9 +421,11 @@ RemoteSuggestionsSchedulerImpl::FetchingSchedule::GetStalenessInterval() const {
   // The default value for staleness is |interval_startup_wifi| which is not
   // constant. It depends on user class and is configurable by field trial
   // params as well.
-  return base::TimeDelta::FromHours(base::GetFieldTrialParamByFeatureAsInt(
-      ntp_snippets::kArticleSuggestionsFeature,
-      kMinAgeForStaleFetchHoursParamName, interval_startup_wifi.InHours()));
+  auto hours =
+      base::TimeDelta::FromHours(base::GetFieldTrialParamByFeatureAsInt(
+          ntp_snippets::kArticleSuggestionsFeature,
+          kMinAgeForStaleFetchHoursParamName, interval_startup_wifi.InHours()));
+  return base::TimeDelta::FromMinutes(1) + hours - hours;
 }
 
 // The TriggerType enum specifies values for the events that can trigger
