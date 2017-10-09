@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7f36e91_6d431ac3",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:17:04Z",
+      "side": 1,
+      "message": "Feels odd to use the delay for both of these things.  Are we sure we want the same delay here?  If that\u0027s expected, add/update a comment in the header file.",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "199b1b4086eae079d412e6d2496f94877453b941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

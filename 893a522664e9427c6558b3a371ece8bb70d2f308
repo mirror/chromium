@@ -16,6 +16,52 @@
       "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e61d03_e69536a7",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:17:04Z",
+      "side": 0,
+      "message": "Is this ok?  If we never notify the observer because the state hasn\u0027t changed, will we update the downloads?",
+      "range": {
+        "startLine": 582,
+        "startChar": 2,
+        "endLine": 582,
+        "endChar": 23
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473f871d_65c99961",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:17:04Z",
+      "side": 0,
+      "message": "Same with this :).",
+      "range": {
+        "startLine": 588,
+        "startChar": 2,
+        "endLine": 588,
+        "endChar": 26
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
