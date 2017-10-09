@@ -6,18 +6,25 @@
 class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
   constructor() {
     super([
+      'addDiscoveredPrinter',
       'getCupsPrintersList',
       'getCupsPrinterManufacturersList',
       'getCupsPrinterModelsList',
       'getPrinterInfo',
       'startDiscoveringPrinters',
       'stopDiscoveringPrinters',
+      'cancelPrinterSetUp',
     ]);
 
     this.printerList = [];
     this.manufacturers = [];
     this.models = [];
     this.printerInfo = {};
+  }
+
+  /** @override */
+  addDiscoveredPrinter(printerId) {
+    this.methodCalled('addDiscoveredPrinter');
   }
 
   /** @override */
@@ -41,8 +48,7 @@ class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
   /** @override */
   getPrinterInfo(newPrinter) {
     this.methodCalled('getPrinterInfo', newPrinter);
-    // Reject all calls for now.
-    return Promise.reject();
+    return Promise.resolve(this.printerInfo);
   }
 
   /** @override */
@@ -53,6 +59,11 @@ class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
   /** @override */
   stopDiscoveringPrinters() {
     this.methodCalled('stopDiscoveringPrinters');
+  }
+
+  /** @override */
+  cancelPrinterSetUp(newPrinter) {
+    this.methodCalled('cancelPrinterSetUp', newPrinter);
   }
 }
 
@@ -168,7 +179,9 @@ suite('CupsAddPrinterDialogTests', function() {
     fillAddManuallyDialog(addDialog);
 
     cupsPrintersBrowserProxy.whenCalled('getCupsPrinterModelsList')
-        .then(function(manufacturer) { assertGT(0, manufacturer.length); });
+        .then(function(manufacturer) {
+          assertGT(manufacturer.length, 0);
+        });
 
     cupsPrintersBrowserProxy.manufacturers =
         ['ManufacturerA', 'ManufacturerB', 'Chromites'];
@@ -181,5 +194,148 @@ suite('CupsAddPrinterDialogTests', function() {
           var modelDialog = dialog.$$('add-printer-manufacturer-model-dialog');
           assertTrue(!!modelDialog);
         });
+  });
+
+  /**
+   * Test that dialog cancellation is logged from the manufacturer screen for
+   * IPP printers.
+   */
+  test('LogDialogCancelledIpp', function() {
+    var makeAndModel = 'Printer Make And Model';
+    // Start on add manually.
+    dialog.fire('open-manually-add-printer-dialog');
+    Polymer.dom.flush();
+
+    // Populate the printer object.
+    dialog.newPrinter = {
+      ppdManufacturer: '',
+      ppdModel: '',
+      printerAddress: '192.168.1.13',
+      printerAutoconf: false,
+      printerDescription: '',
+      printerId: '',
+      printerManufacturer: '',
+      printerModel: '',
+      printerMakeAndModel: '',
+      printerName: 'Test Printer',
+      printerPPDPath: '',
+      printerProtocol: 'ipps',
+      printerQueue: 'moreinfohere',
+      printerStatus: '',
+    };
+
+    // Seed the getPrinterInfo response.  We detect the make and model but it is
+    // not an autoconf printer.
+    cupsPrintersBrowserProxy.printerInfo = {
+      autoconf: false,
+      manufacturer: 'MFG',
+      model: 'MDL',
+      makeAndModel: makeAndModel,
+    };
+
+    // Press the add button to advance dialog.
+    var addDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!addDialog);
+    MockInteractions.tap(addDialog.$$('.action-button'));
+
+    var pressCancel =
+        cupsPrintersBrowserProxy.whenCalled('getPrinterInfo').then(function() {
+          Polymer.dom.flush();
+          var manufacturerDialog =
+              dialog.$$('add-printer-manufacturer-model-dialog');
+          assertTrue(!!manufacturerDialog);
+          // Cancel setup with the cancel button.
+          MockInteractions.tap(manufacturerDialog.$$('.cancel-button'));
+        });
+
+    var verifyCancel =
+        cupsPrintersBrowserProxy.whenCalled('cancelPrinterSetUp')
+            .then(function(newPrinter) {
+              assertTrue(!!newPrinter);
+              assertEquals(makeAndModel, newPrinter.printerMakeAndModel);
+            });
+
+    // Click cancel on the manufacturer dialog when it shows up then verify
+    // cancel was called with the appropriate parameters.
+    return pressCancel.then(verifyCancel);
+  });
+
+  /**
+   * Test that dialog cancellation is logged from the manufacturer screen for
+   * USB printers.
+   */
+  test('LogDialogCancelledUSB', function() {
+    var vendorId = 0x1234;
+    var modelId = 0xDEAD;
+    var manufacturer = 'PrinterMFG';
+    var model = 'Printy Printerson';
+
+    var usbInfo = {
+      usbVendorId: vendorId,
+      usbProductId: modelId,
+      usbVendorName: manufacturer,
+      usbProductName: model,
+    };
+
+    var expectedPrinter = 'PICK_ME!';
+
+    var newPrinter = {
+      ppdManufacturer: '',
+      ppdModel: '',
+      printerAddress: 'EEAADDAA',
+      printerAutoconf: false,
+      printerDescription: '',
+      printerId: expectedPrinter,
+      printerManufacturer: '',
+      printerModel: '',
+      printerMakeAndModel: '',
+      printerName: '',
+      printerPPDPath: '',
+      printerProtocol: 'usb',
+      printerQueue: 'moreinfohere',
+      printerStatus: '',
+      printerUsbInfo: usbInfo,
+    };
+
+    dialog.fire('open-discovery-printers-dialog');
+
+    var selectPrinter =
+        cupsPrintersBrowserProxy.whenCalled('startDiscoveringPrinters')
+            .then(function() {
+              // Select the printer.
+              // TODO(skau): Figure out how to select in a dom-repeat.
+              var discoveryDialog = dialog.$$('add-printer-discovery-dialog');
+              assertTrue(!!discoveryDialog);
+              discoveryDialog.selectedPrinter = newPrinter;
+
+              var addButton = discoveryDialog.$$('.action-button');
+              assertTrue(!!addButton);
+              // Run printer setup.
+              MockInteractions.tap(addButton);
+            });
+
+    var pressCancel =
+        cupsPrintersBrowserProxy.whenCalled('addDiscoveredPrinter')
+            .then(function() {
+              dialog.fire('on-manually-add-discovered-printer', [newPrinter]);
+              Polymer.dom.flush();
+              var manufacturerDialog =
+                  dialog.$$('add-printer-manufacturer-model-dialog');
+              assertTrue(!!manufacturerDialog);
+              // Cancel setup with the cancel button.
+              MockInteractions.tap(manufacturerDialog.$$('.cancel-button'));
+            });
+
+    var verifyUsbInfo =
+        cupsPrintersBrowserProxy.whenCalled('cancelPrinterSetUp')
+            .then(function(newPrinter) {
+              var usbInfo = newPrinter.printerUsbInfo;
+              assertEquals(vendorId, usbInfo.usbVendorId);
+              assertEquals(modelId, usbInfo.usbProductId);
+              assertEquals(manufacturer, usbInfo.usbVendorName);
+              assertEquals(model, usbInfo.usbProductName);
+            });
+
+    return selectPrinter.then(pressCancel).then(verifyUsbInfo);
   });
 });
