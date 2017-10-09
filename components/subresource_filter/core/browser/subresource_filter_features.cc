@@ -324,6 +324,9 @@ Configuration Configuration::MakeForForcedActivation() {
   // (which is why scope is no_sites).
   Configuration config(ActivationLevel::ENABLED, ActivationScope::NO_SITES);
   config.activation_conditions.forced_activation = true;
+
+  // Do not log console messages for subresource blocking.
+  config.activation_options.should_suppress_notifications = true;
   return config;
 }
 
