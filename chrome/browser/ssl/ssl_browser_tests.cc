@@ -5160,7 +5160,6 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, OSReportsCaptivePortal) {
 }
 
 namespace {
-
 // SPKI hash to captive-portal.badssl.com leaf certificate. This
 // doesn't match the actual cert (ok_cert.pem) but is good enough for testing.
 const char kCaptivePortalSPKI[] =
@@ -5183,7 +5182,6 @@ class SSLUICaptivePortalListResourceBundleTest
   void SetUp() override {
     CertVerifierBrowserTest::SetUp();
     SSLErrorHandler::ResetConfigForTesting();
-    SetUpCertVerifier(0, net::OK, std::string());
   }
 
   void TearDown() override {
@@ -5196,11 +5194,15 @@ class SSLUICaptivePortalListResourceBundleTest
   // server's certificate is marked as a captive portal certificate.
   void TestNoCaptivePortalInterstitial(net::CertStatus cert_status,
                                        int net_error) {
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitFromCommandLine(
+        "CaptivePortalCertificateList" /* enabled */,
+        std::string() /* disabled */);
     ASSERT_TRUE(https_server()->Start());
     base::HistogramTester histograms;
 
     // Mark the server's cert as a captive portal cert.
-    SetUpCertVerifier(cert_status, net_error, kCaptivePortalSPKI);
+    SetUpCertVerifierWithTestSPKI(cert_status, net_error);
 
     // Navigate to an unsafe page on the server. CaptivePortalCertificateList
     // feature is enabled but either the error is not name-mismatch, or it's not
@@ -5225,9 +5227,41 @@ class SSLUICaptivePortalListResourceBundleTest
         SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
   }
 
-  void SetUpCertVerifier(net::CertStatus cert_status,
-                         int net_result,
-                         const std::string& spki_hash) {
+  void TestCaptivePortalInterstitial() {
+    base::test::ScopedFeatureList scoped_feature_list;
+    scoped_feature_list.InitFromCommandLine(
+        "CaptivePortalCertificateList" /* enabled */,
+        std::string() /* disabled */);
+    ASSERT_TRUE(https_server()->Start());
+    base::HistogramTester histograms;
+
+    // Navigate to an unsafe page on the server. The captive portal interstitial
+    // should be displayed since CaptivePortalCertificateList feature is
+    // enabled.
+    WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
+    content::WaitForInterstitialAttach(tab);
+
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    EXPECT_FALSE(interstitial_timer_observer.timer_started());
+
+    // Check that the histogram for the captive portal cert was recorded.
+    histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                3);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::HANDLE_ALL, 1);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 1);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 1);
+  }
+
+  void SetUpCertVerifierWithTestSPKI(net::CertStatus cert_status,
+                                     int net_result) {
     scoped_refptr<net::X509Certificate> cert(https_server_.GetCertificate());
     net::CertVerifyResult verify_result;
     verify_result.is_issued_by_known_root =
@@ -5235,12 +5269,9 @@ class SSLUICaptivePortalListResourceBundleTest
     verify_result.verified_cert = cert;
     verify_result.cert_status = cert_status;
 
-    // Set the SPKI hash to captive-portal.badssl.com leaf certificate.
-    if (!spki_hash.empty()) {
-      net::HashValue hash;
-      ASSERT_TRUE(hash.FromString(spki_hash));
-      verify_result.public_key_hashes.push_back(hash);
-    }
+    net::HashValue hash;
+    ASSERT_TRUE(hash.FromString(kCaptivePortalSPKI));
+    verify_result.public_key_hashes.push_back(hash);
     mock_cert_verifier()->AddResultForCert(cert, verify_result, net_result);
   }
 
@@ -5253,40 +5284,80 @@ class SSLUICaptivePortalListResourceBundleTest
 }  // namespace
 
 // Same as CaptivePortalCertificateList_Enabled_FromProto, but this time the
+// cert's full hash (i.e. SHA256 of its DER) is listed in
+// ssl_error_assistant.asciipb.
+IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
+                       Enabled_CertHash) {
+  // Leaf cert of captive-portal.badssl.com. This cert is included as a test
+  // entry in ssl_error_assistant.asciipb file. It's only used in test cases
+  // that read ssl_error_assistant.asciipb file from the resource bundle.
+  // A mock cert verifier returns this cert to trigger a captive portal
+  // interstitial for those tests. Tests that don't read the resource bundle
+  // (i.e. dynamic update tests) don't use this cert, but add embedded
+  // server's certificate to the SSLErrorAssistant proto dynamically.
+  const char kBadSSLCert[] =
+      "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"
+      "9Z7g2Alx6md8QGUZQNsszYZgaAQ=";
+  std::string decoded;
+  ASSERT_TRUE(base::Base64Decode(kBadSSLCert, &decoded));
+  scoped_refptr<net::X509Certificate> cert =
+      net::X509Certificate::CreateFromBytes(decoded.data(), decoded.size());
+
+  net::CertVerifyResult verify_result;
+  verify_result.is_issued_by_known_root = true;
+  verify_result.verified_cert = cert;
+  verify_result.cert_status = net::CERT_STATUS_COMMON_NAME_INVALID;
+  mock_cert_verifier()->AddResultForCert(https_server_.GetCertificate(),
+                                         verify_result,
+                                         net::ERR_CERT_COMMON_NAME_INVALID);
+  TestCaptivePortalInterstitial();
+}
+
+// Same as CaptivePortalCertificateList_Enabled_FromProto, but this time the
 // cert's SPKI hash is listed in ssl_error_assistant.asciipb.
-IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest, Enabled) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitFromCommandLine(
-      "CaptivePortalCertificateList" /* enabled */,
-      std::string() /* disabled */);
-  ASSERT_TRUE(https_server()->Start());
-  base::HistogramTester histograms;
-
+IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
+                       Enabled_SPKIHash) {
   // Mark the server's cert as a captive portal cert.
-  SetUpCertVerifier(net::CERT_STATUS_COMMON_NAME_INVALID,
-                    net::ERR_CERT_COMMON_NAME_INVALID, kCaptivePortalSPKI);
-
-  // Navigate to an unsafe page on the server. The captive portal interstitial
-  // should be displayed since CaptivePortalCertificateList feature is enabled.
-  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
-  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
-  ui_test_utils::NavigateToURL(browser(), https_server()->GetURL("/"));
-  content::WaitForInterstitialAttach(tab);
-
-  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
-  ASSERT_EQ(CaptivePortalBlockingPage::kTypeForTesting,
-            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
-  EXPECT_FALSE(interstitial_timer_observer.timer_started());
-
-  // Check that the histogram for the captive portal cert was recorded.
-  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
-  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::HANDLE_ALL, 1);
-  histograms.ExpectBucketCount(
-      SSLErrorHandler::GetHistogramNameForTesting(),
-      SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 1);
-  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 1);
+  SetUpCertVerifierWithTestSPKI(net::CERT_STATUS_COMMON_NAME_INVALID,
+                                net::ERR_CERT_COMMON_NAME_INVALID);
+  TestCaptivePortalInterstitial();
 }
 
 // Same as SSLUICaptivePortalListResourceBundleTest. Enabled, but this time the
@@ -5301,8 +5372,8 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
   ASSERT_TRUE(https_server()->Start());
 
   // Mark the server's cert as a captive portal cert.
-  SetUpCertVerifier(net::CERT_STATUS_COMMON_NAME_INVALID,
-                    net::ERR_CERT_COMMON_NAME_INVALID, kCaptivePortalSPKI);
+  SetUpCertVerifierWithTestSPKI(net::CERT_STATUS_COMMON_NAME_INVALID,
+                                net::ERR_CERT_COMMON_NAME_INVALID);
 
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
 
@@ -5410,11 +5481,6 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
 // authority-invalid. Captive portal interstitial should not be shown.
 IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
                        Enabled_AuthorityInvalid) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitFromCommandLine(
-      "CaptivePortalCertificateList" /* enabled */,
-      std::string() /* disabled */);
-
   TestNoCaptivePortalInterstitial(net::CERT_STATUS_AUTHORITY_INVALID,
                                   net::ERR_CERT_AUTHORITY_INVALID);
 }
@@ -5424,11 +5490,6 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
 // interstitial should not be shown when name mismatch isn't the only error.
 IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListResourceBundleTest,
                        Enabled_NameMismatchAndWeakKey) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitFromCommandLine(
-      "CaptivePortalCertificateList" /* enabled */,
-      std::string() /* disabled */);
-
   const net::CertStatus cert_status =
       net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_WEAK_KEY;
   // Sanity check that COMMON_NAME_INVALID is seen as the net error, since the

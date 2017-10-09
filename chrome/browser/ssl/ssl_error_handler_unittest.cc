@@ -420,31 +420,80 @@ class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
         cert_status);
   }
 
-  // Set up an error assistant proto with mock captive portal hash data and
-  // begin handling the certificate error.
-  void RunCaptivePortalTest() {
-    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+  std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
+  MakeSSLErrorAssistantProto(bool add_spki_hash, bool add_cert_hash) {
+    EXPECT_TRUE(add_spki_hash || add_cert_hash);
     EXPECT_EQ(1u, ssl_info().public_key_hashes.size());
 
     auto config_proto =
         base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
     config_proto->set_version_id(kLargeVersionId);
-
     config_proto->add_captive_portal_cert()->set_sha256_hash(
         "sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     config_proto->add_captive_portal_cert()->set_sha256_hash(
-        ssl_info().public_key_hashes[0].ToString());
-    config_proto->add_captive_portal_cert()->set_sha256_hash(
         "sha256/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-    SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
 
+    if (add_spki_hash) {
+      config_proto->add_captive_portal_cert()->set_sha256_hash(
+          ssl_info().public_key_hashes[0].ToString());
+    }
+    if (add_cert_hash) {
+      const net::SHA256HashValue hash =
+          net::X509Certificate::CalculateFingerprint256(
+              ssl_info().cert->os_cert_handle());
+      config_proto->add_captive_portal_cert()->set_sha256_hash(
+          net::HashValue(hash).ToString());
+    }
+    return config_proto;
+  }
+
+  // Tests that a certificate marked as a known captive portal certificate
+  // causes the captive portal interstitial to be shown.
+  void TestCaptivePortalInterstitial() {
+    SetCaptivePortalFeatureEnabled(true);
+
+    base::HistogramTester histograms;
+
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
     error_handler()->StartHandlingError();
+
+    // Timer shouldn't start for a known captive portal certificate.
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+    EXPECT_FALSE(delegate()->captive_portal_checked());
+    EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+    EXPECT_TRUE(delegate()->captive_portal_interstitial_shown());
+    EXPECT_FALSE(delegate()->suggested_url_checked());
+
+    // A buggy SSL error handler might have incorrectly started the timer. Run
+    // to completion to ensure the timer is expired.
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+    EXPECT_FALSE(delegate()->captive_portal_checked());
+    EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+    EXPECT_TRUE(delegate()->captive_portal_interstitial_shown());
+    EXPECT_FALSE(delegate()->suggested_url_checked());
+
+    // Check that the histogram for the captive portal cert was recorded.
+    histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                3);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::HANDLE_ALL, 1);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 1);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 1);
   }
 
   void TestNoCaptivePortalInterstitial() {
+    SSLErrorHandler::SetErrorAssistantProto(
+        MakeSSLErrorAssistantProto(true, true));
+
     base::HistogramTester histograms;
 
-    RunCaptivePortalTest();
+    EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
+    error_handler()->StartHandlingError();
 
 #if !defined(OS_ANDROID)
     // On non-Android platforms (except for iOS where this code is disabled),
@@ -1084,46 +1133,27 @@ TEST_F(SSLErrorHandlerDateInvalidTest, TimeQueryHangs) {
 }
 
 // Tests that a certificate marked as a known captive portal certificate causes
-// the captive portal interstitial to be shown.
-TEST_F(SSLErrorAssistantTest, CaptivePortal_FeatureEnabled) {
-  SetCaptivePortalFeatureEnabled(true);
+// the captive portal interstitial to be shown. Uses the SPKI hash of the
+// certificate to mark it as a known captive portal certificate.
+TEST_F(SSLErrorAssistantTest, CaptivePortalList_FeatureEnabled_SPKIHash) {
+  SSLErrorHandler::SetErrorAssistantProto(MakeSSLErrorAssistantProto(
+      true /* add_spki_hash */, false /* add_cert_hash */));
+  TestCaptivePortalInterstitial();
+}
 
-  base::HistogramTester histograms;
-
-  RunCaptivePortalTest();
-
-  // Timer shouldn't start for a known captive portal certificate.
-  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
-  EXPECT_FALSE(delegate()->captive_portal_checked());
-  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
-  EXPECT_TRUE(delegate()->captive_portal_interstitial_shown());
-  EXPECT_FALSE(delegate()->suggested_url_checked());
-
-  // A buggy SSL error handler might have incorrectly started the timer. Run
-  // to completion to ensure the timer is expired.
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
-  EXPECT_FALSE(delegate()->captive_portal_checked());
-  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
-  EXPECT_TRUE(delegate()->captive_portal_interstitial_shown());
-  EXPECT_FALSE(delegate()->suggested_url_checked());
-
-  // Check that the histogram for the captive portal cert was recorded.
-  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 3);
-  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::HANDLE_ALL, 1);
-  histograms.ExpectBucketCount(
-      SSLErrorHandler::GetHistogramNameForTesting(),
-      SSLErrorHandler::SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE, 1);
-  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
-                               SSLErrorHandler::CAPTIVE_PORTAL_CERT_FOUND, 1);
+// Tests that a certificate marked as a known captive portal certificate causes
+// the captive portal interstitial to be shown. Uses the hash of the
+// certificate to mark it as a known captive portal certificate.
+TEST_F(SSLErrorAssistantTest, CaptivePortalList_FeatureEnabled_CertHash) {
+  SSLErrorHandler::SetErrorAssistantProto(MakeSSLErrorAssistantProto(
+      false /* add_spki_hash */, true /* add_cert_hash */));
+  TestCaptivePortalInterstitial();
 }
 
 // Tests that a certificate marked as a known captive portal certificate does
 // not cause the captive portal interstitial to be shown, if the feature is
 // disabled.
-TEST_F(SSLErrorAssistantTest, CaptivePortal_FeatureDisabled) {
+TEST_F(SSLErrorAssistantTest, CaptivePortalList_FeatureDisabled) {
   SetCaptivePortalFeatureEnabled(false);
 
   // Default error for SSLErrorHandlerNameMismatchTest tests is name mismatch.
