@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d763029_52323a2e",
+        "filename": "components/favicon/ios/web_favicon_driver.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T09:02:43Z",
+      "side": 1,
+      "message": "LGTM, but can you also fix the error introduced in (https://chromium-review.googlesource.com/c/chromium/src/+/695761/2/components/favicon/ios/web_favicon_driver.mm) by changing this to GetVisibleItem() instead.",
+      "revId": "279b3f3885781ab7a0893a3beabb0129df580583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
