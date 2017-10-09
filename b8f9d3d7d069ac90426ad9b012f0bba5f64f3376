@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54e77ff8_6ba8c91e",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-09T13:09:47Z",
+      "side": 1,
+      "message": "Could these be changed to data_it-\u003evolume_ et c.? Looks a bit nicer.",
+      "range": {
+        "startLine": 313,
+        "startChar": 37,
+        "endLine": 313,
+        "endChar": 47
+      },
+      "revId": "b8f9d3d7d069ac90426ad9b012f0bba5f64f3376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783d9da4_887cfbb7",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-09T13:09:47Z",
+      "side": 1,
+      "message": "Make these const.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "b8f9d3d7d069ac90426ad9b012f0bba5f64f3376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
