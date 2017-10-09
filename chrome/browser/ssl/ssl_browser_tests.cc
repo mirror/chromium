@@ -5497,6 +5497,8 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, PortalChecksDisabled) {
   base::HistogramTester histograms;
 
   // Mark the server's cert as a captive portal cert.
+  const net::HashValue server_spki_hash =
+      GetSPKIHash(https_server_mismatched_.GetCertificate().get());
   SSLErrorHandler::SetErrorAssistantProto(MakeCaptivePortalConfig(
       kLargeVersionId + 1, std::set<std::string>{server_spki_hash.ToString()}));
   ASSERT_TRUE(SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() > 0);
