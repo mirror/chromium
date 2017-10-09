@@ -12,8 +12,10 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/task_manager/task_manager_table_model.h"
+
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "ui/base/models/list_selection_model.h"
 #include "ui/base/models/table_model_observer.h"
 
 @class WindowSizeAutosaver;
@@ -52,8 +54,16 @@ class TaskManagerMac;
 - (id)initWithTaskManagerMac:(task_manager::TaskManagerMac*)taskManagerMac
                   tableModel:(task_manager::TaskManagerTableModel*)tableModel;
 
-// Refreshes all data in the task manager table.
+// Refreshes all data in the task manager table; leaving the selected tasks
+// unchanged.
 - (void)reloadData;
+
+// Returns a copy of the currently selected model indices.
+- (ui::ListSelectionModel)getCurrentSelection;
+
+// Reloads all data in the task manager table, and then updates the selected
+// tasks to those specified by @c modelSelection.
+- (void)reloadDataAndSetSelection:(const ui::ListSelectionModel&)modelSelection;
 
 // Gets a copy of the current sort descriptor.
 - (task_manager::TableSortDescriptor)sortDescriptor;
@@ -114,6 +124,7 @@ class TaskManagerMac : public ui::TableModelObserver,
   void OnItemsChanged(int start, int length) override;
   void OnItemsAdded(int start, int length) override;
   void OnItemsRemoved(int start, int length) override;
+  void OnItemsMoved(int old_start, int length, int new_start) override;
 
   // TableViewDelegate:
   bool IsColumnVisible(int column_id) const override;
