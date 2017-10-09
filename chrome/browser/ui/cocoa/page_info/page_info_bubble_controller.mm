@@ -31,6 +31,7 @@
 #import "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/navigation_handle.h"
@@ -65,63 +66,66 @@ namespace {
 
 // The default width of the window, in view coordinates. It may be larger to
 // fit the content.
-const CGFloat kDefaultWindowWidth = 320;
+constexpr CGFloat kDefaultWindowWidth = 320;
 
 // Padding around each section
-const CGFloat kSectionVerticalPadding = 20;
-const CGFloat kSectionHorizontalPadding = 16;
+constexpr CGFloat kSectionVerticalPadding = 20;
+constexpr CGFloat kSectionHorizontalPadding = 16;
 
 // Links are buttons with invisible padding, so we need to move them back to
 // align with other text.
-const CGFloat kLinkButtonXAdjustment = 1;
+constexpr CGFloat kLinkButtonXAdjustment = 1;
 
 // Built-in margin for NSButton to take into account.
-const CGFloat kNSButtonBuiltinMargin = 4;
+constexpr CGFloat kNSButtonBuiltinMargin = 4;
 
 // Security Section ------------------------------------------------------------
 
 // Spacing between security summary, security details, and cert decisions text.
-const CGFloat kSecurityParagraphSpacing = 12;
+constexpr CGFloat kSecurityParagraphSpacing = 12;
 
 // Site Settings Section -------------------------------------------------------
 
 // Square size of the permission images.
-const CGFloat kPermissionImageSize = 16;
+constexpr CGFloat kPermissionImageSize = 16;
 
 // Spacing between a permission image and the text.
-const CGFloat kPermissionImageSpacing = 6;
+constexpr CGFloat kPermissionImageSpacing = 6;
 
 // Minimum distance between the label and its corresponding menu.
-const CGFloat kMinSeparationBetweenLabelAndMenu = 16;
+constexpr CGFloat kMinSeparationBetweenLabelAndMenu = 16;
 
 // Square size of the permission delete button image.
-const CGFloat kPermissionDeleteImageSize = 16;
+constexpr CGFloat kPermissionDeleteImageSize = 16;
 
 // The spacing between individual permissions.
-const CGFloat kPermissionsVerticalSpacing = 16;
+constexpr CGFloat kPermissionsVerticalSpacing = 16;
 
 // Spacing to add after a permission label, either directly on top of
 // kPermissionsVerticalSpacing, or before additional text (e.g. "X in use" for
 // cookies).
-const CGFloat kPermissionLabelBottomPadding = 4;
+constexpr CGFloat kPermissionLabelBottomPadding = 4;
 
 // Amount to lower each permission icon to align the icon baseline with the
 // label text.
-const CGFloat kPermissionIconYAdjustment = 1;
+constexpr CGFloat kPermissionIconYAdjustment = 1;
 
 // Amount to lower each permission popup button to make its text align with the
 // permission label.
-const CGFloat kPermissionPopupButtonYAdjustment = 3;
+constexpr CGFloat kPermissionPopupButtonYAdjustment = 3;
 
 // Internal Page Bubble --------------------------------------------------------
 
 // Padding between the window frame and content for the internal page bubble.
-const CGFloat kInternalPageFramePadding = 10;
+constexpr CGFloat kInternalPageFramePadding = 10;
 
 // Spacing between the image and text for internal pages.
-const CGFloat kInternalPageImageSpacing = 10;
+constexpr CGFloat kInternalPageImageSpacing = 10;
 
 // -----------------------------------------------------------------------------
+
+// This number must not be the same as any permission in ContentSettingsType.
+constexpr int kChosenObjectTag = CONTENT_SETTINGS_NUM_TYPES;
 
 // NOTE: This assumes that there will never be more than one page info
 // bubble shown, and that the one that is shown is associated with the current
@@ -1102,6 +1106,8 @@ bool IsInternalURL(const GURL& url) {
                                        atPoint:position];
   }
   [label setToolTip:base::SysUTF16ToNSString(labelText)];
+  // Tag the button with the permission type so it can be updated later.
+  button.tag = permissionInfo.type;
 
   [view setFrameSize:NSMakeSize(viewWidth, NSHeight([view frame]))];
 
@@ -1244,6 +1250,9 @@ bool IsInternalURL(const GURL& url) {
                                            toView:view
                                           atPoint:position];
   }
+  imageView.tag = kChosenObjectTag;
+  label.tag = kChosenObjectTag;
+  button.tag = kChosenObjectTag;
 
   [view setFrameSize:NSMakeSize(viewWidth, NSHeight([view frame]))];
 
@@ -1288,28 +1297,104 @@ bool IsInternalURL(const GURL& url) {
 
 - (void)setPermissionInfo:(const PermissionInfoList&)permissionInfoList
          andChosenObjects:(ChosenObjectInfoList)chosenObjectInfoList {
-  [permissionsView_ setSubviews:[NSArray array]];
   NSPoint controlOrigin = NSMakePoint(kSectionHorizontalPadding, 0);
 
-  permissionsPresent_ = YES;
+  // If |permissionsView_| is already populated, just handle updates to
+  // permissions made by the user here. This will avoid removing/adding new
+  // views (and thus breaking the responder chain), and also avoid immediately
+  // removing permissions set back to the default, which could be user error.
+  // Note that "update" means setPermissionInfo will only change the title of
+  // the permission |PermissionSelectorButton|. This is OK because it is not
+  // possible for the following to occur without closing the Page Info bubble:
+  //   - a permission gets changed away from the factory default (and thus needs
+  //     to be shown in Page Info)
+  //   - a permission's source changes (and becomes disabled / needs to show a
+  //     reason).
+  if ([permissionsView_ subviews].count) {
+    NSView* view = nil;
+    // Remove all the chosen object views. They will be repopulated if the site
+    // still has access to them.
+    while ((view = [permissionsView_ viewWithTag:kChosenObjectTag]))
+      [view removeFromSuperview];
 
-  if (permissionInfoList.size() > 0 || chosenObjectInfoList.size() > 0) {
-    for (const auto& permission : permissionInfoList) {
-      controlOrigin.y += kPermissionsVerticalSpacing;
-      NSPoint rowBottomRight = [self addPermission:permission
-                                            toView:permissionsView_
-                                           atPoint:controlOrigin];
-      controlOrigin.y = rowBottomRight.y;
+    for (view in [permissionsView_ subviews]) {
+      const int permissionType = [view tag];
+      if (permissionType <= 0)
+        continue;
+
+      const int yOrigin = [view frame].origin.y;
+      // Permissions set back to the factory default setting will disappear from
+      // |permissionInfoList|, so use |updated| to keep track of whether |view|
+      // has been updated with its new permission value yet.
+      bool updated = false;
+      for (const auto& permission : permissionInfoList) {
+        if (permissionType != permission.type)
+          continue;
+
+        updated = true;
+        [(PermissionSelectorButton*)view setButtonTitle:permission
+                                                profile:[self profile]];
+        break;
+      }
+
+      if (!updated) {
+        // Permissions that are no longer in |permissionInfoList| have been set
+        // back to factory default settings.
+        PageInfoUI::PermissionInfo default_info;
+        default_info.type = (ContentSettingsType)permissionType;
+        default_info.setting = CONTENT_SETTING_DEFAULT;
+        default_info.default_setting =
+            content_settings::ContentSettingsRegistry::GetInstance()
+                ->Get((ContentSettingsType)permissionType)
+                ->GetInitialDefaultSetting();
+        default_info.source = content_settings::SETTING_SOURCE_USER;
+        default_info.is_incognito = [self profile]->IsOffTheRecord();
+        [(PermissionSelectorButton*)view setButtonTitle:default_info
+                                                profile:[self profile]];
+      }
+
+      // Updating the text might have changed the width of the
+      // |PermissionSelectorRow|, so reposition here.
+      if (base::i18n::IsRTL()) {
+        [view setFrameOrigin:NSMakePoint(kSectionHorizontalPadding, yOrigin)];
+      } else {
+        [view setFrameOrigin:NSMakePoint(NSWidth([permissionsView_ frame]) -
+                                             kSectionHorizontalPadding -
+                                             NSWidth([view frame]),
+                                         yOrigin)];
+      }
     }
+    if ([[permissionsView_ subviews] count]) {
+      controlOrigin.y =
+          CGRectGetMaxY([[[permissionsView_ subviews] lastObject] frame]);
+    }
+  } else {
+    [permissionsView_ setSubviews:[NSArray array]];
 
-    for (auto& object : chosenObjectInfoList) {
-      controlOrigin.y += kPermissionsVerticalSpacing;
-      NSPoint rowBottomRight = [self addChosenObject:std::move(object)
+    permissionsPresent_ = YES;
+
+    if (permissionInfoList.size() > 0 || chosenObjectInfoList.size() > 0) {
+      for (const auto& permission : permissionInfoList) {
+        controlOrigin.y += kPermissionsVerticalSpacing;
+        NSPoint rowBottomRight = [self addPermission:permission
                                               toView:permissionsView_
                                              atPoint:controlOrigin];
-      controlOrigin.y = rowBottomRight.y;
+        controlOrigin.y = rowBottomRight.y;
+      }
     }
   }
+
+  for (auto& object : chosenObjectInfoList) {
+    controlOrigin.y += kPermissionsVerticalSpacing;
+    NSPoint rowBottomRight = [self addChosenObject:std::move(object)
+                                            toView:permissionsView_
+                                           atPoint:controlOrigin];
+    controlOrigin.y = rowBottomRight.y;
+  }
+
+  // |permissionsView_| was updated here, so make sure keyboard access still
+  // works by updating the responder chain.
+  [[self window] recalculateKeyViewLoop];
 
   [permissionsView_ setFrameSize:NSMakeSize(NSWidth([permissionsView_ frame]),
                                             controlOrigin.y)];
