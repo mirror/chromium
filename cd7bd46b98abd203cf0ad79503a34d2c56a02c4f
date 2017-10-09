@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f3692da_9907d4c1",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde197ff_203e2f2a",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07974aa4_603bed53",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a913ce_e358c954",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07974aa4_603bed53",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a54a4fa_4bd80114",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "There are difficulties in using mojo\u0027s Time type. Some VALIDATION_ERROR_UNEXPECTED_STRUCT_HEADER and net::ERR_CONTENT_DECODING_FAILED.\n\nMoreover, there is no representation of mojo Time type in Javascript since it is only the millisecond. In my opinion, it is much simpler just to use the int64 millisecond representation of the time for now.",
+      "parentUuid": "59b9d427_38ae2325",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47075a4c_215cb872",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 23
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-09T18:40:06Z",
       "side": 1,
       "message": "This is odd. I don\u0027t think you should move the message to the caller. Is there a way to get a copy or a reference instead? Or a raw mojo ptr?\n\nI\u0027d prefer this to be a const method.",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e956c5b1_237b831b",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "The mojo pointer is DISALLOW_COPY_AND_ASSIGN, so it can\u0027t be copied. I not sure if there are other ways, but to switch this to a const method would require message_ to be an std::unique_ptr, and then during the test, it would require to do something like:\n  mojom::MessageLogPtr actual \u003d std::move(*(page-\u003emessage()));",
+      "parentUuid": "47075a4c_215cb872",
       "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7e4e2981_a420c824",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a03af56_2dca5d43",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95a9e49a_8c217ed1",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 23
@@ -101,6 +191,24 @@
       "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7145e5ae_1dfccda3",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95a9e49a_8c217ed1",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "00a027a2_638e47e7",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2911ff76_5d9a8fab",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7c8759_91db77b9",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 23
@@ -135,6 +261,24 @@
       "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56de81a_90743e94",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done. Thanks for the tip!",
+      "parentUuid": "da7c8759_91db77b9",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "76645534_21699993",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "This is because doing an auto* for loop will create copies of the pointer/object. And since it it was a unique_ptr.\n\nNow each observer is DISALLOW_COPY_AND_ASSIGN, so we can\u0027t do a auto* for loop.",
+      "parentUuid": "da9bba47_ae2b0a32",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7654d9d_bf7e0b81",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 23
@@ -169,6 +331,24 @@
       "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42961961_a2f1b46a",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7654d9d_bf7e0b81",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

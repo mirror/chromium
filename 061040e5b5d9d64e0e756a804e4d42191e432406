@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bf6a8194_7eb77279",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-09T20:49:42Z",
+      "side": 1,
+      "message": "There are difficulties in using mojo\u0027s Time type. Some VALIDATION_ERROR_UNEXPECTED_STRUCT_HEADER and net::ERR_CONTENT_DECODING_FAILED.\n\nMoreover, there is no representation of mojo Time type in Javascript since it is only the millisecond. In my opinion, it is much simpler just to use the int64 millisecond representation of the time for now.",
+      "parentUuid": "f6938c88_3a14a7c2",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 7
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ee6653f_bf4f757e",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 18
