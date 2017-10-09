@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf39ec73_7668e432",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-09T18:34:30Z",
+      "side": 1,
+      "message": "To avoid flakes around the SSL state updating after theme color under certain conditions (both are async afaik), we should add onSSLStateUpdated here and have another callback helper and  wairforcallback before checking the icons. (Not sure why the already existing test above doesn\u0027t do that though.)",
+      "range": {
+        "startLine": 736,
+        "startChar": 13,
+        "endLine": 736,
+        "endChar": 0
+      },
+      "revId": "d7573d2e4826b53b6f9ff8c034dfe7087ae0613c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58f8650a_20e615ee",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
         "patchSetId": 2
