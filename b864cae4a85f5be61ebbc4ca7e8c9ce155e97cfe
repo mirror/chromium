@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8020f3d0_bd99fd82",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T19:43:27Z",
+      "side": 1,
+      "message": "Oops, just a careless mistake. Removed.",
+      "parentUuid": "87eac7f2_d50efe26",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "b864cae4a85f5be61ebbc4ca7e8c9ce155e97cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf658ff_aa9bbc67",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b864cae4a85f5be61ebbc4ca7e8c9ce155e97cfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efe7956_d6df8891",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T19:43:27Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "9bf658ff_aa9bbc67",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 18
+      },
+      "revId": "b864cae4a85f5be61ebbc4ca7e8c9ce155e97cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
