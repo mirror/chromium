@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "346c1fc8_f299d730",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "Can you add a variant of this test that uses the abusive preset (i.e. disabled rules), and make sure we dont send the activation warning message?",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e7daa5_c1894a47",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "Can you check that we\u0027re sending the warning message when we navigate, not when we open the popup?",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6dc73f8_aab71fa4",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "Observation: We\u0027re using this pattern a bunch, we should consider refactoring it into a helper object or something.",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fca5660_c5d4d11d",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "Just thought of this: Does this break devtools ad blocking on warning sites? Let\u0027s add a test for this case.",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abadd76_e8585cf8",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "Let\u0027s clear the messages here.\n\nMaybe move() it into a local variable which will go out of scope and be cleared when the method returns.",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4791eaf2_5a1be2e2",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "DCHECK that we have no messages?",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5937ca4_a169700b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T16:48:24Z",
+      "side": 1,
+      "message": "DCHECK(activation_level \u003d\u003d ENABLED);",
+      "revId": "385636fcfaad3ed6933298674d4f5dc3fd15d6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
