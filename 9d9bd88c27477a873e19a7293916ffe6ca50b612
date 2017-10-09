@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1730da1b_5944f6e1",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-09T13:58:49Z",
+      "side": 1,
+      "message": "Out of the scope of this CL, but shouldn\u0027t _signinInteractionController be weak?",
+      "range": {
+        "startLine": 1502,
+        "startChar": 4,
+        "endLine": 1502,
+        "endChar": 39
+      },
+      "revId": "9d9bd88c27477a873e19a7293916ffe6ca50b612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
