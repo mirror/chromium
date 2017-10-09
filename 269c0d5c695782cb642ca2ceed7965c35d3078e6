@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd925505_467245ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "Typically the call to super#destroy() happens first. Any reason to have it at the bottom of hte method or can it move up?",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35bb65b2_b0c51a07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "Let\u0027s initialize this below in the if (!BrowserActionsTabModelSelector#isInitialized()) block.",
+      "range": {
+        "startLine": 211,
+        "startChar": 9,
+        "endLine": 211,
+        "endChar": 84
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d638f339_ddbefe79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "Is there any way we can skip this for ChromeTabbedActivity2 to avoid this disk read on that startup path?",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 9
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d2c1d9_776d82e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "We should probably be calling mBrowserActionsPersistencePolicy.setMergeInProgress(true) and updating current checks for mPersistencePolicy#isMergeInProgress(). We use #isMergeInProgress to determine if we need to guard against duplicate tab id\u0027s and in #loadNextTab() to do some clean up work.",
+      "range": {
+        "startLine": 414,
+        "startChar": 20,
+        "endLine": 414,
+        "endChar": 38
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cfb5d4_dce3012d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "For regular tab model merging, we do this after all tabs have been loaded (in #loadNextTab) so that we can ensure the tab metadata file w/ all of the merged tabs have been written before we delete the merged instance\u0027s metadata file. This protects against lost tabs if the browser is killed or crashes before all tabs finish loading.",
+      "range": {
+        "startLine": 419,
+        "startChar": 20,
+        "endLine": 419,
+        "endChar": 89
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008cfcb7_384d79e6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "FYI, this call is likely getting pulled into the #createSecondChromeTabbedActivity helper method in this CL  https://chromium-review.googlesource.com/c/chromium/src/+/707359",
+      "range": {
+        "startLine": 480,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 58
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72205f6_b3625648",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "Can we use a TabModelSelectorObserver instead of polling?",
+      "range": {
+        "startLine": 487,
+        "startChar": 27,
+        "endLine": 487,
+        "endChar": 84
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2ee743_5eab8d19",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "This should probably be called on the UI thread too",
+      "range": {
+        "startLine": 506,
+        "startChar": 7,
+        "endLine": 507,
+        "endChar": 28
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1664418e_c6a3cd63",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "What\u0027s causing the menu to open?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 62
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bcbda4_f6b3055e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T22:34:09Z",
+      "side": 1,
+      "message": "nit: \n\n// Relaunch a new ChromeTabbedActivity. Tabs from multi-windows should be merged and\n// Browser Actions tabs should be appended to the end.",
+      "range": {
+        "startLine": 535,
+        "startChar": 7,
+        "endLine": 536,
+        "endChar": 60
+      },
+      "revId": "269c0d5c695782cb642ca2ceed7965c35d3078e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
