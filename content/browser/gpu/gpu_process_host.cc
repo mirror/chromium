@@ -78,8 +78,8 @@
 #endif
 
 #if defined(OS_WIN)
-#include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
+#include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/gfx/switches.h"
 #include "ui/gfx/win/rendering_window_manager.h"
 #endif

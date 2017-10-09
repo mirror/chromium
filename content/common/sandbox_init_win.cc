@@ -5,10 +5,10 @@
 #include "content/public/common/sandbox_init.h"
 
 #include "base/logging.h"
-#include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox.h"
 #include "sandbox/win/src/sandbox_types.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "services/service_manager/sandbox/win/sandbox_win.h"
 
 namespace content {
 

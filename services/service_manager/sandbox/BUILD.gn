@@ -20,6 +20,12 @@ component("sandbox") {
   deps = [
     "//base",
   ]
+  if (is_win) {
+    sources += [
+      "win/sandbox_win.cc",
+      "win/sandbox_win.h",
+    ]
+  }
   if (is_mac) {
     public_deps += [ "mac:packaged_sb_files" ]
   }

@@ -220,8 +220,8 @@
 #include "base/win/windows_version.h"
 #include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
 #include "content/common/font_cache_dispatcher_win.h"
-#include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
+#include "services/service_manager/sandbox/win/sandbox_win.h"
 #include "ui/display/win/dpi.h"
 #endif
 
