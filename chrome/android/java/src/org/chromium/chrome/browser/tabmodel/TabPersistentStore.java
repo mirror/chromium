@@ -27,6 +27,8 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabModelSelector;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabPersistencePolicy;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.Tab;
@@ -159,6 +161,7 @@ public class TabPersistentStore extends TabPersister {
     }
 
     private final TabPersistencePolicy mPersistencePolicy;
+    private final BrowserActionsTabPersistencePolicy mBrowserActionsPersistencePolicy;
     private final TabModelSelector mTabModelSelector;
     private final TabCreatorManager mTabCreatorManager;
     private TabPersistentStoreObserver mObserver;
@@ -182,6 +185,7 @@ public class TabPersistentStore extends TabPersister {
     private SharedPreferences mPreferences;
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListTask;
     private AsyncTask<Void, Void, DataInputStream> mPrefetchTabListToMergeTask;
+    private AsyncTask<Void, Void, DataInputStream> mPrefetchBrowserActionsTabListTask;
     private byte[] mLastSavedMetadata;
 
     // Tracks whether this TabPersistentStore's tabs are being loaded.
@@ -204,6 +208,7 @@ public class TabPersistentStore extends TabPersister {
     public TabPersistentStore(TabPersistencePolicy policy, TabModelSelector modelSelector,
             TabCreatorManager tabCreatorManager, TabPersistentStoreObserver observer) {
         mPersistencePolicy = policy;
+        mBrowserActionsPersistencePolicy = new BrowserActionsTabPersistencePolicy();
         mTabModelSelector = modelSelector;
         mTabCreatorManager = tabCreatorManager;
         mTabsToSave = new ArrayDeque<>();
@@ -229,6 +234,11 @@ public class TabPersistentStore extends TabPersister {
             assert mPersistencePolicy.getStateToBeMergedFileName() != null;
             mPrefetchTabListToMergeTask = startFetchTabListTask(
                     executor, mPersistencePolicy.getStateToBeMergedFileName());
+        }
+
+        if (!BrowserActionsTabModelSelector.isInitialized()) {
+            mPrefetchBrowserActionsTabListTask = startFetchTabListTask(
+                    executor, mBrowserActionsPersistencePolicy.getStateFileName());
         }
     }
 
@@ -389,6 +399,26 @@ public class TabPersistentStore extends TabPersister {
                             true);
                     logExecutionTime("MergeStateInternalTime", timeMergingState);
                     RecordUserAction.record("Android.MergeState.ColdStart");
+                }
+            }
+
+            if (mPrefetchBrowserActionsTabListTask != null) {
+                long timeBrowserActionsMergingState = SystemClock.uptimeMillis();
+                // Read the tab state metadata file.
+                stream = mPrefetchBrowserActionsTabListTask.get();
+
+                // Restore the Browser Actions tabs if the tab metadata file exists.
+                if (stream != null) {
+                    logExecutionTime("MergeBrowserActionsStateInternalFetchTime",
+                            timeBrowserActionsMergingState);
+                    readSavedStateFile(stream,
+                            createOnTabStateReadCallback(
+                                    mTabModelSelector.isIncognitoSelected(), true),
+                            null, true);
+
+                    deleteFileAsync(mBrowserActionsPersistencePolicy.getStateFileName());
+                    logExecutionTime(
+                            "MergeBrowserActionsStateInternalTime", timeBrowserActionsMergingState);
                 }
             }
         } catch (Exception e) {
