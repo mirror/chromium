@@ -149,6 +149,21 @@ void ExclusiveAccessBubbleViews::RepositionIfVisible() {
     UpdateBounds();
 }
 
+void ExclusiveAccessBubbleViews::Interrupt() {
+  if (!popup_->IsVisible()) {
+    return;
+  }
+
+  if (bubble_first_hide_callback_) {
+    std::move(bubble_first_hide_callback_)
+        .Run(ExclusiveAccessBubbleHideReason::kInterrupted);
+  }
+
+  // Simply reverse the animation. kSlideOutDurationMs is too slow for
+  // interruption.
+  animation_->Hide();
+}
+
 views::View* ExclusiveAccessBubbleViews::GetView() {
   return view_;
 }

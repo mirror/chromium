@@ -52,6 +52,11 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
   // Repositions |popup_| if it is visible.
   void RepositionIfVisible();
 
+  // Hides |popup_| with a short animation and calls
+  // |bubble_first_hide_callback_| with reason kInterrupted if the popup is
+  // visible.
+  void Interrupt();
+
   views::View* GetView();
 
  private:
