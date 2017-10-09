@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382e0f6f_2a3ba1a6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-09T16:57:01Z",
+      "side": 1,
+      "message": "Could we use this for hyphens as well (instead of end-effects) or add NGTextEndEffect::kEllipsis instead? It would be nice if we could share the logic for appending ellipsis and hyphens.",
+      "revId": "76eb8f734dd91b317efa63f412ee5f96c0122ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
