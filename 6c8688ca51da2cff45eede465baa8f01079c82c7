@@ -380,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "a5a0d00e_7b2983ec",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:50:00Z",
+      "side": 1,
+      "message": "Hey, romax@, statements like:\n\"i think having a namespace instead of a wrapping class was suggested in style guide...\" should be made in presence to a link to said style guide.\n\nHere is what we agreed to do a while back BTW (hint: the opposite):\nhttps://chromium-review.googlesource.com/c/chromium/src/+/583970/1/components/offline_pages/core/prefetch/store/prefetch_store_utils.h\n\nI am OK with making a change to that agreement, but let\u0027s discuss that with Dmitry and Carlos at least.",
+      "parentUuid": "2271cf65_36e01f61",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38a70355_1a2188f7",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
