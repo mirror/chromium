@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce7af04_4d060047",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 88496,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-09T22:53:34Z",
+      "side": 1,
+      "message": "Could you please document (a) when this is recorded, and (b) what exactly is being measured?  In particular, it\u0027s not clear to me what the bytes are measuring: are these bytes of textual code for the functions?  Bytes for some parsed representation?  Bytes for the output?  In terms of when this is recorded, you\u0027ll get very different data depending on whether you\u0027re recording this per-function, once every X minutes, at the end of parsing some larger unit of JS, etc.",
+      "range": {
+        "startLine": 88496,
+        "startChar": 79,
+        "endLine": 88496,
+        "endChar": 0
+      },
+      "revId": "052d9b2a4df0401a6364a9c5c1820ebe48247f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
