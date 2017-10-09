@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "637ebd00_26eb99e3",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T22:03:23Z",
+      "side": 1,
+      "message": "Good catch.\n\nIt looks like it is force disabled for LOGGED_IN_USER_PUBLIC_ACCOUNT (I\u0027m not really sure what the difference between that and LOGGED_IN_USER{_ARC}_KIOSK_APP is).\n\nRegardless, I copied the existing logic from network_config_view.cc.",
+      "parentUuid": "38958c76_2e9ac8af",
+      "revId": "e10e0348afdc956551b1950c405e6a32b7d8a05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cd8928b_8dd3e806",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "e10e0348afdc956551b1950c405e6a32b7d8a05d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4cf84a_a824ba08",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T22:03:23Z",
+      "side": 1,
+      "message": "Kind of. We actually need to check shareEnabled + shareDefault. If share is enabled, selecting TLS will unshare the network if it was shared.",
+      "parentUuid": "5cd8928b_8dd3e806",
+      "range": {
+        "startLine": 824,
+        "startChar": 13,
+        "endLine": 824,
+        "endChar": 20
+      },
+      "revId": "e10e0348afdc956551b1950c405e6a32b7d8a05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
