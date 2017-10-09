@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd08046_fdcbcc43",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-10-09T22:14:45Z",
+      "side": 1,
+      "message": "I think the problem could be caused by this line. In the case that Mouse is released before the mouse dragging fires, SetMouseDragging is not called with true, but drag_view_ is initiated in OnMousePressed, then EndDrag will not be called in this scenario, which result in DCHECK(!drag_view_) burst in AppsGridView destructor. Removing this line should help.",
+      "revId": "121639f1887047e6753804f9eaf9441d60b7d97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe15914_65d2f465",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-10-09T22:14:45Z",
+      "side": 1,
+      "message": "SetMouseDragging is deferred to be called when the timer fires. Do not call here.",
+      "revId": "121639f1887047e6753804f9eaf9441d60b7d97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32da5cee_655e530a",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-10-09T22:14:45Z",
+      "side": 1,
+      "message": "We should not call this line here, since it will be called inside SetMouseDragging(false).",
+      "revId": "121639f1887047e6753804f9eaf9441d60b7d97e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
