@@ -7,15 +7,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "base/mac/scoped_nsobject.h"
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
-#include "chrome/browser/ui/cocoa/constrained_window/constrained_window_mac.h"
 
+@class PasswordReuseWarningDialogCocoaWindow;
 @class PasswordReuseWarningViewController;
 
 // A constrained dialog that warns users about a password reuse.
 class PasswordReuseWarningDialogCocoa
-    : public ConstrainedWindowMacDelegate,
-      public safe_browsing::ChromePasswordProtectionService::Observer {
+    : public safe_browsing::ChromePasswordProtectionService::Observer {
  public:
   PasswordReuseWarningDialogCocoa(
       content::WebContents* web_contents,
@@ -38,10 +38,10 @@ class PasswordReuseWarningDialogCocoa
   void OnChangePassword();
   void OnIgnore();
 
- private:
-  // ConstrainedWindowMacDelegate:
-  void OnConstrainedWindowClosed(ConstrainedWindowMac* window) override;
+  void Close();
+  void DidEndSheet();
 
+ private:
   // This class observes the |service_| to check if the password reuse
   // status has changed.
   safe_browsing::ChromePasswordProtectionService* service_;  // weak.
@@ -52,11 +52,11 @@ class PasswordReuseWarningDialogCocoa
   // Dialog button callback.
   safe_browsing::OnWarningDone callback_;
 
+  // The window that contains the dialog view.
+  base::scoped_nsobject<PasswordReuseWarningDialogCocoaWindow> window_;
+
   // Controller for the dialog view.
   base::scoped_nsobject<PasswordReuseWarningViewController> controller_;
-
-  // The constrained window that contains the dialog view.
-  std::unique_ptr<ConstrainedWindowMac> window_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordReuseWarningDialogCocoa);
 };
