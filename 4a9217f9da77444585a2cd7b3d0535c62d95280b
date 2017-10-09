@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a19f4a_f7a49187",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "Should the welcome bubble also be shown the first time the user opens the palette tray?",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc22555_0e6b1d29",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "Update comment, it seems like welcome_bubble_ will never be a nullptr.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4686049e_13177155",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "Can we hookup a fake instead?",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f775f4a5_e18b8c02",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "nit: eliminate default_font_list temporary.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86db43d_51ed1811",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "Why is there a DCHECK? We\u0027re in the ctor.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1bafc8_af53e0fe",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "I don\u0027t see this class in the inheritance list.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960e8016_ffbb90ad",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "It\u0027d be good to move this to PaletteWelcomeBubble so all visibility management is handled in one class.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23d34d8_9c7085e2",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "nit: Consider unifying test interface so it\u0027s either a friend class, *ForTest functions, or a TestApi class. My general preference is TestApi, since it keeps api interfaces explicit.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb67308_658511de",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-09T22:52:33Z",
+      "side": 1,
+      "message": "Declare this as WelcomeBubbleView and remove the static_cast in GetCloseButtonForTest.",
+      "revId": "4a9217f9da77444585a2cd7b3d0535c62d95280b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
