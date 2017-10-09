@@ -1549,6 +1549,7 @@ public class ChromeTabbedActivity
             public void onMenuDismissed() {
                 super.onMenuDismissed();
 
+                Log.d(TAG, "menu dismissed, should notify backend? " + mDismissChromeHomeIPHOnMenuDismissed);
                 if (mDismissChromeHomeIPHOnMenuDismissed) {
                     Tracker tracker =
                             TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
@@ -1569,23 +1570,29 @@ public class ChromeTabbedActivity
 
             @Override
             public int getHeaderResourceId() {
+                Log.d(TAG, "getHeaderResourceId");
                 if (getBottomSheet() != null
                         && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                    Log.d(TAG, "returning promo header");
                     return R.layout.chrome_home_promo_header;
                 }
 
+                Log.d(TAG, "checking bottom sheet properties");
                 if (getBottomSheet() != null && mControlContainer.getVisibility() == View.VISIBLE
                         && getAppMenuPropertiesDelegate().shouldShowPageMenu()
                         && !getBottomSheet().isSheetOpen()) {
+                    Log.d(TAG, "checking with feature tracker");
                     Tracker tracker =
                             TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
                     if (tracker.shouldTriggerHelpUI(
                                 FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE)) {
+                        Log.d(TAG, "returning iph header");
                         mDismissChromeHomeIPHOnMenuDismissed = true;
                         return R.layout.chrome_home_iph_header;
                     }
                 }
 
+                Log.d(TAG, "returning no header");
                 return 0;
             }
 
