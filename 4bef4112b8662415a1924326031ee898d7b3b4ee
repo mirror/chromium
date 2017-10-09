@@ -22,6 +22,30 @@
       "revId": "4bef4112b8662415a1924326031ee898d7b3b4ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cad5227_1e80580b",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-09T11:56:27Z",
+      "side": 1,
+      "message": "\u003e Why is that? It should always accept focus otherwise how one can change the value.\n\nHow can a user change the value of a label? It is not a combobox.",
+      "parentUuid": "fafdd1a5_ea2a0e78",
+      "range": {
+        "startLine": 149,
+        "startChar": 9,
+        "endLine": 149,
+        "endChar": 25
+      },
+      "revId": "4bef4112b8662415a1924326031ee898d7b3b4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
