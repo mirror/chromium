@@ -41,10 +41,10 @@ def apply_computed_style_builder_function_parameters(property_):
     if not property_['should_declare_application_functions']:
         return
 
-    if property_['custom_all']:
-        property_['custom_initial'] = True
-        property_['custom_inherit'] = True
-        property_['custom_value'] = True
+    if property_['api_custom_apply_functions_all']:
+        property_['api_custom_apply_functions_initial'] = True
+        property_['api_custom_apply_functions_inherit'] = True
+        property_['api_custom_apply_functions_value'] = True
 
     name = property_['name_for_methods']
     if not name:
