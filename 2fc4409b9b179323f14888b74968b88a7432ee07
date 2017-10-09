@@ -16,6 +16,24 @@
       "revId": "2fc4409b9b179323f14888b74968b88a7432ee07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3efc49a_a6959bff",
+        "filename": "gpu/command_buffer/client/shared_memory_limits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-09T19:55:01Z",
+      "side": 1,
+      "message": "Ah, good catch - in reality we\u0027re only missing ~0.5% of users (most devices aren\u0027t exactly 512), but worth fixing. I\u0027ll send a CL - https://chromium-review.googlesource.com/#/c/chromium/src/+/706952",
+      "parentUuid": "46e32c86_aaa25bff",
+      "revId": "2fc4409b9b179323f14888b74968b88a7432ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
