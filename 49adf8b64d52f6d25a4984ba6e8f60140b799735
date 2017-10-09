@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "21c11668_9db7b023",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T21:45:30Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "1ca08753_e8a7a64e",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c2d090_d2cceac3",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "aefd1649_ad6fa323",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T21:45:30Z",
+      "side": 1,
+      "message": "Agreed. Good catch.",
+      "parentUuid": "50c2d090_d2cceac3",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72c4483c_f4187ebb",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 4
@@ -67,6 +103,24 @@
       "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92ba5df_7f14ed05",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T21:45:30Z",
+      "side": 1,
+      "message": "Gotcha!",
+      "parentUuid": "72c4483c_f4187ebb",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -460,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "030b6997_ed50a814",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T21:45:30Z",
+      "side": 1,
+      "message": "Yep! Super thorough! Thanks Justin!",
+      "parentUuid": "ab677b29_603b6493",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08278a8c_393cc8b5",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
