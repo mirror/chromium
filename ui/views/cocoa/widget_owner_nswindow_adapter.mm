@@ -73,6 +73,15 @@ WidgetOwnerNSWindowAdapter::WidgetOwnerNSWindowAdapter(
          selector:@selector(windowDidChangeOcclusionState:)
              name:NSWindowDidChangeOcclusionStateNotification
            object:anchor_window_];
+
+  // On a deminiaturize, the occlusion state change occurs before -[NSWindow
+  // isVisible] returns YES. So observe NSWindowDidDeminiaturizeNotification to
+  // check again at the end of the deminiaturize animation.
+  [[NSNotificationCenter defaultCenter]
+      addObserver:observer_bridge_
+         selector:@selector(windowDidChangeOcclusionState:)
+             name:NSWindowDidDeminiaturizeNotification
+           object:anchor_window_];
 }
 
 void WidgetOwnerNSWindowAdapter::OnWindowWillClose() {
