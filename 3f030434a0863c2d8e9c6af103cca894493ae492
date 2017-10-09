@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81206307_4e08d2aa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "Might want to store the result of GetNGData(), rather than calling it twice.",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396b0470_3aaab5c7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "We probably want a method on LayoutBox or LayoutBlockFlow that can provide this information. IsOfAnyNGType()? Or something better. If we have a virtual GetNGData() method, IsOfAnyNGType() could just be implemented as \"return GetNGData() !\u003d nullptr;\"",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdaf84a_59296871",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "Did you consider making a virtual LayoutBlockFlow::RootFragment() instead of this?\nOr... shouldn\u0027t this really be part of LayoutNGData?",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d344f07a_6279b43c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "I think this one too could be virtual on LayoutBlockFlow (or LayoutBox, if you have to?). Would in any case be good to avoid having to include layout_ng_table_cell.h here in this file.",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f894db0d_89d9aef5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "Why include this?",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e92528_00731913",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "Maybe we could come up with a slightly less generic name? Something with \"Block\" or \"BlockFlow\" in it, maybe?\nOr something with \"Mixin\" in it? We could get this class to provide methods for common tasks. I see that LayoutNGTableCell::UpdateBlockLayout() has copied a lot of code from LayoutNGBlockFlow.",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069328aa_172601fd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_table_cell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "I can\u0027t find a CreateFromLayoutObject() with this signature.",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5badeb_aef84aff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_table_cell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "But table cells don\u0027t have margins?",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a48038f_1910cedf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_table_cell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "The containing LayoutBlock of a cell would be the LayoutTable. But we don\u0027t position cells relatively to the table. In legacy layout we position them relatively to the ancestor table section. In NG I don\u0027t know what\u0027s the plan. Maybe the same or relatively to the row. But most likely not the table. I think you can remove this piece of code and replace it with a TODO. Leaving the fragment unplaced should be fine for now, I think.",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6523d1af_554a50ba",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-09T22:11:04Z",
+      "side": 1,
+      "message": "LayoutBlockFlow?",
+      "revId": "3f030434a0863c2d8e9c6af103cca894493ae492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
