@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0173fc3d_1c2709d3",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-09T02:54:14Z",
+      "side": 1,
+      "message": "nit: Please still keep this input focused. Sorry for my previous incorrect comment.\n\nThe reason is that, we currently spellcheck an INPUT only if it\u0027s focused, and clear the markers inside as long as it loses focus. So it\u0027s better to keep it focused to keep it align with the current behavior.",
+      "revId": "bf4ec0b370371c5ca3a1ce280514eeb8ac968a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
