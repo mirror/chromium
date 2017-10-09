@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7408a9ad_b5d1ab53",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T14:55:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "316e44c2_af8987d3",
+      "revId": "4d48b91d6cc62d050c327b6e7c9bca546731eb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f810e12_27431f68",
         "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "4d48b91d6cc62d050c327b6e7c9bca546731eb72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a5bdd5_f8dd7568",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T14:55:15Z",
+      "side": 0,
+      "message": "Because the CookieStoreIOSTest fixture already define a MessageLoop and creating a second one in the function itself cause DCHECK.",
+      "parentUuid": "7f810e12_27431f68",
+      "revId": "4d48b91d6cc62d050c327b6e7c9bca546731eb72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
