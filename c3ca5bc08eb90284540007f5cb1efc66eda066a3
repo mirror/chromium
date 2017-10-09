@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e05919a_68be4650",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/BottomSheetLocationBarTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T18:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f90d430_530f9512",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "c3ca5bc08eb90284540007f5cb1efc66eda066a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c6e9da3_92931806",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c3ca5bc08eb90284540007f5cb1efc66eda066a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fb3a58_bd460174",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T18:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c6e9da3_92931806",
+      "range": {
+        "startLine": 743,
+        "startChar": 38,
+        "endLine": 743,
+        "endChar": 50
+      },
+      "revId": "c3ca5bc08eb90284540007f5cb1efc66eda066a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
