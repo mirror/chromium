@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19927ce5_db214a0b",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-09T15:46:30Z",
+      "side": 1,
+      "message": "question: is it not possible in that case to rely on the call to |viewWillTransitionToSize| ?",
+      "range": {
+        "startLine": 116,
+        "startChar": 23,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "dff71621d563f9f463c8ac626fcd60b1b07ad9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
