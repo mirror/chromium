@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e153ddc_a539d4e7",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-09T22:01:36Z",
+      "side": 1,
+      "message": "Similarly this event is not this metric.  The event should probably be named something like \"TabManager.BackgroundTabOpening.ForegroundTab.Snapshot\"",
+      "range": {
+        "startLine": 1368,
+        "startChar": 56,
+        "endLine": 1368,
+        "endChar": 84
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19abbc0d_7004abe1",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-09T22:01:36Z",
+      "side": 1,
+      "message": "This naming is conflating different things.  The event is not a LoadTime.  This should probably be named something like TabManager.Experimental.BackgroundTabOpening.LoadStopped or TabManager.Experimental.BackgroundTabOpening.LoadComplete\n\nIt\u0027s summary should primarily describe when it is recorded.  The description of what load time is relative to should move to the specific metric e.g. \"UntilTabIsLoaded\"",
+      "range": {
+        "startLine": 1414,
+        "startChar": 58,
+        "endLine": 1414,
+        "endChar": 75
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043a0075_79e1a338",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-09T22:01:36Z",
+      "side": 1,
+      "message": "Maybe name this TabSessionId or something to avoid confusion with Chrome level session_id?",
+      "range": {
+        "startLine": 1448,
+        "startChar": 16,
+        "endLine": 1448,
+        "endChar": 25
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f12473_c386d4d3",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-09T22:01:36Z",
+      "side": 1,
+      "message": "This should probably be renamed something like TimeFromForegrounded",
+      "range": {
+        "startLine": 1458,
+        "startChar": 16,
+        "endLine": 1458,
+        "endChar": 32
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
