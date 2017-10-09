@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8881bd50_88ed9300",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T23:47:29Z",
+      "side": 1,
+      "message": "Why do we need to remove info_bar_displayed once the close button is clicked?",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 75
+      },
+      "revId": "ee8ecb5e34a6de7bef4099dbe509052bc7e9b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689328c4_d0555faf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T23:47:29Z",
+      "side": 1,
+      "message": "Should this be infoBarExists || infoBarDismissed?",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 55
+      },
+      "revId": "ee8ecb5e34a6de7bef4099dbe509052bc7e9b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc45a6f4_3a94ca37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T23:47:29Z",
+      "side": 1,
+      "message": "Add a blank line before this one",
+      "range": {
+        "startLine": 158,
+        "startChar": 11,
+        "endLine": 158,
+        "endChar": 21
+      },
+      "revId": "ee8ecb5e34a6de7bef4099dbe509052bc7e9b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa049f89_cc8102fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T23:47:29Z",
+      "side": 1,
+      "message": "We already record this in #showSurveyInfobar -- should we recording from that method and only record if the infobar is the first its group?\n\nI think we also need to look for infobars being dismissed so that we can set this shared preference if the survey infobar becomes visible due to another info bar being dismissed.",
+      "range": {
+        "startLine": 168,
+        "startChar": 25,
+        "endLine": 168,
+        "endChar": 82
+      },
+      "revId": "ee8ecb5e34a6de7bef4099dbe509052bc7e9b903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
