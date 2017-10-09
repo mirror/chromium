@@ -34,6 +34,24 @@
       "revId": "5485908f4ed94e0f0b4471f0ce1a39eaf376fad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5c0f2e_40a024d7",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-09T01:21:12Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure the sysroot is just headers and libraries. Yes, checkout_linux is true by default for android / cros, and checkout_mac true by default for ios.\n\nLeaving binutils as-is is fine, then.",
+      "parentUuid": "34d92dc3_c27fd427",
+      "revId": "5485908f4ed94e0f0b4471f0ce1a39eaf376fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
