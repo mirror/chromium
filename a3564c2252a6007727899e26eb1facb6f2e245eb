@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "761a6eee_3694c068",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-09T23:18:14Z",
+      "side": 1,
+      "message": "Please add TODO to remove the debugging logs, here and other ones.\ne.g.\n  // TODO(b/67391155): Remove after bug is fixed.",
+      "revId": "a3564c2252a6007727899e26eb1facb6f2e245eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
