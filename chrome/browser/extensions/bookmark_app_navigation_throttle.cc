@@ -11,6 +11,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
@@ -29,6 +31,29 @@
 using content::BrowserThread;
 
 namespace extensions {
+
+namespace {
+
+scoped_refptr<const extensions::Extension> GetBookmarkAppForURL(
+    const GURL& url,
+    content::WebContents* source) {
+  content::BrowserContext* browser_context = source->GetBrowserContext();
+  for (scoped_refptr<const extensions::Extension> app :
+       ExtensionRegistry::Get(browser_context)->enabled_extensions()) {
+    if (!app->from_bookmark())
+      continue;
+
+    const UrlHandlerInfo* url_handler =
+        UrlHandlers::FindMatchingUrlHandler(app.get(), url);
+    if (!url_handler)
+      continue;
+
+    return app;
+  }
+  return nullptr;
+}
+
+}  // namespace
 
 // static
 std::unique_ptr<content::NavigationThrottle>
@@ -88,6 +113,17 @@ BookmarkAppNavigationThrottle::CheckNavigation() {
     return content::NavigationThrottle::PROCEED;
   }
 
+  Browser* browser = chrome::FindBrowserWithWebContents(source);
+  if (browser && browser->is_app() &&
+      !GetBookmarkAppForURL(navigation_handle()->GetURL(), source)) {
+    DVLOG(1) << "Out of scope navigation for Bookmark App."
+             << "Bouncing back to browser.";
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenNewTab,
+                              weak_ptr_factory_.GetWeakPtr()));
+    return content::NavigationThrottle::DEFER;
+  }
+
   if (!navigation_handle()->GetURL().SchemeIsHTTPOrHTTPS()) {
     DVLOG(1) << "Don't intercept: scheme is not HTTP or HTTPS.";
     return content::NavigationThrottle::PROCEED;
@@ -102,29 +138,15 @@ BookmarkAppNavigationThrottle::CheckNavigation() {
     return content::NavigationThrottle::PROCEED;
   }
 
-  content::BrowserContext* browser_context = source->GetBrowserContext();
-  scoped_refptr<const extensions::Extension> matching_app;
-  for (scoped_refptr<const extensions::Extension> app :
-       ExtensionRegistry::Get(browser_context)->enabled_extensions()) {
-    if (!app->from_bookmark())
-      continue;
-
-    const UrlHandlerInfo* url_handler = UrlHandlers::FindMatchingUrlHandler(
-        app.get(), navigation_handle()->GetURL());
-    if (!url_handler)
-      continue;
-
-    matching_app = app;
-    break;
-  }
-
-  if (!matching_app) {
+  auto matching_app_ref =
+      GetBookmarkAppForURL(navigation_handle()->GetURL(), source);
+  if (!matching_app_ref) {
     DVLOG(1) << "No matching Bookmark App for URL: "
              << navigation_handle()->GetURL();
     return NavigationThrottle::PROCEED;
   } else {
-    DVLOG(1) << "Found matching Bookmark App: " << matching_app->name() << "("
-             << matching_app->id() << ")";
+    DVLOG(1) << "Found matching Bookmark App: " << matching_app_ref->name()
+             << "(" << matching_app_ref->id() << ")";
   }
 
   // If prerendering, don't launch the app but abort the navigation.
@@ -140,7 +162,7 @@ BookmarkAppNavigationThrottle::CheckNavigation() {
   DVLOG(1) << "Deferring opening app.";
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenBookmarkApp,
-                            weak_ptr_factory_.GetWeakPtr(), matching_app));
+                            weak_ptr_factory_.GetWeakPtr(), matching_app_ref));
   return content::NavigationThrottle::DEFER;
 }
 
@@ -165,6 +187,25 @@ void BookmarkAppNavigationThrottle::OpenBookmarkApp(
   } else {
     CancelDeferredNavigation(content::NavigationThrottle::CANCEL_AND_IGNORE);
   }
+}
+
+void BookmarkAppNavigationThrottle::OpenNewTab() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  content::WebContents* source = navigation_handle()->GetWebContents();
+  content::OpenURLParams url_params(navigation_handle()->GetURL(),
+                                    navigation_handle()->GetReferrer(),
+                                    WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                    navigation_handle()->GetPageTransition(),
+                                    navigation_handle()->IsRendererInitiated());
+  url_params.redirect_chain = navigation_handle()->GetRedirectChain();
+  url_params.frame_tree_node_id = navigation_handle()->GetFrameTreeNodeId();
+  url_params.user_gesture = navigation_handle()->HasUserGesture();
+  url_params.started_from_context_menu =
+      navigation_handle()->WasStartedFromContextMenu();
+
+  source->OpenURL(url_params);
+  CancelDeferredNavigation(content::NavigationThrottle::CANCEL_AND_IGNORE);
 }
 
 }  // namespace extensions
