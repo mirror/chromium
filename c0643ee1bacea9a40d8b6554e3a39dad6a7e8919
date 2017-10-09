@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6302809f_8ce1230a",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-09T15:59:41Z",
+      "side": 0,
+      "message": "DBC: Nit: Should probably change these to unix hacker style with underscores instead of camel case.  In a different CL.",
+      "revId": "c0643ee1bacea9a40d8b6554e3a39dad6a7e8919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
