@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "48d8f190_08827cda",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8dcd3f_c794d1a0",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39cddde9_f589f2d2",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -334,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "6bf729d2_5ba1064f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve mostly simplified the markup except for a wrapper around the icon and text.\n\n\u003cdiv class\u003d\"section continuation warning\" .....\u003e\n  \u003cdiv\u003e\n    \u003ciron-icon ...\u003e\n    \u003cspan\u003etext...\u003c/span\u003e\n  \u003c/div\u003e\n  \u003cpaper-button ...\u003e \u003c!-- sometimes --\u003e\n\u003c/div\u003e\n\nThe wrapper is used so that the icon and text are always top-aligned with one another. Without the wrapper, when the warning text is multiple lines, the warning icon is centered (i.e. https://imgur.com/a/9pHkQ) when it should be top-aligned to the text.\n\nWithout the wrapper, the reason why the icon is being centered is because the .section class uses @apply(--cr-section) (line 91) and --cr-section uses the attribute align-items: center.\n\nNow with both the icon and text put in the wrapper, the wrapper can be centered, while its inner icon and text can be aligned via .warning div { display: flex }.\n\nwdyt?",
+      "parentUuid": "77eb3c60_aaf80fa9",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6858ee2_7ee80426",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -363,6 +399,24 @@
       "side": 1,
       "message": "The reliance on :empty{ ... } has been removed. I didn\u0027t put the attribute hidden\u003d\"[[!text]]\" on the \u003cspan\u003e tag since its parent div already does the check.",
       "parentUuid": "c6858ee2_7ee80426",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a6063d9_8bcad9d3",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f86c7_2018efde",
       "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

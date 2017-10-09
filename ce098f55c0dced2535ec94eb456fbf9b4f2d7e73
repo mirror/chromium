@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "945781c3_e878fa18",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2835a7cb_9bbd4ecd",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee4d84a_af1fcaad",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aec25163_d933b3ed",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee4d84a_af1fcaad",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4fae389_ece41d6b",
         "filename": "chrome/browser/resources/md_extensions/detail_view.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T20:29:11Z",
       "side": 1,
       "message": "I see from the js console that disabledReasons has another property \"updateRequired\", do we need a warning message for that also?",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db2dbe9_796a1791",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-09T04:04:05Z",
+      "side": 1,
+      "message": "I added this now, but we might need Devlin to take a look.",
+      "parentUuid": "a4fae389_ece41d6b",
       "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
