@@ -800,6 +800,7 @@ static_library("extensions") {
     "//chrome/browser/devtools",
     "//chrome/browser/media/router",
     "//chrome/browser/media/router/discovery",
+    "//chrome/browser/resources/chromeos/vector_icons",
     "//chrome/browser/safe_browsing",
     "//chrome/common",
     "//chrome/common/extensions:mojo_bindings",

@@ -50,6 +50,7 @@ class ChromeAppIcon : public IconImage::Observer {
   void UpdateIcon();
 
   const gfx::ImageSkia& image_skia() const { return image_skia_; }
+  const gfx::ImageSkia& badge_image() const { return badge_image_; }
   const std::string& app_id() const { return app_id_; }
 
  private:
@@ -70,6 +71,9 @@ class ChromeAppIcon : public IconImage::Observer {
   // Contains current icon image. This is static image with applied effects and
   // it is updated each time when |icon_| is updated.
   gfx::ImageSkia image_skia_;
+
+  // Contains current badge icon image. It could be null if not set.
+  gfx::ImageSkia badge_image_;
 
   const int resource_size_in_dip_;
 

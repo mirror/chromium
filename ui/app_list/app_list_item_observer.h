@@ -14,6 +14,9 @@ class APP_LIST_EXPORT AppListItemObserver {
   // Invoked after item's icon is changed.
   virtual void ItemIconChanged() {}
 
+  // Invoked after item's badge is changed.
+  virtual void ItemBadgeIconChanged() {}
+
   // Invoked after item's name is changed.
   virtual void ItemNameChanged() {}
 

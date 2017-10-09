@@ -10,10 +10,8 @@
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/views/app_list_main_view.h"
+#include "ui/chromeos/gfx_utils.h"
 #include "ui/gfx/canvas.h"
-#include "ui/gfx/image/canvas_image_source.h"
-#include "ui/gfx/image/image_skia_operations.h"
-#include "ui/views/background.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
@@ -28,29 +26,6 @@ constexpr int kIconSelectedSize = 56;
 constexpr int kIconSelectedCornerRadius = 4;
 // Icon selected color, #000 8%.
 constexpr int kIconSelectedColor = SkColorSetARGBMacro(0x14, 0x00, 0x00, 0x00);
-
-// The background image source for badge.
-class BadgeBackgroundImageSource : public gfx::CanvasImageSource {
- public:
-  explicit BadgeBackgroundImageSource(int size)
-      : CanvasImageSource(gfx::Size(size, size), false),
-        radius_(static_cast<float>(size / 2)) {}
-  ~BadgeBackgroundImageSource() override = default;
-
- private:
-  // gfx::CanvasImageSource overrides:
-  void Draw(gfx::Canvas* canvas) override {
-    cc::PaintFlags flags;
-    flags.setColor(SK_ColorWHITE);
-    flags.setAntiAlias(true);
-    flags.setStyle(cc::PaintFlags::kFill_Style);
-    canvas->DrawCircle(gfx::PointF(radius_, radius_), radius_, flags);
-  }
-
-  const float radius_;
-
-  DISALLOW_COPY_AND_ASSIGN(BadgeBackgroundImageSource);
-};
 
 }  // namespace
 
@@ -136,19 +111,7 @@ void TileItemView::SetBadgeIcon(const gfx::ImageSkia& badge_icon) {
     return;
   }
 
-  const int size = kBadgeBackgroundRadius * 2;
-  gfx::ImageSkia background(base::MakeUnique<BadgeBackgroundImageSource>(size),
-                            gfx::Size(size, size));
-  gfx::ImageSkia icon_with_background =
-      gfx::ImageSkiaOperations::CreateSuperimposedImage(background, badge_icon);
-
-  gfx::ShadowValues shadow_values;
-  shadow_values.push_back(
-      gfx::ShadowValue(gfx::Vector2d(0, 1), 0, SkColorSetARGB(0x33, 0, 0, 0)));
-  shadow_values.push_back(
-      gfx::ShadowValue(gfx::Vector2d(0, 1), 2, SkColorSetARGB(0x33, 0, 0, 0)));
-  badge_->SetImage(gfx::ImageSkiaOperations::CreateImageWithDropShadow(
-      icon_with_background, shadow_values));
+  badge_->SetImage(ui::CreateBadgeImage(badge_icon));
   badge_->SetVisible(true);
 }
 

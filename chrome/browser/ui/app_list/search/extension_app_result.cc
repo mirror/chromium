@@ -128,6 +128,7 @@ bool ExtensionAppResult::RunExtensionEnableFlow() {
 
 void ExtensionAppResult::OnIconUpdated(extensions::ChromeAppIcon* icon) {
   SetIcon(icon->image_skia());
+  SetBadgeIcon(icon->badge_image());
 }
 
 void ExtensionAppResult::ExecuteLaunchCommand(int event_flags) {

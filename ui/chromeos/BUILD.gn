@@ -13,6 +13,8 @@ component("chromeos") {
     "accelerometer/accelerometer_util.h",
     "devicetype_utils.cc",
     "devicetype_utils.h",
+    "gfx_utils.cc",
+    "gfx_utils.h",
     "ime/candidate_view.cc",
     "ime/candidate_view.h",
     "ime/candidate_window_constants.h",
@@ -37,6 +39,7 @@ component("chromeos") {
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
+    "//cc/paint",
     "//chromeos:chromeos",
     "//chromeos:power_manager_proto",
     "//components/device_event_log",

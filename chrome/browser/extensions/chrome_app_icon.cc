@@ -18,11 +18,16 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/extensions/gfx_utils.h"
+#include "chrome/browser/resources/chromeos/vector_icons/vector_icons.h"
+#include "ui/chromeos/gfx_utils.h"
+#include "ui/gfx/paint_vector_icon.h"
 #endif
 
 namespace extensions {
 
 namespace {
+
+constexpr SkColor kBadgeColor = SkColorSetARGBMacro(0x8A, 0x00, 0x00, 0x00);
 
 // Rounds the corners of a given image.
 // TODO(khmel): avoid sub-classing CanvasImageSource.
@@ -110,7 +115,10 @@ void ChromeAppIcon::UpdateIcon() {
 
   image_skia_ = icon_->image_skia();
 #if defined(OS_CHROMEOS)
-  util::MaybeApplyChromeBadge(browser_context_, app_id_, &image_skia_);
+  if (util::ShouldApplyChromeBadge(browser_context_, app_id_)) {
+    badge_image_ = ui::CreateBadgeImage(
+        gfx::CreateVectorIcon(chromeos::kIcBadgeChromeIcon, 12, kBadgeColor));
+  }
 #endif
 
   if (!util::IsAppLaunchable(app_id_, browser_context_)) {

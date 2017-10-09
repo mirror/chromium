@@ -28,6 +28,12 @@ void AppListItem::SetIcon(const gfx::ImageSkia& icon) {
     observer.ItemIconChanged();
 }
 
+void AppListItem::SetBadgeIcon(const gfx::ImageSkia& badge_icon) {
+  badge_icon_ = badge_icon;
+  for (auto& observer : observers_)
+    observer.ItemBadgeIconChanged();
+}
+
 void AppListItem::SetIsInstalling(bool is_installing) {
   if (is_installing_ == is_installing)
     return;

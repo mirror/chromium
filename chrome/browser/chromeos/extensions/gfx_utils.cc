@@ -190,39 +190,25 @@ const std::vector<std::string> GetEquivalentInstalledExtensions(
   return extension_ids;
 }
 
-void MaybeApplyChromeBadge(content::BrowserContext* context,
-                           const std::string& extension_id,
-                           gfx::ImageSkia* icon_out) {
+bool ShouldApplyChromeBadge(content::BrowserContext* context,
+                            const std::string& extension_id) {
   DCHECK(context);
-  DCHECK(icon_out);
 
   Profile* profile = Profile::FromBrowserContext(context);
   // Only apply Chrome badge for the primary profile.
   if (!chromeos::ProfileHelper::IsPrimaryProfile(profile) ||
       !multi_user_util::IsProfileFromActiveUser(profile)) {
-    return;
+    return false;
   }
 
   const ExtensionRegistry* registry = ExtensionRegistry::Get(context);
   if (!registry || !registry->GetInstalledExtension(extension_id))
-    return;
+    return false;
 
-  if (!HasEquivalentInstalledArcApp(context, extension_id))
-    return;
+  //if (!HasEquivalentInstalledArcApp(context, extension_id))
+    //return false;
 
-  const gfx::ImageSkia* badge_image =
-      ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
-          IDR_ARC_DUAL_ICON_BADGE);
-  DCHECK(badge_image);
-
-  gfx::ImageSkia resized_badge_image = *badge_image;
-  if (badge_image->size() != icon_out->size()) {
-    resized_badge_image = gfx::ImageSkiaOperations::CreateResizedImage(
-        *badge_image, skia::ImageOperations::RESIZE_BEST, icon_out->size());
-  }
-  *icon_out = gfx::ImageSkiaOperations::CreateSuperimposedImage(
-      *icon_out, resized_badge_image);
-  return;
+  return true;
 }
 
 }  // namespace util
