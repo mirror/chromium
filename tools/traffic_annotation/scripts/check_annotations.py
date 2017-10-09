@@ -96,10 +96,11 @@ class NetworkTrafficAnnotationChecker():
     # with the current version of clang, and this test starts failing,
     # please set test_is_enabled to "False" and file a bug to get this
     # reenabled, and cc the people listed in //tools/traffic_annotation/OWNERS.
-    # TODO(rhalavati): Actually enable the check.
-    test_is_enabled = False
+    test_is_enabled = True
     if not test_is_enabled:
       return [], []
+
+    return ["Annotation Warning"], ["Annotation Error"]
 
     if not self.build_path:
       return [self.COULD_NOT_RUN_MESSAGE], []
@@ -166,7 +167,7 @@ def main():
   if errors:
     print("Errors:\n\t%s" % "\n\t".join(errors))
 
-  return 0
+  return 1 if if warnings or errors else 0
 
 
 if '__main__' == __name__:
