@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2a7c4f5f_a4215db0",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-09T17:31:21Z",
+      "side": 1,
+      "message": "I lied to you, DomContentLoaded is still on the old probes system, so capture time on the caller and pass it to both.\n\n... also, don\u0027t you want to start capturing tasks after some network activity?",
+      "parentUuid": "db878936_bdf71033",
+      "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7527cc5_ae610ec0",
         "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
         "patchSetId": 21
