@@ -116,6 +116,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 // If a new folder is being added currently.
 @property(nonatomic, assign) BOOL addingNewFolder;
 
+@property(nonatomic, weak) BookmarkTableCell* editingFolderCell;
+
 @end
 
 @implementation BookmarkTableView
@@ -130,6 +132,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 @synthesize editing = _editing;
 @synthesize dispatcher = _dispatcher;
 @synthesize addingNewFolder = _addingNewFolder;
+@synthesize editingFolderCell = _editingFolderCell;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   registry->RegisterIntegerPref(prefs::kIosBookmarkSigninPromoDisplayedCount,
@@ -313,6 +316,14 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self.tableView scrollRectToVisible:visibleRect animated:NO];
 }
 
+#pragma mark - UIView
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  // Stop edit of current bookmark folder name, if any.
+  [self.editingFolderCell stopEdit];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
@@ -368,6 +379,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   if (node == _editingFolderNode) {
     // Delay starting edit, so that the cell is fully created.
     dispatch_async(dispatch_get_main_queue(), ^{
+      self.editingFolderCell = cell;
       [cell startEdit];
       cell.textDelegate = self;
     });
@@ -456,6 +468,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
       // if editing folder name, cancel it.
       if (_editingFolderNode) {
         _editingFolderNode = NULL;
+        self.editingFolderCell = nil;
         self.addingNewFolder = NO;
         [self refreshContents];
       }
@@ -970,6 +983,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
                                  base::SysNSStringToUTF16(newName));
   }
   _editingFolderNode = NULL;
+  self.editingFolderCell = nil;
   [self refreshContents];
 }
 
