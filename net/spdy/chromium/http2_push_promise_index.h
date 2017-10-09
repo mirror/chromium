@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 
+#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "net/base/net_export.h"
@@ -18,6 +19,13 @@ namespace net {
 
 class SpdySession;
 
+// This class manages cross-origin pushed streams from the receipt of
+// PUSH_PROMISE frame until they are matched to a request.  Each SpdySessionPool
+// owns one instance of this class, which then allows requests to be matched
+// with a pushed stream regardless of which HTTP/2 connection the stream is on
+// on.  Only pushed streams with cryptographic schemes (for example, https) are
+// allowed to be shared across connections.  Non-cryptographic scheme pushes
+// (for example, http) are fully managed within each SpdySession.
 class NET_EXPORT Http2PushPromiseIndex {
  public:
   Http2PushPromiseIndex();
@@ -27,16 +35,18 @@ class NET_EXPORT Http2PushPromiseIndex {
   // |url|, return it.  Otherwise return nullptr.
   base::WeakPtr<SpdySession> Find(const SpdySessionKey& key, const GURL& url);
 
-  // (Un)register a SpdySession with an unclaimed pushed stream for |url|, so
-  // that the right SpdySession can be served by FindAvailableSession.
-  void RegisterUnclaimedPushedStream(GURL url,
-                                     base::WeakPtr<SpdySession> spdy_session);
-  void UnregisterUnclaimedPushedStream(const GURL& url,
-                                       SpdySession* spdy_session);
+  // Register a SpdySession with an unclaimed pushed stream for |url|.
+  // Return true if there was not already an entry with |url|,
+  // in which case the insertion was successful.
+  bool RegisterUnclaimedPushedStream(const GURL& url,
+                                     base::WeakPtr<SpdySession> spdy_session)
+      WARN_UNUSED_RESULT;
+
+  // Unregister a SpdySession with an unclaimed pushed stream for |url|.
+  void UnregisterUnclaimedPushedStream(const GURL& url);
 
  private:
-  typedef std::vector<base::WeakPtr<SpdySession>> WeakSessionList;
-  typedef std::map<GURL, WeakSessionList> UnclaimedPushedStreamMap;
+  typedef std::map<GURL, base::WeakPtr<SpdySession>> UnclaimedPushedStreamMap;
 
   // A map of all SpdySessions owned by |this| that have an unclaimed pushed
   // streams for a GURL.  Might contain invalid WeakPtr's.
