@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "af577760_9d7ee0e5",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAttributeNames.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T22:43:54Z",
+      "side": 1,
+      "message": "Aha, IDL-gen magic. Nevermind then. A few bytes wasted.",
+      "parentUuid": "38c35dad_aeac800c",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ecbc75d_5c6ec652",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
         "patchSetId": 9
@@ -313,6 +337,24 @@
       "side": 1,
       "message": "I\u0027m not really sure what is a good place to share this. I\u0027ve moved this to ImageElementBase which seems like a good spot, but let me know if you had something else in mind.",
       "parentUuid": "4f0ee64c_c13ad149",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "364e8060_99c0c3aa",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T22:43:54Z",
+      "side": 1,
+      "message": "ImageElementBase is a bit awkward (IMO) because it\u0027s a \u003ccanvas\u003e helper, so putting it there seems a bit wrong even though it pans out in a local sense (*ImageElement doesn\u0027t pull in any stuff they didn\u0027t before.) With blinkers on I guess it\u0027s not a big deal.",
+      "parentUuid": "4c9eb976_27d156fb",
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
