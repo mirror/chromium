@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8abe5480_818c8ccc",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:54:47Z",
+      "side": 1,
+      "message": "Hey @justincarlson -\n\nNot sure the best way to do this. Before we perform either the fetch manufacturers or reverse index fetch, we first need the locale_ parameter to be not empty. I hate to group them together into a case, just to separate them again by case, but not sure if there\u0027s a better way to do this.",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
