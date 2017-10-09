@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81ea8bc_9f9dc592",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-09T05:32:55Z",
+      "side": 1,
+      "message": "A explaining comment?",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "f5ece829189c0cbd7505916da93ff9ca3890eeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90ce18d_39d3d005",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-09T05:32:55Z",
+      "side": 1,
+      "message": "Could we add a comment explaining why we disable it / why the warning is not applicable?",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "f5ece829189c0cbd7505916da93ff9ca3890eeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
