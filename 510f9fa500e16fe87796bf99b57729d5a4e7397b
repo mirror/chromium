@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6082aefb_24ade0a2",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3260,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-10-09T17:55:57Z",
+      "side": 1,
+      "message": "I think these can be re-enabled on iOS. Will try to do that separately.",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

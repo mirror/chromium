@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "852c17a8_9520b7ce",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-10-09T17:55:57Z",
+      "side": 0,
+      "message": "This test depended on the preloaded entry for blog.torproject.org but it tests general HPKP functionality that can be tested with a test entry instead to remove the dependency on the real preload list.",
+      "revId": "ddbbee86425a3b8f8e06842834fe97deab6e4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
