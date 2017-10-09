@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62246b77_3a5661f0",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-09T16:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e552dc3_9d5541bf",
+      "revId": "1a4bef42bab6ca96f11263e3ef544ee5a4f4cff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e2e5b8_f5517dfd",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T03:35:15Z",
       "side": 1,
       "message": "Wonder if we can simply always do this, which actually makes things slightly more deterministic.",
+      "revId": "1a4bef42bab6ca96f11263e3ef544ee5a4f4cff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f77fdb9_263e2db6",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-09T16:52:36Z",
+      "side": 1,
+      "message": "IMO, it makes sense to keep the fast path (i.e., destroy |throttle_| directly, saving one post task).\nThat should be the majority case. -- Most of the time, a requests is destroyed after the response is successfully fetched and the consumer destroys the ThrottlingURLLoader itself. \n\nUnless we see cases where the two paths cause issues (making debugging harder, leading to confusion, etc.), I prefer keeping the fast path. WDYT? Thanks!",
+      "parentUuid": "43e2e5b8_f5517dfd",
       "revId": "1a4bef42bab6ca96f11263e3ef544ee5a4f4cff6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
