@@ -195,9 +195,9 @@ public class PictureInPictureControllerTest {
         return mActivity.getCurrentContentViewCore().getWebContents();
     }
 
-    private void triggerAutoPiP() throws Throwable{
-        mUiThreadTestRule.runOnUiThread(() ->
-                mActivityTestRule.getInstrumentation().callActivityOnUserLeaving(mActivity));
+    private void triggerAutoPiP() throws Throwable {
+        mUiThreadTestRule.runOnUiThread(
+                () -> mActivityTestRule.getInstrumentation().callActivityOnUserLeaving(mActivity));
     }
 
     private void enterFullscreen() throws Throwable {
