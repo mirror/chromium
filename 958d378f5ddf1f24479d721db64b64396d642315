@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c997c1_dd8cca0f",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:09:51Z",
+      "side": 1,
+      "message": "Why move this from mac/BUILD.gn ?",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3d875a_06c04308",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:09:51Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed.",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f40b38_cb3dea17",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:09:51Z",
+      "side": 1,
+      "message": "This should go on the :sandbox component. I don\u0027t think this is doing anything here?",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
