@@ -36,6 +36,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
 #include "sandbox/mac/sandbox_compiler.h"
+#include "services/service_manager/sandbox/mac/cdm.sb.h"
 #include "services/service_manager/sandbox/mac/common.sb.h"
 #include "services/service_manager/sandbox/mac/gpu.sb.h"
 #include "services/service_manager/sandbox/mac/nacl_loader.sb.h"
@@ -71,7 +72,7 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
      service_manager::kSeatbeltPolicyString_ppapi},
     {service_manager::SANDBOX_TYPE_NETWORK, nullptr},
     {service_manager::SANDBOX_TYPE_CDM,
-     service_manager::kSeatbeltPolicyString_ppapi},
+     service_manager::kSeatbeltPolicyString_cdm},
     {service_manager::SANDBOX_TYPE_NACL_LOADER,
      service_manager::kSeatbeltPolicyString_nacl_loader},
     {service_manager::SANDBOX_TYPE_PDF_COMPOSITOR,
