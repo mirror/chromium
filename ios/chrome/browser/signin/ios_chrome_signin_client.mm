@@ -6,10 +6,12 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "components/metrics/metrics_service.h"
+#include "components/signin/ios/browser/account_consistency_service.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/browser_state_info_cache.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
+#include "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #include "ios/chrome/browser/signin/gaia_auth_fetcher_ios.h"
 #include "ios/chrome/browser/web_data_service_factory.h"
 #include "ios/chrome/common/channel_info.h"
@@ -83,6 +85,19 @@ std::unique_ptr<GaiaAuthFetcher> IOSChromeSigninClient::CreateGaiaAuthFetcher(
     net::URLRequestContextGetter* getter) {
   return std::make_unique<GaiaAuthFetcherIOS>(consumer, source, getter,
                                               browser_state_);
+}
+
+void IOSChromeSigninClient::PreGaiaLogout(base::OnceClosure callback) {
+  // There is a weird dependency issue here, but I do not know how this can be
+  // fixed (and it is not needed now):
+  // When the profile is shut down, GaiaCookieManagerService is killed after the
+  // AccountConsistencyService. If GaiaCookieManagerService decides to make a
+  // call to Logout after the AccountConsistencyService was shut down, then the
+  // client will attempt to get the AccountConsistencyService here and call
+  // RemoveChromeConnectedCookies. This will probably will crash somehow.
+  AccountConsistencyService* accountConsistencyService =
+      ios::AccountConsistencyServiceFactory::GetForBrowserState(browser_state_);
+  accountConsistencyService->RemoveChromeConnectedCookies(std::move(callback));
 }
 
 void IOSChromeSigninClient::OnErrorChanged() {
