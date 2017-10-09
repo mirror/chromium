@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecca258a_4b3d9e50",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-09T20:07:24Z",
+      "side": 1,
+      "message": "What does this condition mean?  When not in VI oobe, ARC oobe is active?",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
