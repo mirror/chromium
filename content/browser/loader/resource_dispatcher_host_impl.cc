@@ -649,8 +649,8 @@ void ResourceDispatcherHostImpl::DidReceiveResponse(
     ResourceResponse* response) {
   ResourceRequestInfoImpl* info = loader->GetRequestInfo();
   net::URLRequest* request = loader->request();
-  if (request->was_fetched_via_proxy() &&
-      request->was_fetched_via_spdy() &&
+  if (request->proxy_server().is_valid() &&
+      !request->proxy_server().is_direct() && request->was_fetched_via_spdy() &&
       request->url().SchemeIs(url::kHttpScheme)) {
     scheduler_->OnReceivedSpdyProxiedHttpResponse(
         info->GetChildID(), info->GetRouteID());
