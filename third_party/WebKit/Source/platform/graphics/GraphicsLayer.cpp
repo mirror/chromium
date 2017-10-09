@@ -1105,6 +1105,8 @@ void GraphicsLayer::SetContentsToImage(
   if (image)
     paint_image = image->PaintImageForCurrentFrame();
 
+  // TODO(VMPSTR): Plumb developer setting here.
+
   if (paint_image && image->IsBitmapImage() &&
       respect_image_orientation == kRespectImageOrientation) {
     ImageOrientation image_orientation =
