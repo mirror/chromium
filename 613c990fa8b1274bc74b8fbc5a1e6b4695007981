@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8a397e01_8c4beabe",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-09T13:24:03Z",
+      "side": 1,
+      "message": "Should we DCHECK that self.currentBVC is the same as self.mainViewController.activeViewController?",
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d540ddc7_c3148e71",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
         "patchSetId": 9
@@ -36,6 +53,30 @@
       "writtenOn": "2017-10-06T21:31:04Z",
       "side": 1,
       "message": "Perhaps make this optional.",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 74
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902bbb95_8fee9647",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-09T13:24:03Z",
+      "side": 1,
+      "message": "Why do we have two implementations of these methods?  In what scenarios does this object act as the dispatch target?",
+      "parentUuid": "2653732a_6b3a45f6",
       "range": {
         "startLine": 505,
         "startChar": 0,
