@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "29f4b3c3_acbaa6f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-09T14:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a298a410_c3907b1b",
+      "range": {
+        "startLine": 9,
+        "startChar": 52,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f43e9355_c8376103",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-09T14:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f4873c_7970b2ee",
+      "range": {
+        "startLine": 9,
+        "startChar": 278,
+        "endLine": 9,
+        "endChar": 285
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda45276_869b9d85",
         "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
         "patchSetId": 5
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f4de05e0_724441c0",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-09T14:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda45276_869b9d85",
+      "range": {
+        "startLine": 361,
+        "startChar": 20,
+        "endLine": 361,
+        "endChar": 31
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d833cd3_ce74bf6e",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0237594_f9fba576",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-09T14:57:45Z",
+      "side": 1,
+      "message": "I don\u0027t know about such cases in our code (and to ensure that, I\u0027ve added a check in Obj-C code), but this function (through fillPasswordForm) is called also by 3rd part PasswordManager apps, so I don\u0027t think that we should skip this check. I move this check to fillPasswordForm, it\u0027s more logical since fillPasswordFormWithData_ is called for each same origin iframe, we don\u0027t need to check it many times.",
+      "parentUuid": "0d833cd3_ce74bf6e",
+      "range": {
+        "startLine": 278,
+        "startChar": 8,
+        "endLine": 278,
+        "endChar": 64
+      },
+      "revId": "6e35e135beedef3a8019a246886ea7cbec3e5293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
