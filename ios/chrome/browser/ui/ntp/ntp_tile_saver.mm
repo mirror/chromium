@@ -4,6 +4,7 @@
 
 #include "ios/chrome/browser/ui/ntp/ntp_tile_saver.h"
 
+#include "base/bind.h"
 #include "base/md5.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/favicon/core/fallback_url_util.h"
@@ -11,6 +12,7 @@
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
+#include "ios/web/public/web_thread.h"
 #import "net/base/mac/url_conversions.h"
 
 namespace ntp_tile_saver {
@@ -76,8 +78,10 @@ void WriteToDiskIfComplete(NSDictionary<NSURL*, NTPTile*>* tiles,
     DCHECK(tile.faviconFileName || tile.fallbackMonogram);
   }
 
-  ReplaceSavedFavicons(faviconsURL);
-  WriteSavedMostVisited(tiles);
+  web::WebThread::PostTaskAndReply(
+      web::WebThread::IO, FROM_HERE,
+      base::BindOnce(ReplaceSavedFavicons, faviconsURL),
+      base::BindOnce(WriteSavedMostVisited, tiles));
 }
 
 NSString* GetFaviconFileName(const GURL& url) {
@@ -92,78 +96,109 @@ void SaveMostVisitedToDisk(const ntp_tiles::NTPTilesVector& mostVisitedData,
     return;
   }
 
-  NSMutableDictionary<NSURL*, NTPTile*>* tiles =
-      [[NSMutableDictionary alloc] init];
+  auto clearTmpFaviconFolder = []() {
+    NSURL* tmpFaviconURL = TmpFaviconFolderPath();
+    if ([[NSFileManager defaultManager]
+            fileExistsAtPath:[tmpFaviconURL path]]) {
+      [[NSFileManager defaultManager] removeItemAtURL:tmpFaviconURL error:nil];
+    }
+    [[NSFileManager defaultManager] createDirectoryAtPath:[tmpFaviconURL path]
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:nil];
+  };
 
-  // Clear the tmp favicon folder and recreate it.
-  NSURL* tmpFaviconURL = TmpFaviconFolderPath();
-  if ([[NSFileManager defaultManager] fileExistsAtPath:[tmpFaviconURL path]]) {
-    [[NSFileManager defaultManager] removeItemAtURL:tmpFaviconURL error:nil];
-  }
-  [[NSFileManager defaultManager] createDirectoryAtPath:[tmpFaviconURL path]
-                            withIntermediateDirectories:YES
-                                             attributes:nil
-                                                  error:nil];
+  auto getFaviconsAndSave = [](const ntp_tiles::NTPTilesVector& mostVisitedData,
+                               id<GoogleLandingDataSource> faviconFetcher,
+                               NSURL* faviconsURL) {
 
-  // If there are 0 sites to display, the for loop below will not be entered.
-  // Write the updated empty list of sites to disk before returning.
-  if (mostVisitedData.size() == 0) {
-    WriteToDiskIfComplete(tiles, faviconsURL);
-  }
+    NSMutableDictionary<NSURL*, NTPTile*>* tiles =
+        [[NSMutableDictionary alloc] init];
 
-  // For each site, get the favicon. If it is returned, write it to the favicon
-  // tmp folder. If a fallback value is returned, update the tile info. Calls
-  // WriteToDiskIfComplete after each callback execution.
-  // All the sites are added first to the list so that the WriteToDiskIfComplete
-  // command is not passed an incomplete list.
-  for (size_t i = 0; i < mostVisitedData.size(); i++) {
-    const ntp_tiles::NTPTile& ntpTile = mostVisitedData[i];
-    NTPTile* tile =
-        [[NTPTile alloc] initWithTitle:base::SysUTF16ToNSString(ntpTile.title)
-                                   URL:net::NSURLWithGURL(ntpTile.url)
-                              position:i];
-    [tiles setObject:tile forKey:tile.URL];
-  }
+    // If there are 0 sites to display, the for loop below will not be entered.
+    // Write the updated empty list of sites to disk before returning.
+    if (mostVisitedData.size() == 0) {
+      WriteToDiskIfComplete(tiles, faviconsURL);
+    }
 
-  for (NTPTile* tile : [tiles objectEnumerator]) {
-    const GURL& gurl = net::GURLWithNSURL(tile.URL);
-    NSString* faviconFileName = GetFaviconFileName(gurl);
-    NSURL* fileURL =
-        [tmpFaviconURL URLByAppendingPathComponent:faviconFileName];
+    // For each site, get the favicon. If it is returned, write it to the
+    // favicon tmp folder. If a fallback value is returned, update the tile
+    // info. Calls WriteToDiskIfComplete after each callback execution. All the
+    // sites are added first to the list so that the WriteToDiskIfComplete
+    // command is not passed an incomplete list.
+    for (size_t i = 0; i < mostVisitedData.size(); i++) {
+      const ntp_tiles::NTPTile& ntpTile = mostVisitedData[i];
+      NTPTile* tile =
+          [[NTPTile alloc] initWithTitle:base::SysUTF16ToNSString(ntpTile.title)
+                                     URL:net::NSURLWithGURL(ntpTile.url)
+                                position:i];
+      [tiles setObject:tile forKey:tile.URL];
+    }
 
-    void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
-      NSData* imageData = UIImagePNGRepresentation(favicon);
-      if ([imageData writeToURL:fileURL atomically:YES]) {
-        // If saving the image is not possible, the best thing to do is to keep
-        // the previous tile.
-        tile.faviconFetched = YES;
-        tile.faviconFileName = faviconFileName;
-        WriteToDiskIfComplete(tiles, faviconsURL);
-      }
-    };
+    NSURL* tmpFaviconURL = TmpFaviconFolderPath();
+    for (NTPTile* tile : [tiles objectEnumerator]) {
+      const GURL& gurl = net::GURLWithNSURL(tile.URL);
+      NSString* faviconFileName = GetFaviconFileName(gurl);
+      NSURL* fileURL =
+          [tmpFaviconURL URLByAppendingPathComponent:faviconFileName];
 
-    void (^fallbackBlock)(UIColor*, UIColor*, BOOL) =
-        ^(UIColor* textColor, UIColor* backgroundColor, BOOL isDefaultColor) {
-          tile.faviconFetched = YES;
-          tile.fallbackTextColor = textColor;
-          tile.fallbackBackgroundColor = backgroundColor;
-          tile.fallbackIsDefaultColor = isDefaultColor;
-          tile.fallbackMonogram = base::SysUTF16ToNSString(
-              favicon::GetFallbackIconText(net::GURLWithNSURL(tile.URL)));
-          DCHECK(tile.fallbackMonogram && tile.fallbackTextColor &&
-                 tile.fallbackBackgroundColor);
-          WriteToDiskIfComplete(tiles, faviconsURL);
+      void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
+        NSData* imageData = UIImagePNGRepresentation(favicon);
+
+        base::OnceCallback<BOOL()> task = base::BindOnce(
+            [](NSData* imageData, NSURL* fileURL) -> BOOL {
+              return [imageData writeToURL:fileURL atomically:YES];
+            },
+            imageData, fileURL);
+
+        auto updateTile = [](NTPTile* tile, NSString* faviconFileName,
+                             NSURL* faviconsURL,
+                             NSMutableDictionary<NSURL*, NTPTile*>* tiles,
+                             BOOL imageWriteSuccess) {
+          if (imageWriteSuccess) {
+            // If saving the image is not possible, the best thing to do is to
+            // keep the previous tile.
+            tile.faviconFetched = YES;
+            tile.faviconFileName = faviconFileName;
+            WriteToDiskIfComplete(tiles, faviconsURL);
+          }
         };
 
-    // The cache is not used here as it is simply a way to have a synchronous
-    // immediate return. In this case it is unnecessary.
+        base::OnceCallback<void(BOOL)> reply = base::BindOnce(
+            updateTile, tile, faviconFileName, faviconsURL, tiles);
 
-    [faviconFetcher getFaviconForURL:gurl
-                                size:48
-                            useCache:NO
-                       imageCallback:faviconImageBlock
-                    fallbackCallback:fallbackBlock];
-  }
+        web::WebThread::PostTaskAndReplyWithResult(
+            web::WebThread::IO, FROM_HERE, std::move(task), std::move(reply));
+      };
+
+      void (^fallbackBlock)(UIColor*, UIColor*, BOOL) =
+          ^(UIColor* textColor, UIColor* backgroundColor, BOOL isDefaultColor) {
+            tile.faviconFetched = YES;
+            tile.fallbackTextColor = textColor;
+            tile.fallbackBackgroundColor = backgroundColor;
+            tile.fallbackIsDefaultColor = isDefaultColor;
+            tile.fallbackMonogram = base::SysUTF16ToNSString(
+                favicon::GetFallbackIconText(net::GURLWithNSURL(tile.URL)));
+            DCHECK(tile.fallbackMonogram && tile.fallbackTextColor &&
+                   tile.fallbackBackgroundColor);
+            WriteToDiskIfComplete(tiles, faviconsURL);
+          };
+
+      // The cache is not used here as it is simply a way to have a synchronous
+      // immediate return. In this case it is unnecessary.
+
+      [faviconFetcher getFaviconForURL:gurl
+                                  size:48
+                              useCache:NO
+                         imageCallback:faviconImageBlock
+                      fallbackCallback:fallbackBlock];
+    }
+  };
+
+  web::WebThread::PostTaskAndReply(
+      web::WebThread::IO, FROM_HERE, base::BindOnce(clearTmpFaviconFolder),
+      base::BindOnce(getFaviconsAndSave, mostVisitedData, faviconFetcher,
+                     faviconsURL));
 }
 
 void WriteSingleUpdatedTileToDisk(NTPTile* tile) {
@@ -219,11 +254,28 @@ void UpdateSingleFavicon(const GURL& siteURL,
   void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
     tile.faviconFetched = YES;
     NSData* imageData = UIImagePNGRepresentation(favicon);
-    [[NSFileManager defaultManager] removeItemAtURL:previousFileURL error:nil];
-    if ([imageData writeToURL:fileURL atomically:YES]) {
-      tile.faviconFileName = faviconFileName;
-    }
-    WriteSingleUpdatedTileToDisk(tile);
+
+    web::WebThread::PostTaskAndReplyWithResult(
+        web::WebThread::IO, FROM_HERE,
+        base::BindOnce(
+            [](NSData* imageData, NSURL* previousFileURL,
+               NSURL* fileURL) -> BOOL {
+              [[NSFileManager defaultManager] removeItemAtURL:previousFileURL
+                                                        error:nil];
+              return [imageData writeToURL:fileURL atomically:YES];
+            },
+            imageData, previousFileURL, fileURL),
+        base::BindOnce(
+            [](NTPTile* tile, NSString* faviconFileName,
+               BOOL imageWriteSuccess) {
+              if (imageWriteSuccess) {
+                tile.faviconFileName = faviconFileName;
+              }
+              WriteSingleUpdatedTileToDisk(tile);
+
+            },
+            tile, faviconFileName));
+
   };
 
   void (^fallbackBlock)(UIColor*, UIColor*, BOOL) =
@@ -233,9 +285,19 @@ void UpdateSingleFavicon(const GURL& siteURL,
         tile.fallbackBackgroundColor = backgroundColor;
         tile.fallbackIsDefaultColor = isDefaultColor;
         tile.fallbackMonogram = monogram;
-        [[NSFileManager defaultManager] removeItemAtURL:previousFileURL
-                                                  error:nil];
-        WriteSingleUpdatedTileToDisk(tile);
+
+        web::WebThread::PostTaskAndReply(
+            web::WebThread::IO, FROM_HERE,
+            base::BindOnce(
+                [](NSURL* previousFileURL) {
+                  [[NSFileManager defaultManager]
+                      removeItemAtURL:previousFileURL
+                                error:nil];
+                },
+                previousFileURL),
+            base::BindOnce(
+                [](NTPTile* tile) { WriteSingleUpdatedTileToDisk(tile); },
+                tile));
       };
 
   // The cache is not used here as it is simply a way to have a synchronous
