@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0b8468_bd4c87ce",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T00:36:11Z",
+      "side": 1,
+      "message": "Minor nit: no braces for a 1 line C++ if statement (for consistency with the rest of this file)",
+      "range": {
+        "startLine": 110,
+        "startChar": 18,
+        "endLine": 110,
+        "endChar": 19
+      },
+      "revId": "df00c74180d19ec21d79dac64324d5b0d36ed2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09aebb89_0b020a97",
+        "filename": "chrome/browser/banners/app_banner_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-09T00:36:11Z",
+      "side": 1,
+      "message": "Nit: add \"Histogram\" to the name for consistency",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "df00c74180d19ec21d79dac64324d5b0d36ed2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
