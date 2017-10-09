@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "273cd404_fc374275",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:28:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6427b939_974fd1ef",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "488e4e5e_59ad6921",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "82504076b8105bace035152d4e27d0a130238653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e0fcec_c9352b1f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:28:10Z",
+      "side": 1,
+      "message": "Done. Unfortunately alphabetical isn\u0027t properly preserved here, since I couldn\u0027t figure out how to do it tidily with the if statements :/",
+      "parentUuid": "488e4e5e_59ad6921",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ed509a6e_605a2dc3",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c3c26e_747d30d7",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb464f5_be23ad1d",
         "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "82504076b8105bace035152d4e27d0a130238653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b2683b_48c7df5b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:28:10Z",
+      "side": 1,
+      "message": "I\u0027m planning on deleting this method soon (since we\u0027re trying to get rid of StyleBuilder), so I didn\u0027t think it would be worth the effort.",
+      "parentUuid": "abb464f5_be23ad1d",
+      "revId": "82504076b8105bace035152d4e27d0a130238653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
