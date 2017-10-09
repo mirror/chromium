@@ -155,11 +155,17 @@ bool MultibufferDataSource::assume_fully_buffered() {
   return !url_data_->url().SchemeIsHTTPOrHTTPS();
 }
 
+void MultibufferDataSource::SetReader(MultiBufferReader* reader) {
+  DCHECK(render_task_runner_->BelongsToCurrentThread());
+  base::AutoLock auto_lock(lock_);
+  reader_.reset(reader);
+}
+
 void MultibufferDataSource::CreateResourceLoader(int64_t first_byte_position,
                                                  int64_t last_byte_position) {
   DCHECK(render_task_runner_->BelongsToCurrentThread());
 
-  reader_.reset(new MultiBufferReader(
+  SetReader(new MultiBufferReader(
       url_data_->multibuffer(), first_byte_position, last_byte_position,
       base::Bind(&MultibufferDataSource::ProgressCallback, weak_ptr_)));
   UpdateBufferSizes();
@@ -212,7 +218,7 @@ void MultibufferDataSource::OnRedirect(
   if (url_data_->url().GetOrigin() != destination->url().GetOrigin()) {
     single_origin_ = false;
   }
-  reader_.reset(nullptr);
+  SetReader(nullptr);
   url_data_ = destination;
 
   if (url_data_) {
@@ -323,7 +329,7 @@ void MultibufferDataSource::OnBufferingHaveEnough(bool always_cancel) {
                                     !media_has_played_ && !IsStreaming()))) {
     cancel_on_defer_ = true;
     if (!loading_)
-      reader_.reset(nullptr);
+      SetReader(nullptr);
   }
 }
 
@@ -518,7 +524,7 @@ void MultibufferDataSource::StopInternal_Locked() {
 
 void MultibufferDataSource::StopLoader() {
   DCHECK(render_task_runner_->BelongsToCurrentThread());
-  reader_.reset(nullptr);
+  SetReader(nullptr);
 }
 
 void MultibufferDataSource::SetBitrateTask(int bitrate) {
@@ -534,7 +540,7 @@ void MultibufferDataSource::StartCallback() {
   DCHECK(render_task_runner_->BelongsToCurrentThread());
 
   if (init_cb_.is_null()) {
-    reader_.reset();
+    SetReader(nullptr);
     return;
   }
 
@@ -557,7 +563,7 @@ void MultibufferDataSource::StartCallback() {
                                   static_cast<double>(total_bytes_));
     media_log_->SetBooleanProperty("streaming", streaming_);
   } else {
-    reader_.reset(nullptr);
+    SetReader(nullptr);
   }
 
   // TODO(scherkus): we shouldn't have to lock to signal host(), see
@@ -635,6 +641,7 @@ void MultibufferDataSource::UpdateLoadingState_Locked(bool force_loading) {
         // operation is done.
         return;
       }
+      // Already locked, no need to use SetReader().
       reader_.reset(nullptr);
     }
 
