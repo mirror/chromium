@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab5fa03_35b563c6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4835,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-09T18:28:20Z",
+      "side": 1,
+      "message": "I\u0027d add a local variable for the node pointer (and declare it right after the null check) to make it obvious that it cannot be null by the time it is converted to a reference and FirstPositionInOrBeforeNode is called.\n\nconst Node\u0026 node \u003d *NonPseudoNode();",
+      "range": {
+        "startLine": 4835,
+        "startChar": 37,
+        "endLine": 4835,
+        "endChar": 0
+      },
+      "revId": "19aa652fa23d5088bb7aa51d1fc83a335c0861d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
