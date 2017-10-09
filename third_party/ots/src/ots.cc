@@ -687,10 +687,11 @@ bool ProcessGeneric(ots::OpenTypeFile *header,
       // No TrueType glyph found.
 #define PASSTHRU_TABLE(tag_) (table_map.find(tag_) != table_map.end() && \
                               GetTableAction(header, tag_) == ots::TABLE_ACTION_PASSTHRU)
-      // We don't sanitise bitmap table, but don't reject bitmap-only fonts if
-      // we keep the tables.
-      if (!PASSTHRU_TABLE(OTS_TAG('C','B','D','T')) ||
-          !PASSTHRU_TABLE(OTS_TAG('C','B','L','C'))) {
+      // We don't sanitise bitmap tables nor CFF2, but don't reject such fonts
+      // if such a replacement glyph table can be found.
+      if ((!PASSTHRU_TABLE(OTS_TAG('C', 'B', 'D', 'T')) ||
+           !PASSTHRU_TABLE(OTS_TAG('C', 'B', 'L', 'C'))) &&
+          !PASSTHRU_TABLE(OTS_TAG('C', 'F', 'F', '2'))) {
         return OTS_FAILURE_MSG_HDR("no supported glyph shapes table(s) present");
       }
 #undef PASSTHRU_TABLE
