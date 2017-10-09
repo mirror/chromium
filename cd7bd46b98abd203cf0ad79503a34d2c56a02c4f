@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fde197ff_203e2f2a",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "s/Url/URL/",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07974aa4_603bed53",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "at some point, the url string may be too long and we will need a way to truncate it and be able to show the full URL when someone clicks on it or something. Can you open a bug on it?",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b9d427_38ae2325",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "use time common type?",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47075a4c_215cb872",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "This is odd. I don\u0027t think you should move the message to the caller. Is there a way to get a copy or a reference instead? Or a raw mojo ptr?\n\nI\u0027d prefer this to be a const method.",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a03af56_2dca5d43",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "const",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a9e49a_8c217ed1",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "do page_handler.reset() instead.",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2911ff76_5d9a8fab",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 23
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "Do you have two url fields here?",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7c8759_91db77b9",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "As a note, it may be easier to just have an array of TestPreviewsLoggerObservers if that works.\n\ne.g., TestPreviewsLoggerObservers[3] observers;\n\nyou\u0027ll get memory cleanup that way too, and it will be more readable.",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9bba47_ae2b0a32",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "Why did you switch from for (auto*.... to for (size_t....?",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7654d9d_bf7e0b81",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T18:40:06Z",
+      "side": 1,
+      "message": "I\u0027d move this outside of the for loop to where you actually call LogMessage.",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
