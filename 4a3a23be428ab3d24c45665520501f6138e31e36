@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a680d02_23bc8a19",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-09T00:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e98ea3c4_4c01c7a9",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 29
+      },
+      "revId": "4a3a23be428ab3d24c45665520501f6138e31e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2752a82_7351a3d7",
         "filename": "chrome/browser/banners/app_banner_manager.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-06T04:57:24Z",
       "side": 1,
       "message": "Instead of is_native, can this be is_webapp so that we don\u0027t need the !native_app_data.is_null () and the !is_native { do logging } ?",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "4a3a23be428ab3d24c45665520501f6138e31e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cf7593_0487460f",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-09T00:28:28Z",
+      "side": 1,
+      "message": "I was concerned about is_webapp being unclear about inclusion of webapks. On the other hand is_native is clear.\n\nE.g. in app_banner_infobar_delegate_android.cc webapp and webapk are treated as separate categories (i.e. AcceptNativeApp, AcceptWebApp, AcceptWebApk are mutually exclusive). In other places in code webapp concept includes WebAPK (e.g. WebappActivity is a parent class of WebApkActivity). We should strive to minimize such inconsistencies, so I went for is_native which is clear.\n\nWDYT?",
+      "parentUuid": "b2752a82_7351a3d7",
       "range": {
         "startLine": 110,
         "startChar": 22,
