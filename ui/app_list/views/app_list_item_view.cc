@@ -375,6 +375,7 @@ bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
   if (!ShouldEnterPushedState(event))
     return true;
 
+  SetMouseDragging(true);
   apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event.location(),
                                 event.root_location());
 
@@ -455,6 +456,7 @@ bool AppListItemView::OnKeyPressed(const ui::KeyEvent& event) {
 
 void AppListItemView::OnMouseReleased(const ui::MouseEvent& event) {
   Button::OnMouseReleased(event);
+  apps_grid_view_->EndDrag(true);
   SetMouseDragging(false);
 }
 
