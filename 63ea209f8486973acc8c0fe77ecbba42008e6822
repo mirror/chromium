@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bde3780_5ffab8fb",
+        "filename": "base/containers/flat_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-09T10:08:37Z",
+      "side": 1,
+      "message": "Nit: Trailing comma still missing.",
+      "revId": "63ea209f8486973acc8c0fe77ecbba42008e6822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
