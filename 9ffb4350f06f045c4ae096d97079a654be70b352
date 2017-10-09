@@ -34,6 +34,24 @@
       "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0af1ad_0e69c39e",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-09T17:07:35Z",
+      "side": 0,
+      "message": "\u003e Note that we don\u0027t lose any information: If no output is printed, then we\u0027re using bundled clang at the revision hardcoded in update.py.\n\nAssuming everything works correctly :-) But yeah, makes sense I suppose.",
+      "parentUuid": "e152cc18_5f724e3f",
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
