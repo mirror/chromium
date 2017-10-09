@@ -12,7 +12,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -34,6 +33,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/message_center/notification.h"
 
 using extensions::ExtensionRegistry;
 
@@ -45,12 +45,10 @@ const char QuitWithAppsController::kQuitWithAppsNotificationID[] =
     "quit-with-apps";
 
 QuitWithAppsController::QuitWithAppsController()
-    : notification_profile_(NULL), suppress_for_session_(false) {
+    : hosted_app_quit_notification_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kHostedAppQuitNotification)) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  hosted_app_quit_notification_ =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kHostedAppQuitNotification);
 
   // There is only ever one notification to replace, so use the same tag
   // each time.
@@ -66,7 +64,7 @@ QuitWithAppsController::QuitWithAppsController()
     rich_notification_data.buttons.push_back(suppression_button_info);
   }
 
-  notification_.reset(new Notification(
+  notification_.reset(new message_center::Notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kQuitWithAppsNotificationID,
       l10n_util::GetStringUTF16(IDS_QUIT_WITH_APPS_TITLE),
       l10n_util::GetStringUTF16(IDS_QUIT_WITH_APPS_EXPLANATION),
@@ -83,9 +81,8 @@ QuitWithAppsController::~QuitWithAppsController() {}
 void QuitWithAppsController::Display() {}
 
 void QuitWithAppsController::Close(bool by_user) {
-  if (by_user) {
-    suppress_for_session_ = hosted_app_quit_notification_ ? false : true;
-  }
+  if (by_user)
+    suppress_for_session_ = !hosted_app_quit_notification_;
 }
 
 void QuitWithAppsController::Click() {
