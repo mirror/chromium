@@ -22,6 +22,30 @@
       "revId": "659e7a69ec0ab2c27c97fa3c28a8eb27dddddd23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff330fe0_21dbd455",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-09T20:16:19Z",
+      "side": 1,
+      "message": "I agree with what you\u0027re saying.\nI think attempting to verify we have a color which is different from the allocator default color isn\u0027t terribly helpful. We are already intimately familiar with the image internals. I think it is fair to also know the color (and thus know it isn\u0027t the same as the allocator\u0027s color).",
+      "parentUuid": "05644a21_cf7e5928",
+      "range": {
+        "startLine": 480,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 63
+      },
+      "revId": "659e7a69ec0ab2c27c97fa3c28a8eb27dddddd23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
