@@ -81,6 +81,11 @@ class RenderTextTestApi {
     render_text_->DrawVisualText(renderer);
   }
 
+  void DrawSelection(Canvas* canvas) {
+    render_text_->EnsureLayout();
+    render_text_->DrawSelection(canvas);
+  }
+
   const BreakList<SkColor>& colors() const { return render_text_->colors(); }
 
   const BreakList<BaselineStyle>& baselines() const {
@@ -457,6 +462,7 @@ class RenderTextTest : public testing::Test,
   }
 
   void DrawVisualText() { test_api_->DrawVisualText(renderer()); }
+  void DrawSelection() { test_api_->DrawSelection(canvas()); }
 
   const internal::TextRunList* GetHarfBuzzRunList() const {
     DCHECK_EQ(RENDER_TEXT_HARFBUZZ, GetParam());
@@ -4703,6 +4709,36 @@ TEST_P(RenderTextHarfBuzzTest, BaselineWithLineHeight) {
   EXPECT_EQ(font_height + kDelta, current_selection_bounds.height());
   EXPECT_EQ(normal_selection_bounds.width(), current_selection_bounds.width());
   EXPECT_EQ(gfx::Vector2d(), current_selection_bounds.OffsetFromOrigin());
+}
+
+TEST_P(RenderTextHarfBuzzTest, TeleguGraphemeBoundaries) {
+  RenderText* render_text = GetRenderText();
+  render_text->SetDisplayRect(Rect(50, 1000));
+  // This is the string for "New Folder" in Chrome. It might look like 16
+  // characters in a text editor, but a lot of the glyphs combine. With a proper
+  // font, it should be rendered as two runs with {2, 3} glyphs. The exact
+  // number depends on how sophisticated the available fonts on the system are.
+  // Telegu has a character "్", a diacritic to signify the lack of an inherent
+  // vowel. It has no width, but combines with the character before it and
+  // sometimes after it as well. It also has "ొ", a diatric that _adds_ a vowel.
+  // So "క,్,ర,ొ" renders as a single glyph, but it should have 4 cursor
+  // positions.
+  //render_text->SetText(UTF8ToUTF16("క్రొత్త  ఫోల్డర్"));
+  render_text->SetText(UTF8ToUTF16("క్రొ"));
+  size_t cursor_position = render_text->cursor_position();
+  int iterations = 0;
+  while (true) {
+    render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+    if (cursor_position == render_text->cursor_position())
+      break;
+
+    ++iterations;
+    cursor_position = render_text->cursor_position();
+    SCOPED_TRACE(testing::Message("Cursor Position: ") << cursor_position);
+    DrawSelection();
+  }
+  // Note a typical value for all our current platform fonts is 10.
+  EXPECT_EQ(3, iterations);
 }
 
 // Prefix for test instantiations intentionally left blank since each test

@@ -727,12 +727,22 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
   if (glyph_count == 0)
     return RangeF(preceding_run_widths, preceding_run_widths + width);
 
+  DCHECK_LE(0, width);
   Range chars;
   Range glyphs;
   GetClusterAt(text_index, &chars, &glyphs);
-  const float cluster_begin_x = positions[glyphs.start()].x();
+  float cluster_begin_x = positions[glyphs.start()].x();
+  float cluster_min_x = cluster_begin_x;
+  for (size_t i = glyphs.start() + 1; i < glyphs.length(); ++i)
+    cluster_min_x = std::min(cluster_min_x, positions[i].x());
+
   const float cluster_end_x = glyphs.end() < glyph_count ?
       positions[glyphs.end()].x() : SkFloatToScalar(width);
+
+  DLOG(INFO) << chars.length();
+  DLOG(INFO) << glyphs.length();
+
+  cluster_begin_x = cluster_min_x;
 
   // A cluster consists of a number of code points and corresponds to a number
   // of glyphs that should be drawn together. A cluster can contain multiple
@@ -753,11 +763,11 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
       }
     }
     DCHECK_GT(total, 0);
-    if (total > 1) {
+    if (total > 1 /*&& before != total*/) {
       if (is_rtl)
         before = total - before - 1;
       DCHECK_GE(before, 0);
-      DCHECK_LT(before, total);
+      // DCHECK_LT(before, total);
       const int cluster_width = cluster_end_x - cluster_begin_x;
       const int grapheme_begin_x = cluster_begin_x + static_cast<int>(0.5f +
           cluster_width * before / static_cast<float>(total));
