@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8299ff_d8099811",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/trusted-types/block-string-assignment-to-location-href.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-09T09:03:25Z",
+      "side": 1,
+      "message": "NIT: should have \u0027;\u0027 at the end of the line",
+      "revId": "008456c3a1240630e81319910d2685316eb416b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
