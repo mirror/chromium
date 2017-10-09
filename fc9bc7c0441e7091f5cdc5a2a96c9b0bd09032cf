@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f0ee764_5975986f",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T22:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71803a6b_e7d9e080",
+      "revId": "fc9bc7c0441e7091f5cdc5a2a96c9b0bd09032cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd8b9cb_5faa8800",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T21:50:09Z",
       "side": 1,
       "message": "I think we want to move this line before line 149.",
+      "revId": "fc9bc7c0441e7091f5cdc5a2a96c9b0bd09032cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb8dbcd_d5d62bec",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T22:01:59Z",
+      "side": 1,
+      "message": "There\u0027s the connections lock which is held during this function that should prohibit anybody from noticing that this has yet to be added to the connections_ map. I did it this way since otherwise I need another temporary to hold the connection pointer, or look it up again in the map.",
+      "parentUuid": "4dd8b9cb_5faa8800",
       "revId": "fc9bc7c0441e7091f5cdc5a2a96c9b0bd09032cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
