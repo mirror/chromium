@@ -21,8 +21,34 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/wtf/WTF.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
+#include "third_party/WebKit/public/platform/dedicated_worker_factory.mojom-blink.h"
 
 namespace blink {
+namespace {
+
+service_manager::mojom::blink::InterfaceProviderPtrInfo
+ConnectToWorkerInterfaceProvider(Document* document,
+                                 const SecurityOrigin& script_origin) {
+  LocalFrame* frame = document->GetFrame();
+  if (!frame)
+    return {};
+
+  auto* interface_provider = frame->GetAssociatedInterfaceProvider();
+  if (!interface_provider)
+    return {};
+
+  mojom::blink::DedicatedWorkerFactoryAssociatedPtr worker_factory;
+  interface_provider->GetInterface(&worker_factory);
+  service_manager::mojom::blink::InterfaceProviderPtrInfo
+      interface_provider_ptr;
+  worker_factory->CreateDedicatedWorker(
+      script_origin.IsUnique(), mojo::MakeRequest(&interface_provider_ptr));
+  return interface_provider_ptr;
+}
+
+}  // namespace
 
 struct DedicatedWorkerMessagingProxy::QueuedTask {
   RefPtr<SerializedScriptValue> message;
@@ -70,7 +96,9 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
           csp->Headers().get(), referrer_policy, starter_origin,
           ReleaseWorkerClients(), document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
-          std::move(worker_settings), kV8CacheOptionsDefault);
+          std::move(worker_settings), kV8CacheOptionsDefault,
+          ConnectToWorkerInterfaceProvider(
+              document, *SecurityOrigin::Create(script_url)));
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),

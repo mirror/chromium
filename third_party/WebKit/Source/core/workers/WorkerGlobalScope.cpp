@@ -358,6 +358,10 @@ bool WorkerGlobalScope::IsSecureContext(String& error_message) const {
   return false;
 }
 
+service_manager::InterfaceProvider* WorkerGlobalScope::GetInterfaceProvider() {
+  return &interface_provider_;
+}
+
 ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
   return const_cast<WorkerGlobalScope*>(this);
 }
@@ -410,6 +414,15 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
         policy_and_type.first, policy_and_type.second,
         kContentSecurityPolicyHeaderSourceHTTP);
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
+}
+
+void WorkerGlobalScope::BindInterfaceProvider(
+    service_manager::mojom::blink::InterfaceProviderPtrInfo
+        interface_provider_ptr) {
+  interface_provider_.Bind(
+      mojo::MakeProxy(service_manager::mojom::InterfaceProviderPtrInfo(
+          interface_provider_ptr.PassHandle(),
+          service_manager::mojom::InterfaceProvider::Version_)));
 }
 
 void WorkerGlobalScope::SetWorkerSettings(
