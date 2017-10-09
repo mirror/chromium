@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae97d610_053e847d",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "1.Modified the function name to setupShowAllButton.\n\n2. I think if button is attached to object_fieldset then the position of the button always changes. Also i think there is no differentiating value like ID\u0027s in object_fieldset to differentiate different showall button\u0027s.\nSo i have placed the button by the side of Properties with some space.\nIf you think still we need to modify, let me know i can work on it.",
+      "parentUuid": "62596bf2_90734526",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3cf74cb_8b0f87bc",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377340f3_6435659d",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3cf74cb_8b0f87bc",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8801a7d0_55d1d1b6",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd48be1_1dbdfa39",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5bf06f8_a3ad8781",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 7
@@ -85,6 +157,24 @@
       "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb09106_e352db99",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5bf06f8_a3ad8781",
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "703ac86b_9773c4eb",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f729a221_63dfb3bc",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 29
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243992ba_7b0407e1",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 7
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "3015dae6_b1cdc5f2",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243992ba_7b0407e1",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e65844_2c5eae9d",
         "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
         "patchSetId": 7
@@ -154,6 +292,30 @@
       "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63991578_765b6ea7",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-09T07:40:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e65844_2c5eae9d",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
