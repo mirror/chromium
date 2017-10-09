@@ -339,6 +339,7 @@ config("link_shared_library") {
 
 config("cfi_flags") {
   cflags = []
+  defines = []
   if (is_cfi && !is_nacl) {
     if (!defined(cfi_blacklist_path)) {
       cfi_blacklist_path =
@@ -357,6 +358,7 @@ config("cfi_flags") {
     }
 
     if (use_cfi_icall) {
+      defines += [ "CFI_ICALL_ENABLED" ]
       cflags += [ "-fsanitize=cfi-icall" ]
     }
 
@@ -379,7 +381,7 @@ config("cfi_flags") {
         cflags += [ "-fsanitize-recover=cfi" ]
       }
     } else {
-      defines = [ "CFI_ENFORCEMENT_TRAP" ]
+      defines += [ "CFI_ENFORCEMENT_TRAP" ]
     }
   }
 }
