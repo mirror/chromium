@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3787a223_af143d20",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T23:40:22Z",
+      "side": 1,
+      "message": "Same image?",
+      "revId": "a056ce298840714d8bd3d2650bc508a25a37b182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7deb6f7c_6a936b10",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-09T23:40:22Z",
+      "side": 1,
+      "message": "It\u0027s not even here yet :)",
+      "revId": "a056ce298840714d8bd3d2650bc508a25a37b182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
