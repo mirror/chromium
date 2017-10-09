@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db977d90_9318afba",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-10-09T20:42:20Z",
+      "side": 1,
+      "message": "I should be able to replace this with\n\n open_flags |\u003d O_EXCL;\n\nif we\u0027re going the route of mandating empty destination directories in the new version, since this also causes open() not to follow symlinks. That would also allow us to more naturally expose this function in non-POSIX environments.",
+      "range": {
+        "startLine": 326,
+        "startChar": 0,
+        "endLine": 330,
+        "endChar": 31
+      },
+      "revId": "97f11dca28d2ac42fa6a065df76b76fbff25af1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cb3cd3_a2484974",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-10-09T20:42:20Z",
+      "side": 1,
+      "message": "If the change above is made this is no longer necessary since we can\u0027t have TOC-TOU issues on the destination file anymore.",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 359,
+        "endChar": 5
+      },
+      "revId": "97f11dca28d2ac42fa6a065df76b76fbff25af1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
