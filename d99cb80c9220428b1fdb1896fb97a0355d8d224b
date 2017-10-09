@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "136cbedc_a342e656",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-09T13:13:31Z",
+      "side": 1,
+      "message": "Actually, I thought about the same. Wanted to keep the CL minimal but I expected some opposition ;)\n\nDone. \n\nI also pulled out the DCHECK(acticle_category_exists) out of EnterStateReady(), this is unrelated to the status change and renamed the function analogously to existing functions.\n\nI also centralized some tasks into EnterState() that were partially there and partially somewhere else.",
+      "parentUuid": "709fc0b8_b380977b",
+      "range": {
+        "startLine": 1489,
+        "startChar": 27,
+        "endLine": 1489,
+        "endChar": 0
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d99e0137_314770a4",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44f00a3_53f41ff3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-09T13:13:31Z",
+      "side": 1,
+      "message": "Ah, you are right!\n\nI\u0027ve fixed the unit-test so that it fails and then fixed the construction sequence to make it work again (there is no need to load the schedule from prefs before the provider gets initialized).\n\nAt the same time, I agree that it is not very clear from the code. I also agree that asking the provider on-demand is better then duplicating the same bit in the scheduler.\n\nDone.",
+      "parentUuid": "70838e3a_1374d596",
+      "range": {
+        "startLine": 836,
+        "startChar": 65,
+        "endLine": 837,
+        "endChar": 40
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
