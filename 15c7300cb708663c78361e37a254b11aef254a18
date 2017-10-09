@@ -22,6 +22,30 @@
       "revId": "15c7300cb708663c78361e37a254b11aef254a18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a35955c_76505171",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-09T22:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16632f79_4b25cba1",
+      "range": {
+        "startLine": 209,
+        "startChar": 50,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "15c7300cb708663c78361e37a254b11aef254a18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
