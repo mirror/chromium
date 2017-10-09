@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_mac.h"
+#include "services/service_manager/sandbox/max/sandbox_mac.h"
 
 #import <Cocoa/Cocoa.h>
 #include <stddef.h>
@@ -14,6 +14,8 @@
 
 #include <algorithm>
 #include <iterator>
+#include <map>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
@@ -45,7 +47,7 @@
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/sandbox/switches.h"
 
-namespace content {
+namespace service_manager {
 namespace {
 
 // Is the sandbox currently active.
@@ -57,7 +59,7 @@ struct SandboxTypeToResourceIDMapping {
 };
 
 // Mapping from sandbox process types to resource IDs containing the sandbox
-// profile for all process types known to content.
+// profile for all process types known to service_manager.
 // TODO(tsepez): Implement profile for SANDBOX_TYPE_NETWORK.
 SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
     {service_manager::SANDBOX_TYPE_NO_SANDBOX, nullptr},
@@ -111,19 +113,14 @@ const char* Sandbox::kSandboxMacOS1013 = "MACOS_1013";
 void Sandbox::SandboxWarmup(service_manager::SandboxType sandbox_type) {
   base::mac::ScopedNSAutoreleasePool scoped_pool;
 
-  { // CGColorSpaceCreateWithName(), CGBitmapContextCreate() - 10.5.6
+  {  // CGColorSpaceCreateWithName(), CGBitmapContextCreate() - 10.5.6
     base::ScopedCFTypeRef<CGColorSpaceRef> rgb_colorspace(
         CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB));
 
     // Allocate a 1x1 image.
     char data[4];
     base::ScopedCFTypeRef<CGContextRef> context(CGBitmapContextCreate(
-        data,
-        1,
-        1,
-        8,
-        1 * 4,
-        rgb_colorspace,
+        data, 1, 1, 8, 1 * 4, rgb_colorspace,
         kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host));
 
     // Load in the color profiles we'll need (as a side effect).
@@ -135,12 +132,12 @@ void Sandbox::SandboxWarmup(service_manager::SandboxType sandbox_type) {
         CGColorSpaceCreateWithName(kCGColorSpaceGenericCMYK));
   }
 
-  { // localtime() - 10.5.6
+  {  // localtime() - 10.5.6
     time_t tv = {0};
     localtime(&tv);
   }
 
-  { // Gestalt() tries to read /System/Library/CoreServices/SystemVersion.plist
+  {  // Gestalt() tries to read /System/Library/CoreServices/SystemVersion.plist
     // on 10.5.6
     int32_t tmp;
     base::SysInfo::OperatingSystemVersionNumbers(&tmp, &tmp, &tmp);
@@ -149,8 +146,8 @@ void Sandbox::SandboxWarmup(service_manager::SandboxType sandbox_type) {
   {  // CGImageSourceGetStatus() - 10.6
      // Create a png with just enough data to get everything warmed up...
     char png_header[] = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
-    NSData* data = [NSData dataWithBytes:png_header
-                                  length:arraysize(png_header)];
+    NSData* data =
+        [NSData dataWithBytes:png_header length:arraysize(png_header)];
     base::ScopedCFTypeRef<CGImageSourceRef> img(
         CGImageSourceCreateWithData((CFDataRef)data, NULL));
     CGImageSourceGetStatus(img);
@@ -161,7 +158,7 @@ void Sandbox::SandboxWarmup(service_manager::SandboxType sandbox_type) {
     base::GetUrandomFD();
   }
 
-  { // IOSurfaceLookup() - 10.7
+  {  // IOSurfaceLookup() - 10.7
     // Needed by zero-copy texture update framework - crbug.com/323338
     base::ScopedCFTypeRef<IOSurfaceRef> io_surface(IOSurfaceLookup(0));
   }
@@ -279,19 +276,17 @@ bool Sandbox::SandboxIsCurrentlyActive() {
 base::FilePath Sandbox::GetCanonicalSandboxPath(const base::FilePath& path) {
   base::ScopedFD fd(HANDLE_EINTR(open(path.value().c_str(), O_RDONLY)));
   if (!fd.is_valid()) {
-    DPLOG(FATAL) << "GetCanonicalSandboxPath() failed for: "
-                 << path.value();
+    DPLOG(FATAL) << "GetCanonicalSandboxPath() failed for: " << path.value();
     return path;
   }
 
   base::FilePath::CharType canonical_path[MAXPATHLEN];
   if (HANDLE_EINTR(fcntl(fd.get(), F_GETPATH, canonical_path)) != 0) {
-    DPLOG(FATAL) << "GetCanonicalSandboxPath() failed for: "
-                 << path.value();
+    DPLOG(FATAL) << "GetCanonicalSandboxPath() failed for: " << path.value();
     return path;
   }
 
   return base::FilePath(canonical_path);
 }
 
-}  // namespace content
+}  // namespace service_manager
