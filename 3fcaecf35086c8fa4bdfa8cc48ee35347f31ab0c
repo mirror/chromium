@@ -185,6 +185,30 @@
     },
     {
       "key": {
+        "uuid": "3e34c1b2_740d59f2",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-09T13:39:53Z",
+      "side": 1,
+      "message": "Well watching early is fine, you don\u0027t need to block that necessarily.  It\u0027s just calls to GetConnectionType() that are tricky, if you don\u0027t block, the API might have to be changed to an async one, like GetConnectionType(ConnectionTypeCallback).",
+      "parentUuid": "e2f0873c_474a3f1b",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0a13e37_aeeced5b",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 16
