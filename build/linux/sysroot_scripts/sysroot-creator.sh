@@ -184,7 +184,7 @@ ClearInstallDir() {
 
 CreateTarBall() {
   Banner "Creating tarball ${TARBALL}"
-  tar Jcf ${TARBALL} -C ${INSTALL_ROOT} .
+  tar --mtime='1970-01-01' -I "xz -9 -T0" -cf ${TARBALL} -C ${INSTALL_ROOT} .
 }
 
 ExtractPackageGz() {
