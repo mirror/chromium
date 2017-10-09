@@ -44,6 +44,8 @@ LaunchType GetLaunchType(const ExtensionPrefs* prefs,
                          const Extension* extension) {
   LaunchType result = LAUNCH_TYPE_DEFAULT;
 
+  if (!extension)
+    return result;
   int value = GetLaunchTypePrefValue(prefs, extension->id());
   if (value >= LAUNCH_TYPE_FIRST && value < NUM_LAUNCH_TYPES)
     result = static_cast<LaunchType>(value);
