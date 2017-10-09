@@ -88,6 +88,24 @@
       "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439c63c0_5d3066a1",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-09T23:17:20Z",
+      "side": 1,
+      "message": "Done, BLUETOOTH_LOG seems more suitable for this case.",
+      "parentUuid": "a4f274c2_bb7357ba",
+      "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
