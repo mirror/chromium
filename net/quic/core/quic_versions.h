@@ -141,6 +141,11 @@ QUIC_EXPORT_PRIVATE std::string QuicVersionToString(
 QUIC_EXPORT_PRIVATE std::string QuicTransportVersionVectorToString(
     const QuicTransportVersionVector& versions);
 
+QUIC_EXPORT_PRIVATE QuicTransportVersionVector FilterSupportedAltSvcVersions(
+    const std::string& quic_protocol_id,
+    const std::vector<uint32_t>& alt_svc_versions,
+    const QuicTransportVersionVector& supported_versions);
+
 }  // namespace net
 
 #endif  // NET_QUIC_CORE_QUIC_VERSIONS_H_

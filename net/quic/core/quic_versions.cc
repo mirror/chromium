@@ -202,4 +202,29 @@ string QuicTransportVersionVectorToString(
   return result;
 }
 
+QuicTransportVersionVector FilterSupportedAltSvcVersions(
+    const std::string& quic_protocol_id,
+    const std::vector<uint32_t>& alt_svc_versions,
+    const QuicTransportVersionVector& supported_versions) {
+  QuicTransportVersionVector supported_alt_svc_versions;
+  if (quic_protocol_id.compare("hq") == 0) {
+    // Using IETF format for advertising QUIC. In this case,
+    // |alternative_service_entry.version| will store QUIC version tags.
+    for (uint32_t quic_version_label : alt_svc_versions) {
+      for (QuicTransportVersion supported : supported_versions) {
+        if (QuicVersionToQuicVersionLabel(supported) == quic_version_label)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  } else if (quic_protocol_id.compare("quic") == 0) {
+    for (uint32_t quic_version : alt_svc_versions) {
+      for (QuicTransportVersion supported : supported_versions) {
+        if (supported == quic_version)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  }
+  return supported_alt_svc_versions;
+}
+
 }  // namespace net

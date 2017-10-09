@@ -54,17 +54,11 @@ void HttpStreamFactory::ProcessAlternativeServices(
     // Check if QUIC version is supported. Filter supported QUIC versions.
     QuicTransportVersionVector advertised_versions;
     if (protocol == kProtoQUIC && !alternative_service_entry.version.empty()) {
-      bool match_found = false;
-      for (QuicTransportVersion supported :
-           session->params().quic_supported_versions) {
-        for (uint16_t advertised : alternative_service_entry.version) {
-          if (supported == advertised) {
-            match_found = true;
-            advertised_versions.push_back(supported);
-          }
-        }
-      }
-      if (!match_found) {
+      advertised_versions = FilterSupportedAltSvcVersions(
+          alternative_service_entry.protocol_id,
+          alternative_service_entry.version,
+          session->params().quic_supported_versions);
+      if (advertised_versions.empty()) {
         continue;
       }
     }
