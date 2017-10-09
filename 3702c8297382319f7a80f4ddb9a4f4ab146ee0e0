@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3919ecf_91aa29f2",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T21:45:03Z",
+      "side": 1,
+      "message": "Could the code be simplified by just calling base::UnguessableToken::Create() directly here?\n\nOh... I guess this is because of how the create child frame IPC currently works \u003d/",
+      "revId": "3702c8297382319f7a80f4ddb9a4f4ab146ee0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9ddf13_3fa8b03a",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T21:45:03Z",
+      "side": 1,
+      "message": "Should it actually be possible to hit the no WebFrameClient case? I would expect that detached frames wouldn\u0027t be inspectable.",
+      "revId": "3702c8297382319f7a80f4ddb9a4f4ab146ee0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
