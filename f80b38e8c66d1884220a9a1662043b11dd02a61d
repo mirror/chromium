@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76e8e8aa_c7458999",
+        "filename": "extensions/renderer/bindings/api_binding_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T17:16:44Z",
+      "side": 1,
+      "message": "nit: You probably want to add \\n after this line.",
+      "revId": "f80b38e8c66d1884220a9a1662043b11dd02a61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
