@@ -87,6 +87,24 @@
       "revId": "628c66200d8ac4d59eaef453c4affcf010862122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09da66ce_f06c0e96",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-09T08:09:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee0cb80_a8bdf3e5",
+      "revId": "628c66200d8ac4d59eaef453c4affcf010862122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
