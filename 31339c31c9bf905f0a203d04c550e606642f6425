@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60a6d76_62f566b6",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-09T04:13:12Z",
+      "side": 1,
+      "message": "This is weird. The logic here is meant to be - if the OS handler has changed, clear the default for the handler (that way the new OS default will be used).\n\nThere is no reason to be trying to register again. AFAICT this was an unintentional change made some time ago in https://codereview.chromium.org/1701183002.\n\n+pmonette - do you remember this? Was this changed intentionally?",
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
