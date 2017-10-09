@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5962673e_baa23a4a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-compile-and-run.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-09T18:16:47Z",
+      "side": 1,
+      "message": "So far, I\u0027m using some basic heuristics to automatically clean up the test descriptions as much as possible in my migration script, but it doesn\u0027t work for every test.\n\nLet\u0027s do all of test description \u0026 link references cleanup later. I should be able to clean the rest of this up later automatically, and it\u0027s tedious to do this by hand for hundreds of tests.",
+      "parentUuid": "b0efbe13_fe947a40",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "898965cd_c2d4503a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-cyclic-reference.js",
         "patchSetId": 3
@@ -104,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "dd4e7d01_b7a9df6f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-scripts.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-09T18:16:47Z",
+      "side": 1,
+      "message": "Got it, I\u0027ll migrate this test later. I think I need a mechanism to navigate the inspected page to an html page, otherwise I\u0027m not getting the sourceURL correct with loadHTML.",
+      "parentUuid": "365b8ff8_ab7b46dc",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fab622c_b9eff50b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-suspend-active-dom-objects.js",
         "patchSetId": 3
@@ -166,6 +202,24 @@
       "writtenOn": "2017-10-09T17:45:29Z",
       "side": 1,
       "message": "hm? Should this one be migrated as well?",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c394ff8b_afc71c4c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/open-close-open.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-09T18:16:47Z",
+      "side": 1,
+      "message": "/startup/ (formerly, inspector-enabled) tests will need a special solution since the new test framework doesn\u0027t handle these handful of tests well (they open DevTools at start of test).",
+      "parentUuid": "0d090f48_b4507d99",
       "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
