@@ -66,6 +66,11 @@
   [self showAlert:@"showReportAnIssue"];
 }
 
+- (void)showReportAnIssueFromViewController:
+    (UIViewController*)presentingViewController {
+  [self showAlert:@"showReportAnIssueFromViewController:"];
+}
+
 - (void)openURL:(OpenUrlCommand*)command {
   [self showAlert:@"openURL"];
 }

@@ -11,6 +11,7 @@
 @class OpenUrlCommand;
 @class ShowSigninCommand;
 @class StartVoiceSearchCommand;
+@class UIViewController;
 
 // This protocol groups commands that are part of ApplicationCommands, but
 // may also be forwarded directly to a settings navigation controller.
@@ -76,6 +77,10 @@
 
 // Shows the Report an Issue UI.
 - (void)showReportAnIssue;
+
+// Shows the Report an Issue UI from a specified |presentingViewController|.
+- (void)showReportAnIssueFromViewController:
+    (UIViewController*)presentingViewController;
 
 // Opens the |command| URL.
 - (void)openURL:(OpenUrlCommand*)command;
