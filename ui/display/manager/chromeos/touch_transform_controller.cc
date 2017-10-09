@@ -210,6 +210,11 @@ gfx::Transform TouchTransformController::GetTouchTransform(
       touch_area.IsEmpty() || touchscreen.id == ui::InputDevice::kInvalidId)
     return ctm;
 
+  // If the device is currently under calibration, then do not return any
+  // transform as we want to use the raw native touch input data for calibration
+  if (is_calibrating_)
+    return ctm;
+
   // Translate the touch so that it falls within the display bounds. This
   // should not be performed if the displays are mirrored.
   if (display.id() == touch_display.id()) {
@@ -217,10 +222,6 @@ gfx::Transform TouchTransformController::GetTouchTransform(
                   display.bounds_in_native().y());
   }
 
-  // If the device is currently under calibration, then do not return any
-  // transform as we want to use the raw native touch input data for calibration
-  if (is_calibrating_)
-    return ctm;
   uint32_t touch_device_identifier =
       TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
   // If touch calibration data is unavailable, use naive approach.
@@ -302,7 +303,8 @@ void TouchTransformController::UpdateTouchTransforms() const {
 void TouchTransformController::UpdateTouchRadius(
     const ManagedDisplayInfo& display,
     UpdateData* update_data) const {
-  for (const auto& identifier : display.touch_device_identifiers()) {
+  for (const auto& it : display.touch_calibration_data_map()) {
+    uint32_t identifier = it.first;
     DCHECK_EQ(0u, update_data->device_to_scale.count(identifier));
     update_data->device_to_scale.emplace(
         identifier, GetTouchResolutionScale(
@@ -317,7 +319,8 @@ void TouchTransformController::UpdateTouchTransform(
     UpdateData* update_data) const {
   ui::TouchDeviceTransform touch_device_transform;
   touch_device_transform.display_id = target_display_id;
-  for (const auto& identifier : touch_display.touch_device_identifiers()) {
+  for (const auto& it : touch_display.touch_calibration_data_map()) {
+    uint32_t identifier = it.first;
     ui::TouchscreenDevice device = FindTouchscreenByIdentifier(identifier);
     touch_device_transform.device_id = device.id;
     touch_device_transform.transform =

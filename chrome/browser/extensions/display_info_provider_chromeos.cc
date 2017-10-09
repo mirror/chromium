@@ -412,11 +412,6 @@ bool ValidateParamsForTouchCalibration(
     return false;
   }
 
-  if (display.touch_support() != display::Display::TOUCH_SUPPORT_AVAILABLE) {
-    *error = "Display Id(" + id + ") does not support touch.";
-    return false;
-  }
-
   return true;
 }
 
