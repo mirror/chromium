@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64a35bfc_a7ee5339",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Although true, we\u0027re not actually using paint image below, we\u0027re directly getting SkImage, so the decoding mode is essentially ignored.\n\nIn general for cases that don\u0027t go to the compositor as is the case in canvas, we can\u0027t really checker image it.",
+      "parentUuid": "3189e81f_5cb84c20",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c4ce2a_32588d0a",
         "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63d798b_7f57042a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c4ce2a_32588d0a",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e546e74_ee81acb1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply.",
+      "parentUuid": "87f44d10_da5ca908",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c248fc_74e2074a",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e5f0e4_589d1ef5",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply.",
+      "parentUuid": "e0c248fc_74e2074a",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "327c772d_8c9b8fc3",
+        "filename": "third_party/WebKit/Source/core/layout/shapes/Shape.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c69cd5_bcd4aaa5",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a18fd1d_3ae61693",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb432e3e_a0ecebcd",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Yeah it should be for all images. This is the decode api function though, so it doesn\u0027t really matter what the mode is and I\u0027m undoing this change anyway.",
+      "parentUuid": "2a18fd1d_3ae61693",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a1b4b324_b7c81261",
+        "filename": "third_party/WebKit/Source/core/paint/NinePieceImagePainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a8c5fc_bc79bb06",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "591686c2_887bf625",
         "filename": "third_party/WebKit/Source/core/paint/PaintInfo.cpp",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c575d3_cf8178a6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Cool. I\u0027ve moved the actual meat of the code there but kept the function to actually distinguish whether this is svg or html and to respect the features flag.",
+      "parentUuid": "591686c2_887bf625",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "20e25948_f269dc12",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterDefault.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6390932_1dd2f9dc",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ad414f_5536da89",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 5
@@ -169,6 +331,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3c30de_46e6a9d9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1ad414f_5536da89",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "32986e1e_1c7c074a",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28affc11_d00cd396",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10dc49b7_0a1d60bd",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
         "patchSetId": 5
@@ -203,6 +401,24 @@
       "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936ca90c_e8d2d604",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T17:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10dc49b7_0a1d60bd",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
