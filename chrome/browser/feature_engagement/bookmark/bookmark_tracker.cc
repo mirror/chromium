@@ -8,6 +8,7 @@
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
+#include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -26,6 +27,7 @@ BookmarkTracker::BookmarkTracker(
     : FeatureTracker(profile,
                      session_duration_updater,
                      &kIPHBookmarkFeature,
+                     prefs::kBookmarkInProductHelpObservedSessionTime,
                      base::TimeDelta::FromHours(kDefaultPromoShowTimeInHours)) {
 }
 

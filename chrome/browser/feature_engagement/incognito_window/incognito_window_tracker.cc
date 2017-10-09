@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
+#include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -25,15 +26,18 @@ namespace feature_engagement {
 
 IncognitoWindowTracker::IncognitoWindowTracker(
     Profile* profile,
-    SessionDurationUpdater* session_duration_updater)
+    IncognitoWindowInProductHelpSessionDurationUpdater*
+        session_duration_updater)
     : FeatureTracker(profile,
                      session_duration_updater,
                      &kIPHIncognitoWindowFeature,
+                     prefs::kIncognitoWindowInProductHelpObservedSessionTime,
                      base::TimeDelta::FromHours(kDefaultPromoShowTimeInHours)),
       incognito_promo_observer_(this) {}
 
 IncognitoWindowTracker::IncognitoWindowTracker(
-    SessionDurationUpdater* session_duration_updater)
+    IncognitoWindowInProductHelpSessionDurationUpdater*
+        session_duration_updater)
     : IncognitoWindowTracker(nullptr, session_duration_updater) {}
 
 IncognitoWindowTracker::~IncognitoWindowTracker() = default;
