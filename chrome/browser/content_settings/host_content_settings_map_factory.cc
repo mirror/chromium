@@ -97,6 +97,10 @@ scoped_refptr<RefcountedKeyedService>
                    settings_map->GetWeakPtr(), true /* after_sync */));
   }
 
+  LOG(WARNING) << "XXXXX Hack to disable all JavaScript for Profile";
+  settings_map->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
+                                         CONTENT_SETTING_BLOCK);
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // These must be registered before before the HostSettings are passed over to
   // the IOThread.  Simplest to do this on construction.
