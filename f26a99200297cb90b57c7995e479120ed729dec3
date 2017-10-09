@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae451edb_b71c20e8",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-09T18:35:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11c14dd8_b27cae7f",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79184165_88e2bd2b",
         "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-06T20:27:12Z",
       "side": 1,
       "message": "nit: I kind of like \"CaptureNext\" because it more clearly conveys that the capture applies to a single future operation.",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf1c72b_92f38bc9",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-09T18:35:36Z",
+      "side": 1,
+      "message": "Shorter ideas: Run(), Get(), GetNext()?",
+      "parentUuid": "f8b30cc7_502c1299",
       "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

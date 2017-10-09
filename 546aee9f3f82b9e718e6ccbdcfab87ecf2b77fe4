@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a00f495_c5341130",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-09T18:35:36Z",
+      "side": 1,
+      "message": "Frankly, I\u0027m not too happy with this. It\u0027s 8 lines to call a method that returns a bool. The need for CaptureNext\u003c\u003e specialization really hurts the readability of the call itself. I tried a \"using\" declaration in the next file, which helps a little but is still very verbose.\n\nDo you think this is better, or do you think I should stick with the version in patchset 1 that only works for non-ref types?  Any other ideas?",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb5f3f3_1d12fe4b",
+        "filename": "mojo/public/cpp/test_support/waiter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-09T18:35:36Z",
+      "side": 1,
+      "message": "Even in a contrived example with short names, we\u0027re still at 4-5 lines to call a single method.",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
