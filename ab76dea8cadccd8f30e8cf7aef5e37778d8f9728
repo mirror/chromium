@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a31646be_c54bcd24",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-09T14:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03ee082_783ce791",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad2643e0_90072b4b",
         "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T08:44:13Z",
       "side": 1,
       "message": "Nit: We don\u0027t really need this variable, as we just use it for the `if` directly following.",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f8381a_c0605389",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-09T14:53:35Z",
+      "side": 1,
+      "message": "Done.\n\n(I sometimes do this because adding a name to a complex condition can IMHO help readability. I don\u0027t feel strongly about this, though.)",
+      "parentUuid": "ad2643e0_90072b4b",
       "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e29adc8d_a86d41da",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-09T14:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5255b333_6ae2490d",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06c5af0_92666640",
         "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b0ae0c_16cac80b",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-09T14:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06c5af0_92666640",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
