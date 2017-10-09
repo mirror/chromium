@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97b6b7c_fe82b42a",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "nit: DVLOG the result please with the same note as with the other result.",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f8fe56_2ebd6b22",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "add the following, please:\ninvalid db pointer is provided by the store (which indicates store issue).",
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34240759_584bf7f4",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "nit: add empty line after this.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd28ce31_19ae9bd8",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "let\u0027s use the name old_archives_dir_ or legacy_archives_dir_, please.\n\nThat way we explain why it is abandoned in the name, and not just the fact that it was.",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658311a5_2f168fee",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "wow, does git cl format does that in that case?",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 43
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f424263_8b0ceba2",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-09T18:38:26Z",
+      "side": 1,
+      "message": "!",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
