@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f951c03a_32220ed3",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-09T20:56:41Z",
+      "side": 1,
+      "message": "return early if already true?\nmove this to impl cpp file per comment below?",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "ac221960bfa7fd7b406566e67a1c572836974c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d8719_94060076",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-09T20:56:41Z",
+      "side": 1,
+      "message": "this could be defined in anonymous namespace in implementation in .cpp, no need to expose in header",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 8
+      },
+      "revId": "ac221960bfa7fd7b406566e67a1c572836974c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
