@@ -46,6 +46,30 @@
       "revId": "4bef4112b8662415a1924326031ee898d7b3b4ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b959d2_e011efd0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-09T13:15:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1cad5227_1e80580b",
+      "range": {
+        "startLine": 149,
+        "startChar": 9,
+        "endLine": 149,
+        "endChar": 25
+      },
+      "revId": "4bef4112b8662415a1924326031ee898d7b3b4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
