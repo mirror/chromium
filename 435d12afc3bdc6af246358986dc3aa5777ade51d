@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b1bc528d_9278e062",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-09T21:06:48Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "9ff9b73b_af8a7e4b",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c0bda1_6a681dbf",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 13
@@ -273,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "aee1efb3_bbffefa8",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-09T21:06:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e44c94d_95903e82",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f76cf860_879cec7b",
         "filename": "extensions/browser/extension_prefs.cc",
         "patchSetId": 13
@@ -341,6 +389,30 @@
       "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1597659_41656138",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-09T21:06:48Z",
+      "side": 1,
+      "message": "Done, why do we have this alias though?",
+      "parentUuid": "d006fbba_508e3388",
+      "range": {
+        "startLine": 1712,
+        "startChar": 49,
+        "endLine": 1712,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
