@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d65c829a_9c71a5a3",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-09T18:04:37Z",
+      "side": 1,
+      "message": "well, no. We start to capture tasks when DOMContentLoaded is fired.",
+      "parentUuid": "2a7c4f5f_a4215db0",
+      "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7527cc5_ae610ec0",
         "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
         "patchSetId": 21
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "68ec1f36_e4c66c17",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-09T18:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7527cc5_ae610ec0",
+      "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b98db4_a3e83c48",
         "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
         "patchSetId": 21
@@ -85,6 +121,24 @@
       "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211ed10f_1f47c1d6",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-09T18:04:37Z",
+      "side": 1,
+      "message": "Emit it for all frames that run tasks in the process.",
+      "parentUuid": "89b98db4_a3e83c48",
+      "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
