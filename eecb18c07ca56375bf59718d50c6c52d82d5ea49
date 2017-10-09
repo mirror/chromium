@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcc8cca7_6540df5c",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Noted; will write some.",
+      "parentUuid": "f0b2b930_b1123b7b",
+      "range": {
+        "startLine": 1370,
+        "startChar": 21,
+        "endLine": 1370,
+        "endChar": 22
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "424e6de4_4c2a64d7",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-09T18:36:58Z",
       "side": 1,
       "message": "I don\u0027t think these belong in the profile - it really shouldn\u0027t know about this logic.  Can we just pass the permissions manager to the service, and make these methods on the service (having it use a weak pointer to itself)?\n\n(Also note that if we keep these here, they should be in an anonymous namespace)",
+      "range": {
+        "startLine": 1371,
+        "startChar": 5,
+        "endLine": 1371,
+        "endChar": 50
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec7a65d_e7d7dbe0",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "We can\u0027t pass the PermissionManager to the Service; the PermissionManager is in //chrome/browser/profiles and the Service is in //components/domain_reliability, and components can\u0027t depend on chrome.\n\nI can move them to something like //chrome/browser/net or //chrome/browser/domain_reliability if that\u0027s preferable?",
+      "parentUuid": "424e6de4_4c2a64d7",
       "range": {
         "startLine": 1371,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "99ffea67_a558c514",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5dd7d76_64f09a9b",
+      "range": {
+        "startLine": 1377,
+        "startChar": 7,
+        "endLine": 1377,
+        "endChar": 25
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbb7c05_a5c6d374",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "83cc5cc4_ea5a09a2",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfbb7c05_a5c6d374",
+      "range": {
+        "startLine": 1380,
+        "startChar": 33,
+        "endLine": 1380,
+        "endChar": 34
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c046ec_d087115c",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-09T18:36:58Z",
       "side": 1,
       "message": "We need a permissions owner to review this call.  Neither GetPermissionStatus nor BACKGROUND_SYNC are documented.",
+      "range": {
+        "startLine": 1388,
+        "startChar": 32,
+        "endLine": 1388,
+        "endChar": 33
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78e1e72a_1165e8c2",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Okay, looking for one.",
+      "parentUuid": "13c046ec_d087115c",
       "range": {
         "startLine": 1388,
         "startChar": 32,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6c0b93f1_0b936557",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c78f2aeb_9af2e276",
+      "range": {
+        "startLine": 1393,
+        "startChar": 29,
+        "endLine": 1393,
+        "endChar": 33
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98a26115_02b70483",
         "filename": "components/domain_reliability/context_unittest.cc",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-09T18:36:58Z",
       "side": 1,
       "message": "In production, this is running asynchronously.",
+      "range": {
+        "startLine": 187,
+        "startChar": 17,
+        "endLine": 187,
+        "endChar": 39
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcafd2ce_94dc32c7",
+        "filename": "components/domain_reliability/context_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-09T19:50:07Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll test it that way.",
+      "parentUuid": "98a26115_02b70483",
       "range": {
         "startLine": 187,
         "startChar": 17,
