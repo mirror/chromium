@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "2209e5b7_1976373b",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:16:32Z",
+      "side": 1,
+      "message": "I\u0027d rather just get rid of this method.",
+      "parentUuid": "8a397e01_8c4beabe",
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702acf3b_bc8dfffa",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:16:32Z",
+      "side": 1,
+      "message": "As discussed, use an explicit delegate for this.",
+      "range": {
+        "startLine": 1347,
+        "startChar": 5,
+        "endLine": 1347,
+        "endChar": 13
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d540ddc7_c3148e71",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
         "patchSetId": 9
@@ -35,6 +76,53 @@
         "startChar": 42,
         "endLine": 394,
         "endChar": 67
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fcb0da_8127e7fb",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:16:32Z",
+      "side": 1,
+      "message": "Sync with gchatz on https://chromium-review.googlesource.com/c/chromium/src/+/702054 to make sure changes in that CL don\u0027t break this one.",
+      "parentUuid": "d540ddc7_c3148e71",
+      "range": {
+        "startLine": 394,
+        "startChar": 42,
+        "endLine": 394,
+        "endChar": 67
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d3e707_3b9a8536",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:16:32Z",
+      "side": 1,
+      "message": "FromViewController:",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 28
       },
       "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -77,6 +165,30 @@
       "side": 1,
       "message": "Why do we have two implementations of these methods?  In what scenarios does this object act as the dispatch target?",
       "parentUuid": "2653732a_6b3a45f6",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 74
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12db4b1_d3b33088",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-09T17:16:32Z",
+      "side": 1,
+      "message": "Don\u0027t make command methods optional; just get rid of showAccountSettings and always pass the presenting view controller. The implementation below will just ignore it.",
+      "parentUuid": "902bbb95_8fee9647",
       "range": {
         "startLine": 505,
         "startChar": 0,
