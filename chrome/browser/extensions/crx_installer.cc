@@ -178,6 +178,7 @@ void CrxInstaller::InstallCrxFile(const CRXFileInfo& source_file) {
   ExtensionService* service = service_weak_.get();
   if (!service || service->browser_terminating())
     return;
+  CHECK(0);
 
   NotifyCrxInstallBegin();
 
