@@ -22,6 +22,30 @@
       "revId": "ed1ac94aa7dba6758a2877777234f5a476f78f60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8bca49_be075281",
+        "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-09T17:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7229f728_30f876e5",
+      "range": {
+        "startLine": 543,
+        "startChar": 19,
+        "endLine": 543,
+        "endChar": 50
+      },
+      "revId": "ed1ac94aa7dba6758a2877777234f5a476f78f60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
