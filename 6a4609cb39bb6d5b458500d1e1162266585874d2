@@ -267,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "aafe5316_3495ec02",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-09T23:51:53Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "90ca6849_93cbf985",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a47558_6a5b1bb5",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 7
