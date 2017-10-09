@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_SANDBOX_MAC_UNITTEST_HELPER_H_
-#define CONTENT_COMMON_SANDBOX_MAC_UNITTEST_HELPER_H_
+#ifndef SERVICES_SERVICE_MANAGER_TESTS_SANDBOX_MAC_SANDBOX_MAC_UNITTEST_HELPER_H_
+#define SERVICES_SERVICE_MANAGER_TESTS_SANDBOX_MAC_SANDBOX_MAC_UNITTEST_HELPER_H_
 
 #include "base/test/multiprocess_test.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
-namespace content {
+namespace service_manager {
 
 // Helpers for writing unit tests that runs in the context of the Mac sandbox.
 //
@@ -55,7 +55,7 @@ class MacSandboxTest : public base::MultiProcessTest {
                         const char* test_data);
 
   // Runs the test specified by |test_name| in all the different sandbox types
-  // known to content, one by one.
+  // known to service_manager, one by one.
   // Returns true if the test passes, false if either of the functions in
   // the corresponding MacSandboxTestCase return false in any of the spawned
   // processes.
@@ -63,8 +63,7 @@ class MacSandboxTest : public base::MultiProcessTest {
   // DANGER DANGER DANGER:
   // Additional sandbox types defined by the embedder (e.g. the NaCl sandbox)
   // won't be covered by these tests.
-  bool RunTestInAllSandboxTypes(const char* test_name,
-                                const char* test_data);
+  bool RunTestInAllSandboxTypes(const char* test_name, const char* test_data);
 };
 
 // Class to ease writing test cases that run inside the OS X sandbox.
@@ -102,20 +101,21 @@ void AddSandboxTestCase(const char* test_name, MacSandboxTestCase* test_class);
 
 // Construction of this class causes a new entry to be placed in a global
 // map.
-template <class T> struct RegisterSandboxTest {
+template <class T>
+struct RegisterSandboxTest {
   RegisterSandboxTest(const char* test_name) {
     AddSandboxTestCase(test_name, new T);
   }
 };
 
-#define REGISTER_SANDBOX_TEST_CASE(class_name) \
-  namespace { \
-    content::internal::RegisterSandboxTest<class_name> \
-      register_test##class_name(#class_name); \
+#define REGISTER_SANDBOX_TEST_CASE(class_name)               \
+  namespace {                                                \
+  service_manager::internal::RegisterSandboxTest<class_name> \
+      register_test##class_name(#class_name);                \
   }  // namespace
 
 }  // namespace internal
 
-}  // namespace content
+}  // namespace service_manager
 
-#endif  // CONTENT_COMMON_SANDBOX_MAC_UNITTEST_HELPER_H_
+#endif  // SERVICES_SERVICE_MANAGER_TESTS_SANDBOX_MAC_SANDBOX_MAC_UNITTEST_HELPER_H_
