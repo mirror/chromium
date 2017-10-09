@@ -361,6 +361,24 @@
     },
     {
       "key": {
+        "uuid": "663e5d68_b47c72ff",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-09T23:18:13Z",
+      "side": 1,
+      "message": "Yeah I think it\u0027s Ok for the reasons you mentioned. I left a comment on the function explaining that it\u0027s a common base.",
+      "parentUuid": "364e8060_99c0c3aa",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160edbfe_90b33d1a",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
         "patchSetId": 9
