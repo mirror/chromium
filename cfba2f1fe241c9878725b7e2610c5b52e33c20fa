@@ -22,6 +22,30 @@
       "revId": "cfba2f1fe241c9878725b7e2610c5b52e33c20fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e9828d_7c868c38",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-09T19:00:43Z",
+      "side": 1,
+      "message": "That\u0027s the error code Socket::Write(...) returns, and yeah, I think it\u0027s a net error code. \n\nhttps://cs.chromium.org/chromium/src/net/socket/socket.h?sq\u003dpackage:chromium\u0026l\u003d65",
+      "parentUuid": "cc0a2118_594fc19c",
+      "range": {
+        "startLine": 423,
+        "startChar": 38,
+        "endLine": 423,
+        "endChar": 48
+      },
+      "revId": "cfba2f1fe241c9878725b7e2610c5b52e33c20fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
