@@ -339,8 +339,23 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     _webControllerSnapshotHelper = [[WebControllerSnapshotHelper alloc]
         initWithSnapshotManager:_snapshotManager
                             tab:self];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(orientationDidChangeNotification:)
+               name:UIDeviceOrientationDidChangeNotification
+             object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(orientationDidChangeNotification:)
+               name:UIApplicationDidChangeStatusBarOrientationNotification
+             object:nil];
   }
   return self;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)attachTabHelpers {
@@ -1437,6 +1452,17 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       completion:^(BOOL finished) {
         [weakPagePlaceholder removeFromSuperview];
       }];
+}
+
+#pragma mark - Notifications
+
+- (void)orientationDidChangeNotification:(NSNotification*)notification {
+  // On iOS11 WKWebView does not repaint the page after resizing if page content
+  // size is the same as web view size. Orientation change causes web view to
+  // change the size, so prerendered tabs must be discarded.
+  if (_isPrerenderTab) {
+    [delegate_ discardPrerender];
+  }
 }
 
 @end
