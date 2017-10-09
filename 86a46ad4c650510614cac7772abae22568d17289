@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c91436a_e9166ea8",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3500,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "When we\u0027re ready to actually get this in, let\u0027s make sure this happens in //content, not //chrome. For example, I could imagine line 3492 above being something like:\n\n```\nstd::vector\u003cstd::unique_ptr\u003ccontent::URLLoaderThrottle\u003e\u003e result \u003d super::CreateURLLoaderThrottles(wc_getter);\n```\n\nAnd moving this bit into the ContentBrowserClient implementation in //content.",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b791abf_57c3cde2",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "It looks like you\u0027re only using this to get a URLRequestContext in order to kick off the request for the manifest. It seems like you should be able to get everything you need from the WebContents instead by working your way over through StoragePartition. That is, something like:\n\n```\nWebContents* wc \u003d wc_getter.Run()\nStoragePartition* storage_partition \u003d BrowserContext::GetStoragePartition(\n      wc-\u003eGetBrowserContext(), wc-\u003eGetMainFrame()-\u003eGetSiteInstance());\n\nURLRequestContextGetter* context \u003d storage_partition-\u003eGetURLRequestContext();\n```\n\nThat\u0027s a bit complex, I know, but I\u0027m pretty sure we\u0027re trying to get rid of `ResourceContext`, so it would be best to avoid new usage.",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93c4093_d5691910",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "As noted above, it would be ideal if we could omit these two implementations by handing you a URL in `WillProcessResponse`.",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f190deb1_d49c1db4",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "How are you planning on deciding whether or not to issue a request? Just issue the request and wait for a cache hit? Or ask the store whether the version matches?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbdb292_3c6d0309",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "More sanity checking for `version` when we actually land this, plz (length, character set, etc).",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac1e426_ee931553",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "If you use the `StoragePartition` path discussed above, you can avoid the `TrivialURLRequestContextGetter` shim.",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a20541_7007331c",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "Assuming you get the request URL in `response_head.url`, I\u0027d suggest changing this to something like:\n\n```\nGURL::Replacements replace_path;\nstd::string new_path \u003d \"/.well-known/origin-manifest/\";\nnew_path.append(version);\nreplace_path.SetPathStr(new_path);\n// And probably clear out username, password, query, and ref as well?\nGURL manifest_url \u003d response_head.url.ReplaceComponents(replace_path);\n```",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec820bcd_43e85d3c",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "Normally, I\u0027d say we need to be pretty careful about which request context we use, as they could be configured differently, have impact on third-party cookie blocking, etc.\n\nIn this case, though, we explicitly want a cookieless request. So if you tack on something like:\n\n```\nurl_fetcher_-\u003eSetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES | net::LOAD_DO_NOT_SAVE_COOKIES);\n```\n\nWe might be ok. But I\u0027m not entirely familiar with all the configuration on the fetcher/context, so we\u0027ll need some feedback from net/loader folks.",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bad85bc_e15ac671",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "It looks like you\u0027re storing the origin of the original request, and updating it as you see redirect responses come in. That seems like something the ThrottlingURLLoader should be handing you: you shouldn\u0027t have to work your way backwards to the URL of the response you\u0027re processing.\n\nkinuko@: WDYT about tacking that information onto `ResourceResponseInfo`?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6124ccc_031c6b03",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-09T09:11:06Z",
+      "side": 1,
+      "message": "I\u0027ll defer to kinuko@, et al on this, but passing in the ResourceResponseHead here seems pretty reasonable to me. Any reason you chose to pass a const pointer rather than a reference?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
