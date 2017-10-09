@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f1c91e_576a3704",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-09T13:07:27Z",
+      "side": 1,
+      "message": "Could we do this with constraints instead of overriding layoutSubviews?",
+      "revId": "ca163b939a95d8b4be6828210bcc4840124d4a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
