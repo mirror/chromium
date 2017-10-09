@@ -66,7 +66,7 @@ bool PopDictionaryEntries(MessageReader* reader,
 
 // Gets the D-Bus type signature for the value.
 std::string GetTypeSignature(const base::Value& value) {
-  switch (value.type()) {
+  switch (value.GetType()) {
     case base::Value::Type::BOOLEAN:
       return "b";
     case base::Value::Type::INTEGER:
@@ -82,7 +82,7 @@ std::string GetTypeSignature(const base::Value& value) {
     case base::Value::Type::LIST:
       return "av";
     default:
-      DLOG(ERROR) << "Unexpected type " << value.type();
+      DLOG(ERROR) << "Unexpected type " << value.GetType();
       return std::string();
   }
 }
@@ -215,7 +215,7 @@ std::unique_ptr<base::Value> PopDataAsValue(MessageReader* reader) {
 }
 
 void AppendBasicTypeValueData(MessageWriter* writer, const base::Value& value) {
-  switch (value.type()) {
+  switch (value.GetType()) {
     case base::Value::Type::BOOLEAN: {
       bool bool_value = false;
       bool success = value.GetAsBoolean(&bool_value);
@@ -245,7 +245,7 @@ void AppendBasicTypeValueData(MessageWriter* writer, const base::Value& value) {
       break;
     }
     default:
-      DLOG(ERROR) << "Unexpected type " << value.type();
+      DLOG(ERROR) << "Unexpected type " << value.GetType();
       break;
   }
 }
@@ -259,7 +259,7 @@ void AppendBasicTypeValueDataAsVariant(MessageWriter* writer,
 }
 
 void AppendValueData(MessageWriter* writer, const base::Value& value) {
-  switch (value.type()) {
+  switch (value.GetType()) {
     case base::Value::Type::DICTIONARY: {
       const base::DictionaryValue* dictionary = NULL;
       value.GetAsDictionary(&dictionary);
@@ -294,7 +294,7 @@ void AppendValueData(MessageWriter* writer, const base::Value& value) {
       AppendBasicTypeValueData(writer, value);
       break;
     default:
-      DLOG(ERROR) << "Unexpected type: " << value.type();
+      DLOG(ERROR) << "Unexpected type: " << value.GetType();
   }
 }
 

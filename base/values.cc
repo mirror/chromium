@@ -58,7 +58,7 @@ std::unique_ptr<DictionaryValue> CopyDictionaryWithoutEmptyChildren(
 }
 
 std::unique_ptr<Value> CopyWithoutEmptyChildren(const Value& node) {
-  switch (node.type()) {
+  switch (node.GetType()) {
     case Value::Type::LIST:
       return CopyListWithoutEmptyChildren(static_cast<const ListValue&>(node));
 

@@ -24,7 +24,7 @@ bool AppendArgumentFromJSONValue(const std::string& key,
                                  const base::Value& value_node,
                                  base::CommandLine* command_line) {
   std::string argument_name = "--" + key;
-  switch (value_node.type()) {
+  switch (value_node.GetType()) {
     case base::Value::Type::NONE:
       command_line->AppendArg(argument_name);
       break;

@@ -667,7 +667,7 @@ bool ArgumentSpec::ParseArgumentToAny(v8::Local<v8::Context> context,
       return false;
     }
     if (type_ == ArgumentType::BINARY)
-      DCHECK_EQ(base::Value::Type::BINARY, converted->type());
+      DCHECK_EQ(base::Value::Type::BINARY, converted->GetType());
     *out_value = std::move(converted);
   }
   return true;

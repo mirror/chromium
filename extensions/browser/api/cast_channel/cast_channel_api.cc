@@ -357,7 +357,7 @@ bool CastChannelSendFunction::Prepare() {
     SetError("message_info.destination_id is required");
     return false;
   }
-  switch (params_->message.data->type()) {
+  switch (params_->message.data->GetType()) {
     case base::Value::Type::STRING:
     case base::Value::Type::BINARY:
       break;

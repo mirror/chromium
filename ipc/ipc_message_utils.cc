@@ -84,9 +84,9 @@ void WriteValue(base::Pickle* m, const base::Value* value, int recursion) {
     return;
   }
 
-  m->WriteInt(static_cast<int>(value->type()));
+  m->WriteInt(static_cast<int>(value->GetType()));
 
-  switch (value->type()) {
+  switch (value->GetType()) {
     case base::Value::Type::NONE:
     break;
     case base::Value::Type::BOOLEAN: {
