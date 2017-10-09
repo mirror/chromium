@@ -22,6 +22,30 @@
       "revId": "f99ce5aa60348c3912608a1dbe1dc83dbc6cd0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e369d3_8920dc1b",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-09T17:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c763324e_83b26908",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 15
+      },
+      "revId": "f99ce5aa60348c3912608a1dbe1dc83dbc6cd0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
