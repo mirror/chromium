@@ -52,6 +52,24 @@
       "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea8d601_e1e46cb8",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T19:41:20Z",
+      "side": 1,
+      "message": "+1. If these show up in a test, especially an autotest, it could lead to some tail chasing at worst, or make it more difficult to spot a real warning/error at best.",
+      "parentUuid": "6d7a75a8_f1548cb4",
+      "revId": "8a91252d42a711e13bc19e6e3dd0f66e95e8c982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
