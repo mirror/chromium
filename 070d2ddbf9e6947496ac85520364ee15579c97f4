@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef41a9d_f17ed69a",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-09T22:26:55Z",
+      "side": 1,
+      "message": "Presumably this should use return code from ValidateAndParseReverseIndexJSON instead of hard-coding INTERNAL_ERROR (otherwise returning a PpdProvider::CallbackResultCode from that function is overkill; a bool would work.)",
+      "revId": "070d2ddbf9e6947496ac85520364ee15579c97f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
