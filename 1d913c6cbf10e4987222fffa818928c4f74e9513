@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "5ae81982_aea70316",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T18:38:52Z",
+      "side": 1,
+      "message": "What are instances where the struct traits .cc *must* be specified in the typemap file?",
+      "parentUuid": "d593d586_05b13c21",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
