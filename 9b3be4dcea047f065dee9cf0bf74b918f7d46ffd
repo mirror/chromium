@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81564639_195f9217",
+        "filename": "services/identity/identity_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-09T09:33:29Z",
+      "side": 1,
+      "message": "Mihai: Note that I can\u0027t safely make this a wrapper method on FakeProfileOAuth2TokenService because FakeProfileOAuth2TokenService has an alternate constructor that takes in an OAuth2TokenServiceDelegate*; thus it\u0027s not guaranteed in all use cases that FakePO2TS will actually be using a FakeO2TSDelegate (it is in *this* use case though since we explicitly constructed it to do so).",
+      "revId": "9b3be4dcea047f065dee9cf0bf74b918f7d46ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
