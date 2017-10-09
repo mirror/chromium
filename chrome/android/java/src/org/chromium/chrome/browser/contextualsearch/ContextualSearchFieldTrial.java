@@ -34,6 +34,8 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_SEARCH_TERM_RESOLUTION = "disable_search_term_resolution";
     private static final String WAIT_AFTER_TAP_DELAY_MS = "wait_after_tap_delay_ms";
 
+    private static final String ENABLE_SMART_SELECTION = "enable_smart_selection";
+
     // ------------
     // Translation.
     // ------------
@@ -77,7 +79,6 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_AMP_AS_SEPARATE_TAB = "disable_amp_as_separate_tab";
     // Disable logging for Machine Learning
     private static final String DISABLE_RANKER_LOGGING = "disable_ranker_logging";
-    private static final String DISABLE_SMART_SELECTION = "disable_smart_selection";
     private static final String DISABLE_SUPPRESS_FOR_SMART_SELECTION =
             "disable_suppress_for_smart_selection";
 
@@ -113,7 +114,7 @@ public class ContextualSearchFieldTrial {
     private static Boolean sIsPageContentNotificationDisabled;
     private static Boolean sContextualSearchUrlActionsEnabled;
     private static Boolean sIsRankerLoggingDisabled;
-    private static Boolean sIsSmartSelectionDisabled;
+    private static Boolean sIsSmartSelectionEnabled;
     private static Boolean sIsSuppressForSmartSelectionDisabled;
     private static Integer sWaitAfterTapDelayMs;
     private static Integer sTapDurationThresholdMs;
@@ -381,16 +382,14 @@ public class ContextualSearchFieldTrial {
     }
 
     /**
-     * Determines whether Smart Selection is disabled for Chrome.
-     * This is a safety disable-switch to allow shutoff if some future version of Android has a
-     * behavior change that existing versions of Chrome cannot tolerate.
-     * @return Whether Chrome should not allow the Android O Smart Selection feature.
+     * Determines whether Smart Selection is enabled for Chrome.
+     * @return Whether Chrome should support the Android O Smart Selection feature.
      */
-    static boolean isSmartSelectionDisabled() {
-        if (sIsSmartSelectionDisabled == null) {
-            sIsSmartSelectionDisabled = getBooleanParam(DISABLE_SMART_SELECTION);
+    static boolean isSmartSelectionEnabled() {
+        if (sIsSmartSelectionEnabled == null) {
+            sIsSmartSelectionEnabled = getBooleanParam(ENABLE_SMART_SELECTION);
         }
-        return sIsSmartSelectionDisabled;
+        return sIsSmartSelectionEnabled;
     }
 
     /**

@@ -39,7 +39,7 @@ public class SelectionClientManager {
      * @param contentViewCore The {@link ContentViewCore} that will show pupups for this client.
      */
     SelectionClientManager(ContentViewCore contentViewCore) {
-        if (!ContextualSearchFieldTrial.isSmartSelectionDisabled()) {
+        if (ContextualSearchFieldTrial.isSmartSelectionEnabled()) {
             assert contentViewCore != null;
             WebContents webContents = contentViewCore.getWebContents();
             assert webContents != null;
