@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "c1697c8c_e3fec6ac",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:48:20Z",
+      "side": 1,
+      "message": "Yeah we had talked about this a lot and eventually decided that we were ok with putting some onus on the caller to do the right thing (although we should definitely add more documentation here).\n\nI view this a lot like an std::unique_ptr\u003c\u003e where dropping a reference to the owning class will inherently free up all members, including the NativeRefHolder.  If you\u0027re accessing the NativeRefHolder\u0027s data at the time, that\u0027s a design flaw.\n\nI\u0027m happy to add safety checks to make this harder to break though.  We had some ideas about that:\n\n1. (We do this already) Post all automated deletes onto the UI thread, so any UI thread access is guaranteed not to have a delete come from the GC.\n2. Add a semaphore and bump it on each call to getNativePtr(), release it in a task posted to all handlers of the threads calling getNativePtr().  This would guarantee the object wouldn\u0027t be destroyed during all stack frames where getNativePtr() was called.  This was a bit scary because not all threads have a Looper (IIRC) and some background threads might block for a long time :(.\n3. Allow the creator to specify which thread should do destruction when building the ref.  I don\u0027t know if we have any use cases for this in Java currently though.\n\nI also see an interesting issue around manually calling destroy(). maybe we should be posting that to a destruction handler as well (...although I still view that a lot like std::unique_ptr\u003c\u003e::reset())?",
+      "parentUuid": "282831ed_109d64a4",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96a62fd_e1ba68be",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
