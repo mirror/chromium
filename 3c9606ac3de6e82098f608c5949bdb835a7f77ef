@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67e664a0_3bc3ad7d",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-09T23:20:22Z",
+      "side": 1,
+      "message": "nit: format looks different from rest of the code around.",
+      "revId": "3c9606ac3de6e82098f608c5949bdb835a7f77ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
