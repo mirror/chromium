@@ -42,6 +42,9 @@ class CORE_EXPORT ObjectPaintInvalidator {
   void InvalidateDisplayItemClientsIncludingNonCompositingDescendants(
       PaintInvalidationReason);
 
+  // For SlimmingPaintV175.
+  void SetPaintingLayersNeedRepaintIncludingNonCompositingDescendants();
+
   void InvalidatePaintOfPreviousVisualRect(
       const LayoutBoxModelObject& paint_invalidation_container,
       PaintInvalidationReason);

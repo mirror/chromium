@@ -1047,7 +1047,8 @@ void CompositedLayerMapping::UpdateSquashingLayerGeometry(
     LayoutSize subpixel_accumulation =
         offset_from_squash_layer_origin + new_offset_from_layout_object;
     if (layers[i].offset_from_layout_object_set &&
-        layers[i].offset_from_layout_object != new_offset_from_layout_object) {
+        layers[i].offset_from_layout_object != new_offset_from_layout_object &&
+        !RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
       // It is ok to issue paint invalidation here, because all of the geometry
       // needed to correctly invalidate paint is computed by this point.
       DisablePaintInvalidationStateAsserts disabler;
