@@ -156,7 +156,6 @@ class CC_PAINT_EXPORT DisplayItemList
   }
 
   void EmitTraceSnapshot() const;
-  void GenerateDiscardableImagesMetadata();
 
   gfx::Rect VisualRectForTesting(int index) { return visual_rects_[index]; }
 
@@ -177,6 +176,8 @@ class CC_PAINT_EXPORT DisplayItemList
   friend gpu::gles2::GLES2Implementation;
 
   ~DisplayItemList();
+
+  void GenerateDiscardableImagesMetadata();
 
   void Reset();
 

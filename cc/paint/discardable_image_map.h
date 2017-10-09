@@ -60,7 +60,9 @@ class CC_PAINT_EXPORT DiscardableImageMap {
   }
 
   void Reset();
-  void Generate(const PaintOpBuffer* paint_op_buffer, const gfx::Rect& bounds);
+  void Generate(const PaintOpBuffer* paint_op_buffer,
+                const gfx::Rect& bounds,
+                const std::vector<gfx::Rect>& visual_rects);
 
  private:
   friend class ScopedMetadataGenerator;

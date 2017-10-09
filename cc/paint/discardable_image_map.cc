@@ -21,67 +21,14 @@
 namespace cc {
 namespace {
 
-SkRect MapRect(const SkMatrix& matrix, const SkRect& src) {
-  SkRect dst;
-  matrix.mapRect(&dst, src);
-  return dst;
-}
-
-// This canvas is used only for tracking transform/clip/filter state from the
-// non-drawing ops.
-class PaintTrackingCanvas final : public SkNoDrawCanvas {
- public:
-  PaintTrackingCanvas(int width, int height) : SkNoDrawCanvas(width, height) {}
-  ~PaintTrackingCanvas() override = default;
-
-  bool ComputePaintBounds(const SkRect& rect,
-                          const SkPaint* current_paint,
-                          SkRect* paint_bounds) {
-    *paint_bounds = rect;
-    if (current_paint) {
-      if (!current_paint->canComputeFastBounds())
-        return false;
-      *paint_bounds =
-          current_paint->computeFastBounds(*paint_bounds, paint_bounds);
-    }
-
-    for (const auto& paint : base::Reversed(saved_paints_)) {
-      if (!paint.canComputeFastBounds())
-        return false;
-      *paint_bounds = paint.computeFastBounds(*paint_bounds, paint_bounds);
-    }
-
-    return true;
-  }
-
- private:
-  // SkNoDrawCanvas overrides.
-  SaveLayerStrategy getSaveLayerStrategy(const SaveLayerRec& rec) override {
-    saved_paints_.push_back(rec.fPaint ? *rec.fPaint : SkPaint());
-    return SkNoDrawCanvas::getSaveLayerStrategy(rec);
-  }
-
-  void willSave() override {
-    saved_paints_.push_back(SkPaint());
-    return SkNoDrawCanvas::willSave();
-  }
-
-  void willRestore() override {
-    DCHECK_GT(saved_paints_.size(), 0u);
-    saved_paints_.pop_back();
-    SkNoDrawCanvas::willRestore();
-  }
-
-  std::vector<SkPaint> saved_paints_;
-};
-
 class DiscardableImageGenerator {
  public:
   DiscardableImageGenerator(int width,
                             int height,
-                            const PaintOpBuffer* buffer) {
-    PaintTrackingCanvas canvas(width, height);
-    GatherDiscardableImages(buffer, nullptr, &canvas);
+                            const PaintOpBuffer* buffer,
+                            const std::vector<gfx::Rect>& visual_rects) {
+    SkNoDrawCanvas canvas(width, height);
+    GatherDiscardableImages(buffer, &visual_rects, nullptr, &canvas);
   }
   ~DiscardableImageGenerator() = default;
 
@@ -125,36 +72,38 @@ class DiscardableImageGenerator {
   // |top_level_op_rect| will be used as the rect for tracking the position of
   // this image in the top-level buffer.
   void GatherDiscardableImages(const PaintOpBuffer* buffer,
+                               const std::vector<gfx::Rect>* visual_rects,
                                const gfx::Rect* top_level_op_rect,
-                               PaintTrackingCanvas* canvas) {
+                               SkNoDrawCanvas* canvas) {
+    DCHECK_NE(!visual_rects, !top_level_op_rect);
     if (!buffer->HasDiscardableImages())
       return;
+
+    std::vector<gfx::Rect>::const_iterator rect_iter;
+    if (visual_rects) {
+      rect_iter = visual_rects->begin();
+      DCHECK_EQ(visual_rects->size(), buffer->size());
+    }
 
     // Prevent PaintOpBuffers from having side effects back into the canvas.
     SkAutoCanvasRestore save_restore(canvas, true);
 
+    gfx::Rect op_rect;
+    if (top_level_op_rect)
+      op_rect = *top_level_op_rect;
     PlaybackParams params(nullptr, canvas->getTotalMatrix());
     // TODO(khushalsagar): Optimize out save/restore blocks if there are no
     // images in the draw ops between them.
     for (auto* op : PaintOpBuffer::Iterator(buffer)) {
+      if (visual_rects) {
+        op_rect = *rect_iter;
+        ++rect_iter;
+      }
       if (!op->IsDrawOp()) {
         op->Raster(canvas, params);
         continue;
       } else if (!PaintOp::OpHasDiscardableImages(op)) {
         continue;
-      }
-
-      gfx::Rect op_rect;
-      base::Optional<gfx::Rect> local_op_rect;
-
-      if (top_level_op_rect) {
-        op_rect = *top_level_op_rect;
-      } else {
-        local_op_rect = ComputePaintRect(op, canvas);
-        if (local_op_rect.value().IsEmpty())
-          continue;
-
-        op_rect = local_op_rect.value();
       }
 
       const SkMatrix& ctm = canvas->getTotalMatrix();
@@ -180,61 +129,10 @@ class DiscardableImageGenerator {
                  image_rect_op->flags.getFilterQuality());
       } else if (op_type == PaintOpType::DrawRecord) {
         GatherDiscardableImages(
-            static_cast<const DrawRecordOp*>(op)->record.get(),
-            top_level_op_rect, canvas);
+            static_cast<const DrawRecordOp*>(op)->record.get(), nullptr,
+            &op_rect, canvas);
       }
     }
-  }
-
-  // Given the |op_rect|, which is the rect for the draw op, returns the
-  // transformed rect accounting for the current transform, clip and paint
-  // state on |canvas_|.
-  gfx::Rect ComputePaintRect(const PaintOp* op, PaintTrackingCanvas* canvas) {
-    const SkRect& clip_rect = SkRect::Make(canvas->getDeviceClipBounds());
-    const SkMatrix& ctm = canvas->getTotalMatrix();
-
-    gfx::Rect transformed_rect;
-    SkRect op_rect;
-    if (!PaintOp::GetBounds(op, &op_rect)) {
-      // If we can't provide a conservative bounding rect for the op, assume it
-      // covers the complete current clip.
-      transformed_rect = gfx::ToEnclosingRect(gfx::SkRectToRectF(clip_rect));
-    } else {
-      const PaintFlags* flags =
-          op->IsPaintOpWithFlags()
-              ? &static_cast<const PaintOpWithFlags*>(op)->flags
-              : nullptr;
-      SkPaint paint;
-      if (flags)
-        paint = flags->ToSkPaint();
-
-      SkRect paint_rect = MapRect(ctm, op_rect);
-      bool computed_paint_bounds =
-          canvas->ComputePaintBounds(paint_rect, &paint, &paint_rect);
-      if (!computed_paint_bounds) {
-        // TODO(vmpstr): UMA this case.
-        paint_rect = clip_rect;
-      }
-
-      // Clamp the image rect by the current clip rect.
-      if (!paint_rect.intersect(clip_rect))
-        return gfx::Rect();
-
-      transformed_rect = gfx::ToEnclosingRect(gfx::SkRectToRectF(paint_rect));
-    }
-
-    // During raster, we use the device clip bounds on the canvas, which outsets
-    // the actual clip by 1 due to the possibility of antialiasing. Account for
-    // this here by outsetting the image rect by 1. Note that this only affects
-    // queries into the rtree, which will now return images that only touch the
-    // bounds of the query rect.
-    //
-    // Note that it's not sufficient for us to inset the device clip bounds at
-    // raster time, since we might be sending a larger-than-one-item display
-    // item to skia, which means that skia will internally determine whether to
-    // raster the picture (using device clip bounds that are outset).
-    transformed_rect.Inset(-1, -1);
-    return transformed_rect;
   }
 
   void AddImageFromFlags(const gfx::Rect& op_rect,
@@ -259,19 +157,19 @@ class DiscardableImageGenerator {
         return;
       }
 
-      PaintTrackingCanvas canvas(scaled_tile_rect.width(),
-                                 scaled_tile_rect.height());
+      SkNoDrawCanvas canvas(scaled_tile_rect.width(),
+                            scaled_tile_rect.height());
       canvas.setMatrix(SkMatrix::MakeRectToRect(flags.getShader()->tile(),
                                                 scaled_tile_rect,
                                                 SkMatrix::kFill_ScaleToFit));
-      GatherDiscardableImages(flags.getShader()->paint_record().get(), &op_rect,
-                              &canvas);
+      GatherDiscardableImages(flags.getShader()->paint_record().get(), nullptr,
+                              &op_rect, &canvas);
     }
   }
 
   void AddImage(PaintImage paint_image,
                 const SkRect& src_rect,
-                const gfx::Rect& image_rect,
+                const gfx::Rect& visual_rect,
                 const SkMatrix& matrix,
                 SkFilterQuality filter_quality) {
     if (!paint_image.IsLazyGenerated())
@@ -283,12 +181,25 @@ class DiscardableImageGenerator {
     // Make a note if any image was originally specified in a non-sRGB color
     // space.
     SkColorSpace* source_color_space = paint_image.color_space();
-    color_stats_total_pixel_count_ += image_rect.size().GetCheckedArea();
+    color_stats_total_pixel_count_ += visual_rect.size().GetCheckedArea();
     color_stats_total_image_count_++;
     if (!source_color_space || source_color_space->isSRGB()) {
-      color_stats_srgb_pixel_count_ += image_rect.size().GetCheckedArea();
+      color_stats_srgb_pixel_count_ += visual_rect.size().GetCheckedArea();
       color_stats_srgb_image_count_++;
     }
+
+    // During raster, we use the device clip bounds on the canvas, which outsets
+    // the actual clip by 1 due to the possibility of antialiasing. Account for
+    // this here by outsetting the image rect by 1. Note that this only affects
+    // queries into the rtree, which will now return images that only touch the
+    // bounds of the query rect.
+    //
+    // Note that it's not sufficient for us to inset the device clip bounds at
+    // raster time, since we might be sending a larger-than-one-item display
+    // item to skia, which means that skia will internally determine whether to
+    // raster the picture (using device clip bounds that are outset).
+    gfx::Rect image_rect = visual_rect;
+    image_rect.Inset(-1, -1);
 
     image_id_to_rect_[paint_image.stable_id()].Union(image_rect);
 
@@ -323,14 +234,15 @@ DiscardableImageMap::DiscardableImageMap() = default;
 DiscardableImageMap::~DiscardableImageMap() = default;
 
 void DiscardableImageMap::Generate(const PaintOpBuffer* paint_op_buffer,
-                                   const gfx::Rect& bounds) {
+                                   const gfx::Rect& bounds,
+                                   const std::vector<gfx::Rect>& visual_rects) {
   TRACE_EVENT0("cc", "DiscardableImageMap::Generate");
 
   if (!paint_op_buffer->HasDiscardableImages())
     return;
 
   DiscardableImageGenerator generator(bounds.right(), bounds.bottom(),
-                                      paint_op_buffer);
+                                      paint_op_buffer, visual_rects);
   generator.RecordColorHistograms();
   image_id_to_rect_ = generator.TakeImageIdToRectMap();
   animated_images_metadata_ = generator.TakeAnimatedImagesMetadata();

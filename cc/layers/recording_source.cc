@@ -57,13 +57,6 @@ void RecordingSource::UpdateInvalidationForNewViewport(
   invalidation->Union(no_longer_exposed_region);
 }
 
-void RecordingSource::FinishDisplayItemListUpdate() {
-  TRACE_EVENT0("cc", "RecordingSource::FinishDisplayItemListUpdate");
-  DetermineIfSolidColor();
-  display_list_->EmitTraceSnapshot();
-  display_list_->GenerateDiscardableImagesMetadata();
-}
-
 void RecordingSource::SetNeedsDisplayRect(const gfx::Rect& layer_rect) {
   if (!layer_rect.IsEmpty()) {
     // Clamp invalidation to the layer bounds.
@@ -102,10 +95,12 @@ bool RecordingSource::UpdateAndExpandInvalidation(
 void RecordingSource::UpdateDisplayItemList(
     const scoped_refptr<DisplayItemList>& display_list,
     const size_t& painter_reported_memory_usage) {
+  TRACE_EVENT0("cc", "RecordingSource::UpdateDisplayItemList");
   display_list_ = display_list;
   painter_reported_memory_usage_ = painter_reported_memory_usage;
 
-  FinishDisplayItemListUpdate();
+  DetermineIfSolidColor();
+  display_list_->EmitTraceSnapshot();
 }
 
 gfx::Size RecordingSource::GetSize() const {
