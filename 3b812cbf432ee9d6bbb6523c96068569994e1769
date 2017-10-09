@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "3c3683c4_e81cc29c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "Missing case-insensitive-ness.",
+      "range": {
+        "startLine": 283,
+        "startChar": 46,
+        "endLine": 283,
+        "endChar": 63
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae2fa4eb_7bee5a96",
         "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
         "patchSetId": 9
@@ -30,6 +53,24 @@
       "writtenOn": "2017-10-09T18:30:13Z",
       "side": 1,
       "message": "Can this ever return anything other than sync? \u003cimg\u003e and svg image\nelement\u0027s don\u0027t support this code path, do they?",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea834866_fe637345",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "\u003cimg\u003e can have a background-image (\u003csvg:image\u003e cannot.) Should the background be affected by a \"content hint\" though?",
+      "parentUuid": "ae2fa4eb_7bee5a96",
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +94,70 @@
     },
     {
       "key": {
+        "uuid": "827ef35e_bdf9ed5e",
+        "filename": "third_party/WebKit/Source/core/paint/ListMarkerPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "I believe this (a list-item marker) is always an anonymous element, so GetNode() ought to always return nullptr. (layout_list_marker_.ListItem()-\u003eGetNode() could still be an \u003cimg\u003e in theory, but that seems irrelevant.)",
+      "parentUuid": "d57c0603_aaae326c",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148800b5_8dcbf7c9",
+        "filename": "third_party/WebKit/Source/core/svg/SVGAttributeNames.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need to add this one - HTMLNames::asyncAttr should be equivalent (same local name in the default/null NS.)",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecbc75d_5c6ec652",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "This should go in an ParseAttribute override (SvgAttributeChanged is meant for SVGAnimated*-type attributes.)",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 39
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f0ee64c_c13ad149",
         "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
         "patchSetId": 9
@@ -64,6 +169,52 @@
       "writtenOn": "2017-10-09T18:30:13Z",
       "side": 1,
       "message": "Share code with HTMLImageElement? Also needs a flag check.",
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160edbfe_90b33d1a",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "Use EqualIgnoringASCIICase or do LowerASCII once and reuse (it returns the \"lowered\" version, and doing that potentially twice seems like a waste.)",
+      "range": {
+        "startLine": 149,
+        "startChar": 23,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac27adc_974eeb65",
+        "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-09T20:17:14Z",
+      "side": 1,
+      "message": "Undo?",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 3
+      },
       "revId": "3b812cbf432ee9d6bbb6523c96068569994e1769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
