@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b17a04_a6d32ada",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 72576,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-09T23:57:58Z",
+      "side": 1,
+      "message": "Nit: add when it\u0027s logged, e.g. \"Logged when the panel is opened.\"",
+      "range": {
+        "startLine": 72576,
+        "startChar": 68,
+        "endLine": 72576,
+        "endChar": 79
+      },
+      "revId": "61bf37a44e53f08c8a7b4e3d9b31818717555ede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
