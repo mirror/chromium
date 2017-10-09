@@ -12,6 +12,10 @@ import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.infobar.InfoBar;
+import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.infobar.InfoBarContainer.InfoBarContainerObserver;
+import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
@@ -28,7 +32,6 @@ import org.chromium.content_public.browser.WebContentsObserver;
  * Class that controls if and when to show surveys related to the Chrome Home experiment.
  */
 public class ChromeHomeSurveyController {
-    private static final String SURVEY_INFO_BAR_DISPLAYED = "chrome_home_survey_info_bar_displayed";
     private static final String SURVEY_FORCE_ENABLE_SWITCH = "force-enable-survey";
     private static final String TRIAL_NAME = "ChromeHome";
     private static final String PARAM_NAME = "survey_override_site_id";
@@ -109,6 +112,7 @@ public class ChromeHomeSurveyController {
     }
 
     private void showSurveyInfoBar(Tab tab, String siteId) {
+        tab.getInfoBarContainer().addObserver(getObserver(tab));
         WebContents webContents = tab.getWebContents();
         if (webContents.isLoading()) {
             webContents.addObserver(new WebContentsObserver() {
@@ -127,15 +131,45 @@ public class ChromeHomeSurveyController {
     private void showSurveyInfoBar(WebContents webContents, String siteId) {
         SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true, R.drawable.chrome_sync_logo);
         SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-        sharedPreferences.edit().putBoolean(SURVEY_INFO_BAR_DISPLAYED, true).apply();
+        sharedPreferences.edit().putBoolean(SurveyInfoBar.SURVEY_INFO_BAR_DISPLAYED, true).apply();
     }
 
     private boolean hasInfoBarBeenDisplayed() {
-        // TODO(danielpark) Refine logic for whether user has seen a survey (crbug.com/772081).
         try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
             SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-            return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED, false);
+            boolean infoBarExists =
+                    sharedPreferences.getBoolean(SurveyInfoBar.SURVEY_INFO_BAR_DISPLAYED, false);
+            boolean infoBarDismissed =
+                    sharedPreferences.getBoolean(SurveyInfoBar.SURVEY_INFOBAR_DISMISSED, false);
+            return !infoBarExists && !infoBarDismissed;
         }
+    }
+
+    private InfoBarContainerObserver getObserver(Tab tab) {
+        return new InfoBarContainerObserver() {
+
+            @Override
+            public void onRemoveInfoBar(
+                    InfoBarContainer container, InfoBar infoBar, boolean isLast) {}
+
+            @Override
+            public void onInfoBarContainerShownRatioChanged(
+                    InfoBarContainer container, float shownRatio) {}
+            @Override
+            public void onInfoBarContainerAttachedToWindow(boolean hasInfobars) {}
+
+            @Override
+            public void onAddInfoBar(InfoBarContainer container, InfoBar infoBar, boolean isFirst) {
+                if (!isFirst) return;
+                if (infoBar.getInfoBarIdentifier() != InfoBarIdentifier.SURVEY_INFOBAR_ANDROID)
+                    return;
+                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+                sharedPreferences.edit()
+                        .putBoolean(SurveyInfoBar.SURVEY_INFO_BAR_DISPLAYED, true)
+                        .apply();
+                tab.getInfoBarContainer().removeObserver(this);
+            }
+        };
     }
 
     private boolean isValidTabForSurvey(Tab tab) {
