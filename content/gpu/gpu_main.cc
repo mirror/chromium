@@ -82,7 +82,7 @@
 
 #if defined(OS_MACOSX)
 #include "base/message_loop/message_pump_mac.h"
-#include "content/common/sandbox_mac.h"
+#include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #endif
 
 #if defined(USE_OZONE)
