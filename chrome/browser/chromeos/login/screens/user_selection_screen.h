@@ -36,6 +36,8 @@ class UserSelectionScreen
       public proximity_auth::ScreenlockBridge::LockHandler,
       public BaseScreen {
  public:
+  using AuthCallback = base::OnceCallback<void(bool success)>;
+
   explicit UserSelectionScreen(const std::string& display_type);
   ~UserSelectionScreen() override;
 
@@ -63,7 +65,7 @@ class UserSelectionScreen
 
   // Methods for easy unlock support.
   void HardLockPod(const AccountId& account_id);
-  void AttemptEasyUnlock(const AccountId& account_id);
+  void AttemptEasyUnlock(const AccountId& account_id, AuthCallback on_done);
   void RecordClickOnLockIcon(const AccountId& account_id);
 
   // ui::UserActivityDetector implementation:

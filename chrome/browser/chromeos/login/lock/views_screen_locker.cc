@@ -159,8 +159,9 @@ void ViewsScreenLocker::HandleAuthenticateUser(
   UpdatePinKeyboardState(account_id);
 }
 
-void ViewsScreenLocker::HandleAttemptUnlock(const AccountId& account_id) {
-  user_selection_screen_->AttemptEasyUnlock(account_id);
+void ViewsScreenLocker::HandleAttemptUnlock(const AccountId& account_id,
+                                            AttemptUnlockCallback callback) {
+  user_selection_screen_->AttemptEasyUnlock(account_id, std::move(callback));
 }
 
 void ViewsScreenLocker::HandleHardlockPod(const AccountId& account_id) {

@@ -729,11 +729,13 @@ void UserSelectionScreen::HardLockPod(const AccountId& account_id) {
   service->SetHardlockState(EasyUnlockScreenlockStateHandler::USER_HARDLOCK);
 }
 
-void UserSelectionScreen::AttemptEasyUnlock(const AccountId& account_id) {
+void UserSelectionScreen::AttemptEasyUnlock(const AccountId& account_id,
+                                            AuthCallback on_done) {
   EasyUnlockService* service = GetEasyUnlockServiceForUser(account_id);
   if (!service)
     return;
-  service->AttemptAuth(account_id);
+
+  service->AttemptAuth(account_id, std::move(on_done));
 }
 
 void UserSelectionScreen::RecordClickOnLockIcon(const AccountId& account_id) {

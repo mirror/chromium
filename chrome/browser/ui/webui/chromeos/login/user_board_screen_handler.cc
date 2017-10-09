@@ -38,7 +38,7 @@ void UserBoardScreenHandler::HandleHardlockPod(const AccountId& account_id) {
 
 void UserBoardScreenHandler::HandleAttemptUnlock(const AccountId& account_id) {
   CHECK(screen_);
-  screen_->AttemptEasyUnlock(account_id);
+  screen_->AttemptEasyUnlock(account_id, UserSelectionScreen::AuthCallback());
 }
 
 void UserBoardScreenHandler::HandleRecordClickOnLockIcon(

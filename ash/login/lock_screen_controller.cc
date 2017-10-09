@@ -135,10 +135,12 @@ void LockScreenController::HandleFocusLeavingLockScreenApps(bool reverse) {
     observer.OnFocusLeavingLockScreenApps(reverse);
 }
 
-void LockScreenController::AttemptUnlock(const AccountId& account_id) {
+void LockScreenController::AttemptUnlock(
+    const AccountId& account_id,
+    mojom::LockScreenClient::AttemptUnlockCallback callback) {
   if (!lock_screen_client_)
     return;
-  lock_screen_client_->AttemptUnlock(account_id);
+  lock_screen_client_->AttemptUnlock(account_id, std::move(callback));
 }
 
 void LockScreenController::HardlockPod(const AccountId& account_id) {

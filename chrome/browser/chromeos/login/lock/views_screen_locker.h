@@ -51,7 +51,8 @@ class ViewsScreenLocker : public LockScreenClient::Delegate,
                               const std::string& hashed_password,
                               bool authenticated_by_pin,
                               AuthenticateUserCallback callback) override;
-  void HandleAttemptUnlock(const AccountId& account_id) override;
+  void HandleAttemptUnlock(const AccountId& account_id,
+                           AttemptUnlockCallback callback) override;
   void HandleHardlockPod(const AccountId& account_id) override;
   void HandleRecordClickOnLockIcon(const AccountId& account_id) override;
   void HandleOnFocusPod(const AccountId& account_id) override;

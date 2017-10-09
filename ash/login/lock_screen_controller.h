@@ -65,7 +65,8 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
       const std::string& password,
       bool authenticated_by_pin,
       mojom::LockScreenClient::AuthenticateUserCallback callback);
-  void AttemptUnlock(const AccountId& account_id);
+  void AttemptUnlock(const AccountId& account_id,
+                     mojom::LockScreenClient::AttemptUnlockCallback callback);
   void HardlockPod(const AccountId& account_id);
   void RecordClickOnLockIcon(const AccountId& account_id);
   void OnFocusPod(const AccountId& account_id);

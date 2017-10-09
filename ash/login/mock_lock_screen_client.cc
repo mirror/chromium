@@ -29,6 +29,12 @@ void MockLockScreenClient::AuthenticateUser(const AccountId& account_id,
   std::move(callback).Run(authenticate_user_callback_result_);
 }
 
+void MockLockScreenClient::AttemptUnlock(const AccountId& account_id,
+                                         AttemptUnlockCallback callback) {
+  AttemptUnlock_(account_id, callback);
+  std::move(callback).Run(attempt_unlock_callback_result_);
+}
+
 std::unique_ptr<MockLockScreenClient> BindMockLockScreenClient() {
   LockScreenController* lock_screen_controller =
       Shell::Get()->lock_screen_controller();
