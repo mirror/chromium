@@ -16,6 +16,24 @@
       "revId": "2f36b30bdbaacd636e3a49769cbb9f3ef3a4d626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17eb710_88fec888",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-09T18:34:14Z",
+      "side": 0,
+      "message": "No, this cannot trigger synchronous JS; it can only PostTaskToDeliverObservations.",
+      "parentUuid": "daab7153_6e5ceb3d",
+      "revId": "2f36b30bdbaacd636e3a49769cbb9f3ef3a4d626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
