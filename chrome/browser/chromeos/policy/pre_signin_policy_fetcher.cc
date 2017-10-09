@@ -97,8 +97,9 @@ void PreSigninPolicyFetcher::OnMountTemporaryUserHome(
 void PreSigninPolicyFetcher::OnCachedPolicyRetrieved(
     const std::string& policy_blob,
     RetrievePolicyResponseType retrieve_policy_response) {
-  // We only need the cached policy key if there was policy.
-  if (!policy_blob.empty()) {
+  // We only need the cached policy key if there was policy and if the user is
+  // not an AD user (authpolicy-provided policy blobs are not signed).
+  if (!policy_blob.empty() && !IsActiveDirectoryUser()) {
     base::FilePath policy_key_dir;
     CHECK(PathService::Get(chromeos::DIR_USER_POLICY_KEYS, &policy_key_dir));
     cached_policy_key_loader_ = base::MakeUnique<CachedPolicyKeyLoaderChromeOS>(
@@ -108,7 +109,8 @@ void PreSigninPolicyFetcher::OnCachedPolicyRetrieved(
         weak_ptr_factory_.GetWeakPtr(), policy_blob, retrieve_policy_response));
   } else {
     // Skip and pretend we've loaded policy key. We won't need it anyway,
-    // because there is no policy to validate.
+    // because there is no policy to validate or because it's not signed (active
+    // directory).
     OnPolicyKeyLoaded(policy_blob, retrieve_policy_response);
   }
 }
@@ -151,8 +153,10 @@ void PreSigninPolicyFetcher::OnUnmountTemporaryUserHome(
     return;
   }
 
-  // Before validating, check that we have a cached policy key.
-  if (cached_policy_key_loader_->cached_policy_key().empty()) {
+  // Before validating, check that we have a cached policy key. This does not
+  // apply to active directory users (cached policy is unsigned there).
+  if (!IsActiveDirectoryUser() &&
+      cached_policy_key_loader_->cached_policy_key().empty()) {
     LOG(ERROR) << "No cached policy key loaded.";
     NotifyCallback(PolicyFetchResult::ERROR, nullptr);
     return;
@@ -175,7 +179,7 @@ void PreSigninPolicyFetcher::OnCachedPolicyValidated(
   policy_data_ = std::move(validator->policy_data());
   policy_payload_ = std::move(validator->payload());
 
-  if (account_id_.GetAccountType() == AccountType::ACTIVE_DIRECTORY) {
+  if (IsActiveDirectoryUser()) {
     // For AD, we don't support fresh policy fetch at the moment. Simply exit
     // with cached policy.
     NotifyCallback(PolicyFetchResult::SUCCESS, std::move(policy_payload_));
@@ -284,7 +288,7 @@ PreSigninPolicyFetcher::CreateValidatorForCachedPolicy(
   validator->ValidatePolicyType(dm_protocol::kChromeUserPolicyType);
   validator->ValidatePayload();
 
-  if (account_id_.GetAccountType() != AccountType::ACTIVE_DIRECTORY) {
+  if (!IsActiveDirectoryUser()) {
     // Also validate the user e-mail and the signature (except for authpolicy).
     validator->ValidateUsername(account_id_.GetUserEmail(), true);
     validator->ValidateSignature(
@@ -307,7 +311,7 @@ PreSigninPolicyFetcher::CreateValidatorForFetchedPolicy(
       CloudPolicyValidatorBase::DEVICE_ID_REQUIRED);
   validator->ValidatePayload();
 
-  if (account_id_.GetAccountType() != AccountType::ACTIVE_DIRECTORY) {
+  if (!IsActiveDirectoryUser()) {
     // Also validate the signature.
     const std::string domain = gaia::ExtractDomainName(
         gaia::CanonicalizeEmail(account_id_.GetUserEmail()));
@@ -315,6 +319,10 @@ PreSigninPolicyFetcher::CreateValidatorForFetchedPolicy(
         cached_policy_key_loader_->cached_policy_key(), domain);
   }
   return validator;
+}
+
+bool PreSigninPolicyFetcher::IsActiveDirectoryUser() const {
+  return account_id_.GetAccountType() == AccountType::ACTIVE_DIRECTORY;
 }
 
 }  // namespace policy

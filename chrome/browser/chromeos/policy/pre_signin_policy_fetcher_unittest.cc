@@ -47,9 +47,9 @@ namespace {
 const char kCachedHomepage[] = "http://cached.test";
 const char kFreshHomepage[] = "http://fresh.test";
 
-class PreSigninPolicyFetcherTest : public testing::Test {
+class PreSigninPolicyFetcherTestBase : public testing::Test {
  protected:
-  PreSigninPolicyFetcherTest() = default;
+  PreSigninPolicyFetcherTestBase() = default;
 
   void SetUp() override {
     // Setup mock HomedirMethods - this is used by PreSigninPolicyFetcher to
@@ -74,7 +74,7 @@ class PreSigninPolicyFetcherTest : public testing::Test {
     cloud_policy_client_ = cloud_policy_client.get();
     pre_signin_policy_fetcher_ = base::MakeUnique<PreSigninPolicyFetcher>(
         &cryptohome_client_, &session_manager_client_,
-        std::move(cloud_policy_client), account_id_, cryptohome_key_);
+        std::move(cloud_policy_client), GetAccountId(), cryptohome_key_);
     cached_policy_.payload().mutable_homepagelocation()->set_value(
         kCachedHomepage);
     cached_policy_.Build();
@@ -90,6 +90,14 @@ class PreSigninPolicyFetcherTest : public testing::Test {
     mock_homedir_methods_ = nullptr;
   }
 
+  // Returns the AccountId to be used during the test. This will differ between
+  // regular gaia user and AD user.
+  virtual AccountId GetAccountId() const = 0;
+
+  cryptohome::Identification GetCryptohomeIdentification() const {
+    return cryptohome::Identification(GetAccountId());
+  }
+
   void StoreUserPolicyKey(const std::string& public_key) {
     ASSERT_TRUE(base::CreateDirectory(user_policy_key_file().DirName()));
     ASSERT_EQ(static_cast<int>(public_key.size()),
@@ -103,7 +111,8 @@ class PreSigninPolicyFetcherTest : public testing::Test {
 
   base::FilePath user_policy_key_file() const {
     const std::string sanitized_username =
-        chromeos::CryptohomeClient::GetStubSanitizedUsername(cryptohome_id_);
+        chromeos::CryptohomeClient::GetStubSanitizedUsername(
+            GetCryptohomeIdentification());
     return user_policy_keys_dir()
         .AppendASCII(sanitized_username)
         .AppendASCII("policy.pub");
@@ -113,7 +122,7 @@ class PreSigninPolicyFetcherTest : public testing::Test {
   // the passed |mount_error|.
   void ExpectTemporaryCryptohomeMount(cryptohome::MountError mount_error) {
     EXPECT_CALL(*mock_homedir_methods_,
-                MountEx(cryptohome::Identification(account_id_),
+                MountEx(GetCryptohomeIdentification(),
                         cryptohome::Authorization(cryptohome_key_), _, _))
         .WillOnce(WithArgs<2, 3>(Invoke(
             [mount_error](const cryptohome::MountRequest& mount_request,
@@ -175,7 +184,7 @@ class PreSigninPolicyFetcherTest : public testing::Test {
 
   void ExecuteFetchPolicy() {
     pre_signin_policy_fetcher_->FetchPolicy(
-        base::Bind(&PreSigninPolicyFetcherTest::OnPolicyRetrieved,
+        base::Bind(&PreSigninPolicyFetcherTestBase::OnPolicyRetrieved,
                    base::Unretained(this)));
     scoped_task_environment_.RunUntilIdle();
   }
@@ -187,10 +196,6 @@ class PreSigninPolicyFetcherTest : public testing::Test {
   chromeos::FakeSessionManagerClient session_manager_client_;
   UserPolicyBuilder cached_policy_;
   UserPolicyBuilder fresh_policy_;
-  const AccountId account_id_ =
-      AccountId::FromUserEmail(PolicyBuilder::kFakeUsername);
-  const cryptohome::Identification cryptohome_id_ =
-      cryptohome::Identification(account_id_);
   const cryptohome::KeyDefinition cryptohome_key_ =
       cryptohome::KeyDefinition("secret",
                                 std::string() /* label */,
@@ -208,7 +213,17 @@ class PreSigninPolicyFetcherTest : public testing::Test {
 
   bool expecting_fresh_policy_fetch_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(PreSigninPolicyFetcherTest);
+  DISALLOW_COPY_AND_ASSIGN(PreSigninPolicyFetcherTestBase);
+};
+
+// Tests for PreSigninPolicyFetcher with a regular gaia account.
+class PreSigninPolicyFetcherTest : public PreSigninPolicyFetcherTestBase {
+ protected:
+  AccountId GetAccountId() const override { return account_id_; }
+
+ private:
+  const AccountId account_id_ =
+      AccountId::FromUserEmail(PolicyBuilder::kFakeUsername);
 };
 
 // Test that we successfully determine that the user has no policy (unmanaged
@@ -218,8 +233,8 @@ TEST_F(PreSigninPolicyFetcherTest, NoPolicy) {
   ExpectTemporaryCryptohomeMount();
   // session_manager's RetrievePolicy* methods signal that there is no policy by
   // passing an empty string as policy blob.
-  session_manager_client_.set_user_policy_without_session(cryptohome_id_,
-                                                          std::string());
+  session_manager_client_.set_user_policy_without_session(
+      GetCryptohomeIdentification(), std::string());
 
   ExpectNoFreshPolicyFetchOnClient();
   ExecuteFetchPolicy();
@@ -257,7 +272,7 @@ TEST_F(PreSigninPolicyFetcherTest, CachedPolicyFailsToValidate) {
 
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectNoFreshPolicyFetchOnClient();
   ExecuteFetchPolicy();
@@ -277,7 +292,7 @@ TEST_F(PreSigninPolicyFetcherTest, CachedPolicyFailsToValidate) {
 TEST_F(PreSigninPolicyFetcherTest, NoCachedPolicyKeyAccessible) {
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectNoFreshPolicyFetchOnClient();
   ExecuteFetchPolicy();
@@ -299,7 +314,7 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFails) {
 
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectFreshPolicyFetchOnClient(PolicyBuilder::kFakeToken,
                                  PolicyBuilder::kFakeDeviceId);
@@ -327,7 +342,7 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchTimeout) {
 
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectFreshPolicyFetchOnClient(PolicyBuilder::kFakeToken,
                                  PolicyBuilder::kFakeDeviceId);
@@ -356,7 +371,7 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFailsToValidate) {
 
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectFreshPolicyFetchOnClient(PolicyBuilder::kFakeToken,
                                  PolicyBuilder::kFakeDeviceId);
@@ -391,7 +406,7 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchSuccess) {
 
   ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
-      cryptohome_id_, cached_policy_.GetBlob());
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectFreshPolicyFetchOnClient(PolicyBuilder::kFakeToken,
                                  PolicyBuilder::kFakeDeviceId);
@@ -415,6 +430,35 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchSuccess) {
             obtained_policy_payload_->homepagelocation().value());
 }
 
-}  // namespace
+// Tests for PreSigninPolicyFetcher with an Active Directory account.
+class PreSigninPolicyFetcherTestAD : public PreSigninPolicyFetcherTestBase {
+ protected:
+  AccountId GetAccountId() const override { return account_id_; }
 
+ private:
+  const AccountId account_id_ =
+      AccountId::AdFromUserEmailObjGuid(PolicyBuilder::kFakeUsername, "guid");
+};
+
+// For Active Directory, we only have unsigned cached policy. There is no policy
+// key and no fresh policy fetch is attempted currently.
+TEST_F(PreSigninPolicyFetcherTestAD, UnsignedCachedPolicyForActiveDirectory) {
+  ExpectTemporaryCryptohomeMount();
+  session_manager_client_.set_user_policy_without_session(
+      GetCryptohomeIdentification(), cached_policy_.GetBlob());
+
+  ExpectNoFreshPolicyFetchOnClient();
+  ExecuteFetchPolicy();
+
+  VerifyExpectationsOnClient();
+
+  EXPECT_TRUE(policy_retrieved_called_);
+  EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::SUCCESS,
+            obtained_policy_fetch_result_);
+  EXPECT_TRUE(obtained_policy_payload_);
+  EXPECT_EQ(kCachedHomepage,
+            obtained_policy_payload_->homepagelocation().value());
+}
+
+}  // namespace
 }  // namespace policy
