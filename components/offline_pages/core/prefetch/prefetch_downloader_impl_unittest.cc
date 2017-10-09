@@ -51,7 +51,9 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
     download_service_.set_client(download_client_.get());
     prefetch_service_taco_->SetPrefetchDownloader(std::move(downloader));
     prefetch_service_taco_->CreatePrefetchService();
+  }
 
+  void OnDownloadServiceReady() {
     prefetch_downloader()->OnDownloadServiceReady(
         std::set<std::string>(),
         std::map<std::string, std::pair<base::FilePath, int64_t>>());
@@ -79,7 +81,6 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
 
   base::SimpleTestClock* clock() { return clock_; }
 
- private:
   PrefetchDownloader* prefetch_downloader() const {
     return prefetch_service_taco_->prefetch_service()->GetPrefetchDownloader();
   }
@@ -89,6 +90,7 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
         prefetch_service_taco_->prefetch_service()->GetPrefetchDispatcher());
   }
 
+ private:
   download::test::TestDownloadService download_service_;
   std::unique_ptr<TestDownloadClient> download_client_;
   std::unique_ptr<PrefetchServiceTestTaco> prefetch_service_taco_;
@@ -96,6 +98,7 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
 };
 
 TEST_F(PrefetchDownloaderImplTest, DownloadParams) {
+  OnDownloadServiceReady();
   base::Time epoch = base::Time();
   clock()->SetNow(epoch);
 
@@ -121,6 +124,7 @@ TEST_F(PrefetchDownloaderImplTest, DownloadParams) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, ExperimentHeaderInDownloadParams) {
+  OnDownloadServiceReady();
   SetUpExperimentOption();
 
   StartDownload(kDownloadId, kDownloadLocation);
@@ -134,6 +138,7 @@ TEST_F(PrefetchDownloaderImplTest, ExperimentHeaderInDownloadParams) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, DownloadSucceeded) {
+  OnDownloadServiceReady();
   StartDownload(kDownloadId, kDownloadLocation);
   StartDownload(kDownloadId2, kDownloadLocation2);
   RunUntilIdle();
@@ -145,11 +150,51 @@ TEST_F(PrefetchDownloaderImplTest, DownloadSucceeded) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, DownloadFailed) {
+  OnDownloadServiceReady();
   StartDownload(kFailedDownloadId, kDownloadLocation);
   RunUntilIdle();
   ASSERT_EQ(1u, completed_downloads().size());
   EXPECT_EQ(kFailedDownloadId, completed_downloads()[0].download_id);
   EXPECT_FALSE(completed_downloads()[0].success);
+}
+
+TEST_F(PrefetchDownloaderImplTest, DoNotCleanupOngoingDownloads) {
+  // One unknown download is sent to the downloader when the service is ready.
+  std::set<std::string> download_ids_before = {kDownloadId2};
+  prefetch_downloader()->OnDownloadServiceReady(download_ids_before, {});
+  prefetch_downloader()->CleanupDownloadsWhenReady();
+  // We expect that unknown download to be sent to the dispatcher when the
+  // cleanup call is made.
+  EXPECT_EQ(download_ids_before,
+            prefetch_dispatcher()->last_outstanding_download_ids);
+
+  std::map<std::string, std::pair<base::FilePath, int64_t>>
+      expected_success_downloads;
+  EXPECT_EQ(expected_success_downloads,
+            prefetch_dispatcher()->last_success_downloads);
+
+  // Then start a new download with a different ID
+  StartDownload(kDownloadId, kDownloadLocation);
+
+  prefetch_downloader()->CleanupDownloadsWhenReady();
+  std::set<std::string> download_ids_after = {kDownloadId, kDownloadId2};
+  EXPECT_EQ(download_ids_after,
+            prefetch_dispatcher()->last_outstanding_download_ids);
+  EXPECT_EQ(expected_success_downloads,
+            prefetch_dispatcher()->last_success_downloads);
+
+  // This will cause PrefetchDownloader->OnDownloadSucceeded to be called by
+  // the TestDownloadService.
+  RunUntilIdle();
+
+  // Then, when cleanup is called again, the finished download should not
+  // appear in last outstanding download ids.
+  prefetch_downloader()->CleanupDownloadsWhenReady();
+  EXPECT_EQ(download_ids_before,
+            prefetch_dispatcher()->last_outstanding_download_ids);
+  EXPECT_EQ(1U, prefetch_dispatcher()->last_success_downloads.size());
+  EXPECT_EQ(1U,
+            prefetch_dispatcher()->last_success_downloads.count(kDownloadId));
 }
 
 }  // namespace offline_pages

@@ -121,6 +121,7 @@ void PrefetchDownloaderImpl::StartDownload(
 
   // The download service can queue the download even if it is not fully up yet.
   download_service_->StartDownload(params);
+  outstanding_download_ids_.insert(download_id);
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceReady(
@@ -163,6 +164,8 @@ void PrefetchDownloaderImpl::OnDownloadSucceeded(
     int64_t file_size) {
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Download succeeded, download_id=" + download_id);
+  outstanding_download_ids_.erase(download_id);
+  success_downloads_[download_id] = std::make_pair(file_path, file_size);
   NotifyDispatcher(prefetch_service_,
                    PrefetchDownloadResult(download_id, file_path, file_size));
 }
@@ -172,6 +175,7 @@ void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
   result.download_id = download_id;
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Download failed, download_id=" + download_id);
+  outstanding_download_ids_.erase(download_id);
   NotifyDispatcher(prefetch_service_, result);
 }
 

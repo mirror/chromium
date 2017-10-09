@@ -56,7 +56,10 @@ void TestPrefetchDispatcher::GCMOperationCompletedMessageReceived(
 void TestPrefetchDispatcher::CleanupDownloads(
     const std::set<std::string>& outstanding_download_ids,
     const std::map<std::string, std::pair<base::FilePath, int64_t>>&
-        success_downloads) {}
+        success_downloads) {
+  last_outstanding_download_ids = outstanding_download_ids;
+  last_success_downloads = success_downloads;
+}
 
 void TestPrefetchDispatcher::DownloadCompleted(
     const PrefetchDownloadResult& download_result) {
