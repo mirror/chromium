@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d443e827_bf931e3f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-09T19:08:31Z",
+      "side": 1,
+      "message": "Is this covered by any tests?",
+      "revId": "ad623db91c8868a8078f08219c5fc28f748a2835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
