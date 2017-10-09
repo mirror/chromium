@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5789ff46_7c211a5a",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-09T18:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f205b58_0de5c81e",
+      "revId": "f40305703129d7cafc09c03b06a92dc20d3f45cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7431ccae_f5d0ce72",
         "filename": "ui/display/util/edid_parser.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T15:02:22Z",
       "side": 1,
       "message": "Considering edid is coming from a monitor and can be broken, wouldn\u0027t it be better to just have a warning here?",
+      "revId": "f40305703129d7cafc09c03b06a92dc20d3f45cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23affdaa_11b6f792",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-09T18:03:27Z",
+      "side": 1,
+      "message": "Very true. This is just replicating the other functions,\nbut we should replace them with LOG(WARNING) or some such.",
+      "parentUuid": "7431ccae_f5d0ce72",
       "revId": "f40305703129d7cafc09c03b06a92dc20d3f45cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
