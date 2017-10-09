@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678aa694_6ce176fd",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T16:39:14Z",
+      "side": 1,
+      "message": "I\u0027d give a bit more of context, something like:\n\n// In the general case (allocators and edges) the serialization into the trace\n// buffer is handled by the memory-infra service (see tracing_observer.cc).\n// This special case below deals only with serialization of the heap profiler\n// and is temporary given the upcoming work on the out-of-process heap profiler.",
+      "range": {
+        "startLine": 760,
+        "startChar": 2,
+        "endLine": 761,
+        "endChar": 21
+      },
+      "revId": "cbaa304459a3b23bca82c33cb69359b8dd5de3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
