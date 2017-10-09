@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
 #include "chrome/browser/chromeos/login/signin/token_handle_util.h"
+#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/login/auth/authenticator.h"
 #include "chromeos/login/auth/user_context.h"
@@ -242,6 +243,9 @@ class UserSessionManager
   // Removes a profile from the per-user input methods states map.
   void RemoveProfileForTesting(Profile* profile);
 
+  // Check if user is allowed to sign in.
+  bool IsUserAllowed(user_manager::User* user);
+
   const UserContext& user_context() const { return user_context_; }
   bool has_auth_cookies() const { return has_auth_cookies_; }
 
@@ -275,6 +279,9 @@ class UserSessionManager
   // UserSessionManagerDelegate overrides:
   // Used when restoring user sessions after crash.
   void OnProfilePrepared(Profile* profile, bool browser_launched) override;
+
+  // Called when cros settings which controls user log in are changed.
+  void DeviceSettingsChanged();
 
   void ChildAccountStatusReceivedCallback(Profile* profile);
 
@@ -537,6 +544,12 @@ class UserSessionManager
   // after the primary user profile is loaded.
   // TODO(crbug.com/717585): Remove after the root cause of bug identified.
   std::unique_ptr<AppTerminatingStackDumper> app_terminating_stack_dumper_;
+
+  // Cros settings change subscriptions.
+  std::unique_ptr<CrosSettings::ObserverSubscription> allow_guest_subscription_;
+  std::unique_ptr<CrosSettings::ObserverSubscription>
+      allow_supervised_user_subscription_;
+  std::unique_ptr<CrosSettings::ObserverSubscription> users_subscription_;
 
   base::WeakPtrFactory<UserSessionManager> weak_factory_;
 
