@@ -16,6 +16,23 @@
       "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f7d278_32040100",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-09T21:12:59Z",
+      "side": 1,
+      "message": "Nit: `net_unittests` should.\n\nTests built on the network stack do use the preload list (which is something I\u0027m having fun with right now...)",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
