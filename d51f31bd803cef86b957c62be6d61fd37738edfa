@@ -46,6 +46,53 @@
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b52983e5_1ac4b12d",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-09T17:57:40Z",
+      "side": 1,
+      "message": "Sure, but those headers phase transactions could have stayed with the ActiveEntry right if there are writers right? It\u0027s unnecessary to restart them.",
+      "parentUuid": "9f11a2c3_3529f772",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9052693a_77231b60",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-09T17:57:40Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 899,
+        "startChar": 0,
+        "endLine": 900,
+        "endChar": 23
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
