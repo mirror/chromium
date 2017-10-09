@@ -372,6 +372,7 @@ public class HistoryActivityTest {
     @SmallTest
     public void testSupervisedUser() throws Exception {
         final HistoryManagerToolbar toolbar = mHistoryManager.getToolbarForTests();
+        waitForAnimationFinish();
         final SelectableItemView<HistoryItem> item = getItemView(2);
         View itemRemoveButton = item.findViewById(R.id.remove);
 
@@ -723,15 +724,7 @@ public class HistoryActivityTest {
             mAdapter.onSignInStateChange();
         });
 
-        // Wait until animator finish removing history item delete icon
-        // TODO(twellington): Figure out a better way to do this (e.g. listen for RecyclerView
-        // data changes or add a testing callback)
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return !mRecyclerView.isAnimating();
-            }
-        });
+        waitForAnimationFinish();
     }
 
     private void signOut() throws Exception {
@@ -764,5 +757,17 @@ public class HistoryActivityTest {
             }
         });
         SigninTestUtil.tearDownAuthForTest();
+    }
+
+    private void waitForAnimationFinish() {
+        // Wait until animator finish removing history item delete icon
+        // TODO(twellington): Figure out a better way to do this (e.g. listen for RecyclerView
+        // data changes or add a testing callback)
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return !mRecyclerView.isAnimating();
+            }
+        });
     }
 }
