@@ -145,9 +145,16 @@ class CORE_EXPORT NGLineInfo {
     base_direction_ = direction;
   }
 
+  // ShapeResult to append to the line end. Used by 'text-overflow: ellipsis'.
+  RefPtr<ShapeResult>& LineEndShapeResult() { return line_end_shape_result_; }
+  void SetLineEndShapeResult(RefPtr<ShapeResult> result) {
+    line_end_shape_result_ = std::move(result);
+  }
+
  private:
   const ComputedStyle* line_style_ = nullptr;
   NGInlineItemResults results_;
+  RefPtr<ShapeResult> line_end_shape_result_;
 
   NGLogicalOffset line_offset_;
   LayoutUnit available_width_;
