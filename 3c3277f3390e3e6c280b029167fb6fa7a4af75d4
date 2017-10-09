@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a448c7_fe231989",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T16:00:49Z",
+      "side": 1,
+      "message": "My suggestion was to cache the severity; Ideally these 5 lines could be 3:\n  const auto severity \u003d GetAppMenuButton()-\u003eseverity();\n  if (severity \u003d\u003d AppMenuIconController::Severity::NONE \u0026\u0026 ShouldShowPromo())\n    ShowPromo();",
+      "revId": "3c3277f3390e3e6c280b029167fb6fa7a4af75d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b103442_faef9783",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T16:00:49Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "3c3277f3390e3e6c280b029167fb6fa7a4af75d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1863fe2d_1e34f7d1",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T16:00:49Z",
+      "side": 1,
+      "message": "Remove this. Please take a quick review pass on your own code before pinging reviewers. I often mark WIP code/comments with spaces at the end of lines, so they\u0027re caught by presubmit checks when uploading.",
+      "revId": "3c3277f3390e3e6c280b029167fb6fa7a4af75d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
