@@ -7,6 +7,7 @@
 #include <cmath>
 #include <memory>
 
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/session/session_controller.h"
@@ -125,9 +126,17 @@ NightLightController::NightLightController()
     : delegate_(std::make_unique<NightLightControllerDelegateImpl>()),
       binding_(this) {
   Shell::Get()->session_controller()->AddObserver(this);
+  Shell::Get()
+      ->window_tree_host_manager()
+      ->cursor_window_controller()
+      ->AddCursorCompositingDelegate(this);
 }
 
 NightLightController::~NightLightController() {
+  Shell::Get()
+      ->window_tree_host_manager()
+      ->cursor_window_controller()
+      ->RemoveCursorCompositingDelegate(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
@@ -285,6 +294,10 @@ void NightLightController::SetDelegateForTesting(
   delegate_ = std::move(delegate);
 }
 
+bool NightLightController::ShouldEnableCursorCompositing() {
+  return GetEnabled();
+}
+
 void NightLightController::RefreshLayersTemperature() {
   ApplyColorTemperatureToLayers(GetEnabled() ? GetColorTemperature() : 0.0f,
                                 animation_duration_ == AnimationDuration::kShort
@@ -295,7 +308,7 @@ void NightLightController::RefreshLayersTemperature() {
   // animations.
   last_animation_duration_ = animation_duration_;
   animation_duration_ = AnimationDuration::kShort;
-  Shell::Get()->SetCursorCompositingEnabled(GetEnabled());
+  Shell::Get()->UpdateCursorCompositingEnabled();
 }
 
 void NightLightController::StartWatchingPrefsChanges() {

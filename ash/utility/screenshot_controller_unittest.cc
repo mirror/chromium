@@ -21,10 +21,32 @@
 
 namespace ash {
 
-class ScreenshotControllerTest : public AshTestBase {
+class ScreenshotControllerTest
+    : public AshTestBase,
+      public CursorWindowController::CursorCompositingDelegate {
  public:
-  ScreenshotControllerTest() {}
-  ~ScreenshotControllerTest() override {}
+  ScreenshotControllerTest() {
+    Shell::Get()
+        ->window_tree_host_manager()
+        ->cursor_window_controller()
+        ->AddCursorCompositingDelegate(this);
+  }
+
+  ~ScreenshotControllerTest() override {
+    Shell::Get()
+        ->window_tree_host_manager()
+        ->cursor_window_controller()
+        ->RemoveCursorCompositingDelegate(this);
+  }
+
+  void set_cursor_compositing_enabled(bool enabled) {
+    cursor_compositing_enabled_ = enabled;
+  }
+
+  // CursorWindowController::CursorCompositingDelegate:
+  bool ShouldEnableCursorCompositing() override {
+    return cursor_compositing_enabled_;
+  }
 
  protected:
   ScreenshotController* screenshot_controller() {
@@ -65,6 +87,8 @@ class ScreenshotControllerTest : public AshTestBase {
   }
 
  private:
+  bool cursor_compositing_enabled_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(ScreenshotControllerTest);
 };
 
@@ -297,10 +321,11 @@ TEST_F(PartialScreenshotControllerTest, VisibilityTest) {
 // cursor. See http://crbug.com/459214
 TEST_F(PartialScreenshotControllerTest, LargeCursor) {
   Shell::Get()->cursor_manager()->SetCursorSize(ui::CursorSize::kLarge);
+  set_cursor_compositing_enabled(true);
   Shell::Get()
       ->window_tree_host_manager()
       ->cursor_window_controller()
-      ->SetCursorCompositingEnabled(true);
+      ->UpdateCursorCompositingEnabled();
 
   // Large cursor is represented as cursor window.
   MirrorWindowTestApi test_api;
