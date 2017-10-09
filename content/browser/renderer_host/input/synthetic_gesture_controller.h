@@ -38,7 +38,7 @@ class CONTENT_EXPORT SyntheticGestureController {
   };
   SyntheticGestureController(
       Delegate* delegate,
-      std::unique_ptr<SyntheticGestureTarget> gesture_target);
+      base::WeakPtr<SyntheticGestureTarget> gesture_target);
   virtual ~SyntheticGestureController();
 
   typedef base::OnceCallback<void(SyntheticGesture::Result)>
@@ -59,7 +59,7 @@ class CONTENT_EXPORT SyntheticGestureController {
                    SyntheticGesture::Result result);
 
   Delegate* const delegate_;
-  std::unique_ptr<SyntheticGestureTarget> gesture_target_;
+  base::WeakPtr<SyntheticGestureTarget> gesture_target_;
 
   // A queue of gesture/callback pairs.  Implemented as two queues to
   // simplify the ownership of SyntheticGesture pointers.
