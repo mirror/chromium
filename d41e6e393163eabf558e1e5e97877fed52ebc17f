@@ -16,6 +16,24 @@
       "revId": "d41e6e393163eabf558e1e5e97877fed52ebc17f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84363fe_f8d96ca2",
+        "filename": "build/android/pylib/utils/logging_utils.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-09T17:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5eba36c_b34160f4",
+      "revId": "d41e6e393163eabf558e1e5e97877fed52ebc17f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
