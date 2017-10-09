@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f78fe5_70e2b18b",
+        "filename": "content/browser/indexed_db/fake_indexed_db_metadata_coding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Do we need macros.h?",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838daae8_b0496354",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove this! (didn\u0027t I say that before?)",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fda28ef_0302e9c5",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "DCHECK that metadata\u0027s name \u003d\u003d new_name ?\n\n(just looking for places to verify that the fake and real metadata thingy behave the same)",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c87ef98_77aea742",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "DCHECK that metadata\u0027s name \u003d\u003d new_name ?",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4878db1b_a4b670b6",
+        "filename": "content/browser/indexed_db/indexed_db_database_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Is this a new dependency? Not seeing the changes that would require it...",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b142981e_96b39769",
+        "filename": "content/browser/indexed_db/indexed_db_database_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Are these testing:: symbols used?",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f9245a_ff183319",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Interesting that we don\u0027t have these consistency checks in RenameIndex.",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9efabb9_6c47cde6",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "RENAME_OBJECT_STORE ... which means adding a new histogram entry. Not new in this CL so could just add a TODO",
+      "range": {
+        "startLine": 633,
+        "startChar": 33,
+        "endLine": 633,
+        "endChar": 52
+      },
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58faf8dd_9c458090",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "RENAME_OBJECT_STORE",
+      "range": {
+        "startLine": 637,
+        "startChar": 40,
+        "endLine": 637,
+        "endChar": 59
+      },
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc8df89_1e7643aa",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-09T20:09:46Z",
+      "side": 1,
+      "message": "Maybe mention that this contains no state and thus could be static, but is held as a class to enable subclassing for testing.",
+      "revId": "b3bf4ba5eed3c9aaad7d66ed0748dc7e035bbe91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
