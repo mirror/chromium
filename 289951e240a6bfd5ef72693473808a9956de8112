@@ -1,0 +1,358 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb8f8cd_a6185ae0",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Can we enable this as well?",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb0086d_6b4d068c",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "nit: \"limit\" is ambiguous; also there\u0027s no unit here. How about kMaxFileSizeBytes?",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cd2784_32de0707",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Readers have to check SetState (which is no simple) to understand this code. But the logic is actually pretty straightforward, e.g.\n\nif (state !\u003d kOpened) {\n  ErrorType error_type \u003d IsReadOrWriteInProgress() ? kReadWhileInUse : kReadError;\n  OnError(error_type);\n  return;\n}\n\nSee the next comment for OnError.",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d9168d_86e36fda",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "We have similar code to report error in multiple places, does it make sense to have a helper function to do it, e.g. something similar to CdmFileIOImpl::OnError:\n\nhttps://cs.chromium.org/chromium/src/media/cdm/ppapi/cdm_file_io_impl.cc?rcl\u003d20c4e36e637dd4d0bda695a1b5fbb494c3c433ca\u0026l\u003d511",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05786b02_e41dbe15",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "This task is posted, but the function itself is not async. How about s/DoReadAsync/DoRead, or s/DoReadAsync/ReadTask?",
+      "range": {
+        "startLine": 152,
+        "startChar": 37,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e85284_7fd82873",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Similar to OnError, there\u0027s a sync version NotifyClientOfError, IMHO, it\u0027s easier to read\n\nNotifyClientOfError(kReadError);\n\nthan \n\nOnReadComplete(cdm::FileIOClient::Status::kError, nullptr, 0);",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 18
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8fa088_9d6b9fa5",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "nit: Negative bytes mean failure, ...",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb3060a_5042f02c",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "This is a bit confusing. Shouldn\u0027t the status here always be kReading since we are in OnReadComplete()? We probably should DCHECK that.",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf42003e_a57c2fdf",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "hmm, shall we block shutdown to prevent corrupted files? If we corrupt the index file, then all offline license can be lost. Maybe we should do the real \"write\" in a task that blocks shutdown. That might require us copying the data to write, but the data should be relatively small in most cases.",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8684d21f_118b78fa",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Add an implementation comment. e.g. Write, SetLength, then return the result asynchronously.",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0aa05c_248f2e49",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "ditto, 4 lines to report an error seems to be unfortunate..",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd997bc_74c40f57",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "It seems this StateManager doesn\u0027t really add much value. We probably will end up with less code if we just define State and SetState() in MojoCdmFileIO directly.",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafbb2a2_09a69a84",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Should we have a kError state? For example, if we try to read the file, but GetLength() returns -1. Then really we cannot do anything. On the other hand, maybe we only need to fail the Read() call, then the CDM should call Close(). WDYT?",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194d6e74_0858f196",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "nit: we probably want to use base::FilePath as much as possible until we talk to the CDM over the CDM interface, where cdm::FileIO takes char*. It\u0027s fine to a add a TODO here and do it later.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 25
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21bfc9c_01fa72fb",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "Will it be simpler if we just pass in cdm_storage_ptr_.get(), which is of type mojom::CdmStorage* here?\n\nIt seems you want to lazily connect to the CDM storage service (in MCH::OpenFile), but you are already doing the connection in l.23...",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7035eacc_710f7d2e",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "I noticed that we have this pattern for all aux services.\n\nFirst, I believe is_bound() will always return true after the GetInterface() call, even after connection error happens. (Not 100% sure; we can test it.)\n\nSecond, given that we don\u0027t have a connection error handler, if the connection error ever happens, we will not be able to reconnect to the service, which is probably fine, because that means that either the document is destroyed (see FrameServiceBase), or the browser crashed, in both cases there\u0027s no point of reconnection. But we probably should have a MCH class level comment on this topic.\n\nThen we probably don\u0027t need cdm_storage_attempted_ and the check should be on whether we encountered connection error:\n\nif (!cdm_storage_ptr_) {\n  service_manager::GetInterface\u003cmedia::mojom::CdmStorage\u003e(interface_provider_,\n                                                            \u0026cdm_storage_);\n}\nreturn cdm_storage_ptr_.encountered_error();\n\nPlease also file a bug that we should add tests for MojoCdmHelper.",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336800ac_07c02f13",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "See comments below, probably we don\u0027t need these.",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e248803_41f5a4e6",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-09T21:09:40Z",
+      "side": 1,
+      "message": "nit: |cdm_storage_ptr_| would be more clear. Usually we use cdm_storage_ for mojom::CdmStorage*, which is a different type.",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 35
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
