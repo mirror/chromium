@@ -9,7 +9,7 @@ for more details about the presubmit API built into depot_tools.
 """
 
 import os
-
+import subprocess
 
 def _CommonChecks(input_api, output_api):
   """Performs common checks, which includes running pylint."""
@@ -19,6 +19,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckJson(input_api, output_api))
   results.extend(_CheckPerfJsonUpToDate(input_api, output_api))
   results.extend(_CheckExpectations(input_api, output_api))
+  results.extend(_UpdateSysHealthCSV(input_api, output_api))
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
@@ -114,6 +115,26 @@ def _CheckJson(input_api, output_api):
     except ValueError:
       return [output_api.PresubmitError('Error parsing JSON in %s!' % filename)]
   return []
+
+
+def _UpdateSysHealthCSV(input_api, output_api):
+  """Update go/csh-stories"""
+  results = []
+  perf_dir = input_api.PresubmitLocalPath()
+  out, _ = _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(
+          perf_dir, 'generate_system_health_csv')], input_api)
+  cmd = ['git', 'diff', '--name-only']
+  diff_text = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+
+  if "tools/perf/system_health_stories.csv" in diff_text:
+      results.append(output_api.PresubmitError((
+          'Due to your changes the system_health_stories.csv file has been ',
+          'changed. Please add this file and commit it: \n',
+          'chromium/src/tools/perf/system_health_stories.csv'),
+          long_text=out))
+  return results
 
 
 def CheckChangeOnUpload(input_api, output_api):
