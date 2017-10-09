@@ -45,6 +45,8 @@ checking_closure_args = [
   "checks_only",
   "chrome_pass",
   "polymer_pass",
+
+  "jscomp_off=duplicate"
 ]
 
 # Additional closure arguments for minifying

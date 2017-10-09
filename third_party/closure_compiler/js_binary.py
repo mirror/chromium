@@ -19,24 +19,30 @@ import compile2
 
 
 def ParseDepList(dep):
-  """Parses a depenency list, returns |sources, deps|."""
-  assert os.path.isfile(dep), (os.path.splitext(dep) +
+  """Parses a dependency list, returns |sources, deps, externs|."""
+  assert os.path.isfile(dep), (dep +
                                ' is not a js_library target')
   with open(dep, 'r') as dep_list:
     lines = dep_list.read().splitlines()
   assert 'deps:' in lines, dep + ' is not formated correctly, missing "deps:"'
-  split = lines.index('deps:')
-  return lines[1:split], lines[split+1:]
+  deps_start = lines.index('deps:')
+  assert 'externs:' in lines, dep + ' is not formated correctly, missing "externs:"'
+  externs_start = lines.index('externs:')
+
+  return (lines[1:deps_start],
+          lines[deps_start+1:externs_start],
+          lines[externs_start+1:])
 
 
-def CrawlDepsTree(deps, sources):
+def CrawlDepsTree(deps, sources, externs):
   """Parses the dependency tree creating a post-order listing of sources."""
   for dep in deps:
-    new_sources, new_deps = ParseDepList(dep)
+    new_sources, new_deps, new_externs = ParseDepList(dep)
 
-    sources = CrawlDepsTree(new_deps, sources)
-    sources += [source for source in new_sources if source not in sources]
-  return sources
+    sources, externs = CrawlDepsTree(new_deps, sources, externs)
+    sources = new_sources + [s for s in sources if s not in new_sources]
+    externs += [e for e in new_externs if e not in externs]
+  return sources, externs
 
 
 def main():
@@ -61,7 +67,10 @@ def main():
                       help='A list of extern files to pass to the compiler')
 
   args = parser.parse_args()
-  sources = CrawlDepsTree(args.deps, []) + args.sources
+  print 'Deps for ', args.sources
+  print '\n'.join(args.deps)
+  sources, externs = CrawlDepsTree(args.deps, args.sources, args.externs)
+  print '\n'.join(sources)
 
   compiler_args = ['--%s' % flag for flag in args.flags]
   compiler_args += ['--externs=%s' % e for e in args.externs]
@@ -76,6 +85,7 @@ def main():
   compiler_args += sources
 
   returncode, errors = compile2.Checker().run_jar(args.compiler, compiler_args)
+  print '\n'.join(compiler_args)
   if returncode != 0:
     print errors
 
