@@ -16,6 +16,24 @@
       "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3f462f_cbf849c2",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T17:07:40Z",
+      "side": 0,
+      "message": "sorry I didn\u0027t understand. Is this change intentional?",
+      "parentUuid": "b57a4344_5ea870e6",
+      "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
