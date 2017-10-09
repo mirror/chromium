@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bca9d8b_506ecb1a",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T18:07:18Z",
+      "side": 1,
+      "message": "Just to be clear, if thre is no delegate then there should not be a context menu, correct?",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d29df3_7ee1c8e8",
+        "filename": "ui/message_center/message_center_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T18:07:18Z",
+      "side": 1,
+      "message": "Is there a tracking bug for this?",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd8c9e7_437a0984",
+        "filename": "ui/message_center/views/message_popup_collection.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-09T18:07:18Z",
+      "side": 1,
+      "message": "notification",
+      "revId": "473ea0042b2481340e4255c8c0f8bc65c11a7e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
