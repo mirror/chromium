@@ -29,33 +29,29 @@ class MockWebRTCPeerConnectionHandlerClient
   MOCK_METHOD1(DidChangeSignalingState, void(SignalingState state));
   MOCK_METHOD1(DidChangeICEGatheringState, void(ICEGatheringState state));
   MOCK_METHOD1(DidChangeICEConnectionState, void(ICEConnectionState state));
-  MOCK_METHOD2(
-      DidAddRemoteStream,
-      void(const blink::WebMediaStream& stream_descriptor,
-           blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>*));
-  MOCK_METHOD1(DidRemoveRemoteStream,
-               void(const blink::WebMediaStream& stream_descriptor));
+  MOCK_METHOD1(DidAddRemoteTrack,
+               void(std::unique_ptr<blink::WebRTCRtpReceiver>*));
+  MOCK_METHOD1(DidRemoveRemoteTrack,
+               void(std::unique_ptr<blink::WebRTCRtpReceiver>*));
   MOCK_METHOD1(DidAddRemoteDataChannel, void(blink::WebRTCDataChannelHandler*));
   MOCK_METHOD0(ReleasePeerConnectionHandler, void());
 
   void didGenerateICECandidateWorker(
       const blink::WebRTCICECandidate& candidate);
-  void didAddRemoteStreamWorker(
-      const blink::WebMediaStream& stream_descriptor,
-      blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>*
-          stream_web_rtp_receivers);
-  void didRemoveRemoteStreamWorker(
-      const blink::WebMediaStream& stream_descriptor);
+  void didAddRemoteTrackWorker(
+      std::unique_ptr<blink::WebRTCRtpReceiver>* stream_web_rtp_receivers);
+  void didRemoveRemoteTrackWorker(
+      std::unique_ptr<blink::WebRTCRtpReceiver>* stream_web_rtp_receivers);
 
   const std::string& candidate_sdp() const { return candidate_sdp_; }
   int candidate_mlineindex() const {
     return candidate_mline_index_;
   }
   const std::string& candidate_mid() const { return candidate_mid_ ; }
-  const blink::WebMediaStream& remote_stream() const { return remote_steam_;}
+  const blink::WebMediaStream& remote_stream() const { return remote_stream_; }
 
  private:
-  blink::WebMediaStream remote_steam_;
+  blink::WebMediaStream remote_stream_;
   std::string candidate_sdp_;
   int candidate_mline_index_;
   std::string candidate_mid_;
