@@ -64,7 +64,6 @@
 #include "chrome/browser/ui/webui/user_actions/user_actions_ui.h"
 #include "chrome/browser/ui/webui/version_ui.h"
 #include "chrome/common/chrome_features.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
@@ -414,12 +413,6 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
   // Downloads list on Android uses the built-in download manager.
   if (url.host_piece() == chrome::kChromeUIDownloadsHost)
     return &NewWebUI<MdDownloadsUI>;
-  // Material Design feedback. Feedback is implemented separately in
-  // Android.
-  if (url.host_piece() == chrome::kChromeUIFeedbackHost &&
-      ::switches::MdFeedbackEnabled()) {
-    return &NewWebUI<MdFeedbackUI>;
-  }
   // Identity API is not available on Android.
   if (url.host_piece() == chrome::kChromeUIIdentityInternalsHost)
     return &NewWebUI<IdentityInternalsUI>;
