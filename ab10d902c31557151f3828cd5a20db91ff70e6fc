@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e62ed9b1_3e40b857",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "update function name",
+      "range": {
+        "startLine": 73,
+        "startChar": 42,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f07648_698ca120",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "update function name",
+      "range": {
+        "startLine": 78,
+        "startChar": 54,
+        "endLine": 78,
+        "endChar": 77
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c66a22_25abd999",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "update function name",
+      "range": {
+        "startLine": 79,
+        "startChar": 29,
+        "endLine": 79,
+        "endChar": 76
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c051ee_0e81de17",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "nit: wrap line, as below",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 88
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370c2c7b_feba0d2f",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "IIUC, we want the Settings UI to know that the underlying pref is updated here. So we need to make sure Polymer is notified of the change.\n\n|this.settingsPrefs_.prefs.translate_blocked_languages.value| is being set to its existing value (the same array). The array mutations won\u0027t be noticed by Polymer and we\u0027ll get in a weird state. Either use the Polymer push/splice methods, or make |blockedList| be a copy of the pref value instead of equal to it.",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7c9d32_761bd5b4",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-09T22:50:35Z",
+      "side": 1,
+      "message": "update function name",
+      "range": {
+        "startLine": 1261,
+        "startChar": 2,
+        "endLine": 1261,
+        "endChar": 49
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
