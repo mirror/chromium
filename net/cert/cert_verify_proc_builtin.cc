@@ -56,20 +56,19 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
 
   // This is called for each built chain, including ones which failed. It is
   // responsible for adding errors to the built chain if it is not acceptable.
-  void CheckPathAfterVerification(const CertPath& path,
-                                  CertPathErrors* errors) override {
-    CheckRevocation(path, errors);
+  void CheckPathAfterVerification(CertPathBuilderResultPath* path) override {
+    CheckRevocation(path);
   }
 
  private:
   // This method checks whether a certificate chain has been revoked, and if
   // so adds errors to the affected certificates.
-  CertRevocationStatus CheckRevocation(const CertPath& path,
-                                       CertPathErrors* errors) const {
+  CertRevocationStatus CheckRevocation(CertPathBuilderResultPath* path) const {
     // First check for revocations using the CRLSet. This does not require
     // any network activity.
     if (crl_set_) {
-      CertRevocationStatus status = CheckRevocationUsingCRLSet(path, errors);
+      CertRevocationStatus status =
+          CheckRevocationUsingCRLSet(*path, &path->errors);
       if (status == CertRevocationStatus::kKnown)
         return status;
     }
@@ -82,7 +81,7 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
   // any certificate is revoked, the kCertificateRevoked high-severity error is
   // added.
   CertRevocationStatus CheckRevocationUsingCRLSet(
-      const CertPath& path,
+      const CertPathBuilderResultPath& path,
       CertPathErrors* errors) const {
     // Iterate from root certificate towards the leaf (the root certificate is
     // also checked for revocation by CRLSet).
@@ -212,10 +211,10 @@ void AppendPublicKeyHashes(const der::Input& spki_bytes,
 }
 
 // Appends the SubjectPublicKeyInfo hashes for all certificates in
-// |partial_path| to |*hashes|.
-void AppendPublicKeyHashes(const CertPathBuilder::ResultPath& partial_path,
+// |path| to |*hashes|.
+void AppendPublicKeyHashes(const CertPathBuilderResultPath& path,
                            HashValueVector* hashes) {
-  for (const scoped_refptr<ParsedCertificate>& cert : partial_path.path.certs)
+  for (const scoped_refptr<ParsedCertificate>& cert : path.certs)
     AppendPublicKeyHashes(cert->tbs().spki_tlv, hashes);
 }
 
@@ -260,12 +259,12 @@ X509Certificate::OSCertHandle CreateOSCertHandle(
 //  * |path|: The result (possibly failed) from path building.
 scoped_refptr<X509Certificate> CreateVerifiedCertChain(
     X509Certificate* target_cert,
-    const CertPathBuilder::ResultPath& path) {
+    const CertPathBuilderResultPath& path) {
   X509Certificate::OSCertHandles intermediates;
 
   // Skip the first certificate in the path as that is the target certificate
-  for (size_t i = 1; i < path.path.certs.size(); ++i)
-    intermediates.push_back(CreateOSCertHandle(path.path.certs[i]));
+  for (size_t i = 1; i < path.certs.size(); ++i)
+    intermediates.push_back(CreateOSCertHandle(path.certs[i]));
 
   scoped_refptr<X509Certificate> result = X509Certificate::CreateFromHandle(
       target_cert->os_cert_handle(), intermediates);
@@ -354,10 +353,10 @@ void DoVerify(X509Certificate* input_cert,
 
   // Use the best path that was built. This could be a partial path, or it could
   // be a valid complete path.
-  const CertPathBuilder::ResultPath& partial_path =
+  const CertPathBuilderResultPath& partial_path =
       *result.paths[result.best_result_index].get();
 
-  const ParsedCertificate* trusted_cert = partial_path.path.GetTrustedCert();
+  const ParsedCertificate* trusted_cert = partial_path.GetTrustedCert();
   if (trusted_cert) {
     verify_result->is_issued_by_known_root =
         ssl_trust_store->IsKnownRoot(trusted_cert);
@@ -380,7 +379,7 @@ void DoVerify(X509Certificate* input_cert,
 
   if (partial_path.errors.ContainsHighSeverityErrors()) {
     LOG(ERROR) << "CertVerifyProcBuiltin for " << hostname << " failed:\n"
-               << partial_path.errors.ToDebugString(partial_path.path.certs);
+               << partial_path.errors.ToDebugString(partial_path.certs);
   }
 }
 
