@@ -96,8 +96,7 @@ class NetworkTrafficAnnotationChecker():
     # with the current version of clang, and this test starts failing,
     # please set test_is_enabled to "False" and file a bug to get this
     # reenabled, and cc the people listed in //tools/traffic_annotation/OWNERS.
-    # TODO(rhalavati): Actually enable the check.
-    test_is_enabled = False
+    test_is_enabled = True
     if not test_is_enabled:
       return [], []
 
