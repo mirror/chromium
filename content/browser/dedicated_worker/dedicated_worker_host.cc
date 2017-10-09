@@ -5,11 +5,13 @@
 #include <string>
 
 #include "content/browser/dedicated_worker/dedicated_worker_host.h"
+#include "content/browser/worker_binder_registry.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 #include "url/origin.h"
 
@@ -27,7 +29,8 @@ class DedicatedWorkerHost : public service_manager::mojom::InterfaceProvider {
     if (!process)
       return;
 
-    // TODO(sammc): Dispatch interface requests.
+    GetWorkerBinderRegistry().BindInterface(
+        interface_name, std::move(interface_pipe), process, origin_);
   }
 
  private:

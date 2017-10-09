@@ -2925,7 +2925,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
     permission_service_context_.reset(new PermissionServiceContext(this));
 
   registry_->AddInterface(
-      base::Bind(&PermissionServiceContext::CreateService,
+      base::Bind(&PermissionServiceContext::CreateServiceForFrame,
                  base::Unretained(permission_service_context_.get())));
 
   registry_->AddInterface(base::Bind(

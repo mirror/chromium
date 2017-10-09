@@ -31,6 +31,7 @@
 #include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_type_converters.h"
+#include "content/browser/worker_binder_registry.h"
 #include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
@@ -205,6 +206,9 @@ void GetInterfaceImpl(const std::string& interface_name,
   auto* process = RenderProcessHost::FromID(process_id);
   if (!process)
     return;
+
+  GetWorkerBinderRegistry().BindInterface(
+      interface_name, std::move(interface_pipe), process, origin);
 }
 
 }  // namespace

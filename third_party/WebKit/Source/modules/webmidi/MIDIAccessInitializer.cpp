@@ -43,7 +43,6 @@ ScriptPromise MIDIAccessInitializer::Start() {
                              mojo::MakeRequest(&permission_service_));
   permission_service_->RequestPermission(
       CreateMidiPermissionDescriptor(options_.hasSysex() && options_.sysex()),
-      GetExecutionContext()->GetSecurityOrigin(),
       UserGestureIndicator::ProcessingUserGesture(),
       ConvertToBaseCallback(WTF::Bind(
           &MIDIAccessInitializer::OnPermissionsUpdated, WrapPersistent(this))));
