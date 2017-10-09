@@ -100,7 +100,6 @@ cr.define('extensions', function() {
         assert(this.data);
         idElement.innerHTML = this.i18n('itemId', this.data.id);
       }
-      this.fire('extension-item-size-changed', {item: this.data});
     },
 
     /**
