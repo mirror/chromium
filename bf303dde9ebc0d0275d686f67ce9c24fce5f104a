@@ -22,6 +22,30 @@
       "revId": "bf303dde9ebc0d0275d686f67ce9c24fce5f104a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70cc89a4_4760cda4",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-09T01:43:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cda0ad1_8495fb4a",
+      "range": {
+        "startLine": 587,
+        "startChar": 41,
+        "endLine": 587,
+        "endChar": 46
+      },
+      "revId": "bf303dde9ebc0d0275d686f67ce9c24fce5f104a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
