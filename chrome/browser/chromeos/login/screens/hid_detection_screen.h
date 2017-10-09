@@ -16,13 +16,13 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/chromeos/device/input_service_proxy.h"
 #include "chrome/browser/chromeos/login/screens/base_screen.h"
 #include "components/login/screens/screen_context.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_device.h"
 #include "device/bluetooth/bluetooth_discovery_session.h"
 #include "device/hid/public/interfaces/input_service.mojom.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 
 namespace chromeos {
 
@@ -33,7 +33,7 @@ class HIDDetectionView;
 class HIDDetectionScreen : public BaseScreen,
                            public device::BluetoothAdapter::Observer,
                            public device::BluetoothDevice::PairingDelegate,
-                           public InputServiceProxy::Observer {
+                           public device::mojom::InputDeviceManagerClient {
  public:
   static const char kContextKeyKeyboardState[];
   static const char kContextKeyMouseState[];
@@ -98,9 +98,9 @@ class HIDDetectionScreen : public BaseScreen,
   void DeviceRemoved(device::BluetoothAdapter* adapter,
                      device::BluetoothDevice* device) override;
 
-  // InputServiceProxy::Observer implementation.
-  void OnInputDeviceAdded(InputDeviceInfoPtr info) override;
-  void OnInputDeviceRemoved(const std::string& id) override;
+  // device::mojom::InputDeviceManagerClient implementation.
+  void InputDeviceAdded(InputDeviceInfoPtr info) override;
+  void InputDeviceRemoved(const std::string& id) override;
 
   // Types of dialog leaving scenarios for UMA metric.
   enum ContinueScenarioType {
@@ -135,8 +135,7 @@ class HIDDetectionScreen : public BaseScreen,
       const base::Callback<void(bool)>& on_check_done,
       std::vector<InputDeviceInfoPtr> devices);
 
-  // Saves and processes list of input devices returned by InputServiceProxy on
-  // regular request.
+  // Saves and processes list of input devices returned on regular request.
   void OnGetInputDevicesList(std::vector<InputDeviceInfoPtr> devices);
 
   // Called for revision of active devices. If current-placement is available
@@ -212,7 +211,10 @@ class HIDDetectionScreen : public BaseScreen,
   // Default bluetooth adapter, used for all operations.
   scoped_refptr<device::BluetoothAdapter> adapter_;
 
-  InputServiceProxy input_service_proxy_;
+  device::mojom::InputDeviceManagerPtr input_device_manager_;
+  device::mojom::InputDeviceManagerPtr input_device_manager_for_check_;
+
+  mojo::AssociatedBinding<device::mojom::InputDeviceManagerClient> binding_;
 
   // Save the connected input devices.
   DeviceMap devices_;
