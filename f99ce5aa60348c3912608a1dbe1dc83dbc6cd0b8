@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c763324e_83b26908",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-09T16:56:51Z",
+      "side": 1,
+      "message": "for consistency with use_libfuzzer/use_afl etc, maybe rename to |use_fuzzing_engine| ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 15
+      },
+      "revId": "f99ce5aa60348c3912608a1dbe1dc83dbc6cd0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
