@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31dbe8f_e31f1da8",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/overflow-repaint-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-09T01:38:18Z",
+      "side": 1,
+      "message": "I verified that these two tests are visually correct in SPv2 mode.",
+      "revId": "d768370cdf33ff7e5565bb24c8678e847743da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
