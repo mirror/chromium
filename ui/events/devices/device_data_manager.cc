@@ -6,6 +6,7 @@
 
 #include "base/at_exit.h"
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/events/devices/input_device_event_observer.h"
