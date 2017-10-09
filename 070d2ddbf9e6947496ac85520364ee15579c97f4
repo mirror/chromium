@@ -16,6 +16,24 @@
       "revId": "070d2ddbf9e6947496ac85520364ee15579c97f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aaf604e_77be4b78",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T23:17:00Z",
+      "side": 1,
+      "message": "quite foolish in retrospect. this was done too hastily.",
+      "parentUuid": "6ef41a9d_f17ed69a",
+      "revId": "070d2ddbf9e6947496ac85520364ee15579c97f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
