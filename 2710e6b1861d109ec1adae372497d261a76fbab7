@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022f13b2_0db559ec",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T19:32:28Z",
+      "side": 1,
+      "message": "optional nit: how about using enum class and forward decl?",
+      "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3c71d8_9eccfc57",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T19:32:28Z",
+      "side": 1,
+      "message": "optional nit: define a utility method to get current indicator type.",
+      "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
