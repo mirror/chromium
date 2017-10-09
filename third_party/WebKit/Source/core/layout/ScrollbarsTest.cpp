@@ -27,12 +27,16 @@ namespace blink {
 
 namespace {
 
-class ScrollbarsTest : private ScopedRootLayerScrollingForTest, public SimTest {
+class ScrollbarsTest : public ::testing::WithParamInterface<bool>,
+                       private ScopedRootLayerScrollingForTest,
+                       public SimTest {
  public:
-  ScrollbarsTest() : ScopedRootLayerScrollingForTest(true) {}
+  ScrollbarsTest() : ScopedRootLayerScrollingForTest(GetParam()) {}
 };
 
-TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
+INSTANTIATE_TEST_CASE_P(All, ScrollbarsTest, ::testing::Bool());
+
+TEST_P(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
   v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
   WebView().Resize(WebSize(800, 600));
   SimRequest request("https://example.com/test.html", "text/html");
@@ -40,11 +44,11 @@ TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
   request.Complete(
       "<!DOCTYPE html>"
       "<style> body { width: 1600px; height: 1200px; } </style>");
-  PaintLayerScrollableArea* plsa =
-      GetDocument().GetLayoutView()->GetScrollableArea();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
 
   Compositor().BeginFrame();
-  ASSERT_TRUE(plsa->VerticalScrollbar() && plsa->HorizontalScrollbar());
+  ASSERT_TRUE(layout_viewport->VerticalScrollbar() &&
+              layout_viewport->HorizontalScrollbar());
 
   // Forces recalc of LayoutView's computed style in Document::updateStyle,
   // without invalidating layout.
@@ -52,7 +56,8 @@ TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
       "document.querySelector('style').sheet.insertRule('body {}', 1);"));
 
   Compositor().BeginFrame();
-  ASSERT_TRUE(plsa->VerticalScrollbar() && plsa->HorizontalScrollbar());
+  ASSERT_TRUE(layout_viewport->VerticalScrollbar() &&
+              layout_viewport->HorizontalScrollbar());
 }
 
 class ScrollbarsWebViewClient : public FrameTestHelpers::TestWebViewClient {
@@ -71,7 +76,7 @@ class ScrollbarsWebViewClient : public FrameTestHelpers::TestWebViewClient {
   float device_scale_factor_;
 };
 
-TEST_F(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
+TEST_P(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
   ScrollbarsWebViewClient client;
   client.set_device_scale_factor(1.f);
 
@@ -133,7 +138,7 @@ TEST_F(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
 // caused by trying to avoid the layout when overlays are enabled but not
 // checking whether the scrollbars should be custom - which do take up layout
 // space. https://crbug.com/668387.
-TEST_F(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
+TEST_P(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
   // The bug reproduces only with RLS off. When RLS ships we can keep the test
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
@@ -187,7 +192,7 @@ TEST_F(ScrollbarsTest, CustomScrollbarsCauseLayoutOnExistenceChange) {
   ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
 }
 
-TEST_F(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
+TEST_P(ScrollbarsTest, TransparentBackgroundUsesDarkOverlayColorTheme) {
   // The bug reproduces only with RLS off. When RLS ships we can keep the test
   // but remove this setting.
   ScopedRootLayerScrollingForTest turn_off_root_layer_scrolling(false);
@@ -1145,6 +1150,77 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
             scrollbar->GetTheme().ThumbPosition(*scrollbar));
 }
 #endif
+
+// A body with width just under the window width should not have scrollbars.
+TEST_P(ScrollbarsTest, WideBodyShouldNotHaveScrollbars) {
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 10px;"
+      "  width: 799px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
+// A body with height just under the window height should not have scrollbars.
+TEST_P(ScrollbarsTest, TallBodyShouldNotHaveScrollbars) {
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 599px;"
+      "  width: 10px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
+// A body with dimensions just barely inside the window dimensions should not
+// have scrollbars.
+TEST_P(ScrollbarsTest, TallAndWideBodyShouldNotHaveScrollbars) {
+  // DCHECK(RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 599px;"
+      "  width: 799px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
 
 }  // namespace
 
