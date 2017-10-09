@@ -11,7 +11,37 @@
 #include "components/download/internal/startup_status.h"
 #include "components/download/internal/stats.h"
 
+#include "base/guid.h"
+#include "base/threading/thread_task_runner_handle.h"
+#include "components/download/public/download_params.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
+
 namespace download {
+
+namespace {
+void CrapCallback(const std::string& guid, DownloadParams::StartResult result) {
+}
+
+void StartEmUp(DownloadServiceImpl* service) {
+  DownloadParams p;
+  p.guid = base::GenerateGUID();
+  p.client = DownloadClient::DEBUGGING;
+  p.request_params.url =
+      GURL("http://ipv4.download.thinkbroadband.com/100MB.zip");
+  p.traffic_annotation =
+      net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET);
+  p.callback = base::Bind(&CrapCallback);
+  service->StartDownload(p);
+}
+
+void TestMe(DownloadServiceImpl* service) {
+  StartEmUp(service);
+  StartEmUp(service);
+  StartEmUp(service);
+  StartEmUp(service);
+  StartEmUp(service);
+}
+}  // namespace
 
 DownloadServiceImpl::DownloadServiceImpl(std::unique_ptr<Configuration> config,
                                          std::unique_ptr<Logger> logger,
@@ -23,6 +53,8 @@ DownloadServiceImpl::DownloadServiceImpl(std::unique_ptr<Configuration> config,
       startup_completed_(false) {
   controller_->Initialize(base::Bind(
       &DownloadServiceImpl::OnControllerInitialized, base::Unretained(this)));
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::Bind(&TestMe, this), base::TimeDelta::FromSeconds(10));
 }
 
 DownloadServiceImpl::~DownloadServiceImpl() = default;
