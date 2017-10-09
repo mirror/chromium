@@ -48,14 +48,6 @@ function renderTemplate(experimentalFeaturesData) {
     elements[i].onclick = restartBrowser;
   }
 
-  // Toggling of experiment description overflow content.
-  elements = document.querySelectorAll('.experiment .flex:first-child');
-  for (var i = 0; i < elements.length; ++i) {
-    elements[i].addEventListener('click', function(e) {
-      this.classList.toggle('expand');
-    });
-  }
-
   // Tab panel selection.
   var tabEls = document.getElementsByClassName('tab');
   for (var i = 0; i < tabEls.length; ++i) {
@@ -68,6 +60,15 @@ function renderTemplate(experimentalFeaturesData) {
   }
 
   $('experiment-reset-all').onclick = resetAllFlags;
+
+  // Toggling of experiment description overflow content.
+  elements = document.querySelectorAll('.experiment .flex:first-child');
+  for (var i = 0; i < elements.length; ++i) {
+    elements[i].onclick = function(e) {
+      this.classList.toggle('expand');
+      return false;
+    };
+  }
 
   highlightReferencedFlag();
   var search = new FlagSearch();

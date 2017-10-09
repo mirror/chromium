@@ -16,6 +16,7 @@ body {
   --color-light-gray: rgba(0, 0, 0, 0.54);
   --color-shadow: rgba(0, 0, 0, 0.1);
   --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --google-blue-300: rgb(123, 170, 247);
   --google-blue-700: rgb(51, 103, 214);
   --google-grey-100: rgb(245, 245, 245);
   color: var(--color-dark-gray);
@@ -127,6 +128,11 @@ h2 {
   width: 20px;
 }
 
+.clear-search:focus {
+  opacity: 1;
+  outline: none;
+}
+
 .searching .blurb-container,
 .searching .promo {
   display: none;
@@ -162,7 +168,6 @@ h2 {
   line-height: 1.45;
   /* Adjustment for fixed header */
   margin: .3em 0 -70px;
-  overflow: hidden;
   padding-top: 70px;
   width: 100%;
 }
@@ -173,7 +178,7 @@ h2 {
 
 .experiment .flex-container .flex:first-child {
   box-sizing: border-box;
-  overflow: hidden;
+  max-width: 540px;
   padding-right: 8px;
 }
 
@@ -315,6 +320,12 @@ h2 {
   z-index: 1;
 }
 
+.tab:active,
+.tab:focus {
+  background: #eee;
+  outline: none;
+}
+
 .tabs .selected .tab,
 .tabs .selected .tab:focus {
   border-bottom: 3px solid rgb(66, 133, 244);
@@ -385,6 +396,11 @@ h2 {
   color: white;
   font-size: 14px;
   padding: 14px 38px;
+}
+
+.experiment-restart-button:focus {
+  background: var(--google-blue-300);
+  outline: 0;
 }
 
 #version {
