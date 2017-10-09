@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "612208b9_294e9980",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "It seems a little strange that the RenderFrameHost is not remembered after construction. With out of process iframes, the RenderFrameHosts that make up a WebContents may not even be all in the same process, and for a bunch of reasons, it\u0027s bad to lose track of which process you\u0027re talking to.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33231446_c4526c28",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "It seems a little strange that the RenderFrameHost is not remembered after construction. With out of process iframes, the RenderFrameHosts that make up a WebContents may not even be all in the same process, and for a bunch of reasons, it\u0027s bad to lose track of which process you\u0027re talking to.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0650c2_2baf1485",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "Here, it\u0027s not clear what bad things could happen if you had two RenderFrameHosts (e.g. one for the main frame, one for an \u003ciframe\u003e) that both initiated a KeyboardLockService. Because the keyboard_lock::Host is using web_contents_ as a key, it seems like one of the two KeyboardLockServiceImpls will wind up in an orphaned state.\n\nThat situation worries me, since it sounds like the setup for an exploitable use-after-free bug.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ed3109b_06fbe9fe",
         "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
         "patchSetId": 18
@@ -19,6 +70,91 @@
         "endLine": 43,
         "endChar": 49
       },
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ca6e51_87f10b10",
+        "filename": "ui/aura/keyboard_lock/active_client_key_event_filter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "This being templated on CLIENT_ID makes the code harder to comprehend. And it\u0027s surprising to me that CLIENT_ID winds up being a WebContents*, because I don\u0027t think of a WebContents pointer as being, semantically, an ID.\n\nInstead of templating this, I\u0027d prefer we use interfaces or callbacks, so that the non-content code doesn\u0027t see a WebContents pointer at all.\n\nSometimes base::SupportsUserData can be a useful technique as well for componentization something that needs to be created on a one-per-WebContents basis (i.e. the TabHelper pattern -- https://chromium.googlesource.com/chromium/src/+/HEAD/docs/tab_helpers.md ).",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8678f6c_f253be86",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "At a very high level, I have an instinct here that content::RenderWidgetHostView ought to be part of the per-platform implementation strategy here.\n\nIn content, RenderWidgetHostView is the fundamental class responsible for receiving input events from the surrounding environment. It already knows about focus and fullscreen. By not going through RenderWidgetHostView, you\u0027re having to approximate the events you actually care about via less precise signals (for example, the cancellation of special-key hooking whenever a main-frame navigation occurs via WebContentsObserver, seems potentially imprecise. What if the navigation becomes a download? What if you\u0027re doing an in-page navigation?)\n\nI\u0027d direct your attention to RenderWidgetHostViewAura, which can already detect if it\u0027s mus (IsMus()) or not. For the non-mus case, you would forward the key interception requests to a helper PlatformHook that would be either platform_hook_win or platform_hook_x11 (using either #ifdefs, or selective compilation).\n\nPart of the code-sharing goal here, right, is that you envision needing the X11 (and ultimately, I guess, mac/win?) implementation of PlatformHook to be usable both by mojo ui service and content? For that purpose, I might consider just putting the PlatformHookWin in ui/base/win, similar to how osk_display_manager.h works. It\u0027s not necessarily clear to me that you\u0027d need to even establish a uniform interface across platforms; though this depends on how bad the #ifdef cost actually is in the calling code.\n\nBut anyhow: assuming that mus support in V1 is a non-goal, I\u0027d be okay with putting the platform_hook_win and similar code into the content/ layer directly, and figure out how to extract it out for reuse by mus as a follow-on activity. It is just a lot easier to reason about structuring code for reuse, at the point where you actually have 2 real consumers.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6935ea9_742c49c0",
+        "filename": "ui/aura/keyboard_lock/special_key_detector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "Should they just be arguments to the constructor then, rather than being Delegate methods? That would make this guarantee implicit.\n\nYou could potentially collect them into a struct (SpecialKeyInfo or SpecialKeyDetector::Info or something like that), and pass the struct into the ctor.",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbe3660_2c9d5238",
+        "filename": "ui/aura/keyboard_lock/special_key_detector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "style nit: names_like_this() are for simple accessors; virtual methods are generally not considered simple accessors.\n\nTo illustrate, there are very few methods named like this: https://cs.chromium.org/search/?q\u003dvirtual%5C+int%5C+%5Ba-z%5D%2B_+case:yes+-file:third_party+-file:v8\u0026sq\u003dpackage:chromium\u0026type\u003dcs and very many named like this: https://cs.chromium.org/search/?q\u003dvirtual%5C+int%5C+%5BA-Z%5D%5Ba-z%5D%2B%5BA-Z%5D+case:yes+-file:third_party+-file:v8\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794b04b1_6a80edfe",
+        "filename": "ui/aura/keyboard_lock/special_key_detector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T18:42:49Z",
+      "side": 1,
+      "message": "Time durations should always be expressed as base::TimeDeltas.",
       "revId": "26dcda03a7040871e16f648c9607af78f8796690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
