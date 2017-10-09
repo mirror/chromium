@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acc7a7ca_6b157c79",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T18:36:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this can happen?",
+      "range": {
+        "startLine": 1377,
+        "startChar": 28,
+        "endLine": 1377,
+        "endChar": 0
+      },
+      "revId": "85fd5a51849d4a193779915d16b932167c8705a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea23ba2_5f9b0030",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T18:36:58Z",
+      "side": 1,
+      "message": "This should be looked at by someone familiar with GetPermissionStatus.  It\u0027s an undocumented API (And BACKGROUND_SYNC is also undocumented), so I can\u0027t verify the correctness of this.",
+      "range": {
+        "startLine": 1388,
+        "startChar": 33,
+        "endLine": 1388,
+        "endChar": 34
+      },
+      "revId": "85fd5a51849d4a193779915d16b932167c8705a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7bdc36_a3ff0110",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T18:36:58Z",
+      "side": 1,
+      "message": "Do you plan to fix this in this CL?  Doesn\u0027t seem like it should be landed without fixing this.  Lifetimes certainly don\u0027t look right - the permission manager it a KeyedService on the Profile (No idea why it\u0027s not a BrowserContextKeyedService...), so during teardown, it could well be delted by the time we bound over to the UI thread.",
+      "range": {
+        "startLine": 1419,
+        "startChar": 24,
+        "endLine": 1419,
+        "endChar": 35
+      },
+      "revId": "85fd5a51849d4a193779915d16b932167c8705a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5e3ce5_d68c5fba",
+        "filename": "components/domain_reliability/context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T18:36:58Z",
+      "side": 1,
+      "message": "Should we do something if it\u0027s not allowed?  Delete the context?",
+      "range": {
+        "startLine": 169,
+        "startChar": 18,
+        "endLine": 169,
+        "endChar": 0
+      },
+      "revId": "85fd5a51849d4a193779915d16b932167c8705a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bcb987_a276c244",
+        "filename": "components/domain_reliability/context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T18:36:58Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 95,
+        "startChar": 3,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "85fd5a51849d4a193779915d16b932167c8705a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
