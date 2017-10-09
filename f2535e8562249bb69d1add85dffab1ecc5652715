@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89eb85e8_73d0e701",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T18:43:06Z",
+      "side": 1,
+      "message": "Nit: no default please (that suppresses compiler warnings for new enum values that aren\u0027t handled)",
+      "revId": "f2535e8562249bb69d1add85dffab1ecc5652715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6195ba_80e9a642",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation_struct_traits.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T18:43:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f2535e8562249bb69d1add85dffab1ecc5652715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
