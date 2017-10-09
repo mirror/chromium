@@ -1912,7 +1912,8 @@ static bool IsInlineWithOutlineAndContinuation(const LayoutObject& o) {
          !o.IsElementContinuation() && ToLayoutInline(o).Continuation();
 }
 
-bool LayoutBlockFlow::ShouldTruncateOverflowingText(const LayoutBlockFlow* block) const {
+bool LayoutBlockFlow::ShouldTruncateOverflowingText(
+    const LayoutBlockFlow* block) {
   const LayoutObject* object_to_check = block;
   if (block->IsAnonymousBlock()) {
     const LayoutObject* parent = block->Parent();

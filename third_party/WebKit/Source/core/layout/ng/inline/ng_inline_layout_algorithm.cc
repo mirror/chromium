@@ -176,9 +176,6 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
              item.GetLayoutObject()->IsLayoutNGListItem());
       DCHECK(!box->text_metrics.IsEmpty());
       DCHECK(item.Style());
-      text_builder.SetStyle(item.Style());
-      text_builder.SetSize(
-          {item_result.inline_size, box->text_metrics.LineHeight()});
       if (item_result.shape_result) {
         if (quirks_mode_)
           box->ActivateTextMetrics();
@@ -188,18 +185,15 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
                                    baseline_type_);
         }
         text_builder.SetEndEffect(item_result.text_end_effect);
-        text_builder.SetShapeResult(std::move(item_result.shape_result));
         text_builder.SetExpansion(item_result.expansion);
       } else {
         if (quirks_mode_ && line_box.Children().IsEmpty())
           box->ActivateTextMetrics();
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
-      RefPtr<NGPhysicalTextFragment> text_fragment =
-          text_builder.ToTextFragment(item_result.item_index,
-                                      item_result.start_offset,
-                                      item_result.end_offset);
-      line_box.AddChild(std::move(text_fragment), {position, box->text_top});
+      PlaceText(std::move(item_result.shape_result), *item.Style(), position,
+                item_result.inline_size, box, &text_builder, &item_result,
+                &line_box);
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       box = box_states_.OnOpenTag(item, item_result, &line_box, position);
       // Compute text metrics for all inline boxes since even empty inlines
@@ -219,7 +213,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
         if (quirks_mode_)
           box->ActivateTextMetrics();
       }
-      box = box_states_.OnCloseTag(item, &line_box, box, baseline_type_);
+      box = box_states_.OnCloseTag(&line_box, box, baseline_type_);
       continue;
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
       box = PlaceAtomicInline(item, &item_result, *line_info, position,
@@ -245,6 +239,14 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     }
 
     position += item_result.inline_size;
+  }
+
+  if (RefPtr<ShapeResult> text_overflow_result =
+          line_info->TakeTextOverflowResult()) {
+    // text_builder.SetEndEffect(item_result.text_end_effect);
+    PlaceGeneratedContent(std::move(text_overflow_result),
+                          line_info->LineStyle(), &position, box, &text_builder,
+                          &line_box);
   }
 
   if (line_box.Children().IsEmpty()) {
@@ -300,6 +302,49 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   return true;
 }
 
+void NGInlineLayoutAlgorithm::PlaceText(RefPtr<const ShapeResult> shape_result,
+                                        const ComputedStyle& style,
+                                        LayoutUnit position,
+                                        LayoutUnit inline_size,
+                                        NGInlineBoxState* box,
+                                        NGTextFragmentBuilder* text_builder,
+                                        NGInlineItemResult* item_result,
+                                        NGLineBoxFragmentBuilder* line_box) {
+  text_builder->SetStyle(&style);
+  text_builder->SetSize({inline_size, box->text_metrics.LineHeight()});
+  text_builder->SetShapeResult(std::move(shape_result));
+  RefPtr<NGPhysicalTextFragment> text_fragment =
+      item_result ? text_builder->ToTextFragment(item_result->item_index,
+                                                 item_result->start_offset,
+                                                 item_result->end_offset)
+                  : text_builder->ToTextFragment(0, 0, 0);
+  line_box->AddChild(std::move(text_fragment), {position, box->text_top});
+}
+
+void NGInlineLayoutAlgorithm::PlaceGeneratedContent(
+    RefPtr<const ShapeResult> shape_result,
+    const ComputedStyle& style,
+    LayoutUnit* position,
+    NGInlineBoxState* box,
+    NGTextFragmentBuilder* text_builder,
+    NGLineBoxFragmentBuilder* line_box) {
+  LayoutUnit inline_size = shape_result->SnappedWidth();
+  if (box->CanAddTextOfStyle(style)) {
+    PlaceText(std::move(shape_result), style, *position, inline_size, box,
+              text_builder, nullptr, line_box);
+  } else {
+    RefPtr<ComputedStyle> text_style =
+        ComputedStyle::CreateAnonymousStyleWithDisplay(style,
+                                                       EDisplay::kInline);
+    NGInlineBoxState* box = box_states_.OnOpenTag(*text_style, line_box);
+    box->ComputeTextMetrics(*text_style, baseline_type_, false);
+    PlaceText(std::move(shape_result), *text_style, *position, inline_size, box,
+              text_builder, nullptr, line_box);
+    box_states_.OnCloseTag(line_box, box, baseline_type_);
+  }
+  *position += inline_size;
+}
+
 NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
     const NGInlineItem& item,
     NGInlineItemResult* item_result,
@@ -318,7 +363,7 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
 
   PlaceLayoutResult(item_result, position, box, line_box);
 
-  return box_states_.OnCloseTag(item, line_box, box, baseline_type_);
+  return box_states_.OnCloseTag(line_box, box, baseline_type_);
 }
 
 // Place a NGLayoutResult into the line box.

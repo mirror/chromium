@@ -22,6 +22,7 @@ class NGInlineBreakToken;
 class NGInlineNode;
 class NGInlineItem;
 class NGLineBoxFragmentBuilder;
+class NGTextFragmentBuilder;
 
 // A class for inline layout (e.g. a <span> with no special style).
 //
@@ -52,6 +53,20 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   bool PlaceItems(NGLineInfo*,
                   const NGExclusionSpace&,
                   RefPtr<NGInlineBreakToken>);
+  void PlaceText(RefPtr<const ShapeResult>,
+                 const ComputedStyle&,
+                 LayoutUnit position,
+                 LayoutUnit inline_size,
+                 NGInlineBoxState*,
+                 NGTextFragmentBuilder*,
+                 NGInlineItemResult*,
+                 NGLineBoxFragmentBuilder*);
+  void PlaceGeneratedContent(RefPtr<const ShapeResult>,
+                             const ComputedStyle&,
+                             LayoutUnit* position,
+                             NGInlineBoxState*,
+                             NGTextFragmentBuilder*,
+                             NGLineBoxFragmentBuilder*);
   NGInlineBoxState* PlaceAtomicInline(const NGInlineItem&,
                                       NGInlineItemResult*,
                                       const NGLineInfo&,

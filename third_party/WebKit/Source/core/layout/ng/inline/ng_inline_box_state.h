@@ -82,6 +82,8 @@ struct NGInlineBoxState {
   void SetLineRightForBoxFragment(const NGInlineItem&,
                                   const NGInlineItemResult&,
                                   LayoutUnit position);
+
+  bool CanAddTextOfStyle(const ComputedStyle&) const;
 };
 
 // Represents the inline tree structure. This class provides:
@@ -102,10 +104,11 @@ class NGInlineLayoutStateStack {
                               const NGInlineItemResult&,
                               NGLineBoxFragmentBuilder*,
                               LayoutUnit position);
+  NGInlineBoxState* OnOpenTag(const ComputedStyle&,
+                              NGLineBoxFragmentBuilder* line_box);
 
   // Pop a box state stack.
-  NGInlineBoxState* OnCloseTag(const NGInlineItem&,
-                               NGLineBoxFragmentBuilder*,
+  NGInlineBoxState* OnCloseTag(NGLineBoxFragmentBuilder*,
                                NGInlineBoxState*,
                                FontBaseline);
 

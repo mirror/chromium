@@ -145,9 +145,17 @@ class CORE_EXPORT NGLineInfo {
     base_direction_ = direction;
   }
 
+  RefPtr<ShapeResult> TakeTextOverflowResult() {
+    return std::move(text_overflow_result_);
+  }
+  void SetTextOverflowResult(RefPtr<ShapeResult> result) {
+    text_overflow_result_ = std::move(result);
+  }
+
  private:
   const ComputedStyle* line_style_ = nullptr;
   NGInlineItemResults results_;
+  RefPtr<ShapeResult> text_overflow_result_;
 
   NGLogicalOffset line_offset_;
   LayoutUnit available_width_;
