@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "78a37305_d0f13c3a",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T21:25:50Z",
+      "side": 1,
+      "message": "I see. I imagined the plumbing would be more like:\n1. Renderer: Hi Browser, I need to create a new dedicated worker with the following script URL.\n2. Browser: \u003cdoes security checks\u003e\n3. Browser: OK, renderer. You\u0027re good. Here\u0027s your new dedicated worker host.\n\nIs it possible to (eventually) do that? It just seems awkward to have to plumb up the opaque origin bit from the renderer.",
+      "parentUuid": "a4d818a0_f238b41d",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe8469b_60171346",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
         "patchSetId": 5
