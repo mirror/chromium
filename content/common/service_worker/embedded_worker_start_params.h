@@ -7,6 +7,7 @@
 
 #include "content/common/content_export.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 #include "url/gurl.h"
 
 namespace content {

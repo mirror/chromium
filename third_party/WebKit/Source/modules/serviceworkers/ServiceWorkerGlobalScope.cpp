@@ -105,6 +105,9 @@ ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
     global_scope->ParseAndSetReferrerPolicy(creation_params->referrer_policy);
   OriginTrialContext::AddTokens(global_scope,
                                 creation_params->origin_trial_tokens.get());
+  global_scope->BindInterfaceProvider(
+      std::move(creation_params->interface_provider));
+
   return global_scope;
 }
 
