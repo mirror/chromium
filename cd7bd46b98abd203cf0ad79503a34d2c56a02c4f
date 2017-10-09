@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b4f2f2fc_9f2de8e6",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-09T23:13:40Z",
+      "side": 1,
+      "message": "can you just return mojom::MessageLog* with message_.get() to make this const?",
+      "parentUuid": "e956c5b1_237b831b",
+      "revId": "cd7bd46b98abd203cf0ad79503a34d2c56a02c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a03af56_2dca5d43",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 23
