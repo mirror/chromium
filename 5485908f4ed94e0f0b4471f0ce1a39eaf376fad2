@@ -16,6 +16,24 @@
       "revId": "5485908f4ed94e0f0b4471f0ce1a39eaf376fad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d92dc3_c27fd427",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-09T00:59:45Z",
+      "side": 1,
+      "message": "Doesn\u0027t the sysroot contain things that can run only on Linux? But sure, done.\n\n(I\u0027m assuming checkout_linux is also true for android and cros builds, and checkout_mac also for ios builds.)\n\nbinutils is really just linux binaries, so I left that one as-is.",
+      "parentUuid": "1fd4055a_fb47a641",
+      "revId": "5485908f4ed94e0f0b4471f0ce1a39eaf376fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
