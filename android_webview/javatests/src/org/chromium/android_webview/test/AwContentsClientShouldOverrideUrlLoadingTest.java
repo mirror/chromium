@@ -830,6 +830,62 @@ public class AwContentsClientShouldOverrideUrlLoadingTest {
     @Test
     @SmallTest
     @Feature({"AndroidWebView"})
+    public void testCallStopAndLoadJsInCallback() throws Throwable {
+        class StopInCallbackClient extends TestAwContentsClient {
+            @Override
+            public boolean shouldOverrideUrlLoading(AwContentsClient.AwWebResourceRequest request) {
+                mAwContents.stopLoading();
+                mAwContents.loadUrl("javascript:window.location;");
+                return super.shouldOverrideUrlLoading(request);
+            }
+        }
+
+        setupWithProvidedContentsClient(new StopInCallbackClient());
+        mShouldOverrideUrlLoadingHelper = mContentsClient.getShouldOverrideUrlLoadingHelper();
+
+        mActivityTestRule.loadDataSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
+                CommonResources.makeHtmlPageWithSimpleLinkTo("http://foo.com"), "text/html", false);
+
+        int shouldOverrideUrlLoadingCallCount = mShouldOverrideUrlLoadingHelper.getCallCount();
+        setShouldOverrideUrlLoadingReturnValueOnUiThread(true);
+        clickOnLinkUsingJs();
+        mShouldOverrideUrlLoadingHelper.waitForCallback(shouldOverrideUrlLoadingCallCount);
+
+        mActivityTestRule.loadDataSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
+                CommonResources.ABOUT_HTML, "text/html", false);
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testCallLoadInCallback() throws Throwable {
+        final String httpPath = "/page_with_about_blank_navigation";
+        final String httpPathOnServer = mWebServer.getResponseUrl(httpPath);
+        addPageToTestServer(httpPath,
+                CommonResources.makeHtmlPageWithSimpleLinkTo(
+                        ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL));
+        class StopInCallbackClient extends TestAwContentsClient {
+            @Override
+            public boolean shouldOverrideUrlLoading(AwContentsClient.AwWebResourceRequest request) {
+                mAwContents.loadUrl(httpPathOnServer);
+                return super.shouldOverrideUrlLoading(request);
+            }
+        }
+        setupWithProvidedContentsClient(new StopInCallbackClient());
+        mShouldOverrideUrlLoadingHelper = mContentsClient.getShouldOverrideUrlLoadingHelper();
+        mActivityTestRule.loadDataSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
+                CommonResources.makeHtmlPageWithSimpleLinkTo("http://foo.com"), "text/html", false);
+        int shouldOverrideUrlLoadingCallCount = mShouldOverrideUrlLoadingHelper.getCallCount();
+        int onPageFinishedCallCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
+        setShouldOverrideUrlLoadingReturnValueOnUiThread(true);
+        clickOnLinkUsingJs();
+        mShouldOverrideUrlLoadingHelper.waitForCallback(shouldOverrideUrlLoadingCallCount);
+        mContentsClient.getOnPageFinishedHelper().waitForCallback(onPageFinishedCallCount);
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
     public void testNullContentsClientWithServerRedirect() throws Throwable {
         try {
             // The test will fire real intents through the test activity.
