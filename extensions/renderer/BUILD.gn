@@ -329,6 +329,36 @@ source_set("renderer") {
   }
 }
 
+static_library("unit_test_support") {
+  testonly = true
+  sources = [
+    "bindings/api_binding_test.cc",
+    "bindings/api_binding_test.h",
+    "bindings/api_binding_test_util.cc",
+    "bindings/api_binding_test_util.h",
+    "native_extension_bindings_system_unittest.cc",
+    "native_extension_bindings_system_unittest.h",
+    "string_source_map.cc",
+    "string_source_map.h",
+    "test_v8_extension_configuration.cc",
+    "test_v8_extension_configuration.h",
+  ]
+
+  deps = [
+    ":renderer",
+    "//base",
+    "//components/crx_file",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//content/public/child",
+    "//content/test:test_support",
+    "//extensions/common",
+    "//extensions:test_support",
+    "//gin:gin_test",
+    "//gin",
+  ]
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [
@@ -341,10 +371,6 @@ source_set("unit_tests") {
     "bindings/api_binding_hooks_test_delegate.cc",
     "bindings/api_binding_hooks_test_delegate.h",
     "bindings/api_binding_js_util_unittest.cc",
-    "bindings/api_binding_test.cc",
-    "bindings/api_binding_test.h",
-    "bindings/api_binding_test_util.cc",
-    "bindings/api_binding_test_util.h",
     "bindings/api_binding_unittest.cc",
     "bindings/api_bindings_system_unittest.cc",
     "bindings/api_bindings_system_unittest.h",
@@ -371,8 +397,6 @@ source_set("unit_tests") {
     "module_system_test.h",
     "module_system_unittest.cc",
     "mojo/keep_alive_client_unittest.cc",
-    "native_extension_bindings_system_unittest.cc",
-    "native_extension_bindings_system_unittest.h",
     "native_renderer_messaging_service_unittest.cc",
     "one_time_message_handler_unittest.cc",
     "safe_builtins_unittest.cc",
@@ -380,15 +404,12 @@ source_set("unit_tests") {
     "scoped_web_frame.h",
     "script_context_set_unittest.cc",
     "script_context_unittest.cc",
-    "string_source_map.cc",
-    "string_source_map.h",
-    "test_v8_extension_configuration.cc",
-    "test_v8_extension_configuration.h",
     "utils_unittest.cc",
   ]
 
   deps = [
     ":renderer",
+    ":unit_test_support",
     "//base",
     "//base/test:test_support",
     "//components/crx_file:crx_file",
