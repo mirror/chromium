@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab97d976_814302d4",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:25:42Z",
+      "side": 1,
+      "message": "nit: punctuation",
+      "revId": "52ec12177d33f27647a436dd878d4fa0d590430b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adfee93_af4bd115",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:25:42Z",
+      "side": 1,
+      "message": "nit: punctuation",
+      "revId": "52ec12177d33f27647a436dd878d4fa0d590430b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713e680d_7e766106",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:25:42Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be LOG()\u0027d -- maybe DVLOG or just drop it. This will print on every 10.9 user\u0027s machine.",
+      "revId": "52ec12177d33f27647a436dd878d4fa0d590430b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79affb52_245926d9",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:25:42Z",
+      "side": 1,
+      "message": "Queue names should be like org.chromium.CoreAudioSerializationQueue.",
+      "range": {
+        "startLine": 131,
+        "startChar": 48,
+        "endLine": 131,
+        "endChar": 64
+      },
+      "revId": "52ec12177d33f27647a436dd878d4fa0d590430b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd25f8a_27d32f81",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-09T22:25:42Z",
+      "side": 1,
+      "message": "I think even more of a comment here is warranted:\n\n- What is being overriden?\n- Why is it being overriden?\n- What\u0027s the bug reference?\n- What\u0027s the return value mean?",
+      "revId": "52ec12177d33f27647a436dd878d4fa0d590430b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
