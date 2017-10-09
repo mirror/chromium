@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "72d86ea4_90b51472",
+        "filename": "content/network/throttling/throttling_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T20:17:45Z",
+      "side": 1,
+      "message": "If we remove the content/browser/devtools dependency of this class, can we make it no longer a singleton?  Making it owned by the NetworkService, and passing a pointer to it to ThrottlingNetworkTransactionFactory would be a nice improvement.",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50153789_7682989f",
         "filename": "content/network/throttling/throttling_controller.h",
         "patchSetId": 3
