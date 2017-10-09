@@ -52,6 +52,24 @@
       "revId": "84a36dc13bf57a3eb78ef63ef5d73137f87f9c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b42789c7_1fdfd068",
+        "filename": "base/numerics/ranges.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-09T19:00:19Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e can this be constexpr?\n\u003e \u003e Do you mean the use of std::is_arithmetic\u003cT\u003e::value?\n\u003e \n\u003e I mean the method IsApproximatelyEqual.\n\u003e \n\u003e constexpr bool IsApprox..() { ... }\n\nDone in the last patchset.",
+      "parentUuid": "e6e936cc_0880e12f",
+      "revId": "84a36dc13bf57a3eb78ef63ef5d73137f87f9c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
