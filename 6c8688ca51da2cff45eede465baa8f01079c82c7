@@ -404,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "e4644c9f_2e04116f",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-09T18:58:22Z",
+      "side": 1,
+      "message": "Thanks for pointing out the missing of link...\nThe link is here:\nhttps://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions\nI might have misunderstood the statement in the style guide, but let\u0027s chat about what\u0027s the best way here.",
+      "parentUuid": "a5a0d00e_7b2983ec",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38a70355_1a2188f7",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
