@@ -302,6 +302,30 @@
       "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c2d7df_c4216ce1",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-09T08:56:27Z",
+      "side": 1,
+      "message": "I investigated around and now have another idea:\nCan we just use a dedicated Mojo message pipe for SWRegistrationObjectHost interface? I mean we do not need to associate it with SWContainerHost(being a IPC channel-associated connection).\n\nBecause I think SWRegistrationObjectHost.{Update,Unregister} should have no ordering race issue with SWContainerHost.{Register,GetRegistration,etc.}, because all these methods serve to impl JavaScript calls expecting a promise to be returned.\n\nFor example we always write like:\n  navigator.serviceWorker.getRegistration(xxx).then(function(reg) \n      { reg.update().then(function() { XXX }); });\nbut NOT like:\n  navigator.serviceWorker.getRegistration(xxx).then(function(reg) \n      { XXX });\n  reg.update().then(function() { XXX });\n\nI think we should always try to avoid using IPC channel-associated interfaces and should use separate Mojo message pipes as possible as we can.\nWDYT? Thanks.",
+      "parentUuid": "d15334ab_d9865a08",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
