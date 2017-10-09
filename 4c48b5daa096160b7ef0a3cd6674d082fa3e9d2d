@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ff39b0_bc9d8bce",
+        "filename": "net/spdy/chromium/spdy_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5079,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-09T17:53:47Z",
+      "side": 0,
+      "message": "I know that removing these couple of lines is unrelated to the rest of the CL, but they are totally silly, and I didn\u0027t want to create a separate CL just for this.",
+      "range": {
+        "startLine": 5079,
+        "startChar": 0,
+        "endLine": 5079,
+        "endChar": 64
+      },
+      "revId": "4c48b5daa096160b7ef0a3cd6674d082fa3e9d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
