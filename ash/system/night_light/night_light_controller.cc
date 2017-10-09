@@ -132,12 +132,6 @@ NightLightController::~NightLightController() {
 }
 
 // static
-bool NightLightController::IsFeatureEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      ash::switches::kAshEnableNightLight);
-}
-
-// static
 void NightLightController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kNightLightEnabled, false,
                                 PrefRegistry::PUBLIC);
