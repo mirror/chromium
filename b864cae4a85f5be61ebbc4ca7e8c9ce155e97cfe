@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87eac7f2_d50efe26",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-09T19:33:01Z",
+      "side": 1,
+      "message": "In the dtor of SafeBrowsingTriggeredPopupBlocker, the dtor of |scoped_observer_| will be automatically called, which calls RemoveAll() by itself. That\u0027s why the class is called *Scoped*Observer.\n\nWhy are you calling it manually?",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "b864cae4a85f5be61ebbc4ca7e8c9ce155e97cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf658ff_aa9bbc67",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-09T19:33:01Z",
+      "side": 1,
+      "message": "typo: MatchSublist",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 18
+      },
+      "revId": "b864cae4a85f5be61ebbc4ca7e8c9ce155e97cfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
