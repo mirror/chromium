@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "810665f0_864699db",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-10-09T18:28:36Z",
+      "side": 1,
+      "message": "Do we need to assert that this JS runs? Is there any good way to do that? There might be a way by setting global JS variables.",
+      "range": {
+        "startLine": 838,
+        "startChar": 16,
+        "endLine": 838,
+        "endChar": 67
+      },
+      "revId": "ec78a5e082c6f1439acebc425a31d81af0f2c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ad2419_da2e68bc",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-10-09T18:28:36Z",
+      "side": 1,
+      "message": "What is this data load for (meaning is unclear)?",
+      "range": {
+        "startLine": 854,
+        "startChar": 8,
+        "endLine": 854,
+        "endChar": 38
+      },
+      "revId": "ec78a5e082c6f1439acebc425a31d81af0f2c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579a020e_06cb0222",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-10-09T18:28:36Z",
+      "side": 1,
+      "message": "All this tests is that there\u0027s no crash, right? Can we add an assert for which page we navigate to?",
+      "range": {
+        "startLine": 883,
+        "startChar": 8,
+        "endLine": 883,
+        "endChar": 91
+      },
+      "revId": "ec78a5e082c6f1439acebc425a31d81af0f2c10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
