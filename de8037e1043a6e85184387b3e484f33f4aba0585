@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36e8562a_b3c589ad",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T07:58:57Z",
+      "side": 1,
+      "message": "+const",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 3
+      },
+      "revId": "de8037e1043a6e85184387b3e484f33f4aba0585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84216234_043c515f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T07:58:57Z",
+      "side": 1,
+      "message": "uh can we add a proper accessor here? We shouldn\u0027t be using method named \"for_testing\" in production code. There should be even a presubmit for that",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 68
+      },
+      "revId": "de8037e1043a6e85184387b3e484f33f4aba0585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94514b0_4efe8831",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T07:58:57Z",
+      "side": 1,
+      "message": "+const ?",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 12
+      },
+      "revId": "de8037e1043a6e85184387b3e484f33f4aba0585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5078fd9_a6c1871b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T07:58:57Z",
+      "side": 1,
+      "message": "given that you use these only once, I\u0027d inline them in the if()s below.\nKeeping the three branches is good, even if two of them both \"continue\", cause that has a good explanation",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 56
+      },
+      "revId": "de8037e1043a6e85184387b3e484f33f4aba0585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66b5af3_77fb0e28",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T07:58:57Z",
+      "side": 1,
+      "message": "At some point in the near future (i.e. future CLs) I\u0027d expect that we add more test coverage to edges (maybe once the math is in), as that logic is quite complex",
+      "range": {
+        "startLine": 29,
+        "startChar": 58,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "de8037e1043a6e85184387b3e484f33f4aba0585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
