@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1766242_99d841e7",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyleUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-09T16:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582ea11b_5328c7d1",
+      "range": {
+        "startLine": 57,
+        "startChar": 23,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b34f862_914cace7",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
