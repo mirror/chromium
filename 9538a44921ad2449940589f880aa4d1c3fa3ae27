@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4185d39_6b7f75f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-09T16:05:38Z",
+      "side": 1,
+      "message": "Maybe mention that this also makes us *build* it on mac, which we weren\u0027t doing before.\n\n(When I first read your commit message I thought we already built it, and this moved it to a separate tarball)",
+      "revId": "9538a44921ad2449940589f880aa4d1c3fa3ae27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
