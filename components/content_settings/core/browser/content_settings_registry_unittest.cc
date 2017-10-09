@@ -125,6 +125,28 @@ TEST_F(ContentSettingsRegistryTest, Iteration) {
   EXPECT_TRUE(cookies_found);
 }
 
+// Settings that control access to user data should not be inherited.
+// Check that only safe settings are inherited in incognito.
+TEST_F(ContentSettingsRegistryTest, Inheritance) {
+  // These settings are safe to inherit in incognito mode because they only
+  // disable features like popup blocking, download blocking or ad blocking.
+  // They do not allow access to user data.
+  const ContentSettingsType whitelist[] = {
+      CONTENT_SETTINGS_TYPE_POPUPS,               //
+      CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,  //
+      CONTENT_SETTINGS_TYPE_ADS};
+
+  for (const ContentSettingsInfo* info : *registry()) {
+    ContentSettingsType type = info->website_settings_info()->type();
+    if (info->incognito_behavior() ==
+            ContentSettingsInfo::INHERIT_IN_INCOGNITO &&
+        std::find(std::begin(whitelist), std::end(whitelist), type) ==
+            std::end(whitelist)) {
+      FAIL() << "Incorrect inheritance behavior for type: " << type;
+    }
+  }
+}
+
 TEST_F(ContentSettingsRegistryTest, IsDefaultSettingValid) {
   const ContentSettingsInfo* info =
       registry()->Get(CONTENT_SETTINGS_TYPE_COOKIES);
