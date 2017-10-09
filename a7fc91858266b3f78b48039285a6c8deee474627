@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0e6e87f_aad17230",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-09T15:54:31Z",
+      "side": 1,
+      "message": "That\u0027s right. The crash is still coming. Using SetLogMessageHandler pattern in this test as well.",
+      "parentUuid": "25173715_17ba7a8c",
+      "revId": "a7fc91858266b3f78b48039285a6c8deee474627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85127f20_e973b499",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a7fc91858266b3f78b48039285a6c8deee474627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5339766e_7460d948",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-09T15:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85127f20_e973b499",
+      "revId": "a7fc91858266b3f78b48039285a6c8deee474627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

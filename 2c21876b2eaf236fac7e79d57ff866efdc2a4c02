@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "d74b3193_cb375efe",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-09T15:54:31Z",
+      "side": 1,
+      "message": "Ok, got it. I am actually now not using ActivationDecision but activation_options().activation_level \u003d\u003d ActivationLevel::ENABLED\nas the condition now .",
+      "parentUuid": "8483aeb1_c6964c3c",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cad5144_736f1454",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
         "patchSetId": 3
