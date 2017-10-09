@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b5e8d1ac_1874653e",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-09T11:37:23Z",
+      "side": 1,
+      "message": "IIRC there are NCN clients that query the NCN very early on in browser construction, potentially prior to the IO thread existing, so I\u0027m not sure this class can live on other threads.",
+      "parentUuid": "27f9d259_7c42c83f",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be7b611e_8e4a2c6e",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 16
@@ -77,6 +101,30 @@
       "writtenOn": "2017-10-06T20:16:47Z",
       "side": 1,
       "message": "Think I made this comment on an earlier CL, not sure if you saw it:\n\nShould we send the current state of the connection to the new client here?",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74865477_c1ec9033",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-09T11:37:23Z",
+      "side": 1,
+      "message": "We could send the current state, just note that to mimic current NCN behavior, the NetworkConnectionTracker may need to block until the initial state is received before NetworkConnectionTracker::GetConnectionType() returns.",
+      "parentUuid": "b791098a_4e8883f4",
       "range": {
         "startLine": 55,
         "startChar": 41,
@@ -136,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "7a56c389_968e7146",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-09T11:37:23Z",
+      "side": 1,
+      "message": "Why does network_change_manager_for_testing() need to return a modifiable type?  The only calls I see are to GetNumClientsForTesting() which is const.",
+      "parentUuid": "a61611f0_1ba997f3",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 68
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18114084_e7436d4f",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 16
@@ -171,6 +243,30 @@
       "side": 1,
       "message": "This constructor registers for notification. The connection type will be populated when we receive the first broadcast?",
       "parentUuid": "18114084_e7436d4f",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 51
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54df9b03_8b99afea",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-09T11:37:23Z",
+      "side": 1,
+      "message": "This will cause problems.  On desktop environments where network changes can be days apart, the NetworkConnectionTracker will give out the wrong connection type for days.  This can also cause problems because when the first broadcast is received it will trigger a spurious network change event sent to observers.  Unfortunately the NCN construction and initialization is synchronous, but this guarantees that all queries get the correct initial type and never an uninitialized value.",
+      "parentUuid": "98bc325e_97ece10a",
       "range": {
         "startLine": 18,
         "startChar": 10,
