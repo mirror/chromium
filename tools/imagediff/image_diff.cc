@@ -41,6 +41,8 @@ static const char kOptionPollStdin[] = "use-stdin";
 static const char kOptionCompareHistograms[] = "histogram";
 // Causes the app to output an image that visualizes the difference.
 static const char kOptionGenerateDiff[] = "diff";
+// In the output diff image, only output the pixels that are different.
+static const char kOptionOnlyShowDiffs[] = "diff-only";
 
 // Return codes used by this utility.
 static const int kStatusSame = 0;
@@ -335,7 +337,10 @@ int CompareImages(const base::FilePath& file1,
 */
 }
 
-bool CreateImageDiff(const Image& image1, const Image& image2, Image* out) {
+bool CreateImageDiff(const Image& image1,
+                     const Image& image2,
+                     Image* out,
+                     bool only_show_diffs) {
   int w = std::min(image1.w(), image2.w());
   int h = std::min(image1.h(), image2.h());
   *out = Image(image1);
@@ -350,6 +355,9 @@ bool CreateImageDiff(const Image& image1, const Image& image2, Image* out) {
         // Set differing pixels red.
         out->set_pixel_at(x, y, RGBA_RED | RGBA_ALPHA);
         same = false;
+      } else if (only_show_diffs) {
+        // Set same pixels as transparent.
+        out->set_pixel_at(x, y, 0);
       } else {
         // Set same pixels as faded.
         uint32_t alpha = base_pixel & RGBA_ALPHA;
@@ -362,8 +370,10 @@ bool CreateImageDiff(const Image& image1, const Image& image2, Image* out) {
   return same;
 }
 
-int DiffImages(const base::FilePath& file1, const base::FilePath& file2,
-               const base::FilePath& out_file) {
+int DiffImages(const base::FilePath& file1,
+               const base::FilePath& file2,
+               const base::FilePath& out_file,
+               bool only_show_diffs) {
   Image actual_image;
   Image baseline_image;
 
@@ -379,7 +389,8 @@ int DiffImages(const base::FilePath& file1, const base::FilePath& file2,
   }
 
   Image diff_image;
-  bool same = CreateImageDiff(baseline_image, actual_image, &diff_image);
+  bool same = CreateImageDiff(baseline_image, actual_image, &diff_image,
+                              only_show_diffs);
   if (same)
     return kStatusSame;
 
@@ -437,11 +448,12 @@ int main(int argc, const char* argv[]) {
   }
 
   const base::CommandLine::StringVector& args = parsed_command_line.GetArgs();
-  if (parsed_command_line.HasSwitch(kOptionGenerateDiff)) {
+  if (parsed_command_line.HasSwitch(kOptionGenerateDiff) ||
+      parsed_command_line.HasSwitch(kOptionOnlyShowDiffs)) {
     if (args.size() == 3) {
-      return DiffImages(base::FilePath(args[0]),
-                        base::FilePath(args[1]),
-                        base::FilePath(args[2]));
+      return DiffImages(base::FilePath(args[0]), base::FilePath(args[1]),
+                        base::FilePath(args[2]),
+                        parsed_command_line.HasSwitch(kOptionOnlyShowDiffs));
     }
   } else if (args.size() == 2) {
     return CompareImages(
