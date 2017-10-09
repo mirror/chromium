@@ -38,19 +38,23 @@ constexpr int kBlacklistAccess = 0;
 // constexpr int kWhitelistAccess = 1;
 // constexpr int kAllAccess = 2;
 
-class SyncedPrintersManagerImpl : public SyncedPrintersManager {
+class SyncedPrintersManagerImpl : public SyncedPrintersManager,
+                                  public PrintersSyncBridge::Observer {
  public:
   SyncedPrintersManagerImpl(Profile* profile,
                             std::unique_ptr<PrintersSyncBridge> sync_bridge)
       : profile_(profile),
         sync_bridge_(std::move(sync_bridge)),
-        observers_(new base::ObserverListThreadSafe<Observer>()) {
+        observers_(new base::ObserverListThreadSafe<
+                   SyncedPrintersManager::Observer>()),
+        weak_factory_(this) {
     pref_change_registrar_.Init(profile->GetPrefs());
     pref_change_registrar_.Add(
         prefs::kRecommendedNativePrinters,
         base::Bind(&SyncedPrintersManagerImpl::UpdateRecommendedPrinters,
                    base::Unretained(this)));
     UpdateRecommendedPrinters();
+    sync_bridge_->AddObserver(this);
   }
   ~SyncedPrintersManagerImpl() override = default;
 
@@ -86,11 +90,11 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
     return sync_bridge_->RemovePrinter(printer_id);
   }
 
-  void AddObserver(Observer* observer) override {
+  void AddObserver(SyncedPrintersManager::Observer* observer) override {
     observers_->AddObserver(observer);
   }
 
-  void RemoveObserver(Observer* observer) override {
+  void RemoveObserver(SyncedPrintersManager::Observer* observer) override {
     observers_->RemoveObserver(observer);
   }
 
@@ -115,6 +119,14 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   }
 
   PrintersSyncBridge* GetSyncBridge() override { return sync_bridge_.get(); }
+
+  // PrintersSyncBridge::Observer override.
+  void OnPrintersUpdated() override {
+    observers_->Notify(
+        FROM_HERE,
+        &SyncedPrintersManager::Observer::OnConfiguredPrintersChanged,
+        GetConfiguredPrinters());
+  }
 
  private:
   std::unique_ptr<Printer> GetPrinterLocked(
@@ -143,10 +155,6 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
     }
 
     sync_bridge_->UpdatePrinter(PrinterToSpecifics(printer));
-    observers_->Notify(
-        FROM_HERE,
-        &SyncedPrintersManager::Observer::OnConfiguredPrintersChanged,
-        GetConfiguredPrinters());
   }
 
   void UpdateRecommendedPrinters() {
@@ -233,7 +241,9 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   // the printers was last installed with CUPS.
   std::map<std::string, std::string> installed_printer_fingerprints_;
 
-  scoped_refptr<base::ObserverListThreadSafe<Observer>> observers_;
+  scoped_refptr<base::ObserverListThreadSafe<SyncedPrintersManager::Observer>>
+      observers_;
+  base::WeakPtrFactory<SyncedPrintersManagerImpl> weak_factory_;
 };
 
 }  // namespace
