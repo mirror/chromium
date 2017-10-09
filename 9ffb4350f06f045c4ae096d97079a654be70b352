@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859592a2_1cfef2b9",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-09T16:11:39Z",
+      "side": 0,
+      "message": "I do find this useful when looking at bot output, and also sometimes locally, to see that it\u0027s using the right clang and whatnot.\n\nWe could easily make it a single line though, \"Clang is already up to date: 123456-1\".\nOr should the hooks ideally be completely silent?",
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
