@@ -442,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "ab677b29_603b6493",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-09T18:18:01Z",
+      "side": 1,
+      "message": "There\u0027s some guidance on this in style guide, see CHECK, DCHECK and NOTREACHED:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md\n\nThere\u0027s an implication there that\u0027s not spelled out that you should generally not use DCHECK at all unless the condition being checked is sufficiently computationally expensive that we don\u0027t want to do it in optimized builds, just use CHECK.  \n\nAnother piece that\u0027s not spelled out in style guide is that a CHECK failure implies a programming error *within the system you\u0027re working on*, in other words, something is already sufficiently broken that crashing out the browser is a reasonable thing to do.\n\nThe things you were checking here are based on data coming from a *different* system, downloads from a service external to the browser.  Having CHECKs based on the contents of something you get from an external server means malformed network traffic can potentially crash the browser.  having *DCHECKs* in those places means that malformed external content can crash a debug build browser and, even worse, potentially invoke undefined behavior/exploit security holes in an optimized-build browser that omits the DCHECKs.\n\nDoes that help?",
+      "parentUuid": "e269a5ce_b2725ad7",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08278a8c_393cc8b5",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2

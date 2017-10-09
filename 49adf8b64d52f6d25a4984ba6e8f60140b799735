@@ -16,6 +16,57 @@
       "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca08753_e8a7a64e",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-09T18:18:01Z",
+      "side": 1,
+      "message": "This needs to be an else if, I think.  The class doesn\u0027t support multiple fetches issued at the same time.",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c2d090_d2cceac3",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-09T18:18:01Z",
+      "side": 1,
+      "message": "Every path through this function (including failures) should result in a callback being posted for the front entry of the queue, otherwise you\u0027ll end up with code waiting forever for callbacks that never come.",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c4483c_f4187ebb",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-09T18:18:01Z",
+      "side": 1,
+      "message": "Nit: capture the minimal amount, and capture by reference for non-pod types.  Here, you should probably capture \u0026entry.effective_make_and_model",
+      "revId": "49adf8b64d52f6d25a4984ba6e8f60140b799735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
