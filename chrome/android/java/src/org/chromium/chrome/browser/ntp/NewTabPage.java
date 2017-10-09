@@ -26,7 +26,6 @@ import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.layouts.content.InvalidationAwareThumbnailProvider;
-import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.ntp.NewTabPageView.NewTabPageManager;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
@@ -325,9 +324,6 @@ public class NewTabPage
                 getScrollPositionFromNavigationEntry());
 
         eventReporter.onSurfaceOpened();
-
-        DownloadManagerService.getDownloadManagerService().checkForExternallyRemovedDownloads(
-                /*isOffRecord=*/false);
 
         RecordHistogram.recordBooleanHistogram(
                 "NewTabPage.MobileIsUserOnline", NetworkChangeNotifier.isOnline());

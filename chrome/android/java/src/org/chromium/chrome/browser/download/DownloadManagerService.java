@@ -367,6 +367,9 @@ public class DownloadManagerService
     public void onActivityLaunched() {
         // TODO(jming): Remove this after M-62.
         DownloadNotificationService.clearResumptionAttemptLeft();
+
+        DownloadManagerService.getDownloadManagerService().checkForExternallyRemovedDownloads(
+                /*isOffRecord=*/false);
     }
 
     /**
@@ -1019,6 +1022,7 @@ public class DownloadManagerService
      */
     private long getNativeDownloadManagerService() {
         if (mNativeDownloadManagerService == 0) {
+            Log.d("@@@ ", "Creating native download manager service.");
             mNativeDownloadManagerService = nativeInit();
         }
         return mNativeDownloadManagerService;
@@ -1405,6 +1409,8 @@ public class DownloadManagerService
      */
     @Override
     public void checkForExternallyRemovedDownloads(boolean isOffTheRecord) {
+        Log.d("@@@", "checkForExternallyRemovedDownloads.");
+        Thread.dumpStack();
         nativeCheckForExternallyRemovedDownloads(getNativeDownloadManagerService(), isOffTheRecord);
     }
 
