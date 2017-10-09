@@ -296,19 +296,185 @@ CSSParserToken CSSTokenizer::NextToken() {
   // incremental tokenization of partial sources.
   // However, for now we follow the spec exactly.
   UChar cc = Consume();
-  CodePoint code_point_func = 0;
+  ++token_count_;
 
-  if (IsASCII(cc)) {
-    SECURITY_DCHECK(cc < codePointsNumber);
-    code_point_func = kCodePoints[cc];
-  } else {
-    code_point_func = &CSSTokenizer::NameStart;
+  switch (cc) {
+    case 0:
+      return EndOfFile(cc);
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 9:
+    case 10:
+      return WhiteSpace(cc);
+    case 11:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 12:
+    case 13:
+      return WhiteSpace(cc);
+    case 14:
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 24:
+    case 25:
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+    case 31:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 32:
+      return WhiteSpace(cc);
+    case 33:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 34:
+      return StringStart(cc);
+    case 35:
+      return Hash(cc);
+    case 36:
+      return DollarSign(cc);
+    case 37:
+    case 38:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 39:
+      return StringStart(cc);
+    case 40:
+      return LeftParenthesis(cc);
+    case 41:
+      return RightParenthesis(cc);
+    case 42:
+      return Asterisk(cc);
+    case 43:
+      return PlusOrFullStop(cc);
+    case 44:
+      return Comma(cc);
+    case 45:
+      return HyphenMinus(cc);
+    case 46:
+      return PlusOrFullStop(cc);
+    case 47:
+      return Solidus(cc);
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+    case 55:
+    case 56:
+    case 57:
+      return AsciiDigit(cc);
+    case 58:
+      return Colon(cc);
+    case 59:
+      return SemiColon(cc);
+    case 60:
+      return LessThan(cc);
+    case 61:
+    case 62:
+    case 63:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 64:
+      return CommercialAt(cc);
+    case 65:
+    case 66:
+    case 67:
+    case 68:
+    case 69:
+    case 70:
+    case 71:
+    case 72:
+    case 73:
+    case 74:
+    case 75:
+    case 76:
+    case 77:
+    case 78:
+    case 79:
+    case 80:
+    case 81:
+    case 82:
+    case 83:
+    case 84:
+      return NameStart(cc);
+    case 85:
+      return LetterU(cc);
+    case 86:
+    case 87:
+    case 88:
+    case 89:
+    case 90:
+      return NameStart(cc);
+    case 91:
+      return LeftBracket(cc);
+    case 92:
+      return ReverseSolidus(cc);
+    case 93:
+      return RightBracket(cc);
+    case 94:
+      return CircumflexAccent(cc);
+    case 95:
+      return NameStart(cc);
+    case 96:
+      return CSSParserToken(kDelimiterToken, cc);
+    case 97:
+    case 98:
+    case 99:
+    case 100:
+    case 101:
+    case 102:
+    case 103:
+    case 104:
+    case 105:
+    case 106:
+    case 107:
+    case 108:
+    case 109:
+    case 110:
+    case 111:
+    case 112:
+    case 113:
+    case 114:
+    case 115:
+    case 116:
+      return NameStart(cc);
+    case 117:
+      return LetterU(cc);
+    case 118:
+    case 119:
+    case 120:
+    case 121:
+    case 122:
+      return NameStart(cc);
+    case 123:
+      return LeftBrace(cc);
+    case 124:
+      return VerticalLine(cc);
+    case 125:
+      return RightBrace(cc);
+    case 126:
+      return Tilde(cc);
+    case 127:
+      return CSSParserToken(kDelimiterToken, cc);
   }
 
-  ++token_count_;
-  if (code_point_func)
-    return ((this)->*(code_point_func))(cc);
-  return CSSParserToken(kDelimiterToken, cc);
+  DCHECK(!IsASCII(cc));
+  return NameStart(cc);
 }
 
 // This method merges the following spec sections for efficiency
