@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4eb1169_30ed907d",
+        "filename": "components/safe_browsing/db/util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T17:19:22Z",
+      "side": 1,
+      "message": "would you mind sorting this alphabetically? i.e. api_permissions, then population_id, then s_f_m, and finally tpt. thanks.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 70
+      },
+      "revId": "e4e5d2b4bbf557be7e95c89521d19c01722ea4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
