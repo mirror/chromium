@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c89e1627_6fb66e21",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c10028_687ec65d",
+      "range": {
+        "startLine": 795,
+        "startChar": 31,
+        "endLine": 795,
+        "endChar": 49
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef53754d_7354eb54",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f83e0c31_c4f30a0b",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef53754d_7354eb54",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc6fc5e_f2abe5dd",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-06T16:10:55Z",
       "side": 1,
       "message": "You are using \"default\" below, consider also using it for the constructors.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fc01ea_00e195d6",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure to understand. I do use default for constructors. But I cannot do use default in .h files.",
+      "parentUuid": "7bc6fc5e_f2abe5dd",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "798da8c5_ae423457",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2c9872_f10d1c9f",
+      "range": {
+        "startLine": 109,
+        "startChar": 42,
+        "endLine": 109,
+        "endChar": 55
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd606a4b_9442559e",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 13
@@ -114,6 +210,30 @@
       "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b6a7d2_c8c824e5",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd606a4b_9442559e",
+      "range": {
+        "startLine": 288,
+        "startChar": 29,
+        "endLine": 288,
+        "endChar": 35
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "97d97b85_66162bdf",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc93426_d6f6972c",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 10
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54d12698_feef8a5f",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 13
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-06T16:10:55Z",
       "side": 1,
       "message": "The callback is not called in this case. This is bad as this will break the reconcilor.\n\nPlease add a unit test for this.",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 29
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366d4b9c_16c36d17",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Replaced by DCHECK. There is no point to test again this value since it is only called by AccountConsistencyService::RemoveChromeConnectedCookies()",
+      "parentUuid": "54d12698_feef8a5f",
       "range": {
         "startLine": 316,
         "startChar": 6,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "67cf4367_8173565c",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c11189_778c9635",
+      "range": {
+        "startLine": 500,
+        "startChar": 45,
+        "endLine": 500,
+        "endChar": 52
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af60c82b_1c510fb1",
         "filename": "components/signin/ios/browser/account_consistency_service_unittest.mm",
         "patchSetId": 13
@@ -206,6 +398,30 @@
       "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a77929_a5a2fb90",
+        "filename": "components/signin/ios/browser/account_consistency_service_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af60c82b_1c510fb1",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "0d5b535a_14e0d398",
+        "filename": "components/signin/ios/browser/account_consistency_service_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfebd6b0_33636b7b",
+      "range": {
+        "startLine": 199,
+        "startChar": 7,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca755bf2_53055ed6",
         "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.mm",
         "patchSetId": 13
@@ -246,6 +486,24 @@
       "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48e545e_e2587fe6",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-09T11:27:09Z",
+      "side": 1,
+      "message": "Do you want me to add a comment? I can also test if accountConsistencyService exists.",
+      "parentUuid": "ca755bf2_53055ed6",
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
