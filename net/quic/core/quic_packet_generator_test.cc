@@ -87,6 +87,7 @@ struct PacketContents {
         num_stream_frames(0),
         num_ping_frames(0),
         num_mtu_discovery_frames(0),
+        num_connectivity_probing_frames(0),
         num_padding_frames(0) {}
 
   size_t num_ack_frames;
@@ -97,6 +98,7 @@ struct PacketContents {
   size_t num_stream_frames;
   size_t num_ping_frames;
   size_t num_mtu_discovery_frames;
+  size_t num_connectivity_probing_frames;
   size_t num_padding_frames;
 };
 
@@ -211,7 +213,8 @@ class QuicPacketGeneratorTest : public QuicTest {
         contents.num_ping_frames;
     size_t num_frames =
         contents.num_ack_frames + contents.num_stop_waiting_frames +
-        contents.num_mtu_discovery_frames + contents.num_padding_frames +
+        contents.num_mtu_discovery_frames +
+        contents.num_connectivity_probing_frames + contents.num_padding_frames +
         num_retransmittable_frames;
 
     if (num_retransmittable_frames == 0) {
@@ -241,7 +244,8 @@ class QuicPacketGeneratorTest : public QuicTest {
               simple_framer_.padding_frames().size());
 
     // From the receiver's perspective, MTU discovery frames are ping frames.
-    EXPECT_EQ(contents.num_ping_frames + contents.num_mtu_discovery_frames,
+    EXPECT_EQ(contents.num_ping_frames + contents.num_mtu_discovery_frames +
+                  contents.num_connectivity_probing_frames,
               simple_framer_.ping_frames().size());
   }
 
@@ -967,6 +971,26 @@ TEST_F(QuicPacketGeneratorTest, GenerateMtuDiscoveryPacket_Simple) {
 
   PacketContents contents;
   contents.num_mtu_discovery_frames = 1;
+  contents.num_padding_frames = 1;
+  CheckPacketContains(contents, 0);
+}
+
+// Test sending a connectivity probe.
+TEST_F(QuicPacketGeneratorTest, GenerateConnectivityProbingPacket) {
+  delegate_.SetCanWriteAnything();
+
+  EXPECT_CALL(delegate_, OnSerializedPacket(_))
+      .WillOnce(Invoke(this, &QuicPacketGeneratorTest::SavePacket));
+
+  generator_.GenerateProbingPacket(kDefaultMaxPacketSize);
+
+  EXPECT_FALSE(generator_.HasQueuedFrames());
+  EXPECT_FALSE(generator_.HasRetransmittableFrames());
+  ASSERT_EQ(1u, packets_.size());
+  EXPECT_EQ(kDefaultMaxPacketSize, packets_[0].encrypted_length);
+
+  PacketContents contents;
+  contents.num_connectivity_probing_frames = 1;
   contents.num_padding_frames = 1;
   CheckPacketContains(contents, 0);
 }
