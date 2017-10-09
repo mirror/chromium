@@ -216,9 +216,9 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {number} lineNumber
    * @param {number=} columnNumber
    * @param {string=} condition
-   * @param {function(?Protocol.Debugger.BreakpointId, !Array.<!SDK.DebuggerModel.Location>)=} callback
+   * @return {!Promise<!SDK.DebuggerModel.SetBreakpointResult>}
    */
-  async setBreakpointByURL(url, lineNumber, columnNumber, condition, callback) {
+  async setBreakpointByURL(url, lineNumber, columnNumber, condition) {
     // Convert file url to node-js path.
     if (this.target().isNodeJS() && SDK.DebuggerModel._fileURLToNodeJSPath.has(url))
       url = SDK.DebuggerModel._fileURLToNodeJSPath.get(url);
@@ -231,31 +231,59 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
         minColumnNumber = minColumnNumber ? Math.min(minColumnNumber, script.columnOffset) : script.columnOffset;
     }
     columnNumber = Math.max(columnNumber, minColumnNumber);
-
-    var response =
-        await this._agent.invoke_setBreakpointByUrl({lineNumber, url, urlRegex: undefined, columnNumber, condition});
-
-    if (!callback)
-      return;
-    var locations = (response.locations || []).map(payload => SDK.DebuggerModel.Location.fromPayload(this, payload));
-    callback(response[Protocol.Error] ? null : response.breakpointId, locations);
+    var response = await this._agent.invoke_setBreakpointByUrl(
+        {lineNumber: lineNumber, url: url, columnNumber: columnNumber, condition: condition});
+    var error = response[Protocol.Error];
+    if (error)
+      return {};
+    var locations;
+    if (response.locations)
+      locations = response.locations.map(payload => SDK.DebuggerModel.Location.fromPayload(this, payload));
+    return {locations: locations, breakpointId: response.breakpointId};
   }
 
   /**
-   * @param {!SDK.DebuggerModel.Location} rawLocation
-   * @param {string} condition
-   * @param {function(?Protocol.Debugger.BreakpointId, !Array.<!SDK.DebuggerModel.Location>)=} callback
+   * @param {!SDK.Script} script
+   * @param {number} lineNumber
+   * @param {number=} columnNumber
+   * @param {string=} condition
+   * @return {!Promise<!SDK.DebuggerModel.SetBreakpointResult>}
    */
-  setBreakpointBySourceId(rawLocation, condition, callback) {
-    this._agent.invoke_setBreakpoint({location: rawLocation.payload(), condition}).then(response => {
-      if (!callback)
-        return;
-      if (response[Protocol.Error] || !response.actualLocation) {
-        callback(null, []);
-        return;
-      }
-      callback(response.breakpointId, [SDK.DebuggerModel.Location.fromPayload(this, response.actualLocation)]);
+  async setBreakpointInAnonymousScript(script, lineNumber, columnNumber, condition) {
+    var response = await this._agent.invoke_setBreakpointByUrl(
+        {lineNumber: lineNumber, scriptHash: script.hash, columnNumber: columnNumber, condition: condition});
+    var error = response[Protocol.Error];
+    if (error) {
+      // Old V8 backend doesn't support scriptHash argument.
+      if (error !== 'Either url or urlRegex must be specified.')
+        return {};
+      return this._setBreakpointBySourceId(script, lineNumber, columnNumber, condition);
+    }
+    var locations;
+    if (response.locations)
+      locations = response.locations.map(payload => SDK.DebuggerModel.Location.fromPayload(this, payload));
+    return {locations: locations, breakpointId: response.breakpointId};
+  }
+
+  /**
+   * @param {!SDK.Script} script
+   * @param {number} lineNumber
+   * @param {number=} columnNumber
+   * @param {string=} condition
+   * @return {!Promise<!SDK.DebuggerModel.SetBreakpointResult>}
+   */
+  async _setBreakpointBySourceId(script, lineNumber, columnNumber, condition) {
+    var response = await this._agent.invoke_setBreakpoint({
+      location: {scriptId: script.scriptId, lineNumber: lineNumber, columnNumber: columnNumber},
+      condition: condition
     });
+    var error = response[Protocol.Error];
+    if (error)
+      return {};
+    var actualLocation;
+    if (response.actualLocation)
+      actualLocation = [SDK.DebuggerModel.Location.fromPayload(this, response.actualLocation)];
+    return {locations: actualLocation, breakpointId: response.breakpointId};
   }
 
   /**
@@ -876,6 +904,13 @@ SDK.DebuggerModel.ContinueToLocationTargetCallFrames = {
   Any: 'any',
   Current: 'current'
 };
+
+/** @typedef {{
+ *    breakpointId: (!Protocol.Debugger.BreakpointId|undefined),
+ *    locations: (!Array<!Protocol.Debugger.Location>|undefined),
+ *  }}
+ */
+SDK.DebuggerModel.SetBreakpointResult;
 
 /**
  * @implements {Protocol.DebuggerDispatcher}
