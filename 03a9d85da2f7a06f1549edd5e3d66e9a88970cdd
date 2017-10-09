@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4c2bcf0_b40aafb0",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-09T23:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61df7243_b753e4ca",
+      "revId": "03a9d85da2f7a06f1549edd5e3d66e9a88970cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c0da73a_a7343439",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "03a9d85da2f7a06f1549edd5e3d66e9a88970cdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536400f5_bc1b3258",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-10-09T23:24:25Z",
+      "side": 1,
+      "message": "I just created a separate Initialize method, seemed simplest approach.",
+      "parentUuid": "2c0da73a_a7343439",
+      "revId": "03a9d85da2f7a06f1549edd5e3d66e9a88970cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
