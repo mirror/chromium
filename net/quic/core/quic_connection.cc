@@ -2367,6 +2367,11 @@ QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
   return max_packet_size;
 }
 
+void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
+  packet_generator_.FlushAllQueuedFrames();
+  // TODO(zhongyi): use packet generator to send a Probing.
+}
+
 void QuicConnection::SendMtuDiscoveryPacket(QuicByteCount target_mtu) {
   // Currently, this limit is ensured by the caller.
   DCHECK_EQ(target_mtu, GetLimitedMaxPacketSize(target_mtu));
