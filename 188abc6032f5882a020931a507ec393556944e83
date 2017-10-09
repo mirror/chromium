@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31cec4bf_2114b714",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-09T11:57:35Z",
+      "side": 1,
+      "message": "Do not use \u0027is\u0027 in property names. See ObjectiveC style guide (or look at the inNewTabAnimation property a few lines up).\n\nHere I would just go with a simple private method instead of a property.",
+      "range": {
+        "startLine": 596,
+        "startChar": 0,
+        "endLine": 596,
+        "endChar": 60
+      },
+      "revId": "188abc6032f5882a020931a507ec393556944e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3808bd8_6858fe4b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-09T11:57:35Z",
+      "side": 1,
+      "message": "This is confusing. What is a panel? Can you name this \"shownInContentArea\"? Or reverse the condition and name it \"shownInModal\"?",
+      "range": {
+        "startLine": 1244,
+        "startChar": 8,
+        "endLine": 1244,
+        "endChar": 31
+      },
+      "revId": "188abc6032f5882a020931a507ec393556944e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3104a78_0510bb52",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-09T11:57:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure his is needed in all cases. Is this the recognizer swiping from one panel to the other?",
+      "range": {
+        "startLine": 3333,
+        "startChar": 0,
+        "endLine": 3333,
+        "endChar": 70
+      },
+      "revId": "188abc6032f5882a020931a507ec393556944e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d104cd94_cbfe5495",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 3341,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-09T11:57:35Z",
+      "side": 1,
+      "message": "Those will also be broken as this will attempt to switch panel. The condition for this if block should be if shownInContentArea.",
+      "range": {
+        "startLine": 3341,
+        "startChar": 32,
+        "endLine": 3341,
+        "endChar": 58
+      },
+      "revId": "188abc6032f5882a020931a507ec393556944e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
