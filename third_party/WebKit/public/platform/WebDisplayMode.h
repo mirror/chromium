@@ -7,8 +7,6 @@
 
 namespace blink {
 
-// Enumerates values of the display property of the Web App Manifest.
-//
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.blink_public.platform
 // GENERATED_JAVA_PREFIX_TO_STRIP: WebDisplayMode
 enum WebDisplayMode {
@@ -18,8 +16,6 @@ enum WebDisplayMode {
   kWebDisplayModeStandalone,
   kWebDisplayModeFullscreen,
   kWebDisplayModeLast = kWebDisplayModeFullscreen
-  // This enum is persisted to logs, and therefore is append-only and should not
-  // be reordered.
 };
 
 }  // namespace blink

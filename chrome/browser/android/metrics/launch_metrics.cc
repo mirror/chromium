@@ -22,7 +22,11 @@ using base::android::JavaParamRef;
 
 namespace metrics {
 
-enum class HomeScreenLaunchType { STANDALONE = 0, SHORTCUT = 1, COUNT = 2 };
+enum HomeScreenLaunchType {
+  LAUNCH_TYPE_STANDALONE = 0,
+  LAUNCH_TYPE_SHORTCUT = 1,
+  LAUNCH_TYPE_COUNT = 2
+};
 
 static void RecordLaunch(JNIEnv* env,
                          const JavaParamRef<jclass>& caller,
@@ -98,20 +102,19 @@ static void RecordLaunch(JNIEnv* env,
   if (!is_shortcut) {
     UMA_HISTOGRAM_ENUMERATION("Launch.WebAppDisplayMode",
                               static_cast<blink::WebDisplayMode>(display_mode),
-                              blink::WebDisplayMode::kWebDisplayModeLast + 1);
+                              blink::WebDisplayMode::kWebDisplayModeLast);
   }
 
   rappor::SampleDomainAndRegistryFromGURL(g_browser_process->rappor_service(),
                                           rappor_metric_source, url);
 
-  HomeScreenLaunchType action = is_shortcut ? HomeScreenLaunchType::SHORTCUT
-                                            : HomeScreenLaunchType::STANDALONE;
+  HomeScreenLaunchType action =
+      is_shortcut ? LAUNCH_TYPE_SHORTCUT : LAUNCH_TYPE_STANDALONE;
   std::string rappor_metric_action = is_shortcut
                                          ? "Launch.HomeScreen.Shortcut"
                                          : "Launch.HomeScreen.Standalone";
 
-  UMA_HISTOGRAM_ENUMERATION("Launch.HomeScreen", action,
-                            HomeScreenLaunchType::COUNT);
+  UMA_HISTOGRAM_ENUMERATION("Launch.HomeScreen", action, LAUNCH_TYPE_COUNT);
 
   rappor::SampleDomainAndRegistryFromGURL(g_browser_process->rappor_service(),
                                           rappor_metric_action, url);
