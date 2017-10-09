@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "0e69931a_326c9ace",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-09T11:26:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b93c4093_d5691910",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f190deb1_d49c1db4",
         "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2017-10-09T09:11:06Z",
       "side": 1,
       "message": "How are you planning on deciding whether or not to issue a request? Just issue the request and wait for a cache hit? Or ask the store whether the version matches?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cca366d_ed91ab82",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-09T11:26:26Z",
+      "side": 1,
+      "message": "OriginManfiest om \u003d store.GetOriginManifest(version);\nif (om) {\n  Magic.Apply(om);\n  return;\n}\nFetchOriginManifest(version); // which eventually calls Magic.Apply(om) as well\n\nI explicitly do not want to rely on HTTP caching for the reasons discussed in the Github issues around the topic of versioning.",
+      "parentUuid": "f190deb1_d49c1db4",
       "revId": "86a46ad4c650510614cac7772abae22568d17289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +120,24 @@
       "revId": "86a46ad4c650510614cac7772abae22568d17289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ef547d_64d15e8e",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-09T11:26:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dbdb292_3c6d0309",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +203,24 @@
       "writtenOn": "2017-10-09T09:11:06Z",
       "side": 1,
       "message": "It looks like you\u0027re storing the origin of the original request, and updating it as you see redirect responses come in. That seems like something the ThrottlingURLLoader should be handing you: you shouldn\u0027t have to work your way backwards to the URL of the response you\u0027re processing.\n\nkinuko@: WDYT about tacking that information onto `ResourceResponseInfo`?",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fa4b60_a83003d5",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1237420
+      },
+      "writtenOn": "2017-10-09T11:26:26Z",
+      "side": 1,
+      "message": "I agree. I just wanted to leave the other code more or less untouched. Honestly, I was surprised how little I know in WillProcessResponse about the actual request/response. That was my quick workaround. Anything more elegant is welcome.",
+      "parentUuid": "2bad85bc_e15ac671",
       "revId": "86a46ad4c650510614cac7772abae22568d17289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
