@@ -4840,10 +4840,10 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
         point.Y() > bottom) {
       if (point.X() <= right / 2) {
         return CreatePositionWithAffinity(
-            FirstPositionInOrBeforeNodeDeprecated(NonPseudoNode()));
+            FirstPositionInOrBeforeNode(*NonPseudoNode()));
       }
       return CreatePositionWithAffinity(
-          LastPositionInOrAfterNodeDeprecated(NonPseudoNode()));
+          LastPositionInOrAfterNode(*NonPseudoNode()));
     }
   }
 
