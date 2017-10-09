@@ -7,9 +7,68 @@
  * section.
  */
 
+/**
+ * @typedef {{
+ *   id: string,
+ *   start: number,
+ *   children: !Array<CookieDetails>,
+ * }}
+ */
+var CookieList;
+
+/**
+ * @typedef {{
+ *   data: !Object,
+ *   id: string,
+ * }}
+ */
+var LocalDataItem;
+
+/**
+ * TODO(dschuyler): add |filter| and |order|.
+ * @typedef {{
+ *   items: !Array<LocalDataItem>,
+ *   start: number,
+ *   total: number,
+ * }}
+ */
+var LocalDataList;
+
 cr.define('settings', function() {
   /** @interface */
   class LocalDataBrowserProxy {
+    /**
+     * @param {string} filter Search filter (use "" for none).
+     * @return {!Promise}
+     */
+    filter(filter) {}
+
+    /**
+     * @param {number} begin Which element to start with.
+     * @param {number} count How many list elements are displayed.
+     * @return {!Promise<!LocalDataList>}
+     */
+    getDisplayList(begin, count) {}
+
+    /**
+     * Removes all local data (local storage, cookies, etc.).
+     * @return {!Promise<!LocalDataList>} Likely an empty list, unless something
+     *     added something between the delete and the response creation.
+     */
+    removeAll() {}
+
+    /**
+     * Remove items that pass the filter.
+     * @param {?Object} filter Host specific filtering.
+     */
+    removeByFilter(filter) {}
+
+    /**
+     * Remove a specific list item.
+     * @param {string} id Which element to delete.
+     */
+    removeItem(id) {}
+
     /**
      * Gets the cookie details for a particular site.
      * @param {string} site The name of the site.
@@ -18,32 +77,19 @@ cr.define('settings', function() {
     getCookieDetails(site) {}
 
     /**
-     * Reloads all cookies.
+     * Reloads all local data.
+     * TODO(dschuyler): rename function (-cookies).
      * @return {!Promise<!CookieList>} Returns the full cookie
      *     list.
      */
     reloadCookies() {}
 
     /**
-     * Fetches all children of a given cookie.
-     * @param {string} path The path to the parent cookie.
-     * @return {!Promise<!Array<!CookieDataSummaryItem>>} Returns a cookie list
-     *     for the given path.
-     */
-    loadCookieChildren(path) {}
-
-    /**
+     * TODO(dschuyler): merge with removeItem().
      * Removes a given cookie.
      * @param {string} path The path to the parent cookie.
      */
     removeCookie(path) {}
-
-    /**
-     * Removes all cookies.
-     * @return {!Promise<!CookieList>} Returns the up to date cookie list once
-     *     deletion is complete (empty list).
-     */
-    removeAllCookies() {}
   }
 
   /**
@@ -51,28 +97,43 @@ cr.define('settings', function() {
    */
   class LocalDataBrowserProxyImpl {
     /** @override */
+    filter(filter) {
+      return cr.sendWithPromise('localData.filter', filter);
+    }
+
+    /** @override */
+    getDisplayList(begin, count) {
+      return cr.sendWithPromise('localData.getDisplayList', begin, count);
+    }
+
+    /** @override */
+    removeAll() {
+      return cr.sendWithPromise('localData.removeAll');
+    }
+
+    /** @override */
+    removeByFilter(filter) {
+      chrome.send('localData.removeByFilter', [filter]);
+    }
+
+    /** @override */
+    removeItem(id) {
+      chrome.send('localData.removeItem', [id]);
+    }
+
+    /** @override */
     getCookieDetails(site) {
-      return cr.sendWithPromise('getCookieDetails', site);
+      return cr.sendWithPromise('localData.getCookieDetails', site);
     }
 
     /** @override */
     reloadCookies() {
-      return cr.sendWithPromise('reloadCookies');
-    }
-
-    /** @override */
-    loadCookieChildren(path) {
-      return cr.sendWithPromise('loadCookie', path);
+      return cr.sendWithPromise('localData.reload');
     }
 
     /** @override */
     removeCookie(path) {
-      chrome.send('removeCookie', [path]);
-    }
-
-    /** @override */
-    removeAllCookies() {
-      return cr.sendWithPromise('removeAllCookies');
+      chrome.send('localData.removeCookie', [path]);
     }
   }
 

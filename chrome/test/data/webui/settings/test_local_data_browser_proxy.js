@@ -12,6 +12,11 @@
 class TestLocalDataBrowserProxy extends TestBrowserProxy {
   constructor() {
     super([
+      'filter',
+      'getDisplayList',
+      'removeAll',
+      'removeByFilter',
+      'removeItem',
       'getCookieDetails',
       'reloadCookies',
       'removeCookie',
@@ -19,12 +24,9 @@ class TestLocalDataBrowserProxy extends TestBrowserProxy {
 
     /** @private {?CookieList} */
     this.cookieDetails_ = null;
-  }
 
-  /** @override */
-  getCookieDetails(site) {
-    this.methodCalled('getCookieDetails', site);
-    return Promise.resolve(this.cookieDetails_ || {id: '', children: []});
+    /** @private {Array<!CookieList>} */
+    this.cookieList_ = [];
   }
 
   /**
@@ -32,6 +34,57 @@ class TestLocalDataBrowserProxy extends TestBrowserProxy {
    */
   setCookieDetails(cookieList) {
     this.cookieDetails_ = cookieList;
+  }
+
+  /**
+   * @param {!CookieList} cookieList
+   */
+  setCookieList(cookieList) {
+    this.cookieList_ = cookieList;
+    this.filteredCookieList_ = cookieList;
+  }
+
+  /** @override */
+  filter(search) {
+    this.filteredCookieList_ = [];
+    for (let i = 0; i < this.cookieList_.length; ++i) {
+      if (this.cookieList_[i].site.indexOf(search) >= 0) {
+        this.filteredCookieList_.push(this.cookieList_[i]);
+      }
+    }
+    return Promise.resolve();
+  }
+
+  /** @override */
+  getDisplayList(begin, count) {
+    let output = [];
+    let end = Math.min(begin + count, this.filteredCookieList_.length);
+    for (let i = begin; i < end; ++i) {
+      output.push(this.filteredCookieList_[i]);
+    }
+    return Promise.resolve({items: output});
+  }
+
+  /** @override */
+  removeAll() {
+    this.methodCalled('removeAll');
+    return Promise.resolve({id: null, children: []});
+  }
+
+  /** @override */
+  removeByFilter(filter) {
+    this.methodCalled('removeByFilter', filter);
+  }
+
+  /** @override */
+  removeItem(id) {
+    this.methodCalled('removeItem', id);
+  }
+
+  /** @override */
+  getCookieDetails(site) {
+    this.methodCalled('getCookieDetails', site);
+    return Promise.resolve(this.cookieDetails_ || {id: '', children: []});
   }
 
   /** @override */
