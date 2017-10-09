@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cbcd004_b15a75d5",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T22:49:19Z",
+      "side": 1,
+      "message": "This could make device level networks shared (if the user selects TLS).\n\nI\u0027m not sure setProperties will handle that case well (i.e. IIRC it will just save the network configuration as part of the current network\u0027s network profile).\n\nActually, I think the same goes for any shared changes - if the network is configured, I don\u0027t think we can change it\u0027s shared state using setProperties (though, shared -\u003e not shared could probably be handled by using createNetwork(false/*shared*/) instead of setProperties).",
+      "revId": "6d7bc07311d388f676f3869090779a45b379d495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
