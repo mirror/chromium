@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e86e236_b35729e5",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-09T20:20:59Z",
+      "side": 1,
+      "message": "I think that\u0027s a fine idea. The desktop snapshot code I used long, long ago seems to have been deleted. Do you know if we have anything for that in the codebase at the moment? If not, I\u0027ll cobble something together based on what once was (BitBlt).",
+      "parentUuid": "80ee3e61_e00cd1f9",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31c87c65_f23da5c5",
         "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
         "patchSetId": 1
