@@ -249,7 +249,6 @@ using blink::WebContextMenuData;
 using blink::WebData;
 using blink::WebDocumentLoader;
 using blink::WebDocument;
-using blink::WebDOMEvent;
 using blink::WebDOMMessageEvent;
 using blink::WebElement;
 using blink::WebExternalPopupMenu;
