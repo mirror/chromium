@@ -16,6 +16,24 @@
       "revId": "63f6a1f76094bc17f7fb89b2f6faf588704fbd7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756b5b4c_eb323cad",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T05:51:36Z",
+      "side": 1,
+      "message": "Hmm, in the long run I suspect that won\u0027t matter too much, however in the mean time it is a bit ugly. Perhaps we should keep the api_classnames list. WDYT?",
+      "parentUuid": "975d8a80_3799f2d2",
+      "revId": "63f6a1f76094bc17f7fb89b2f6faf588704fbd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
