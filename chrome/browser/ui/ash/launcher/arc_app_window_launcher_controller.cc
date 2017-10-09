@@ -10,7 +10,6 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
@@ -22,6 +21,7 @@
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
+#include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/exo/shell_surface.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -161,9 +161,8 @@ ArcAppWindowLauncherController::ArcAppWindowLauncherController(
 ArcAppWindowLauncherController::~ArcAppWindowLauncherController() {
   if (observed_profile_)
     StopObserving(observed_profile_);
-  if (observing_shell_ && ash::Shell::Get()->tablet_mode_controller()) {
-    ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
-  }
+  if (observing_shell_ && TabletModeClient::Get())
+    TabletModeClient::Get()->RemoveObserver(this);
   if (arc::ArcSessionManager::Get())
     arc::ArcSessionManager::Get()->RemoveObserver(this);
 }
@@ -284,7 +283,8 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   // the layout switch information.
   if (!observing_shell_) {
     observing_shell_ = true;
-    ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
+    if (TabletModeClient::Get())
+      TabletModeClient::Get()->AddObserver(this);
   }
 
   // Check if we have controller for this task.
@@ -314,11 +314,8 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   DCHECK(info->app_window()->controller());
   const ash::ShelfID shelf_id(info->app_window()->shelf_id());
   window->SetProperty(ash::kShelfIDKey, new std::string(shelf_id.Serialize()));
-  if (ash::Shell::Get()
-          ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+  if (TabletModeClient::Get()->tablet_mode_enabled())
     SetOrientationLockForAppWindow(info->app_window());
-  }
 }
 
 void ArcAppWindowLauncherController::OnAppReadyChanged(
@@ -430,9 +427,7 @@ void ArcAppWindowLauncherController::OnTaskOrientationLockRequested(
         ScreenOrientationController::LockCompletionBehavior::None);
   }
 
-  if (ash::Shell::Get()
-          ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+  if (TabletModeClient::Get()->tablet_mode_enabled()) {
     ArcAppWindow* app_window = info->app_window();
     if (app_window)
       SetOrientationLockForAppWindow(app_window);
@@ -539,19 +534,19 @@ void ArcAppWindowLauncherController::OnWindowActivated(
   OnTaskSetActive(active_task_id_);
 }
 
-void ArcAppWindowLauncherController::OnTabletModeStarted() {
-  for (auto& it : task_id_to_app_window_info_) {
-    ArcAppWindow* app_window = it.second->app_window();
-    if (app_window)
-      SetOrientationLockForAppWindow(app_window);
+void ArcAppWindowLauncherController::OnTabletModeToggled(bool enabled) {
+  if (enabled) {
+    for (auto& it : task_id_to_app_window_info_) {
+      ArcAppWindow* app_window = it.second->app_window();
+      if (app_window)
+        SetOrientationLockForAppWindow(app_window);
+    }
+  } else {
+    ash::ScreenOrientationController* orientation_controller =
+        ash::Shell::Get()->screen_orientation_controller();
+    // Don't unlock one by one because it'll switch to next rotation.
+    orientation_controller->UnlockAll();
   }
-}
-
-void ArcAppWindowLauncherController::OnTabletModeEnded() {
-  ash::ScreenOrientationController* orientation_controller =
-      ash::Shell::Get()->screen_orientation_controller();
-  // Don't unlock one by one because it'll switch to next rotation.
-  orientation_controller->UnlockAll();
 }
 
 void ArcAppWindowLauncherController::StartObserving(Profile* profile) {
