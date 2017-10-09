@@ -15,9 +15,12 @@
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebElementCollection.h"
 #include "third_party/WebKit/public/web/WebFormControlElement.h"
+#include "third_party/WebKit/public/web/WebInputElement.h"
 #include "third_party/WebKit/public/web/WebLabelElement.h"
 #include "third_party/WebKit/public/web/WebNode.h"
 #include "third_party/re2/src/re2/re2.h"
+
+using blink::WebString;
 
 namespace autofill {
 
@@ -102,7 +105,7 @@ struct TraversalInfo {
 // inputs in a form, as well as their ordering.
 struct FormInputCollection {
   blink::WebFormElement form;
-  std::vector<blink::WebFormControlElement> inputs;
+  std::vector<blink::WebInputElement> inputs;
   std::vector<size_t> text_inputs;
   std::vector<size_t> password_inputs;
   std::vector<size_t> explicit_password_inputs;
@@ -112,20 +115,22 @@ struct FormInputCollection {
   // username and password fields respectively. This is used to quickly match
   // against well-known <input> patterns to guess what kind of form we are
   // dealing with, and provide intelligent autocomplete suggestions.
-  void AddInput(const blink::WebFormControlElement& input) {
+  void AddInput(const blink::WebInputElement& input) {
+    CR_DEFINE_STATIC_LOCAL(WebString, kType, ("type"));
+    CR_DEFINE_STATIC_LOCAL(WebString, kAutocomplete, ("autocomplete"));
     std::string type(
-        input.HasAttribute("type") ? input.GetAttribute("type").Utf8() : "");
+        input.HasAttribute(kType) ? input.GetAttribute(kType).Utf8() : "");
     signature +=
         type != "password" ? kTextFieldSignature : kPasswordFieldSignature;
     if (type != "password") {
       text_inputs.push_back(inputs.size());
     } else {
       password_inputs.push_back(inputs.size());
-      if (input.HasAttribute("autocomplete")) {
+      if (input.HasAttribute(kAutocomplete)) {
         // There are some warnings we only throw if we are certain that a
         // password field is actually a password (rather than a credit card
         // security code, etc.).
-        std::string autocomplete(input.GetAttribute("autocomplete").Utf8());
+        std::string autocomplete(input.GetAttribute(kAutocomplete).Utf8());
         if (autocomplete == "current-password" ||
             autocomplete == "new-password")
           explicit_password_inputs.push_back(inputs.size());
@@ -194,8 +199,9 @@ bool FormIsTooComplex(const std::string& signature) {
 void TrackElementId(
     const blink::WebElement& element,
     std::map<std::string, std::vector<blink::WebNode>>* nodes_for_id) {
-  if (element.HasAttribute("id")) {
-    std::string id_attr = element.GetAttribute("id").Utf8();
+  CR_DEFINE_STATIC_LOCAL(WebString, kId, ("id"));
+  if (element.HasAttribute(kId)) {
+    std::string id_attr = element.GetAttribute(kId).Utf8();
     (*nodes_for_id)[id_attr].push_back(element);
   }
 }
@@ -224,6 +230,7 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
     const blink::WebDocument& document,
     std::set<blink::WebNode>* skip_nodes,
     PagePasswordsAnalyserLogger* logger) {
+  CR_DEFINE_STATIC_LOCAL(WebString, kType, ("type"));
   std::vector<FormInputCollection> form_input_collections;
 
   // Keep track of inputs that are inside <form> elements to find the complement
@@ -238,18 +245,19 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
     // Collect all the inputs in the form.
     blink::WebVector<blink::WebFormControlElement> form_control_elements;
     form.GetFormControlElements(form_control_elements);
-    for (const blink::WebFormControlElement& input : form_control_elements) {
-      if (TrackElementIfUntracked(input, skip_nodes, &nodes_for_id))
+    for (const blink::WebFormControlElement& element : form_control_elements) {
+      if (TrackElementIfUntracked(element, skip_nodes, &nodes_for_id))
         continue;
       // We are only interested in a subset of input elements -- those likely
       // to be username or password fields.
-      if (input.TagName() == "INPUT" &&
-          (!input.HasAttribute("type") ||
+      const blink::WebInputElement* input = ToWebInputElement(&element);
+      if (input &&
+          (!input->HasAttribute(kType) ||
            std::find(std::begin(kTypeAttributes), std::end(kTypeAttributes),
-                     input.GetAttribute("type").Utf8()) !=
+                     input->GetAttribute(kType).Utf8()) !=
                std::end(kTypeAttributes))) {
-        form_input_collections.back().AddInput(input);
-        inputs_with_forms.insert(input);
+        form_input_collections.back().AddInput(*input);
+        inputs_with_forms.insert(*input);
       }
     }
 
@@ -312,7 +320,7 @@ std::vector<FormInputCollection> ExtractFormsForAnalysis(
 // other fields.
 void InferUsernameField(
     const blink::WebFormElement& form,
-    const std::vector<blink::WebFormControlElement>& inputs,
+    const std::vector<blink::WebInputElement>& inputs,
     size_t username_field_guess,
     std::map<size_t, std::string>* autocomplete_suggestions) {
   blink::WebElementCollection labels(form.GetElementsByHTMLTagName("label"));
@@ -387,7 +395,7 @@ void GuessAutocompleteAttributesForPasswordFields(
 void AnalyseForm(const FormInputCollection& form_input_collection,
                  PagePasswordsAnalyserLogger* logger) {
   const blink::WebFormElement& form = form_input_collection.form;
-  const std::vector<blink::WebFormControlElement>& inputs =
+  const std::vector<blink::WebInputElement>& inputs =
       form_input_collection.inputs;
   const std::vector<size_t>& text_inputs = form_input_collection.text_inputs;
   const std::vector<size_t>& explicit_password_inputs =
@@ -458,9 +466,10 @@ void AnalyseForm(const FormInputCollection& form_input_collection,
   // For each input element that is not annotated with an autocomplete
   // attribute, if we have a guess for what function the input serves, log
   // a warning, suggesting that the inferred attribute value should be added.
+  CR_DEFINE_STATIC_LOCAL(WebString, kAutocomplete, ("autocomplete"));
   for (size_t i = 0; i < inputs.size(); ++i) {
     if (autocomplete_suggestions.count(i) &&
-        !inputs[i].HasAttribute("autocomplete"))
+        !inputs[i].HasAttribute(kAutocomplete))
       logger->Send(LinkDocumentation("Input elements should have autocomplete "
                                      "attributes (suggested: \"" +
                                      autocomplete_suggestions[i] + "\"):"),
