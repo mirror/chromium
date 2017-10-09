@@ -222,9 +222,11 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
 void NetworkContext::ApplyContextParamsToBuilder(
     net::URLRequestContextBuilder* builder,
     mojom::NetworkContextParams* network_context_params) {
+  net::NetLog* net_log = nullptr;
   // |network_service_| may be nullptr in tests.
-  if (!builder->net_log() && network_service_)
-    builder->set_net_log(network_service_->net_log());
+  if (network_service_)
+    net_log = network_service_->net_log();
+  builder->set_net_log(net_log);
 
   builder->set_enable_brotli(network_context_params->enable_brotli);
   if (network_context_params->context_name)
@@ -266,7 +268,7 @@ void NetworkContext::ApplyContextParamsToBuilder(
             // PrefDelegate.
             new HttpServerPropertiesPrefDelegate(pref_service_.get()),
             base::ThreadTaskRunnerHandle::Get(),
-            base::ThreadTaskRunnerHandle::Get(), builder->net_log());
+            base::ThreadTaskRunnerHandle::Get(), net_log);
     http_server_properties_manager_ = http_server_properties.get();
     http_server_properties_manager_->InitializeOnNetworkSequence();
 

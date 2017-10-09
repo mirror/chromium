@@ -18,7 +18,7 @@
 
 namespace content {
 
-std::unique_ptr<NetworkService> NetworkService::Create() {
+std::unique_ptr<NetworkService> NetworkService::Create(net::NetLog* net_log) {
   return base::MakeUnique<NetworkServiceImpl>(nullptr);
 }
 
@@ -55,8 +55,26 @@ class NetworkServiceImpl::MojoNetLog : public net::NetLog {
 };
 
 NetworkServiceImpl::NetworkServiceImpl(
-    std::unique_ptr<service_manager::BinderRegistry> registry)
-    : net_log_(new MojoNetLog), registry_(std::move(registry)), binding_(this) {
+    std::unique_ptr<service_manager::BinderRegistry> registry,
+    net::NetLog* net_log)
+    : registry_(std::move(registry)), binding_(this) {
+  if (net_log) {
+    net_log_ = net_log;
+  } else {
+    owned_net_log_ = std::make_unique<MojoNetLog>();
+    net_log_ = owned_net_log_.get();
+
+    // Note: The command line switches are only checked when using its own
+    // NetLog, since if there's another NetLog, it may already be writing to
+    // the destination log file.
+    //
+    // TODO(mmenke): Separate out the file writing code from MojoNetLog, and
+    // either always have the network service apply the command line flag, or
+    // just have the logic in the embedder, and always use a mojo API to start
+    // logging to file on NetworkService construction.
+    owned_net_log_->ProcessCommandLine(*base::CommandLine::ForCurrentProcess());
+  }
+
   // |registry_| is nullptr when an in-process NetworkService is
   // created directly. The latter is done in concert with using
   // CreateNetworkContextWithBuilder to ease the transition to using the network
@@ -64,11 +82,6 @@ NetworkServiceImpl::NetworkServiceImpl(
   if (registry_) {
     registry_->AddInterface<mojom::NetworkService>(
         base::Bind(&NetworkServiceImpl::Create, base::Unretained(this)));
-
-    // Note: The command line switches are only checked when running out of
-    // process, since in in-process mode other code may already be writing to
-    // the destination log file.
-    net_log_->ProcessCommandLine(*base::CommandLine::ForCurrentProcess());
   }
 }
 
@@ -140,10 +153,6 @@ bool NetworkServiceImpl::HasRawHeadersAccess(uint32_t process_id) const {
     return true;
   return processes_with_raw_headers_access_.find(process_id) !=
          processes_with_raw_headers_access_.end();
-}
-
-net::NetLog* NetworkServiceImpl::net_log() const {
-  return net_log_.get();
 }
 
 void NetworkServiceImpl::OnBindInterface(
