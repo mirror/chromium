@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c83bc99e_c0de8c82",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-09T06:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8fb9a83_b78b2664",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1549187d_a3689015",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2f1a73_8e0626b8",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-09T06:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1549187d_a3689015",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b60090e9_95b168b0",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-09T06:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ba4a65_e9d49f05",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22d10bb_b65def9c",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fd056d_1267986c",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-09T06:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22d10bb_b65def9c",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +170,24 @@
       "writtenOn": "2017-10-09T02:26:03Z",
       "side": 1,
       "message": "This is very repetitive - so we should be able to generate it - perhaps a TODO somewhere to figure out how to specify the shorthand for ResolveDirectionAwareProperty?",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ea3716_f145741f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollSnapMarginBlockStart.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-09T06:21:37Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure what you mean. If you mean that all of these different impls for different API subclasses are very similar then I agree. I thought about that while I was doing it. They all have different parameters, and generating the methods with the parameters subbed in (i.e. exactly like the code I have here, but generated into a header) would have put a lot of switching in the generator, which didn\u0027t feel very Ribbony.\n\nOne alternative would be to store the \"side\" and shorthand/properties data on the API, since they are property-specific, and make ResolveToPhysicalProperty non-static.\n\nAnother option is to move the logic of ResolveToPhysicalProperty inline here. That actually might be kinda nice. Removes more switches and puts the property-specific logic with the property.",
+      "parentUuid": "9a8f7a2d_e30228b9",
       "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
