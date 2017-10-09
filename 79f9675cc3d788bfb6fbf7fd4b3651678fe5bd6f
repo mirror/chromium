@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "764c6a2f_f3c57ad5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-09T18:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61fe3bf5_8c09733b",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d8ce37_0a0316fa",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
