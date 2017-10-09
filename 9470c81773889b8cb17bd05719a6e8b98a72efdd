@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d71097e5_e7556a18",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "will fail or get ignored.",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ab03f3_7c248708",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "... to fetch them again if the scheduler is not disabled.",
+      "range": {
+        "startLine": 1474,
+        "startChar": 66,
+        "endLine": 1474,
+        "endChar": 67
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb933d75_d4684d11",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "this is hard to understand. Why don\u0027t we want to flip the AVAILABLE_LOADING status.\nIf it\u0027s needed indeed, this comment should go to where the method is called (because here, it\u0027s just describing the method name).",
+      "range": {
+        "startLine": 1567,
+        "startChar": 42,
+        "endLine": 1567,
+        "endChar": 77
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60b9686_993b9490",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "would this ever happen?\n\nIs it possible to receive a StopScheduling() call after construction but before the provider got activated?",
+      "range": {
+        "startLine": 601,
+        "startChar": 14,
+        "endLine": 601,
+        "endChar": 49
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f4ee4e_b9b96b0a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "let\u0027s use WillRepeatedly() which is more robust.",
+      "range": {
+        "startLine": 383,
+        "startChar": 35,
+        "endLine": 383,
+        "endChar": 42
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

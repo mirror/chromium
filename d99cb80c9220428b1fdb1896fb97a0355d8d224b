@@ -117,6 +117,30 @@
       "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eff79525_0252836d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-09T13:37:27Z",
+      "side": 1,
+      "message": "any idea why we had the load at construction time in the first place? Just want to make sure we\u0027re not missing something...",
+      "parentUuid": "c44f00a3_53f41ff3",
+      "range": {
+        "startLine": 836,
+        "startChar": 65,
+        "endLine": 837,
+        "endChar": 40
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
