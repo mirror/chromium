@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71732cb1_9c2fa707",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-09T23:44:57Z",
+      "side": 1,
+      "message": "Identifiers beginning with __ are reserved to the implementation. I\u0027d make this into a function with an ordinary name, or perhaps better, factor the bodies of SetMemoryRead{Write,Only} into a helper function and inline it into that.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392806a8_a623e0f7",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-09T23:44:57Z",
+      "side": 1,
+      "message": "Do these need to be weak? In the other file you declare a section named protected_memory with length 0. So I think the section (and these symbols) should always exist.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e52c5cf_fd9d65b6",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-09T23:44:57Z",
+      "side": 1,
+      "message": "Could be simpler to do:\n\nstatic Lock lock;\nreturn \u0026lock;",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2548137_3297c4f8",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-09T23:44:57Z",
+      "side": 1,
+      "message": "Do you mean \"always set back to read-only\"?",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4573d6_9d08f20d",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-09T23:44:57Z",
+      "side": 1,
+      "message": "Identifiers beginning with __ are reserved to the implementation. I\u0027d move this into a namespace named \"internal\".\n\nAlso, I wonder what you think about changing the API so that instead of using macro wrappers, we make ProtectedCall part of the API, and use a dynamic check to make sure that the function pointer is protected. Something like:\n\nauto ProtectedCall(const Func \u0026f, Args\u0026\u0026... args) {\n  CHECK(\u0026f \u003e\u003d ProtectedMemoryStart() \u0026\u0026 \u0026f \u003c\u003d ProtectedMemoryEnd());\n  return f(std::forward\u003cArgs\u003e(args)...);\n}",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
