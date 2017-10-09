@@ -464,11 +464,6 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   // Indicate if this response was fetched from disk cache.
   bool was_cached() const { return response_info_.was_cached; }
 
-  // Returns true if the URLRequest was delivered through a proxy.
-  bool was_fetched_via_proxy() const {
-    return response_info_.was_fetched_via_proxy;
-  }
-
   // Returns true if the URLRequest was delivered over SPDY.
   bool was_fetched_via_spdy() const {
     return response_info_.was_fetched_via_spdy;
@@ -646,8 +641,8 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
     return received_response_content_length_;
   }
 
-  // Available at NetworkDelegate::NotifyHeadersReceived() time, which is before
-  // the more general response_info() is available, even though it is a subset.
+  // Available when the request headers are sent, which is before the mor
+  // general response_info() is available.
   const ProxyServer& proxy_server() const { return proxy_server_; }
 
   // Gets the connection attempts made in the process of servicing this
