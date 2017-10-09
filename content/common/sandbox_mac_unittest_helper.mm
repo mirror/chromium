@@ -14,8 +14,8 @@ extern "C" {
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/process/kill.h"
-#include "content/common/sandbox_mac.h"
 #include "content/test/test_content_client.h"
+#include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "testing/multiprocess_func_list.h"
 
