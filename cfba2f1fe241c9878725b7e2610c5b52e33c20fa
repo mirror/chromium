@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0a2118_594fc19c",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-09T17:29:15Z",
+      "side": 1,
+      "message": "Is this the net error code?",
+      "range": {
+        "startLine": 423,
+        "startChar": 38,
+        "endLine": 423,
+        "endChar": 48
+      },
+      "revId": "cfba2f1fe241c9878725b7e2610c5b52e33c20fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
