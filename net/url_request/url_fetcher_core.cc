@@ -83,7 +83,6 @@ URLFetcherCore::URLFetcherCore(
       load_flags_(LOAD_NORMAL),
       response_code_(URLFetcher::RESPONSE_CODE_INVALID),
       url_request_data_key_(NULL),
-      was_fetched_via_proxy_(false),
       was_cached_(false),
       received_response_content_length_(0),
       total_received_bytes_(0),
@@ -323,7 +322,7 @@ const ProxyServer& URLFetcherCore::ProxyServerUsed() const {
 }
 
 bool URLFetcherCore::WasFetchedViaProxy() const {
-  return was_fetched_via_proxy_;
+  return proxy_server_.is_valid() && !proxy_server_.is_direct();
 }
 
 bool URLFetcherCore::WasCached() const {
@@ -411,7 +410,6 @@ void URLFetcherCore::OnReceivedRedirect(URLRequest* request,
     url_ = redirect_info.new_url;
     response_code_ = request_->GetResponseCode();
     proxy_server_ = request_->proxy_server();
-    was_fetched_via_proxy_ = request_->was_fetched_via_proxy();
     was_cached_ = request_->was_cached();
     total_received_bytes_ += request_->GetTotalReceivedBytes();
     int result = request->Cancel();
@@ -429,7 +427,6 @@ void URLFetcherCore::OnResponseStarted(URLRequest* request, int net_error) {
     response_headers_ = request_->response_headers();
     socket_address_ = request_->GetSocketAddress();
     proxy_server_ = request_->proxy_server();
-    was_fetched_via_proxy_ = request_->was_fetched_via_proxy();
     was_cached_ = request_->was_cached();
     total_response_bytes_ = request_->GetExpectedContentSize();
   }
