@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71803a6b_e7d9e080",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-09T21:50:09Z",
+      "side": 1,
+      "message": "now that this interface is exposed, we probably want to be robust to the browser requesting us to start profiling on a process that is already profiling. conditional + dlog and early return?",
+      "revId": "fc9bc7c0441e7091f5cdc5a2a96c9b0bd09032cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd8b9cb_5faa8800",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-09T21:50:09Z",
+      "side": 1,
+      "message": "I think we want to move this line before line 149.",
+      "revId": "fc9bc7c0441e7091f5cdc5a2a96c9b0bd09032cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
