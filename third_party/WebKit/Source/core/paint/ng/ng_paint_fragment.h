@@ -11,6 +11,8 @@
 
 namespace blink {
 
+struct NGPhysicalOffset;
+
 // The NGPaintFragment contains a NGPhysicalFragment and geometry in the paint
 // coordinate system.
 //
@@ -38,6 +40,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return children_;
   }
 
+  void UpdateVisualRect();
+
   // TODO(layout-dev): Implement when we have oveflow support.
   bool HasOverflowClip() const { return false; }
   LayoutRect VisualRect() const { return visual_rect_; }
@@ -58,7 +62,12 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants();
+  struct UpdateContext {
+    const LayoutObject* parent_box = nullptr;
+    const NGPhysicalOffset offset_to_parent_box;
+  };
+  void UpdateVisualRect(const UpdateContext&);
+  void PopulateDescendants(const UpdateContext&);
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
