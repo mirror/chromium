@@ -130,6 +130,8 @@ class PreSigninPolicyFetcher : public CloudPolicyClient::Observer {
   std::unique_ptr<UserCloudPolicyValidator> CreateValidatorForFetchedPolicy(
       std::unique_ptr<enterprise_management::PolicyFetchResponse> policy);
 
+  bool IsActiveDirectoryUser() const;
+
   chromeos::CryptohomeClient* const cryptohome_client_;
   chromeos::SessionManagerClient* const session_manager_client_;
   const std::unique_ptr<CloudPolicyClient> cloud_policy_client_;
