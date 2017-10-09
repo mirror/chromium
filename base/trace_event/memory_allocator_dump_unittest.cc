@@ -163,7 +163,8 @@ TEST(MemoryAllocatorDumpTest, DumpIntoProcessMemoryDump) {
 
   // Check that the AsValueInfo doesn't hit any DCHECK.
   std::unique_ptr<TracedValue> traced_value(new TracedValue);
-  pmd.AsValueInto(traced_value.get());
+  pmd.SerializeAllocatorDumpsInto(traced_value.get());
+  pmd.SerializeHeapProfilerDumpsInto(traced_value.get());
 }
 
 TEST(MemoryAllocatorDumpTest, GetSize) {
