@@ -51,17 +51,18 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
     const MemoryAllocatorDump& dump = *path_to_dump.second;
 
     bool is_global = base::StartsWith(path, "global/", CompareCase::SENSITIVE);
-    Process* graph =
+    Process* process =
         is_global ? global_graph->shared_memory_graph() : process_graph;
 
     Node* node;
     auto node_iterator = global_graph->nodes_by_guid().find(dump.guid());
     if (node_iterator == global_graph->nodes_by_guid().end()) {
-      node = graph->CreateNode(dump.guid(), path);
+      bool is_weak = dump.flags() & MemoryAllocatorDump::Flags::WEAK;
+      node = process->CreateNode(dump.guid(), path, is_weak);
     } else {
       node = node_iterator->second;
 
-      DCHECK_EQ(node, graph->FindNode(path))
+      DCHECK_EQ(node, process->FindNode(path))
           << "Nodes have different paths but same GUIDs";
       DCHECK(is_global) << "Multiple nodes have same GUID without being global";
     }
@@ -106,6 +107,47 @@ void AddEdges(const base::trace_event::ProcessMemoryDump& source,
   }
 }
 
+void MarkWeakNodesRecursively(Node* node) {
+  if (node->is_weak())
+    return;
+
+  // While a node is also considered weak if its parent is weak, this is
+  // considered implicit in this algorithm. Therefore, we will not mark
+  // this node based on its parents weakness.
+  if (node->owns_edge() && node->owns_edge()->target()->is_weak()) {
+    node->set_weak(true);
+    return;
+  }
+
+  // Recursively mark nodes as weak then store whether all children are weak.
+  bool all_children_weak = true;
+  for (auto& path_to_child : *node->children()) {
+    MarkWeakNodesRecursively(path_to_child.second);
+    all_children_weak = all_children_weak && path_to_child.second->is_weak();
+  }
+
+  // We mark a node as weak if there was no explicit dump associated with it and
+  // all its children are weak.
+  node->set_weak(!node->is_explicit() && all_children_weak);
+}
+
+void RemoveWeakNodesRecursively(Node* parent) {
+  for (auto path_to_node_it = parent->children()->begin();
+       path_to_node_it != parent->children()->end();) {
+    Node* node = path_to_node_it->second;
+    if (node->is_weak()) {
+      path_to_node_it = parent->children()->erase(path_to_node_it);
+    } else {
+      RemoveWeakNodesRecursively(node);
+
+      auto* owned_by_edges = node->owned_by_edges();
+      std::remove_if(owned_by_edges->begin(), owned_by_edges->end(),
+                     [](Edge* edge) { return edge->source()->is_weak(); });
+      ++path_to_node_it;
+    }
+  }
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
@@ -123,6 +165,22 @@ std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
   for (auto& pid_to_dump : process_dumps) {
     AddEdges(pid_to_dump.second, global_graph.get());
   }
+
+  // Third pass: mark recursively nodes as weak if they own a node which is
+  // weak or they don't have an associated dump and all theird children are
+  // weak. Implicitly consider child nodes as weak if parent is weak.
+  MarkWeakNodesRecursively(global_graph->shared_memory_graph()->root());
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    MarkWeakNodesRecursively(pid_to_process.second->root());
+  }
+
+  // Fourth pass: remove all nodes which are weak (including their descendants)
+  // and clean owned by edges to match.
+  RemoveWeakNodesRecursively(global_graph->shared_memory_graph()->root());
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    RemoveWeakNodesRecursively(pid_to_process.second->root());
+  }
+
   return global_graph;
 }
 
