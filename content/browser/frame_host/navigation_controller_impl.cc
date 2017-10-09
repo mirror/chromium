@@ -1279,6 +1279,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
   if (params.history_list_was_cleared) {
     DiscardNonCommittedEntriesInternal();
     entries_.clear();
+    LOG(ERROR) << "------------------- 1";
     last_committed_entry_index_ = -1;
   }
 
@@ -1445,6 +1446,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
 
   // If a transient entry was removed, the indices might have changed, so we
   // have to query the entry index again.
+    LOG(ERROR) << "------------------- 2";
   last_committed_entry_index_ = GetIndexOfEntry(entry);
 }
 
@@ -1571,6 +1573,8 @@ bool NavigationControllerImpl::RendererDidNavigateAutoSubframe(
 
       // We only need to discard the pending entry in this history navigation
       // case.  For newly created subframes, there was no pending entry.
+
+    LOG(ERROR) << "------------------- 3";
       last_committed_entry_index_ = entry_index;
       DiscardNonCommittedEntriesInternal();
 
@@ -1725,6 +1729,7 @@ void NavigationControllerImpl::CopyStateFromAndPrune(
   InsertEntriesFrom(*source, max_source_index);
 
   // Adjust indices such that the last entry and pending are at the end now.
+    LOG(ERROR) << "------------------- 4";
   last_committed_entry_index_ = GetEntryCount() - 1;
 
   delegate_->SetHistoryOffsetAndLength(last_committed_entry_index_,
@@ -1771,6 +1776,7 @@ void NavigationControllerImpl::PruneAllButLastCommittedInternal() {
   entries_.erase(entries_.begin(),
                  entries_.begin() + last_committed_entry_index_);
   entries_.erase(entries_.begin() + 1, entries_.end());
+    LOG(ERROR) << "------------------- 6";
   last_committed_entry_index_ = 0;
 }
 
@@ -1867,8 +1873,11 @@ void NavigationControllerImpl::RemoveEntryAtIndexInternal(int index) {
   DiscardNonCommittedEntries();
 
   entries_.erase(entries_.begin() + index);
-  if (last_committed_entry_index_ > index)
+  if (last_committed_entry_index_ > index) {
+
+    LOG(ERROR) << "------------------- 6";
     last_committed_entry_index_--;
+  }
 }
 
 void NavigationControllerImpl::DiscardNonCommittedEntries() {
@@ -1947,6 +1956,7 @@ void NavigationControllerImpl::InsertOrReplaceEntry(
   PruneOldestEntryIfFull();
 
   entries_.push_back(std::move(entry));
+    LOG(ERROR) << "------------------- 7" << "replace? " << replace;
   last_committed_entry_index_ = static_cast<int>(entries_.size()) - 1;
 }
 
@@ -2241,6 +2251,7 @@ void NavigationControllerImpl::FinishRestore(int selected_index,
   DCHECK(selected_index >= 0 && selected_index < GetEntryCount());
   ConfigureEntriesForRestore(&entries_, type);
 
+    LOG(ERROR) << "------------------- 8";
   last_committed_entry_index_ = selected_index;
 }
 
@@ -2279,8 +2290,11 @@ void NavigationControllerImpl::DiscardTransientEntry() {
   if (transient_entry_index_ == -1)
     return;
   entries_.erase(entries_.begin() + transient_entry_index_);
-  if (last_committed_entry_index_ > transient_entry_index_)
+  if (last_committed_entry_index_ > transient_entry_index_) {
+
+    LOG(ERROR) << "------------------- 9";
     last_committed_entry_index_--;
+  }
   if (pending_entry_index_ > transient_entry_index_)
     pending_entry_index_--;
   transient_entry_index_ = -1;
