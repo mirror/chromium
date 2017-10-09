@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "653b37d8_ede07600",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "base::ContainsKey would be more elegant",
+      "range": {
+        "startLine": 203,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a13ff64_8b6f5190",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "auto \u0026 ?",
+      "range": {
+        "startLine": 621,
+        "startChar": 7,
+        "endLine": 621,
+        "endChar": 11
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6775cdeb_56f61236",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "std::set\u003cscoped_refptr\u003cPasswordProtectionRequest\u003e\u003e requests_ is a private member.\nHow is it accessible in CPPS?",
+      "range": {
+        "startLine": 621,
+        "startChar": 17,
+        "endLine": 621,
+        "endChar": 26
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b92f6a5_3dda3312",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "Please add the argument name in commented form",
+      "range": {
+        "startLine": 629,
+        "startChar": 20,
+        "endLine": 629,
+        "endChar": 72
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5505af68_b8e101a7",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "Can go outside else.\n\nEdit: why not use switch case?",
+      "range": {
+        "startLine": 646,
+        "startChar": 4,
+        "endLine": 646,
+        "endChar": 14
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d19733_258ebe86",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "drop sb::",
+      "range": {
+        "startLine": 680,
+        "startChar": 2,
+        "endLine": 680,
+        "endChar": 17
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5887ac9_e33746c0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-09T22:20:49Z",
+      "side": 1,
+      "message": "nit: use shorthand notation?",
+      "range": {
+        "startLine": 683,
+        "startChar": 2,
+        "endLine": 686,
+        "endChar": 17
+      },
+      "revId": "dd38abc693c3ea7374e1b53ed918fefb7821daa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
