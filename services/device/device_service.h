@@ -14,6 +14,7 @@
 #include "services/device/public/interfaces/fingerprint.mojom.h"
 #include "services/device/public/interfaces/nfc_provider.mojom.h"
 #include "services/device/public/interfaces/power_monitor.mojom.h"
+#include "services/device/public/interfaces/public_ip_address_geolocator.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/serial.mojom.h"
 #include "services/device/public/interfaces/time_zone_monitor.mojom.h"
@@ -36,6 +37,7 @@ namespace device {
 
 class HidManagerImpl;
 class PowerMonitorMessageBroadcaster;
+class PublicIpAddressLocationNotifier;
 class TimeZoneMonitor;
 
 #if defined(OS_ANDROID)
@@ -90,6 +92,9 @@ class DeviceService : public service_manager::Service {
 
   void BindPowerMonitorRequest(mojom::PowerMonitorRequest request);
 
+  void BindPublicIpAddressGeolocatorRequest(
+      mojom::PublicIpAddressGeolocatorRequest request);
+
   void BindScreenOrientationListenerRequest(
       mojom::ScreenOrientationListenerRequest request);
 
@@ -107,6 +112,8 @@ class DeviceService : public service_manager::Service {
   std::unique_ptr<HidManagerImpl> hid_manager_;
   std::unique_ptr<PowerMonitorMessageBroadcaster>
       power_monitor_message_broadcaster_;
+  std::unique_ptr<PublicIpAddressLocationNotifier>
+      public_ip_address_location_notifier_;
   std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
   scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
