@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047d0578_771f588f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T17:27:31Z",
+      "side": 1,
+      "message": "Please add more detail about why this change is needed. Why was the previous strategy incorrect? Why did your previous fix (with the false positives) need to be changed? How does your solution work around the false positive issue? etc.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3591fa_37056396",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T17:27:31Z",
+      "side": 1,
+      "message": "This solution is flaky and will incorrect metrics.\n\nExample:\n(1) Service starts up and adapter is not present.\n(2) Timer set for 2 seconds.\n(3) Adapter becomes present, and state is ENABLED. ENABLED is logged to metrics.\n(4) Timer fires, and state is still ENABLED. ENABLED is logged a second time.\n\nThis double logging can occur with other states besides ENABLED as well.\n\nThe correct thing to do is:\n(1) When we first encounter this situation, set a timer like you have already done.\n(2) When the timer fires, check to see if nothing has changed. If the state is still \"Bluetooth not present\" and there have been no state changes since then, then we can assume that this is an actual error and we should log to analytics. If the state has changed since the timer was set, we know it was a false positive and should not be logged.",
+      "range": {
+        "startLine": 515,
+        "startChar": 4,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d882f7_efd01a04",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T17:27:31Z",
+      "side": 1,
+      "message": "nit: Let\u0027s name this RecordTetherFeatureStateIfPossible() and have the description of the \"false positive\" problem within that function instead so that it\u0027s easier to discern what the issue is within the implementation.",
+      "range": {
+        "startLine": 197,
+        "startChar": 7,
+        "endLine": 197,
+        "endChar": 64
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a882982_c52b73c8",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T17:27:31Z",
+      "side": 1,
+      "message": "nit: Describe what this field means, not where it is used.",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 73
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71948f0_35014d39",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-09T17:27:31Z",
+      "side": 1,
+      "message": "Take the expected count as a parameter and verify that the expected value is the actual value.",
+      "range": {
+        "startLine": 326,
+        "startChar": 16,
+        "endLine": 326,
+        "endChar": 17
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
