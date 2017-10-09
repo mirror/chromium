@@ -16,6 +16,7 @@
 #include "services/service_manager/public/cpp/service.h"
 
 namespace net {
+class NetLog;
 class URLRequestContext;
 class URLRequestContextBuilder;
 }  // namespace net
@@ -27,8 +28,12 @@ class NetworkContext;
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
  public:
-  explicit NetworkServiceImpl(
-      std::unique_ptr<service_manager::BinderRegistry> registry);
+  // |net_log| is an optional shared NetLog, which will be used instead of the
+  // service's own NetLog. It must outlive the NetworkService.
+  // TODO(mmenke): Once the NetworkService can always create its own NetLog in
+  // production, remove the |net_log| argument.
+  NetworkServiceImpl(std::unique_ptr<service_manager::BinderRegistry> registry,
+                     net::NetLog* net_log = nullptr);
 
   ~NetworkServiceImpl() override;
 
@@ -54,7 +59,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
 
-  net::NetLog* net_log() const;
+  net::NetLog* net_log() const { return net_log_; }
 
  private:
   class MojoNetLog;
@@ -68,7 +73,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
 
   void Create(mojom::NetworkServiceRequest request);
 
-  std::unique_ptr<MojoNetLog> net_log_;
+  std::unique_ptr<MojoNetLog> owned_net_log_;
+  net::NetLog* net_log_;
 
   std::unique_ptr<service_manager::BinderRegistry> registry_;
 

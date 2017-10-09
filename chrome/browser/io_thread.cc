@@ -764,7 +764,6 @@ void IOThread::ConstructSystemRequestContext() {
   builder->set_network_delegate(
       globals_->data_use_ascriber->CreateNetworkDelegate(
           std::move(chrome_network_delegate), GetMetricsDataUseForwarder()));
-  builder->set_net_log(net_log_);
   std::unique_ptr<net::HostResolver> host_resolver(
       CreateGlobalHostResolver(net_log_));
 
@@ -805,7 +804,8 @@ void IOThread::ConstructSystemRequestContext() {
   SetUpProxyConfigService(builder.get(),
                           std::move(system_proxy_config_service_));
 
-  globals_->network_service = content::NetworkService::Create();
+  globals_->network_service =
+      content::NetworkService::Create(globals_->net_log);
   if (!is_quic_allowed_on_init_)
     globals_->network_service->DisableQuic();
 
