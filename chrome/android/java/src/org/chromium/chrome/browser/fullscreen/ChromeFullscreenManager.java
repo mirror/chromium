@@ -462,7 +462,12 @@ public class ChromeFullscreenManager
      * animation, preventing message loop stalls due to untimely invalidation.
      */
     private void scheduleVisibilityUpdate() {
-        final int desiredVisibility = shouldShowAndroidControls() ? View.VISIBLE : View.INVISIBLE;
+        final boolean requestVisible = shouldShowAndroidControls();
+        final int desiredVisibility = requestVisible ? View.VISIBLE : View.INVISIBLE;
+        if ((!mBrowserVisibilityDelegate.canAutoHideBrowserControls() && !requestVisible)
+                || (mBrowserVisibilityDelegate.canShowBrowserControls() && requestVisible)) {
+            return;
+        }
         if (mControlContainer.getView().getVisibility() == desiredVisibility) return;
         mControlContainer.getView().removeCallbacks(mUpdateVisibilityRunnable);
         mControlContainer.getView().postOnAnimation(mUpdateVisibilityRunnable);
