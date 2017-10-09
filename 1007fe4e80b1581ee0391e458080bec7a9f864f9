@@ -16,6 +16,24 @@
       "revId": "1007fe4e80b1581ee0391e458080bec7a9f864f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d366bf_e61efc13",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T21:36:07Z",
+      "side": 1,
+      "message": "Done for ShelfItem struct (left MenuItem as-is)",
+      "parentUuid": "4047daa9_bc17d19c",
+      "revId": "1007fe4e80b1581ee0391e458080bec7a9f864f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
