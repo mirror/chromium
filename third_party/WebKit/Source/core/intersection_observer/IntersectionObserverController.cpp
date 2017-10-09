@@ -69,6 +69,8 @@ void IntersectionObserverController::DeliverIntersectionObservations() {
 }
 
 void IntersectionObserverController::ComputeTrackedIntersectionObservations() {
+  if (!GetExecutionContext())
+    return;
   TRACE_EVENT0(
       "blink",
       "IntersectionObserverController::computeTrackedIntersectionObservations");
