@@ -207,7 +207,6 @@ class PrintPDFFetcherDelegate : public URLFetcherDelegate {
   printInfo.outputType = UIPrintInfoOutputGeneral;
   printInfo.jobName = title;
   printInteractionController.printInfo = printInfo;
-  printInteractionController.showsPageRange = YES;
 
   // Print Formatters do not work for PDFs in iOS9 WKWebView, but do in iOS10.
   // Instead, download the PDF and (eventually) pass it to the
