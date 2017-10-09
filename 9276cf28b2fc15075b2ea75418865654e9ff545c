@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80ee3e61_e00cd1f9",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T15:31:45Z",
+      "side": 1,
+      "message": "How about saving a snapshot of the whole desktop? That may provide more helpful information.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c87c65_f23da5c5",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-09T15:31:45Z",
+      "side": 1,
+      "message": "WDYT of prefixing this time stamp too? The file will certainly have a timestamp, but including the timestamp in the names makes it easier to move around the time and know when it was created.",
+      "range": {
+        "startLine": 54,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
