@@ -639,6 +639,38 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   }
 }
 
+// Row selection of the tableView will be cleared after reloadData.  This
+// function is used to restore the row selection.  It also updates editNodes in
+// case some selected nodes are removed.
+- (void)restoreRowSelection {
+  // Create a new editNodes set to check if some selected nodes are removed.
+  std::set<const bookmarks::BookmarkNode*> newEditNodes;
+
+  // Add selected nodes to editNodes only if they are not removed (still exist
+  // in the table).
+  NSInteger index = 0;
+  for (auto it = _bookmarkItems.begin(); it != _bookmarkItems.end();
+       it++, index++) {
+    // If this node is found in editNodes, its row was previously selected.
+    if (_editNodes.find(*it) != _editNodes.end()) {
+      newEditNodes.insert(*it);
+      // Reselect the row of this node.
+      [self.tableView
+          selectRowAtIndexPath:[NSIndexPath
+                                   indexPathForRow:index
+                                         inSection:self.bookmarksSection]
+                      animated:NO
+                scrollPosition:UITableViewScrollPositionNone];
+    }
+  }
+
+  // if editNodes is changed, update it and tell BookmarkTableViewDelegate.
+  if (_editNodes.size() != newEditNodes.size()) {
+    _editNodes = newEditNodes;
+    [self.delegate bookmarkTableView:self selectedEditNodes:_editNodes];
+  }
+}
+
 // Removes the sign-in promo view.
 - (void)signinPromoCloseButtonAction {
   [_signinPromoViewMediator signinPromoViewClosed];
@@ -653,9 +685,12 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self computeBookmarkTableViewData];
   [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
   [self cancelAllFaviconLoads];
-  [self resetEditNodes];
   [self.delegate bookmarkTableViewRefreshContextBar:self];
+
   [self.tableView reloadData];
+  if (self.editing && !_editNodes.empty()) {
+    [self restoreRowSelection];
+  }
   if (self.addingNewFolder) {
     dispatch_async(dispatch_get_main_queue(), ^{
       // Scroll to the end of the table if a new folder is being added.
@@ -797,7 +832,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
       std::find(_bookmarkItems.begin(), _bookmarkItems.end(), bookmarkNode);
   if (it != _bookmarkItems.end()) {
     ptrdiff_t index = std::distance(_bookmarkItems.begin(), it);
-    indexPath = [NSIndexPath indexPathForRow:index inSection:1];
+    indexPath =
+        [NSIndexPath indexPathForRow:index inSection:self.bookmarksSection];
   }
   return indexPath;
 }
