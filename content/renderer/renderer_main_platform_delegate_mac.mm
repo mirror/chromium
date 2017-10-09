@@ -16,7 +16,7 @@
 #include "base/mac/scoped_cftyperef.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
-#include "content/common/sandbox_init_mac.h"
+#include "content/common/content_sandbox_init_mac.h"
 #include "content/public/common/content_switches.h"
 #include "sandbox/mac/seatbelt.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"

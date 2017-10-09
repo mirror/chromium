@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_SANDBOX_PARAMETERS_MAC_H_
-#define CONTENT_BROWSER_SANDBOX_PARAMETERS_MAC_H_
+#ifndef CONTENT_BROWSER_CONTENT_SANDBOX_PARAMETERS_MAC_H_
+#define CONTENT_BROWSER_CONTENT_SANDBOX_PARAMETERS_MAC_H_
 
 namespace sandbox {
 class SeatbeltExecClient;
@@ -18,4 +18,4 @@ void SetupRendererSandboxParameters(sandbox::SeatbeltExecClient* client);
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_SANDBOX_PARAMETERS_MAC_H_
+#endif  // CONTENT_BROWSER_CONTENT_SANDBOX_PARAMETERS_MAC_H_

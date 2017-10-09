@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_mac_unittest_helper.h"
+#include "services/service_manager/tests/sandbox/mac/sandbox_mac_unittest_helper.h"
 
 extern "C" {
 #include <sandbox.h>
@@ -14,12 +14,11 @@ extern "C" {
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/process/kill.h"
-#include "content/test/test_content_client.h"
 #include "services/service_manager/sandbox/mac/sandbox_mac.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "testing/multiprocess_func_list.h"
 
-namespace content {
+namespace service_manager {
 namespace {
 
 const char* kSandboxTypeKey = "CHROMIUM_SANDBOX_SANDBOX_TYPE";
@@ -31,7 +30,7 @@ const char* kTestDataKey = "CHROMIUM_SANDBOX_USER_DATA";
 // Support infrastructure for REGISTER_SANDBOX_TEST_CASE macro.
 namespace internal {
 
-typedef std::map<std::string,MacSandboxTestCase*> SandboxTestMap;
+typedef std::map<std::string, MacSandboxTestCase*> SandboxTestMap;
 
 // A function that returns a common map from string -> test case class.
 SandboxTestMap& GetSandboxTestMap() {
@@ -104,7 +103,7 @@ void MacSandboxTestCase::SetTestData(const char* test_data) {
 
 // Given a test name specified by |name| return that test case.
 // If no test case is found for the given name, return NULL.
-MacSandboxTestCase *SandboxTestForName(const char* name) {
+MacSandboxTestCase* SandboxTestForName(const char* name) {
   using internal::SandboxTestMap;
   using internal::GetSandboxTestMap;
 
@@ -172,4 +171,4 @@ MULTIPROCESS_TEST_MAIN(mac_sandbox_test_runner) {
   return 0;
 }
 
-}  // namespace content
+}  // namespace service_manager

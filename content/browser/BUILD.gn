@@ -528,6 +528,8 @@ source_set("browser") {
     # needed on all platforms.
     "compositor/surface_utils.cc",
     "compositor/surface_utils.h",
+    "content_sandbox_parameters_mac.h",
+    "content_sandbox_parameters_mac.mm",
     "devtools/browser_devtools_agent_host.cc",
     "devtools/browser_devtools_agent_host.h",
     "devtools/devtools_agent_host_impl.cc",
@@ -1399,8 +1401,6 @@ source_set("browser") {
     "sandbox_host_linux.h",
     "sandbox_ipc_linux.cc",
     "sandbox_ipc_linux.h",
-    "sandbox_parameters_mac.h",
-    "sandbox_parameters_mac.mm",
     "screen_orientation/screen_orientation_provider.cc",
     "screen_orientation/screen_orientation_provider.h",
     "service_manager/common_browser_interfaces.cc",

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_SANDBOX_INIT_MAC_H_
-#define CONTENT_COMMON_SANDBOX_INIT_MAC_H_
+#ifndef CONTENT_COMMON_CONTENT_SANDBOX_INIT_MAC_H_
+#define CONTENT_COMMON_CONTENT_SANDBOX_INIT_MAC_H_
 
 #include "base/callback_forward.h"
 
@@ -23,4 +23,4 @@ bool InitializeSandboxWithPostWarmupHook(base::OnceClosure hook);
 
 }  // namespace content
 
-#endif  // CONTENT_COMMON_SANDBOX_INIT_MAC_H_
+#endif  // CONTENT_COMMON_CONTENT_SANDBOX_INIT_MAC_H_

@@ -62,7 +62,7 @@
 #include "content/child/font_warmup_win.h"
 #include "sandbox/win/src/sandbox.h"
 #elif defined(OS_MACOSX)
-#include "content/common/sandbox_init_mac.h"
+#include "content/common/content_sandbox_init_mac.h"
 #endif
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
