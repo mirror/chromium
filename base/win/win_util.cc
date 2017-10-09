@@ -105,12 +105,15 @@ bool SetProcessDpiAwarenessWrapper(PROCESS_DPI_AWARENESS value) {
     if (SUCCEEDED(hr))
       return true;
     DLOG_IF(ERROR, hr == E_ACCESSDENIED)
-        << "Access denied error from SetProcessDpiAwareness. Function called "
-           "twice, or manifest was used.";
+        << "Access denied error from SetProcessDpiAwarenessInternal. Function "
+           "called twice, or manifest was used.";
+    DCHECK(SUCCEEDED(hr));
+    return false;
   }
-  // TODO(pbos): Consider DCHECKing / NOTREACHED here if the platform version is
-  // >= 8.1. That way we can detect future name changes instead of having to
-  // discover silent failures.
+
+  DCHECK_LT(GetVersion(), VERSION_WIN8_1) << "SetProcessDpiAwarenessInternal "
+                                             "should be available on all "
+                                             "platforms >= Windows 8.1";
   return false;
 }
 
@@ -672,7 +675,8 @@ void EnableHighDPISupport() {
   if (!SetProcessDpiAwarenessWrapper(process_dpi_awareness)) {
     // For windows versions where SetProcessDpiAwareness is not available or
     // failed, try its predecessor.
-    ::SetProcessDPIAware();
+    BOOL result = ::SetProcessDPIAware();
+    DCHECK(result) << "SetProcessDPIAware failed.";
   }
 }
 
