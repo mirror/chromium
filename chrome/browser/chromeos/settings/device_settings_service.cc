@@ -116,6 +116,11 @@ scoped_refptr<PublicKey> DeviceSettingsService::GetPublicKey() {
   return public_key_;
 }
 
+void DeviceSettingsService::SetDeviceOffHoursControllerForTesting(
+    policy::DeviceOffHoursController* controller) {
+  device_off_hours_controller_.reset(controller);
+}
+
 void DeviceSettingsService::Load() {
   EnqueueLoad(false);
 }
