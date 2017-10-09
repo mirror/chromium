@@ -380,6 +380,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   NewWindowController* new_window_controller() {
     return new_window_controller_.get();
   }
+  NativeCursorManagerAsh* native_cursor_manager() {
+    return native_cursor_manager_;
+  }
   NightLightController* night_light_controller();
   OverlayEventFilter* overlay_filter() { return overlay_filter_.get(); }
   PaletteDelegate* palette_delegate() { return palette_delegate_.get(); }
@@ -507,10 +510,11 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
-  // Toggles cursor compositing on/off. Native cursor is disabled when cursor
-  // compositing is enabled, and vice versa.
-  void SetCursorCompositingEnabled(bool enabled);
-
+  // Updates cursor compositing on/off based on the features that are using it.
+  // If at least one of the features is still using it, it should not be
+  // disabled. Native cursor is disabled when cursor compositing is enabled, and
+  // vice versa.
+  void UpdateCursorCompositingEnabled();
 
   // Returns true if split view mode is active.
   bool IsSplitViewModeActive() const;

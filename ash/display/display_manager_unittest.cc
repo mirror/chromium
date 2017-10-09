@@ -5,6 +5,7 @@
 #include "ui/display/manager/display_manager.h"
 
 #include "ash/accelerators/accelerator_commands.h"
+#include "ash/display/cursor_window_controller.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_util.h"
 #include "ash/display/mirror_window_controller.h"
@@ -62,9 +63,11 @@ std::string ToDisplayName(int64_t id) {
 
 }  // namespace
 
-class DisplayManagerTest : public AshTestBase,
-                           public display::DisplayObserver,
-                           public aura::WindowObserver {
+class DisplayManagerTest
+    : public AshTestBase,
+      public display::DisplayObserver,
+      public aura::WindowObserver,
+      public CursorWindowController::CursorCompositingDelegate {
  public:
   DisplayManagerTest() {}
   ~DisplayManagerTest() override {}
@@ -73,8 +76,16 @@ class DisplayManagerTest : public AshTestBase,
     AshTestBase::SetUp();
     display::Screen::GetScreen()->AddObserver(this);
     Shell::GetPrimaryRootWindow()->AddObserver(this);
+    Shell::Get()
+        ->window_tree_host_manager()
+        ->cursor_window_controller()
+        ->AddCursorCompositingDelegate(this);
   }
   void TearDown() override {
+    Shell::Get()
+        ->window_tree_host_manager()
+        ->cursor_window_controller()
+        ->RemoveCursorCompositingDelegate(this);
     Shell::GetPrimaryRootWindow()->RemoveObserver(this);
     display::Screen::GetScreen()->RemoveObserver(this);
     AshTestBase::TearDown();
@@ -138,6 +149,15 @@ class DisplayManagerTest : public AshTestBase,
     root_window_destroyed_ = true;
   }
 
+  void set_cursor_compositing_enabled(bool enabled) {
+    cursor_compositing_enabled_ = enabled;
+  }
+
+  // CursorWindowController::CursorCompositingDelegate:
+  bool ShouldEnableCursorCompositing() override {
+    return cursor_compositing_enabled_;
+  }
+
  private:
   vector<display::Display> changed_;
   vector<display::Display> added_;
@@ -146,6 +166,7 @@ class DisplayManagerTest : public AshTestBase,
   size_t did_process_count_ = 0u;
   bool root_window_destroyed_ = false;
   uint32_t changed_metrics_ = 0u;
+  bool cursor_compositing_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(DisplayManagerTest);
 };
@@ -2268,7 +2289,8 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   EXPECT_FALSE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
-  Shell::Get()->SetCursorCompositingEnabled(true);
+  set_cursor_compositing_enabled(true);
+  Shell::Get()->UpdateCursorCompositingEnabled();
 
   EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
@@ -2281,7 +2303,8 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   root_windows = Shell::GetAllRootWindows();
   EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
-  Shell::Get()->SetCursorCompositingEnabled(false);
+  set_cursor_compositing_enabled(false);
+  Shell::Get()->UpdateCursorCompositingEnabled();
 }
 
 TEST_F(DisplayManagerTest, MirroredLayout) {

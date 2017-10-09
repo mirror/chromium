@@ -9,6 +9,7 @@
 
 #include "ash/ash_constants.h"
 #include "ash/ash_export.h"
+#include "ash/display/cursor_window_controller.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
 
@@ -25,7 +26,9 @@ namespace ash {
 // The controller for accessibility features in ash. Features can be enabled
 // in chrome's webui settings or the system tray menu (see TrayAccessibility).
 // Uses preferences to communicate with chrome to support mash.
-class ASH_EXPORT AccessibilityController : public SessionObserver {
+class ASH_EXPORT AccessibilityController
+    : public SessionObserver,
+      public CursorWindowController::CursorCompositingDelegate {
  public:
   explicit AccessibilityController(service_manager::Connector* connector);
   ~AccessibilityController() override;
@@ -48,6 +51,9 @@ class ASH_EXPORT AccessibilityController : public SessionObserver {
   void OnActiveUserPrefServiceChanged(PrefService* prefs) override;
 
   void SetPrefServiceForTest(PrefService* prefs);
+
+  // CursorWindowController::CursorCompositingDelegate:
+  bool ShouldEnableCursorCompositing() override;
 
  private:
   // Observes either the signin screen prefs or active user prefs and loads

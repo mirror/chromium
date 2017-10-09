@@ -10,6 +10,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
+#include "ash/wm/native_cursor_manager_ash.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
@@ -96,8 +97,42 @@ CursorWindowController::CursorWindowController()
       large_cursor_size_in_dip_(ash::kDefaultLargeCursorSize),
       delegate_(new CursorWindowDelegate()) {}
 
-CursorWindowController::~CursorWindowController() {
-  SetContainer(NULL);
+CursorWindowController::~CursorWindowController() {}
+
+void CursorWindowController::AddCursorCompositingDelegate(
+    CursorCompositingDelegate* delegate) {
+  cursor_compositing_delegates_.push_back(delegate);
+}
+
+void CursorWindowController::RemoveCursorCompositingDelegate(
+    CursorCompositingDelegate* delegate) {
+  auto it = std::find(cursor_compositing_delegates_.begin(),
+                      cursor_compositing_delegates_.end(), delegate);
+  if (it != cursor_compositing_delegates_.end())
+    cursor_compositing_delegates_.erase(it);
+}
+
+void CursorWindowController::UpdateCursorCompositingEnabled() {
+  bool should_enable = false;
+  // If at least one of the features that uses cursor compositing is enabled, it
+  // should not be disabled.
+  for (CursorCompositingDelegate* delegate : cursor_compositing_delegates_) {
+    if (delegate->ShouldEnableCursorCompositing()) {
+      should_enable = true;
+      break;
+    }
+  }
+
+  if (is_cursor_compositing_enabled_ != should_enable) {
+    // Native cursor is disabled when cursor compositing is enabled, and vice
+    // versa.
+    is_cursor_compositing_enabled_ = should_enable;
+    Shell::Get()->native_cursor_manager()->SetNativeCursorEnabled(
+        !should_enable);
+    if (display_.is_valid())
+      UpdateCursorImage();
+    UpdateContainer();
+  }
 }
 
 void CursorWindowController::SetLargeCursorSizeInDip(
@@ -114,15 +149,6 @@ void CursorWindowController::SetLargeCursorSizeInDip(
 
   if (display_.is_valid())
     UpdateCursorImage();
-}
-
-void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {
-  if (is_cursor_compositing_enabled_ != enabled) {
-    is_cursor_compositing_enabled_ = enabled;
-    if (display_.is_valid())
-      UpdateCursorImage();
-    UpdateContainer();
-  }
 }
 
 void CursorWindowController::UpdateContainer() {
