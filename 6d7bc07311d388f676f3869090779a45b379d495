@@ -52,6 +52,24 @@
       "revId": "6d7bc07311d388f676f3869090779a45b379d495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a45b3d3_f56f3cdd",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-10T01:36:31Z",
+      "side": 1,
+      "message": "2. yes, but don\u0027t that !!this.guid necessarily implies that the network is configured.\nIf a network does not have a guid assigned by shill, network_state_handler will assign it a generated temp guid value (which gets reset once the network is added to a network profile) \nsee: https://cs.chromium.org/chromium/src/chromeos/network/network_state_handler.cc?rcl\u003d5d716c4e1fa6bfd6bf2cee13b244ad4b9f645047\u0026l\u003d1433)\nSo, even when a network state has guid set, it might not actually be configured, and setProperties may still error out with unknown network error (as it will not find an existing network configuration)",
+      "parentUuid": "b02b6c86_c3d0410b",
+      "revId": "6d7bc07311d388f676f3869090779a45b379d495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
