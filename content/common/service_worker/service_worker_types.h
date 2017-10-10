@@ -95,7 +95,9 @@ using ServiceWorkerHeaderMap =
 
 using ServiceWorkerHeaderList = std::vector<std::string>;
 
-// To dispatch fetch request from browser to child process.
+// The Request interface from the Fetch API. It is called "ServiceWorker" for
+// legacy reasons. blink::mojom::FetchAPIRequest is typemapped to this.
+// TODO(onion soup): Replace this with FetchAPIRequest.
 struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerFetchRequest();
   ServiceWorkerFetchRequest(const GURL& url,
@@ -128,7 +130,12 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   ServiceWorkerFetchType fetch_type;
 };
 
-// Represents a response to a fetch.
+// The Response interface from the Fetch API. It is called "ServiceWorker" for
+// legacy reasons. It is used for FetchEvent#respondWith (via
+// mojom::ServiceWorkerFetchResponseCallback) and for Cache Storage responses.
+// Meanwhile the Fetch API's fetch() uses content::ResourceResponse directly.
+// TODO(onion soup): Replace this with the Mojo FetchAPIResponse type, when it
+// exists.
 struct CONTENT_EXPORT ServiceWorkerResponse {
   ServiceWorkerResponse();
   ServiceWorkerResponse(

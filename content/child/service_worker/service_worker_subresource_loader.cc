@@ -6,6 +6,7 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/callback.h"
+#include "base/guid.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/service_worker/controller_service_worker_connector.h"
 #include "content/common/service_worker/service_worker_loader_helpers.h"
@@ -59,10 +60,18 @@ void ServiceWorkerSubresourceLoader::DeleteSoon() {
 
 void ServiceWorkerSubresourceLoader::StartRequest(
     const ResourceRequest& resource_request) {
-  // TODO(kinuko): Implement request.request_body handling.
-  DCHECK(!resource_request.request_body);
   std::unique_ptr<ServiceWorkerFetchRequest> request =
       ServiceWorkerLoaderHelpers::CreateFetchRequest(resource_request);
+
+  if (resource_request.request_body) {
+    storage::mojom::BlobPtr blob;
+    // Register() is a Mojo call to the browser process.
+    blob_registry_->data->Register(
+        MakeRequest(&blob), base::GenerateGUID(), std::string(), std::string(),
+        std::vector<storage::mojom::DataElementPtr>());
+    request->blob = base::MakeRefCounted<storage::BlobHandle>(std::move(blob));
+  }
+
   DCHECK_EQ(Status::kNotStarted, status_);
   status_ = Status::kStarted;
 
