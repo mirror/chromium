@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76c0a511_25441531",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-10T05:30:03Z",
+      "side": 1,
+      "message": "nit: this variable is used only in onProgress function. Better to move around line 764.",
+      "range": {
+        "startLine": 720,
+        "startChar": 10,
+        "endLine": 720,
+        "endChar": 50
+      },
+      "revId": "50bdd404ccdc338fe8cf14129bff060abc49311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a043023_2e881885",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-10T05:30:03Z",
+      "side": 1,
+      "message": "We can know that whether we have created progress notification or not by checking progressNotificationCreated. How about to check the value and calling chrome.notification.create or chrome.notification.update rather than using notificationFunction variable? IMHO, that would be easier to read.",
+      "range": {
+        "startLine": 777,
+        "startChar": 12,
+        "endLine": 777,
+        "endChar": 32
+      },
+      "revId": "50bdd404ccdc338fe8cf14129bff060abc49311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf7e581_e2cd8da2",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/file_operation_utils.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-10T05:30:03Z",
+      "side": 1,
+      "message": "nit: add @return",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "50bdd404ccdc338fe8cf14129bff060abc49311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
