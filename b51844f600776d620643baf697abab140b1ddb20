@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74946d5c_3fd517da",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1483,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "inb4 this comment is here when the path ships to stable :D",
+      "revId": "b51844f600776d620643baf697abab140b1ddb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecd6618_1d964409",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "I feel like this still requires some pretty deep mojo knowledge to get what set vs bind is. I actually thought I had it backward when I read this the first time, sigggh. How about something like... idk.. This sets up the HostFrameSinkManager as being the FrameSinkManagerClient, and gives it a deferred pointer to the FrameSinkManager?\n\nOr \"binds the HostFrameSinkManager as being the FrameSinkManagerClient\"? or something. The \"a is the implementation of b\" is implied by bind in your comment but is missed to the unfamiliar reader IMHO.",
+      "revId": "b51844f600776d620643baf697abab140b1ddb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8b55ae_27228ea3",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b51844f600776d620643baf697abab140b1ddb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

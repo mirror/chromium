@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "dc85f7d6_dbe3fb1a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "Oh okay, i thot this would be a mojo call or a non-mojo thing or something, I see now. This is a non-mojo object ui::Gpu which has a mojo-based c++ class ClientGpuMemoryBufferManager. Gotcha thanks.",
+      "parentUuid": "167dab3f_b33495c5",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc68dc97_e5344422",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -364,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "2f25b6e9_538020a1",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "Ohh ok thanks. I had learnt about the private interface in the context of Mus before, thanks.",
+      "parentUuid": "a6ac8d30_fe7e5959",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e12889b8_f5688613",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -399,6 +435,24 @@
     },
     {
       "key": {
+        "uuid": "662849c4_d95b916e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "Sure. Have a look at the GPTF implementation, when it fails, it posts another call to itself, with an increment on how many tries its made. After some limit it gives up on gpu and makes a softwarebacked LayerTreeFrameSink (ie it doesnt put a context in it) and this time it can\u0027t fail so no need for retries.",
+      "parentUuid": "f358bdaf_fe5b8703",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3f4c61_ff842b3e",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -428,6 +482,24 @@
       "side": 1,
       "message": "I have no idea what worker_context_provider does tbh.",
       "parentUuid": "2e3f4c61_ff842b3e",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d59abca_b6e22ba0",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T22:25:19Z",
+      "side": 1,
+      "message": "That context is used on a worker thread pool to do gpu raster, or to do texture uploads. When it\u0027s not present everything has to be done on the compositor thread with the compositor context.",
+      "parentUuid": "5ac4d854_a7ad9029",
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
