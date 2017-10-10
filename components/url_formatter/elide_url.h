@@ -73,6 +73,17 @@ base::string16 ElideUrlSimple(const GURL& url,
                               float available_pixel_width,
                               url::Parsed* parsed);
 
+// This method is a more flexible equivalent of ElideUrlSimple, allowing the
+// caller to pre-format a URL as required. |url_string| is the pre-formatted
+// URL, but |url| is still required to provide type information. |parsed| must
+// be the component position data returned from the previous formatting, and is
+// updated to reflect the elided result.
+base::string16 ElideUrlString(const GURL& url,
+                              const base::string16& url_string,
+                              const gfx::FontList& font_list,
+                              float available_pixel_width,
+                              url::Parsed* parsed);
+
 enum class SchemeDisplay {
   SHOW,
   OMIT_HTTP_AND_HTTPS,
