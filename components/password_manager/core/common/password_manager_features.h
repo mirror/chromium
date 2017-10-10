@@ -31,6 +31,7 @@ extern const base::Feature kEnableShowAllSavedPasswordsContextMenu;
 extern const base::Feature kEnableUsernameCorrection;
 extern const base::Feature kFillOnAccountSelect;
 extern const base::Feature kPasswordImportExport;
+extern const base::Feature kExpandedPopupViews;
 extern const base::Feature kProtectSyncCredential;
 extern const base::Feature kProtectSyncCredentialOnReauth;
 extern const base::Feature kViewPasswords;
