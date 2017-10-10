@@ -22,6 +22,80 @@
       "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4532ac68_15f02f76",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-10T05:13:23Z",
+      "side": 1,
+      "message": "Could you add a comment about why we skip this if we are clearing all notifications?",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83afa2c8_3bd2e718",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-10T05:13:23Z",
+      "side": 1,
+      "message": "Maybe it\u0027s worth it to add a comment about how observers could start animations afresh here, and why we want to return?",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452221a7_195406d3",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-10T05:13:23Z",
+      "side": 1,
+      "message": "In AnimateClearingOneNotification, the notification is no longer added to deleted_when_done_ or any other lists. Once the entire clear operation is finished, RemoveAllNotifications is called. It seems like, for notifications that have had their animation started (or even after then) - i.e. removed from |clearing_all_notifications_| will no longer be in any list, and be handled by the final else statement in this function. The final else animates the notification to some destination area, which seems a bit strange. More generally, having the cleared animations not be in any list seems like it could violate some assumptions in this file, wdyt?",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfdaeab_e5188db9",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-10T05:13:23Z",
+      "side": 1,
+      "message": "*animation",
+      "range": {
+        "startLine": 523,
+        "startChar": 7,
+        "endLine": 523,
+        "endChar": 17
+      },
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
