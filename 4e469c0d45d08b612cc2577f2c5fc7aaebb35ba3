@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ac725c_31d2be8e",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T00:01:29Z",
+      "side": 1,
+      "message": "Nit: No braces in Chromium if...\n1) The if statement condition is one line\n2) The true branch statement is also one line.",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1b2fb5_641461d7",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T00:01:29Z",
+      "side": 1,
+      "message": "This code seems to repeat itself a few times throughout the file. A helper like ConditionallyCallHideCallback(ExclusiveAccessBubbleHideReason reason) or something like that would be appropriate.",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 3
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbfbe9e_e0118e44",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T00:01:29Z",
+      "side": 1,
+      "message": "Note which slide duration we expect to be already set here instead. Maybe we should DCHECK it too.",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 162,
+        "endChar": 34
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8276cfbe_8d5e8a0f",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T00:01:29Z",
+      "side": 1,
+      "message": "Nit: We tend to keep implementation details outside of the individual function comment. Since this just restates what the code does, this can be removed.",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
