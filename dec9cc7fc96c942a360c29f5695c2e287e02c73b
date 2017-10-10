@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5ae6884_d62d365c",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T21:57:19Z",
+      "side": 1,
+      "message": "let\u0027s use the same color as Settings (--google-blue-700).",
+      "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46973c36_b9448d6e",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T21:57:19Z",
+      "side": 1,
+      "message": "let\u0027s use the same color as Settings (--google-blue-700).",
+      "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c68f2a87_1c45c324",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 3
@@ -19,6 +53,40 @@
         "endLine": 209,
         "endChar": 54
       },
+      "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f882659_8bf144ad",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T21:57:19Z",
+      "side": 1,
+      "message": "use md_extensions_string.grdp and AddLocalizedString instead.",
+      "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e45d706_8651ff61",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T21:57:19Z",
+      "side": 1,
+      "message": "use md_extensions_string.grdp and AddLocalizedString instead.",
       "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
