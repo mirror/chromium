@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e976df60_3b876f34",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:30:48Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "9beadb2c4ae2e8d613f9fc8d0c01fbf3cad3aa28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9f1835_ac82b6b2",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:30:48Z",
+      "side": 1,
+      "message": "optional: clearer and less error prone to have this return the gfx::Image.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 39
+      },
+      "revId": "9beadb2c4ae2e8d613f9fc8d0c01fbf3cad3aa28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
