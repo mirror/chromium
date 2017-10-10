@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eb5deaf_c42dfe29",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-10T09:25:04Z",
+      "side": 1,
+      "message": "Not the best of names. Suggest testGetSettingsWhenRemoteWidthAndHeightNotKnown - since this test will fail when settings are known.",
+      "revId": "acff535aab993d219d92bcff823585111a331658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
