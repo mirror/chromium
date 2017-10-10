@@ -1394,6 +1394,9 @@ extern const char kMacViewsNativeAppWindowsDescription[];
 extern const char kMacViewsTaskManagerName[];
 extern const char kMacViewsTaskManagerDescription[];
 
+extern const char kSerializeCoreAudioPauseResumeName[];
+extern const char kSerializeCoreAudioPauseResumeDescription[];
+
 extern const char kTabDetachingInFullscreenName[];
 extern const char kTabDetachingInFullscreenDescription[];
 
