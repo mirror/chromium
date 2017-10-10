@@ -331,11 +331,11 @@ void LayerAnimator::SchedulePauseForProperties(
                             properties_to_pause, duration)));
 }
 
-bool LayerAnimator::IsAnimatingProperty(
-    LayerAnimationElement::AnimatableProperty property) const {
+bool LayerAnimator::IsAnimatingProperties(
+    LayerAnimationElement::AnimatableProperties properties) const {
   for (AnimationQueue::const_iterator queue_iter = animation_queue_.begin();
        queue_iter != animation_queue_.end(); ++queue_iter) {
-    if ((*queue_iter)->properties() & property)
+    if ((*queue_iter)->properties() & properties)
       return true;
   }
   return false;
@@ -357,8 +357,11 @@ void LayerAnimator::StopAnimatingProperty(
 }
 
 void LayerAnimator::AddObserver(LayerAnimationObserver* observer) {
-  if (!observers_.HasObserver(observer))
+  if (!observers_.HasObserver(observer)) {
     observers_.AddObserver(observer);
+    for (auto& layer_animation_sequence : animation_queue_)
+      layer_animation_sequence->AddObserver(observer);
+  }
 }
 
 void LayerAnimator::RemoveObserver(LayerAnimationObserver* observer) {

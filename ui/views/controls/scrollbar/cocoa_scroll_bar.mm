@@ -481,7 +481,7 @@ void CocoaScrollBar::ShowScrollbar() {
   // If the scrollbar is still expanded but has not completely faded away,
   // then shrink it back to its original state.
   if (is_expanded_ && !IsHoverOrPressedState() &&
-      layer()->GetAnimator()->IsAnimatingProperty(
+      layer()->GetAnimator()->IsAnimatingProperties(
           ui::LayerAnimationElement::OPACITY)) {
     DCHECK_EQ(scroller_style_, NSScrollerStyleOverlay);
     thickness_animation_.Hide();

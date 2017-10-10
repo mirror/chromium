@@ -57,7 +57,7 @@ void VisibilityController::UpdateLayerVisibility(aura::Window* window,
   // opacity is 0, yet the window is marked as visible) (see CL 132903003).
   // TODO(vollick): remove this.
   if (!visible &&
-      window->layer()->GetAnimator()->IsAnimatingProperty(
+      window->layer()->GetAnimator()->IsAnimatingProperties(
           ui::LayerAnimationElement::VISIBILITY) &&
       !window->layer()->GetTargetVisibility()) {
     return;

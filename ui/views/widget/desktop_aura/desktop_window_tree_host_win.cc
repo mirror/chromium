@@ -179,7 +179,7 @@ void DesktopWindowTreeHostWin::Close() {
   if (should_animate_window_close_) {
     pending_close_ = true;
     const bool is_animating =
-        content_window_->layer()->GetAnimator()->IsAnimatingProperty(
+        content_window_->layer()->GetAnimator()->IsAnimatingProperties(
             ui::LayerAnimationElement::VISIBILITY);
     // Animation may not start for a number of reasons.
     if (!is_animating)

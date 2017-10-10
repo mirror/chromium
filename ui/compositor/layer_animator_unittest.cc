@@ -2144,14 +2144,14 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimationsOnEnd) {
   animator->StartAnimation(new LayerAnimationSequence(
       LayerAnimationElement::CreateBoundsElement(
           target_bounds, bounds_delta)));
-  ASSERT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   base::TimeTicks start_time = animator->last_step_time();
   animator->Step(start_time + halfway_delta);
 
   // Completing the brightness animation should have stopped the bounds
   // animation.
-  ASSERT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   animator->RemoveObserver(observer.get());
 }
@@ -2200,21 +2200,21 @@ TEST(LayerAnimatorTest, CallbackDeletesAnimationInProgress) {
   animator->StartAnimation(new LayerAnimationSequence(
       LayerAnimationElement::CreateBoundsElement(
           target_bounds, bounds_delta)));
-  ASSERT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   base::TimeTicks start_time = animator->last_step_time();
   ASSERT_NO_FATAL_FAILURE(animator->Step(start_time + bounds_delta1));
-  ASSERT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   // The next step should change the animated bounds past the threshold and
   // cause the animaton to stop.
   ASSERT_NO_FATAL_FAILURE(animator->Step(start_time + bounds_delta2));
-  ASSERT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
   ASSERT_NO_FATAL_FAILURE(animator->Step(start_time + final_delta));
 
   // Completing the animation should have stopped the bounds
   // animation.
-  ASSERT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 }
 
 // Similar to the ObserverDeletesAnimationsOnEnd test above except that it
@@ -2249,7 +2249,7 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimationsOnAbort) {
   animator->StartAnimation(new LayerAnimationSequence(
       LayerAnimationElement::CreateBoundsElement(
           target_bounds, bounds_delta)));
-  ASSERT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   animator->set_preemption_strategy(
       LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
@@ -2261,7 +2261,7 @@ TEST(LayerAnimatorTest, ObserverDeletesAnimationsOnAbort) {
   // Starting the second brightness animation should have aborted the initial
   // brightness animation. |observer| should have stopped the bounds animation
   // as a result.
-  ASSERT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  ASSERT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   animator->RemoveObserver(observer.get());
 }
@@ -2310,7 +2310,7 @@ TEST(LayerAnimatorTest, ImmediatelySettingNewTargetDoesNotLeak) {
     animator->SetBounds(middle_bounds);
   }
 
-  EXPECT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  EXPECT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
 
   int num_live_instances = 0;
   base::TimeDelta delta = base::TimeDelta::FromSeconds(1);
@@ -2325,7 +2325,7 @@ TEST(LayerAnimatorTest, ImmediatelySettingNewTargetDoesNotLeak) {
   // the target value. The sequence should alse be destructed.
   animator->StartAnimation(sequence.release());
 
-  EXPECT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
+  EXPECT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
   EXPECT_EQ(0, num_live_instances);
   CheckApproximatelyEqual(delegate.GetBoundsForAnimation(), target_bounds);
 }
@@ -2463,11 +2463,36 @@ TEST(LayerAnimatorTest, SchedulePauseForProperties) {
   animator->SchedulePauseForProperties(
       base::TimeDelta::FromMilliseconds(100),
       LayerAnimationElement::TRANSFORM | LayerAnimationElement::BOUNDS);
-  EXPECT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::TRANSFORM));
-  EXPECT_TRUE(animator->IsAnimatingProperty(LayerAnimationElement::BOUNDS));
-  EXPECT_FALSE(animator->IsAnimatingProperty(LayerAnimationElement::OPACITY));
+  EXPECT_TRUE(
+      animator->IsAnimatingProperties(LayerAnimationElement::TRANSFORM));
+  EXPECT_TRUE(animator->IsAnimatingProperties(LayerAnimationElement::BOUNDS));
+  EXPECT_FALSE(animator->IsAnimatingProperties(LayerAnimationElement::OPACITY));
 }
 
+// Verifies that IsAnimatingProperties() returns true iff one of the input
+// properties is animated.
+TEST(LayerAnimatorTest, IsAnimatingProperties) {
+  TestLayerAnimationDelegate delegate;
+  scoped_refptr<LayerAnimator> animator(CreateImplicitTestAnimator(&delegate));
+  animator->set_preemption_strategy(LayerAnimator::ENQUEUE_NEW_ANIMATION);
+  animator->SetBrightness(0.5f);
+  animator->SetGrayscale(0.5f);
+  EXPECT_TRUE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::BRIGHTNESS));
+  EXPECT_TRUE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::GRAYSCALE));
+  EXPECT_TRUE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::BRIGHTNESS |
+      LayerAnimationElement::LayerAnimationElement::GRAYSCALE));
+  EXPECT_TRUE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::BRIGHTNESS |
+      LayerAnimationElement::LayerAnimationElement::TEMPERATURE));
+  EXPECT_FALSE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::TEMPERATURE));
+  EXPECT_FALSE(animator->IsAnimatingProperties(
+      LayerAnimationElement::LayerAnimationElement::TEMPERATURE |
+      LayerAnimationElement::LayerAnimationElement::BOUNDS));
+}
 
 class AnimatorOwner {
  public:

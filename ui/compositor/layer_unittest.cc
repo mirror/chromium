@@ -2016,7 +2016,7 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSolidColorNotAnimating) {
 
   EXPECT_FALSE(root->fills_bounds_opaquely());
   EXPECT_FALSE(
-      root->GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR));
+      root->GetAnimator()->IsAnimatingProperties(LayerAnimationElement::COLOR));
   EXPECT_EQ(transparent, root->background_color());
   EXPECT_EQ(transparent, root->GetTargetColor());
 
@@ -2025,7 +2025,7 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSolidColorNotAnimating) {
 
   EXPECT_FALSE(root->fills_bounds_opaquely());
   EXPECT_FALSE(
-      root->GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR));
+      root->GetAnimator()->IsAnimatingProperties(LayerAnimationElement::COLOR));
   EXPECT_EQ(transparent, root->background_color());
   EXPECT_EQ(transparent, root->GetTargetColor());
 }
@@ -2054,7 +2054,7 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSolidColorWhileAnimating) {
 
   EXPECT_TRUE(root->fills_bounds_opaquely());
   EXPECT_TRUE(
-      root->GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR));
+      root->GetAnimator()->IsAnimatingProperties(LayerAnimationElement::COLOR));
   EXPECT_EQ(SK_ColorBLACK, root->background_color());
   EXPECT_EQ(transparent, root->GetTargetColor());
 
@@ -2063,7 +2063,7 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSolidColorWhileAnimating) {
 
   EXPECT_TRUE(root->fills_bounds_opaquely());
   EXPECT_TRUE(
-      root->GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR));
+      root->GetAnimator()->IsAnimatingProperties(LayerAnimationElement::COLOR));
   EXPECT_EQ(SK_ColorBLACK, root->background_color());
   EXPECT_EQ(transparent, root->GetTargetColor());
 
@@ -2071,7 +2071,7 @@ TEST_F(LayerWithRealCompositorTest, SwitchCCLayerSolidColorWhileAnimating) {
   root->GetAnimator()->StopAnimating();
   EXPECT_FALSE(root->fills_bounds_opaquely());
   EXPECT_FALSE(
-      root->GetAnimator()->IsAnimatingProperty(LayerAnimationElement::COLOR));
+      root->GetAnimator()->IsAnimatingProperties(LayerAnimationElement::COLOR));
   EXPECT_EQ(transparent, root->background_color());
   EXPECT_EQ(transparent, root->GetTargetColor());
 }
