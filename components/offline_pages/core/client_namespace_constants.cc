@@ -4,6 +4,8 @@
 
 #include "components/offline_pages/core/client_namespace_constants.h"
 
+#include <cstring>
+
 namespace offline_pages {
 
 // NOTE: When adding a namespace constant, you MUST add this as a suffix in
@@ -18,5 +20,16 @@ const char kSuggestedArticlesNamespace[] = "suggested_articles";
 const char kBrowserActionsNamespace[] = "browser_actions";
 
 const char kDefaultNamespace[] = "default";
+
+bool IsWellKnownOfflinePagesNamespace(const std::string& name_space) {
+  return strcmp(name_space.c_str(), kBookmarkNamespace) == 0 ||
+         strcmp(name_space.c_str(), kLastNNamespace) == 0 ||
+         strcmp(name_space.c_str(), kAsyncNamespace) == 0 ||
+         strcmp(name_space.c_str(), kCCTNamespace) == 0 ||
+         strcmp(name_space.c_str(), kDownloadNamespace) == 0 ||
+         strcmp(name_space.c_str(), kNTPSuggestionsNamespace) == 0 ||
+         strcmp(name_space.c_str(), kSuggestedArticlesNamespace) == 0 ||
+         strcmp(name_space.c_str(), kBrowserActionsNamespace) == 0;
+}
 
 }  // namespace offline_pages

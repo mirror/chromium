@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_CLIENT_NAMESPACE_CONSTANTS_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_CLIENT_NAMESPACE_CONSTANTS_H_
 
+#include <string>
+
 #include "build/build_config.h"
 
 namespace offline_pages {
@@ -22,6 +24,8 @@ extern const char kBrowserActionsNamespace[];
 
 // Currently used for fallbacks like tests.
 extern const char kDefaultNamespace[];
+
+extern bool IsWellKnownOfflinePagesNamespace(const std::string& name_space);
 
 }  // namespace offline_pages
 

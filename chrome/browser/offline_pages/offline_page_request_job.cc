@@ -10,6 +10,7 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -19,6 +20,7 @@
 #include "chrome/browser/offline_pages/offline_page_tab_helper.h"
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "components/previews/core/previews_decider.h"
@@ -185,9 +187,10 @@ RequestResultToAggregatedRequestResult(
       case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
         return OfflinePageRequestJob::AggregatedRequestResult::
             PAGE_NOT_FOUND_ON_CONNECTED_NETWORK;
-      default:
-        NOTREACHED();
+      case NetworkState::CONNECTED_NETWORK:
+        break;
     }
+    NOTREACHED();
   }
 
   if (request_result == RequestResult::REDIRECTED) {
@@ -204,9 +207,10 @@ RequestResultToAggregatedRequestResult(
       case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
         return OfflinePageRequestJob::AggregatedRequestResult::
             REDIRECTED_ON_CONNECTED_NETWORK;
-      default:
-        NOTREACHED();
+      case NetworkState::CONNECTED_NETWORK:
+        break;
     }
+    NOTREACHED();
   }
 
   DCHECK_EQ(RequestResult::OFFLINE_PAGE_SERVED, request_result);
@@ -224,18 +228,61 @@ RequestResultToAggregatedRequestResult(
     case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
       return OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_CONNECTED_NETWORK;
-    default:
-      NOTREACHED();
-   }
+    case NetworkState::CONNECTED_NETWORK:
+      break;
+  }
+  NOTREACHED();
 
-   return OfflinePageRequestJob::AggregatedRequestResult::
-       AGGREGATED_REQUEST_RESULT_MAX;
+  return OfflinePageRequestJob::AggregatedRequestResult::
+      AGGREGATED_REQUEST_RESULT_MAX;
 }
 
-void ReportRequestResult(
-    RequestResult request_result, NetworkState network_state) {
+// TODO(carlosk): Canonicalize this suffix adding logic which is already
+// duplicated in many different places around the codebase.
+std::string AddHistogramSuffix(const ClientId& client_id,
+                               const char* histogram_name) {
+  DCHECK(IsWellKnownOfflinePagesNamespace(client_id.name_space));
+  std::string adjusted_histogram_name(histogram_name);
+  adjusted_histogram_name += ".";
+  adjusted_histogram_name += client_id.name_space;
+  return adjusted_histogram_name;
+}
+
+void ReportRequestResult(RequestResult request_result,
+                         NetworkState network_state,
+                         const OfflinePageItem* offline_page) {
   OfflinePageRequestJob::ReportAggregatedRequestResult(
       RequestResultToAggregatedRequestResult(request_result, network_state));
+
+  DCHECK(request_result != RequestResult::OFFLINE_PAGE_SERVED || offline_page);
+  if (request_result == RequestResult::OFFLINE_PAGE_SERVED && offline_page &&
+      IsWellKnownOfflinePagesNamespace(offline_page->client_id.name_space)) {
+    // The two histograms below are an expansion of the
+    // UMA_HISTOGRAM_COUNTS_100000 macro adapted to allow for a dynamically
+    // suffixed histogram name. The factory creates and owns the histograms.
+    // Reported values are between 1KiB and 100MiB.
+    switch (network_state) {
+      case NetworkState::DISCONNECTED_NETWORK:        // Fall-through
+      case NetworkState::PROHIBITIVELY_SLOW_NETWORK:  // Fall-through
+      case NetworkState::FLAKY_NETWORK: {
+        base::HistogramBase* histogram = base::Histogram::FactoryGet(
+            AddHistogramSuffix(offline_page->client_id,
+                               "OfflinePages.PageSizeAccessedOffline"),
+            1, 100000, 50, base::HistogramBase::kUmaTargetedHistogramFlag);
+        histogram->Add(offline_page->file_size / 1024);
+        break;
+      }
+      case NetworkState::CONNECTED_NETWORK:  // Fall-through
+      case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK: {
+        base::HistogramBase* histogram = base::Histogram::FactoryGet(
+            AddHistogramSuffix(offline_page->client_id,
+                               "OfflinePages.PageSizeAccessedOnline"),
+            1, 100000, 50, base::HistogramBase::kUmaTargetedHistogramFlag);
+        histogram->Add(offline_page->file_size / 1024);
+        break;
+      }
+    }
+  }
 }
 
 OfflinePageModel* GetOfflinePageModel(
@@ -365,7 +412,7 @@ void SucceededToFindOfflinePage(
   // the problem, we still need to support those pages already saved with this
   if (offline_page && url == offline_page->original_url &&
       url != offline_page->url) {
-    ReportRequestResult(RequestResult::REDIRECTED, network_state);
+    ReportRequestResult(RequestResult::REDIRECTED, network_state, nullptr);
     NotifyOfflineRedirectOnUI(job, offline_page->url);
     return;
   }
@@ -375,7 +422,7 @@ void SucceededToFindOfflinePage(
       offline_header, network_state, job, web_contents_getter, offline_page,
       &offline_file_path);
 
-  ReportRequestResult(request_result, network_state);
+  ReportRequestResult(request_result, network_state, offline_page);
 
   // NotifyOfflineFilePathOnUI should always be called regardless the failure
   // result and empty file path such that OfflinePageRequestJob will be notified
@@ -404,13 +451,13 @@ void SelectPageForURL(
 
   content::WebContents* web_contents = web_contents_getter.Run();
   if (!web_contents){
-    ReportRequestResult(RequestResult::NO_WEB_CONTENTS, network_state);
+    ReportRequestResult(RequestResult::NO_WEB_CONTENTS, network_state, nullptr);
     FailedToFindOfflinePage(job);
     return;
   }
   int tab_id;
   if (!tab_id_getter.Run(web_contents, &tab_id)) {
-    ReportRequestResult(RequestResult::NO_TAB_ID, network_state);
+    ReportRequestResult(RequestResult::NO_TAB_ID, network_state, nullptr);
     FailedToFindOfflinePage(job);
     return;
   }
