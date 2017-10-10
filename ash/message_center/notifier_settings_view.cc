@@ -105,6 +105,11 @@ constexpr SkColor kQuietModeIconColor = SkColorSetARGB(0x8A, 0x5A, 0x5A, 0x5A);
 constexpr SkColor kTopLabelColor = SkColorSetRGB(0x42, 0x85, 0xF4);
 constexpr SkColor kLabelColor = SkColorSetARGB(0xDE, 0x0, 0x0, 0x0);
 const int kLabelFontSize = 13;
+const int kEmptyIconSize = 24;
+constexpr gfx::Insets kEmptyIconPadding(0, 0, 4, 0);
+constexpr gfx::Insets kEmptyViewPadding(96, 0, 96, 0);
+constexpr SkColor kEmptyViewColor = SkColorSetARGB(0x8A, 0, 0, 0);
+const int kEmptyLabelSize = 12;
 
 // EntryView ------------------------------------------------------------------
 
@@ -184,6 +189,33 @@ void EntryView::OnBlur() {
   // We render differently when focused.
   SchedulePaint();
 }
+
+// EmptyNotifierView -----------------------------------------------------------
+
+class EmptyNotifierView : public views::View {
+ public:
+  EmptyNotifierView() {
+    views::BoxLayout* layout =
+        new views::BoxLayout(views::BoxLayout::kVertical, kEmptyViewPadding, 0);
+    layout->set_cross_axis_alignment(
+        views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
+    SetLayoutManager(layout);
+
+    views::ImageView* icon = new views::ImageView();
+    icon->SetImage(gfx::CreateVectorIcon(kNotificationCenterEmptyIcon,
+                                         kEmptyIconSize, kEmptyViewColor));
+    icon->SetBorder(views::CreateEmptyBorder(kEmptyIconPadding));
+    AddChildView(icon);
+
+    views::Label* label = new views::Label(
+        l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_NO_NOTIFIERS));
+    label->SetEnabledColor(kEmptyViewColor);
+    // "Roboto-Medium, 12sp" is specified in the mock.
+    label->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+        kEmptyLabelSize, gfx::Font::Weight::MEDIUM));
+    AddChildView(label);
+  }
+};
 
 }  // namespace
 
@@ -364,7 +396,9 @@ void NotifierSettingsView::NotifierButton::GridChanged(bool has_learn_more) {
 NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
     : title_arrow_(nullptr),
       header_view_(nullptr),
+      top_label_(nullptr),
       scroller_(nullptr),
+      empty_view_(nullptr),
       provider_(provider) {
   // |provider_| may be null in tests.
   if (provider_)
@@ -409,17 +443,17 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
   quiet_mode_view->AddChildView(quiet_mode_toggle_);
   header_view_->AddChildView(quiet_mode_view);
 
-  views::Label* top_label = new views::Label(l10n_util::GetStringUTF16(
+  top_label_ = new views::Label(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_SETTINGS_DIALOG_DESCRIPTION));
-  top_label->SetBorder(views::CreateEmptyBorder(kTopLabelPadding));
+  top_label_->SetBorder(views::CreateEmptyBorder(kTopLabelPadding));
   // "Roboto-Medium, 13sp" is specified in the mock.
-  top_label->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+  top_label_->SetFontList(message_center_style::GetFontListForSizeAndWeight(
       kLabelFontSize, gfx::Font::Weight::MEDIUM));
-  top_label->SetAutoColorReadabilityEnabled(false);
-  top_label->SetEnabledColor(kTopLabelColor);
-  top_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  top_label->SetMultiLine(true);
-  header_view_->AddChildView(top_label);
+  top_label_->SetAutoColorReadabilityEnabled(false);
+  top_label_->SetEnabledColor(kTopLabelColor);
+  top_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  top_label_->SetMultiLine(true);
+  header_view_->AddChildView(top_label_);
 
   AddChildView(header_view_);
 
@@ -428,6 +462,9 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
   scroller_->SetVerticalScrollBar(new views::OverlayScrollBar(false));
   scroller_->SetHorizontalScrollBar(new views::OverlayScrollBar(true));
   AddChildView(scroller_);
+
+  empty_view_ = new EmptyNotifierView();
+  AddChildView(empty_view_);
 
   std::vector<std::unique_ptr<Notifier>> notifiers;
   if (provider_)
@@ -491,6 +528,9 @@ void NotifierSettingsView::UpdateContentsView(
     buttons_.insert(button);
   }
 
+  top_label_->SetVisible(notifier_count > 0);
+  empty_view_->SetVisible(notifier_count == 0);
+
   scroller_->SetContents(contents_view);
 
   contents_view->SetBoundsRect(gfx::Rect(contents_view->GetPreferredSize()));
@@ -510,12 +550,15 @@ void NotifierSettingsView::Layout() {
   }
   contents_view->SetBounds(0, 0, content_width, content_height);
   scroller_->SetBounds(0, header_height, width(), height() - header_height);
+  empty_view_->SetBounds(0, header_height, width(), height() - header_height);
 }
 
 gfx::Size NotifierSettingsView::GetMinimumSize() const {
   gfx::Size size(kWidth, kMinimumHeight);
   int total_height = header_view_->GetPreferredSize().height() +
                      scroller_->contents()->GetPreferredSize().height();
+  if (empty_view_->visible())
+    total_height += empty_view_->GetPreferredSize().height();
   if (total_height > kMinimumHeight)
     size.Enlarge(scroller_->GetScrollBarLayoutWidth(), 0);
   return size;
@@ -525,8 +568,12 @@ gfx::Size NotifierSettingsView::CalculatePreferredSize() const {
   gfx::Size preferred_size;
   gfx::Size header_size = header_view_->GetPreferredSize();
   gfx::Size content_size = scroller_->contents()->GetPreferredSize();
-  return gfx::Size(std::max(header_size.width(), content_size.width()),
-                   header_size.height() + content_size.height());
+  gfx::Size empty_view_size;
+  if (empty_view_->visible())
+    empty_view_size = empty_view_->GetPreferredSize();
+  return gfx::Size(
+      std::max(header_size.width(), content_size.width()),
+      header_size.height() + content_size.height() + empty_view_size.height());
 }
 
 bool NotifierSettingsView::OnKeyPressed(const ui::KeyEvent& event) {

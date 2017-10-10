@@ -109,7 +109,9 @@ class ASH_EXPORT NotifierSettingsView
   views::ImageButton* title_arrow_;
   views::ToggleButton* quiet_mode_toggle_;
   views::View* header_view_;
+  views::Label* top_label_;
   views::ScrollView* scroller_;
+  views::View* empty_view_;
   message_center::NotifierSettingsProvider* provider_;
   std::set<NotifierButton*> buttons_;
 
