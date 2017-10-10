@@ -22,6 +22,30 @@
       "revId": "19ad9274417dddd8ba48290ffacd1b403d1db343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857edd7d_17168822",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-10T22:38:25Z",
+      "side": 1,
+      "message": "\u003e This seems like you\u0027re trying to fix up the disposition after the fact and assuming this should always happen.\n\nI believe that\u0027s what we want. It doesn\u0027t make sense to open a background tab in a separate browser window while in an app window.\n\n\u003e Can\u0027t the caller correctly set the disposition?\n\nThere are at least two cases in which this will get called with a NEW_BACKGROUND_TAB disposition: \"Open link in new tab\" and Ctrl + Click. Ctrl + Click comes from content and the first function where we could perform this check is in Browser::OpenURLFromTab(). That doesn\u0027t seem like the appropriate place to adjust the disposition.\n\nSee this doc[1] for a comparison of the paths both cases take. Both end up calling Navigate, so it seems like a good place to ensure both cases are handled the same and avoid repeating the logic.\n\n[1] https://docs.google.com/document/d/1Tl15ktapHzgiQuhFVEuwc5MFFC2AYmkKr0CpKOQRetI/edit?usp\u003dsharing",
+      "parentUuid": "bc8c5e77_e157db2e",
+      "range": {
+        "startLine": 437,
+        "startChar": 2,
+        "endLine": 440,
+        "endChar": 3
+      },
+      "revId": "19ad9274417dddd8ba48290ffacd1b403d1db343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
