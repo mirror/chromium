@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca08f2f_69c59ae4",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:08:22Z",
+      "side": 1,
+      "message": "MAX should not have explicit value",
+      "range": {
+        "startLine": 233,
+        "startChar": 21,
+        "endLine": 233,
+        "endChar": 22
+      },
+      "revId": "0ef2d2c5ec4cfcfafbf485ac3fd6c73d60981f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67139273_1c660339",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:08:22Z",
+      "side": 1,
+      "message": "similar to last CL\u0027s comments, it is better if you only emit the ENUM once",
+      "revId": "0ef2d2c5ec4cfcfafbf485ac3fd6c73d60981f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cad602_f884149a",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:08:22Z",
+      "side": 1,
+      "message": "if you remove the explicit value, remove the +1s",
+      "revId": "0ef2d2c5ec4cfcfafbf485ac3fd6c73d60981f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8471be_30af8d1a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31307,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:08:22Z",
+      "side": 1,
+      "message": "this is quite length and hard to grok for someone not familar. I\u0027m wondering if you can move it away from descriptions of the outputs, and more in terms a high level description of what this is recording. Remember the values of the enums are usually visibile so you don\u0027t need to repeat the possible outputs.",
+      "revId": "0ef2d2c5ec4cfcfafbf485ac3fd6c73d60981f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
