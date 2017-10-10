@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2fdf154_a08f2353",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "I made comment notes to help those familiar with SQL.",
+      "parentUuid": "7d50cf59_0319df00",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba17c82f_43a63f21",
         "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49a5829_994d1bd4",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba17c82f_43a63f21",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a0854fcd_f5cc5ab9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4e007e_992781e8",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 36
+      },
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883c0bd9_4acc6e4a",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 11
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-10T14:26:05Z",
       "side": 1,
       "message": "How could the browserProxy not exist? As far as I know, the RouteObserver only works if the element is attached and attached() is creating the browserProxy.",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137f00cd_6783490c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "The |settings.RouteObserverBehavior| attached() will be called before* the module that inherits* the behavior.\n\nThough I could change the init of this.browserProxy_ to be in ready(). I\u0027ll do that.\n\n*This is a special case for Polymer lifecycle methods (ready, attached, etc.)\n**It\u0027s not really class inheritance, but it\u0027s similar.\n\nDone",
+      "parentUuid": "883c0bd9_4acc6e4a",
       "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "a8eddc4c_20a86dfd",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "We could call clearTimeout, but the timeout has fired, so it would be a no-op.\n\nAck",
+      "parentUuid": "27158ce2_19f45aac",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01cb9ed8_6b1c7a84",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 11
@@ -107,6 +203,24 @@
       "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2396e14b_e3317254",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "Replaced with requestIdleCallback as discussed offline.\n\nDone",
+      "parentUuid": "01cb9ed8_6b1c7a84",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "206f7289_a0155147",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c61b57_5fe911d5",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a9fa51c_b386ba52",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 11
@@ -141,6 +273,24 @@
       "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4e294d_b4925a14",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-10T22:41:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a9fa51c_b386ba52",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
