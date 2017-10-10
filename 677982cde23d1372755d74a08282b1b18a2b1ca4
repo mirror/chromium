@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902df301_9a36e281",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-10T18:24:36Z",
+      "side": 1,
+      "message": "I suspect this should actually use ViewportToContents as the input event is probably in \"viewport coordinates\" but I forget if maybe we already do the conversion by the time it gets here. Could you double check by:\n\n1. Loading a page with no horizontal scrolling\n2. Zoom in\n3. While zoomed in, scroll all the way to the right\n\nNow if you zoom again at the left edge of the screen and print out the location here, if pinch_event.x is ~0 then it\u0027s in viewport coordinates. Otherwise it\u0027s in root frame coordinates and the current code is correct.",
+      "range": {
+        "startLine": 2106,
+        "startChar": 43,
+        "endLine": 2106,
+        "endChar": 62
+      },
+      "revId": "677982cde23d1372755d74a08282b1b18a2b1ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
