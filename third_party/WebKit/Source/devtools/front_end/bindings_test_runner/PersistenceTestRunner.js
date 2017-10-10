@@ -7,8 +7,6 @@
  * @suppress {accessControls}
  */
 
-Runtime.experiments.enableForTest('persistenceValidation');
-
 Persistence.PersistenceBinding.prototype.toString = function() {
   var lines = [
     '{', '       network: ' + this.network.url(), '    fileSystem: ' + this.fileSystem.url(),
