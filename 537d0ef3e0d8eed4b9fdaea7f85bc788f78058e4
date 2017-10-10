@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a66898_96299883",
+        "filename": "android_webview/common/crash_reporter/crash_keys.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:04:50Z",
+      "side": 1,
+      "message": "Nit: Should we list some of these in the non-temp section above (e.g., under \"content\" or Site Isolation)?  Same in the other crash_keys.cc files.",
+      "revId": "537d0ef3e0d8eed4b9fdaea7f85bc788f78058e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489bb42e_3c455ea2",
+        "filename": "content/browser/child_process_security_policy_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:04:50Z",
+      "side": 1,
+      "message": "nit: ...or if it is not locked to an origin.",
+      "revId": "537d0ef3e0d8eed4b9fdaea7f85bc788f78058e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
