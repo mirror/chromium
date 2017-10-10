@@ -16,6 +16,24 @@
       "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327a2bf8_91e5bc89",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-10T13:41:33Z",
+      "side": 1,
+      "message": "It\u0027s called by UpdateDisplayType on the same element, although on the child types like MediaControlCastButtonElement and MediaControlMuteButtonElement.",
+      "parentUuid": "2d0babcc_2eb6c1d1",
+      "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
