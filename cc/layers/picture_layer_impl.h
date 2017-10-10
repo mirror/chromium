@@ -65,6 +65,8 @@ class CC_EXPORT PictureLayerImpl
   bool HasValidTilePriorities() const override;
   bool RequiresHighResToDraw() const override;
   gfx::Rect GetEnclosingRectInTargetSpace() const override;
+  bool HasDifferentImageOnActiveTree(
+      PaintImage::Id paint_image_id) const override;
 
   // ImageAnimationController::AnimationDriver overrides.
   bool ShouldAnimate(PaintImage::Id paint_image_id) const override;
@@ -115,6 +117,8 @@ class CC_EXPORT PictureLayerImpl
 
   const Region& InvalidationForTesting() const { return invalidation_; }
 
+  bool HasDiscardableImages() const;
+
  protected:
   PictureLayerImpl(LayerTreeImpl* tree_impl,
                    int id,
@@ -146,6 +150,11 @@ class CC_EXPORT PictureLayerImpl
 
   void RegisterAnimatedImages();
   void UnregisterAnimatedImages();
+
+  // Returns whether an image other than the given |paint_image_id| exists at
+  // |screen_space_rect|.
+  bool HasDifferentImageAt(const PaintImage::Id paint_image_id,
+                           const gfx::Rect& screen_space_rect) const;
 
   PictureLayerImpl* twin_layer_;
 
