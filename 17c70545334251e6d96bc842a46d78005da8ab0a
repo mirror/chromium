@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ca8c8a8_05147daa",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-10T05:27:19Z",
+      "side": 1,
+      "message": "nit: sef -\u003e set",
+      "revId": "17c70545334251e6d96bc842a46d78005da8ab0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4219cda_9c51f7ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-10T05:27:19Z",
+      "side": 1,
+      "message": "Better would be:\n\n// 0: 1 if color, 0 if grayscale",
+      "revId": "17c70545334251e6d96bc842a46d78005da8ab0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
