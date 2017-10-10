@@ -69,6 +69,24 @@
       "revId": "b6de262a1c493935983e068ccb506008022ab79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56079d8d_665b64a3",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T15:38:41Z",
+      "side": 0,
+      "message": "Oh I see, it\u0027s not enough to check the flag once, we check it twice! Makes sense to remove, thanks.",
+      "parentUuid": "7344654f_30c39809",
+      "revId": "b6de262a1c493935983e068ccb506008022ab79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
