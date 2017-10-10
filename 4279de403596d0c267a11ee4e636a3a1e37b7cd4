@@ -148,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "f6d6ed89_491ffc90",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-10T15:14:57Z",
+      "side": 1,
+      "message": "I\u0027ve opened https://crbug.com/773296 to track the follow-up work.",
+      "parentUuid": "9ce07a9f_37f8a513",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebfc0973_72fd9014",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 7
@@ -430,6 +448,24 @@
     },
     {
       "key": {
+        "uuid": "cfe074e4_2b654f5b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-10T15:14:57Z",
+      "side": 1,
+      "message": "Okay.  Let me also try to flesh out some raw thoughts / notes while they are fresh on my mind:\n\nI think there are 2 concerns here: 1) desire to understand kills happening in the wild and 2) desire to avoid accidental kills (e.g. avoid a surprise on Stable after tweaking CanCommitURL checks somewhere deep [e.g. in chrome/extensions layer]).\n\nWe can solve #1 by either A) adding generic data to *all* the kills (not just to CommitURL) or B) adding UMA specific to CommitURL.  I think I prefer (A).\n\nI am not sure how we could solve #2.  UMA and/or DWOC specific to CommitURL?  Kill switch for all kills?",
+      "parentUuid": "4c7902cd_1bb9e4b7",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0879ba_f17d9177",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -533,6 +569,30 @@
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6685754f_a3ed0c9b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-10T15:14:57Z",
+      "side": 1,
+      "message": "Thanks for the ping.\n\n1. Blocked navigations seem okay (if we trust that a block navigation never commits the real content).\n\n2. webview guests are interesting.  I think things are okay after this CL, but I am not sure.  We can chat today with Charlie to make sure we\u0027re not missing anything.  I hope that other CWS-specific checks sufficiently help here (even in absence of CanCommitURL defense-in-depth): DoesSiteRequireDedicatedProcess, ShouldSwapBrowsingInstancesForNavigation.  And maybe we can always play the user-has-to-trust-the-webview-tag-embedding-app-anyway card here?",
+      "parentUuid": "19227fbc_b38087f2",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
