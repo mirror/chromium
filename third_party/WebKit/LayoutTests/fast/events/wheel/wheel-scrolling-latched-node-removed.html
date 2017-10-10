@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    margin: 0px;
+    height: 1000px;
+    width: 1000px;
+  }
+  #parentDiv {
+    background-color: #FF7F7F;
+    height: 600px;
+    width: 600px;
+    overflow: scroll;
+  }
+  #content1 {
+    height: 700px;
+    width: 700px;
+  }
+  #childDiv {
+    background-color: #84BE6A;
+    height: 500px;
+    width: 500px;
+    overflow: scroll;
+  }
+  #content2 {
+    height: 600px;
+    width: 600px;
+  }
+</style>
+
+<div id="parentDiv">
+  <div id="content1">
+    <div id="childDiv">
+      <div id="content2">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+var parentDiv = document.getElementById('parentDiv');
+var childDiv = document.getElementById('childDiv');
+var rect = childDiv.getBoundingClientRect();
+
+setup({ explicit_done: true });
+test(() => {
+  // Start scrolling on the child div.
+  eventSender.gestureScrollBegin("touchpad",
+                                 (rect.left + rect.right) / 2,
+                                 (rect.top + rect.bottom) / 2);
+  eventSender.gestureScrollUpdate("touchpad", 0, -70);
+  waitForChildScrollAndRemove();
+}, "New node must start scrolling when the latched node is removed.");
+
+var lastScrollOffset = childDiv.scrollTop;
+var rafCount = 0;
+
+// Wait for the child div to fully consume scroll delta, then remove the div.
+function waitForChildScrollAndRemove() {
+  if (childDiv.scrollTop == 70) {
+    lastScrollOffset = childDiv.scrollTop;
+    rafCount = 0;
+    childDiv.remove();
+    sendNextScrollUpdate();
+  } else if (childDiv.scrollTop != lastScrollOffset) {
+    lastScrollOffset = childDiv.scrollTop;
+    rafCount = 0;
+    requestAnimationFrame(waitForChildScrollAndRemove);
+  } else if (rafCount < 10) {
+    requestAnimationFrame(waitForChildScrollAndRemove);
+    rafCount++;
+  } else {
+    // Fail the test since for the last 10 rafs childDiv.scrollTop hasn't
+    // changed and the scroll delta is not fully consumed.
+    assert_equals(childDiv.scrollTop, 70,
+        "The child div should fully comsume scroll delta.");
+  }
+}
+
+function sendNextScrollUpdate() {
+  eventSender.gestureScrollUpdate("touchpad", 0, -30);
+  parentScrollCheck();
+}
+
+// Wait till the parentDiv starts scrolling.
+function parentScrollCheck() {
+  if (parentDiv.scrollTop > 0) {
+    done();
+  } else if (rafCount < 10) {
+    requestAnimationFrame(parentScrollCheck);
+    rafCount++;
+  } else {
+    // Fail the test since for the last 10 rafs parentDiv.scrollTop hasn't
+    // changed.
+    assert_greater_than(parentDiv.scrollTop, 0,
+        "The parent div should start scrolling.");
+  }
+}
+</script>
