@@ -16,6 +16,24 @@
       "revId": "f68a7041ff75b9a6a4f962b7fa271abe2b996671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6ebf8f_e1f21242",
+        "filename": "ash/display/display_color_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T15:18:31Z",
+      "side": 1,
+      "message": "While we\u0027re not interested in recording this specific piece of information by itself every time the mode changes (the flag is coming from the crtc, so it\u0027s always the same), the number of time we record it here should help interpreting this value vs the other two UMA stats added in this patch.",
+      "parentUuid": "a2e54498_9b5e09d1",
+      "revId": "f68a7041ff75b9a6a4f962b7fa271abe2b996671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
