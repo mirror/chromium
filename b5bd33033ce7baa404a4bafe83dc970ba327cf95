@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f08921_e60d3321",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-10T07:35:40Z",
+      "side": 1,
+      "message": "I\u0027m concerned about the performance regression.\nReading through all elements on every change event might be heavy.\n\nCan we just touch the item whose selection state is changed?",
+      "revId": "b5bd33033ce7baa404a4bafe83dc970ba327cf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
