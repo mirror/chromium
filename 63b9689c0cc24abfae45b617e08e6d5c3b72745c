@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ec4c4a0_706ab463",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-10T07:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e2367d_6e0987f0",
+      "range": {
+        "startLine": 474,
+        "startChar": 54,
+        "endLine": 474,
+        "endChar": 60
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae9f1f6b_7570a9fa",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 35
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T05:34:14Z",
       "side": 1,
       "message": "nit: should it be DCHECK_GT?",
+      "range": {
+        "startLine": 501,
+        "startChar": 9,
+        "endLine": 501,
+        "endChar": 11
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b91c7c8_45e74b66",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-10T07:16:59Z",
+      "side": 1,
+      "message": "We should but since that is not refactoring,\n we do it in another patch.",
+      "parentUuid": "ae9f1f6b_7570a9fa",
       "range": {
         "startLine": 501,
         "startChar": 9,
@@ -91,6 +139,30 @@
       "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c2afe8_aaff26f3",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-10T07:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1719f2b_554941c2",
+      "range": {
+        "startLine": 505,
+        "startChar": 50,
+        "endLine": 505,
+        "endChar": 56
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
