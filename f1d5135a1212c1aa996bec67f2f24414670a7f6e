@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c207c9_8f14c98f",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-10T17:24:58Z",
+      "side": 1,
+      "message": "\"scrtipable\"",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd89527_fa8f12a1",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-10T17:24:58Z",
+      "side": 1,
+      "message": "Prefix this method name with a verb like Wrap/Create/Ensconce/InterlardWith or what have you. The current name reads like a class name.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16258158_42898e8a",
+        "filename": "extensions/browser/extension_util.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-10T17:24:58Z",
+      "side": 1,
+      "message": "use host_piece() to avoid a string copy.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bec837_4ecfaa1b",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-10T17:24:58Z",
+      "side": 1,
+      "message": "This is fine, but it\u0027s a good nudge towards just just fixing that bug. I chatted with alexmos, who said that there was one failing devtools test if we just removed this condition. I suggested the approach of replacing the !GetParent() check with \"GetSiteInstance()-\u003eGetSiteURL() \u003d\u003d chrome-extension://[the extension id].\" He says he\u0027ll put together a CL, if that lands quickly than it should let us get rid of the complexity here.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
