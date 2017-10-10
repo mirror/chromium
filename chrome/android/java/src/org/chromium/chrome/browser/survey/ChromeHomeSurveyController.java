@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.survey;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.view.accessibility.AccessibilityManager;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
@@ -51,7 +52,7 @@ public class ChromeHomeSurveyController {
     }
 
     private void startDownload(Context context, TabModelSelector tabModelSelector) {
-        if (!doesUserQualifyForSurvey()) return;
+        if (!doesUserQualifyForSurvey(context)) return;
 
         mTabModelSelector = tabModelSelector;
 
@@ -75,10 +76,11 @@ public class ChromeHomeSurveyController {
         surveyController.downloadSurvey(context, siteId, "", onSuccessRunnable);
     }
 
-    private boolean doesUserQualifyForSurvey() {
-        if (!FeatureUtilities.isChromeHomeEnabled()) return true;
+    private boolean doesUserQualifyForSurvey(Context context) {
         if (CommandLine.getInstance().hasSwitch(SURVEY_FORCE_ENABLE_SWITCH)) return true;
+        if (talkBackIsEnabled(context)) return false;
         if (hasInfoBarBeenDisplayed()) return false;
+        if (!FeatureUtilities.isChromeHomeEnabled()) return true;
 
         try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
             SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
@@ -131,11 +133,16 @@ public class ChromeHomeSurveyController {
     }
 
     private boolean hasInfoBarBeenDisplayed() {
-        // TODO(danielpark) Refine logic for whether user has seen a survey (crbug.com/772081).
         try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
             SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
             return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED, false);
         }
+    }
+
+    private boolean talkBackIsEnabled(Context context) {
+        AccessibilityManager manager =
+                (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        return manager.isTouchExplorationEnabled();
     }
 
     private boolean isValidTabForSurvey(Tab tab) {
