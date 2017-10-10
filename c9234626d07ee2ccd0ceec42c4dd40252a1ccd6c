@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4ef1af3_673cd33d",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-10T04:33:36Z",
+      "side": 1,
+      "message": "I don\u0027t understand. I am specifying zero - what are you suggesting?",
+      "parentUuid": "406173f4_cff50a20",
+      "range": {
+        "startLine": 169,
+        "startChar": 74,
+        "endLine": 169,
+        "endChar": 75
+      },
+      "revId": "c9234626d07ee2ccd0ceec42c4dd40252a1ccd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0fc920_3fd98a9b",
         "filename": "tools/clang/scripts/update.py",
         "patchSetId": 2
