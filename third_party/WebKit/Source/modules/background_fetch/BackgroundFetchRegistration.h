@@ -7,6 +7,7 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/events/EventTarget.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Handle.h"
@@ -22,8 +23,11 @@ class ServiceWorkerRegistration;
 
 // Represents an individual Background Fetch registration. Gives developers
 // access to its properties, options, and enables them to abort the fetch.
-class BackgroundFetchRegistration final : public EventTargetWithInlineData {
+class BackgroundFetchRegistration final
+    : public EventTargetWithInlineData,
+      public blink::mojom::blink::BackgroundFetchRegistrationObserver {
   DEFINE_WRAPPERTYPEINFO();
+  USING_PRE_FINALIZER(BackgroundFetchRegistration, Dispose);
 
  public:
   BackgroundFetchRegistration(const String& developer_id,
@@ -37,8 +41,15 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   ~BackgroundFetchRegistration();
 
   // Sets the ServiceWorkerRegistration that this BackgroundFetchRegistration
-  // has been associated with.
+  // has been associated with. Will register |this| as an observer for progress
+  // events associated with the background fetch.
   void SetServiceWorkerRegistration(ServiceWorkerRegistration*);
+
+  // BackgroundFetchRegistrationObserver implementation.
+  void OnProgress(uint64_t upload_total,
+                  uint64_t uploaded,
+                  uint64_t download_total,
+                  uint64_t downloaded) override;
 
   // Web Exposed attribute defined in the IDL file. Corresponds to the
   // |developer_id| used elsewhere in the codebase.
@@ -61,6 +72,8 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   const AtomicString& InterfaceName() const override;
   ExecutionContext* GetExecutionContext() const override;
 
+  void Dispose();
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -71,6 +84,7 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   // Corresponds to IDL 'id' attribute. Not unique - an active registration can
   // have the same |developer_id_| as one or more inactive registrations.
   String developer_id_;
+
   // Globally unique ID for the registration, generated in content/. Used to
   // distinguish registrations in case a developer re-uses |developer_id_|s. Not
   // exposed to JavaScript.
@@ -82,6 +96,9 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   unsigned long long downloaded_;
   HeapVector<IconDefinition> icons_;
   String title_;
+
+  mojo::Binding<blink::mojom::blink::BackgroundFetchRegistrationObserver>
+      observer_binding_;
 };
 
 }  // namespace blink
