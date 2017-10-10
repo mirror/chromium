@@ -46,6 +46,9 @@ class ValueStoreFactory;
 // their own right.
 class ExtensionSystem : public KeyedService {
  public:
+  // A callback to be executed when InstallUpdate finishes.
+  using InstallUpdateCallback = base::OnceCallback<void(bool success)>;
+
   ExtensionSystem();
   ~ExtensionSystem() override;
 
@@ -124,12 +127,14 @@ class ExtensionSystem : public KeyedService {
   virtual std::unique_ptr<ExtensionSet> GetDependentExtensions(
       const Extension* extension) = 0;
 
-  // Install an updated version of |extension_id| with the version given in
-  // temp_dir. Ownership of |temp_dir| in the filesystem is transferred and
-  // implementors of this function are responsible for cleaning it up on
-  // errors, etc.
+  // Install an updated version of |extension_id| with the provided
+  // |public_key| and the version given in unpacked_dir. Ownership of
+  // |unpacked_dir| in the filesystem is transferred and implementors of this
+  // function are responsible for cleaning it up on errors, etc.
+  // If callback is not null, it will be executed to provide the install update
+  // result.
   virtual void InstallUpdate(const std::string& extension_id,
-                             const base::FilePath& temp_dir) = 0;
+                             const base::FilePath& unpacked_dir) = 0;
 };
 
 }  // namespace extensions
