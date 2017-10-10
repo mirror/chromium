@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d58b6fa_0b9f7026",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T09:00:57Z",
+      "side": 1,
+      "message": "Could that logic live in MediaControls\u0027 handling of \u0027durationchange\u0027 event?",
+      "revId": "7c8525b278d8a815bb3ef08ecd39f02e589178ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
