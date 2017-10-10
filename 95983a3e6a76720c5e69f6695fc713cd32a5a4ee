@@ -22,6 +22,30 @@
       "revId": "95983a3e6a76720c5e69f6695fc713cd32a5a4ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f58cf1c_00af2620",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-10T21:23:42Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve been a bit fast with this patch. I think -[ProfileChooserController showMenuWithViewMode:] is better.\n\nThanks for your input.",
+      "parentUuid": "e2166180_60604ffe",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "95983a3e6a76720c5e69f6695fc713cd32a5a4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
