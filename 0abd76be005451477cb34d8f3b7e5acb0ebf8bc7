@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6740181f_9ef665c3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user_mock.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-10T20:54:10Z",
+      "side": 1,
+      "message": "Hmm, since prompt is a class method, I guess using instance attributes doesn\u0027t work here?\n\nUsing a class attribute rather than global might be a little better, WDYT? Another alternative would be to make prompt a regular method rather than classmethod.",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacc6e15_2bbf12db",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-10T20:54:10Z",
+      "side": 1,
+      "message": "Nit: This can also be written as:\n\n    self.assertIn(\u0027...substring...\u0027, output_string)",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7ba0ed_2b66e719",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-10T20:54:10Z",
+      "side": 1,
+      "message": "Nit: This can be written as:\n\n     self.assertEqual(output_string.count(\u0027...substring...\u0027), 3)",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
