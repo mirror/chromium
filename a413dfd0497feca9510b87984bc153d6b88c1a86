@@ -22,6 +22,30 @@
       "revId": "a413dfd0497feca9510b87984bc153d6b88c1a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680f92c1_156170fb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T21:52:55Z",
+      "side": 0,
+      "message": "Checked on line 540 of this file.",
+      "parentUuid": "f3e37056_7dff396f",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "a413dfd0497feca9510b87984bc153d6b88c1a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
