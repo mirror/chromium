@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "59eb6f4c_ead98518",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-10T23:37:10Z",
+      "side": 1,
+      "message": "Hmm, probably best to verify empirically.  Aashutosh has a captive portal setup here (GUESTGATE).\n\nEasiest way to simulate blacklisting is `iptables -I INPUT -j DROP`.\n\nI guess Chrome is not using the RecheckPortal dbus call?",
+      "parentUuid": "b8244156_de09bc61",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0ce791e_b7843292",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
