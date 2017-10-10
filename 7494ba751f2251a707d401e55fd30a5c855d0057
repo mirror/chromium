@@ -85,6 +85,24 @@
       "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c135abd5_3ab9e8df",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-10T06:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccbe6860_92b33ce2",
+      "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
