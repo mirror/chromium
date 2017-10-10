@@ -371,6 +371,9 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
       const gfx::ColorSpace& raster_color_space,
       CheckerImageTracker::DecodeType decode_type,
       CheckerImageTracker::ImageDecodeQueue* image_decode_queue);
+  bool ShouldVetoCheckeringForPotentialFlicker(
+      const PrioritizedTile& prioritized_tile,
+      PaintImage::Id paint_image_id) const;
 
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
   ScheduledTasksStateAsValue() const;

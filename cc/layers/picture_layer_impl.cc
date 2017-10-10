@@ -68,6 +68,11 @@ const int kTileMinimalAlignment = 4;
 // scales.
 const float kMaxIdealContentsScale = 10000.f;
 
+// The maximum number of layers to analyze to check whether a different image
+// exists in a given region on the active tree when an update is received on the
+// pending tree.
+const int kMaxLayersToAnalyzeForImageFlickerVeto = 5;
+
 // Intersect rects which may have right() and bottom() that overflow integer
 // boundaries. This code is similar to gfx::Rect::Intersect with the exception
 // that the types are promoted to int64_t when there is a chance of overflow.
@@ -642,6 +647,7 @@ void PictureLayerImpl::UpdateRasterSource(
   const bool recording_updated =
       !raster_source_ || raster_source_->GetDisplayItemList() !=
                              raster_source->GetDisplayItemList();
+  const bool previous_recording_had_images = HasDiscardableImages();
 
   // Unregister for all images on the current raster source, if the recording
   // was updated.
@@ -652,6 +658,11 @@ void PictureLayerImpl::UpdateRasterSource(
   // first frame.
   bool could_have_tilings = raster_source_.get() && CanHaveTilings();
   raster_source_.swap(raster_source);
+
+  // Update PictureLayerImpl with images tracking if the state of recordings
+  // with images changed.
+  if (previous_recording_had_images != HasDiscardableImages())
+    layer_tree_impl()->reset_picture_layers_with_images();
 
   // Register images from the new raster source, if the recording was updated.
   // TODO(khushalsagar): UMA the number of animated images in layer?
@@ -1609,6 +1620,127 @@ void PictureLayerImpl::UnregisterAnimatedImages() {
                              .animated_images_metadata();
   for (const auto& data : metadata)
     controller->UnregisterAnimationDriver(data.paint_image_id, this);
+}
+
+bool PictureLayerImpl::HasDifferentImageOnActiveTree(
+    PaintImage::Id paint_image_id) const {
+  TRACE_EVENT0("cc.debug", "HasDifferentImageOnActiveTree");
+  DCHECK(layer_tree_impl()->IsPendingTree());
+
+  // If there is no active tree, we are not replacing any content.
+  if (!layer_tree_impl()->active_tree())
+    return false;
+
+  // Map the position for this image in screen space.
+  gfx::Rect image_position_in_layer_space =
+      raster_source_->GetRectForImage(paint_image_id);
+  DCHECK(!image_position_in_layer_space.IsEmpty());
+  gfx::Rect image_position_in_screen_space = MathUtil::MapEnclosingClippedRect(
+      ScreenSpaceTransform(), image_position_in_layer_space);
+
+  // First check if our twin layer can answer this question. Since this will be
+  // true in most cases, we can early out quickly.
+  if (twin_layer_) {
+    auto result = twin_layer_->HasDifferentImageAt(
+        paint_image_id, image_position_in_screen_space);
+    if (result != ImageQueryResult::kLayerDoesNotCoverRegion)
+      return result == ImageQueryResult::kDifferentImageExists;
+  }
+
+  const auto* picture_layers_with_images =
+      layer_tree_impl()->picture_layers_with_images();
+  DCHECK(picture_layers_with_images) << "Tracking for PictureLayers with "
+                                        "images should have been update with "
+                                        "updating tile priorities";
+
+  // Limit the max number of layers we iterate through to provide a definite
+  // answer. If we can't afford to do this analysis, we conservatively assume
+  // that this is replacing a different image.
+  if (picture_layers_with_images->size() >
+      kMaxLayersToAnalyzeForImageFlickerVeto) {
+    return true;
+  }
+
+  for (const auto* layer : *picture_layers_with_images) {
+    if (layer == twin_layer_)
+      continue;
+
+    auto result = layer->HasDifferentImageAt(paint_image_id,
+                                             image_position_in_screen_space);
+    if (result != ImageQueryResult::kLayerDoesNotCoverRegion)
+      return result == ImageQueryResult::kDifferentImageExists;
+  }
+
+  // If none of the PictureLayers cover the given region, the active tree is not
+  // displaying any image here.
+  return false;
+}
+
+PictureLayerImpl::ImageQueryResult PictureLayerImpl::HasDifferentImageAt(
+    const PaintImage::Id paint_image_id,
+    const gfx::Rect& screen_space_position) const {
+  // Does the layer draw?
+  if (!contributes_to_drawn_render_surface())
+    return ImageQueryResult::kLayerDoesNotCoverRegion;
+
+  // Map the region into layer space.
+  gfx::Transform view_to_layer(gfx::Transform::kSkipInitialization);
+  if (!ScreenSpaceTransform().GetInverse(&view_to_layer))
+    return ImageQueryResult::kLayerDoesNotCoverRegion;
+  gfx::Rect position_in_layer_space = MathUtil::ProjectEnclosingClippedRect(
+      view_to_layer, screen_space_position);
+
+  // Check if the given location falls within the layer's drawable rect,
+  // accounting for clipping. If the layer does not draw at this position, we
+  // can not answer if a different image exists at this position.
+  gfx::Transform target_to_layer(gfx::Transform::kSkipInitialization);
+  if (!draw_properties().target_space_transform.GetInverse(&target_to_layer))
+    return ImageQueryResult::kLayerDoesNotCoverRegion;
+  gfx::Rect drawable_rect_in_layer_space =
+      MathUtil::ProjectEnclosingClippedRect(
+          target_to_layer, draw_properties().drawable_content_rect);
+  if (!position_in_layer_space.Intersects(drawable_rect_in_layer_space))
+    return ImageQueryResult::kLayerDoesNotCoverRegion;
+
+  // Is the layer occluded at this position?
+  if (draw_properties().occlusion_in_content_space.IsOccluded(
+          position_in_layer_space))
+    return ImageQueryResult::kLayerDoesNotCoverRegion;
+
+  // Now we know that this layer definitely draws content at the given position.
+  // Unless we have recordings for this region which have a different image, it
+  // is safe to say that the given area on this tree is not covered by a
+  // different image.
+  if (!raster_source_ ||
+      !raster_source_->RecordedViewport().Intersects(position_in_layer_space))
+    return ImageQueryResult::kDifferentImageDoesNotExist;
+
+  // Try seeing if the recording has the same image here. It is cheaper to query
+  // the rect for an image than querying the Rtree for all images in a rect.
+  if (raster_source_->GetRectForImage(paint_image_id)
+          .Intersects(position_in_layer_space))
+    return ImageQueryResult::kDifferentImageDoesNotExist;
+
+  std::vector<const DrawImage*> images_in_rect;
+  raster_source_->GetDiscardableImagesInRect(position_in_layer_space,
+                                             &images_in_rect);
+  bool image_exists_in_rect = false;
+  for (auto* image : images_in_rect) {
+    if (image->paint_image().stable_id() == paint_image_id) {
+      image_exists_in_rect = true;
+      break;
+    }
+  }
+
+  // Either the given image exists in this rect or it has no images.
+  return (image_exists_in_rect || images_in_rect.empty())
+             ? ImageQueryResult::kDifferentImageDoesNotExist
+             : ImageQueryResult::kDifferentImageExists;
+}
+
+bool PictureLayerImpl::HasDiscardableImages() const {
+  return raster_source_ && raster_source_->GetDisplayItemList() &&
+         !raster_source_->GetDisplayItemList()->discardable_image_map().empty();
 }
 
 }  // namespace cc

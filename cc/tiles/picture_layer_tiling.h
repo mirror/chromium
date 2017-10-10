@@ -50,6 +50,10 @@ class CC_EXPORT PictureLayerTilingClient {
       const PictureLayerTiling* tiling) const = 0;
   virtual bool HasValidTilePriorities() const = 0;
   virtual bool RequiresHighResToDraw() const = 0;
+  // Returns true if the region for this image on the pending tree may be
+  // displaying a different image on the active tree.
+  virtual bool HasDifferentImageOnActiveTree(
+      PaintImage::Id paint_image_id) const = 0;
 
  protected:
   virtual ~PictureLayerTilingClient() {}
