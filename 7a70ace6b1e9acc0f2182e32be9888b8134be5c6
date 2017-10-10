@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f936b8b6_4f1b4529",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-10T17:16:10Z",
+      "side": 1,
+      "message": "Is this related to the bug that you are fixing? and how?",
+      "range": {
+        "startLine": 91,
+        "startChar": 11,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "7a70ace6b1e9acc0f2182e32be9888b8134be5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e514e494_6ded3892",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-10T17:16:10Z",
+      "side": 1,
+      "message": "can these 3 lines be removed, now that you are calling static method below?\n\n(This needs to be resolved only if the change to startDownload is related to this change)",
+      "range": {
+        "startLine": 372,
+        "startChar": 28,
+        "endLine": 372,
+        "endChar": 53
+      },
+      "revId": "7a70ace6b1e9acc0f2182e32be9888b8134be5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
