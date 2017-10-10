@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33736b7c_9d972f7f",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-10T10:27:37Z",
+      "side": 1,
+      "message": "Please leave some comments explaining that\n- due to the RESOURCE_TYPE_PING based requests, these tests still need to run without the feature\n- we keep the body of the tests untouched so that we can unship easily when needed\n\nand leave TODO/bugs to remember that we\u0027ll update/remove/add these tests after 1 or 2 milestones to bake the feature.",
+      "revId": "aee9e37b29b2cfdf5b8734e210273edaa2e76427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
