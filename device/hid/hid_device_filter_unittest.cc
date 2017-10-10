@@ -69,33 +69,38 @@ TEST_F(HidFilterTest, MatchProductIdNegative) {
 
 TEST_F(HidFilterTest, MatchUsagePage) {
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageGenericDesktop);
+  filter.SetUsagePage(
+      static_cast<uint16_t>(device::mojom::Page::kPageGenericDesktop));
   ASSERT_TRUE(filter.Matches(*device_info_->device()));
 }
 
 TEST_F(HidFilterTest, MatchUsagePageNegative) {
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageLed);
+  filter.SetUsagePage(static_cast<uint16_t>(device::mojom::Page::kPageLed));
   ASSERT_FALSE(filter.Matches(*device_info_->device()));
 }
 
 TEST_F(HidFilterTest, MatchVendorAndUsagePage) {
   HidDeviceFilter filter;
   filter.SetVendorId(0x046d);
-  filter.SetUsagePage(HidUsageAndPage::kPageGenericDesktop);
+  filter.SetUsagePage(
+      static_cast<uint16_t>(device::mojom::Page::kPageGenericDesktop));
   ASSERT_TRUE(filter.Matches(*device_info_->device()));
 }
 
 TEST_F(HidFilterTest, MatchUsageAndPage) {
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageGenericDesktop);
-  filter.SetUsage(HidUsageAndPage::kGenericDesktopKeyboard);
+  filter.SetUsagePage(
+      static_cast<uint16_t>(device::mojom::Page::kPageGenericDesktop));
+  filter.SetUsage(static_cast<uint16_t>(
+      device::mojom::GenericDesktopUsage::kGenericDesktopKeyboard));
   ASSERT_TRUE(filter.Matches(*device_info_->device()));
 }
 
 TEST_F(HidFilterTest, MatchUsageAndPageNegative) {
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageGenericDesktop);
+  filter.SetUsagePage(
+      static_cast<uint16_t>(device::mojom::Page::kPageGenericDesktop));
   filter.SetUsage(0x02);
   ASSERT_FALSE(filter.Matches(*device_info_->device()));
 }
@@ -108,7 +113,8 @@ TEST_F(HidFilterTest, MatchEmptyFilterListNegative) {
 TEST_F(HidFilterTest, MatchFilterList) {
   std::vector<HidDeviceFilter> filters;
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageGenericDesktop);
+  filter.SetUsagePage(
+      static_cast<uint16_t>(device::mojom::Page::kPageGenericDesktop));
   filters.push_back(filter);
   ASSERT_TRUE(HidDeviceFilter::MatchesAny(*device_info_->device(), filters));
 }
@@ -116,7 +122,7 @@ TEST_F(HidFilterTest, MatchFilterList) {
 TEST_F(HidFilterTest, MatchFilterListNegative) {
   std::vector<HidDeviceFilter> filters;
   HidDeviceFilter filter;
-  filter.SetUsagePage(HidUsageAndPage::kPageLed);
+  filter.SetUsagePage(static_cast<uint16_t>(device::mojom::Page::kPageLed));
   filters.push_back(filter);
   ASSERT_FALSE(HidDeviceFilter::MatchesAny(*device_info_->device(), filters));
 }
