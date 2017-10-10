@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5ff1b6_e8c844ff",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T18:03:25Z",
+      "side": 1,
+      "message": "nit: no const when return non-const pointer/ref. Although general style guide allows this, it is hard to make it const correct. So chromium simplifed this to \"don\u0027t return pointers or references to non-const objects from const methods.\" \n\nhttps://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "6b470f300a65f881ffa4b8bf90d9a48ab93d59b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
