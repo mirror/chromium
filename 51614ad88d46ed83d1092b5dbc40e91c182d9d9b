@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e62db2f_15b7f36e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-10T16:56:29Z",
+      "side": 1,
+      "message": "Hmm... Locations here are SDK.DebuggerModel.Location, while typedef says Protocol.Debugger.Location.",
+      "revId": "51614ad88d46ed83d1092b5dbc40e91c182d9d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

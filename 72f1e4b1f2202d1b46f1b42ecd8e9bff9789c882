@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec58d56_e3d23e03",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/BreakpointManager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-10T16:56:29Z",
+      "side": 0,
+      "message": "Why was it like this? Maybe there is a reason? Just being cautious here.",
+      "revId": "72f1e4b1f2202d1b46f1b42ecd8e9bff9789c882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
