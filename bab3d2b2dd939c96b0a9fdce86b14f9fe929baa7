@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d197b1c2_6411951d",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Done, thanks",
+      "parentUuid": "ecd2d78e_d404e3c9",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "378e5ccc_12a41bb5",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410a4b66_9382b7ea",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378e5ccc_12a41bb5",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c6f797cc_4bf85995",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a4b1d5_b76af178",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 61
+      },
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83024f04_fea934ef",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 11
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "fd33114b_b708e773",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83024f04_fea934ef",
+      "range": {
+        "startLine": 241,
+        "startChar": 47,
+        "endLine": 241,
+        "endChar": 61
+      },
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52cc9915_10b2c0a3",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 11
@@ -93,6 +177,24 @@
       "writtenOn": "2017-10-10T02:07:53Z",
       "side": 1,
       "message": "The failure on the trybots seems real. Could you take a look?",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24410715_3b276676",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Yeah, the was caused by the same name of MockWebServiceWorkerProviderClientImpl in SWDispatcherUnittest. This one should be moved into anonymous namespace.",
+      "parentUuid": "52cc9915_10b2c0a3",
       "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +215,24 @@
       "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adea167_8765c5ea",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T07:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5e0d6f_4186180d",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
