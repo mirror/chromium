@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b032f492_2f5a1311",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-10-10T07:26:29Z",
+      "side": 1,
+      "message": "Since \"gerrit:current_user\" is not working like \"gerrit:change_owner\" (for now), we don\u0027t know who is accessing a change in prolog rules.\n\nThus, the rules are defining how a change could be submittable rather than who can submit it. Anyone with \u0027Submit\u0027 permission can submit a change once it\u0027s submittable no matter who creates it.\n\nIn v1, a change will be submittable:\n\n1- If it\u0027s created by FindIt, it\u0027s \u0027on-master\u0027 and \u0027pure-revert\u0027.\n2- If it\u0027s not created by FindIt, it has \u0027Code-Review +1\u0027.\n\n\nThe rules LGTM. But I think the commit message needs to be adjusted. \n\nBy the way, how do you think if a change is created by FindIt but someone else pushes a new patch set to it? The change can still meet condition 1-.",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -18,6 +35,29 @@
         "startChar": 42,
         "endLine": 14,
         "endChar": 50
+      },
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0820e07_b333d8ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-10-10T07:26:29Z",
+      "side": 1,
+      "message": "nit:s/user/users",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 13
       },
       "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
