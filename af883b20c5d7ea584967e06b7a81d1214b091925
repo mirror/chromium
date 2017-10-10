@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "e48ca138_cc7ffd68",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-10-10T17:30:00Z",
+      "side": 1,
+      "message": "I fully agree. I was thinking about just record both touch_major, tool_type in InProgressEvent and then make the decision in 2nd phase. Not sure if adding those field is good.\n\nBTW, by 2nd phase, we are talking about steps in ReportEvents(EventConverterEvdev::TimeTicksFromInputEvent(input));,\nright?",
+      "parentUuid": "01cb30bd_c5d048be",
+      "range": {
+        "startLine": 406,
+        "startChar": 8,
+        "endLine": 406,
+        "endChar": 15
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d54d7f0d_ad969b1b",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
         "patchSetId": 1
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "eccf5e3c_77c83e2a",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-10-10T17:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d54d7f0d_ad969b1b",
+      "range": {
+        "startLine": 410,
+        "startChar": 31,
+        "endLine": 410,
+        "endChar": 48
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fa25385_e2f5c176",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
         "patchSetId": 1
@@ -105,6 +153,30 @@
       "writtenOn": "2017-10-10T17:10:00Z",
       "side": 1,
       "message": "I do not think this is quite right. The condition for palm is we either get MT_TOOL_PALM or large ABS_MT_TOUCH_MAJOR; we are not guaranteed to get both. So if you get ABS_MT_TOOL_TYPE/MT_TOOL_PALM first, and then ABS_MT_TOUCH_MAJOR with smaller value you will end up resetting cancel reason.\n\nI think you need a piece of code to \"finalize\" your touch states once you get EV_SYN/SYN_REPORT event, i.e. when you have complete picture of a contact.",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 0
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f691498b_9ecfd003",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-10-10T17:30:00Z",
+      "side": 1,
+      "message": "I see. I did not expect we would get both. But I was supposing that if we get MT_TOOL_PALM for a slot, we should not get a major \u003c max. Seems this assumption is wrong.",
+      "parentUuid": "1fa25385_e2f5c176",
       "range": {
         "startLine": 407,
         "startChar": 0,
