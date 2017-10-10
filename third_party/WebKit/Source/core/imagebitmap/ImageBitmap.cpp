@@ -67,32 +67,26 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
   }
 
   if (options.colorSpaceConversion() != kImageBitmapOptionNone) {
-    if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
-      if (options.colorSpaceConversion() == kImageBitmapOptionDefault ||
-          options.colorSpaceConversion() ==
-              kSRGBImageBitmapColorSpaceConversion) {
-        parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-      } else if (options.colorSpaceConversion() ==
-                 kLinearRGBImageBitmapColorSpaceConversion) {
-        parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-        parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-      } else if (options.colorSpaceConversion() ==
-                 kP3ImageBitmapColorSpaceConversion) {
-        parsed_options.color_params.SetCanvasColorSpace(kP3CanvasColorSpace);
-        parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-      } else if (options.colorSpaceConversion() ==
-                 kRec2020ImageBitmapColorSpaceConversion) {
-        parsed_options.color_params.SetCanvasColorSpace(
-            kRec2020CanvasColorSpace);
-        parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-      } else {
-        NOTREACHED()
-            << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
-            << options.colorSpaceConversion();
-      }
+    if (options.colorSpaceConversion() == kImageBitmapOptionDefault ||
+        options.colorSpaceConversion() ==
+            kSRGBImageBitmapColorSpaceConversion) {
+      parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+    } else if (options.colorSpaceConversion() ==
+               kLinearRGBImageBitmapColorSpaceConversion) {
+      parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+      parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+    } else if (options.colorSpaceConversion() ==
+               kP3ImageBitmapColorSpaceConversion) {
+      parsed_options.color_params.SetCanvasColorSpace(kP3CanvasColorSpace);
+      parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+    } else if (options.colorSpaceConversion() ==
+               kRec2020ImageBitmapColorSpaceConversion) {
+      parsed_options.color_params.SetCanvasColorSpace(kRec2020CanvasColorSpace);
+      parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
     } else {
-      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
-      parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
+      NOTREACHED()
+          << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
+          << options.colorSpaceConversion();
     }
   }
 
@@ -308,8 +302,6 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
 RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    return image;
   // Color correct the image. This code path uses SkImage::makeColorSpace(). If
   // the color space of the source image is nullptr, it will be assumed in SRGB.
   return image->ConvertToColorSpace(
@@ -430,8 +422,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
     sk_sp<SkColorSpace> dst_color_space = nullptr;
     SkColorType dst_color_type = kN32_SkColorType;
-    if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() ||
-        !parsed_options.color_params.LinearPixelMath()) {
+    if (!parsed_options.color_params.LinearPixelMath()) {
       dst_color_space = parsed_options.color_params.GetSkColorSpace();
       dst_color_type = parsed_options.color_params.GetSkColorType();
     }
@@ -616,12 +607,6 @@ ImageBitmap::ImageBitmap(ImageData* data,
                         color_params.GetSkColorType(), kUnpremul_SkAlphaType,
                         color_params.GetSkColorSpaceForSkSurfaces());
 
-  // If we are in color correct rendering mode but we only color correct to
-  // SRGB, we don't do any color conversion when transferring the pixels from
-  // ImageData to ImageBitmap to avoid double gamma correction. We tag the
-  // image with SRGB color space later in ApplyColorSpaceConversion().
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    info = info.makeColorSpace(nullptr);
   image_ = NewImageFromRaster(info, std::move(image_pixels));
 
   // swizzle back

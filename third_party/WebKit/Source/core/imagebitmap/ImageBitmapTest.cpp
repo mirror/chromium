@@ -71,13 +71,6 @@ class ImageBitmapTest : public ::testing::Test {
 
     // Save the global memory cache to restore it upon teardown.
     global_memory_cache_ = ReplaceMemoryCacheForTesting(MemoryCache::Create());
-
-    // Save the state of experimental canvas features and color correct
-    // rendering flags to restore them on teardown.
-    experimental_canvas_features =
-        RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-    color_canvas_extensions =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
   }
   virtual void TearDown() {
     // Garbage collection is required prior to switching out the
@@ -88,20 +81,13 @@ class ImageBitmapTest : public ::testing::Test {
                                            BlinkGC::kForcedGC);
 
     ReplaceMemoryCacheForTesting(global_memory_cache_.Release());
-    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-        experimental_canvas_features);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions);
   }
 
   sk_sp<SkImage> image_, image2_;
   Persistent<MemoryCache> global_memory_cache_;
-  bool experimental_canvas_features;
-  bool color_canvas_extensions;
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
@@ -170,7 +156,6 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   HTMLImageElement* image =
       HTMLImageElement::Create(*Document::CreateForTest());
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -250,7 +235,7 @@ enum class ColorSpaceConversion : uint8_t {
   LAST = REC2020
 };
 
-static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
+static ImageBitmapOptions PrepareBitmapOptions(
     const ColorSpaceConversion& color_space_conversion) {
   // Set the color space conversion in ImageBitmapOptions
   ImageBitmapOptions options;
@@ -259,9 +244,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
-  // Set the runtime flags
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   return options;
 }
@@ -320,8 +302,7 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
-    ImageBitmapOptions options =
-        PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
+    ImageBitmapOptions options = PrepareBitmapOptions(color_space_conversion);
     ImageBitmap* image_bitmap = ImageBitmap::Create(
         image_element, crop_rect, &(image_element->GetDocument()), options);
 
@@ -421,8 +402,7 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
   image_element->SetImageForTest(source_image_resource);
 
   Optional<IntRect> crop_rect = IntRect(0, 0, image->width(), image->height());
-  ImageBitmapOptions options =
-      PrepareBitmapOptionsAndSetRuntimeFlags(ColorSpaceConversion::SRGB);
+  ImageBitmapOptions options = PrepareBitmapOptions(ColorSpaceConversion::SRGB);
   ImageBitmap* source_image_bitmap = ImageBitmap::Create(
       image_element, crop_rect, &(image_element->GetDocument()), options);
 
@@ -439,7 +419,7 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
-    options = PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
+    options = PrepareBitmapOptions(color_space_conversion);
     ImageBitmap* image_bitmap =
         ImageBitmap::Create(source_image_bitmap, crop_rect, options);
     SkImage* converted_image = image_bitmap->BitmapImage()
@@ -545,8 +525,7 @@ TEST_F(ImageBitmapTest,
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
-    ImageBitmapOptions options =
-        PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
+    ImageBitmapOptions options = PrepareBitmapOptions(color_space_conversion);
     ImageBitmap* image_bitmap = ImageBitmap::Create(
         StaticBitmapImage::Create(image), crop_rect, options);
 
@@ -634,8 +613,7 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
-    ImageBitmapOptions options =
-        PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
+    ImageBitmapOptions options = PrepareBitmapOptions(color_space_conversion);
     ImageBitmap* image_bitmap =
         ImageBitmap::Create(image_data, crop_rect, options);
 

@@ -149,8 +149,7 @@ static sk_sp<SkSurface> CreateSkSurface(GrContext* gr,
   // SRGB, we leave the surface with no color space. The painting canvas will
   // get wrapped with a proper SkColorSpaceXformCanvas in GetOrCreateSurface().
   sk_sp<SkColorSpace> color_space = nullptr;
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    color_space = color_params.GetSkColorSpaceForSkSurfaces();
+  color_space = color_params.GetSkColorSpaceForSkSurfaces();
   SkImageInfo info =
       SkImageInfo::Make(size.Width(), size.Height(),
                         color_params.GetSkColorType(), alpha_type, color_space);

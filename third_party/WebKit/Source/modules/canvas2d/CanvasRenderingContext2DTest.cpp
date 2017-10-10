@@ -1072,7 +1072,7 @@ enum class ColorSpaceConversion : uint8_t {
   LAST = REC2020
 };
 
-static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
+static ImageBitmapOptions PrepareBitmapOptions(
     const ColorSpaceConversion& color_space_conversion) {
   // Set the color space conversion in ImageBitmapOptions
   ImageBitmapOptions options;
@@ -1081,10 +1081,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
-  // Set the runtime flags
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
-
   return options;
 }
 
@@ -1092,9 +1088,6 @@ constexpr int kSRGBColorCorrectionTolerance = 1;
 constexpr float kWideGamutColorCorrectionTolerance = 0.01;
 
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
-  // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
   CanvasContextCreationAttributes attributes;
@@ -1129,8 +1122,7 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
        i <= static_cast<uint8_t>(ColorSpaceConversion::LAST); i++) {
     ColorSpaceConversion color_space_conversion =
         static_cast<ColorSpaceConversion>(i);
-    ImageBitmapOptions options =
-        PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
+    ImageBitmapOptions options = PrepareBitmapOptions(color_space_conversion);
     ImageBitmap* image_bitmap = ImageBitmap::Create(canvas, crop_rect, options);
     sk_sp<SkImage> converted_image =
         image_bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage();
@@ -1287,9 +1279,6 @@ enum class CanvasColorSpaceSettings : uint8_t {
 void TestPutImageDataOnCanvasWithColorSpaceSettings(
     HTMLCanvasElement& canvas_element,
     CanvasColorSpaceSettings canvas_colorspace_setting) {
-  // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   unsigned num_image_data_color_spaces = 3;
   CanvasColorSpace image_data_color_spaces[] = {
       kSRGBCanvasColorSpace, kRec2020CanvasColorSpace, kP3CanvasColorSpace,

@@ -40,23 +40,22 @@ CanvasRenderingContext::CanvasRenderingContext(
       color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
       creation_attributes_(attrs) {
   color_params_.SetCanvasColorSpace(kLegacyCanvasColorSpace);
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
-    if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
-      color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
-    else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
-      color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
 
-    // For now, we only support RGBA8 (for SRGB) and F16 (for all). Everything
-    // else falls back to SRGB + RGBA8.
-    if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
-      color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-    } else {
-      color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-      color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
-    }
+  if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
+    color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
+  else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
+    color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
 
-    // TODO(ccameron): linearPixelMath needs to be propagated here.
+  // For now, we only support RGBA8 (for SRGB) and F16 (for all). Everything
+  // else falls back to SRGB + RGBA8.
+  if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
+    color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+  } else {
+    color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+    color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
   }
+
+  // TODO(ccameron): linearPixelMath needs to be propagated here.
   // Make m_creationAttributes reflect the effective colorSpace, pixelFormat and
   // linearPixelMath rather than the requested one.
   creation_attributes_.setColorSpace(ColorSpaceAsString());

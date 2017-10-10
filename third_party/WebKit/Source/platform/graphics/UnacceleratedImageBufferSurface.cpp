@@ -54,8 +54,7 @@ UnacceleratedImageBufferSurface::UnacceleratedImageBufferSurface(
   // as SRGB will be managed by wrapping the internal SkCanvas inside a
   // SkColorSpaceXformCanvas. If color correct rendering is enbaled for other
   // color spaces, we set the color space properly.
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    info = info.makeColorSpace(color_params.GetSkColorSpaceForSkSurfaces());
+  info = info.makeColorSpace(color_params.GetSkColorSpaceForSkSurfaces());
 
   SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
   surface_ = SkSurface::MakeRaster(
