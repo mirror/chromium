@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "19f204e2_195bd8c5",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:50:34Z",
+      "side": 1,
+      "message": "See http://crrev.com/c/702077, we have a test case |end_offset \u003d\u003d 0|.",
+      "parentUuid": "2b91c7c8_45e74b66",
+      "range": {
+        "startLine": 501,
+        "startChar": 9,
+        "endLine": 501,
+        "endChar": 11
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74fb4a39_a706c1d9",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 35
