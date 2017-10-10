@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0bf801eb_d1360605",
+        "filename": "components/viz/common/switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a812afd_a9033327",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2579c470_4d54bbff",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87a1bc5_39303a59",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2579c470_4d54bbff",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "51d570fa_bcb7ed42",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29363944_4439303d",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59b8555c_daf2af8e",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798cd61b_a32ee87d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b8555c_daf2af8e",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "167dab3f_b33495c5",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "On the UI thread the ui::Gpu constructors calls BindBrowserGpuRequest() immediately and constructs a ClientGpuMemoryBufferManager. BindBrowserGpuRequest() creates the ui::mojom::GpuPtr and ClientGpuMemoryBufferManager owns it. BindBrowserGpuRequest() also creates ui::mojom::GpuRequest on the UI thread immediately, so the message pipe exists and things will be queued on it until the GpuRequest is bound.\n\nThe GpuRequest thread hops and gets bound on the IO thread later. When it gets bound any queued messages will arrive. So I think this doesn\u0027t race?",
+      "parentUuid": "996d4ec6_567f572d",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc68dc97_e5344422",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b1bc16_e1bef5f4",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Yes I think so. It looks like ContextFactoryPrivate::ResizeDisplay gets used to disable swap on resize here:\n\nhttps://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/desktop_window_tree_host_win.cc?type\u003dcs\u0026q\u003dDisableSwapUntilResize()\u0026l\u003d940\n\nThat should probably be clearer and have a different call though.",
+      "parentUuid": "bc68dc97_e5344422",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "416273cd_c96ca0f0",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "I\u0027ll remove this before the CL lands. The fix is here: https://chromium-review.googlesource.com/c/chromium/src/+/703514",
+      "parentUuid": "bd0abecf_e2bd2a00",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3eb3b23_bbfdb76d",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -132,6 +258,30 @@
       "writtenOn": "2017-10-06T18:58:42Z",
       "side": 1,
       "message": "It\u0027d be really helpful if each NOTIMPLMENTED and NOTREACHED had a comment saying what should be done roughly.",
+      "range": {
+        "startLine": 161,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 6
+      },
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efcfe70_c952d055",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "I added comments to most, at least where I have some understanding. There are a couple functions I have literally no idea about though.",
+      "parentUuid": "c3eb3b23_bbfdb76d",
       "range": {
         "startLine": 161,
         "startChar": 5,
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "77ce7a59_17f4e03f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3461b6a0_c0a6b1b2",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a03fb09b_828e348f",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -175,6 +343,24 @@
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ac8d30_fe7e5959",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "It basically has the privileged stuff that the viz host needs. In mus there is no ContextFactoryPrivate in the browser because it\u0027s not the viz host. In viz Chrome this is needed, at least for now, because there are a couple crucial methods on it.",
+      "parentUuid": "a03fb09b_828e348f",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "f358bdaf_fe5b8703",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done. I added a TODO(danakj) since I don\u0027t have a good understanding of what we need to do.",
+      "parentUuid": "e12889b8_f5688613",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e3f4c61_ff842b3e",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 5
@@ -206,6 +410,24 @@
       "writtenOn": "2017-10-06T18:58:42Z",
       "side": 1,
       "message": "TODO about the worker?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac4d854_a7ad9029",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "I have no idea what worker_context_provider does tbh.",
+      "parentUuid": "2e3f4c61_ff842b3e",
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +448,24 @@
       "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d4f0c7_8ba8e8c0",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T14:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c58fac_f1a576e0",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
