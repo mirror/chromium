@@ -25,6 +25,121 @@
     },
     {
       "key": {
+        "uuid": "2ab6a150_0b75c870",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "Change this to:\n\ncase NetworkState::CONNECTED_NETWORK:\n   break;\n\nand your formatting issue will be solved.  It\u0027s not really a fall through anyway.",
+      "parentUuid": "f94c923c_bdc91712",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72ba295_de1fb7cd",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "why is this check here?",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d09045f_b5c0d094",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "nit: if NOTREACHED is truly case, then you should not handle that, and just allow the code to flow.",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 13
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef51fe81_c393bd67",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "want to do stringprintf instead? https://cs.chromium.org/chromium/src/base/strings/stringprintf.h?q\u003dbase/strings/\u0026sq\u003dpackage:chromium\u0026dr",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2405a9_3708c8d2",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "this check is redundant given the dcheck.  You could just say if (offline_page) at this point.\n\nIf you really want to handle weird cases, then the dcheck should be removed and this code should handle them.",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facce82d_7510e14c",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "nit: I don\u0027t usually put braces here, is there a reason you did?",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef38208a_c80e6b24",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
@@ -91,6 +206,74 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5f66d5e_4067baea",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "It is hard to read that this takes a client ID and not a namespace",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73454778_caeeebe0",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "Need a test where |count| is nonzero",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb35d63_38a58427",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "need a test where args are not (client_id, 0, 1)",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75607316_ac6f8d6b",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T17:22:18Z",
+      "side": 1,
+      "message": "Need a test where |count| is nonzero",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
