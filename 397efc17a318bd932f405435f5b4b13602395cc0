@@ -16,6 +16,24 @@
       "revId": "397efc17a318bd932f405435f5b4b13602395cc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4fd866_fdb5ba2d",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-10T04:02:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea1a11c2_861fbc05",
+      "revId": "397efc17a318bd932f405435f5b4b13602395cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
