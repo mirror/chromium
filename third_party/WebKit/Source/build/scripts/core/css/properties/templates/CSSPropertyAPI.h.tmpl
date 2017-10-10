@@ -81,16 +81,27 @@ class CSSPropertyAPI {
   }
 
  protected:
-  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
-      TextDirection,
-      WritingMode,
-      LogicalBoxSide,
-      const StylePropertyShorthand&);
+  static const StylePropertyShorthand& BorderDirections();
   static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
       WritingMode,
       LogicalExtent,
       const CSSPropertyID*);
-  static const StylePropertyShorthand& BorderDirections();
+  static const CSSPropertyAPI& ResolveAfterToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveBeforeToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveEndToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveStartToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
 
  private:
   const CSSPropertyID id_;
