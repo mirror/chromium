@@ -190,12 +190,12 @@ component("ime") {
       "//ui/events/ozone:events_ozone_layout",
       "//ui/ozone",
     ]
-  }
 
-  if (is_fuchsia) {
-    sources -= [
-      "input_method_auralinux.cc",
-      "input_method_auralinux.h",
-    ]
+    if (is_fuchsia) {
+      sources -= [
+        "input_method_auralinux.cc",
+        "input_method_auralinux.h",
+      ]
+    }
   }
 }

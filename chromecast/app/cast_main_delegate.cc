@@ -33,16 +33,16 @@
 #include "base/android/apk_assets.h"
 #include "chromecast/app/android/cast_crash_reporter_client_android.h"
 #include "chromecast/app/android/crash_handler.h"
-#elif defined(OS_LINUX)
+#else
 #include "chromecast/app/linux/cast_crash_reporter_client.h"
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_ANDROID)
 
 namespace {
 
-#if defined(OS_LINUX)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 base::LazyInstance<chromecast::CastCrashReporterClient>::Leaky
     g_crash_reporter_client = LAZY_INSTANCE_INITIALIZER;
-#endif  // defined(OS_LINUX)
+#endif  // !defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
 const int kMaxCrashFiles = 10;
@@ -132,18 +132,17 @@ void CastMainDelegate::PreSandboxStartup() {
   std::string process_type =
       command_line->GetSwitchValueASCII(switches::kProcessType);
 
-// TODO(crbug.com/753619): Enable crash reporting on Fuchsia.
 #if defined(OS_ANDROID)
   base::FilePath log_file;
   PathService::Get(FILE_CAST_ANDROID_LOG, &log_file);
   chromecast::CrashHandler::Initialize(process_type, log_file);
-#elif defined(OS_LINUX)
+#else
   crash_reporter::SetCrashReporterClient(g_crash_reporter_client.Pointer());
 
   if (process_type != switches::kZygoteProcess) {
     CastCrashReporterClient::InitCrashReporter(process_type);
   }
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_ANDROID)
 
   InitializeResourceBundle();
 }
@@ -164,14 +163,14 @@ int CastMainDelegate::RunProcess(
 #endif  // defined(OS_ANDROID)
 }
 
-#if defined(OS_LINUX)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 void CastMainDelegate::ZygoteForked() {
   const base::CommandLine* command_line(base::CommandLine::ForCurrentProcess());
   std::string process_type =
       command_line->GetSwitchValueASCII(switches::kProcessType);
   CastCrashReporterClient::InitCrashReporter(process_type);
 }
-#endif  // defined(OS_LINUX)
+#endif  // !defined(OS_ANDROID)
 
 void CastMainDelegate::InitializeResourceBundle() {
   base::FilePath pak_file;
