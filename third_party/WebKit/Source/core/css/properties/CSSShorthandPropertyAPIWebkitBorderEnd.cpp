@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "core/css/properties/CSSShorthandPropertyAPIWebkitBorderEnd.h"
+
 #include "core/StylePropertyShorthand.h"
+#include "core/css/CSSProperty.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
 namespace blink {

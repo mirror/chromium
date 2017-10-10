@@ -2,20 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPIWebkitBorderWidth.h"
+#include "core/css/properties/CSSPropertyAPIScrollPaddingInlineStart.h"
 
+#include "core/StylePropertyShorthand.h"
+#include "core/css/CSSProperty.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/css/properties/CSSPropertyWebkitBorderWidthUtils.h"
 
 namespace blink {
 
-const CSSValue* CSSPropertyAPIWebkitBorderWidth::ParseSingleValue(
+const CSSValue* CSSPropertyAPIScrollPaddingInlineStart::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
-  return CSSPropertyWebkitBorderWidthUtils::ConsumeBorderWidth(
-      range, context.Mode(), CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
+  return ConsumeLengthOrPercent(
+      range, context.Mode(), kValueRangeNonNegative,
+      CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
 }
-
 }  // namespace blink

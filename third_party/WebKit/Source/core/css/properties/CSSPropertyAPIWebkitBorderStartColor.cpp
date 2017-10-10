@@ -2,18 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPILogicalWidthOrHeight.h"
+#include "core/css/properties/CSSPropertyAPIWebkitBorderStartColor.h"
 
+#include "core/StylePropertyShorthand.h"
+#include "core/css/CSSProperty.h"
+#include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "core/css/properties/CSSPropertyLengthUtils.h"
 
 namespace blink {
 
-const CSSValue* CSSPropertyAPILogicalWidthOrHeight::ParseSingleValue(
+class CSSParserLocalContext;
+
+const CSSValue* CSSPropertyAPIWebkitBorderStartColor::ParseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) const {
-  return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range, context);
+  return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
 }
-
 }  // namespace blink
