@@ -140,6 +140,13 @@ void DisplayManagerTestApi::SetTouchSupport(
       ->set_touch_support(touch_support);
 }
 
+void DisplayManagerTestApi::AddTouchDevice(int64_t display_id,
+                                           uint32_t touch_device_identifier) {
+  DCHECK(display_manager_->display_info_.count(display_id));
+  display_manager_->display_info_[display_id].AddTouchDevice(
+      touch_device_identifier);
+}
+
 ScopedSetInternalDisplayId::ScopedSetInternalDisplayId(
     DisplayManager* display_manager,
     int64_t id) {

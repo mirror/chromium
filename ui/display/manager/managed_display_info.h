@@ -56,6 +56,10 @@ struct DISPLAY_MANAGER_EXPORT TouchCalibrationData {
 
   bool operator==(TouchCalibrationData other) const;
 
+  // If the bounds are not set, then this instance of touch calibration data
+  // is empty.
+  bool IsEmpty() const { return bounds.IsEmpty(); }
+
   // Calibration point pairs used during calibration. Each point pair contains a
   // display point and the corresponding touch point.
   CalibrationPointPairQuad point_pairs;
@@ -193,6 +197,10 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   // this display.
   void AddTouchDevice(uint32_t touch_device_identifier);
 
+  // Disassociates and removes a touch device identified with
+  // |touch_device_identifier|.
+  void RemoveTouchDevice(uint32_t touch_device_identifier);
+
   // Clear the list of touch devices associated with this display.
   void ClearTouchDevices();
 
@@ -200,10 +208,8 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   // is associated with this display.
   bool HasTouchDevice(uint32_t touch_device_identifier) const;
 
-  // The identifiers of touch devices that are associated with this display.
-  std::set<uint32_t> touch_device_identifiers() const {
-    return touch_device_identifiers_;
-  }
+  // Returns the number of touch devices associated with this display.
+  uint32_t TouchDevicesCount() const;
 
   // Gets/Sets the device scale factor of the display.
   float device_scale_factor() const { return device_scale_factor_; }
