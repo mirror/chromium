@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b193f86c_1a0216a8",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-10T23:03:15Z",
+      "side": 1,
+      "message": "Ha, this was initially a string, but I seem to remember you asking for a const char[] at some point in an unrelated change so I changed it to const char. Changed back :)",
+      "parentUuid": "26f8864f_ed6461c7",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c44f085_bf26d789",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "77f6c3c7_8e586d21",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-10T23:03:15Z",
+      "side": 1,
+      "message": "Changed it to Link since they all tests what happens when clicking links.",
+      "parentUuid": "2c44f085_bf26d789",
+      "range": {
+        "startLine": 333,
+        "startChar": 35,
+        "endLine": 333,
+        "endChar": 38
+      },
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23cdf67_29cd68f5",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8a298f_8f8a162b",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-10T23:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23cdf67_29cd68f5",
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
