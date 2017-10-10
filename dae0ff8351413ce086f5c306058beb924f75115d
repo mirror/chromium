@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f4d3b30_a8f7d7ec",
+        "filename": "device/u2f/u2f_discovery.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c0601f_e14477b6",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b792dca7_8c6b969d",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab442e18_1e7e3836",
         "filename": "device/u2f/u2f_discovery.h",
         "patchSetId": 7
@@ -25,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "d70e6d4e_bba088cf",
+        "filename": "device/u2f/u2f_discovery_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc55b928_5c9e77b1",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 7
@@ -42,6 +110,98 @@
         "endLine": 55,
         "endChar": 57
       },
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d5d08d_16f8d513",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "A static U2fHidDevice::GetIdForDevice(const device::mojom::HidDeviceInfo\u0026 device_info) method would be good.",
+      "parentUuid": "cc55b928_5c9e77b1",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e177e4e_6b2f44c7",
+        "filename": "device/u2f/u2f_hid_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7c33e2_678aacd9",
+        "filename": "device/u2f/u2f_hid_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af60cf3_0bdd00e0",
+        "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e7b3b0_cc0cf38f",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-10T18:05:23Z",
+      "side": 1,
+      "message": "This header is unused.",
       "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
