@@ -163,6 +163,12 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
     return last_commit_was_error_page_;
   }
 
+  // Exposes the interface registry to be manipulated for testing.
+  service_manager::BinderRegistry& binder_registry() { return *registry_; }
+
+  static service_manager::mojom::InterfaceProviderRequest
+  CreateDeadEndInterfacesRequest();
+
  private:
   void SendNavigateWithParameters(int nav_entry_id,
                                   bool did_create_new_entry,
