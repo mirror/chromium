@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "192bcc89_4295f7b0",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-10T18:03:30Z",
+      "side": 0,
+      "message": "Done, good point, they won\u0027t send download network requests.",
+      "parentUuid": "cf68a4ea_895af964",
+      "range": {
+        "startLine": 582,
+        "startChar": 2,
+        "endLine": 582,
+        "endChar": 23
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "473f871d_65c99961",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 8
