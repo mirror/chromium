@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1180c86e_9c314402",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 9797,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T21:33:45Z",
+      "side": 1,
+      "message": "OK, I\u0027d then suggest renaming the policy to \"DeviceUserAvatarSettings\" to make the difference with UserAvatarImage (and other potential per-user settings) clearer.\n\n(The policy proto message can be left without the \"Device\" word.)",
+      "range": {
+        "startLine": 9797,
+        "startChar": 15,
+        "endLine": 9797,
+        "endChar": 33
+      },
+      "revId": "f3123cb9c5e27dc086462b04c853c68bcce415c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
