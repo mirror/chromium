@@ -16,6 +16,24 @@
       "revId": "bfeba0dbb8bf1954745cbb55da93dd30f0718095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9758ab_bd8718b2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/performance-timing/longtask-v2/longtask-executescript.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-10-10T15:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93b3ca64_f7d74e0f",
+      "revId": "bfeba0dbb8bf1954745cbb55da93dd30f0718095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
