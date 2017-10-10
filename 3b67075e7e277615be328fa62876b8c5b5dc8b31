@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b4c01b2_eb2af743",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T21:20:05Z",
+      "side": 1,
+      "message": "Should this assert/check that the elided url\u0027s host component is not empty?",
+      "revId": "3b67075e7e277615be328fa62876b8c5b5dc8b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9a51aa_9a4af46e",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T21:20:05Z",
+      "side": 1,
+      "message": "Consolidate this and ElideUrlSimple, that was added explicitly for VR\u0027s use case and has no other non-test callers.\nYou should be able to either pass the pre-formatted url string or a url_formatter::FormatUrlTypes arg.",
+      "revId": "3b67075e7e277615be328fa62876b8c5b5dc8b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
