@@ -1169,7 +1169,8 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
       return loader;
   }
 
-  return GetFrame()->CreateURLLoader(request, task_runner);
+  return GetFrame()->GetURLLoaderFactory()->CreateURLLoader(
+      request, task_runner);
 }
 
 FetchContext* FrameFetchContext::Detach() {

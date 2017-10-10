@@ -718,6 +718,64 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
   return result;
 }
 
+class RenderFrameImpl::FrameURLLoaderFactory : public blink::WebURLLoaderFactory {
+ public:
+  FrameURLLoaderFactory(
+      base::WeakPtr<RenderFrameImpl> frame,
+      scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter)
+      : frame_(frame), loader_factory_getter_(std::move(loader_factory_getter)) {}
+
+  ~FrameURLLoaderFactory() override = default;
+
+  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
+      const WebURLRequest& request,
+      base::SingleThreadTaskRunner* task_runner) override {
+    // This should not be called if the frame is detached.
+    DCHECK(frame_);
+
+    frame_->UpdatePeakMemoryStats();
+
+    ChildThreadImpl* child_thread = ChildThreadImpl::current();
+    if (!loader_factory_getter_) {
+      DCHECK(!child_thread);
+      // There may be no child thread in RenderViewTests, but these tests can
+      // still use data URLs.
+      return std::make_unique<WebURLLoaderImpl>(
+          nullptr, std::move(task_runner), nullptr);
+    }
+
+    DCHECK(loader_factory_getter_);
+    mojom::URLLoaderFactory* factory = frame_->custom_url_loader_factory();
+
+    if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+        request.Url().ProtocolIs(url::kBlobScheme)) {
+      factory = loader_factory_getter_->GetBlobLoaderFactory();
+      DCHECK(factory);
+    }
+
+    if (!factory) {
+      factory = loader_factory_getter_->GetNetworkLoaderFactory();
+      DCHECK(factory);
+    }
+
+    mojom::KeepAliveHandlePtr keep_alive_handle;
+    if (base::FeatureList::IsEnabled(
+            features::kKeepAliveRendererForKeepaliveRequests) &&
+        request.GetKeepalive()) {
+      frame_->GetFrameHost()->IssueKeepAliveHandle(mojo::MakeRequest(&keep_alive_handle));
+    }
+    return std::make_unique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
+                                              std::move(task_runner), factory,
+                                              std::move(keep_alive_handle));
+  }
+
+ private:
+  base::WeakPtr<RenderFrameImpl> frame_;
+  scoped_refptr<ChildURLLoaderFactoryGetter> loader_factory_getter_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameURLLoaderFactory);
+};
+
 }  // namespace
 
 // The following methods are outside of the anonymous namespace to ensure that
@@ -6881,39 +6939,11 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
   return current_state;
 }
 
-std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  UpdatePeakMemoryStats();
-
-  ChildThreadImpl* child_thread = ChildThreadImpl::current();
-  if (!child_thread) {
-    return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
-        request, std::move(task_runner));
-  }
-
-  mojom::URLLoaderFactory* factory = custom_url_loader_factory_.get();
-
-  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
-      request.Url().ProtocolIs(url::kBlobScheme)) {
-    factory = GetDefaultURLLoaderFactoryGetter()->GetBlobLoaderFactory();
-    DCHECK(factory);
-  }
-
-  if (!factory) {
-    factory = GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory();
-    DCHECK(factory);
-  }
-
-  mojom::KeepAliveHandlePtr keep_alive_handle;
-  if (base::FeatureList::IsEnabled(
-          features::kKeepAliveRendererForKeepaliveRequests) &&
-      request.GetKeepalive()) {
-    GetFrameHost()->IssueKeepAliveHandle(mojo::MakeRequest(&keep_alive_handle));
-  }
-  return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
-                                            std::move(task_runner), factory,
-                                            std::move(keep_alive_handle));
+std::unique_ptr<blink::WebURLLoaderFactory>
+RenderFrameImpl::CreateURLLoaderFactory() {
+  return std::make_unique<FrameURLLoaderFactory>(
+      weak_factory_.GetWeakPtr(),
+      RenderThreadImpl::current() ? nullptr : GetDefaultURLLoaderFactoryGetter());
 }
 
 void RenderFrameImpl::DraggableRegionsChanged() {
