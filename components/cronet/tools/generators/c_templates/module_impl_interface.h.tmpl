@@ -1,0 +1,55 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/* DO NOT EDIT. Generated from {{module.path}} */
+
+{%- if variant -%}
+{%-   set variant_path = "%s-%s"|format(module.path, variant) -%}
+{%- else -%}
+{%-   set variant_path = module.path -%}
+{%- endif %}
+
+{%- set header_guard = "%s_IMPL_INTERFACE_H_"|format(
+        variant_path|upper|replace("/","_")|replace(".","_")|
+            replace("-", "_")) %}
+
+{%- macro declare_c_params(prefix, parameters) %}
+{%-   for param in parameters -%}
+{{param.kind|c_wrapper_type}} {{prefix}}{{param.name}}
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+{%- endmacro %}
+
+
+#ifndef {{header_guard}}
+#define {{header_guard}}
+
+#include <string>
+#include <vector>
+#include "{{variant_path}}_c.h"
+#include "base/macros.h"
+
+{#--- Interface Stubs -#}
+{%  for interface in interfaces %}
+struct {{interface.name}} {
+  {{interface.name}}();
+  virtual ~{{interface.name}}() = default;
+
+{% for method in interface.methods %}
+{%-  if method.response_parameters and method.sync %}
+{%-   for param in method.response_parameters %}
+virtual {{param.kind|c_wrapper_type}}
+{%-   endfor -%}
+{%-  else %}
+virtual void
+{%- endif %}
+   {{method.name}}({{declare_c_params("", method.parameters)}}) = 0;
+{%- endfor %}
+
+  DISALLOW_COPY_AND_ASSIGN({{interface.name}});
+};
+
+{% endfor %}
+#endif  // {{header_guard}}
+

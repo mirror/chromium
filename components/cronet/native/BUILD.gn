@@ -1,0 +1,36 @@
+import("//mojo/public/tools/bindings/mojom.gni")
+import("//testing/test.gni")
+
+mojom("cronet_mojo") {
+  sources = [
+    "cronet.mojom",
+  ]
+}
+
+source_set("cronet_native_impl") {
+  sources = [
+    "cronet.mojom_c.h",
+    "cronet.mojom_impl_interface.cc",
+    "cronet.mojom_impl_interface.h",
+    "cronet.mojom_impl_struct.cc",
+    "cronet.mojom_impl_struct.h",
+  ]
+  deps = [
+    "//base",
+    "//net",
+  ]
+}
+
+source_set("cronet_native_impl_tests") {
+  testonly = true
+
+  deps = [
+    ":cronet_mojo",
+    ":cronet_native_impl",
+    "//net:test_support",
+  ]
+
+  sources = [
+    "cronet.mojom_impl_struct_unittest.cc",
+  ]
+}
