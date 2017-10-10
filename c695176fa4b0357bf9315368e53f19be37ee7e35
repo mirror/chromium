@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e233e7c_507f3506",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-10T23:26:13Z",
+      "side": 1,
+      "message": "Can this change be in cr-toast so it\u0027s applied to all instances?",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
