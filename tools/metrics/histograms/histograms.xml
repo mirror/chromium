@@ -30685,6 +30685,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Audio.CoreAudioDispatchOverrideStatus"
+    enum="CoreAudioDispatchOverrideStatus">
+  <owner>ossu@chromium.org</owner>
+  <summary>
+    Tracks support and initialization success/failure of the CoreAudio dispatch
+    override hotfix. The fix is not supported on macOS earlier than version
+    10.10.
+  </summary>
+</histogram>
+
 <histogram name="Media.Audio.InputBufferSizeWasChangedAudioWorkedMac"
     enum="BooleanChanged">
   <owner>henrika@chromium.org</owner>
