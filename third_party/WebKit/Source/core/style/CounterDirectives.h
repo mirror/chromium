@@ -30,6 +30,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/RefPtr.h"
+#include "platform/wtf/SaturatedArithmetic.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/AtomicStringHash.h"
 
@@ -83,8 +84,11 @@ class CounterDirectives {
   int CombinedValue() const {
     DCHECK(is_reset_set_ || !reset_value_);
     DCHECK(is_increment_set_ || !increment_value_);
-    // FIXME: Shouldn't allow overflow here.
-    return reset_value_ + increment_value_;
+
+    // https://drafts.csswg.org/css-lists-3/#valdef-counter-reset-custom-ident-integer
+    // As allowed by the spec, we clamp the counter to be representable by an
+    // int.
+    return WTF::MakeClampedNum(reset_value_) + increment_value_;
   }
 
  private:

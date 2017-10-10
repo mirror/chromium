@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<style>
+.reset-overflow {
+  counter-reset: c 2147483645;
+}
+
+.reset-overflow h3::before {
+  counter-increment: c 1;
+}
+
+.increment-overflow {
+  counter-reset: c 0;
+}
+
+.increment-overflow h3::before {
+  counter-increment: c 2147483646;
+}
+
+.reset-underflow {
+  counter-reset: c -2147483646;
+}
+
+.reset-underflow h3::before {
+  counter-increment: c -1;
+}
+
+.increment-underflow {
+  counter-reset: c 0;
+}
+
+.increment-underflow h3::before {
+  counter-increment: c -2147483647;
+}
+
+h3::before {
+  content: counter(c);
+}
+</style>
+<div class="reset-overflow"><h3>First</h3><h3>Second</h3><h3>Third</h3></div>
+<div class="increment-overflow"><h3>First</h3><h3>Second</h3><h3>Third</h3></div>
+<div class="reset-underflow"><h3>First</h3><h3>Second</h3><h3>Third</h3></div>
+<div class="increment-underflow"><h3>First</h3><h3>Second</h3><h3>Third</h3></div>
