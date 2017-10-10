@@ -9,9 +9,11 @@ child.contentDocument.open();
 var grandchild = child.contentDocument.appendChild(document.createElement('iframe'));
 
 child.contentWindow.onload = function() {
-    var a = grandchild.contentDocument.createElement('a');
-    a.href = 'data:text/xml,';
-    a.click();
+    try {
+      var a = grandchild.contentDocument.createElement('a');
+      a.href = 'data:text/xml,';
+      a.click();
+    } catch (e) {}
 }
 
 var a = grandchild.contentDocument.createElement('a');
