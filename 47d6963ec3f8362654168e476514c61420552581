@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d88bb9c4_bea77d62",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57383,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-10T17:47:47Z",
+      "side": 1,
+      "message": "s/sampler/sampled/ (and there\u0027s some superfluous spaces on each line here).",
+      "revId": "47d6963ec3f8362654168e476514c61420552581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
