@@ -60,6 +60,7 @@ class LinuxSandbox {
     METHOD_GET_STYLE_FOR_STRIKE = 35,
     METHOD_MAKE_SHARED_MEMORY_SEGMENT = 36,
     METHOD_MATCH_WITH_FALLBACK = 37,
+    METHOD_TIMEZONE = 38,
   };
 
   // Get our singleton instance.

@@ -188,6 +188,8 @@ void SandboxIPCHandler::HandleRequestFromChild(int fd) {
     HandleMakeSharedMemorySegment(fd, iter, fds);
   } else if (kind == LinuxSandbox::METHOD_MATCH_WITH_FALLBACK) {
     HandleMatchWithFallback(fd, iter, fds);
+  } else if (kind == LinuxSandbox::METHOD_TIMEZONE) {
+    HandleTimezone(fd, iter, fds);
   }
 }
 
@@ -405,6 +407,24 @@ void SandboxIPCHandler::HandleMatchWithFallback(
     if (IGNORE_EINTR(close(font_fd)) < 0)
       PLOG(ERROR) << "close";
   }
+}
+
+void SandboxIPCHandler::HandleTimezone(int fd,
+                                       base::PickleIterator iter,
+                                       const std::vector<base::ScopedFD>& fds) {
+  // The other side of this call is in |ProxyTimezoneCallToBrowser|, in
+  // zygote_main_linux.cc.
+
+  tzset();
+  base::Pickle reply;
+  reply.WriteString(tzname[0] ? tzname[0] : "");
+  reply.WriteString(tzname[1] ? tzname[1] : "");
+  reply.WriteLong(timezone);
+  reply.WriteInt(daylight);
+  const char* tzenv = getenv("TZ");
+  if (tzenv)
+    reply.WriteString(tzenv);
+  SendRendererReply(fds, reply, -1);
 }
 
 void SandboxIPCHandler::SendRendererReply(

@@ -168,6 +168,51 @@ static void ProxyLocaltimeCallToBrowser(time_t input, struct tm* output,
   }
 }
 
+static void ProxyTimezoneCallToBrowser() {
+  base::Pickle request;
+  request.WriteInt(LinuxSandbox::METHOD_TIMEZONE);
+
+  uint8_t reply_buf[512];
+  const ssize_t r = base::UnixDomainSocket::SendRecvMsg(
+      GetSandboxFD(), reply_buf, sizeof(reply_buf), NULL, request);
+  if (r == -1)
+    return;
+
+  base::Pickle reply(reinterpret_cast<char*>(reply_buf), r);
+  base::PickleIterator iter(reply);
+
+  std::string tzname0;
+  if (!iter.ReadString(&tzname0))
+    return;
+  std::string tzname1;
+  if (!iter.ReadString(&tzname1))
+    return;
+  long timezone_remote;
+  if (!iter.ReadLong(&timezone_remote))
+    return;
+  int daylight_remote;
+  if (!iter.ReadInt(&daylight_remote))
+    return;
+  std::string tzenv;
+  if (iter.ReadString(&tzenv)) {
+    setenv("TZ", tzenv.c_str(), 1);
+  } else {
+    unsetenv("TZ");
+  }
+
+  static const size_t TZNAME_SIZE = 128;
+  static char tzname_remote[2][TZNAME_SIZE];
+  strncpy(tzname_remote[0], tzname0.c_str(), TZNAME_SIZE);
+  strncpy(tzname_remote[1], tzname1.c_str(), TZNAME_SIZE);
+  tzname_remote[0][TZNAME_SIZE - 1] = 0;
+  tzname_remote[1][TZNAME_SIZE - 1] = 0;
+  tzname[0] = tzname_remote[0];
+  tzname[1] = tzname_remote[1];
+
+  timezone = timezone_remote;
+  daylight = daylight_remote;
+}
+
 static bool g_am_zygote_or_renderer = false;
 
 // Sandbox interception of libc calls.
@@ -209,12 +254,14 @@ static bool g_am_zygote_or_renderer = false;
 typedef struct tm* (*LocaltimeFunction)(const time_t* timep);
 typedef struct tm* (*LocaltimeRFunction)(const time_t* timep,
                                          struct tm* result);
+typedef void (*TimezoneSetFunction)();
 
 static pthread_once_t g_libc_localtime_funcs_guard = PTHREAD_ONCE_INIT;
 static LocaltimeFunction g_libc_localtime;
 static LocaltimeFunction g_libc_localtime64;
 static LocaltimeRFunction g_libc_localtime_r;
 static LocaltimeRFunction g_libc_localtime64_r;
+static TimezoneSetFunction g_libc_tzset;
 
 static void InitLibcLocaltimeFunctions() {
   g_libc_localtime = reinterpret_cast<LocaltimeFunction>(
@@ -225,6 +272,8 @@ static void InitLibcLocaltimeFunctions() {
       dlsym(RTLD_NEXT, "localtime_r"));
   g_libc_localtime64_r = reinterpret_cast<LocaltimeRFunction>(
       dlsym(RTLD_NEXT, "localtime64_r"));
+  g_libc_tzset =
+      reinterpret_cast<TimezoneSetFunction>(dlsym(RTLD_NEXT, "tzset"));
 
   if (!g_libc_localtime || !g_libc_localtime_r) {
     // http://code.google.com/p/chromium/issues/detail?id=16800
@@ -339,6 +388,20 @@ struct tm* localtime64_r_override(const time_t* timep, struct tm* result) {
   if (res->tm_zone) __msan_unpoison_string(res->tm_zone);
 #endif
   return res;
+}
+
+__attribute__((__visibility__("default"))) void tzset_override() __asm__(
+    "tzset");
+
+__attribute__((__visibility__("default"))) void tzset_override() {
+  if (g_am_zygote_or_renderer) {
+    ProxyTimezoneCallToBrowser();
+    return;
+  }
+
+  CHECK_EQ(0, pthread_once(&g_libc_localtime_funcs_guard,
+                           InitLibcLocaltimeFunctions));
+  g_libc_tzset();
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
