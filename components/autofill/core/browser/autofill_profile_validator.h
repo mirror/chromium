@@ -15,7 +15,6 @@
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "components/autofill/core/browser/address_i18n.h"
-#include "components/autofill/core/browser/address_validation_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "third_party/libaddressinput/chromium/chrome_address_validator.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/preload_supplier.h"
@@ -29,8 +28,7 @@ using ::i18n::addressinput::PreloadSupplier;
 using ::i18n::addressinput::Source;
 using ::i18n::addressinput::Storage;
 
-using AutofillProfileValidatorCallback =
-    base::OnceCallback<void(AutofillProfile::ValidityState)>;
+using AutofillProfileValidatorCallback = base::OnceCallback<void()>;
 
 // AutofillProfileValidator Loads Rules from the server and validates an
 // autofill profile. For a given autofill profile, it will set the ValidityState
