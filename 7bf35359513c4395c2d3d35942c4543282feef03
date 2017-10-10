@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d77d3cd_05f230cd",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-10T08:00:38Z",
+      "side": 1,
+      "message": "New line",
+      "range": {
+        "startLine": 58,
+        "startChar": 46,
+        "endLine": 58,
+        "endChar": 48
+      },
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
