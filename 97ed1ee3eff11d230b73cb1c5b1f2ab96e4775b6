@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39575ad1_97bb098a",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c325b7_46cf1443",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d3da65_8b9023b2",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3dffa1bc_e2a37d28",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "I would assume it always exists. Maybe not in incognito mode? Removed comment.",
+      "parentUuid": "59d3da65_8b9023b2",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "458ea145_87d8c0bd",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 10
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-09T20:10:39Z",
       "side": 1,
       "message": "How does fsid different from file_system_id_? It\u0027s kind of confusing, because we pass both below to OpenPluginPrivateFileSystem.",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 18
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a60fbe1_e321b985",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Since we\u0027re using the PluginPrivate file system, |file_system_id_| is really the plugin name. But in mojo we\u0027re not running as a plugin, but the name needs to match so that the same storage is used.",
+      "parentUuid": "458ea145_87d8c0bd",
       "range": {
         "startLine": 217,
         "startChar": 14,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7f0c87ee_90524ea0",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec02872_1be02f3e",
+      "range": {
+        "startLine": 266,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 54
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05f56071_50fa8fa0",
         "filename": "content/browser/media/cdm_storage_impl.h",
         "patchSetId": 10
@@ -96,6 +180,24 @@
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524046cf_55313bdb",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f56071_50fa8fa0",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "15a12e0e_92b268fc",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10925f13_b5ad248e",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b302336_507cf8ea",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 10
@@ -127,6 +247,24 @@
       "writtenOn": "2017-10-09T20:10:39Z",
       "side": 1,
       "message": "Just wondering: shouldn\u0027t all this be statically known at compile time? So this should basically never happen.",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd00291_499dce2a",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "ChromeOS registers their own set of CDMs, so they may not.",
+      "parentUuid": "0b302336_507cf8ea",
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "d2e61b98_3806e7a9",
+        "filename": "media/cdm/cdm_paths.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5094ef52_b802c0f3",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01134a29_ae75c410",
         "filename": "media/mojo/interfaces/cdm_storage.mojom",
         "patchSetId": 10
@@ -170,6 +332,24 @@
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e36996_814e129d",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Happy to do it. Ran into the problem initially with ERROR.",
+      "parentUuid": "01134a29_ae75c410",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +373,30 @@
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6efaa5f_e8fb6901",
+        "filename": "third_party/widevine/cdm/widevine_cdm_common.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-10T01:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19d1b061_f59cbdcf",
+      "range": {
+        "startLine": 39,
+        "startChar": 72,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
