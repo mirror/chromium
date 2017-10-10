@@ -1,0 +1,36 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/language/content/util/language_code_locator.h"
+
+#include "base/strings/string_split.h"
+#include "third_party/s2cellid/src/s2/s2cellid.h"
+#include "third_party/s2cellid/src/s2/s2latlng.h"
+
+namespace language {
+
+LanguageCodeLocator::LanguageCodeLocator() : district_lang_({
+  {% set c = 1 %}
+  {% for cell_lang_pair in cell_lang_pairs -%}
+    { {{cell_lang_pair[0]}}ull, "{{cell_lang_pair[1]}}"}{% if c < cell_lang_pairs|length%},{% endif %}
+    {% set c = c + 1%}
+  {%- endfor %}
+}) {}
+
+LanguageCodeLocator::~LanguageCodeLocator() {}
+
+std::vector<std::string> LanguageCodeLocator::GetLanguageCode(
+    double lat, double lng) const {
+  S2CellId current_cell(S2LatLng::FromDegrees(lat, lng));
+  while (current_cell.level() > 0) {
+    auto search = district_lang_.find(current_cell.id());
+    if (search != district_lang_.end()) {
+      return base::SplitString(search->second, ";", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+    }
+    current_cell = current_cell.parent();
+  }
+  return {};
+}
+
+}  // namespace language
