@@ -753,6 +753,30 @@ TEST_F(DeviceInfoSyncBridgeTest, DisableSync) {
   EXPECT_EQ(4, change_count());
 }
 
+void Baz() {
+  LOG(ERROR) << "SKYM Baz 1";
+  ASSERT_TRUE(false);
+  LOG(ERROR) << "SKYM Baz 2";
+}
+
+void Bar() {
+  LOG(ERROR) << "SKYM Bar 1";
+  Baz();
+  ASSERT_TRUE(false);
+  LOG(ERROR) << "SKYM Bar 2";
+}
+
+void Foo() {
+  LOG(ERROR) << "SKYM Foo 1";
+  Bar();
+  ASSERT_TRUE(false);
+  LOG(ERROR) << "SKYM Foo 2";
+}
+
+TEST_F(DeviceInfoSyncBridgeTest, Sky) {
+  Foo();
+}
+
 }  // namespace
 
 }  // namespace syncer
