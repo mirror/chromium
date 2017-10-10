@@ -1,0 +1,198 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Elementary building blocks:
+
+# Empty
+" "
+
+# Tokens
+"("
+")"
+"["
+"]"
+"{"
+"}"
+":"
+";"
+"."
+"..."
+"?"
+"++"
+"--"
+"=>"
+"!"
+"="
+"|="
+"^="
+"&="
+"<<="
+">>="
+">>>="
+"+="
+"-="
+"*="
+"/="
+"%="
+"**="
+","
+"||"
+"&&"
+"|"
+"^"
+"&"
+"<<"
+">>"
+">>>"
+"+"
+"-"
+"*"
+"/"
+"%"
+"**"
+"=="
+"!="
+"==="
+"!=="
+"<"
+">"
+"<="
+">="
+"!"
+"~"
+
+# Keywords, contextual keywords, literals, reserved words.
+"__proto__"
+"anonymous"
+"arguments"
+"as"
+"async"
+"await"
+"break"
+"case"
+"catch"
+"class"
+"const"
+"constructor"
+"continue"
+"debugger"
+"default"
+"delete"
+"do"
+"else"
+"enum"
+"eval"
+"export"
+"extends"
+"false"
+"finally"
+"for"
+"from"
+"function"
+"get"
+"if"
+"import"
+"in"
+"instanceof"
+"let"
+"name"
+"new"
+"null"
+"of"
+"prototype"
+"return"
+"sent"
+"set"
+"static"
+"super"
+"switch"
+"target"
+"this"
+"throw"
+"true"
+"try"
+"typeof"
+"undefined"
+"var"
+"void"
+"while"
+"with"
+
+# Separators
+"\n"
+"; "
+$0 "\n"
+$0 "; "
+
+$0 "," $1
+"(" $0 ")"
+
+# Identifiers
+"foo"
+"bar"
+"a"
+"b"
+"c"
+
+# Other literals
+"0"
+"0.0"
+
+# FIXME: Add strings and numbers! And quotes.
+
+# Other meaningful words from the spec
+"new.target"
+
+# More complicated building blocks
+
+# Block, object, or binding pattern
+"{" $0 "}"
+"{" $0 ": " $1 "}"
+
+# Array or array binding pattern
+"[" $0 "]"
+
+# Rest element or rest parameter
+"..."
+"..." $0
+
+# Variable declarations
+"let" $0 "=" $1 ";"
+"const " $0 "=" $1 ";"
+"var" $0 "=" $1 ";"
+
+# Return statements
+"return" $0
+"return" $0 ";"
+
+# If statements
+"if (" $0 ")" $1
+"if (" $0 ") {" $1 "}"
+"if (" $0 ") {" $1 "} else {" $2 "}"
+"if (" $0 ")" $1 "else" $2
+
+# Iteration statements
+"do" $0 "while (" $1 ");"
+"for (" $0 ")" $1
+"for (" $0 ") {" $1 " }"
+"for (" $0 "in" $1 ")" $2
+"for (" $0 "in" $1 ") {" $2 "}"
+"for (" $0 "of" $1 ")" $2
+"for (" $0 "of" $1 ") {" $2 "}"
+"continue"
+"continue;"
+"continue" $0
+"break"
+"break;"
+"break" $0
+
+# With statements
+"with (" $0 ")" $1
+"with (" $0 ") {" $1 "}"
+
+# Switch statements
+"switch (" $0 ")" $1
+"case" $0 ": " $1
+"default :" $0
+
