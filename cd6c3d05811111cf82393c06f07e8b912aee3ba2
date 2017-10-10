@@ -16,6 +16,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4680f8ce_bc385e3a",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-10T18:31:16Z",
+      "side": 1,
+      "message": "Hmm, good question. Ideally ultimately no code outside of the blob system itself would deal with storage::DataElements. If you could somehow move this code into blink you could just be using blink::BlobData/blink::BlobDataHandle directly?\n\nIf for whatever reason this always will have to remain outside of blink, I guess we\u0027ll have to somehow extract blink::BlobData  and the blink::BlobDataHandle constructor code into WebKit/common. Not quite sure yet how tricky that would be (or rather than doing trying to refactor the blink-side code today, we could add new mojo-blob only code to WebKit/common and later migrate blink::BlobDataHandle to use that code when it no longer needs to support ipc-blobs).\n\nI don\u0027t really know how this code is used well enough to figure out what the best solution is. But it does seem odd that you\u0027d be duplicating creating a blob, rather than just having a blob be passed in...",
+      "parentUuid": "88d8ed57_d181cf55",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
