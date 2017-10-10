@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f06c3c0_110cf5ba",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T15:29:23Z",
+      "side": 1,
+      "message": "I can possibly think of some benefits to expose this, while this comment would just confuse users as it says the same thing as one above, so we probably need to have some impl-specific documentation that touches channel thing here..?",
+      "revId": "d6f7efddd401be75fd4843c74b28be371e03fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
