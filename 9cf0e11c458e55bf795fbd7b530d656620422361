@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0938e73_38cfac2a",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-10T11:49:10Z",
+      "side": 1,
+      "message": "Might as well test this explicitly before calling it. I\u0027ve imported the function weakly, above.",
+      "revId": "9cf0e11c458e55bf795fbd7b530d656620422361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
