@@ -466,6 +466,24 @@
     },
     {
       "key": {
+        "uuid": "fbe325f7_785fcb5e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-10T21:02:50Z",
+      "side": 1,
+      "message": "Ack. https://chromium-review.googlesource.com/c/chromium/src/+/707801 will get us started on #1, and perhaps if needed, we could also eventually set crash keys here that are specific to this renderer kill, mainly |validated_params-\u003eurl.GetOrigin()|?",
+      "parentUuid": "cfe074e4_2b654f5b",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0879ba_f17d9177",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -608,6 +626,30 @@
       "side": 1,
       "message": "I talked with Charlie today and a high-level bit of information is that guest view is associated with a separate storage partition - therefore a Chrome Web Store loaded inside the guest view would not be able to interact with the main profile / install things in the main profile.  Therefore relaxing the kills for guest view (and ignoring CWS in this case) seems okay.",
       "parentUuid": "6685754f_a3ed0c9b",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32874124_e0e47d10",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-10T21:02:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "beb24b90_151f3f1c",
       "range": {
         "startLine": 3671,
         "startChar": 4,
