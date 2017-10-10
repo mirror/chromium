@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5887e1a7_dd44c57e",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T15:44:59Z",
+      "side": 1,
+      "message": "These two are only used by FreeType\u0027s src, I don\u0027t see them included from any FreeType header files. Also, there\u0027s not a whole lot of reason for anyone to include these (as they\u0027re mostly for configuring the FreeType build). However, it appears that package managers do typically provide these. I\u0027m guessing that any issues you ran into were due to config.h?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "43a5ae610e73ec0b230053b28523fc42472a07b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c73c40b_d9f513cc",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T15:44:59Z",
+      "side": 1,
+      "message": "This one affects our ftmodule.h, so if that goes in the config, this define probably should as well.",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "43a5ae610e73ec0b230053b28523fc42472a07b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f19202_42ad9174",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T15:44:59Z",
+      "side": 1,
+      "message": "This one affects ftoption.h, but the define it controls is only used by FreeType source files. However, in theory this define should travel with ftoption.h, on the off chance that if someone included ftoption.h (through FT_CONFIG_OPTIONS_H) and checked to see if FT_CONFIG_OPTION_USE_HARFBUZZ was defined.",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 34
+      },
+      "revId": "43a5ae610e73ec0b230053b28523fc42472a07b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66fa13e_d31e37fb",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T15:44:59Z",
+      "side": 1,
+      "message": "This define is used by our ftconfig.h, so maybe this should also go in the config (since it is logically part of that header).",
+      "range": {
+        "startLine": 122,
+        "startChar": 18,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "43a5ae610e73ec0b230053b28523fc42472a07b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c54aaec_ce381b34",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T15:44:59Z",
+      "side": 1,
+      "message": "This one is actually gone now (left over from it was used by FreeType). It\u0027s been replaced with FT_MACINTOSH, which is disabled by default. While we\u0027re moving all the defines around, lets remove this useless one.",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 127,
+        "endChar": 21
+      },
+      "revId": "43a5ae610e73ec0b230053b28523fc42472a07b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
