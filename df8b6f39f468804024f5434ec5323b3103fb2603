@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3746b53d_36a0d5d9",
+        "filename": "components/download/internal/debugging_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-10T17:35:17Z",
+      "side": 1,
+      "message": "nit: This can be the last line in the class.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "df8b6f39f468804024f5434ec5323b3103fb2603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
