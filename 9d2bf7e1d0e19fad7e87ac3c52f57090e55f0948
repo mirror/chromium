@@ -34,6 +34,24 @@
       "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbdcae1_5f05cd1d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-10T02:40:33Z",
+      "side": 1,
+      "message": "Oh, sorry, I didn\u0027t notice it\u0027s already public. So is this just a shorthand because it\u0027s so often used? Isn\u0027t it better for callers to get the mapping object once, then call functions to it?\n\nI mean, the question is whether these two functions should be exposed from NGInlineNode or not?",
+      "parentUuid": "b6c447a7_6459a1c2",
+      "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
