@@ -26,8 +26,8 @@ class MEDIA_EXPORT SineWaveAudioSource
  public:
   // |channels| is the number of audio channels, |freq| is the frequency in
   // hertz and it has to be less than half of the sampling frequency
-  // |sample_freq| or else you will get aliasing.
-  SineWaveAudioSource(int channels, double freq, double sample_freq);
+  // |sample_rate| or else you will get aliasing.
+  SineWaveAudioSource(int channels, double freq, double sample_rate);
   ~SineWaveAudioSource() override;
 
   // Return up to |cap| samples of data via OnMoreData().  Use Reset() to
@@ -46,13 +46,26 @@ class MEDIA_EXPORT SineWaveAudioSource
   int callbacks() { return callbacks_; }
   int errors() { return errors_; }
 
+  base::TimeDelta stream_time() {
+    return base::TimeDelta::FromSecondsD(static_cast<double>(stream_pos_) /
+                                         sample_rate_);
+  }
+
+  void set_expected_period_size(int expected_period_size) {
+    expected_period_size_ = expected_period_size;
+  }
+
  protected:
-  int channels_;
-  double f_;
-  int time_state_;
-  int cap_;
-  int callbacks_;
-  int errors_;
+  const int channels_;
+  const double f_;
+  const double sample_rate_;
+
+  int expected_period_size_ = -1;
+
+  int stream_pos_ = 0;
+  int cap_ = 0;
+  int callbacks_ = 0;
+  int errors_ = 0;
   base::Lock time_lock_;
 };
 

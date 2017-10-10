@@ -102,35 +102,32 @@ BeepContext* GetBeepContext() {
 // SineWaveAudioSource implementation.
 
 SineWaveAudioSource::SineWaveAudioSource(int channels,
-                                         double freq, double sample_freq)
-    : channels_(channels),
-      f_(freq / sample_freq),
-      time_state_(0),
-      cap_(0),
-      callbacks_(0),
-      errors_(0) {
-}
+                                         double freq,
+                                         double sample_rate)
+    : channels_(channels), f_(freq / sample_rate), sample_rate_(sample_rate) {}
 
-SineWaveAudioSource::~SineWaveAudioSource() {
-}
+SineWaveAudioSource::~SineWaveAudioSource() {}
 
 // The implementation could be more efficient if a lookup table is constructed
 // but it is efficient enough for our simple needs.
-int SineWaveAudioSource::OnMoreData(base::TimeDelta /* delay */,
-                                    base::TimeTicks /* delay_timestamp */,
-                                    int /* prior_frames_skipped */,
+int SineWaveAudioSource::OnMoreData(base::TimeDelta delay,
+                                    base::TimeTicks delay_timestamp,
+                                    int prior_frames_skipped,
                                     AudioBus* dest) {
   base::AutoLock auto_lock(time_lock_);
   callbacks_++;
+
+  if (expected_period_size_ >= 0)
+    CHECK_EQ(dest->frames(), expected_period_size_);
 
   // The table is filled with s(t) = kint16max*sin(Theta*t),
   // where Theta = 2*PI*fs.
   // We store the discrete time value |t| in a member to ensure that the
   // next pass starts at a correct state.
   int max_frames =
-      cap_ > 0 ? std::min(dest->frames(), cap_ - time_state_) : dest->frames();
+      cap_ > 0 ? std::min(dest->frames(), cap_ - stream_pos_) : dest->frames();
   for (int i = 0; i < max_frames; ++i)
-    dest->channel(0)[i] = sin(2.0 * base::kPiDouble * f_ * time_state_++);
+    dest->channel(0)[i] = sin(2.0 * base::kPiDouble * f_ * stream_pos_++);
   for (int i = 1; i < dest->channels(); ++i) {
     memcpy(dest->channel(i), dest->channel(0),
            max_frames * sizeof(*dest->channel(i)));
@@ -150,7 +147,7 @@ void SineWaveAudioSource::CapSamples(int cap) {
 
 void SineWaveAudioSource::Reset() {
   base::AutoLock auto_lock(time_lock_);
-  time_state_ = 0;
+  stream_pos_ = 0;
 }
 
 FileSource::FileSource(const AudioParameters& params,
