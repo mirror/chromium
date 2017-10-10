@@ -133,6 +133,12 @@ void PerformanceMonitor::WillExecuteScript(ExecutionContext* context) {
   // In V2, timing of script execution along with style & layout updates will be
   // accounted for detailed and more accurate attribution.
   ++script_depth_;
+  if (!context || !context->IsDocument())
+    return;
+
+  LocalFrame* frame_context = ToDocument(context)->GetFrame();
+  if (frame_context && local_root_ == &(frame_context->LocalFrameRoot()))
+    task_involves_root_ = true;
   if (!task_execution_context_)
     task_execution_context_ = context;
   else if (task_execution_context_ != context)
@@ -274,6 +280,7 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
   // as it is needed in ReportTaskTime which occurs after didProcessTask.
   task_execution_context_ = nullptr;
   task_has_multiple_contexts_ = false;
+  task_involves_root_ = false;
 
   if (!enabled_)
     return;
@@ -300,6 +307,8 @@ void PerformanceMonitor::DidProcessTask(double start_time, double end_time) {
     }
   }
 
+  if (!task_involves_root_)
+    return;
   double task_time = end_time - start_time;
   if (thresholds_[kLongTask] && task_time > thresholds_[kLongTask]) {
     ClientThresholds* client_thresholds = subscriptions_.at(kLongTask);
