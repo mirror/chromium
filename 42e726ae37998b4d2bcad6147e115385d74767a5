@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d43b9298_a204bfcb",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-10T23:28:47Z",
+      "side": 1,
+      "message": "I didn\u0027t update this one - it\u0027s a Cocoa-only dialog with a single field, so there won\u0027t be inconsistency.",
+      "revId": "42e726ae37998b4d2bcad6147e115385d74767a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
