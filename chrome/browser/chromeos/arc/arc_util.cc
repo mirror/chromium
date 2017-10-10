@@ -32,6 +32,10 @@
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "google_apis/google_api_keys.h"
+#if defined(GOOGLE_CHROME_BUILD) || defined(USE_OFFICIAL_GOOGLE_API_KEYS)
+#include "google_apis/internal/google_chrome_api_keys.h"
+#endif
 
 namespace arc {
 
@@ -39,6 +43,9 @@ namespace {
 
 constexpr char kLsbReleaseArcVersionKey[] = "CHROMEOS_ARC_ANDROID_SDK_VERSION";
 constexpr char kAndroidMSdkVersion[] = "23";
+
+// Used as client id on bot tests.
+constexpr char kDummyClientId[] = "dummytoken";
 
 // Contains set of profiles for which decline reson was already reported.
 base::LazyInstance<std::set<base::FilePath>>::DestructorAtExit
@@ -232,6 +239,23 @@ bool IsArcAllowedForProfile(const Profile* profile) {
     VLOG(1) << "Do not start ARC because chrome will restart";
     return false;
   }
+
+#if defined(GOOGLE_CHROME_BUILD) || defined(USE_OFFICIAL_GOOGLE_API_KEYS)
+  if (google_apis::GetOAuth2ClientID(google_apis::CLIENT_MAIN) !=
+      google_apis::GOOGLE_CLIENT_ID_MAIN) {
+    VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
+        << "ARC is not supported for non-google clients.";
+    return false;
+  }
+#else
+  // Make sure we work on bots in tests.
+  if (google_apis::GetOAuth2ClientID(google_apis::CLIENT_MAIN) !=
+      kDummyClientId) {
+    VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
+        << "ARC is not supported for non-google builds.";
+    return false;
+  }
+#endif
 
   return true;
 }
