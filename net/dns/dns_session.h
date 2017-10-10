@@ -112,6 +112,9 @@ class NET_EXPORT_PRIVATE DnsSession
   void ApplyPersistentData(const base::Value& data);
   std::unique_ptr<const base::Value> GetPersistentData() const;
 
+  // List of DNS over HTTP servers;
+  std::vector<std::string> dohservers;
+
  private:
   friend class base::RefCounted<DnsSession>;
   ~DnsSession() override;

@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/base64url.h"
 #include "base/big_endian.h"
 #include "base/bind.h"
 #include "base/containers/circular_deque.h"
@@ -41,8 +42,15 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
+#include "net/proxy/proxy_config_service_fixed.h"
 #include "net/socket/datagram_client_socket.h"
 #include "net/socket/stream_socket.h"
+#include "net/url_request/url_fetcher.h"
+#include "net/url_request/url_fetcher_delegate.h"
+#include "net/url_request/url_fetcher_response_writer.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_builder.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace net {
 
@@ -295,6 +303,98 @@ class DnsUDPAttempt : public DnsAttempt {
   CompletionCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(DnsUDPAttempt);
+};
+
+class DnsHTTPAttempt : public DnsAttempt, public URLFetcherDelegate {
+ public:
+  class ResponseWriter : public URLFetcherResponseWriter {
+   public:
+    ResponseWriter(DnsHTTPAttempt* attempt) : attempt_(attempt) {}
+    ~ResponseWriter() override {}
+    int Initialize(const CompletionCallback& callback) override { return OK; }
+
+    int Write(IOBuffer* buffer,
+              int num_bytes,
+              const CompletionCallback& callback) override {
+      if (!attempt_->response_ ||
+          attempt_->response_->io_buffer()->size() < num_bytes) {
+        attempt_->response_.reset(new DnsResponse(num_bytes + 1));
+      }
+      memcpy(attempt_->response_->io_buffer()->data(), buffer->data(),
+             num_bytes);
+      return num_bytes;
+    }
+
+    int Finish(int net_error, const CompletionCallback& callback) override {
+      return OK;
+    }
+
+   private:
+    DnsHTTPAttempt* attempt_;
+  };
+
+  DnsHTTPAttempt(std::unique_ptr<DnsQuery> query, std::string server)
+      : DnsAttempt(0), query_(std::move(query)) {
+    std::string encoded_query;
+    base::Base64UrlEncode(base::StringPiece(query_->io_buffer()->data(),
+                                            query_->io_buffer()->size()),
+                          base::Base64UrlEncodePolicy::INCLUDE_PADDING,
+                          &encoded_query);
+    std::string url_spec(server + encoded_query);
+    GURL url(url_spec);
+    fetcher_ = URLFetcher::Create(url, URLFetcher::GET, this);
+    fetcher_->AddExtraRequestHeader(
+        std::string("Accept: application/dns-udpwireformat"));
+    net::URLRequestContextBuilder builder;
+#ifdef OS_LINUX
+    builder.set_proxy_config_service(
+        std::make_unique<net::ProxyConfigServiceFixed>(net::ProxyConfig()));
+#endif
+    fetcher_->SetRequestContext(new TrivialURLRequestContextGetter(
+        builder.Build().release(), base::ThreadTaskRunnerHandle::Get()));
+    fetcher_->SaveResponseWithWriter(
+        std::unique_ptr<net::URLFetcherResponseWriter>(
+            new ResponseWriter(this)));
+  }
+
+  int Start(const CompletionCallback& callback) override {
+    callback_ = callback;
+    fetcher_->Start();
+    return ERR_IO_PENDING;
+  }
+
+  const DnsQuery* GetQuery() const override { return query_.get(); }
+  const DnsResponse* GetResponse() const override { return response_.get(); }
+  const NetLogWithSource& GetSocketNetLog() const override { return net_log; }
+
+  // URLFetcherDelegate overrides
+  void OnURLFetchComplete(const URLFetcher* source) override {
+    int rv = DoReadResponseComplete();
+    callback_.Run(rv);
+  }
+
+  int DoReadResponseComplete() {
+    size_t response_size = fetcher_->GetReceivedResponseContentLength();
+    if (!response_->InitParse(response_size, *query_)) {
+      return ERR_DNS_MALFORMED_RESPONSE;
+    }
+    if (response_->flags() & dns_protocol::kFlagTC) {
+      return ERR_UNEXPECTED;
+    }
+    if (response_->rcode() == dns_protocol::kRcodeNXDOMAIN)
+      return ERR_NAME_NOT_RESOLVED;
+    if (response_->rcode() != dns_protocol::kRcodeNOERROR)
+      return ERR_DNS_SERVER_FAILED;
+    return OK;
+  }
+
+ private:
+  std::unique_ptr<DnsQuery> query_;
+  NetLogWithSource net_log;
+  CompletionCallback callback_;
+  std::unique_ptr<net::URLRequestContext> context_;
+  std::unique_ptr<DnsResponse> response_;
+  std::unique_ptr<URLFetcher> fetcher_;
 };
 
 class DnsTCPAttempt : public DnsAttempt {
@@ -697,9 +797,17 @@ class DnsTransactionImpl : public DnsTransaction,
     callback.Run(this, result.rv, response);
   }
 
+  AttemptResult MakeAttempt() {
+    if (!session_->dohservers.empty()) {
+      return MakeHTTPAttempt(session_->dohservers);
+    } else {
+      return MakeUDPAttempt();
+    }
+  }
+
   // Makes another attempt at the current name, |qnames_.front()|, using the
   // next nameserver.
-  AttemptResult MakeAttempt() {
+  AttemptResult MakeUDPAttempt() {
     unsigned attempt_number = attempts_.size();
 
     uint16_t id = session_->NextQueryId();
@@ -744,6 +852,23 @@ class DnsTransactionImpl : public DnsTransaction,
                                                       attempt_number);
       timer_.Start(FROM_HERE, timeout, this, &DnsTransactionImpl::OnTimeout);
     }
+    return AttemptResult(rv, attempt);
+  }
+
+  AttemptResult MakeHTTPAttempt(const std::vector<std::string>& servers) {
+    unsigned attempt_number = attempts_.size();
+    uint16_t id = session_->NextQueryId();
+    std::unique_ptr<DnsQuery> query;
+    if (attempts_.empty()) {
+      query.reset(new DnsQuery(id, qnames_.front(), qtype_, opt_rdata_));
+    } else {
+      query = attempts_[0]->GetQuery()->CloneWithNewId(id);
+    }
+    DnsHTTPAttempt* attempt = new DnsHTTPAttempt(std::move(query), servers[0]);
+    attempts_.push_back(base::WrapUnique(attempt));
+    ++attempts_count_;
+    int rv = attempt->Start(base::Bind(&DnsTransactionImpl::OnAttemptComplete,
+                                       base::Unretained(this), attempt_number));
     return AttemptResult(rv, attempt);
   }
 
@@ -901,6 +1026,8 @@ class DnsTransactionImpl : public DnsTransaction,
             return result;
           }
           break;
+        case ERR_DNS_HTTP_FAILED:
+          result = MakeUDPAttempt();
         case ERR_DNS_SERVER_REQUIRES_TCP:
           result = MakeTCPAttempt(result.attempt);
           break;
