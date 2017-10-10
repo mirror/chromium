@@ -106,7 +106,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
                   EditingState*);
   void ApplyStyledElement(Element*, EditingState*);
   void RemoveStyledElement(Element*, EditingState*);
-  void DeleteSelection(EditingState*,
+  bool DeleteSelection(EditingState*,
                        bool smart_delete = false,
                        bool merge_blocks_after_delete = true,
                        bool expand_for_special_elements = true,
