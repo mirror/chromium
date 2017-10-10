@@ -4,7 +4,10 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.text.TextUtils;
+
 import org.chromium.base.Callback;
+import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.offlinepages.DeletedPageInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
@@ -35,12 +38,12 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
 
     @Override
     public void offlinePageModelLoaded() {
-        updateOfflinableSuggestionsAvailability();
+        updateOfflinableSuggestionsAvailability(/* reportPrefetchedSuggestionsCount = */ false);
     }
 
     @Override
     public void offlinePageAdded(OfflinePageItem addedPage) {
-        updateOfflinableSuggestionsAvailability();
+        updateOfflinableSuggestionsAvailability(/* reportPrefetchedSuggestionsCount = */ false);
     }
 
     @Override
@@ -55,18 +58,55 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
             // The old value cannot be simply removed without a request to the
             // model, because there may be an older offline page for the same
             // URL.
-            updateOfflinableSuggestionAvailability(suggestion);
+            updateOfflinableSuggestionAvailability(suggestion, /* counter = */ null,
+                    /* reportPrefetchedSuggestionsCount = */ false);
         }
     }
 
-    public void updateOfflinableSuggestionsAvailability() {
+    private class RequestsCounter {
+        private int mRequestsRemain;
+        private int mPrefetchedSuggestions;
+
+        public RequestsCounter(int pendingRequestsCount) {
+            mRequestsRemain = pendingRequestsCount;
+            mPrefetchedSuggestions = 0;
+        }
+
+        public void countCompletedRequest() {
+            --mRequestsRemain;
+        }
+
+        public void countPrefetchedSuggestion() {
+            ++mPrefetchedSuggestions;
+        }
+
+        public int getPrefetchedSuggestionsCount() {
+            return mPrefetchedSuggestions;
+        }
+
+        public boolean areAllRequestsDone() {
+            return mRequestsRemain == 0;
+        }
+    }
+
+    public void updateOfflinableSuggestionsAvailability(boolean reportPrefetchedSuggestionsCount) {
+        int pendingRequestsCount = 0;
         for (T suggestion : getOfflinableSuggestions()) {
-            if (suggestion.requiresExactOfflinePage()) continue;
-            updateOfflinableSuggestionAvailability(suggestion);
+            ++pendingRequestsCount;
+        }
+        final RequestsCounter counter = new RequestsCounter(pendingRequestsCount);
+        for (T suggestion : getOfflinableSuggestions()) {
+            if (suggestion.requiresExactOfflinePage()) {
+                counter.countCompletedRequest();
+                continue;
+            }
+            updateOfflinableSuggestionAvailability(
+                    suggestion, counter, reportPrefetchedSuggestionsCount);
         }
     }
 
-    public void updateOfflinableSuggestionAvailability(final T suggestion) {
+    public void updateOfflinableSuggestionAvailability(final T suggestion,
+            final RequestsCounter counter, boolean reportPrefetchedSuggestionsCount) {
         // This method is not applicable to articles for which the exact offline id must specified.
         assert !suggestion.requiresExactOfflinePage();
         if (!mOfflinePageBridge.isOfflinePageModelLoaded()) return;
@@ -77,6 +117,17 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
                 suggestion.getUrl(), /*tabId=*/0, new Callback<OfflinePageItem>() {
                     @Override
                     public void onResult(OfflinePageItem item) {
+                        if (reportPrefetchedSuggestionsCount) {
+                            counter.countCompletedRequest();
+                            boolean isPrefetched = item != null
+                                    && TextUtils.equals(item.getClientId().getNamespace(),
+                                               OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE);
+                            if (isPrefetched) counter.countPrefetchedSuggestion();
+                            if (counter.areAllRequestsDone()) {
+                                NewTabPageUma.recordPrefetchedArticleSuggestionsCount(
+                                        counter.getPrefetchedSuggestionsCount());
+                            }
+                        }
                         onSuggestionOfflineIdChanged(suggestion, item);
                     }
                 });
