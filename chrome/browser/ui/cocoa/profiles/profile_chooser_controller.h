@@ -79,7 +79,7 @@ class GaiaWebContentsDelegate;
           accessPoint:(signin_metrics::AccessPoint)accessPoint;
 
 // Creates all the subviews of the avatar bubble for |viewToDisplay|.
-- (void)initMenuContentsWithView:(profiles::BubbleViewMode)viewToDisplay;
+- (void)setUpMenuContentsWithView:(profiles::BubbleViewMode)viewToDisplay;
 
 // Returns the view currently displayed by the bubble.
 - (profiles::BubbleViewMode)viewMode;
