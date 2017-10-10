@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c53a2006_e18c8004",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T14:19:16Z",
+      "side": 1,
+      "message": "I have no objections to implementing an rgba parser.  It could be useful other places, as well.",
+      "parentUuid": "f22c24c2_54c2cd84",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6531cdf3_17858658",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 15

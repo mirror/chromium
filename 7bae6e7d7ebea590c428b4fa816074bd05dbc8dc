@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "29fe8977_035327e1",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T14:19:16Z",
+      "side": 1,
+      "message": "Whoops!  Just use extension-\u003eAddInstallWarning() here.",
+      "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6d8c464_df914002",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 17
@@ -13,6 +30,24 @@
       "writtenOn": "2017-10-10T04:44:03Z",
       "side": 1,
       "message": "This is definitely the wrong place to put this, but it\u0027s what ManifestTest uses and the Validate function doesn\u0027t get called otherwise. Is there something I should change to make my test work?",
+      "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f55bb05_a0c69afc",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T14:19:16Z",
+      "side": 1,
+      "message": "I made this more complicated than I had to - we actually have an AddInstallWarning method in Extension, so the warning can be added directly in the parse method.  Sorry for the misdirection!",
+      "parentUuid": "f6d8c464_df914002",
       "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
