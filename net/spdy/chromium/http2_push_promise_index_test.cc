@@ -71,22 +71,22 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleSessionsWithDifferentUrl) {
   EXPECT_FALSE(index_.Find(key1_, url1_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, spdy_session1));
 
   EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url2_, spdy_session2);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url2_, spdy_session2));
 
   EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
   EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
+  index_.UnregisterUnclaimedPushedStream(url1_);
 
   EXPECT_FALSE(index_.Find(key1_, url1_));
   EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
 
-  index_.UnregisterUnclaimedPushedStream(url2_, spdy_session2.get());
+  index_.UnregisterUnclaimedPushedStream(url2_);
 
   EXPECT_FALSE(index_.Find(key1_, url1_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
@@ -127,7 +127,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, spdy_session1));
 
   // Note that Find() only uses its SpdySessionKey argument to verify proxy and
   // privacy mode.  Cross-origin pooling is supported, therefore HostPortPair of
@@ -137,22 +137,15 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session2);
+  // At most one pushed stream is allowed for each url.
+  EXPECT_FALSE(index_.RegisterUnclaimedPushedStream(url1_, spdy_session2));
 
-  // Find returns the first SpdySession if there are multiple for the same URL.
   EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
   EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
   EXPECT_FALSE(index_.Find(key1_, url2_));
   EXPECT_FALSE(index_.Find(key2_, url2_));
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
-
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
-
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session2.get());
+  index_.UnregisterUnclaimedPushedStream(url1_);
 
   EXPECT_FALSE(index_.Find(key1_, url1_));
   EXPECT_FALSE(index_.Find(key2_, url1_));
