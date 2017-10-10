@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616793bd_84bdb44d",
+        "filename": "ui/events/ozone/evdev/touch_evdev_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-10-10T19:04:18Z",
+      "side": 1,
+      "message": "This will work but I think it would be preferable to do it as a function instead of storing redundant state:\n\nbool TouchEventConverterEdev::IsPalm(const InProgressTouchEvdev\u0026 touch) {\n  return touch.tool_type \u003d\u003d MT_TOOL_PALM ||\n     (major_max_ \u003e 0 \u0026\u0026 touch.major \u003d\u003d major_max_);\n}\n\n(since major is overloaded, I think it makes sense to move the \"divide by 2\" later).",
+      "revId": "7725263b83ec1faf5e5d9c07f7c51c9cdfeaaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb943833_80297688",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-10-10T19:04:18Z",
+      "side": 1,
+      "message": "s/TID/TrackingId/",
+      "range": {
+        "startLine": 807,
+        "startChar": 37,
+        "endLine": 807,
+        "endChar": 66
+      },
+      "revId": "7725263b83ec1faf5e5d9c07f7c51c9cdfeaaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
