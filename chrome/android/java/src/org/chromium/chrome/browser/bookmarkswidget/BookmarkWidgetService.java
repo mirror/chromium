@@ -11,6 +11,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.support.annotation.BinderThread;
@@ -31,6 +36,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
 import org.chromium.chrome.browser.bookmarks.BookmarkModel;
+import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -499,7 +505,27 @@ public class BookmarkWidgetService extends RemoteViewsService {
             if (bookmark == mCurrentFolder.folder) {
                 views.setImageViewResource(R.id.favicon, R.drawable.back_normal);
             } else if (bookmark.isFolder) {
-                views.setImageViewResource(R.id.favicon, R.drawable.bookmark_folder);
+                // RemoteView does not inherently support tinting icons, and while
+                // BookmarkUtils#getFolderIcon() returns a TintedDrawable, Drawable#getBitmap() does
+                // not return a Bitmap with the tint applied. Programatically apply the tint before
+                // setting the RemoteView's ImageView bitmap.
+                Bitmap folderIcon =
+                        BookmarkUtils.getFolderIcon(mContext.getResources()).getBitmap();
+                Bitmap bitmapResult = Bitmap.createBitmap(
+                        folderIcon.getWidth(), folderIcon.getHeight(), Config.ARGB_8888);
+
+                // Use the solid color equivalent of dark_mode_tint since bookmark widget has a
+                // translucent background.
+                Paint paint = new Paint();
+                paint.setColorFilter(new PorterDuffColorFilter(
+                        ApiCompatibilityUtils.getColor(
+                                mContext.getResources(), R.color.light_normal_color),
+                        PorterDuff.Mode.SRC_IN));
+
+                Canvas canvas = new Canvas(bitmapResult);
+                canvas.drawBitmap(folderIcon, 0, 0, paint);
+
+                views.setImageViewBitmap(R.id.favicon, bitmapResult);
             } else {
                 views.setImageViewBitmap(R.id.favicon, bookmark.favicon);
             }
