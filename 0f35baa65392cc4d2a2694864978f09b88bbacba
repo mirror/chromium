@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef161fa_c9ddc531",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:32:49Z",
+      "side": 1,
+      "message": "nit, whitespace at the end of line.",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfe0c5c_85f14af1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:32:49Z",
+      "side": 1,
+      "message": "Any chance we could get rid of DisplaySnapshot_Params completely in this CL and send DisplaySnapshot directly over IPC even with legacy struct traits (I\u0027m not sure if security ppl would like that though, maybe DisplaySnapshot_Params was initially introduce exactly to avoid that.)",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4e34eb_0885d64b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:32:49Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2a3db1_1e21f895",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:32:49Z",
+      "side": 1,
+      "message": "Are Display Modes Equal? Or maybe IsDisplayModeEqualTo?",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
