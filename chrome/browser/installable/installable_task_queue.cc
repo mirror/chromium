@@ -4,6 +4,10 @@
 
 #include "chrome/browser/installable/installable_task_queue.h"
 
+InstallableTask::InstallableTask() {}
+InstallableTask::~InstallableTask() {}
+InstallableTask::InstallableTask(const InstallableTask& other) = default;
+
 InstallableTaskQueue::InstallableTaskQueue() {}
 InstallableTaskQueue::~InstallableTaskQueue() {}
 
