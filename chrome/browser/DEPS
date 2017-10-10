@@ -3,6 +3,7 @@ include_rules = [
   "+cc/paint",
   "+chrome/app",
   "+chrome/chrome_watcher",
+  "+chrome/gpu",
   "+chrome/grit",
   "+chrome/install_static",
   "+chrome/installer/util",
