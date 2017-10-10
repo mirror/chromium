@@ -145,6 +145,7 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
       service_manager::BinderRegistry* registry,
       content::AssociatedInterfaceRegistry* associated_registry,
       content::RenderProcessHost* render_process_host) override;
+  void RegisterInProcessServices(StaticServiceMap* services) override;
   std::vector<std::unique_ptr<content::URLLoaderThrottle>>
   CreateURLLoaderThrottles(
       const base::Callback<content::WebContents*()>& wc_getter) override;
