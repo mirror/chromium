@@ -33,6 +33,10 @@ void MediaSinkServiceBase::OnFetchCompleted() {
     return;
   }
 
+  SendSinksToMediaRouterProvider();
+}
+
+void MediaSinkServiceBase::SendSinksToMediaRouterProvider() {
   DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
   sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
       current_sinks_.begin(), current_sinks_.end()));

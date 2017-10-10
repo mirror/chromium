@@ -220,4 +220,15 @@ void CastMediaSinkService::OnSinksDiscoveredOnIOThread(
       base::BindOnce(sink_discovery_callback_, std::move(sinks)));
 }
 
+void CastMediaSinkService::SendSinksToMediaRouteProvider() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!cast_media_sink_service_impl_)
+    return;
+
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&CastMediaSinkServiceImpl::SendSinksToMediaRouterProvider,
+                     cast_media_sink_service_impl_->AsWeakPtr()));
+}
+
 }  // namespace media_router

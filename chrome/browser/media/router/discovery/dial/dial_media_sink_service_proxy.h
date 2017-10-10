@@ -61,6 +61,9 @@ class DialMediaSinkServiceProxy
   void SetDialMediaSinkServiceForTest(
       std::unique_ptr<DialMediaSinkServiceImpl> dial_media_sink_service);
 
+  // Force sending discovered sinks to Media Router Provider.
+  void SendSinksToMediaRouteProvider();
+
  private:
   friend class DialMediaSinkServiceProxyTest;
   friend class base::DeleteHelper<DialMediaSinkServiceProxy>;

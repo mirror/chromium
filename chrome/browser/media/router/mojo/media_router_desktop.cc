@@ -152,8 +152,10 @@ void MediaRouterDesktop::StartDiscovery() {
           context(),
           content::BrowserThread::GetTaskRunnerForThread(
               content::BrowserThread::IO));
+      cast_media_sink_service_->Start();
+    } else {
+      cast_media_sink_service_->SendSinksToMediaRouteProvider();
     }
-    cast_media_sink_service_->Start();
   }
 
   if (media_router::DialLocalDiscoveryEnabled()) {
@@ -165,8 +167,10 @@ void MediaRouterDesktop::StartDiscovery() {
               context());
       dial_media_sink_service_proxy_->SetObserver(
           cast_media_sink_service_.get());
+      dial_media_sink_service_proxy_->Start();
+    } else {
+      dial_media_sink_service_proxy_->SendSinksToMediaRouteProvider();
     }
-    dial_media_sink_service_proxy_->Start();
   }
 }
 

@@ -20,6 +20,9 @@ class MediaSinkServiceBase : public MediaSinkService {
   explicit MediaSinkServiceBase(const OnSinksDiscoveredCallback& callback);
   ~MediaSinkServiceBase() override;
 
+  // Forces sending discovered sinks to Media Router Provider.
+  void SendSinksToMediaRouterProvider();
+
  protected:
   void SetTimerForTest(std::unique_ptr<base::Timer> timer);
 

@@ -89,4 +89,15 @@ void DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread(
       base::BindOnce(sink_discovery_callback_, std::move(sinks)));
 }
 
+void DialMediaSinkServiceProxy::SendSinksToMediaRouteProvider() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!dial_media_sink_service_)
+    return;
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DialMediaSinkServiceImpl::SendSinksToMediaRouterProvider,
+                     dial_media_sink_service_->AsWeakPtr()));
+}
+
 }  // namespace media_router

@@ -202,4 +202,11 @@ TEST_F(CastMediaSinkServiceTest, TestOnDnsSdEvent) {
   base::RunLoop().RunUntilIdle();
 }
 
+TEST_F(CastMediaSinkServiceTest, TestSendSinksToMediaRouteProvider) {
+  EXPECT_CALL(mock_sink_discovered_io_cb_, Run(_));
+
+  media_sink_service_->SendSinksToMediaRouteProvider();
+  task_runner_->RunUntilIdle();
+}
+
 }  // namespace media_router

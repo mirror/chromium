@@ -60,6 +60,9 @@ class CastMediaSinkService
   // It is invoked by OnUserGesture().
   void ForceDiscovery();
 
+  // Forces sending discovered sinks to Media Router Provider.
+  void SendSinksToMediaRouteProvider();
+
  protected:
   ~CastMediaSinkService() override;
 
