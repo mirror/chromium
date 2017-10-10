@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf9cdab_a4a9cab8",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T18:39:49Z",
+      "side": 1,
+      "message": "Is \"running\" accurate here or is there some extra nuance we\u0027re trying to capture.",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "c771b99ef5f0f8659a1e02a2ba9f19cf64f2382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d918e4_bba46f2b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T18:39:49Z",
+      "side": 1,
+      "message": "These should probably be \"task_1_running\" similar to below then.",
+      "range": {
+        "startLine": 292,
+        "startChar": 23,
+        "endLine": 292,
+        "endChar": 32
+      },
+      "revId": "c771b99ef5f0f8659a1e02a2ba9f19cf64f2382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6ebf05_a85673c6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T18:39:49Z",
+      "side": 1,
+      "message": "Similar rename may apply here.",
+      "range": {
+        "startLine": 307,
+        "startChar": 9,
+        "endLine": 307,
+        "endChar": 18
+      },
+      "revId": "c771b99ef5f0f8659a1e02a2ba9f19cf64f2382b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
