@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddbc0a04_76775885",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T22:34:55Z",
+      "side": 1,
+      "message": "If this is going to be reset after a single use, it probably should not have the bool parameter and should have \"Once\" in the name.\n\nWhen I suggested the bool param, I was imagining the test would have to both enable and disable this mode, rather than just setting it for the next call. This way is fine, too. Sorry if I caused confusion before.",
+      "revId": "55ee790335960f2675a755e3e1657bb8fb86e72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810030d0_b3a2b78b",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T22:34:55Z",
+      "side": 1,
+      "message": "Nit: trailing underscore for member variables.",
+      "revId": "55ee790335960f2675a755e3e1657bb8fb86e72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
