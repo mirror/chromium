@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29010b33_3f9abac9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T07:21:46Z",
+      "side": 1,
+      "message": "There\u0027s a strong difference between waiting for an icon to download vs waiting for a service worker which might never be added. If I have CHECK_IMMEDIATELY set, I can reasonably expect my callback to be called.\n\nMaking wait_for_worker false by default is probably fine, but I think that such a large divergence of behavior is best signalled by a mandatory parameter, rather than a comment. e.g. I didn\u0027t set this in https://chromium-review.googlesource.com/c/chromium/src/+/700137 and on pages with a manifest and no serviceworker, the dialog would never show.\n\nHaving to make a decision at every call site makes the semantics of the wait behavior clear and explicit. It\u0027s something that a client should have to think about every time, and it shouldn\u0027t be something that can be missed (like a comment).\n\nIt also feels out of place in params which is otherwise a set of bools that determines what gets filled out in InstallableData.",
+      "parentUuid": "220da54e_0c66c8f4",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1142338_fcf3e8f1",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cbd25f06_625a4ba2",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T07:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1142338_fcf3e8f1",
+      "range": {
+        "startLine": 239,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "694fc5b3_35a999e3",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-09T05:05:15Z",
       "side": 1,
       "message": "Remove this bit so this is more logical",
+      "range": {
+        "startLine": 307,
+        "startChar": 34,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8786bc39_11f1949b",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T07:21:46Z",
+      "side": 1,
+      "message": "Done.\n\nDo you think it\u0027s worth DCHECKing for !params.has_worker || params.valid_manifest in GetData? I think it never makes sense to have has_worker without valid_manifest, right?",
+      "parentUuid": "694fc5b3_35a999e3",
       "range": {
         "startLine": 307,
         "startChar": 34,
@@ -91,6 +163,30 @@
       "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14c40af_72faea1e",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T07:21:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04aec6f4_a6e19f5d",
+      "range": {
+        "startLine": 405,
+        "startChar": 35,
+        "endLine": 405,
+        "endChar": 57
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
