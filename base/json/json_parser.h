@@ -16,7 +16,6 @@
 #include "base/gtest_prod_util.h"
 #include "base/json/json_reader.h"
 #include "base/macros.h"
-#include "base/memory/manual_constructor.h"
 #include "base/strings/string_piece.h"
 
 namespace base {
@@ -139,7 +138,9 @@ class BASE_EXPORT JSONParser {
     // The copied string representation. Will be uninitialized until Convert()
     // is called, which will set has_string_ to true.
     bool has_string_;
-    base::ManualConstructor<std::string> string_;
+    union {
+      std::string string_;
+    };
   };
 
   // Quick check that the stream has capacity to consume |length| more bytes.
