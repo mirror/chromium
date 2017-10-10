@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5192fe1_ecf42979",
+        "filename": "ash/mojo_interface_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "OnceCallbak?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3147509_c60aff2e",
+        "filename": "ash/mojo_test_interface_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "Forward declare BinderRegistry?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5291393_9ae16786",
+        "filename": "ash/mus/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate this has to be in the real manifest. But as the code isn\u0027t linked into the real ash it seems ok.",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5e04ba_13c4acda",
+        "filename": "ash/public/interfaces/system_tray_test_api.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "kFoo style.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae31c04_4e1253b5",
+        "filename": "ash/system/tray/system_tray_test_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "This class is compiled into a static library, how come you need the ASH_EXPORT?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b67d125_e31359d4",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "\u0027test_api\u0027 is very generic. Maybe \u0027tray_test_api\u0027?",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e34aaa_97abb775",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "optional: this seems like a common pattern we\u0027re going to have (same with the Waiter below). It would be nice if both could be reduced to single lines, perhaps by way of calling template functions?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6691fb_7afd1b7c",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "\u0027api\u0027 is *super* generic. Maybe SystemTrayTestApi?",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce04e9be_a6c185c0",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "Similar comment about test_api being overly generic.",
+      "range": {
+        "startLine": 150,
+        "startChar": 35,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a00f495_c5341130",
         "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
         "patchSetId": 5
@@ -49,6 +256,29 @@
       "side": 1,
       "message": "... This does unfortunately fail in cases where different mojom types map to the same target type, because we end up emitting duplicate definitions of the same specialization.\n\nI\u0027m not sure how to deal with that.",
       "parentUuid": "68efaf5a_e1e505f5",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6fe077_250a524e",
+        "filename": "chrome/test/base/chrome_test_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:19:43Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as:\nbase::Bind(\u0026ash::mojo_test_interface_factory::RegisterInterfaces) ?",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 10
+      },
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
