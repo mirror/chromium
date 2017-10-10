@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "829742de_4eec38f4",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-10T01:51:20Z",
+      "side": 1,
+      "message": "You could use libprotobuf-mutator (kind of like is done here https://github.com/google/libprotobuf-mutator/blob/master/examples/xml/xml.proto#L91) to define the input you want mutated as containing \"data\", \"property_id\", and \"parser_mode\" instead of using bytes from data or hashes to do this, but it\u0027s up to you. I\u0027d be more than happy to help if you\u0027d like to do that.\nThere\u0027s a guide on libprotobuf-mutator here (https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/libprotobuf-mutator.md) if you\u0027re interested.",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d78d1eaa_ea79a1bd",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
         "patchSetId": 1
