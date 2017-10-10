@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3048116_bd337071",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T23:59:24Z",
+      "side": 1,
+      "message": "nit: enableSmartSelection?",
+      "range": {
+        "startLine": 55,
+        "startChar": 76,
+        "endLine": 55,
+        "endChar": 84
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064fcfdc_cb8a61ec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3170,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T23:59:24Z",
+      "side": 1,
+      "message": "This is failing:\n\njunit.framework.AssertionFailedError: Fake Search Term Resolution never started.\n\tat junit.framework.Assert.fail(Assert.java:50)\n\tat junit.framework.Assert.assertTrue(Assert.java:20)\n\tat org.chromium.content.browser.test.util.CriteriaHelper.pollInstrumentationThread(CriteriaHelper.java:79)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.waitForSearchTermResolutionToStart(ContextualSearchManagerTest.java:314)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchFakeServer$FakeSlowResolveSearch.simulate(ContextualSearchFakeServer.java:328)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.simulateSlowResolveSearch(ContextualSearchManagerTest.java:423)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.testSecondTap(ContextualSearchManagerTest.java:3170)\n\tat java.lang.reflect.Method.invokeNative(Method.java)",
+      "range": {
+        "startLine": 3170,
+        "startChar": 8,
+        "endLine": 3170,
+        "endChar": 43
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3699adc8_4d1ccc39",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T23:59:24Z",
+      "side": 1,
+      "message": "The panel should still be showing on second tap unless smart select is enabled, right?",
+      "range": {
+        "startLine": 3172,
+        "startChar": 8,
+        "endLine": 3172,
+        "endChar": 36
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac26fe4_546e7eb5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T23:59:24Z",
+      "side": 1,
+      "message": "This is failing:\n\njunit.framework.AssertionFailedError: Panel did not enter PEEKED state. Instead, the current state is CLOSED.\n\tat junit.framework.Assert.fail(Assert.java:50)\n\tat junit.framework.Assert.assertTrue(Assert.java:20)\n\tat org.chromium.content.browser.test.util.CriteriaHelper.pollInstrumentationThread(CriteriaHelper.java:79)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.waitForPanelToEnterState(ContextualSearchManagerTest.java:830)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.waitForPanelToPeek(ContextualSearchManagerTest.java:797)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.longPressNode(ContextualSearchManagerTest.java:283)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchFakeServer$FakeLongPressSearch.simulate(ContextualSearchFakeServer.java:123)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.simulateLongPressSearch(ContextualSearchManagerTest.java:379)\n\tat org.chromium.chrome.browser.contextualsearch.ContextualSearchManagerTest.testSmartSelectSuppresses(ContextualSearchManagerTest.java:3189)\n\tat java.lang.reflect.Method.invokeNative(Method.java)\n\tat java.lang.reflect.Method.invoke(Method.java:515)",
+      "range": {
+        "startLine": 3184,
+        "startChar": 8,
+        "endLine": 3184,
+        "endChar": 29
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9f4e2e_db9ff13d",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T23:59:24Z",
+      "side": 1,
+      "message": "Doesn\u0027t this construct with smart selection enabled?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 55
+      },
+      "revId": "d20c645c588eed45386ee7f8199518e62f3612bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
