@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e33cd7_0f7add93",
+        "filename": "chromecast/media/cma/backend/fuchsia/audio_decoder_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T22:17:44Z",
+      "side": 1,
+      "message": "nit: Why return 200ms, rather than 0ms, for example?",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78d450a_5536abc0",
+        "filename": "chromecast/media/cma/backend/fuchsia/audio_decoder_fuchsia.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T22:17:44Z",
+      "side": 1,
+      "message": "IIUC these APIs mirror those on the MediaPipelineBackendFuchsia.\n\nRather than pre-emptively define these with NOTIMPLEMENTED(), could we just have the overrides on MediaPipelineBackendFuchsia just be NOTIMPLEMENTED, and flesh out the API here based on what the real implementation needs?",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3717140_fc00d333",
+        "filename": "chromecast/media/cma/backend/fuchsia/media_pipeline_backend_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T22:17:44Z",
+      "side": 1,
+      "message": "nit: You might want to DCHECK that the supplied |params| are supported, here.",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0dc178_2ce72ab8",
+        "filename": "chromecast/media/cma/backend/fuchsia/media_pipeline_backend_fuchsia_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T22:17:44Z",
+      "side": 1,
+      "message": "nit: This is testing that Initialize() succeeds if you *haven\u0027t* created either an audio nor a video decoder, which is actually a bit weird; I\u0027d expect it to fail in this case...",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
