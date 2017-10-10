@@ -112,6 +112,9 @@ class ArcSupportHost : public arc::ArcSupportMessageHost::Observer,
   explicit ArcSupportHost(Profile* profile);
   ~ArcSupportHost() override;
 
+  // Returns true if App is available
+  static bool IsAppAvailable(Profile* profile);
+
   void SetAuthDelegate(AuthDelegate* delegate);
   void SetTermsOfServiceDelegate(TermsOfServiceDelegate* delegate);
   void SetErrorDelegate(ErrorDelegate* delegate);

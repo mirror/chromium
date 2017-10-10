@@ -100,10 +100,15 @@ constexpr char kEventOnSendFeedbackClicked[] = "onSendFeedbackClicked";
 // "onOpenSettingsPageClicked" is fired when a user clicks settings link.
 constexpr char kEventOnOpenSettingsPageClicked[] = "onOpenSettingsPageClicked";
 
-void RequestOpenApp(Profile* profile) {
+const extensions::Extension* GetApp(Profile* profile) {
   const extensions::Extension* extension =
       extensions::ExtensionRegistry::Get(profile)->GetInstalledExtension(
           arc::kPlayStoreAppId);
+  return extension;
+}
+
+void RequestOpenApp(Profile* profile) {
+  const extensions::Extension* extension = GetApp(profile);
   DCHECK(extension);
   DCHECK(extensions::util::IsAppLaunchable(arc::kPlayStoreAppId, profile));
   OpenApplication(CreateAppLaunchParamsUserContainer(
@@ -180,6 +185,11 @@ ArcSupportHost::~ArcSupportHost() {
 
   if (message_host_)
     DisconnectMessageHost();
+}
+
+// static
+bool ArcSupportHost::IsAppAvailable(Profile* profile) {
+  return GetApp(profile) != NULL;
 }
 
 void ArcSupportHost::SetAuthDelegate(AuthDelegate* delegate) {

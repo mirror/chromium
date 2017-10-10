@@ -411,7 +411,7 @@ void ArcSessionManager::Initialize() {
   // in typical use case there will be no one nearby the kiosk device, who can
   // do some action to solve the problem be means of UI.
   if (!g_disable_ui_for_testing && !IsArcOptInVerificationDisabled() &&
-      !IsArcKioskMode()) {
+      !IsArcKioskMode() && ArcSupportHost::IsAppAvailable(profile_)) {
     DCHECK(!support_host_);
     support_host_ = std::make_unique<ArcSupportHost>(profile_);
     support_host_->SetErrorDelegate(this);
