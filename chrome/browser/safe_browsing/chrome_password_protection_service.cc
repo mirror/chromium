@@ -45,6 +45,8 @@
 using content::BrowserThread;
 using sync_pb::UserEventSpecifics;
 using GaiaPasswordReuse = UserEventSpecifics::GaiaPasswordReuse;
+using PasswordReuseDialogInteraction =
+    GaiaPasswordReuse::PasswordReuseDialogInteraction;
 using PasswordReuseLookup = GaiaPasswordReuse::PasswordReuseLookup;
 using SafeBrowsingStatus =
     GaiaPasswordReuse::PasswordReuseDetected::SafeBrowsingStatus;
@@ -215,6 +217,7 @@ void ChromePasswordProtectionService::OnUserAction(
     content::WebContents* web_contents,
     PasswordProtectionService::WarningUIType ui_type,
     PasswordProtectionService::WarningAction action) {
+  int64_t navigation_id;
   RecordWarningAction(ui_type, action);
   switch (ui_type) {
     case PasswordProtectionService::PAGE_INFO:
@@ -238,14 +241,29 @@ void ChromePasswordProtectionService::OnUserAction(
       }
       break;
     case PasswordProtectionService::MODAL_DIALOG:
+      DCHECK(!unhandled_password_reuses_.empty());
+      navigation_id = unhandled_password_reuses_[Origin(
+          web_contents->GetLastCommittedURL())];
+      DCHECK_NE(0, navigation_id);
       switch (action) {
         case PasswordProtectionService::CHANGE_PASSWORD:
+          LogPasswordReuseDialogInteraction(
+              navigation_id,
+              PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
           // Opens chrome://settings page in a new tab.
           OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
           break;
         case PasswordProtectionService::IGNORE_WARNING:
+          // No need to change state.
+          LogPasswordReuseDialogInteraction(
+              navigation_id,
+              PasswordReuseDialogInteraction::WARNING_ACTION_IGNORED);
+          break;
         case PasswordProtectionService::CLOSE:
           // No need to change state.
+          LogPasswordReuseDialogInteraction(
+              navigation_id,
+              PasswordReuseDialogInteraction::WARNING_UI_IGNORED);
           break;
         default:
           NOTREACHED();
@@ -406,6 +424,31 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
   user_event_service->RecordUserEvent(std::move(specifics));
 }
 
+void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
+    int64_t navigation_id,
+    PasswordReuseDialogInteraction::InteractionResult interaction_result) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+    return;
+
+  syncer::UserEventService* user_event_service =
+      browser_sync::UserEventServiceFactory::GetForProfile(profile_);
+  if (!user_event_service)
+    return;
+
+  std::unique_ptr<UserEventSpecifics> specifics =
+      GetUserEventSpecificsWithNavigationId(navigation_id);
+  if (!specifics)
+    return;
+
+  PasswordReuseDialogInteraction* const dialog_interaction =
+      specifics->mutable_gaia_password_reuse_event()
+          ->mutable_dialog_interaction();
+  dialog_interaction->set_interaction_result(interaction_result);
+  user_event_service->RecordUserEvent(std::move(specifics));
+}
+
 PasswordProtectionService::SyncAccountType
 ChromePasswordProtectionService::GetSyncAccountType() {
   const AccountInfo account_info = GetAccountInfo();
@@ -422,9 +465,8 @@ ChromePasswordProtectionService::GetSyncAccountType() {
 }
 
 std::unique_ptr<UserEventSpecifics>
-ChromePasswordProtectionService::GetUserEventSpecifics(
-    content::WebContents* web_contents) {
-  int64_t navigation_id = GetLastCommittedNavigationID(web_contents);
+ChromePasswordProtectionService::GetUserEventSpecificsWithNavigationId(
+    int64_t navigation_id) {
   if (navigation_id <= 0)
     return nullptr;
 
@@ -433,6 +475,13 @@ ChromePasswordProtectionService::GetUserEventSpecifics(
       GetMicrosecondsSinceWindowsEpoch(base::Time::Now()));
   specifics->set_navigation_id(navigation_id);
   return specifics;
+}
+
+std::unique_ptr<UserEventSpecifics>
+ChromePasswordProtectionService::GetUserEventSpecifics(
+    content::WebContents* web_contents) {
+  return GetUserEventSpecificsWithNavigationId(
+      GetLastCommittedNavigationID(web_contents));
 }
 
 void ChromePasswordProtectionService::LogPasswordReuseLookupResult(
