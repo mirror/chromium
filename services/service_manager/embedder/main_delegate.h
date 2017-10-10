@@ -67,8 +67,9 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT MainDelegate {
   // return |ProcessType::kDefault| to avoid overriding.
   virtual ProcessType OverrideProcessType();
 
-  // Allows the embedder to override the process-wide Mojop configuration.
-  virtual void OverrideMojoConfiguration(mojo::edk::Configuration* config);
+  // Allows the embedder to determine if this process should act as the broker
+  // process.
+  virtual bool ShouldBeBrokerProcess();
 
   // Create the service catalog to be used by the Service Manager. May return
   // null to use the default (empty) catalog, if you're into that.

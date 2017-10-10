@@ -83,7 +83,7 @@ if (use_aura && !is_cast_audio_only) {
     deps = [
       ":graphics",
       "//base/test:test_support",
-      "//mojo/edk/system",
+      "//services/service_manager/public/cpp",
       "//testing/gtest",
       "//ui/aura",
       "//ui/aura:test_support",

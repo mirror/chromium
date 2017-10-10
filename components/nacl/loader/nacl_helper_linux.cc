@@ -39,9 +39,9 @@
 #include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 
 #if defined(OS_NACL_NONSFI)
 #include "components/nacl/loader/nonsfi/nonsfi_listener.h"
@@ -119,7 +119,7 @@ void BecomeNaClLoader(base::ScopedFD browser_fd,
                                               browser_fd.release());
 
   // The Mojo EDK must be initialized before using IPC.
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
 
   base::MessageLoopForIO main_message_loop;
 #if defined(OS_NACL_NONSFI)

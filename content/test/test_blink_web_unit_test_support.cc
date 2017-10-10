@@ -20,13 +20,13 @@
 #include "cc/blink/web_layer_impl.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/child/web_url_loader_impl.h"
 #include "content/test/mock_webclipboard_impl.h"
 #include "content/test/web_gesture_curve_mock.h"
 #include "media/base/media.h"
 #include "media/media_features.h"
 #include "net/cookies/cookie_monster.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/WebData.h"
 #include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
@@ -129,7 +129,7 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport() {
   base::FeatureList::SetInstance(base::WrapUnique(new base::FeatureList));
 
   // Initialize mojo firstly to enable Blink initialization to use it.
-  InitializeMojo();
+  service_manager::InitializeMojo();
 
   blink::Initialize(this);
   blink::SetLayoutTestMode(true);
