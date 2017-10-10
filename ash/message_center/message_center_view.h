@@ -119,7 +119,7 @@ class ASH_EXPORT MessageCenterView
  private:
   friend class MessageCenterViewTest;
 
-  enum class Mode { NOTIFICATIONS, SETTINGS, BUTTONS_ONLY };
+  enum class Mode { NOTIFICATIONS, SETTINGS, BUTTONS_ONLY, NO_NOTIFICATIONS };
 
   static bool disable_animation_for_testing;
 
@@ -140,6 +140,7 @@ class ASH_EXPORT MessageCenterView
   views::ScrollView* scroller_;
   std::unique_ptr<MessageListView> message_list_view_;
   NotifierSettingsView* settings_view_;
+  views::View* empty_view_;
   MessageCenterButtonBar* button_bar_;
 
   // Data for transition animation between settings view and message list.
@@ -164,7 +165,7 @@ class ASH_EXPORT MessageCenterView
   bool is_locked_ = false;
 
   // Current view mode. During animation, it is the target mode.
-  Mode mode_ = Mode::BUTTONS_ONLY;
+  Mode mode_ = Mode::NO_NOTIFICATIONS;
 
   message_center::MessageViewContextMenuController context_menu_controller_;
 
