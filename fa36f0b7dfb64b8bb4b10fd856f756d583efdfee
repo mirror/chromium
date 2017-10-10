@@ -16,6 +16,52 @@
       "revId": "fa36f0b7dfb64b8bb4b10fd856f756d583efdfee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73cb2ca_9804fdd8",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T01:44:59Z",
+      "side": 1,
+      "message": "Would it be possible to make this enum-class?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "fa36f0b7dfb64b8bb4b10fd856f756d583efdfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0454a4b5_5bad2244",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T01:44:59Z",
+      "side": 1,
+      "message": "Could you remove \"WorkerGlobalScope\"? It\u0027d be obvious from enum class name.\n\nGlobalScopeStartMode::kDontPauseOnStart\nGlobalScopeStartMode::kPauseOnStart",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "fa36f0b7dfb64b8bb4b10fd856f756d583efdfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
