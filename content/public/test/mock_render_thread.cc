@@ -65,6 +65,14 @@ class MockRenderMessageFilterImpl : public mojom::RenderMessageFilter {
   MockRenderThread* const thread_;
 };
 
+// Returns an InterfaceProvider that is safe to call into, but will not actually
+// service any interface requests.
+service_manager::mojom::InterfaceProviderPtr CreateDeadEndInterfaceProvider() {
+  ::service_manager::mojom::InterfaceProviderPtr dead_interface_provider_proxy;
+  mojo::MakeRequest(&dead_interface_provider_proxy);
+  return dead_interface_provider_proxy;
+}
+
 }  // namespace
 
 MockRenderThread::MockRenderThread()
@@ -267,8 +275,11 @@ void MockRenderThread::OnCreateWidget(int opener_id,
 // The Frame expects to be returned a valid route_id different from its own.
 void MockRenderThread::OnCreateChildFrame(
     const FrameHostMsg_CreateChildFrame_Params& params,
-    int* new_render_frame_id) {
+    int* new_render_frame_id,
+    mojo::MessagePipeHandle* new_interfaces) {
   *new_render_frame_id = new_frame_routing_id_++;
+  *new_interfaces =
+      CreateDeadEndInterfaceProvider().PassInterface().PassHandle().release();
 }
 
 bool MockRenderThread::OnControlMessageReceived(const IPC::Message& msg) {
@@ -307,6 +318,7 @@ void MockRenderThread::OnCreateWindow(
     mojom::CreateNewWindowReply* reply) {
   reply->route_id = new_window_routing_id_;
   reply->main_frame_route_id = new_window_main_frame_routing_id_;
+  reply->main_frame_interfaces = CreateDeadEndInterfaceProvider();
   reply->main_frame_widget_route_id = new_window_main_frame_widget_routing_id_;
   reply->cloned_session_storage_namespace_id = 0;
 }
