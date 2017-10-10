@@ -50,6 +50,41 @@
       "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a936a8_08cadab7",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T07:51:47Z",
+      "side": 1,
+      "message": "That\u0027s a base class implementation (that\u0027s also used when a frame is detached), FrameFetchContext returns more relevant task runners.",
+      "parentUuid": "fe8553c3_cc5b45e6",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e014fc8_c2bd2e3d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T07:51:47Z",
+      "side": 1,
+      "message": "The given task runner is only used if it\u0027s already loaded and otherwise the runner that is given to Finish is used, could you document that?",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
