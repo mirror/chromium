@@ -51990,6 +51990,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.StorageManager.PageSizeTotal" units="MB">
+  <owner>petewil@chromium.org</owner>
+  <summary>The size of all pages of this type as detected in storage.</summary>
+</histogram>
+
 <histogram name="OfflinePages.TabRestore" enum="OfflinePagesTabRestoreType">
   <owner>carlosk@chromium.org</owner>
   <summary>
@@ -100711,6 +100716,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="OfflinePages.PageSize"/>
   <affected-histogram name="OfflinePages.SavePageResult"/>
   <affected-histogram name="OfflinePages.SavePageTime"/>
+  <affected-histogram name="OfflinePages.StorageManager.PageSizeTotal"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="OfflinePrefechItemFinalOutcome" separator=".">

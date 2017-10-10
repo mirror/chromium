@@ -7,8 +7,10 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/time/clock.h"
 #include "base/time/default_clock.h"
+#include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/offline_page_client_policy.h"
 #include "components/offline_pages/core/offline_page_item.h"
@@ -69,6 +71,7 @@ void OfflinePageStorageManager::OnGetAllPagesDoneForClearingPages(
     const ClearStorageCallback& callback,
     const ArchiveManager::StorageStats& stats,
     const MultipleOfflinePageItemResult& pages) {
+  ReportStorageUsageUMA(pages);
   std::vector<int64_t> page_ids_to_clear;
   GetPageIdsToClear(pages, stats, &page_ids_to_clear);
   model_->DeletePagesByOfflineId(
@@ -181,6 +184,48 @@ OfflinePageStorageManager::ShouldClearPages(
   }
   // Otherwise there's no need to clear storage right now.
   return ClearMode::NOT_NEEDED;
+}
+
+void OfflinePageStorageManager::ReportStorageUsageUMA(
+    const MultipleOfflinePageItemResult& pages) {
+  int64_t prefetched_sizes = 0;
+  int64_t bookmarked_sizes = 0;
+  int64_t last_n_sizes = 0;
+  static bool run_this_launch = false;
+
+  // Only run once per app launch to make the data less noisy.
+  // TODO(petewil): Once per day might be better, but would need a new field in
+  // the database, and a new async task to get it.
+  if (run_this_launch)
+    return;
+
+  // Iterate through all the pages, getting their size, and adding to the proper
+  // namespace accumulator
+  for (const OfflinePageItem& item : pages) {
+    if (item.client_id.name_space == kSuggestedArticlesNamespace)
+      prefetched_sizes += item.file_size;
+    else if (item.client_id.name_space == kBookmarkNamespace)
+      bookmarked_sizes += item.file_size;
+    else if (item.client_id.name_space == kLastNNamespace)
+      last_n_sizes += item.file_size;
+  }
+
+  // Report the numbers for each namespace
+  // TODO(Should I use constants for the namespace names, and concatenate?)
+  if (prefetched_sizes > 0) {
+    UMA_HISTOGRAM_MEMORY_LARGE_MB(
+        "OfflinePages.StorageManager.PageSizeTotal.suggested_articles",
+        prefetched_sizes);
+  }
+
+  if (bookmarked_sizes > 0) {
+    UMA_HISTOGRAM_MEMORY_LARGE_MB(
+        "OfflinePages.StorageManager.PageSizeTotal.bookmark", bookmarked_sizes);
+  }
+  if (last_n_sizes > 0) {
+    UMA_HISTOGRAM_MEMORY_LARGE_MB(
+        "OfflinePages.StorageManager.PageSizeTotal.last_n", last_n_sizes);
+  }
 }
 
 bool OfflinePageStorageManager::IsExpired(const OfflinePageItem& page) const {
