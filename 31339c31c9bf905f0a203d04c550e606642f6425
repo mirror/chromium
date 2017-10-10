@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7952f96_6be8be51",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-10T01:48:26Z",
+      "side": 1,
+      "message": "Sure, thanks.",
+      "parentUuid": "1320c247_3333a59e",
+      "range": {
+        "startLine": 421,
+        "startChar": 29,
+        "endLine": 421,
+        "endChar": 52
+      },
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b60a6d76_62f566b6",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
         "patchSetId": 24
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1cc854ce_0f2bbea0",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-10T01:48:26Z",
+      "side": 1,
+      "message": "Thanks for all the information. Using a wrapping function is a good idea.",
+      "parentUuid": "5b014f21_afa676af",
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76146ace_564bff2d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 24
@@ -71,6 +113,30 @@
       "writtenOn": "2017-10-09T22:56:28Z",
       "side": 1,
       "message": "nit: Perhaps \"StartupState\" or something like that?",
+      "range": {
+        "startLine": 13166,
+        "startChar": 39,
+        "endLine": 13166,
+        "endChar": 44
+      },
+      "revId": "31339c31c9bf905f0a203d04c550e606642f6425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53dac6d_887fca2e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 13166,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-10T01:48:26Z",
+      "side": 1,
+      "message": "This metric is no longer needed after we found hidden stories behind this bug.",
+      "parentUuid": "76146ace_564bff2d",
       "range": {
         "startLine": 13166,
         "startChar": 39,
