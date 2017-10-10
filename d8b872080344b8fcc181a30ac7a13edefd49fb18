@@ -283,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "34037397_dd35ef47",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "934de725_c7f7f46a",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bac3017_f8cdd02d",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 5

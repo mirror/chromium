@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1608b40d_a20831f3",
+        "filename": "content/browser/blob_storage/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b6066e_aa7c382d",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a389bb9_2136ec0e",
         "filename": "content/browser/service_worker/link_header_support.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T20:58:58Z",
       "side": 1,
       "message": "With the policy being injected into the validator as a dependency, every client now has to know how to properly construct the validator. Maybe that\u0027s fine, but would it make sense to encapsulate in a factory method somewhere?",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 22
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c076668d_93410a55",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "How would static TrialPolicyImpl::ValidatorForPolicy sound?",
+      "parentUuid": "8a389bb9_2136ec0e",
       "range": {
         "startLine": 147,
         "startChar": 12,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "abd6f03a_7f1ffd75",
+        "filename": "content/common/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a486c5_4763791f",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de609eac_8f79ba01",
         "filename": "content/common/origin_trials/trial_policy_impl.h",
         "patchSetId": 10
@@ -79,6 +145,24 @@
       "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cace940_8ebc59f1",
+        "filename": "content/common/origin_trials/trial_policy_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "TODO added.",
+      "parentUuid": "de609eac_8f79ba01",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +292,24 @@
     },
     {
       "key": {
+        "uuid": "e2db4c20_17141698",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a52b39_758ff663",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf64871c_b643c533",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 10
@@ -228,6 +330,30 @@
       "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1c3f9e_76639819",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf64871c_b643c533",
+      "range": {
+        "startLine": 699,
+        "startChar": 18,
+        "endLine": 699,
+        "endChar": 27
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "5f7073da_538598a6",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af3c1739_af2d564b",
+      "range": {
+        "startLine": 701,
+        "startChar": 15,
+        "endLine": 701,
+        "endChar": 25
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f17eb5_3a6c5cca",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 10
@@ -289,6 +439,30 @@
       "writtenOn": "2017-08-29T20:58:58Z",
       "side": 1,
       "message": "This should probably be called CreateOriginTrialPolicy(), as it creates a new instance each time. Which begs the question - does it need to create a new instance each time?",
+      "range": {
+        "startLine": 702,
+        "startChar": 25,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085c49a3_55ccf6ca",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-10-10T16:03:53Z",
+      "side": 1,
+      "message": "We decided that it would be simpler for the validator to simply own a policy instead of some more complex shared scheme. (see earlier comment https://chromium-review.googlesource.com/c/chromium/src/+/591932/5/third_party/WebKit/common/origin_trials/trial_token_validator.h#67)",
+      "parentUuid": "a4f17eb5_3a6c5cca",
       "range": {
         "startLine": 702,
         "startChar": 25,
