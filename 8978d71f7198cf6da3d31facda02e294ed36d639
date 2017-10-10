@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c52e294_4e11bdf0",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Not done, see https://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/LU6NWiaSSRc/ejVH7KOnCQAJ",
+      "parentUuid": "6fbae7f3_3ef01ccb",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0415d021_067a3a3f",
         "filename": "components/sync/driver/about_sync_util.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1376229_25fc32b6",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0415d021_067a3a3f",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2c3a45fc_0f4c27e7",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Whoops, done.",
+      "parentUuid": "d7df3ed4_3d9dad1c",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01e08c71_515f1ad6",
         "filename": "components/sync/driver/data_type_manager_impl.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1563f3be_6c43e8cb",
+        "filename": "components/sync/driver/data_type_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01e08c71_515f1ad6",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8cd1366d_8069e1b7",
+        "filename": "components/sync/engine_impl/commit_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Done, and added a comment.",
+      "parentUuid": "627c9038_e639d79e",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45be822c_5ba5fea0",
         "filename": "components/sync/engine_impl/get_commit_ids.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ea531c_16fee98c",
+        "filename": "components/sync/engine_impl/get_commit_ids.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Staying with DCHECK as per chromium-dev thread.",
+      "parentUuid": "45be822c_5ba5fea0",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "db6d6862_31aaf9d2",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0f3c858_a7180461",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68d4d818_093bb340",
         "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0111f6a8_7367b492",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Followed up by asking chromium-dev, guidance seems to be use DCHECK here, see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/LU6NWiaSSRc/puEoc82ABgAJ . Did not change.",
+      "parentUuid": "68d4d818_093bb340",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6c1b04dc_56550179",
+        "filename": "components/sync/syncable/model_neutral_mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823812e6_505ae6d8",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e797360_85e7ac51",
         "filename": "components/sync/syncable/model_neutral_mutable_entry.cc",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b78f61_87987282",
+        "filename": "components/sync/syncable/model_neutral_mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e797360_85e7ac51",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "e335eda7_8c3e3941",
+        "filename": "components/sync/syncable/mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f82b0ed_3ea8ac2a",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c78218d_d1d6e702",
         "filename": "components/sync/syncable/write_node.cc",
         "patchSetId": 6
@@ -203,6 +401,41 @@
       "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b926bc3c_248df418",
+        "filename": "components/sync/syncable/write_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c78218d_d1d6e702",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0895c1af_58c3a5a4",
+        "filename": "components/sync/test/engine/mock_connection_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-10T23:20:11Z",
+      "side": 1,
+      "message": "Whoops, flipped this one, which is causing at least some of the test failures I think.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
