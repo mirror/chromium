@@ -215,20 +215,20 @@ int GetFetchMoreSuggestionsCount() {
       kFetchMoreSuggestionsCountDefault);
 }
 
-// Variation parameter for the timeout when refetching suggestions while
-// displaying. If the fetch takes too long and the timeout is over, the category
-// status is forced back to AVAILABLE and the existing (possibly stale)
-// suggestions are notified.
-const char kTimeoutForRefetchWhileDisplayingSecondsParamName[] =
-    "timeout_for_refetch_while_displaying_seconds";
+// Variation parameter for the timeout when fetching suggestions with a loading
+// indicator. If the fetch takes too long and the timeout is over, the category
+// status is forced back to AVAILABLE. If there are existing (possibly stale)
+// suggestions, they get notified.
+const char kTimeoutForLoadingIndicatorSecondsParamName[] =
+    "timeout_for_loading_indicator_seconds";
 
-const int kDefaultTimeoutForRefetchWhileDisplayingSeconds = 5;
+const int kDefaultTimeoutForLoadingIndicatorSeconds = 5;
 
-base::TimeDelta GetTimeoutForRefetchWhileDisplaying() {
+base::TimeDelta GetTimeoutForLoadingIndicator() {
   return base::TimeDelta::FromSeconds(base::GetFieldTrialParamByFeatureAsInt(
       ntp_snippets::kArticleSuggestionsFeature,
-      kTimeoutForRefetchWhileDisplayingSecondsParamName,
-      kDefaultTimeoutForRefetchWhileDisplayingSeconds));
+      kTimeoutForLoadingIndicatorSecondsParamName,
+      kDefaultTimeoutForLoadingIndicatorSeconds));
 }
 
 template <typename SuggestionPtrContainer>
@@ -439,61 +439,42 @@ void RemoteSuggestionsProviderImpl::ReloadSuggestions() {
   if (!remote_suggestions_scheduler_->AcquireQuotaForInteractiveFetch()) {
     return;
   }
+  auto callback = base::Bind(
+      [](RemoteSuggestionsScheduler* scheduler, Status status_code) {
+        scheduler->OnInteractiveFetchFinished(status_code);
+      },
+      base::Unretained(remote_suggestions_scheduler_));
+
+  if (AreArticlesEmpty()) {
+    // No reason to hide the loading indicator before the fetch definitely fails
+    // as we have nothing else to display.
+    FetchSuggestionsWithLoadingIndicator(
+        /*interactive_request=*/true, std::move(callback),
+        /*hide_loading_indicator_after_timeout=*/false);
+    return;
+  }
   FetchSuggestions(
-      /*interactive_request=*/true,
-      base::Bind(
-          [](RemoteSuggestionsScheduler* scheduler, Status status_code) {
-            scheduler->OnInteractiveFetchFinished(status_code);
-          },
-          base::Unretained(remote_suggestions_scheduler_)));
+      /*interactive_request=*/true, std::move(callback));
 }
 
 void RemoteSuggestionsProviderImpl::RefetchInTheBackground(
     FetchStatusCallback callback) {
+  if (AreArticlesEmpty()) {
+    // We want to have a loading indicator even for a background fetch as the
+    // user might open an NTP before the fetch finishes.
+    FetchSuggestionsWithLoadingIndicator(
+        /*interactive_request=*/false, std::move(callback),
+        /*hide_loading_indicator_after_timeout=*/false);
+    return;
+  }
   FetchSuggestions(/*interactive_request=*/false, std::move(callback));
 }
 
 void RemoteSuggestionsProviderImpl::RefetchWhileDisplaying(
     FetchStatusCallback callback) {
-  debug_logger_->Log(FROM_HERE, /*message=*/std::string());
-  if (!AreArticlesAvailable()) {
-    // If the article section is not AVAILABLE, we cannot safely flip its status
-    // to AVAILABLE_LOADING and back. Instead, we fallback to the standard
-    // background refetch.
-    debug_logger_->Log(
-        FROM_HERE,
-        "fallback because the articles category is not displayed yet");
-    RefetchInTheBackground(std::move(callback));
-    return;
-  }
-
-  NotifyRefetchWhileDisplayingStarted();
-  // |fetch_timeout_timer_| makes sure the UI stops waiting after a certain time
-  // period (in that case, it can fall-back to the old suggestions).
-  fetch_timeout_timer_->Start(
-      FROM_HERE, GetTimeoutForRefetchWhileDisplaying(),
-      base::Bind(&RemoteSuggestionsProviderImpl::
-                     NotifyRefetchWhileDisplayingFailedOrTimeouted,
-                 base::Unretained(this)));
-
-  FetchStatusCallback callback_wrapped = base::BindOnce(
-      &RemoteSuggestionsProviderImpl::OnRefetchWhileDisplayingFinished,
-      base::Unretained(this), std::move(callback));
-
-  FetchSuggestions(/*interactive_request=*/true, std::move(callback_wrapped));
-}
-
-void RemoteSuggestionsProviderImpl::OnRefetchWhileDisplayingFinished(
-    FetchStatusCallback callback,
-    Status status) {
-  fetch_timeout_timer_->Stop();
-  // If the fetch succeeds, it already notified new results.
-  if (!status.IsSuccess()) {
-    NotifyRefetchWhileDisplayingFailedOrTimeouted();
-  }
-  if (callback) {
-    std::move(callback).Run(status);
-  }
+  FetchSuggestionsWithLoadingIndicator(
+      /*interactive_request=*/true, std::move(callback),
+      /*hide_loading_indicator_after_timeout=*/true);
 }
 
 const RemoteSuggestionsFetcher*
@@ -523,6 +504,54 @@ bool RemoteSuggestionsProviderImpl::ready() const {
   return state_ == State::READY;
 }
 
+void RemoteSuggestionsProviderImpl::FetchSuggestionsWithLoadingIndicator(
+    bool interactive_request,
+    FetchStatusCallback callback,
+    bool hide_loading_indicator_after_timeout) {
+  if (!AreArticlesAvailable()) {
+    // If the article section is not AVAILABLE, we cannot safely flip its status
+    // to AVAILABLE_LOADING and back. Instead, we fallback to the standard
+    // background refetch.
+    debug_logger_->Log(
+        FROM_HERE,
+        "fallback because the articles category is not displayed yet");
+    FetchSuggestions(interactive_request, std::move(callback));
+    return;
+  }
+
+  NotifyFetchWithLoadingIndicatorStarted();
+
+  if (hide_loading_indicator_after_timeout) {
+    // |fetch_timeout_timer_| makes sure the UI stops waiting after a certain
+    // time period (in that case, it can fall-back to the old suggestions).
+    fetch_timeout_timer_->Start(
+        FROM_HERE, GetTimeoutForLoadingIndicator(),
+        base::Bind(&RemoteSuggestionsProviderImpl::
+                       NotifyFetchWithLoadingIndicatorFailedOrTimeouted,
+                   base::Unretained(this)));
+  }
+
+  FetchStatusCallback callback_wrapped =
+      base::BindOnce(&RemoteSuggestionsProviderImpl::
+                         OnFetchSuggestionsWithLoadingIndicatorFinished,
+                     base::Unretained(this), std::move(callback));
+
+  FetchSuggestions(interactive_request, std::move(callback_wrapped));
+}
+
+void RemoteSuggestionsProviderImpl::
+    OnFetchSuggestionsWithLoadingIndicatorFinished(FetchStatusCallback callback,
+                                                   Status status) {
+  fetch_timeout_timer_->Stop();
+  // If the fetch succeeds, it already notified new results.
+  if (!status.IsSuccess()) {
+    NotifyFetchWithLoadingIndicatorFailedOrTimeouted();
+  }
+  if (callback) {
+    std::move(callback).Run(status);
+  }
+}
+
 void RemoteSuggestionsProviderImpl::FetchSuggestions(
     bool interactive_request,
     FetchStatusCallback callback) {
@@ -532,8 +561,6 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
                                    "RemoteSuggestionsProvider is not ready!"));
     return;
   }
-
-  MarkEmptyCategoriesAsLoading();
 
   // |count_to_fetch| is actually ignored, because the server does not support
   // this functionality.
@@ -612,27 +639,27 @@ RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams(
   return result;
 }
 
-void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
-  for (const auto& item : category_contents_) {
-    Category category = item.first;
-    const CategoryContent& content = item.second;
-    if (content.suggestions.empty()) {
-      UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
-    }
-  }
-}
-
-bool RemoteSuggestionsProviderImpl::AreArticlesAvailable() {
+bool RemoteSuggestionsProviderImpl::AreArticlesEmpty() const {
   if (!ready()) {
     return false;
   }
   auto articles_it = category_contents_.find(articles_category_);
   DCHECK(articles_it != category_contents_.end());
-  CategoryContent& content = articles_it->second;
+  const CategoryContent& content = articles_it->second;
+  return content.suggestions.empty();
+}
+
+bool RemoteSuggestionsProviderImpl::AreArticlesAvailable() const {
+  if (!ready()) {
+    return false;
+  }
+  auto articles_it = category_contents_.find(articles_category_);
+  DCHECK(articles_it != category_contents_.end());
+  const CategoryContent& content = articles_it->second;
   return content.status == CategoryStatus::AVAILABLE;
 }
 
-void RemoteSuggestionsProviderImpl::NotifyRefetchWhileDisplayingStarted() {
+void RemoteSuggestionsProviderImpl::NotifyFetchWithLoadingIndicatorStarted() {
   auto articles_it = category_contents_.find(articles_category_);
   DCHECK(articles_it != category_contents_.end());
   CategoryContent& content = articles_it->second;
@@ -641,7 +668,7 @@ void RemoteSuggestionsProviderImpl::NotifyRefetchWhileDisplayingStarted() {
 }
 
 void RemoteSuggestionsProviderImpl::
-    NotifyRefetchWhileDisplayingFailedOrTimeouted() {
+    NotifyFetchWithLoadingIndicatorFailedOrTimeouted() {
   auto articles_it = category_contents_.find(articles_category_);
   DCHECK(articles_it != category_contents_.end());
   CategoryContent& content = articles_it->second;
