@@ -112,6 +112,13 @@ size_t RegisterWebViewCrashKeys() {
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", kMediumSize},
+
+      // For investigating site isolation renderer kills.  See
+      // https://crbug.com/773140.
+      {"cpsp_requested_site_url", kSmallSize},
+      {"cpsp_requested_origin", kSmallSize},
+      {"killed_process_origin_lock", kSmallSize},
+      {"site_isolation_mode", kSmallSize},
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering

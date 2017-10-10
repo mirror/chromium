@@ -73,6 +73,13 @@ size_t RegisterCastCrashKeys() {
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", ::crash_keys::kMediumSize},
+
+      // For investigating site isolation renderer kills.  See
+      // https://crbug.com/773140.
+      {"cpsp_requested_site_url", ::crash_keys::kSmallSize},
+      {"cpsp_requested_origin", ::crash_keys::kSmallSize},
+      {"killed_process_origin_lock", kSmallSize},
+      {"site_isolation_mode", kSmallSize},
   };
 
   return base::debug::InitCrashKeys(fixed_keys, arraysize(fixed_keys),
