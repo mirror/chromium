@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab89327d_416d23fd",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "Why is !important needed here? Can you increase the specificity of this selector to avoid the need for it?",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b734d31b_cd2d2061",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "Comments should be full sentences with proper capitalization and punctuation, per styleguide, here and elsewhere.",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e67fd1e_e2c4216e",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "What is the benefit of this temporary variable? Can you directly return the final value?",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5276357_6be0d9c2",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "Variables in JS are namedLikeThis.",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dcccf7_6b57aad9",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "There is no need for |buttonparent|. Please bind() the function properly so that the lexical scoping does not get in the way.\n\naddEventListener(function() {.. access |this| here}.bind(this), ....);\nOr use ES6 arrow functions to completely avoid the need to bind. see https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Arrow-Functions.",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ba5df3_1985753c",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "Why is this setTimeout() needed? Can we avoid this (it is generally and anti-pattern. If not can you add a comment in the code with the explanation?",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a676e75_1ce5fee5",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T19:01:21Z",
+      "side": 1,
+      "message": "Private member variables are by convention suffixed by \"_\".",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
