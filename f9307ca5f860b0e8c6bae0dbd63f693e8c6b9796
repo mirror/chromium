@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4929c27e_60de8901",
+        "filename": "chromeos/dbus/fake_system_clock_client.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T04:19:28Z",
+      "side": 1,
+      "message": "Please use SequencedTaskRunnerHandle::Get() or ThreadTaskRunnerHandle::Get().\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/threading_and_tasks.md#Posting-to-the-Current-Thread",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "f9307ca5f860b0e8c6bae0dbd63f693e8c6b9796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f39a99_10ae9e5f",
+        "filename": "chromeos/dbus/fake_system_clock_client.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T04:19:28Z",
+      "side": 1,
+      "message": "Can\u0027t this be just:\n  base::BindOnce(callback, network_synchronized_)\nand FakeSystemClockClient::OnGetLastSyncInfo be removed?",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "f9307ca5f860b0e8c6bae0dbd63f693e8c6b9796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d288adff_ee61d4b6",
+        "filename": "chromeos/dbus/system_clock_client.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T04:19:28Z",
+      "side": 1,
+      "message": "Please put this using in SystemClockClient.\nAlso, please use base::OnceCallback instead of base::Callback.\n\nPlease take a look at an existing example:\n  https://chromium.googlesource.com/chromium/src/+/edaeadc24ef95384705ac7ffa1db5e4db4a7f740/chromeos/dbus/virtual_file_provider_client.h#27",
+      "revId": "f9307ca5f860b0e8c6bae0dbd63f693e8c6b9796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
