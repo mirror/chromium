@@ -398,6 +398,17 @@ void GpuJpegDecodeAccelerator::Decode(
   NOTIMPLEMENTED();
 }
 
+void GpuJpegDecodeAccelerator::DecodeWithFD(int32_t buffer_id,
+                                            mojo::ScopedHandle input_fd,
+                                            uint32_t input_buffer_size,
+                                            int32_t coded_size_width,
+                                            int32_t coded_size_height,
+                                            mojo::ScopedHandle output_fd,
+                                            uint32_t output_buffer_size,
+                                            DecodeWithFDCallback callback) {
+  NOTIMPLEMENTED();
+}
+
 void GpuJpegDecodeAccelerator::Uninitialize() {
   // TODO(c.padhi): see http://crbug.com/699255.
   NOTIMPLEMENTED();

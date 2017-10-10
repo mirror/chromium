@@ -137,6 +137,11 @@ void CameraHalDispatcherImpl::AddClientObserver(
                      base::Unretained(this), base::Passed(&observer)));
 }
 
+void CameraHalDispatcherImpl::SetGpuJpegDecoderFactory(
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory) {
+  jpeg_decoder_factory_ = jpeg_decoder_factory;
+}
+
 bool CameraHalDispatcherImpl::IsStarted() {
   return proxy_thread_.IsRunning() && blocking_io_thread_.IsRunning() &&
          proxy_fd_.is_valid();
@@ -189,6 +194,11 @@ void CameraHalDispatcherImpl::RegisterClient(
       base::Unretained(this), base::Unretained(client_observer.get())));
   AddClientObserver(std::move(client_observer));
   VLOG(1) << "Camera HAL client registered";
+}
+
+void CameraHalDispatcherImpl::GetGpuJpegDecodeAccelerator(
+    media::mojom::GpuJpegDecodeAcceleratorRequest accerlator_request) {
+  jpeg_decoder_factory_.Run(std::move(accerlator_request));
 }
 
 void CameraHalDispatcherImpl::CreateSocket(base::WaitableEvent* started) {
