@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "e63fc062_240f178b",
+        "filename": "chrome/test/data/webui/settings/fake_language_settings_private.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:25:09Z",
+      "side": 1,
+      "message": "New version looks good, thanks.",
+      "parentUuid": "370c2c7b_feba0d2f",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "ab10d902c31557151f3828cd5a20db91ff70e6fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7c9d32_761bd5b4",
         "filename": "extensions/browser/extension_function_histogram_value.h",
         "patchSetId": 12
