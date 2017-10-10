@@ -46,7 +46,6 @@ def MaybeDownloadApk(builder, milestone, apk, download_path, bucket):
         force=False,
         output=apk_path,
         ignore_errors=False,
-        verbose=True,
         auto_platform=False,
         extract=False)
     return apk_path

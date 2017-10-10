@@ -360,7 +360,6 @@ def _DownloadFromBucket(bucket_path, sha1_file, destination, verbose,
       output=destination,
       ignore_errors=False,
       sha1_file=sha1_file,
-      verbose=verbose,
       auto_platform=True,
       extract=False)
 
