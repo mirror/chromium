@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e8dc6d7e_7804931f",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-10T22:51:40Z",
+      "side": 1,
+      "message": "So, IIRC, if SetHistogramMemory has been called for a process, we should never be calling GetChildNonPersistentHistogramData for that process? So if there exists an entry in the ChildHistogramMap, we should elide the call to GetChildNonPersistentHistogramData. If that\u0027s right, then the logic in this file needs another rewrite.  \n\nBut I\u0027m not convinced that this matches the old behavior. The old code always iterates through all processes sending GetChildNonPersistentHistogramData, and ChildHistgramMessageFilter can always send those histograms not in shared memory.",
+      "parentUuid": "f52270ce_fc6a4888",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ff8597_8dc52ad1",
         "filename": "content/browser/histogram_controller.cc",
         "patchSetId": 19
