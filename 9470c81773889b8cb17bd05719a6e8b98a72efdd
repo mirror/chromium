@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fb5aed2_13988db6",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71097e5_e7556a18",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ab03f3_7c248708",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0610ed78_8f93f6ec",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ab03f3_7c248708",
+      "range": {
+        "startLine": 1474,
+        "startChar": 66,
+        "endLine": 1474,
+        "endChar": 67
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e0828286_3f307da7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1567,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "This is indeed weird. It looks like historical reasons where a category was set as AVAILABLE_LOADING before the provider got inited.\n\nRemoved.",
+      "parentUuid": "fb933d75_d4684d11",
+      "range": {
+        "startLine": 1567,
+        "startChar": 42,
+        "endLine": 1567,
+        "endChar": 77
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60b9686_993b9490",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4a9e7b16_c191f5f0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "This should not ever happen. It is just to make the scheduler more robust and impose less implicit assumptions.",
+      "parentUuid": "b60b9686_993b9490",
+      "range": {
+        "startLine": 601,
+        "startChar": 14,
+        "endLine": 601,
+        "endChar": 49
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f4ee4e_b9b96b0a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802872de_009e6391",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f4ee4e_b9b96b0a",
+      "range": {
+        "startLine": 383,
+        "startChar": 35,
+        "endLine": 383,
+        "endChar": 42
+      },
+      "revId": "9470c81773889b8cb17bd05719a6e8b98a72efdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -141,6 +141,30 @@
       "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "294ad2c6_eb2250b1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T06:06:58Z",
+      "side": 1,
+      "message": "Not at all. I think this is a relict of back-and-forths with how the scheduler-provider pair gets initialized and activated.",
+      "parentUuid": "eff79525_0252836d",
+      "range": {
+        "startLine": 836,
+        "startChar": 65,
+        "endLine": 837,
+        "endChar": 40
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
