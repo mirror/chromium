@@ -55,6 +55,10 @@ class DISPLAY_EXPORT DisplayManagerTestApi {
   // Sets the touch support for |display_id|.
   void SetTouchSupport(int64_t display_id, Display::TouchSupport touch_support);
 
+  // Adds a touch device identified by |touch_device_identifier| to display with
+  // id |display_id|.
+  void AddTouchDevice(int64_t display_id, uint32_t touch_device_identifier);
+
  private:
   friend class ScopedSetInternalDisplayId;
   // Sets the display id for internal display and
