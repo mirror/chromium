@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a933b5e_53675bbe",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "Was gonna ask to replace with functions from histogram_functions.h but I see it\u0027s already done.",
+      "range": {
+        "startLine": 516,
+        "startChar": 58,
+        "endLine": 516,
+        "endChar": 68
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "740fd134_b529cc95",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "Please rename NTP_SUGGESTIONS, update its comment and the enums.xml label to also reflect this note.",
+      "range": {
+        "startLine": 770,
+        "startChar": 0,
+        "endLine": 771,
+        "endChar": 56
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591918f6_96076ddc",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "nit: This enum is used for UMA reporting of the UI location from which an offline page was launched.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918baefb_8db8ed17",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "Add explicit int values to each enum value.",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf513303_7837cf5e",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "Might consider moving this to be the 1st element. If we ever add new values it will be weird to have the \"accepts all\" OTHER in the middle of specific buckets.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 11
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b61d74_21c4dddd",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "Nice find!",
+      "range": {
+        "startLine": 578,
+        "startChar": 24,
+        "endLine": 578,
+        "endChar": 47
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03bb4e45_dc693195",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51021,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:50:25Z",
+      "side": 1,
+      "message": "nit: Logs the UI location from which an offline page was launched.",
+      "range": {
+        "startLine": 51021,
+        "startChar": 11,
+        "endLine": 51021,
+        "endChar": 69
+      },
+      "revId": "bcf3871112988ac9045cd7676be04f52bff14269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
