@@ -235,32 +235,10 @@ void ManagePasswordItemsView::PasswordFormRow::AddCredentialsRow(
   std::unique_ptr<views::Label> password_label(
       CreatePasswordLabel(*password_form_, false));
   delete_button_ = CreateDeleteButton(this).release();
-  // TODO(https://crbug.com/761767): Remove this workaround once the grid layout
-  // bug is fixed.
-  const int username_width = username_label->CalculatePreferredSize().width();
-  const int password_width = password_label->CalculatePreferredSize().width();
-  const int available_width =
-      host_->bubble_width_ - delete_button_->CalculatePreferredSize().width() -
-      2 * ChromeLayoutProvider::Get()->GetDistanceMetric(
-              views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
-  if (username_width > available_width && password_width < available_width) {
-    layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, available_width, fixed_height_);
-    layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, 0, fixed_height_);
-  } else if (username_width < available_width &&
-             password_width > available_width) {
-    layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, username_width, fixed_height_);
-    layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, available_width - username_width,
-                    fixed_height_);
-  } else {
-    layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, 0, fixed_height_);
-    layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
-                    views::GridLayout::FILL, 0, fixed_height_);
-  }
+  layout->AddView(username_label.release(), 1, 1, views::GridLayout::FILL,
+                  views::GridLayout::FILL, 0, fixed_height_);
+  layout->AddView(password_label.release(), 1, 1, views::GridLayout::FILL,
+                  views::GridLayout::FILL, 0, fixed_height_);
   layout->AddView(delete_button_, 1, 1, views::GridLayout::TRAILING,
                   views::GridLayout::FILL, 0, fixed_height_);
 }
