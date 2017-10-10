@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "130344ac_0ad7ec3e",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-10T23:21:26Z",
+      "side": 1,
+      "message": "If LLVM_FORCE_HEAD_REVISION is set to YES then this will fail with an exception, which I think is desirable because it ensures that any bad settings will be found promptly. Thoughts?",
+      "parentUuid": "887e24c2_7016e104",
+      "revId": "c33556474f52e562bf54a7397c09790f3ecb955f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2f42e13_50eeb616",
         "filename": "tools/clang/scripts/update.py",
         "patchSetId": 3
