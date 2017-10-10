@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5fe24d4c_8b2414ed",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "I won\u0027t press the issue, but you might want to read the advice in http://goto.corp.google.com/totw/105 (which I just found after finding the Style Guide\u0027s documentation a bit lackluster \u003d])\n\nAs far as which constants to expose: I personally prefer smaller public APIs, but it\u0027s probably best to check with the owners / primary developers of this code.",
+      "parentUuid": "b6a93189_443e48f8",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "a254facf625a8a6c37ada67d52eac5db5b45692c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c06e157a_2ad90492",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3

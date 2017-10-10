@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5954718d_ea2e63e2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7815,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "How do you plan to interpret this data?  It\u0027s generally best to record both successes and failures in the same histogram, so that you can make statements like \"the failure rate is X%\".  Otherwise, it\u0027s usually hard to reason about absolute numbers.  BooleanHit is typically used for histograms measuring something that\u0027s expected never to happen (to verify that assumption), which doesn\u0027t seem to be the case here.",
+      "range": {
+        "startLine": 7815,
+        "startChar": 10,
+        "endLine": 7815,
+        "endChar": 20
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd9bf1e_8c4c3452",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7818,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "nit: \"the result of offline ...\"",
+      "range": {
+        "startLine": 7818,
+        "startChar": 12,
+        "endLine": 7818,
+        "endChar": 23
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76a5861_fc9a0396",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "nit: \"since the last time the ...\"",
+      "range": {
+        "startLine": 7819,
+        "startChar": 4,
+        "endLine": 7819,
+        "endChar": 14
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f628503d_e8dfb46a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "nit: \"reported a\"",
+      "range": {
+        "startLine": 7819,
+        "startChar": 42,
+        "endLine": 7819,
+        "endChar": 49
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cc1739_a7b2191c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T19:55:28Z",
+      "side": 1,
+      "message": "I think this histogram would be easier to understand if you listed the motivation for gathering this data, as you did in the comment in the C++ code.",
+      "range": {
+        "startLine": 7818,
+        "startChar": 4,
+        "endLine": 7819,
+        "endChar": 65
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
