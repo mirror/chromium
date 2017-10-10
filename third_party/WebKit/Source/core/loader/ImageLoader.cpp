@@ -585,6 +585,17 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
   DCHECK(failed_load_url_.IsEmpty());
   DCHECK_EQ(resource, image_.Get());
 
+  if (image_ && image_->GetImage()) {
+    auto type = Image::ImageType::kCount;
+    if (IsHTMLImageElement(element_))
+      type = Image::ImageType::kImg;
+    else if (IsSVGImageElement(element_))
+      type = Image::ImageType::kSvg;
+
+    if (type != Image::ImageType::kCount)
+      Image::RecordCheckerableImageUMA(*image_->GetImage(), type);
+  }
+
   // |image_complete_| is always true for entire ImageDocument loading for
   // historical reason.
   // DoUpdateFromElement() is not called and SetImageForImageDocument()
