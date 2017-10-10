@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3627d6b3_a722c01b",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T21:06:28Z",
+      "side": 1,
+      "message": "The test code could set some custom name space.",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a231adc_8785a8fb",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T21:06:28Z",
+      "side": 1,
+      "message": "I think it would be better to move all these new UMA reports into a separate helper function such that we don\u0027t need the DCHECK and if check.",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7d0dfd_6017aa34",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T21:06:28Z",
+      "side": 1,
+      "message": "Better to remove this as well.",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117bc987_69897ff2",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T21:06:28Z",
+      "side": 1,
+      "message": "Can we merge these 2 FactoryGet calls into one because most except the basic UMA name are identica?",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a464a0b1_3a470214",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T21:06:28Z",
+      "side": 1,
+      "message": "This should not be reached.",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
