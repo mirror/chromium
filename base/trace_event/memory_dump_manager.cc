@@ -103,7 +103,7 @@ void NotifyHeapProfilingEnabledOnMDPThread(
 inline bool ShouldEnableMDPAllocatorHooks(HeapProfilingMode mode) {
   return (mode == kHeapProfilingModePseudo) ||
          (mode == kHeapProfilingModeNative) ||
-         (mode == kHeapProfilingModeNoStack);
+         (mode == kHeapProfilingModeBackground);
 }
 
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
@@ -267,9 +267,9 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
           AllocationContextTracker::CaptureMode::NATIVE_STACK);
       break;
 
-    case kHeapProfilingModeNoStack:
+    case kHeapProfilingModeBackground:
       AllocationContextTracker::SetCaptureMode(
-          AllocationContextTracker::CaptureMode::NO_STACK);
+          AllocationContextTracker::CaptureMode::PSEUDO_STACK);
       break;
 
     case kHeapProfilingModeTaskProfiler:

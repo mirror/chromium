@@ -37,11 +37,11 @@ class HeapProfilerSerializationState;
 
 enum HeapProfilingMode {
   kHeapProfilingModeDisabled,
-  kHeapProfilingModePseudo,
-  kHeapProfilingModeNative,
-  kHeapProfilingModeNoStack,
-  kHeapProfilingModeTaskProfiler,
-  kHeapProfilingModeInvalid  // Disabled permanently or unsupported.
+  kHeapProfilingModePseudo,  // Pseudo stacks with default filtering categories.
+  kHeapProfilingModeBackground,    // Pseudo stacks without default filtering.
+  kHeapProfilingModeNative,        // Native stacks
+  kHeapProfilingModeTaskProfiler,  // Pertask count without allocation register.
+  kHeapProfilingModeInvalid        // Disabled permanently or unsupported.
 };
 
 // This is the interface exposed to the rest of the codebase to deal with
