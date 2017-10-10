@@ -14,7 +14,9 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.StatisticsRecorderAndroid;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.components.variations.VariationsAssociatedData;
 
 import java.util.HashMap;
@@ -38,6 +40,12 @@ public class FeedbackCollector
      */
     @VisibleForTesting
     static final String URL_KEY = "URL";
+
+    private static final String CHROME_HOME_STATE_KEY = "Chrome Home State";
+    private static final String CHROME_HOME_ENABLED_VALUE = "Enabled";
+    private static final String CHROME_HOME_DISABLED_VALUE = "Disabled";
+    private static final String CHROME_HOME_OPT_IN_VALUE = "Opt-In";
+    private static final String CHROME_HOME_OPT_OUT_VALUE = "Opt-Out";
 
     /**
      * The timeout (ms) for gathering data asynchronously.
@@ -292,6 +300,7 @@ public class FeedbackCollector
         addConnectivityData();
         addDataReductionProxyData();
         addVariationsData();
+        addChromeHomeData();
         return asBundle();
     }
 
@@ -317,6 +326,21 @@ public class FeedbackCollector
     private void addVariationsData() {
         if (mProfile.isOffTheRecord()) return;
         mData.putAll(VariationsAssociatedData.getFeedbackMap());
+    }
+
+    private void addChromeHomeData() {
+        if (mProfile.isOffTheRecord()) return;
+
+        String value;
+        boolean chromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
+        boolean userPreferenceSet =
+                ChromePreferenceManager.getInstance().isChromeHomeUserPreferenceSet();
+        if (chromeHomeEnabled) {
+            value = userPreferenceSet ? CHROME_HOME_OPT_IN_VALUE : CHROME_HOME_ENABLED_VALUE;
+        } else {
+            value = userPreferenceSet ? CHROME_HOME_OPT_OUT_VALUE : CHROME_HOME_DISABLED_VALUE;
+        }
+        mData.put(CHROME_HOME_STATE_KEY, value);
     }
 
     private Bundle asBundle() {
