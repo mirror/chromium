@@ -115,7 +115,7 @@ public class ChromeHomePromoDialog extends PromoDialog {
             }
         });
 
-        toggle.setChecked(FeatureUtilities.isChromeHomeEnabled());
+        toggle.setChecked(mShowReason != ShowReason.NTP);
         addControl(toggleLayout);
     }
 
