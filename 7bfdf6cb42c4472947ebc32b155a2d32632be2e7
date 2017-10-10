@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6351f820_4f7e825d",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-10T04:06:56Z",
+      "side": 1,
+      "message": "oops. No.",
+      "parentUuid": "79e11bcc_8dbb4abd",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 16
+      },
+      "revId": "7bfdf6cb42c4472947ebc32b155a2d32632be2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70aa9717_76e53ce5",
         "filename": "chrome/browser/push_messaging/push_messaging_browsertest.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T02:45:42Z",
       "side": 1,
       "message": "I\u0027m not familiar with this code, but this looks strange. Both \"1\" and \"11\" would match a tag of \"1\". Is that expected? Maybe a comment?",
+      "range": {
+        "startLine": 308,
+        "startChar": 11,
+        "endLine": 308,
+        "endChar": 59
+      },
+      "revId": "7bfdf6cb42c4472947ebc32b155a2d32632be2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9102f0e_6912cf99",
+        "filename": "chrome/browser/push_messaging/push_messaging_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-10T04:06:56Z",
+      "side": 1,
+      "message": "you\u0027re right that it\u0027s heuristic. For the purposes of how it\u0027s used in these tests, it should be sufficient. Added a comment.",
+      "parentUuid": "70aa9717_76e53ce5",
       "range": {
         "startLine": 308,
         "startChar": 11,
