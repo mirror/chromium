@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ea06f36_106c1517",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-10T22:50:42Z",
+      "side": 1,
+      "message": "this needs a comment at least, or (preferable) something intrinsic like\n\n if (!extension) {\n   DCHECK(base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n          switches::kDisableDefaultApps));\n   return;\n }",
+      "revId": "c14ea24ed8fbfaf79ab302b8a7c420e1f64d9bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
