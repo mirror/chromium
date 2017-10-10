@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c66813f_ec212099",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-10T03:11:41Z",
+      "side": 1,
+      "message": "swap the code blocks:\n\nif (expression) {\n  // when true\n} else {\n  // when false\n}\n\nis easier to read than\n\nif (expression \u003d\u003d false) {\n  // when false\n} else {\n  // when true\n}",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 66
+      },
+      "revId": "9132aa5c98006a6def06a480a8510ae0ade0dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc381ea_d354672f",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-10T03:11:41Z",
+      "side": 1,
+      "message": "use CSS file:\nchrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+      "revId": "9132aa5c98006a6def06a480a8510ae0ade0dbc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
