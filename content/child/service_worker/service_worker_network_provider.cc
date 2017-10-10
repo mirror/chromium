@@ -120,6 +120,11 @@ class WebServiceWorkerNetworkProviderForFrame
     if (!GURL(request.Url()).SchemeIsHTTPOrHTTPS())
       return nullptr;
 
+    if (request.GetServiceWorkerMode() !=
+        blink::WebURLRequest::ServiceWorkerMode::kAll) {
+      return nullptr;
+    }
+
     // S13nServiceWorker:
     // Create our own SubresourceLoader to route the request
     // to the controller ServiceWorker.
@@ -239,11 +244,6 @@ int ServiceWorkerNetworkProvider::provider_id() const {
 }
 
 bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
-    // Interception for subresource loading is not working (yet)
-    // when servicification is enabled.
-    return false;
-  }
   return context() && context()->controller();
 }
 
