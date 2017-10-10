@@ -26,149 +26,168 @@ print_preview.AppStateField = {
   VENDOR_OPTIONS: 'vendorOptions'
 };
 
-/**
- * Object used to represent a recent destination in the app state.
- * @constructor
- * @struct
- */
-function RecentDestination(destination) {
-  /**
-   * ID of the RecentDestination.
-   * @type {string}
-   */
-  this.id = destination.id;
-
-  /**
-   * Origin of the RecentDestination.
-   * @type {!print_preview.DestinationOrigin}
-   */
-  this.origin = destination.origin;
-
-  /**
-   * Account the RecentDestination is registered for.
-   * @type {string}
-   */
-  this.account = destination.account || '';
-
-  /**
-   * CDD of the RecentDestination.
-   * @type {print_preview.Cdd}
-   */
-  this.capabilities = destination.capabilities;
-
-  /**
-   * Name of the RecentDestination.
-   * @type {string}
-   */
-  this.name = destination.name || '';
-
-  /**
-   * Extension ID associated with the RecentDestination.
-   * @type {string}
-   */
-  this.extensionId = destination.extension_id || '';
-
-  /**
-   * Extension name associated with the RecentDestination.
-   * @type {string}
-   */
-  this.extensionName = destination.extension_name || '';
-}
-
 cr.define('print_preview', function() {
   'use strict';
-
-  /**
-   * Object used to get and persist the print preview application state.
-   * @constructor
-   */
-  function AppState() {
+  class AppStateRecentDestination {
     /**
-     * Internal representation of application state.
-     * @private {Object}
+     * Object used to represent a recent destination stored in the app state.
+     * @param {!print_preview.Destination} destination The destination to store.
      */
-    this.state_ = {};
-    this.state_[print_preview.AppStateField.VERSION] = AppState.VERSION_;
-    this.state_[print_preview.AppStateField.RECENT_DESTINATIONS] = [];
+    constructor(destination) {
+      /**
+       * ID of the AppStateRecentDestination.
+       * @type {string}
+       * @private
+       */
+      this.id_ = destination.id;
 
-    /**
-     * Whether the app state has been initialized. The app state will ignore all
-     * writes until it has been initialized.
-     * @private {boolean}
-     */
-    this.isInitialized_ = false;
+      /**
+       * Origin of the AppStateRecentDestination.
+       * @type {!print_preview.DestinationOrigin}
+       * @private
+       */
+      this.origin_ = destination.origin;
 
-    /**
-     * Native Layer object to use for sending app state to C++ handler.
-     * @private {!print_preview.NativeLayer}
-     */
-    this.nativeLayer_ = print_preview.NativeLayer.getInstance();
+      /**
+       * Account the AppStateRecentDestination is registered for.
+       * @type {string}
+       * @private
+       */
+      this.account_ = destination.account || '';
+
+      /**
+       * CDD of the AppStateRecentDestination.
+       * @type {?print_preview.Cdd}
+       * @private
+       */
+      this.capabilities_ = destination.capabilities;
+
+      /**
+       * Display name of the AppStateRecentDestination.
+       * @type {string}
+       * @private
+       */
+      this.displayName_ = destination.displayName || '';
+
+      /**
+       * Extension ID associated with the AppStateRecentDestination.
+       * @type {string}
+       * @private
+       */
+      this.extensionId_ = destination.extensionId || '';
+
+      /**
+       * Extension name associated with the AppStateRecentDestination.
+       * @type {string}
+       * @private
+       */
+      this.extensionName_ = destination.extensionName || '';
+    }
+
+    get id() {
+      return this.id_;
+    }
+
+    get origin() {
+      return this.origin_;
+    }
+
+    get account() {
+      return this.account_;
+    }
+
+    get capabilities() {
+      return this.capabilities_;
+    }
+
+    get displayName() {
+      return this.displayName_;
+    }
+
+    get extensionId() {
+      return this.extensionId_;
+    }
+
+    get extensionName() {
+      return this.extensionName_;
+    }
   }
 
-  /**
-   * Number of recent print destinations to store across browser sessions.
-   * @const {number}
-   */
-  AppState.NUM_DESTINATIONS_ = 3;
-
-  /**
-   * Current version of the app state. This value helps to understand how to
-   * parse earlier versions of the app state.
-   * @type {number}
-   * @const
-   * @private
-   */
-  AppState.VERSION_ = 2;
-
-  AppState.prototype = {
+  class AppState {
     /**
-     * @return {?RecentDestination} The most recent destination,
-     *     which is currently the selected destination.
+     * Object used to get and persist the print preview application state.
+     */
+    constructor() {
+      /**
+       * Internal representation of application state.
+       * @private {Object}
+       */
+      this.state_ = {};
+      this.state_[print_preview.AppStateField.VERSION] = AppState.VERSION_;
+      this.state_[print_preview.AppStateField.RECENT_DESTINATIONS] = [];
+
+      /**
+       * Whether the app state has been initialized. The app state will ignore
+       * all writes until it has been initialized.
+       * @private {boolean}
+       */
+      this.isInitialized_ = false;
+
+      /**
+       * Native Layer object to use for sending app state to C++ handler.
+       * @private {!print_preview.NativeLayer}
+       */
+      this.nativeLayer_ = print_preview.NativeLayer.getInstance();
+    }
+
+    /**
+     * @return {?print_preview.AppStateRecentDestination} The most recent
+     *     destination, which is currently the selected destination.
      */
     get selectedDestination() {
       return (this.state_[print_preview.AppStateField.RECENT_DESTINATIONS]
                   .length > 0) ?
           this.state_[print_preview.AppStateField.RECENT_DESTINATIONS][0] :
           null;
-    },
+    }
 
     /**
      * @return {boolean} Whether the selected destination is valid.
      */
-    isSelectedDestinationValid: function() {
+    isSelectedDestinationValid() {
       return !!this.selectedDestination && !!this.selectedDestination.id &&
           !!this.selectedDestination.origin;
-    },
+    }
 
     /**
-     * @return {?Array<!RecentDestination>} The
+     * @return {?Array<!print_preview.AppStateRecentDestination>} The
      *     AppState.NUM_DESTINATIONS_ most recent destinations.
      */
     get recentDestinations() {
       return this.state_[print_preview.AppStateField.RECENT_DESTINATIONS];
-    },
+    }
 
     /**
      * @param {!print_preview.AppStateField} field App state field to check if
      *     set.
      * @return {boolean} Whether a field has been set in the app state.
      */
-    hasField: function(field) {
+    hasField(field) {
       return this.state_.hasOwnProperty(field);
-    },
+    }
 
     /**
      * @param {!print_preview.AppStateField} field App state field to get.
      * @return {?} Value of the app state field.
      */
-    getField: function(field) {
+    getField(field) {
       if (field == print_preview.AppStateField.CUSTOM_MARGINS) {
         return this.state_[field] ?
             print_preview.Margins.parse(this.state_[field]) :
             null;
       }
       return this.state_[field];
-    },
+    }
 
     /**
      * Initializes the app state from a serialized string returned by the native
@@ -176,7 +195,7 @@ cr.define('print_preview', function() {
      * @param {?string} serializedAppStateStr Serialized string representation
      *     of the app state.
      */
-    init: function(serializedAppStateStr) {
+    init(serializedAppStateStr) {
       if (serializedAppStateStr) {
         try {
           var state = JSON.parse(serializedAppStateStr);
@@ -209,21 +228,21 @@ cr.define('print_preview', function() {
         this.state_[print_preview.AppStateField.RECENT_DESTINATIONS].length =
             AppState.NUM_DESTINATIONS_;
       }
-    },
+    }
 
     /**
      * Sets to initialized state. Now object will accept persist requests.
      */
-    setInitialized: function() {
+    setInitialized() {
       this.isInitialized_ = true;
-    },
+    }
 
     /**
      * Persists the given value for the given field.
      * @param {!print_preview.AppStateField} field Field to persist.
      * @param {?} value Value of field to persist.
      */
-    persistField: function(field, value) {
+    persistField(field, value) {
       if (!this.isInitialized_)
         return;
       if (field == print_preview.AppStateField.CUSTOM_MARGINS) {
@@ -232,19 +251,19 @@ cr.define('print_preview', function() {
         this.state_[field] = value;
       }
       this.persist_();
-    },
+    }
 
     /**
      * Persists the selected destination.
      * @param {!print_preview.Destination} dest Destination to persist.
      */
-    persistSelectedDestination: function(dest) {
+    persistSelectedDestination(dest) {
       if (!this.isInitialized_)
         return;
 
       // Determine if this destination is already in the recent destinations,
       // and where in the array it is located.
-      var newDestination = new RecentDestination(dest);
+      var newDestination = new AppStateRecentDestination(dest);
       var indexFound =
           this.state_[print_preview.AppStateField.RECENT_DESTINATIONS]
               .findIndex(function(recent) {
@@ -275,16 +294,34 @@ cr.define('print_preview', function() {
           0, 0, newDestination);
 
       this.persist_();
-    },
+    }
 
     /**
      * Calls into the native layer to persist the application state.
      * @private
      */
-    persist_: function() {
+    persist_() {
       this.nativeLayer_.saveAppState(JSON.stringify(this.state_));
     }
-  };
+  }
 
-  return {AppState: AppState};
+  /**
+   * Number of recent print destinations to store across browser sessions.
+   * @const {number}
+   */
+  AppState.NUM_DESTINATIONS_ = 3;
+
+  /**
+   * Current version of the app state. This value helps to understand how to
+   * parse earlier versions of the app state.
+   * @type {number}
+   * @const
+   * @private
+   */
+  AppState.VERSION_ = 2;
+
+  return {
+    AppState: AppState,
+    AppStateRecentDestination: AppStateRecentDestination
+  };
 });
