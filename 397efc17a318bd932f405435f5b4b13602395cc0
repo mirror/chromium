@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1a11c2_861fbc05",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-10T03:41:02Z",
+      "side": 1,
+      "message": "Can this be removed?",
+      "revId": "397efc17a318bd932f405435f5b4b13602395cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
