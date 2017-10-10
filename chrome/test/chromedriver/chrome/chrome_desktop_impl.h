@@ -73,6 +73,7 @@ class ChromeDesktopImpl : public ChromeImpl {
   Status SetWindowSize(const std::string& target_id, int width, int height);
   Status MaximizeWindow(const std::string& target_id);
   Status FullScreenWindow(const std::string& target_id);
+  Status ExitFullscreen(const std::string& target_id);
 
  private:
   struct Window {
