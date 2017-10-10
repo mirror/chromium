@@ -72,6 +72,7 @@ std::unique_ptr<NotificationTemplateBuilder> NotificationTemplateBuilder::Build(
 
   builder->EndToastElement();
 
+  LOG(ERROR) << builder->GetNotificationTemplate().c_str();
   return builder;
 }
 
