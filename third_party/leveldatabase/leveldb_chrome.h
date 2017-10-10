@@ -5,6 +5,7 @@
 #ifndef THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 #define THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 
+#include "base/files/file_path.h"
 #include "leveldb/cache.h"
 #include "leveldb/env.h"
 
@@ -23,6 +24,11 @@ extern bool IsMemEnv(const leveldb::Env* env);
 
 // Creates an in-memory Env for which all files are stored in the heap.
 extern leveldb::Env* NewMemEnv(leveldb::Env* base_env);
+
+// Corrupt a closed database for testing purposes. After calling this function
+// leveldb::OpenDB(...) will return a status where IsCorruption() returns true.
+// Returns true if the database was successfully corrupted, false if not.
+extern bool CorruptClosedDBForTesting(const base::FilePath& db_path);
 
 }  // namespace leveldb_chrome
 
