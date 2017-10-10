@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57f4842c_fe4e0883",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-10-10T15:32:58Z",
+      "side": 1,
+      "message": "Maybe unnecessary to return early because the two implementations ends up with the same logic, and this would be more efficient?\n\nImp1 (Currently):\n-set true;\n-return\n\nImp2:\nwhen true:\n-If true\n-return\n\nwhen false:\n-If false\n-set true\n-return",
+      "parentUuid": "f951c03a_32220ed3",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "ac221960bfa7fd7b406566e67a1c572836974c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a00d8719_94060076",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ac221960bfa7fd7b406566e67a1c572836974c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0926c8_0777002c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-10-10T15:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00d8719_94060076",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 8
+      },
+      "revId": "ac221960bfa7fd7b406566e67a1c572836974c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
