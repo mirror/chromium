@@ -70,6 +70,30 @@
       "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85ba5be_2d029055",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-10T22:06:35Z",
+      "side": 1,
+      "message": "I think this works! :) Just implemented your suggestion, will upload a change soon where which will make this CL much smaller!",
+      "parentUuid": "e1619ff5_eff9590a",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
