@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e2367d_6e0987f0",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T05:34:14Z",
+      "side": 1,
+      "message": "nit: whether",
+      "range": {
+        "startLine": 474,
+        "startChar": 54,
+        "endLine": 474,
+        "endChar": 60
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9f1f6b_7570a9fa",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T05:34:14Z",
+      "side": 1,
+      "message": "nit: should it be DCHECK_GT?",
+      "range": {
+        "startLine": 501,
+        "startChar": 9,
+        "endLine": 501,
+        "endChar": 11
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fb4a39_a706c1d9",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T05:34:14Z",
+      "side": 1,
+      "message": "It should be \u003e, in order not to mark an empty selection in the remaining text.",
+      "range": {
+        "startLine": 504,
+        "startChar": 22,
+        "endLine": 504,
+        "endChar": 24
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1719f2b_554941c2",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T05:34:14Z",
+      "side": 1,
+      "message": "nit: whether",
+      "range": {
+        "startLine": 505,
+        "startChar": 50,
+        "endLine": 505,
+        "endChar": 56
+      },
+      "revId": "63b9689c0cc24abfae45b617e08e6d5c3b72745c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
