@@ -87,6 +87,24 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d1a399_26d318ec",
+        "filename": "mojo/public/cpp/test_support/waiter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-10T03:35:28Z",
+      "side": 1,
+      "message": "Yeah, good point that sync is still 3 lines. But I agree the ash::mojom::SystemTrayTestApi::IsBubbleViewVisibleCallback is unfortunate.",
+      "parentUuid": "1739c28b_88140395",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
