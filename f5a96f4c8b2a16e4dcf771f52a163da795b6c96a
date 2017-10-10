@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f98be9ca_9f219666",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-10T17:31:12Z",
+      "side": 0,
+      "message": "why is this removed?",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
