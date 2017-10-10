@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91fa5304_03d87254",
+        "filename": "content/browser/gpu/browser_gpu_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T19:30:24Z",
+      "side": 1,
+      "message": "Since BrowserGpuClient keeps getting recreated for each gpu crash, I believe we can\u0027t do this? There\u0027s code that expects the browser to have a special client-id (1 iirc), right? So this probably needs to be a singleton, or be managed by some existing singleton (maybe BrowserMainLoop?)",
+      "revId": "d490cf443a11c5aa4d2ba7d0d79de366968861e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7163d2e_6ee8fbb0",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T19:30:24Z",
+      "side": 1,
+      "message": "Who is/will-be calling this?",
+      "revId": "d490cf443a11c5aa4d2ba7d0d79de366968861e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
