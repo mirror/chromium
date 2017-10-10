@@ -7,6 +7,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/mock_callback.h"
+#include "base/test/scoped_task_environment.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "gpu/command_buffer/common/sync_token.h"
@@ -23,6 +25,25 @@
 namespace media {
 
 namespace {
+
+// TODO(sandersd): This is the same as SyncTokenClientImpl in
+// video_frame_unittest.cc. Share the impl.
+class FakeSyncTokenClient : public VideoFrame::SyncTokenClient {
+ public:
+  explicit FakeSyncTokenClient(const gpu::SyncToken& sync_token)
+      : sync_token_(sync_token) {}
+
+  ~FakeSyncTokenClient() override {}
+
+  void GenerateSyncToken(gpu::SyncToken* sync_token) override {
+    *sync_token = sync_token_;
+  }
+
+  void WaitSyncToken(const gpu::SyncToken& sync_token) override {}
+
+ private:
+  gpu::SyncToken sync_token_;
+};
 
 class VideoFrameStructTraitsTest : public testing::Test,
                                    public media::mojom::TraitsTestService {
@@ -42,13 +63,16 @@ class VideoFrameStructTraitsTest : public testing::Test,
     return proxy->EchoVideoFrame(std::move(input), frame);
   }
 
+  void RunUntilIdle() { scoped_task_environment_.RunUntilIdle(); }
+  void CloseAllBindings() { traits_test_bindings_.CloseAllBindings(); }
+
  private:
   void EchoVideoFrame(const scoped_refptr<VideoFrame>& f,
                       EchoVideoFrameCallback callback) override {
     std::move(callback).Run(f);
   }
 
-  base::MessageLoop loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   mojo::BindingSet<TraitsTestService> traits_test_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoFrameStructTraitsTest);
@@ -112,6 +136,41 @@ TEST_F(VideoFrameStructTraitsTest, MailboxVideoFrame) {
   EXPECT_EQ(frame->timestamp(), base::TimeDelta::FromSeconds(100));
   ASSERT_TRUE(frame->HasTextures());
   ASSERT_EQ(frame->mailbox_holder(0).mailbox, mailbox);
+}
+
+TEST_F(VideoFrameStructTraitsTest, MailboxVideoFrameRelease) {
+  base::MockCallback<base::Callback<void(const gpu::SyncToken&)>>
+      release_mailbox_cb;
+
+  // Inital and updated SyncTokens for the frame.
+  gpu::SyncToken original(gpu::CommandBufferNamespace::GPU_IO, 0,
+                          gpu::CommandBufferId::FromUnsafeValue(1), 1);
+  gpu::SyncToken updated(gpu::CommandBufferNamespace::GPU_IO, 0,
+                         gpu::CommandBufferId::FromUnsafeValue(1), 2);
+
+  // Set up the initial VideoFrame and then pass it via Mojo (twice).
+  // TODO(sandersd): Share VideoFrame construction code.
+  gpu::Mailbox mailbox = gpu::Mailbox::Generate();
+  gpu::MailboxHolder mailbox_holder[VideoFrame::kMaxPlanes];
+  mailbox_holder[0] = gpu::MailboxHolder(mailbox, original, 0);
+  scoped_refptr<VideoFrame> frame = VideoFrame::WrapNativeTextures(
+      PIXEL_FORMAT_ARGB, mailbox_holder, release_mailbox_cb.Get(),
+      gfx::Size(100, 100), gfx::Rect(10, 10, 80, 80), gfx::Size(200, 100),
+      base::TimeDelta::FromSeconds(100));
+  ASSERT_TRUE(RoundTrip(&frame));
+  ASSERT_TRUE(frame);
+
+  // Disconnect the proxy; the release callback should still work.
+  CloseAllBindings();
+
+  // Update the sync token on the video frame.
+  FakeSyncTokenClient client(updated);
+  frame->UpdateReleaseSyncToken(&client);
+
+  // Expect a callback with the new sync token when |frame| is destructed.
+  EXPECT_CALL(release_mailbox_cb, Run(updated));
+  frame = nullptr;
+  RunUntilIdle();
 }
 
 }  // namespace media
