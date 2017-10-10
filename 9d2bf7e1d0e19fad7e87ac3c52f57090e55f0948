@@ -52,6 +52,24 @@
       "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7572452f_e02fc9a7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T03:26:14Z",
+      "side": 1,
+      "message": "Makes sense.\n\nIn fact, NGOffsetMappingResult will become more complicated, it seems better to expose it from NGInlineNode so that we don\u0027t bloat NGInlineNode.\n\nI\u0027ll make such a patch.",
+      "parentUuid": "1dbdcae1_5f05cd1d",
+      "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
