@@ -24,9 +24,9 @@
 #include "third_party/WebKit/public/platform/WebRTCDataChannelInit.h"
 #include "third_party/WebKit/public/platform/WebRTCOfferOptions.h"
 #include "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h"
-#include "third_party/WebKit/public/platform/WebRTCRtpContributingSource.h"
 #include "third_party/WebKit/public/platform/WebRTCRtpReceiver.h"
 #include "third_party/WebKit/public/platform/WebRTCRtpSender.h"
+#include "third_party/WebKit/public/platform/WebRTCRtpSource.h"
 #include "third_party/WebKit/public/platform/WebRTCStatsResponse.h"
 #include "third_party/WebKit/public/platform/WebRTCVoidRequest.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -260,26 +260,26 @@ class MockWebRTCRtpSender : public blink::WebRTCRtpSender {
   std::unique_ptr<blink::WebMediaStreamTrack> track_;
 };
 
-class MockWebRTCRtpContributingSource
-    : public blink::WebRTCRtpContributingSource {
+class MockWebRTCRtpSource : public blink::WebRTCRtpSource {
  public:
-  MockWebRTCRtpContributingSource(
-      blink::WebRTCRtpContributingSourceType source_type,
-      double timestamp_ms,
-      uint32_t source)
+  MockWebRTCRtpSource(blink::WebRTCRtpSourceType source_type,
+                      double timestamp_ms,
+                      uint32_t source)
       : source_type_(source_type),
         timestamp_ms_(timestamp_ms),
         source_(source) {}
-  ~MockWebRTCRtpContributingSource() override {}
+  ~MockWebRTCRtpSource() override {}
 
-  blink::WebRTCRtpContributingSourceType SourceType() const override {
+  blink::WebRTCRtpSourceType SourceType() const override {
     return source_type_;
   }
   double TimestampMs() const override { return timestamp_ms_; }
   uint32_t Source() const override { return source_; }
+  uint8_t AudioLevel() const override { return 127; }
+  bool HasAudioLevel() const override { return false; }
 
  private:
-  blink::WebRTCRtpContributingSourceType source_type_;
+  blink::WebRTCRtpSourceType source_type_;
   double timestamp_ms_;
   uint32_t source_;
 };
@@ -303,29 +303,27 @@ class MockWebRTCRtpReceiver : public blink::WebRTCRtpReceiver {
   // - 3rd call: { (CSRC, 1, 5000), (CSRC, 2, 10000), (SSRC, 0, 10000) }
   // - 4th call: { (CSRC, 2, 10000), (CSRC, 0, 15000), (SSRC, 0, 15000) }
   // RTCPeerConnection-getReceivers.html depends on this behavior.
-  blink::WebVector<std::unique_ptr<blink::WebRTCRtpContributingSource>>
-  GetSources() override {
+  blink::WebVector<std::unique_ptr<blink::WebRTCRtpSource>> GetSources()
+      override {
     ++num_packets_;
     size_t num_csrcs = std::min(kNumCSRCsActive, num_packets_);
-    blink::WebVector<std::unique_ptr<blink::WebRTCRtpContributingSource>>
-        contributing_sources(num_csrcs + 1);
+    blink::WebVector<std::unique_ptr<blink::WebRTCRtpSource>> sources(
+        num_csrcs + 1);
     for (size_t i = 0; i < num_csrcs; ++i) {
       size_t sequence_number = num_packets_ - num_csrcs + i;
-      contributing_sources[i] =
-          base::MakeUnique<MockWebRTCRtpContributingSource>(
-              blink::WebRTCRtpContributingSourceType::CSRC,
-              // Return value should include timestamps for the last 10 seconds,
-              // we pretend |10000.0 / kNumCSRCsActive| milliseconds have passed
-              // per packet in the sequence, starting from 0. This is not
-              // relative to any real clock.
-              sequence_number * 10000.0 / kNumCSRCsActive,
-              sequence_number % kNumCSRCs);
+      sources[i] = base::MakeUnique<MockWebRTCRtpSource>(
+          blink::WebRTCRtpSourceType::CSRC,
+          // Return value should include timestamps for the last 10 seconds,
+          // we pretend |10000.0 / kNumCSRCsActive| milliseconds have passed
+          // per packet in the sequence, starting from 0. This is not
+          // relative to any real clock.
+          sequence_number * 10000.0 / kNumCSRCsActive,
+          sequence_number % kNumCSRCs);
     }
-    contributing_sources[num_csrcs] =
-        base::MakeUnique<MockWebRTCRtpContributingSource>(
-            blink::WebRTCRtpContributingSourceType::SSRC,
-            contributing_sources[num_csrcs - 1]->TimestampMs(), 0);
-    return contributing_sources;
+    sources[num_csrcs] = base::MakeUnique<MockWebRTCRtpSource>(
+        blink::WebRTCRtpSourceType::SSRC, sources[num_csrcs - 1]->TimestampMs(),
+        0);
+    return sources;
   }
 
  private:
