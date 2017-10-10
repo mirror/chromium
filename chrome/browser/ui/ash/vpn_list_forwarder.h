@@ -60,6 +60,11 @@ class VpnListForwarder : ArcAppListPrefs::Observer,
   // observed.
   void UpdateVPNProviders();
 
+  //  Retrieves the current list of ArcVPNproviders installed in primary
+  //  user's profile. Should only be called after Arc package list gets initial
+  //  refreshed after Arc container starts. Called only once per Arc session.
+  void UpdateArcVPNProviders();
+
   // Starts to observe extension registry and ArcAppListPrefs. Must only be
   // called when a user is logged in.
   void AttachToPrimaryUserProfile();
