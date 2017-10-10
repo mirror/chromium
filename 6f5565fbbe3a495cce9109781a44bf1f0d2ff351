@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "c3a68ea7_3f604aef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T16:48:14Z",
+      "side": 1,
+      "message": "Now I am not sure about this. It is not a double negation, strictly speaking. However, initially I understood this as \"do not show indication at all\". This may be only me, so feel free to ignore.",
+      "parentUuid": "b600857d_8814ff55",
+      "range": {
+        "startLine": 451,
+        "startChar": 49,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c568251e_d6a5722f",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 1
