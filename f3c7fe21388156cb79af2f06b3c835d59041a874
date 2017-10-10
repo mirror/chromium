@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec3c7333_2e46a703",
+        "filename": "DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Actually due to header file inclusion violation during cl upload, I made this change.\nAfter adding GetVulkanSurface() to output_surface.h, issue is solved.\n\nBut now I could not use \"gpu/vulkan/features.h\" for adding ENABLE_VULKAN on display_output_surface.h file yet.",
+      "parentUuid": "9d4c2aad_025b1c9c",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7afda11_7751f173",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281973d8_d298e24c",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7afda11_7751f173",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "32f1938a_9e619407",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5056ead_ec189af4",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51fb827_f472eb22",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d836b30_88756842",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c51fb827_f472eb22",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e8e195c2_15ec2e50",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bf7ba00_1f0877ce",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a413d82_020f2821",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749596f2_75496d54",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a413d82_020f2821",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "697797e1_d3827cce",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46dfb5c8_1cf5a268",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1e8ab2b_15318f8c",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
         "patchSetId": 17
@@ -135,6 +261,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c74386_54fe6675",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e8ab2b_15318f8c",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d5155c28_226a4a38",
+        "filename": "components/viz/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "934436c7_c850007d",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4950a35_f3e1346e",
         "filename": "components/viz/service/BUILD.gn",
         "patchSetId": 17
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c63ba4e8_1e729cfc",
+        "filename": "components/viz/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4950a35_f3e1346e",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d02722_0833c779",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 17
@@ -186,6 +366,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79604e13_209d439c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02d02722_0833c779",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +410,30 @@
     },
     {
       "key": {
+        "uuid": "6a0ecd41_9fe7ea8e",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d658dce2_5d8a6a0e",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51afb50b_1f6eb571",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
@@ -226,6 +448,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9bd8d6_bd353655",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51afb50b_1f6eb571",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "82a10bdc_75436a37",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5e0cda_dc88b782",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00670f18_3af4e1f8",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
@@ -263,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "0bb6cd08_69d54dd0",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00670f18_3af4e1f8",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229b06cc_d302b237",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
@@ -277,6 +553,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a30077_e6d9587b",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229b06cc_d302b237",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +597,30 @@
     },
     {
       "key": {
+        "uuid": "58ab6c30_8ea8abaf",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1067bd6b_aa62a4b9",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 54
+      },
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf203f0e_94a80ae3",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
@@ -320,6 +638,24 @@
     },
     {
       "key": {
+        "uuid": "80050d16_524f0cd8",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf203f0e_94a80ae3",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca0e6875_5a57787a",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 17
@@ -334,6 +670,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b9ef0e_81c1e2de",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca0e6875_5a57787a",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +725,24 @@
     },
     {
       "key": {
+        "uuid": "baf87a7c_dae03a6b",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6794639_84fa943d",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba4a0a3_7a400b0a",
         "filename": "components/viz/service/display/skia_renderer.h",
         "patchSetId": 17
@@ -385,6 +757,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e3b464_35b241fc",
+        "filename": "components/viz/service/display/skia_renderer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba4a0a3_7a400b0a",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +795,24 @@
     },
     {
       "key": {
+        "uuid": "6cbfd07a_cae89149",
+        "filename": "gpu/vulkan/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "There is a conflict issue with definition of Time variable when X11 is included.\n\nthird_party/WebKit/Source/platform/platform/SkiaTextureHolder.o\nIn file included from ../../third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp:13:\nIn file included from ../../third_party/skia/include/gpu/GrBackendSurface.h:16:\nIn file included from ../../third_party/skia/include/gpu/vk/GrVkTypes.h:13:\nIn file included from ../../third_party/skia/include/gpu/vk/GrVkDefines.h:36:\nIn file included from ../../third_party/vulkan/include/vulkan/vulkan.h:3468:\nIn file included from /usr/include/X11/Xlib.h:44:\n/usr/include/X11/X.h:77:23: error: type alias redefinition with different types (\u0027unsigned long\u0027 vs \u0027base::Time\u0027)\ntypedef unsigned long Time;\n                      ^\n../../third_party/WebKit/Source/platform/wtf/Time.h:24:7: note: previous definition is here\nusing Time \u003d base::Time;\n      ^\n1 error generated.\n[10106/14427] CXX obj/third_party/WebKit/Source/platform/platform/PaintArtifactCompositor.o\nninja: build stopped: subcommand failed.",
+      "parentUuid": "212f4b1c_a3777877",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "128b14e5_85913645",
         "filename": "gpu/vulkan/vulkan_device_queue.cc",
         "patchSetId": 17
@@ -419,6 +827,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329c414e_36681c55",
+        "filename": "gpu/vulkan/vulkan_device_queue.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128b14e5_85913645",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -445,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "1b27a1fd_3be6a6f2",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d9acee_0e76e8bf",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 33
+      },
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e401f0a_69b8fd24",
         "filename": "third_party/vulkan/include/vulkan/vk_platform.h",
         "patchSetId": 17
@@ -459,6 +909,24 @@
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edce747c_09a46f03",
+        "filename": "third_party/vulkan/include/vulkan/vk_platform.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-10-10T06:56:50Z",
+      "side": 1,
+      "message": "Done, I think this has been used for same X11 issue.\nEither this has to be commented or below change is required on vulkan/BUILD.gn #all_dependent_configs \u003d [ \"//third_party/vulkan:vulkan_headers\" ].",
+      "parentUuid": "4e401f0a_69b8fd24",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
