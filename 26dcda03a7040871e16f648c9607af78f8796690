@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "5f8746a5_5adb1b16",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T01:08:17Z",
+      "side": 1,
+      "message": "But we are talking about one WebContents in this feature. Enabling the feature when the Window is activated is not right, the feature should only be enabled when the WebContents is activated.\nUnlike InputMethod, which works for all web pages attached with one Window, this feature works only for one web page.",
+      "parentUuid": "ffef5a05_4d37dcc1",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6935ea9_742c49c0",
         "filename": "ui/aura/keyboard_lock/special_key_detector.h",
         "patchSetId": 18
