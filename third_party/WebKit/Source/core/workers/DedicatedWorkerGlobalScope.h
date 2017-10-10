@@ -74,12 +74,9 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
  private:
   friend class DedicatedWorkerThreadForTest;
 
-  DedicatedWorkerGlobalScope(const KURL&,
-                             const String& user_agent,
+  DedicatedWorkerGlobalScope(std::unique_ptr<GlobalScopeCreationParams>,
                              DedicatedWorkerThread*,
-                             double time_origin,
-                             std::unique_ptr<SecurityOrigin::PrivilegeData>,
-                             WorkerClients*);
+                             double time_origin);
 
   DedicatedWorkerObjectProxy& WorkerObjectProxy() const;
 };
