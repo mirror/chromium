@@ -28,8 +28,9 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
  public:
   // At this moment, paint worklet allows at most two global scopes at any time.
   static const size_t kNumGlobalScopes;
-  static PaintWorklet* From(LocalDOMWindow&);
-  static PaintWorklet* Create(LocalFrame*);
+  static PaintWorklet* From(LocalDOMWindow&,
+                            bool is_constructed_from_testing = false);
+  static PaintWorklet* Create(LocalFrame*, bool is_constructed_from_testing);
   ~PaintWorklet() override;
 
   void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
@@ -51,7 +52,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
  private:
   friend class PaintWorkletTest;
 
-  explicit PaintWorklet(LocalFrame*);
+  explicit PaintWorklet(LocalFrame*, bool is_constructed_from_testing);
 
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
@@ -59,9 +60,14 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
 
   // Since paint worklet has more than one global scope, we MUST override this
   // function and provide our own selection logic.
-  size_t SelectGlobalScope() const final;
+  size_t SelectGlobalScope() final;
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
   DocumentDefinitionMap document_definition_map_;
+
+  size_t previous_paint_frame_cnt_ = 0u;
+  size_t previously_selected_global_scope_ = 0u;
+  int paints_before_switching_global_scope_;
+  bool is_constructed_from_testing_;
 
   static const char* SupplementName();
 };

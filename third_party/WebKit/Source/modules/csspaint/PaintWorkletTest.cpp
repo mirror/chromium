@@ -24,7 +24,7 @@ class PaintWorkletTest : public ::testing::Test {
   void SetUp() override { proxy_ = GetPaintWorklet()->CreateGlobalScope(); }
 
   PaintWorklet* GetPaintWorklet() {
-    return PaintWorklet::From(*page_->GetDocument().domWindow());
+    return PaintWorklet::From(*page_->GetDocument().domWindow(), true);
   }
 
   size_t SelectGlobalScope(PaintWorklet* paint_worklet) {
@@ -85,26 +85,39 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
 TEST_F(PaintWorkletTest, GlobalScopeSelection) {
   PaintWorklet* paint_worklet = GetPaintWorklet();
   const size_t update_life_cycle_count = 500u;
-  size_t global_scope_switch_count = 0u;
-  size_t previous_selected_global_scope = 0u;
-  Vector<size_t> selected_global_scope_count(PaintWorklet::kNumGlobalScopes, 0);
+  size_t switched_frame_cnt = 0u;
   for (size_t i = 0; i < update_life_cycle_count; i++) {
     paint_worklet->GetFrame()->View()->UpdateAllLifecyclePhases();
-    size_t selected_global_scope = SelectGlobalScope(paint_worklet);
-    DCHECK_LT(selected_global_scope, PaintWorklet::kNumGlobalScopes);
-    selected_global_scope_count[selected_global_scope]++;
-    if (selected_global_scope != previous_selected_global_scope) {
-      previous_selected_global_scope = selected_global_scope;
-      global_scope_switch_count++;
+    size_t paint_cnt_within_frame = i;
+    size_t previously_selected_global_scope = 0u;
+    size_t global_scope_switch_count = 0u;
+    for (size_t j = 0; j < paint_cnt_within_frame; j++) {
+      size_t selected_global_scope = SelectGlobalScope(paint_worklet);
+      if (selected_global_scope != previously_selected_global_scope) {
+        previously_selected_global_scope = selected_global_scope;
+        // The first call to paint in this frame should not count as a global
+        // scope switching.
+        if (j != 0) {
+          global_scope_switch_count++;
+          switched_frame_cnt++;
+        }
+      }
     }
+    EXPECT_LT(global_scope_switch_count, 2u);
+    // Our implementation will switch to a random global scope every 25-30 paint
+    // calls, so when the |paint_cnt_within_frame| is < 25, there will be no
+    // switching at all.
+    if (i < 25)
+      EXPECT_EQ(global_scope_switch_count, 0u);
   }
-  EXPECT_EQ(PaintWorklet::kNumGlobalScopes, 2u);
-  // The following numbers depends on the number of paint worklet global scopes,
-  // which is why we check |kNumGlobalScopes| before.
-  EXPECT_EQ(selected_global_scope_count[0], 260u);
-  EXPECT_EQ(selected_global_scope_count[1], 240u);
-  EXPECT_EQ(global_scope_switch_count, 4u);
-
+  // In our current implementation, when we switch global scope within a frame,
+  // we switch to a random global scope. Even though it is not guaranteed that
+  // we'd switch to different global scope, we'd expect that happens half of the
+  // time. So in this test, we expect it to switch to a different global scope
+  // about (150, 350) times given 500 frames. The lower / upper bound is set to
+  // be generous to avoid flakiness.
+  EXPECT_GT(switched_frame_cnt, 150u);
+  EXPECT_LT(switched_frame_cnt, 350u);
   // Delete the page & associated objects.
   Terminate();
 }
