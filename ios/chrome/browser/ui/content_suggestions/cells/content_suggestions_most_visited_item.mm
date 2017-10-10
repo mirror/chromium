@@ -45,14 +45,7 @@
 }
 
 - (ntp_tiles::TileVisualType)tileType {
-  if (!self.attributes) {
-    return ntp_tiles::TileVisualType::NONE;
-  } else if (self.attributes.faviconImage) {
-    return ntp_tiles::TileVisualType::ICON_REAL;
-  }
-  return self.attributes.defaultBackgroundColor
-             ? ntp_tiles::TileVisualType::ICON_DEFAULT
-             : ntp_tiles::TileVisualType::ICON_COLOR;
+  return [FaviconAttributes tileVisualTypeFromAttributes:self.attributes];
 }
 
 - (CGFloat)cellHeightForWidth:(CGFloat)width {

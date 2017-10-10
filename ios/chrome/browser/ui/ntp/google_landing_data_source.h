@@ -12,6 +12,7 @@
 #include "components/ntp_tiles/tile_visual_type.h"
 #include "url/gurl.h"
 
+@class FaviconAttributes;
 class ReadingListModel;
 class LargeIconCache;
 namespace favicon {
@@ -64,13 +65,10 @@ class LargeIconService;
 // if there is valid fallback data with the |textColor| and |backgroundColor|
 // for the fallback icon to use. |isDefaultColor| is true if a default color
 // should be used instead of |backgroundColor|.
-- (void)getFaviconForURL:(const GURL&)URL
-                    size:(CGFloat)size
-                useCache:(BOOL)useCache
-           imageCallback:(void (^)(UIImage* favicon))imageCallback
-        fallbackCallback:(void (^)(UIColor* textColor,
-                                   UIColor* backgroundColor,
-                                   BOOL isDefaultColor))fallbackCallback;
+- (void)getFaviconForPageURL:(const GURL&)URL
+                        size:(CGFloat)size
+                    useCache:(BOOL)useCache
+                    callback:(void (^)(FaviconAttributes*))callback;
 
 @end
 
