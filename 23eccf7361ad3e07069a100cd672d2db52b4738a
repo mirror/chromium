@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aae1c3c_5054eb51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrIntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-10T21:20:57Z",
+      "side": 1,
+      "message": "nit: be more specific than \u0027Daydream\u0027, because the platform isn\u0027t adding this extra.",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "23eccf7361ad3e07069a100cd672d2db52b4738a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85873ee_ab013889",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-10T21:20:57Z",
+      "side": 1,
+      "message": "nit: Daydream Home?",
+      "range": {
+        "startLine": 870,
+        "startChar": 77,
+        "endLine": 870,
+        "endChar": 85
+      },
+      "revId": "23eccf7361ad3e07069a100cd672d2db52b4738a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
