@@ -22,6 +22,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Invoke;
 using ::testing::Return;
 
@@ -100,7 +101,9 @@ class BiodClientTest : public testing::Test {
                             std::unique_ptr<dbus::Response> response) {
     ASSERT_FALSE(pending_method_calls_.count(method_name));
     pending_method_calls_[method_name] = std::move(response);
-    EXPECT_CALL(*proxy_.get(), DoCallMethod(HasMember(method_name), _, _))
+    EXPECT_CALL(*proxy_.get(),
+                DoCallMethod(HasMember(method_name), _,
+                             A<dbus::ObjectProxy::ResponseCallback*>()))
         .WillOnce(Invoke(this, &BiodClientTest::OnCallMethod));
   }
 

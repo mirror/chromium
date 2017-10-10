@@ -22,6 +22,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Invoke;
 using ::testing::Return;
 
@@ -108,7 +109,8 @@ void ShillClientUnittestBase::SetUp() {
 
   // Set an expectation so mock_proxy's CallMethod() will use OnCallMethod()
   // to return responses.
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillRepeatedly(Invoke(this, &ShillClientUnittestBase::OnCallMethod));
 
   // Set an expectation so mock_proxy's CallMethodWithErrorCallback() will use

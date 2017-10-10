@@ -24,6 +24,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Return;
 using ::testing::SaveArg;
 
@@ -216,13 +217,13 @@ class PowerManagerClientTest : public testing::Test {
     EXPECT_CALL(
         *proxy_.get(),
         DoCallMethod(HasMember(power_manager::kRegisterSuspendDelayMethod), _,
-                     _))
+                     A<dbus::ObjectProxy::ResponseCallback*>()))
         .WillRepeatedly(
             Invoke(this, &PowerManagerClientTest::RegisterSuspendDelay));
     EXPECT_CALL(
         *proxy_.get(),
         DoCallMethod(HasMember(power_manager::kRegisterDarkSuspendDelayMethod),
-                     _, _))
+                     _, A<dbus::ObjectProxy::ResponseCallback*>()))
         .WillRepeatedly(
             Invoke(this, &PowerManagerClientTest::RegisterSuspendDelay));
 
@@ -273,7 +274,7 @@ class PowerManagerClientTest : public testing::Test {
     EXPECT_CALL(
         *proxy_.get(),
         DoCallMethod(IsSuspendReadiness(method_name, suspend_id, delay_id), _,
-                     _));
+                     A<dbus::ObjectProxy::ResponseCallback*>()));
   }
 
   // Arbitrary delay IDs returned to |client_|.
