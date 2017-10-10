@@ -132,6 +132,7 @@ class FrameTreeNodeBlameContextTest : public RenderViewHostImplTestHarness {
     for (int child_num = 1; shape[consumption++] == '('; ++child_num) {
       int child_id = self_id * 10 + child_num;
       tree()->AddFrame(node, process_id(), child_id,
+                       TestRenderFrameHost::CreateDeadEndInterfacesRequest(),
                        blink::WebTreeScopeType::kDocument, std::string(),
                        base::StringPrintf("uniqueName%d", child_id),
                        blink::WebSandboxFlags::kNone,
