@@ -37,6 +37,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_linux.h"
+#include "content/zygote/zygote_main.h"
 #include "gpu/config/gpu_info.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
@@ -303,6 +304,9 @@ bool LinuxSandbox::InitializeSandboxImpl(const gpu::GPUInfo* gpu_info) {
       command_line->GetSwitchValueASCII(switches::kProcessType);
   service_manager::SandboxType sandbox_type =
       service_manager::SandboxTypeFromCommandLine(*command_line);
+
+  if (sandbox_type == service_manager::SANDBOX_TYPE_PROFILING)
+    content::DisableLocaltimeOverride();
 
   // We need to make absolutely sure that our sandbox is "sealed" before
   // returning.
