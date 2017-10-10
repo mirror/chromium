@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "d125a3bb_7235e399",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-10-10T08:11:31Z",
+      "side": 1,
+      "message": "In this case Changcheng mentioned, the revert_of field in A points to B instead of C, and I thought that would fail the pure-revert validation.\n\nIf this is not the case, we might have to revisit the design, because there might be a potential security hole here.\n\nCould you help confirm?",
+      "parentUuid": "deb09214_7217a065",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
