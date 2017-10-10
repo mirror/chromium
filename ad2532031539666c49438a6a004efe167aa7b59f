@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f8cee4_9fa21a56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:39:49Z",
+      "side": 1,
+      "message": "nit: there seems to be some whitespace at the end of the line and below?",
+      "range": {
+        "startLine": 9,
+        "startChar": 85,
+        "endLine": 9,
+        "endChar": 86
+      },
+      "revId": "ad2532031539666c49438a6a004efe167aa7b59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ae786e_87a06090",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:39:49Z",
+      "side": 1,
+      "message": "You could additionally associate with bug 417126 as well.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "ad2532031539666c49438a6a004efe167aa7b59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
