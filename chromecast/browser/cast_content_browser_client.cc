@@ -623,7 +623,7 @@ void CastContentBrowserClient::GetAdditionalMappedFilesForChildProcess(
   if (crash_signal_fd >= 0) {
     mappings->Share(kCrashDumpSignal, crash_signal_fd);
   }
-#endif  // !defined(OS_FUCHSIA)
+#endif  // defined(OS_ANDROID)
 }
 
 void CastContentBrowserClient::GetAdditionalWebUISchemes(
