@@ -23,6 +23,7 @@
 #include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -56,6 +57,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/process_type.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
@@ -1598,6 +1600,9 @@ TEST_F(ResourceDispatcherHostTest, SyncLoadCancel) {
 // If the filter has disappeared then detachable resources should continue to
 // load.
 TEST_F(ResourceDispatcherHostTest, DeletedFilterDetached) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      features::kKeepAliveRendererForKeepaliveRequests);
   // test_url_1's data is available synchronously, so use 2 and 3.
   ResourceRequest request_prefetch = CreateResourceRequest(
       "GET", RESOURCE_TYPE_PREFETCH, net::URLRequestTestJob::test_url_2());
@@ -1866,6 +1871,9 @@ TEST_F(ResourceDispatcherHostTest, CancelInDelegate) {
 }
 
 TEST_F(ResourceDispatcherHostTest, CancelRequestsForRoute) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      features::kKeepAliveRendererForKeepaliveRequests);
   job_factory_->SetDelayedStartJobGeneration(true);
   MakeTestRequestWithRenderFrame(0, 11, 1, net::URLRequestTestJob::test_url_1(),
                                  RESOURCE_TYPE_XHR);
