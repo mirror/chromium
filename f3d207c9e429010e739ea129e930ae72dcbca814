@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f6da857_51fb30e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-10T15:48:06Z",
+      "side": 1,
+      "message": "Tiny nit: indent this line two more spaces?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e56e5037_839391e5",
         "filename": "components/flags_ui/resources/flags.css",
         "patchSetId": 5
@@ -41,6 +64,53 @@
         "startChar": 0,
         "endLine": 26,
         "endChar": 16
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656440eb_7d47421f",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-10T15:48:06Z",
+      "side": 1,
+      "message": "Could you add a comment that explains this?",
+      "parentUuid": "2fc82d76_52508749",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81804e0_9b812e71",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-10T15:48:06Z",
+      "side": 1,
+      "message": "Woah, TIL :D\n\nI think I would go through a static method here though -- if a client invokes `new FlagSearch()`, they might assume they will get a new instance instead of a shared singleton.",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 32
       },
       "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
