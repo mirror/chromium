@@ -69,7 +69,7 @@ UIColor* IncognitoSecureTextColor() {
 
 // Simple Obj-C object to forward UITextFieldDelegate method calls back to the
 // OmniboxViewIOS.
-@interface AutocompleteTextFieldDelegate : NSObject<OmniboxTextFieldDelegate> {
+@interface AutocompleteTextFieldDelegate : NSObject<OmniboxTextfieldDelegate> {
  @private
   OmniboxViewIOS* editView_;  // weak, owns us
 
@@ -175,7 +175,7 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
 
   if (@available(iOS 11.0, *)) {
-    paste_delegate_.reset([[OmniboxTextFieldPasteDelegate alloc] init]);
+    paste_delegate_.reset([[OmniboxTextfieldPasteDelegate alloc] init]);
     [field_ setPasteDelegate:paste_delegate_];
   }
 

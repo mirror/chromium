@@ -20,7 +20,7 @@ class AutocompleteResult;
 @class AutocompleteTextFieldDelegate;
 class GURL;
 @class OmniboxTextFieldIOS;
-@class OmniboxTextFieldPasteDelegate;
+@class OmniboxTextfieldPasteDelegate;
 class WebOmniboxEditController;
 
 namespace ios {
@@ -170,7 +170,7 @@ class OmniboxViewIOS : public OmniboxView,
   ios::ChromeBrowserState* browser_state_;
 
   base::scoped_nsobject<OmniboxTextFieldIOS> field_;
-  base::scoped_nsobject<OmniboxTextFieldPasteDelegate> paste_delegate_;
+  base::scoped_nsobject<OmniboxTextfieldPasteDelegate> paste_delegate_;
   WebOmniboxEditController* controller_;  // weak, owns us
 
   State state_before_change_;
