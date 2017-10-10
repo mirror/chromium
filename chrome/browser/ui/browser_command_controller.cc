@@ -1028,9 +1028,11 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
       IDC_SHOW_AS_TAB,
       !browser_->is_type_tabbed() && !is_fullscreen);
 
+  // Always enable focus on the omnibox in fullscreen mode.
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, /*enabled=*/true);
+
   // Focus various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, show_main_ui);
-  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, show_main_ui);
   command_updater_.UpdateCommandEnabled(
       IDC_FOCUS_MENU_BAR, main_not_fullscreen);
