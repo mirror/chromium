@@ -16,6 +16,24 @@
       "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44d4932_aceb6910",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-10T09:10:35Z",
+      "side": 1,
+      "message": "I think that some differences are to be expected because of differing feature sets (Gecko and Edge not having \u0027width\u0027 and \u0027height\u0027 as presentation attributes primarily.) I don\u0027t mind letting this hang for a bit, but I suspect that the GH issue will do the same.",
+      "parentUuid": "77299fc5_410cc206",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
