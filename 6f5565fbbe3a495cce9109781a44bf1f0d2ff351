@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "039ec528_16d69d58",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T14:18:36Z",
+      "side": 1,
+      "message": "Then could you add to the comment that this has nothing to do with FetchMore?",
+      "parentUuid": "e620c597_970b7329",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c9e61b5_8455b8eb",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Added a comment:\n\nNo reason to hide the loading indicator before the fetch definitely fails as we have nothing else to display here.\n\nIs it clear now?",
       "parentUuid": "7c9e61b5_8455b8eb",
+      "range": {
+        "startLine": 451,
+        "startChar": 49,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b600857d_8814ff55",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T14:18:36Z",
+      "side": 1,
+      "message": "Yeap, but now I understood why I was puzzled. /*hide_loading_indicator_after_timeout\u003d*/false contains double negation. Could you rename the parameter to |enable_loading_indication_timeout|?",
+      "parentUuid": "a949333a_0cc78f9f",
       "range": {
         "startLine": 451,
         "startChar": 49,
