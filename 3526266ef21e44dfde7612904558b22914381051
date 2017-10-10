@@ -16,6 +16,24 @@
       "revId": "3526266ef21e44dfde7612904558b22914381051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56195fe2_801980ab",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T13:39:07Z",
+      "side": 1,
+      "message": "When it\u0027s just set to 1 it doesn\u0027t always allow you to escape from the corner. I reduced it a bit and it seems to work well enough with 5.",
+      "parentUuid": "65220f3a_1429b7f1",
+      "revId": "3526266ef21e44dfde7612904558b22914381051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
