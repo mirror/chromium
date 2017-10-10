@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "217daed0_23c83bb9",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-10T22:28:20Z",
+      "side": 1,
+      "message": "That ^^",
+      "parentUuid": "b3919ecf_91aa29f2",
+      "revId": "3702c8297382319f7a80f4ddb9a4f4ab146ee0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b9ddf13_3fa8b03a",
         "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T21:45:03Z",
       "side": 1,
       "message": "Should it actually be possible to hit the no WebFrameClient case? I would expect that detached frames wouldn\u0027t be inspectable.",
+      "revId": "3702c8297382319f7a80f4ddb9a4f4ab146ee0e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eadfe8f7_2df8afad",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-10T22:28:20Z",
+      "side": 1,
+      "message": "This code might be reached from tracing which could actually try serializing frames ids in various states.",
+      "parentUuid": "7b9ddf13_3fa8b03a",
       "revId": "3702c8297382319f7a80f4ddb9a4f4ab146ee0e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
