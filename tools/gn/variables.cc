@@ -1293,6 +1293,18 @@ Examples
     libs = [ "ld" ]
 )";
 
+const char kLinkedDeps[] = "linked_deps";
+const char kLinkedDeps_HelpShort[] =
+    "linked_deps: [label list] Public and private dependencies.";
+const char kLinkedDeps_Help[] =
+    R"(linked_deps: Public and private linked dependencies sorted in order
+       applying.
+
+  A list of target labels.
+
+  Linked dependencies are pubblic and private (but not data) dependencies.
+)";
+
 const char kOutputExtension[] = "output_extension";
 const char kOutputExtension_HelpShort[] =
     "output_extension: [string] Value to use for the output's file extension.";

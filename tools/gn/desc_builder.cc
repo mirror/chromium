@@ -90,7 +90,7 @@ void RecursiveCollectDeps(const Target* target,
 
 void RecursiveCollectChildDeps(const Target* target,
                                std::set<const Target*>* result) {
-  for (const auto& pair : target->GetDeps(Target::DEPS_ALL))
+  for (const auto& pair : target->GetDeps(Target::DEPS_LINKED))
     RecursiveCollectDeps(pair.ptr, result);
 }
 
@@ -406,6 +406,25 @@ class TargetDescBuilder : public BaseDescBuilder {
     if (what(variables::kDeps))
       res->SetWithoutPathExpansion(variables::kDeps, RenderDeps());
 
+    // By default RenderDeps only renders Target::DEPS_PRIVATE, in that case
+    // the output should be enriched also with Target::DEPS_PUBLIC.
+    if (!tree_ && !all_) {
+      if (what(variables::kPublicDeps)) {
+        res->SetWithoutPathExpansion(variables::kPublicDeps,
+                                     RenderDepsOf(Target::DEPS_PUBLIC));
+      }
+    }
+
+    if (what(variables::kDataDeps)) {
+      res->SetWithoutPathExpansion(variables::kDataDeps,
+                                   RenderDepsOf(Target::DEPS_DATA));
+    }
+
+    if (what(variables::kLinkedDeps)) {
+      res->SetWithoutPathExpansion(variables::kLinkedDeps,
+                                   RenderDepsOf(Target::DEPS_LINKED));
+    }
+
     // Runtime deps are special, print only when explicitly asked for and not in
     // overview mode.
     if (what_.find("runtime_deps") != what_.end())
@@ -452,7 +471,7 @@ class TargetDescBuilder : public BaseDescBuilder {
                           int indent_level) {
     // Combine all deps into one sorted list.
     std::vector<LabelTargetPair> sorted_deps;
-    for (const auto& pair : target->GetDeps(Target::DEPS_ALL))
+    for (const auto& pair : target->GetDeps(Target::DEPS_LINKED))
       sorted_deps.push_back(pair);
     std::sort(sorted_deps.begin(), sorted_deps.end(),
               LabelPtrLabelLess<Target>());
@@ -511,12 +530,23 @@ class TargetDescBuilder : public BaseDescBuilder {
       } else {
         // Show direct dependencies only.
         std::vector<const Target*> deps;
-        for (const auto& pair : target_->GetDeps(Target::DEPS_ALL))
+        for (const auto& pair : target_->GetDeps(Target::DEPS_PRIVATE))
           deps.push_back(pair.ptr);
-        std::sort(deps.begin(), deps.end());
         commands::FilterAndPrintTargets(&deps, res.get());
       }
     }
+
+    return std::move(res);
+  }
+
+  ValuePtr RenderDepsOf(Target::DepsIterationType type) {
+    auto res = base::MakeUnique<base::ListValue>();
+
+    std::vector<const Target*> deps;
+    for (const auto& pair : target_->GetDeps(type))
+      deps.push_back(pair.ptr);
+
+    commands::FilterAndPrintTargets(&deps, res.get());
 
     return std::move(res);
   }

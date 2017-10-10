@@ -48,8 +48,11 @@ class Target : public Item {
   };
 
   enum DepsIterationType {
-    DEPS_ALL,  // Iterates through all public, private, and data deps.
-    DEPS_LINKED,  // Iterates through all non-data dependencies.
+    DEPS_ALL,      // Iterates through all public, private, and data deps.
+    DEPS_DATA,     // Iterates through all data dependencies.
+    DEPS_LINKED,   // Iterates through all non-data dependencies.
+    DEPS_PRIVATE,  // Iterates through private deps.
+    DEPS_PUBLIC,   // Iterates through public deps.
   };
 
   typedef std::vector<SourceFile> FileList;

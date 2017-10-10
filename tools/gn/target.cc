@@ -418,13 +418,21 @@ bool Target::IsFinal() const {
 }
 
 DepsIteratorRange Target::GetDeps(DepsIterationType type) const {
-  if (type == DEPS_LINKED) {
-    return DepsIteratorRange(DepsIterator(
-        &public_deps_, &private_deps_, nullptr));
+  switch (type) {
+    case DEPS_DATA:
+      return DepsIteratorRange(DepsIterator(&data_deps_, nullptr, nullptr));
+    case DEPS_LINKED:
+      return DepsIteratorRange(
+          DepsIterator(&public_deps_, &private_deps_, nullptr));
+    case DEPS_PRIVATE:
+      return DepsIteratorRange(DepsIterator(&private_deps_, nullptr, nullptr));
+    case DEPS_PUBLIC:
+      return DepsIteratorRange(DepsIterator(&public_deps_, nullptr, nullptr));
+    default:
+      // All deps.
+      return DepsIteratorRange(
+          DepsIterator(&public_deps_, &private_deps_, &data_deps_));
   }
-  // All deps.
-  return DepsIteratorRange(DepsIterator(
-      &public_deps_, &private_deps_, &data_deps_));
 }
 
 std::string Target::GetComputedOutputName() const {

@@ -314,6 +314,7 @@ Possibilities for <what to show>
   cflags_cxx [--blame]
   check_includes
   configs [--tree] (see below)
+  data_deps (see below)
   defines [--blame]
   depfile
   deps [--all] [--tree] (see below)
@@ -322,9 +323,11 @@ Possibilities for <what to show>
   ldflags [--blame]
   lib_dirs
   libs
+  linked_deps (see below)
   outputs
-  public_configs
   public
+  public_configs
+  public_deps (see below)
   script
   sources
   testonly
@@ -372,8 +375,21 @@ Printing outputs
 
 Printing deps
 
-  Deps will include all public, private, and data deps (TODO this could be
-  clarified and enhanced) sorted in order applying. The following may be used:
+  There are 4 different fields which contain information about deps:
+
+  deps
+      if the command is invoked without --tree and --all it just includes
+      private deps (see below for --tree and --all);
+  public_deps
+      if the command is invoked without --tree and --all it includes public
+      deps. If the command is invoked with --tree or --all this field is not
+      printed;
+  data_deps
+      includes data deps;
+  linked_deps
+      includes public and private deps sorted in order applying.
+
+  The following may be used:
 
   --all
       Collects all recursive dependencies and prints a sorted flat list. Also
