@@ -308,6 +308,8 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
   }
   bool HasColElements() const { return has_col_elements_; }
 
+  unsigned ColElementToAbsoluteColumnIndex(const LayoutTableCol*) const;
+
   bool NeedsSectionRecalc() const { return needs_section_recalc_; }
   void SetNeedsSectionRecalc() {
     if (DocumentBeingDestroyed())

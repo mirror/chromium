@@ -35,6 +35,7 @@ LayoutState::LayoutState(LayoutView& view)
     : is_paginated_(view.PageLogicalHeight()),
       containing_block_logical_width_changed_(false),
       pagination_state_changed_(false),
+      is_in_collapsed_cell_(false),
       flow_thread_(nullptr),
       next_(nullptr),
       layout_object_(view) {
@@ -52,6 +53,8 @@ LayoutState::LayoutState(LayoutBox& layout_object,
     flow_thread_ = ToLayoutFlowThread(&layout_object);
   else
     flow_thread_ = next_->FlowThread();
+
+  is_in_collapsed_cell_ = next_->is_in_collapsed_cell_;
   pagination_state_changed_ = next_->pagination_state_changed_;
   height_offset_for_table_headers_ = next_->HeightOffsetForTableHeaders();
   height_offset_for_table_footers_ = next_->HeightOffsetForTableFooters();
@@ -106,6 +109,7 @@ LayoutState::LayoutState(LayoutObject& root)
     : is_paginated_(false),
       containing_block_logical_width_changed_(false),
       pagination_state_changed_(false),
+      is_in_collapsed_cell_(false),
       flow_thread_(nullptr),
       next_(root.View()->GetLayoutState()),
       layout_object_(root) {

@@ -105,6 +105,10 @@ class LayoutState {
   bool PaginationStateChanged() const { return pagination_state_changed_; }
   void SetPaginationStateChanged() { pagination_state_changed_ = true; }
 
+  // Returns whether or not the object is a descendant of a collapsed cell.
+  bool IsInCollapsedCell() const { return is_in_collapsed_cell_; }
+  void SetIsInCollapsedCell() { is_in_collapsed_cell_ = true; }
+
   LayoutState* Next() const { return next_; }
 
   LayoutFlowThread* FlowThread() const { return flow_thread_; }
@@ -118,6 +122,7 @@ class LayoutState {
 
   bool containing_block_logical_width_changed_ : 1;
   bool pagination_state_changed_ : 1;
+  bool is_in_collapsed_cell_ : 1;
 
   LayoutFlowThread* flow_thread_;
 
