@@ -13,6 +13,7 @@
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
+#include "components/autofill/content/renderer/page_form_analyser_logger.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/autofill/core/common/form_data_predictions.h"
 #include "components/strings/grit/components_strings.h"
@@ -42,6 +43,77 @@ using blink::WebVector;
 namespace autofill {
 
 namespace {
+
+// For a given |type| (a string representation of enum values), return the
+// appropriate autocomplete value that should be suggested to the website
+// developer.
+std::string MapTypePredictionToAutocomplete(std::string type) {
+  if (type == "NAME_FIRST")
+    return "given-name";
+  if (type == "NAME_MIDDLE")
+    return "additional-name";
+  if (type == "NAME_LAST")
+    return "family-name";
+  if (type == "NAME_FULL")
+    return "name";
+  if (type == "NAME_SUFFIX")
+    return "honorific-suffix";
+  if (type == "EMAIL_ADDRESS")
+    return "email";
+  if (type == "PHONE_HOME_NUMBER")
+    return "tel-local";
+  if (type == "PHONE_HOME_CITY_CODE")
+    return "tel-area-code";
+  if (type == "PHONE_HOME_COUNTRY_CODE")
+    return "tel-country-code";
+  if (type == "PHONE_HOME_CITY_AND_NUMBER")
+    return "tel-national";
+  if (type == "PHONE_HOME_WHOLE_NUMBER")
+    return "tel";
+  if (type == "PHONE_HOME_EXTENSION")
+    return "tel-extension";
+  if (type == "ADDRESS_HOME_STREET_ADDRESS")
+    return "street-address";
+  if (type == "ADDRESS_HOME_DEPENDENT_LOCALITY")
+    return "address-level3";
+  if (type == "ADDRESS_HOME_LINE1")
+    return "address-line1";
+  if (type == "ADDRESS_HOME_LINE2")
+    return "address-line2";
+  if (type == "ADDRESS_HOME_LINE3")
+    return "address-line3";
+  if (type == "ADDRESS_HOME_CITY")
+    return "address-level2";
+  if (type == "ADDRESS_HOME_STATE")
+    return "address-level1";
+  if (type == "ADDRESS_HOME_ZIP")
+    return "postal-code";
+  if (type == "ADDRESS_HOME_COUNTRY")
+    return "country-name";
+  if (type == "CREDIT_CARD_NAME_FULL")
+    return "cc-name";
+  if (type == "CREDIT_CARD_NAME_FIRST")
+    return "cc-given-name";
+  if (type == "CREDIT_CARD_NAME_LAST")
+    return "cc-family-name";
+  if (type == "CREDIT_CARD_NUMBER")
+    return "cc-number";
+  if (type == "CREDIT_CARD_EXP_MONTH")
+    return "cc-exp-month";
+  if (type == "CREDIT_CARD_EXP_2_DIGIT_YEAR" ||
+      type == "CREDIT_CARD_EXP_4_DIGIT_YEAR")
+    return "cc-exp-year";
+  if (type == "CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR" ||
+      type == "CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR")
+    return "cc-exp";
+  if (type == "CREDIT_CARD_TYPE")
+    return "cc-type";
+  if (type == "CREDIT_CARD_VERIFICATION_CODE")
+    return "cc-csc";
+  if (type == "COMPANY_NAME")
+    return "organization";
+  return std::string();
+}
 
 void LogDeprecationMessages(const WebFormControlElement& element) {
   std::string autocomplete_attribute =
@@ -86,14 +158,14 @@ bool IsFormInteresting(const FormData& form, size_t num_editable_elements) {
 
 }  // namespace
 
-FormCache::FormCache(const WebLocalFrame& frame) : frame_(frame) {}
+FormCache::FormCache(WebLocalFrame* frame) : frame_(frame) {}
 
 FormCache::~FormCache() {
 }
 
 std::vector<FormData> FormCache::ExtractNewForms() {
   std::vector<FormData> forms;
-  WebDocument document = frame_.GetDocument();
+  WebDocument document = frame_->GetDocument();
   if (document.IsNull())
     return forms;
 
@@ -248,7 +320,8 @@ bool FormCache::ClearFormWithElement(const WebFormControlElement& element) {
   return true;
 }
 
-bool FormCache::ShowPredictions(const FormDataPredictions& form) {
+bool FormCache::ShowPredictions(const FormDataPredictions& form,
+                                bool should_attach_to_field) {
   DCHECK_EQ(form.data.fields.size(), form.fields.size());
 
   std::vector<WebFormControlElement> control_elements;
@@ -257,7 +330,7 @@ bool FormCache::ShowPredictions(const FormDataPredictions& form) {
   bool found_synthetic_form = false;
   if (form.data.SameFormAs(synthetic_form_)) {
     found_synthetic_form = true;
-    WebDocument document = frame_.GetDocument();
+    WebDocument document = frame_->GetDocument();
     control_elements = form_util::GetUnownedAutofillableFormFieldElements(
         document.All(), nullptr);
   }
@@ -267,7 +340,7 @@ bool FormCache::ShowPredictions(const FormDataPredictions& form) {
     bool found_form = false;
     WebFormElement form_element;
     WebVector<WebFormElement> web_forms;
-    frame_.GetDocument().Forms(web_forms);
+    frame_->GetDocument().Forms(web_forms);
 
     for (size_t i = 0; i < web_forms.size(); ++i) {
       form_element = web_forms[i];
@@ -300,6 +373,7 @@ bool FormCache::ShowPredictions(const FormDataPredictions& form) {
     return false;
   }
 
+  PageFormAnalyserLogger logger(frame_);
   for (size_t i = 0; i < control_elements.size(); ++i) {
     WebFormControlElement& element = control_elements[i];
 
@@ -309,43 +383,62 @@ bool FormCache::ShowPredictions(const FormDataPredictions& form) {
       // were modified between page load and the server's response to our query.
       continue;
     }
-
-    constexpr size_t kMaxLabelSize = 100;
-    const base::string16 truncated_label = field_data.label.substr(
-        0, std::min(field_data.label.length(), kMaxLabelSize));
-
     const FormFieldDataPredictions& field = form.fields[i];
 
-    // A rough estimate of the maximum title size is:
-    //    7 field titles at <17 chars each
-    //    + 6 values at <40 chars each
-    //    + 1 truncated label at <kMaxLabelSize;
-    //    = 459 chars, rounded up to the next multiple of 64 = 512
-    // A particularly large parseable name could blow through this and cause
-    // another allocation, but that's OK.
-    constexpr size_t kMaxTitleSize = 512;
-    std::string title;
-    title.reserve(kMaxTitleSize);
-    title += "overall type: ";
-    title += field.overall_type;
-    title += "\nserver type: ";
-    title += field.server_type;
-    title += "\nheuristic type: ";
-    title += field.heuristic_type;
-    title += "\nlabel: ";
-    title += base::UTF16ToUTF8(truncated_label);
-    title += "\nparseable name: ";
-    title += field.parseable_name;
-    title += "\nfield signature: ";
-    title += field.signature;
-    title += "\nform signature: ";
-    title += form.signature;
+    // Possibly add a console warning for this field regarding the usage of
+    // autocomplete attributes.
+    std::string predicted_autocomplete_attribute =
+        MapTypePredictionToAutocomplete(field.overall_type);
+    std::string actual_autocomplete_attribute =
+        element.GetAttribute("autocomplete").Utf8();
+    if (actual_autocomplete_attribute.find(predicted_autocomplete_attribute) ==
+        std::string::npos) {
+      logger.Send(
+          "Input elements should have autocomplete attributes (suggested: "
+          "autocomplete='" +
+              predicted_autocomplete_attribute +
+              "', confirm at https://goo.gl/6KgkJg)",
+          PageFormAnalyserLogger::kVerbose, element);
+    }
 
-    element.SetAttribute("title", WebString::FromUTF8(title));
+    // If the flag is enabled, attach the prediction to the field.
+    if (should_attach_to_field) {
+      constexpr size_t kMaxLabelSize = 100;
+      const base::string16 truncated_label = field_data.label.substr(
+          0, std::min(field_data.label.length(), kMaxLabelSize));
 
-    element.SetAttribute("autofill-prediction",
-                         WebString::FromUTF8(field.overall_type));
+      // A rough estimate of the maximum title size is:
+      //    7 field titles at <17 chars each
+      //    + 6 values at <40 chars each
+      //    + 1 truncated label at <kMaxLabelSize;
+      //    = 459 chars, rounded up to the next multiple of 64 = 512
+      // A particularly large parseable name could blow through this and cause
+      // another allocation, but that's OK.
+      constexpr size_t kMaxTitleSize = 512;
+      std::string title;
+      title.reserve(kMaxTitleSize);
+      title += "overall type: ";
+      title += field.overall_type;
+      title += "\nserver type: ";
+      title += field.server_type;
+      title += "\nheuristic type: ";
+      title += field.heuristic_type;
+      title += "\nlabel: ";
+      title += base::UTF16ToUTF8(truncated_label);
+      title += "\nparseable name: ";
+      title += field.parseable_name;
+      title += "\nfield signature: ";
+      title += field.signature;
+      title += "\nform signature: ";
+      title += form.signature;
+
+      element.SetAttribute("title", WebString::FromUTF8(title));
+
+      element.SetAttribute("autofill-prediction",
+                           WebString::FromUTF8(field.overall_type));
+    }
   }
+  logger.Flush();
 
   return true;
 }
