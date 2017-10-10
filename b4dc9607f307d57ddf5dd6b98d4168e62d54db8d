@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7d4df76_deba56be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-10-10T20:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329bf5db_6986ad77",
+      "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da7bbcd_95ec3441",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3e29a715_7dc94165",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-10-10T20:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da7bbcd_95ec3441",
+      "range": {
+        "startLine": 197,
+        "startChar": 67,
+        "endLine": 197,
+        "endChar": 69
+      },
+      "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68f6c140_cd2371ff",
         "filename": "media/base/android/java/src/org/chromium/media/MediaCodecUtil.java",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cda40c_659206cb",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-10-10T20:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f6c140_cd2371ff",
+      "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9636e7c_f079bf59",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1230862
+      },
+      "writtenOn": "2017-10-10T20:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b0bcb3_8bedbcb7",
+      "range": {
+        "startLine": 341,
+        "startChar": 23,
+        "endLine": 341,
+        "endChar": 34
+      },
+      "revId": "b4dc9607f307d57ddf5dd6b98d4168e62d54db8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
