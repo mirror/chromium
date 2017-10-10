@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130d5e1f_cb01fdb5",
+        "filename": "chrome/browser/profiles/profile_attributes_entry.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-10-10T15:23:59Z",
+      "side": 1,
+      "message": "Can we avoid duplicating this function? I\u0027d rather move functions only when nothing else in ProfileInfoCache needs them.",
+      "revId": "bbcb163d960a2448ab469ab85cd1f4551c9e9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
