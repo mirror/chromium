@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c19a9a_5dcb2749",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-10T15:35:29Z",
+      "side": 1,
+      "message": "would have been nice to say why, but not a huge deal.\nright now can\u0027t tell why this helps testing or whatnot.\nbut at the same time looks good anyways, so not going to bother too much :)",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 63
+      },
+      "revId": "e1ddfc26db4fb2bd3c3bd75908bebdeb47fecbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
