@@ -290,8 +290,7 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
   DCHECK(!callback_);
   callback_ = callback;
 
-  const base::Time last_download_time = base::Time::FromInternalValue(
-      prefs_->GetInt64(prefs::kPopularSitesLastDownloadPref));
+  const base::Time last_download_time = GetLastDownloadTime();
   const base::TimeDelta time_since_last_download =
       base::Time::Now() - last_download_time;
   const base::TimeDelta redownload_interval =
@@ -314,6 +313,11 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
 const std::map<SectionType, PopularSitesImpl::SitesVector>&
 PopularSitesImpl::sections() const {
   return sections_;
+}
+
+base::Time PopularSitesImpl::GetLastDownloadTime() {
+  return base::Time::FromInternalValue(
+      prefs_->GetInt64(prefs::kPopularSitesLastDownloadPref));
 }
 
 GURL PopularSitesImpl::GetLastURLFetched() const {
