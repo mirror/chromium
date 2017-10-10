@@ -780,14 +780,17 @@ bool AboutUIHTMLSource::ShouldAddContentSecurityPolicy() const {
   return content::URLDataSource::ShouldAddContentSecurityPolicy();
 }
 
-bool AboutUIHTMLSource::ShouldDenyXFrameOptions() const {
+std::string AboutUIHTMLSource::GetAccessControlAllowOriginForOrigin(
+    const std::string& origin) const {
 #if defined(OS_CHROMEOS)
-  if (source_name_ == chrome::kChromeUITermsHost) {
-    // chrome://terms page is embedded in iframe to chrome://oobe.
-    return false;
+  // Allow chrome://oobe to load chrome://terms via XHR.
+  if (source_name_ == chrome::kChromeUITermsHost &&
+      base::StartsWith(chrome::kChromeUIOobeURL, origin,
+                       base::CompareCase::SENSITIVE)) {
+    return origin;
   }
 #endif
-  return content::URLDataSource::ShouldDenyXFrameOptions();
+  return content::URLDataSource::GetAccessControlAllowOriginForOrigin(origin);
 }
 
 AboutUI::AboutUI(content::WebUI* web_ui, const std::string& name)
