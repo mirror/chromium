@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "027a93b1_8a3ac6f0",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Redundant with the comment below?",
+      "range": {
+        "startLine": 523,
+        "startChar": 45,
+        "endLine": 523,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3f6574_2709b958",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Braces?",
+      "range": {
+        "startLine": 1510,
+        "startChar": 8,
+        "endLine": 1510,
+        "endChar": 11
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafca871_47f75d11",
+        "filename": "components/component_updater/crl_set_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "kSHA256Length",
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bdcfbe_6e770f49",
+        "filename": "components/component_updater/crl_set_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Just to double-check: MayBlock() implies synchronous completion?  It seems like you\u0027re counting on that elsewhere.",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c73c90a_8118bc54",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Do you specifically prefer to use the same path for the old and new updater?",
+      "range": {
+        "startLine": 223,
+        "startChar": 56,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19947047_5c12b633",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "UpdateCRLSetIfNewer() might be a bit clearer; the term \"upgrade\" is confusing to me.  You could also explicitly call out CRLSet::sequence() as the source of the sequence number.",
+      "range": {
+        "startLine": 49,
+        "startChar": 76,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e559a0b_9d944ee1",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Nit \"... and with GetCRLSet\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e784287a_bb65e22b",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-10T21:09:17Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this comment does much.  Can this be nullptr or does it always have a value?",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
