@@ -16,6 +16,24 @@
       "revId": "e81abafba272ff6ce1cc2d692ca908d88d16865a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ac4e33_72b349b3",
+        "filename": "url/gurl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-10T05:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436e1ec6_7f34b506",
+      "revId": "e81abafba272ff6ce1cc2d692ca908d88d16865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
