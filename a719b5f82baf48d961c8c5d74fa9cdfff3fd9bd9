@@ -22,6 +22,30 @@
       "revId": "a719b5f82baf48d961c8c5d74fa9cdfff3fd9bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30072b45_ebfcc1c3",
+        "filename": "net/cert/internal/ocsp_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-10T19:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ede1911_2842f698",
+      "range": {
+        "startLine": 356,
+        "startChar": 26,
+        "endLine": 356,
+        "endChar": 37
+      },
+      "revId": "a719b5f82baf48d961c8c5d74fa9cdfff3fd9bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
