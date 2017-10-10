@@ -22,6 +22,30 @@
       "revId": "4cc7b95888da4e10a0e17cd4f001ddd8e50e28c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f303fb80_17269189",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T16:11:38Z",
+      "side": 1,
+      "message": "Oops. Good catch! Fixed.",
+      "parentUuid": "430b4686_b94ef33d",
+      "range": {
+        "startLine": 1137,
+        "startChar": 28,
+        "endLine": 1137,
+        "endChar": 50
+      },
+      "revId": "4cc7b95888da4e10a0e17cd4f001ddd8e50e28c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
