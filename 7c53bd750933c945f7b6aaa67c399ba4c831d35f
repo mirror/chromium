@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f96162c_55cf037b",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-10T20:13:28Z",
+      "side": 1,
+      "message": "I am a little concerned about referring to types outside of this file. Those types are not considered stable (or at least not documented so).\nFor example, at the moment mojo.common.mojom.Time is a native-only struct. It is very likely we will want to change that to a normal mojom struct some day.\n\nWhen those type changes, we may get test failure (which is good) or weird failure in the field if the serialized data can be interpreted in the new way without validation failure (which is bad).\n\nDoes it make sense to eliminate all imports unless they are also stabilized?",
+      "revId": "7c53bd750933c945f7b6aaa67c399ba4c831d35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
