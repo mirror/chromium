@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec0c53ee_682c2447",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:43:26Z",
+      "side": 1,
+      "message": "How come you need the message loop include here?",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 42
+      },
+      "revId": "1188048b1d1326602ec92c05dbb4ecfc3152c6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
