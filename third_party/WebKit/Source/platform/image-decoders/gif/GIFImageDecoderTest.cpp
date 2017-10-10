@@ -30,6 +30,7 @@
 
 #include "platform/image-decoders/gif/GIFImageDecoder.h"
 
+#include <cstdint>
 #include <memory>
 #include "platform/SharedBuffer.h"
 #include "platform/image-decoders/ImageDecoderTestHelpers.h"
@@ -402,10 +403,15 @@ TEST(GIFImageDecoderTest, bitmapAlphaType) {
 }
 
 namespace {
-// Needed to exercise ImageDecoder::SetMemoryAllocator, but still does the
-// default allocation.
-class Allocator final : public SkBitmap::Allocator {
-  bool allocPixelRef(SkBitmap* dst) override { return dst->tryAllocPixels(); }
+class ColorFillingDebugAllocator final : public SkBitmap::Allocator {
+ public:
+  bool allocPixelRef(SkBitmap* dst) override {
+    if (dst->tryAllocPixels()) {
+      dst->eraseARGB(0xcd, 0xcd, 0xcd, 0xcd);
+      return true;
+    }
+    return false;
+  }
 };
 }
 
@@ -418,7 +424,7 @@ TEST(GIFImageDecoderTest, externalAllocator) {
   auto decoder = CreateDecoder();
   decoder->SetData(data.get(), true);
 
-  Allocator allocator;
+  ColorFillingDebugAllocator allocator;
   decoder->SetMemoryAllocator(&allocator);
   EXPECT_EQ(1u, decoder->FrameCount());
   ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
@@ -427,6 +433,54 @@ TEST(GIFImageDecoderTest, externalAllocator) {
   ASSERT_TRUE(frame);
   EXPECT_EQ(IntRect(IntPoint(), decoder->Size()), frame->OriginalFrameRect());
   EXPECT_FALSE(frame->HasAlpha());
+}
+
+TEST(GIFImageDecoderTest, partialFrameIsZeroFilledWhenIndependent) {
+  const Vector<char> data =
+      ReadFile(kLayoutTestResourcesDir, "animated-gif-with-offsets.gif")
+          ->Copy();
+  const size_t midway_into_first_frame = 330;
+  RefPtr<SharedBuffer> incomplete_data =
+      SharedBuffer::Create(data.data(), midway_into_first_frame);
+
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  decoder->SetData(incomplete_data.get(), false);
+  ColorFillingDebugAllocator allocator;
+  decoder->SetMemoryAllocator(&allocator);
+
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
+  decoder->SetMemoryAllocator(nullptr);
+  ASSERT_TRUE(frame);
+  EXPECT_FALSE(decoder->Failed());
+  // The image is 100x100. Since we only provided part of the first frame, the
+  // final row of pixels cannot be decoded.
+  // This checks that the last pixel was zero-filled (as opposed to the color
+  // provided by the ColorFillingDebugAllocator).
+  EXPECT_EQ(*frame->GetAddr(99, 99), 0u);
+}
+
+TEST(GIFImageDecoderTest, partialFrameIsPriorFilledWhenDependent) {
+  const Vector<char> data =
+      ReadFile(kLayoutTestResourcesDir, "animated-gif-with-offsets.gif")
+          ->Copy();
+  const size_t midway_into_second_frame = 850;
+  RefPtr<SharedBuffer> incomplete_data =
+      SharedBuffer::Create(data.data(), midway_into_second_frame);
+
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  decoder->SetData(incomplete_data.get(), false);
+  ImageFrame* first_frame = decoder->DecodeFrameBufferAtIndex(0);
+  ASSERT_TRUE(first_frame);
+  const uint32_t first_frame_pixel_color = 0xff1e90ff;
+  EXPECT_EQ(*first_frame->GetAddr(50, 50), first_frame_pixel_color);
+
+  ImageFrame* second_frame = decoder->DecodeFrameBufferAtIndex(1);
+  ASSERT_TRUE(second_frame);
+  EXPECT_FALSE(decoder->Failed());
+  // The second frame updates a subregion in the center of the 100x100 image.
+  // This color is the color from the first frame (before being updated by the
+  // second frame).
+  EXPECT_EQ(*second_frame->GetAddr(50, 50), first_frame_pixel_color);
 }
 
 TEST(GIFImageDecoderTest, recursiveDecodeFailure) {
