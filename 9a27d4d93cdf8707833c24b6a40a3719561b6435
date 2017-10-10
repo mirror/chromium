@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5042c69_ae629dfa",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:29:09Z",
+      "side": 1,
+      "message": "Could you mention the reason why we need to invalidate |LayoutSVGText|?",
+      "revId": "9a27d4d93cdf8707833c24b6a40a3719561b6435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
