@@ -46,6 +46,29 @@
       "revId": "cfba2f1fe241c9878725b7e2610c5b52e33c20fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6abf5aaa_b4c122aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 42699,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T15:49:25Z",
+      "side": 1,
+      "message": "units\u003d\"ms\"",
+      "range": {
+        "startLine": 42699,
+        "startChar": 11,
+        "endLine": 42699,
+        "endChar": 23
+      },
+      "revId": "cfba2f1fe241c9878725b7e2610c5b52e33c20fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
