@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31065cd6_41e0ff40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "I\u0027d assume it can\u0027t normally fail.. maybe it would be better to omit it if the histogram code will do something reasonable (assert/ignore?). BatteryStatusManager.java has a similar check, while DeviceConditions.java checks the max value is non-zero.",
+      "parentUuid": "613b1c11_39969248",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8d0034d_c59ba9b9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "dd21e04a_40ce4346",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57447,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "I had a look...\n\n- Permissions.Engagement.(Accepted).(Geolocation) logs the site engagement score for accepted prompts.\n- Permissions.Prompt.(Accepted).(PriorDismissCount).(Geolocation) logs the number of dismisses in the past before finally accepting. PriorIgnoreCount is similar, Persisted is from a past experiment.\n\n- Permissions.Action.(Geolocation) logs allow/block/dismiss/ignore/revoke actions. With the exception of revoke, these should be the total number of entries in the matching Engagement/PriorDismissCount/PriorIgnoreCount histogram.\n\nSo for now I changed this to Permissions.BatteryLevel.(Accepted).(Geolocation), which I think is easier to navigate than having the Battery tag in the middle... but other suggestions are welcome.",
+      "parentUuid": "b8d0034d_c59ba9b9",
+      "range": {
+        "startLine": 57447,
+        "startChar": 17,
+        "endLine": 57447,
+        "endChar": 56
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45e441c3_2cee647c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -85,6 +133,30 @@
       "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9f2062_825035c6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57451,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "It... didn\u0027t occur to me, done!",
+      "parentUuid": "45e441c3_2cee647c",
+      "range": {
+        "startLine": 57451,
+        "startChar": 36,
+        "endLine": 57451,
+        "endChar": 64
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "12f09923_f027e7bf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57458,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "Sorry, fixed.",
+      "parentUuid": "04849f10_9376973d",
+      "range": {
+        "startLine": 57458,
+        "startChar": 64,
+        "endLine": 57458,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bece27c6_28b6b104",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -131,6 +227,30 @@
       "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541b04bd_c43e132f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57467,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bece27c6_28b6b104",
+      "range": {
+        "startLine": 57467,
+        "startChar": 64,
+        "endLine": 57467,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "2e6303c8_321b23d7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57472,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "Renamed this - the location settings dialog is shown when you try to grant a website location permission but the Android setting is off.",
+      "parentUuid": "81813766_304cd278",
+      "range": {
+        "startLine": 57472,
+        "startChar": 37,
+        "endLine": 57472,
+        "endChar": 40
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06e2284_49b16535",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -177,6 +321,30 @@
       "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825c21c8_e4ef164f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57475,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "Fixed this to actually say what it\u0027s for.",
+      "parentUuid": "c06e2284_49b16535",
+      "range": {
+        "startLine": 57475,
+        "startChar": 30,
+        "endLine": 57475,
+        "endChar": 52
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +371,30 @@
     },
     {
       "key": {
+        "uuid": "aa3b0be0_6d649390",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57480,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "The dialog is modal and can\u0027t be dismissed.",
+      "parentUuid": "2a147f52_092c5a82",
+      "range": {
+        "startLine": 57480,
+        "startChar": 70,
+        "endLine": 57480,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "934c97f2_9d7f6834",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -223,6 +415,30 @@
       "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4919f257_677636fd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57483,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T07:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "934c97f2_9d7f6834",
+      "range": {
+        "startLine": 57483,
+        "startChar": 64,
+        "endLine": 57483,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
