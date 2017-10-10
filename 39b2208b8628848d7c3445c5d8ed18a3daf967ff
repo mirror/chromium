@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0f052ec_97f11763",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "I merged this class with TestSourceLaggy as it wasn\u0027t used directly. Most tests use SineWaveAudioSource which would be the right place to add these checks. Maybe in a separate CL?",
+      "parentUuid": "346519f6_95a326d2",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58be7876_ddac18b7",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "Both OnMoreData() and OnError() are called on audio device thread, wheres callback_count() and had_error() are called on the main thread, so it\u0027s a data race. Use atomics?",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02db42b_95a0ce9a",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Updated the tests to call these functions only after Stop(), so there is no race.",
+      "parentUuid": "58be7876_ddac18b7",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26509838_1deff6c5",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0751a7ef_7bd798f2",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e742e8_8421e6c2",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "Great that you added this, surprising that we have not had one.\nLooks like it belongs to audio_manager_unittest.cc? (Up to you though, that file is scary)",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3d4162_cbafad82",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d prefer to avoid adding more tests audio_manager_unittest.cc - that file is a mess. This test verifies that we can create system-specific AudioOutputStream with various parameters, so I think this file is good place to put it. Also it\u0027s where it lives on Windows (see media/audio/win/audio_output_win_unittest.cc)",
+      "parentUuid": "27e742e8_8421e6c2",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "889848e6_86efe2e5",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Many other tests already do that, so I don\u0027t think we need it here.",
+      "parentUuid": "7d7636f1_45299f88",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "add0e7f8_bad9bb38",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "Close a stream in case expectation fails? Otherwise the system is left in a funny state.",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721496cb_6ede78bb",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we can really guarantee that failed tests leave the process in a clean state, so I don\u0027t think it\u0027s worth to worry about here. Also checking it would make the test code much more complicated, which we want to avoid.\n\nIMO the right thing to do would be to update MakeAudioOutputStream() to return unique_ptr\u003c\u003e. That would require updating AudioOutputStream to remove Close() method and allow the owner to simply delete the thing.",
+      "parentUuid": "add0e7f8_bad9bb38",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f47f4a4b_dd7e25b6",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Done. IMO, some of these should really be replaced with (D)CHECKs in AudioParameters (e.g. for negative period size).",
+      "parentUuid": "d0f1828b_49f079a7",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c116a9d_d2e9e973",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "(again, looks like a part of AudioManager testing)\nCould you add a comment on why do we test it?",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747a3a99_04497953",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Same as above. This test tests creation of system-specific audio output stream. It has to call audio manager because that\u0027s the right way to create output streams.",
+      "parentUuid": "8c116a9d_d2e9e973",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "399dc0c2_5c585ab6",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "I have no idea how this number was chosen. This logic was copied from WinAudioTest.PCMWaveStreamOpenLimit. Removed this check, since we have similar one in SanityOnMakeParams",
+      "parentUuid": "bca159bd_9d521d60",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "109fdc05_9875badd",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "Could you elaborate on how this potential deadlock situation looks like?",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624c0858_64f868b8",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "This was some windows-specific issue, see CL that added this tests: https://codereview.chromium.org/67154/#ps1\n\nI think this test may still be useful. Just cleaned up the comment to remove deadlock reference.",
+      "parentUuid": "109fdc05_9875badd",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "33ed6358_e7cc305c",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "IMO it\u0027s better to test for stream position instead of number of callbacks. Also the problem is that the stream may take some time to initialize, which means that even if we run it for .2 seconds, it doesn\u0027t mean that the system will request .2 worth of samples. I just added basic checks that verify that stream position moves past 0.",
+      "parentUuid": "0824d235_44820ea1",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f02eb302_cb2338ff",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2017-10-06T10:07:56Z",
       "side": 1,
       "message": "Add Set/GetVolume tests?",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8fa112_0d3cb004",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T00:03:27Z",
+      "side": 1,
+      "message": "Play200HzTone22kHz calls these. I don\u0027t think we need any other tests beside that.",
+      "parentUuid": "f02eb302_cb2338ff",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
