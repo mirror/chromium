@@ -8,8 +8,15 @@
 
 login.createScreen('EulaScreen', 'eula', function() {
   var CONTEXT_KEY_USAGE_STATS_ENABLED = 'usageStatsEnabled';
+  var TERMS_URL = 'chrome://terms';
 
   return {
+    /**
+     * Tracks OEM Eula url so that it could be properly reloaded.
+     * @type {?string}
+     */
+    oemEulaUrl_: null,
+
     /** @override */
     decorate: function() {
       $('eula-chrome-credits-link').hidden = true;
@@ -27,6 +34,9 @@ login.createScreen('EulaScreen', 'eula', function() {
           .addEventListener('click', function(event) {
             $('popup-overlay').hidden = true;
           });
+
+      $('cros-eula-frame')
+          .addEventListener('contentload', this.onFrameLoad.bind(this));
 
       var self = this;
       $('usage-stats').addEventListener('click', function(event) {
@@ -64,11 +74,9 @@ login.createScreen('EulaScreen', 'eula', function() {
      * @param {object} data Screen init payload.
      */
     onBeforeShow: function() {
-      this.setMDMode_();
       $('eula').classList.add('eula-loading');
-      $('cros-eula-frame').onload = this.onFrameLoad;
       $('accept-button').disabled = true;
-      $('cros-eula-frame').src = 'chrome://terms';
+      this.updateLocalizedContent();
     },
 
     /**
@@ -143,15 +151,66 @@ login.createScreen('EulaScreen', 'eula', function() {
     updateLocalizedContent: function() {
       this.setMDMode_();
 
-      $('oobe-eula-md').updateLocalizedContent();
+      // Reload the terms contents.
+      if (!$('oobe-eula-md').hidden)
+        $('oobe-eula-md').updateLocalizedContent();
 
-      // Force iframes to refresh. It's only available method because we have
-      // no access to iframe.contentWindow.
-      if ($('cros-eula-frame').src) {
-        $('cros-eula-frame').src = $('cros-eula-frame').src;
+      if (!$('oobe-eula').hidden) {
+        this.loadEulaToWebview_(TERMS_URL, $('cros-eula-frame'));
+        if (this.oemEulaUrl_)
+          this.loadEulaToWebview_(this.oemEulaUrl_, $('oem-eula-frame'));
       }
-      if ($('oem-eula-frame').src) {
-        $('oem-eula-frame').src = $('oem-eula-frame').src;
+    },
+
+    /**
+     * Sets url for OEM Eula. Oem Eula UI is hidden if the url is null or empty.
+     * @param {?string} oemEulaUrl The URL for OEM Eula.
+     */
+    setOemEulaUrl: function(oemEulaUrl) {
+      this.oemEulaUrl_ = oemEulaUrl;
+
+      if (this.oemEulaUrl_) {
+        this.loadEulaToWebview_(this.oemEulaUrl_, $('oem-eula-frame'));
+        $('eulas').classList.remove('one-column');
+      } else {
+        $('eulas').classList.add('one-column');
+      }
+    },
+
+    /**
+     * Load terms contents from the given url into the given webview.
+     * @param {!string} url URL to load terms contents.
+     * @param {!WebView} webview Webview element to host the terms.
+     */
+    loadEulaToWebview_: function(url, webview) {
+      assert(webview.tagName === 'WEBVIEW');
+
+      var onFailure = function() {
+        webview.src = 'about:blank';
+      };
+
+      var setTerms = function(contents) {
+        webview.src =
+            'data:text/html;charset=utf-8,' + encodeURIComponent(contents);
+      };
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4)
+          return;
+        if (xhr.status != 200) {
+          onFailure();
+          return;
+        }
+
+        setTerms(xhr.response);
+      };
+
+      try {
+        xhr.send();
+      } catch (e) {
+        onFailure();
       }
     },
   };
