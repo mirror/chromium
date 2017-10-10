@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1883ac1b_57ec2bf4",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T22:45:43Z",
+      "side": 1,
+      "message": "No need for a local here.",
+      "revId": "e76098fa83b199caa28d91a4bae10948ab7c5775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8f44e41_cb2abb8a",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T22:45:43Z",
+      "side": 1,
+      "message": "This is better, but did you consider ScopedObserver?",
+      "revId": "e76098fa83b199caa28d91a4bae10948ab7c5775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
