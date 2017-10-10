@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71fb5e32_b0e06e3e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-10T09:04:18Z",
+      "side": 1,
+      "message": "how about rolling the log message into the NOTREACHED and including the value of |hr| in the message? it seems like we\u0027d want to know any other hr value since they\u0027d be surprising.",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8219ada0_6a0326a4",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-10T09:04:18Z",
+      "side": 1,
+      "message": "while SetProcessDPIAware isn\u0027t documented as setting the last error code, how about using DPCHECK here just in case:\n    DPCHECK(result) \u003c\u003c \"SetProcessDPIAware failed\";\n(note the lack of a period at the end of the message\")\n\ni could also see the value in:\n    ::SetLastError(ERROR_SUCCESS);\njust before calling SetProcessDPIAware to mitigate a stale value in the LEC.",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
