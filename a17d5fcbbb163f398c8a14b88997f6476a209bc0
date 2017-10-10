@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4813ae_01d40833",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T01:24:31Z",
+      "side": 1,
+      "message": "Is it OK to use last committed origin here to make the factory? Is it possible this RenderFrameHost\u0027s origin changes later and we still use the old origin?\n\nWould it make sense to add a comment about why we know the origin wont\u0027 change later?\n\n(I\u0027m not super familiar with these mechanisms)",
+      "revId": "a17d5fcbbb163f398c8a14b88997f6476a209bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ecf7ef_ecf9da10",
+        "filename": "third_party/WebKit/public/platform/dedicated_worker_factory.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T01:24:31Z",
+      "side": 1,
+      "message": "Question: Is this creating document the so-called \"shadow page\"?",
+      "revId": "a17d5fcbbb163f398c8a14b88997f6476a209bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
