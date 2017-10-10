@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "21e2596b_8499484e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "tsepez: do you have security advise here? It sort of bothers me to do `const auto\u0026` and then don\u0027t bother checking \u003e\u003d 0 since we \"know\" it\u0027s unsigned. Could we just do `uint32_t feature : version-\u003eused_features()`  (are we guaranteed the compiler complains if used_features becomes signed later?)\n\nIf not, I\u0027d prefer just doing the CHECK \u003e\u003d 0 and \u003c kNumFeatures now. This code should eventually go away when everything is using WebFeature natively.",
+      "parentUuid": "c9a72f25_ff7b407c",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f039b2f_7046a329",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "it\u0027s not a big deal but could this be written to not do two lookups on provider_clients_?\n something like:\niter \u003d provider_clients_.find(provider_id);\nif (iter !\u003d end)\n  return iter.second;\nreturn nullptr;",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ac4805_00d450f3",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "don\u0027t need to set to nullptr, the WeakPtr is nullptr by default",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d77d3cd_05f230cd",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 12
@@ -36,6 +88,132 @@
         "endLine": 58,
         "endChar": 48
       },
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2f8280_28a4968e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "I don\u0027t think new line is needed here.",
+      "parentUuid": "4d77d3cd_05f230cd",
+      "range": {
+        "startLine": 58,
+        "startChar": 46,
+        "endLine": 58,
+        "endChar": 48
+      },
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28de6a5_7b092509",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "This comment looks very obsolete :)",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459ee697_2c4e32b8",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0c51fd_f5ef8b55",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "can remove this blank line",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a20dce_ba071778",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "/* notify_controllerchange */",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05804a8_9e6b3e09",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "consider adding DCHECK(provider_client) to help document that the caller should only call this after SetClient() has been called.",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9071426d_e21089da",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T08:52:26Z",
+      "side": 1,
+      "message": "Move lines 86-87 to line 83. The first two sentences are about setting |controller|.\n\nThen we talk about about |used_features|. It could be:\n\"If |controller| is valid, |used_features| is the set of features the controller has used, for UseCounter purposes.\"",
       "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
