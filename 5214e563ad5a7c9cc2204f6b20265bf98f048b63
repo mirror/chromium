@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8573f4fd_21cefb6a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "I\u0027d avoid the extra subfolder and move all this tests to \"css-grid-1/alignment/\".\nThey have different names and that shouldn\u0027t be an issue.\nI prefer to have just one folder for each main section as it\u0027s already hard to find\nthe proper folder for some tests with that.\nThanks!",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc4fc28_2ba722ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Typo: \"along\"\n\nThe term \"well defined\" is strange, probably we should look for something better.\nFor example the spec (https://drafts.csswg.org/css-grid/#placement) talks about:\n\"definite grid position\" vs \"automatic grid position\".",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c2ab8f_7a1cfafa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Nit: I guess the link here should be css-align-3 too.",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba03e8b4_3019769c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Note that we\u0027ve now a support/grid.css file in the WPT which already defines these classes\nadd background colors and so on.",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1891d9ad_4b00a5ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-010.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Nit: This is strange, better just do:\n  .grid \u003e div {\n    position: absolute;\n    direction: rtl;\n  }",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21bd7d3_04e0c8a9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-013.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Nit: As explained before, I\u0027d probably just say \"automatic grid positions\".",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069c3c00_7d060e36",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-rtl-001.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Super-nit: Use \"RTL\" instead of \"rtl\".",
+      "range": {
+        "startLine": 3,
+        "startChar": 101,
+        "endLine": 3,
+        "endChar": 108
+      },
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e16b347_a875d2ee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/column-axis/grid-column-axis-alignment-positioned-items-rtl-007.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-10-10T20:09:01Z",
+      "side": 1,
+      "message": "Typo: grido",
+      "revId": "5214e563ad5a7c9cc2204f6b20265bf98f048b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
