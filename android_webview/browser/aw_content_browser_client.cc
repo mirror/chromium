@@ -23,6 +23,7 @@
 #include "android_webview/browser/tracing/aw_tracing_delegate.h"
 #include "android_webview/common/aw_descriptors.h"
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/constants.mojom.h"
 #include "android_webview/common/crash_reporter/aw_microdump_crash_reporter.h"
 #include "android_webview/common/render_view_messages.h"
 #include "android_webview/common/url_constants.h"
@@ -171,6 +172,45 @@ void AwContentsMessageFilter::OnSubFrameCreated(int parent_render_frame_id,
 void DummyBindPasswordManagerDriver(
     autofill::mojom::PasswordManagerDriverRequest request,
     content::RenderFrameHost* render_frame_host) {}
+
+class AndroidWebviewService : public service_manager::Service {
+ public:
+  AndroidWebviewService() {
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+    registry_with_source_info_.AddInterface(
+        base::Bind(&SpellCheckHostImpl::Create),
+        content::BrowserThread::GetTaskRunnerForThread(
+            content::BrowserThread::UI));
+#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
+    registry_.AddInterface(base::Bind(&SpellCheckPanelHostImpl::Create),
+                           content::BrowserThread::GetTaskRunnerForThread(
+                               content::BrowserThread::UI));
+#endif
+#endif
+  }
+
+  ~AndroidWebviewService() override {}
+
+  static std::unique_ptr<service_manager::Service> Create() {
+    return base::MakeUnique<AndroidWebviewService>();
+  }
+
+ private:
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
+                       const std::string& name,
+                       mojo::ScopedMessagePipeHandle handle) override {
+    if (!registry_.TryBindInterface(name, &handle))
+      registry_with_source_info_.TryBindInterface(name, &handle, remote_info);
+  }
+
+  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistryWithArgs<
+      const service_manager::BindSourceInfo&>
+      registry_with_source_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(AndroidWebviewService);
+};
 
 }  // anonymous namespace
 
@@ -572,6 +612,13 @@ void AwContentBrowserClient::ExposeInterfacesToRenderer(
                 base::Unretained(this))),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
+}
+
+void AwContentBrowserClient::RegisterInProcessServices(
+    content::StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo info;
+  info.factory = base::Bind(&AndroidWebviewService::Create);
+  services->insert(std::make_pair(android_webview::mojom::kServiceName, info));
 }
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>
