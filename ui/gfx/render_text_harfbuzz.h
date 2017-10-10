@@ -56,14 +56,19 @@ struct GFX_EXPORT TextRunHarfBuzz {
   RangeF GetGraphemeBounds(RenderTextHarfBuzz* render_text,
                            size_t text_index) const;
 
-  // Returns the width of the given |char_range| handling grapheme boundaries
-  // within glyphs.
-  float GetGraphemeWidthForCharRange(RenderTextHarfBuzz* render_text,
-                                     const Range& char_range) const;
+  // Returns the horizontal span of the given |char_range| handling grapheme
+  // boundaries within glyphs.
+  std::pair<float, float> GetGraphemeSpanForCharRange(
+      RenderTextHarfBuzz* render_text,
+      const Range& char_range) const;
 
   // Returns the glyph width for the given character range. |char_range| is in
   // text-space (0 corresponds to |GetDisplayText()[0]|).
   SkScalar GetGlyphWidthForCharRange(const Range& char_range) const;
+
+  // For glyphs in the cluster represented in |glyph_range|, find the minimum
+  // horizontal position offset.
+  float GetMinXPositionInCluster(const Range& glyph_range) const;
 
   float width;
   float preceding_run_widths;

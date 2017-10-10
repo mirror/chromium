@@ -753,7 +753,7 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
       }
     }
     DCHECK_GT(total, 0);
-    if (total > 1) {
+    if (total > 1 && before != total) {
       if (is_rtl)
         before = total - before - 1;
       DCHECK_GE(before, 0);
@@ -772,17 +772,18 @@ RangeF TextRunHarfBuzz::GetGraphemeBounds(RenderTextHarfBuzz* render_text,
                 preceding_run_widths + cluster_end_x);
 }
 
-float TextRunHarfBuzz::GetGraphemeWidthForCharRange(
+std::pair<float, float> TextRunHarfBuzz::GetGraphemeSpanForCharRange(
     RenderTextHarfBuzz* render_text,
     const Range& char_range) const {
   if (char_range.is_empty())
-    return 0;
+    return {};
+
   DCHECK(!char_range.is_reversed());
   DCHECK(range.Contains(char_range));
   size_t left_index = is_rtl ? char_range.end() - 1 : char_range.start();
   size_t right_index = is_rtl ? char_range.start() : char_range.end() - 1;
-  return GetGraphemeBounds(render_text, right_index).GetMax() -
-         GetGraphemeBounds(render_text, left_index).GetMin();
+  return {GetGraphemeBounds(render_text, left_index).GetMin(),
+          GetGraphemeBounds(render_text, right_index).GetMax()};
 }
 
 SkScalar TextRunHarfBuzz::GetGlyphWidthForCharRange(
@@ -809,6 +810,15 @@ SkScalar TextRunHarfBuzz::GetGlyphWidthForCharRange(
               ? SkFloatToScalar(width)
               : positions[glyph_range.end()].x()) -
          positions[glyph_range.start()].x();
+}
+
+float TextRunHarfBuzz::GetMinXPositionInCluster(
+    const Range& glyph_range) const {
+  DCHECK(!glyph_range.is_empty());
+  float cluster_min_x = positions[glyph_range.start()].x();
+  for (size_t i = glyph_range.start() + 1; i < glyph_range.end(); ++i)
+    cluster_min_x = std::min(cluster_min_x, positions[i].x());
+  return cluster_min_x;
 }
 
 TextRunList::TextRunList() : width_(0.0f) {}
@@ -1148,8 +1158,8 @@ std::vector<Rect> RenderTextHarfBuzz::GetSubstringBounds(const Range& range) {
       IsValidCursorIndex(range.GetMax())
           ? range.GetMax()
           : IndexOfAdjacentGrapheme(range.GetMax(), CURSOR_FORWARD);
-  Range display_range(TextIndexToDisplayIndex(start),
-                      TextIndexToDisplayIndex(end));
+  const Range display_range(TextIndexToDisplayIndex(start),
+                            TextIndexToDisplayIndex(end));
   DCHECK(Range(0, GetDisplayText().length()).Contains(display_range));
 
   std::vector<Rect> rects;
@@ -1161,30 +1171,24 @@ std::vector<Rect> RenderTextHarfBuzz::GetSubstringBounds(const Range& range) {
     const internal::Line& line = lines()[line_index];
     // Only the last line can be empty.
     DCHECK(!line.segments.empty() || (line_index == lines().size() - 1));
+    const int line_start_x =
+        line.segments.empty()
+            ? 0
+            : run_list->runs()[line.segments[0].run]->preceding_run_widths;
 
-    float line_x = 0;
     for (const internal::LineSegment& segment : line.segments) {
       const Range intersection = segment.char_range.Intersect(display_range);
       DCHECK(!intersection.is_reversed());
       if (!intersection.is_empty()) {
         const internal::TextRunHarfBuzz& run = *run_list->runs()[segment.run];
-        float width = SkScalarToFloat(
-            run.GetGraphemeWidthForCharRange(this, intersection));
-        float x = line_x;
-        if (run.is_rtl) {
-          x += SkScalarToFloat(run.GetGraphemeWidthForCharRange(
-              this, gfx::Range(intersection.end(), segment.char_range.end())));
-        } else {
-          x += SkScalarToFloat(run.GetGraphemeWidthForCharRange(
-              this,
-              gfx::Range(segment.char_range.start(), intersection.start())));
-        }
-        int end_x = std::ceil(x + width);
-        int start_x = std::ceil(x);
+        Range actual_char_range;
+        std::pair<float, float> selected_span =
+            run.GetGraphemeSpanForCharRange(this, intersection);
+        int start_x = std::floor(selected_span.first) - line_start_x;
+        int end_x = std::ceil(selected_span.second) - line_start_x;
         gfx::Rect rect(start_x, 0, end_x - start_x, line.size.height());
         rects.push_back(rect + GetLineOffset(line_index));
       }
-      line_x += segment.width();
     }
   }
   return rects;
