@@ -269,7 +269,7 @@ void TextIteratorTextNodeHandler::HandleTextNodeInRange(Text* node,
   if (should_handle_first_letter)
     HandleTextNodeFirstLetter(ToLayoutTextFragment(layout_object));
 
-  if (!layout_object->FirstTextBox() && str.length() > 0 &&
+  if (!layout_object->HasRenderedText() && str.length() > 0 &&
       !should_handle_first_letter) {
     if (layout_object->Style()->Visibility() == EVisibility::kVisible ||
         IgnoresStyleVisibility()) {

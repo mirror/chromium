@@ -204,6 +204,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
   int CaretMinOffset() const override;
   int CaretMaxOffset() const override;
   unsigned ResolvedTextLength() const;
+  bool HasRenderedText() const { return FirstTextBox(); }
 
   bool ContainsReversedText() const { return contains_reversed_text_; }
 

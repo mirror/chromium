@@ -242,7 +242,7 @@ bool SimplifiedBackwardsTextIteratorAlgorithm<Strategy>::HandleTextNode() {
     return true;
 
   String text = layout_object->GetText();
-  if (!layout_object->HasTextBoxes() && text.length() > 0)
+  if (!layout_object->HasRenderedText() && text.length() > 0)
     return true;
 
   position_end_offset_ = offset_;
