@@ -14,7 +14,11 @@ namespace {
 // on success, false on failure.
 bool CallFlockOnFileWithFlag(const int fd, int flag) {
   int ret = -1;
+#if defined(OS_FUCHSIA)
+  if ((ret = flock(fd, flag)) < 0)
+#else
   if ((ret = TEMP_FAILURE_RETRY(flock(fd, flag))) < 0)
+#endif
     PLOG(ERROR) << "Error locking " << fd;
 
   return !ret;

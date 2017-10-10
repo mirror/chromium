@@ -5,13 +5,20 @@
 #include "chromecast/net/network_change_notifier_factory_cast.h"
 
 #include "chromecast/net/net_util_cast.h"
+
+#if defined(OS_LINUX)
 #include "net/base/network_change_notifier_linux.h"
+#endif
 
 namespace chromecast {
 
 net::NetworkChangeNotifier* NetworkChangeNotifierFactoryCast::CreateInstance() {
+#if defined(OS_LINUX)
   // Caller assumes ownership.
   return new net::NetworkChangeNotifierLinux(GetIgnoredInterfaces());
+#else
+  return nullptr;
+#endif
 }
 
 NetworkChangeNotifierFactoryCast::~NetworkChangeNotifierFactoryCast() {

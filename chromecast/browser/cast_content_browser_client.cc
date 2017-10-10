@@ -347,12 +347,14 @@ void CastContentBrowserClient::AppendExtraCommandLineSwitches(
   base::CommandLine* browser_command_line =
       base::CommandLine::ForCurrentProcess();
 
+#if defined(OS_LINUX) || defined(OS_ANDROID)
   // IsCrashReporterEnabled() is set when InitCrashReporter() is called, and
   // controlled by GetBreakpadClient()->EnableBreakpadForProcess(), therefore
   // it's ok to add switch to every process here.
   if (breakpad::IsCrashReporterEnabled()) {
     command_line->AppendSwitch(switches::kEnableCrashReporter);
   }
+#endif
 
   // Command-line for different processes.
   if (process_type == switches::kRendererProcess) {
@@ -613,7 +615,7 @@ CastContentBrowserClient::GetDevToolsManagerDelegate() {
   return new CastDevToolsManagerDelegate();
 }
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 int CastContentBrowserClient::GetCrashSignalFD(
     const base::CommandLine& command_line) {
   std::string process_type =

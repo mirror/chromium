@@ -37,7 +37,7 @@ class CastMainDelegate : public content::ContentMainDelegate {
   int RunProcess(
       const std::string& process_type,
       const content::MainFunctionParams& main_function_params) override;
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
   void ZygoteForked() override;
 #endif  // !defined(OS_ANDROID)
   content::ContentBrowserClient* CreateContentBrowserClient() override;

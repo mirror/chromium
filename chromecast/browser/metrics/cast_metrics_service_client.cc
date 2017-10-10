@@ -58,7 +58,7 @@ const char kMetricsOldClientID[] = "user_experience_metrics.client_id";
 
 #if defined(OS_ANDROID)
 const char kClientIdName[] = "Client ID";
-#else
+#elif defined(OS_LINUX)
 const char kExternalUmaEventsRelativePath[] = "metrics/uma-events";
 const char kPlatformUmaEventsPath[] = "/data/share/chrome/metrics/uma-events";
 
@@ -179,12 +179,14 @@ bool CastMetricsServiceClient::GetBrand(std::string* brand_code) {
   }
   NOTREACHED();
   return ::metrics::SystemProfileProto::CHANNEL_UNKNOWN;
-#else
+#elif defined(OS_LINUX)
   // Use the system (or signed) release channel here to avoid the noise in the
   // metrics caused by the virtual channel which could be temporary or
   // arbitrary.
   return GetReleaseChannelFromUpdateChannelName(
       sys_info->GetSystemReleaseChannel());
+#else
+  return ::metrics::SystemProfileProto::CHANNEL_UNKNOWN;
 #endif  // defined(OS_ANDROID)
 }
 

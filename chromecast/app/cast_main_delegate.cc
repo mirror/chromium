@@ -39,7 +39,7 @@
 
 namespace {
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 base::LazyInstance<chromecast::CastCrashReporterClient>::Leaky
     g_crash_reporter_client = LAZY_INSTANCE_INITIALIZER;
 #endif  // !defined(OS_ANDROID)
@@ -138,7 +138,7 @@ void CastMainDelegate::PreSandboxStartup() {
   base::FilePath log_file;
   PathService::Get(FILE_CAST_ANDROID_LOG, &log_file);
   chromecast::CrashHandler::Initialize(process_type, log_file);
-#else
+#elif defined(OS_LINUX)
   crash_reporter::SetCrashReporterClient(g_crash_reporter_client.Pointer());
 
   if (process_type != switches::kZygoteProcess) {
@@ -165,7 +165,7 @@ int CastMainDelegate::RunProcess(
 #endif  // defined(OS_ANDROID)
 }
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 void CastMainDelegate::ZygoteForked() {
   const base::CommandLine* command_line(base::CommandLine::ForCurrentProcess());
   std::string process_type =

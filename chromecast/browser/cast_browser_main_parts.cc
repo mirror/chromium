@@ -69,7 +69,7 @@
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_switches.h"
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 #include <signal.h>
 #include <sys/prctl.h>
 #endif
@@ -98,7 +98,7 @@
 
 namespace {
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
 int kSignalsToRunClosure[] = { SIGTERM, SIGINT, };
 // Closure to run on SIGTERM and SIGINT.
 base::Closure* g_signal_closure = nullptr;
@@ -467,7 +467,7 @@ int CastBrowserMainParts::PreCreateThreads() {
   // Hook for internal code
   cast_browser_process_->browser_client()->PreCreateThreads();
 
-#if defined(USE_AURA)
+#if defined(USE_AURA) && defined(OS_LINUX)
   cast_browser_process_->SetCastScreen(base::WrapUnique(new CastScreen()));
   DCHECK(!display::Screen::GetScreen());
   display::Screen::SetScreenInstance(cast_browser_process_->cast_screen());
@@ -481,8 +481,7 @@ int CastBrowserMainParts::PreCreateThreads() {
 }
 
 void CastBrowserMainParts::PreMainMessageLoopRun() {
-
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && defined(OS_LINUX)
   memory_pressure_monitor_.reset(new CastMemoryPressureMonitor());
 #endif  // defined(OS_ANDROID)
 
@@ -558,7 +557,9 @@ bool CastBrowserMainParts::MainMessageLoopRun(int* result_code) {
 #else
   base::RunLoop run_loop;
   base::Closure quit_closure(run_loop.QuitClosure());
+#if defined(OS_LINUX)
   RegisterClosureOnSignal(quit_closure);
+#endif
 
   // If parameters_.ui_task is not NULL, we are running browser tests.
   if (parameters_.ui_task) {
@@ -569,11 +570,13 @@ bool CastBrowserMainParts::MainMessageLoopRun(int* result_code) {
 
   run_loop.Run();
 
+#if defined(OS_LINUX)
   // Once the main loop has stopped running, we give the browser process a few
   // seconds to stop cast service and finalize all resources. If a hang occurs
   // and cast services refuse to terminate successfully, then we SIGKILL the
   // current process to avoid indefinte hangs.
   RegisterKillOnAlarm(kKillOnAlarmTimeoutSec);
+#endif
 
   cast_browser_process_->cast_service()->Stop();
   return true;
@@ -591,7 +594,9 @@ void CastBrowserMainParts::PostMainMessageLoopRun() {
   cast_browser_process_->metrics_service_client()->Finalize();
   cast_browser_process_.reset();
 
+#if defined(OS_LINUX)
   DeregisterKillOnAlarm();
+#endif
 #endif
 }
 

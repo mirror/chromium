@@ -964,7 +964,6 @@ if (!is_android) {
       "//components/sync",
       "//components/sync:test_support_fake_server",
       "//components/sync:test_support_model",
-      "//components/sync:test_support_testserver",
       "//content/test:test_support",
       "//net",
       "//skia",
@@ -1001,6 +1000,9 @@ if (!is_android) {
         "//components/arc:arc_test_support",
         "//components/user_manager:test_support",
       ]
+    }
+    if (!is_fuchsia) {
+      deps += [ "//components/sync:test_support_testserver" ]
     }
   }
 
@@ -2418,9 +2420,6 @@ test("browser_tests") {
       deps += [ "//content/public/common:feature_h264_with_openh264_ffmpeg" ]
     } else {
       sources -= [
-        "../browser/extensions/api/webrtc_audio_private/webrtc_audio_private_browsertest.cc",
-        "../browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
-        "../browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
         "../browser/media/webrtc/webrtc_apprtc_browsertest.cc",
         "../browser/media/webrtc/webrtc_audio_quality_browsertest.cc",
         "../browser/media/webrtc/webrtc_browsertest.cc",
@@ -2433,6 +2432,13 @@ test("browser_tests") {
         "../browser/media/webrtc/webrtc_video_quality_browsertest.cc",
         "../browser/media/webrtc/webrtc_webcam_browsertest.cc",
       ]
+      if (enable_extensions) {
+        sources -= [
+          "../browser/extensions/api/webrtc_audio_private/webrtc_audio_private_browsertest.cc",
+          "../browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
+          "../browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        ]
+      }
     }
     if (is_win) {
       deps += [
@@ -5101,7 +5107,7 @@ if (safe_browsing_mode == 1 && is_mac) {
   }
 }
 
-if (!is_android) {
+if (!is_android && !is_fuchsia) {
   # TODO(609855): Make this compile on Android and run on the bots.
   test("chrome_app_unittests") {
     sources = [

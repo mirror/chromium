@@ -21,8 +21,10 @@ source_set("browser") {
     "//components/crash/content/app",
     "//content/public/browser",
     "//content/public/common",
-    "//third_party/breakpad:client",
   ]
+  if (!is_fuchsia) {
+    deps += [ "//third_party/breakpad:client" ]
+  }
 
   if (is_linux || is_android) {
     set_sources_assignment_filter([])
