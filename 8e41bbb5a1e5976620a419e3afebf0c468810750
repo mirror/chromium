@@ -69,6 +69,24 @@
       "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8ac8afe_9d9bb5c8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-10T18:38:20Z",
+      "side": 1,
+      "message": "Oh my bad. No need to change TaskQueue\u0027s API",
+      "parentUuid": "aacea374_efe6438c",
+      "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
