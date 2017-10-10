@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514c7487_b22f1aa3",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T00:11:57Z",
+      "side": 1,
+      "message": "nit: Update the local variable too?",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb4a599_1357839d",
+        "filename": "content/browser/indexed_db/indexed_db_class_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T00:11:57Z",
+      "side": 1,
+      "message": "nit: Update argument name too?\n\nI suspect it\u0027d make sense to do a metadata_factory -\u003e metadata_coding search/replace through the diff.",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3fc534_f82a90c8",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T00:11:57Z",
+      "side": 1,
+      "message": "nit: If you want to avoid the copy (which sounds like a noble goal to me), you could create a copy of new_name inside an \"#if DCHECK_IS_ON()\" block before moving, and use that copy for the DCHECK_EQ below.",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c67149c_6ec8d7b3",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T00:11:57Z",
+      "side": 1,
+      "message": "Same nit as above -- you can use std::move with a bit of extra code.",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

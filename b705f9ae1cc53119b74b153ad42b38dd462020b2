@@ -475,6 +475,24 @@
       "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b838525e_f539c829",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T00:11:57Z",
+      "side": 1,
+      "message": "Okay, if it matches the rest of the file.",
+      "parentUuid": "3ea38625_7ea8e43c",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
