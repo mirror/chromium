@@ -39,18 +39,18 @@ namespace blink {
 
 namespace {
 
-DoubleSize ContentsScrollOffset(AbstractView* abstract_view) {
+FloatSize ContentsScrollOffset(AbstractView* abstract_view) {
   if (!abstract_view || !abstract_view->IsLocalDOMWindow())
-    return DoubleSize();
+    return FloatSize();
   LocalFrame* frame = ToLocalDOMWindow(abstract_view)->GetFrame();
   if (!frame)
-    return DoubleSize();
+    return FloatSize();
   LocalFrameView* frame_view = frame->View();
   if (!frame_view)
-    return DoubleSize();
+    return FloatSize();
   float scale_factor = frame->PageZoomFactor();
-  return DoubleSize(frame_view->ScrollX() / scale_factor,
-                    frame_view->ScrollY() / scale_factor);
+  return FloatSize(frame_view->ScrollX() / scale_factor,
+                   frame_view->ScrollY() / scale_factor);
 }
 
 float PageZoomFactor(const UIEvent* event) {
@@ -194,8 +194,8 @@ MouseEvent::MouseEvent(const AtomicString& event_type,
                        double screen_y,
                        double window_x,
                        double window_y,
-                       double movement_x,
-                       double movement_y,
+                       int movement_x,
+                       int movement_y,
                        WebInputEvent::Modifiers modifiers,
                        short button,
                        unsigned short buttons,
@@ -249,7 +249,7 @@ void MouseEvent::InitCoordinates(const double client_x, const double client_y) {
   // Set up initial values for coordinates.
   // Correct values are computed lazily, see computeRelativePosition.
   client_location_ = DoublePoint(client_x, client_y);
-  page_location_ = client_location_ + ContentsScrollOffset(view());
+  page_location_ = client_location_ + DoubleSize(ContentsScrollOffset(view()));
 
   layer_location_ = page_location_;
   offset_location_ = page_location_;
@@ -366,7 +366,7 @@ void MouseEvent::InitMouseEventInternal(
   InitUIEventInternal(type, can_bubble, cancelable, related_target, view,
                       detail, source_capabilities);
 
-  screen_location_ = DoublePoint(screen_x, screen_y);
+  screen_location_ = FloatPoint(screen_x, screen_y);
   button_ = button;
   buttons_ = buttons;
   related_target_ = related_target;
