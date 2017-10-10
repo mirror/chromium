@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a39744f_bd089adb",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-10T01:50:39Z",
+      "side": 1,
+      "message": "I won\u0027t forward declare this on this CL since that meant adding some extra code, and it will be part of making this a UIVC subclass.",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "ef1a7eb91d253fe58ee2894f4736f4ef0914c30b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
