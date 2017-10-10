@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c2fbe6f_71f2ce50",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "Can you use FRIEND_TEST_ALL_PREFIXES() instead?",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9737e2f3_32ca9d96",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 33,
+        "startChar": 40,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa38c244_90d4dd92",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "nit: static_cast\u003cbool\u003e(client_);",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37115f74_57cd9768",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "nit: client_.reset()",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4027e29_8505797f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60cdf41_837cc3c0",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T15:47:57Z",
+      "side": 1,
+      "message": "Same here, FRIEND_TEST_ALL_PREFIXES",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "32ea8ee5a9494ebae541550e5e2e52ccaf771b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
