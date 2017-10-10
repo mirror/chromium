@@ -396,4 +396,6 @@ enum EffectiveConnectionType {
     boolean isLowEndDevice();
 
     sequence<DOMString> supportedTextEncodingLabels();
+
+    void BypassLongCompileThresholdOnce();
 };

@@ -78,6 +78,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/geometry/DOMPoint.h"
@@ -3490,6 +3491,15 @@ bool Internals::isLowEndDevice() const {
 
 Vector<String> Internals::supportedTextEncodingLabels() const {
   return WTF::TextEncodingAliasesForTesting();
+}
+
+void Internals::BypassLongCompileThresholdOnce() {
+  if (!document || !document->GetFrame() ||
+      !document->GetFrame()->GetPerformanceMonitor())
+    return;
+  return &document->GetFrame()
+              ->GetPerformanceMonitor()
+              ->SetBypassLongCompileThresholdForTesting(true);
 }
 
 }  // namespace blink
