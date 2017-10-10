@@ -5,7 +5,7 @@
 #ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_TRACING_HELPER_H_
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_UTIL_TRACING_HELPER_H_
 
-#include <memory>
+#include <functional>
 #include "base/macros.h"
 #include "base/trace_event/trace_event.h"
 #include "platform/PlatformExport.h"
@@ -61,13 +61,14 @@ class StateTracer {
     }
   }
 
- private:
-  bool is_enabled() {
+ protected:
+  bool is_enabled() const {
     bool result = false;
     TRACE_EVENT_CATEGORY_GROUP_ENABLED(category, &result);  // Cached.
     return result;
   }
 
+ private:
   const char* const name_;  // Not owned.
   const void* const object_;  // Not owned.
 
@@ -76,7 +77,50 @@ class StateTracer {
   bool started_;
 
   DISALLOW_COPY_AND_ASSIGN(StateTracer);
-  // TODO(kraynov): Tests.
+};
+
+template <typename T, const char* category>
+class TraceableState: private StateTracer<category> {
+ public:
+  TraceableState(T initial_state,
+                 const char* name,
+                 const void* object,
+                 std::function<const char* (T)> converter)
+      : StateTracer<category>(name, object),
+        state_(initial_state),
+        converter_(converter) {}
+
+  void set(T state) {
+    if (state != state_) {
+      state_ = state;
+      TraceNow();
+    }
+  }
+  TraceableState& operator =(const T& value) {
+    set(value);
+    return *this;
+  }
+
+  T get() const {
+    return state_;
+  }
+  operator T() const {
+    return get();
+  }
+
+  // Trace current value even if unchanged.
+  void TraceNow() {
+    // See http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html if
+    // curious why |this| is required here.
+    if (this->is_enabled())
+      this->SetState(converter_(state_));
+  }
+
+ private:
+  T state_;
+  std::function<const char* (T)> converter_;
+
+  DISALLOW_COPY_AND_ASSIGN(TraceableState);
 };
 
 }  // namespace scheduler
