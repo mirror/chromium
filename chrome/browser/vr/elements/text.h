@@ -9,6 +9,7 @@
 
 #include "chrome/browser/vr/elements/textured_element.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "cc/base/lap_timer.h"
 
 namespace vr {
 
@@ -25,9 +26,13 @@ class Text : public TexturedElement {
   void SetText(const base::string16& text);
   void SetColor(SkColor color);
 
+ protected:
+ 	void PrepareToDraw() override;
+
  private:
   UiTexture* GetTexture() const override;
 
+  base::string16 text_;
   std::unique_ptr<TextTexture> texture_;
   DISALLOW_COPY_AND_ASSIGN(Text);
 };

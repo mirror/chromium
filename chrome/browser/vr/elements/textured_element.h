@@ -37,7 +37,7 @@ class TexturedElement : public UiElement {
   virtual UiTexture* GetTexture() const = 0;
   virtual void UpdateElementSize();
 
-  void PrepareToDraw() final;
+  void PrepareToDraw() override;
 
  private:
   void Flush(SkSurface* surface);

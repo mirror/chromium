@@ -41,6 +41,7 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/transform_util.h"
+#include "base/strings/utf_string_conversions.h"
 
 namespace vr {
 
@@ -308,14 +309,23 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
   auto text = base::MakeUnique<Text>(512, kUnderDevelopmentNoticeFontHeightM,
                                      kUnderDevelopmentNoticeWidthM);
   BindColor(this, text.get(), &ColorScheme::world_background_text);
-  text->SetText(l10n_util::GetStringUTF16(IDS_VR_UNDER_DEVELOPMENT_NOTICE));
-  text->set_name(kUnderDevelopmentNotice);
+  text->SetText(base::UTF8ToUTF16("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo "
+    "ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis "
+    "dis parturient montes, nascetur ridiculus mus. Donec quam felis, "
+    "ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa "
+    "quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, "
+    "arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. "
+    "Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras "
+    "dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. "
+    "Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. "
+    "Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus"));
+  text->set_name(kTestText);
   text->set_draw_phase(kPhaseForeground);
   text->set_hit_testable(false);
   text->SetSize(kUnderDevelopmentNoticeWidthM, kUnderDevelopmentNoticeHeightM);
   text->SetTranslate(0, -kUnderDevelopmentNoticeVerticalOffsetM, 0);
   text->SetRotate(1, 0, 0, kUnderDevelopmentNoticeRotationRad);
-  text->SetVisible(true);
+  text->SetVisible(false);
   text->set_y_anchoring(YAnchoring::YBOTTOM);
   control_elements_.push_back(text.get());
   scene_->AddUiElement(kUrlBar, std::move(text));

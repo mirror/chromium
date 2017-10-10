@@ -10,6 +10,11 @@
 #include "chrome/browser/vr/test/gl_test_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
+#include <iostream>
+#include <fstream>
+#include "base/trace_event/trace_log.h"
+#include "base/memory/ref_counted_memory.h"
+#include "base/test/scoped_task_environment.h"
 
 namespace vr {
 
@@ -17,8 +22,8 @@ namespace {
 
 constexpr int kMaximumTextWidthPixels = 512;
 constexpr size_t kNumberOfRuns = 35;
-constexpr float kFontHeightMeters = 0.05f;
-constexpr float kTextWidthMeters = 1.0f;
+constexpr float kFontHeightMeters = 0.048f;
+constexpr float kTextWidthMeters = 1.056f;
 
 }  // namespace
 
@@ -49,7 +54,7 @@ class TextPerfTest : public testing::Test {
     static_cast<UiElement*>(text_element_.get())->PrepareToDraw();
     // Make sure all GL commands are applied before we measure the time.
     glFinish();
-    timer_.NextLap();
+    // timer_.NextLap();
   }
 
   std::unique_ptr<Text> text_element_;
@@ -71,12 +76,39 @@ TEST_F(TextPerfTest, RenderLoremIpsum100Chars) {
 
 TEST_F(TextPerfTest, RenderLoremIpsum700Chars) {
   base::string16 text = base::UTF8ToUTF16(kLoremIpsum700Chars);
+
+  // start of the test
+  base::trace_event::TraceLog::GetInstance()->SetEnabled(
+      base::trace_event::TraceConfig("gpu", ""),
+      base::trace_event::TraceLog::RECORDING_MODE);
+
+  text_element_->set_name(kTestText);
+
   timer_.Reset();
-  for (size_t i = 0; i < kNumberOfRuns; i++) {
+  // for (size_t i = 0; i < kNumberOfRuns; i++) {
     text_element_->SetText(text);
     RenderAndLapTimer();
-  }
-  PrintResults("render_lorem_ipsum_700_chars");
+  // }
+
+  base::trace_event::TraceLog::GetInstance()->SetDisabled(base::trace_event::TraceLog::RECORDING_MODE);
+  
+  std::ofstream myfile;
+  myfile.open ("/sdcard/test_trace.json", std::ios_base::trunc);
+  myfile << "[";
+
+  base::test::ScopedTaskEnvironment env(base::test::ScopedTaskEnvironment::MainThreadType::UI);
+
+  base::trace_event::TraceLog::GetInstance()->Flush(
+    base::Bind([](std::ofstream* myfile,
+                  const scoped_refptr<base::RefCountedString>& str,
+                  bool has_more_events) {
+      (*myfile) << str->data();
+    }, &myfile));
+  env.RunUntilIdle();
+  myfile << "]";
+  myfile.close();
+
+  // PrintResults("render_lorem_ipsum_700_chars");
 }
 
 }  // namespace vr

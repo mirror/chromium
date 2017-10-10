@@ -82,15 +82,21 @@ std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
 
   if (wrapping_behavior == kWrappingBehaviorWrap) {
     std::vector<base::string16> strings;
-    gfx::ElideRectangleText(text, font_list, bounds->width(),
-                            bounds->height() ? bounds->height() : INT_MAX,
-                            gfx::WRAP_LONG_WORDS, &strings);
 
+    {
+      TRACE_EVENT0("gpu", "UiTexture::PrepareDrawStringRect.test1");
+      gfx::ElideRectangleText(text, font_list, bounds->width(),
+                              bounds->height() ? bounds->height() : INT_MAX,
+                              gfx::WRAP_LONG_WORDS, &strings);
+    }
     int height = 0;
     int line_height = 0;
+    {
+        TRACE_EVENT0("gpu", "UiTexture::PrepareDrawStringRect.test2");
     for (size_t i = 0; i < strings.size(); i++) {
-      std::unique_ptr<gfx::RenderText> render_text = CreateConfiguredRenderText(
-          strings[i], font_list, color, text_alignment);
+      std::unique_ptr<gfx::RenderText> render_text;
+        render_text = CreateConfiguredRenderText(
+            strings[i], font_list, color, text_alignment);
 
       if (i == 0) {
         // Measure line and center text vertically.
@@ -107,6 +113,7 @@ std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
       rect += gfx::Vector2d(0, line_height);
       lines.push_back(std::move(render_text));
     }
+  }
 
     // Set calculated height.
     if (bounds->height() == 0)

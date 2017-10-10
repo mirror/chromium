@@ -23,9 +23,9 @@ class VrCommonTestSuite : public base::TestSuite {
   void Initialize() override {
     base::TestSuite::Initialize();
 
-    scoped_task_environment_ =
-        base::MakeUnique<base::test::ScopedTaskEnvironment>(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI);
+    // scoped_task_environment_ =
+    //     base::MakeUnique<base::test::ScopedTaskEnvironment>(
+    //         base::test::ScopedTaskEnvironment::MainThreadType::UI);
 
     mojo::edk::Init();
 

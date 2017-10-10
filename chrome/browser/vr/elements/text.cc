@@ -12,6 +12,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/render_text.h"
+#include "base/trace_event/trace_event.h"
 
 namespace vr {
 
@@ -62,6 +63,7 @@ Text::Text(int maximum_width_pixels,
 Text::~Text() {}
 
 void Text::SetText(const base::string16& text) {
+  text_ = text;
   texture_->SetText(text);
 }
 
@@ -78,23 +80,65 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
   gfx::Canvas* canvas = &gfx_canvas;
 
+  // LOG(INFO) << "TIMING font_height_ " << font_height_;
+  // LOG(INFO) << "TIMING text_width_ " << text_width_;
+  // LOG(INFO) << "TIMING texture_size " << texture_size.width() << ", " << texture_size.height();
+  // LOG(INFO) << "TIMING text_ " << text_;
+
   gfx::FontList fonts;
-  float pixels_per_meter = texture_size.width() / text_width_;
-  int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
-  GetFontList(pixel_font_height, text_, &fonts);
+  {
+    TRACE_EVENT0("gpu", "TextTexture::Draw.test1");
+    float pixels_per_meter = texture_size.width() / text_width_;
+    int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
+    GetFontList(pixel_font_height, text_, &fonts);
+  }
   gfx::Rect text_bounds(texture_size.width(), 0);
 
-  std::vector<std::unique_ptr<gfx::RenderText>> lines =
-      // TODO(vollick): if this subsumes all text, then we should probably move
-      // this function into this class.
-      PrepareDrawStringRect(text_, fonts, color_, &text_bounds,
-                            kTextAlignmentCenter, kWrappingBehaviorWrap);
-  // Draw the text.
-  for (auto& render_text : lines)
-    render_text->Draw(canvas);
+  // for (auto& font : fonts.GetFonts()) {
+  //   LOG(INFO) << "TIMING font name " << font.GetFontName();
+  // }
+
+  std::vector<std::unique_ptr<gfx::RenderText>> lines;
+  {
+    TRACE_EVENT0("gpu", "TextTexture::Draw.test2");
+    lines =
+        // TODO(vollick): if this subsumes all text, then we should probably move
+        // this function into this class.
+        PrepareDrawStringRect(text_, fonts, color_, &text_bounds,
+                              kTextAlignmentCenter, kWrappingBehaviorWrap);
+  }
+
+  // for (auto& line : lines) {
+  //   LOG(INFO) << "TIMING line " << line->text();
+  // }
+
+  {
+    TRACE_EVENT0("gpu", "TextTexture::Draw.test3");
+    for (auto& render_text : lines)
+      render_text->Draw(canvas);
+  }
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
 }
+
+void Text::PrepareToDraw() {
+    if (name() == kTestText) {
+      glFinish();
+      cc::LapTimer timer;
+      timer.Reset();
+      for (size_t i = 0; i < 100; i++) {
+        TRACE_EVENT0("gpu", "Text::PrepareToDraw.test");
+        texture_->SetText(text_);
+        UpdateTexture();
+        glFinish();
+        timer.NextLap();
+      }
+      LOG(INFO) << "TIMING render_time_avg " <<  timer.MsPerLap();
+      LOG(INFO) << "TIMING number_of_runs " <<  timer.NumLaps();
+    } else {
+      UpdateTexture();
+    }
+  }
 
 }  // namespace vr
