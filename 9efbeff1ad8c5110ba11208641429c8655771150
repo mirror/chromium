@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bebecbc_07f5c867",
+        "filename": "dbus/mock_object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29683d9b_739b5a81",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5d3703_0367fa11",
         "filename": "dbus/object_proxy.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f42c0d_f3063fb8",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "I just moved the code. It\u0027s Ryo\u0027s work actually :-)",
+      "parentUuid": "3e5d3703_0367fa11",
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3883b3f8_df52b7b4",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0a71f6_92a9fcbd",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "89f10315_8d1acbed",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e6fcc8b_a01b3236",
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df49dd80_f13eb6df",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 1
@@ -123,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "92ca66aa_061fba58",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "I don\u0027t have strong opinion, so done.\nJust in case, I split PS (PS2-\u003e3 is just renaming work).",
+      "parentUuid": "df49dd80_f13eb6df",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 42
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad83ab6_e364238a",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 1
@@ -143,6 +251,30 @@
       "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b2ee93_d0a85676",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad83ab6_e364238a",
+      "range": {
+        "startLine": 151,
+        "startChar": 28,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
