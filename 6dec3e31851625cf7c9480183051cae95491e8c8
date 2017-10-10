@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3f66ccd_6b653e8c",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:45:35Z",
+      "side": 1,
+      "message": "Note that these could be marked as constexpr.",
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94644fcb_e2e5b792",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:45:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be DCHECKs as well?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5065335e_62b3db40",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 8
@@ -64,6 +104,29 @@
         "startChar": 76,
         "endLine": 57,
         "endChar": 79
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9517b8_ffc64747",
+        "filename": "components/ntp_tiles/ntp_tile_impression.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:45:35Z",
+      "side": 1,
+      "message": "Please pass base::Time by value.",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 37
       },
       "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
