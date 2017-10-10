@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b048d203_dce60b4e",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T07:54:19Z",
+      "side": 1,
+      "message": "Ack. Thank you for elaborating.\n\nIt\u0027s a confusing point that we don\u0027t have a good way to know if a string is a language code coming from outside or an internal code. Maybe we should have a type representing internal codes. This is just an idea. It\u0027s OK so far.",
+      "parentUuid": "015de399_7b87a6a5",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e9a371_9cbdb441",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 13
@@ -69,6 +87,41 @@
       "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "558fe973_d993dfac",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T07:54:19Z",
+      "side": 1,
+      "message": "How about adding DCHECK(!value.empty()) here?",
+      "parentUuid": "78570ec7_c40d3eba",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c68c8f0_c4188a8b",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T07:54:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
