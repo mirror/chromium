@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7717ba1_1d841f7e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T17:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b25d8ce_76a9fb27",
+      "range": {
+        "startLine": 1277,
+        "startChar": 2,
+        "endLine": 1277,
+        "endChar": 0
+      },
+      "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5783101c_c36f3a8e",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T15:56:07Z",
       "side": 1,
       "message": "Shouldn\u0027t you reset the counts after logging them? Otherwise you\u0027re double counting things each time you log.",
+      "range": {
+        "startLine": 1376,
+        "startChar": 78,
+        "endLine": 1376,
+        "endChar": 0
+      },
+      "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa25e3b_bce84189",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T17:21:59Z",
+      "side": 1,
+      "message": "With these stats I\u0027m trying to capture the number of databases which are currently sharing the block cache. database_use_count_ isn\u0027t monotonically increasing - it goes up and down as db\u0027s are opened/closed. So I think this is correct, but please correct me if I\u0027m wrong, which I often am with UMA.\n\n*However* I do believe something is wrong with how this is being logged (or with histograms.xml). I\u0027m getting this warning:\n\nSome UMA_HISTOGRAM lines have been modified and the associated histogram name has no match in either tools/metrics/histograms/histograms.xml or the modifications of it:\n   [third_party/leveldatabase/env_chromium.cc:1375] LevelDB.SharedCache.DBCount.Unified\n   ...\n\nI\u0027m not quite sure how to fix this.",
+      "parentUuid": "5783101c_c36f3a8e",
       "range": {
         "startLine": 1376,
         "startChar": 78,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af0c5caf_2e2e1a12",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T17:21:59Z",
+      "side": 1,
+      "message": "It was unimportant, so I switched to int - thx.",
+      "parentUuid": "f1d66bcb_74f8437e",
+      "range": {
+        "startLine": 246,
+        "startChar": 28,
+        "endLine": 246,
+        "endChar": 36
+      },
+      "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3159e5ef_fd5874a6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552c56a5_88417847",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29693,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T17:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3159e5ef_fd5874a6",
+      "range": {
+        "startLine": 29693,
+        "startChar": 63,
+        "endLine": 29693,
+        "endChar": 68
+      },
+      "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
