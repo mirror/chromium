@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082048ea_98668ec1",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "nit: for forward-decls I think we can omit these empty lines before/after namespace { }",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f38ff2_d2e8a08b",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "nit: launches -\u003e ships ? (\u0027launches\u0027 could also mean \u0027the service starts up\u0027)",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93be38ab_feb48b3e",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 38
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "Could you document some of the info that you wrote in response to Randy\u0027s question here too? I think that\u0027d be useful.",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8b81d5_4972b160",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_getAll_set.html",
+        "patchSetId": 38
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "Just want to make sure... is this comment supposed to be landed (and upstreamed)?",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13a7ba3_323ac34d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "nit: NOTIMPLEMENTED() if we\u0027re going to add code for workers too?",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dfbdd3_40897756",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "return here?",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f7d9d7_c2a0db37",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T08:45:42Z",
+      "side": 1,
+      "message": "Just to make sure I understand the intention... you\u0027re going to instantiate this not only for LocalDOMWindow but maybe also for Service Workers, that\u0027s why you used template here?",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
