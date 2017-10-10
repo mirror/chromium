@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c7783a0_7f0d273f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T16:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d93a352_1594c565",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10499107_19036608",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ecbe2c54_afc62c92",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T16:08:36Z",
+      "side": 1,
+      "message": "Done (also removed SharedWorkerGlobalScope::Create)",
+      "parentUuid": "10499107_19036608",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eba1847_bff775e8",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-10T14:35:52Z",
       "side": 1,
       "message": "I\u0027m not a huge fan of `auto` here since I don\u0027t know if Create is returning a smart ptr or raw ptr or even just a DedicatedWorkerGlobalScope. maybe it\u0027s a known Blink-ism though?",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c53c75_e0a86637",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T16:08:36Z",
+      "side": 1,
+      "message": "Good point.\n\nIn the latest patchset, this was replaced with the ctor call and \"auto\" obviously indicates a raw-ptr, so let me keep \"auto\" here.",
+      "parentUuid": "5eba1847_bff775e8",
       "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +139,24 @@
       "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955a718b_18a712c2",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T16:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69365ed6_3bbfa537",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
