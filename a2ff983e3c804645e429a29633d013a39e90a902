@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03789a67_4645e169",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "This name makes it seem like the warning requires devtools. Maybe change to\nWarningSiteWithForceActivation_LogsWarning.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1db571_37f108ca",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "I wonder if we can make a ScopedLoggingObserver object that does \nlogging::SetLogMessageHandler(\u0026LogHandler) in its constructor and then has this as a method.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5150e2d_88f2d740",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "I think maybe a SCOPED_TRACE(testing::Message() \u003c\u003c messages_expected \u003c\u003c \" \" \u003c\u003c messages_not_expected);\n\nWill help debugging issues.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3327f8c1_24bd6e97",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "If you include this here maybe include it in the name \"RoundTripAndVerifyLogMessages\" or something, otherwise it doesn\u0027t feel right to execute some random Javascript.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f440b465_d8f36695",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "nit: just use an initializer list instead of writing it all out like this.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58f21f6_f09cd269",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "Can you use the abusive preset?",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d219f66_03a51ec2",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "We\u0027re in warning mode not enforce, so this should not be expected, right?",
+      "range": {
+        "startLine": 234,
+        "startChar": 45,
+        "endLine": 234,
+        "endChar": 70
+      },
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde878e2_eae017c5",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "nit: just use the initializer list e.g.\nVerifyLogMessagesReceived(web_contents, {kDisallowNewWindowMessage}, {});",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f213f6_195a8cbb",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "Is this necessary anymore? I don\u0027t know if it is possible for two racing main frame navs to *both* get to ReadyToCommit navigation before either commits.",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1888f6a_0dc2f2bc",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "optional: Could also say matched-configuration.activation_conditions.forced...",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0cdf13_26e30579",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T12:54:27Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e\n\nDo we really want the messages to be dropped if a subframe nav finishes before a main frame one? I\u0027m not confident a subframe nav can commit in between a main frame\u0027s ReadyToCommit-DidFinish but it might be possible. May want to move this below IsInMainFrame().",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
