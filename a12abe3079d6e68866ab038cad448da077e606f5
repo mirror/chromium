@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ea056b_72340d11",
+        "filename": "components/sync_sessions/task_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-10T23:09:36Z",
+      "side": 1,
+      "message": "nit: remove curly braces",
+      "range": {
+        "startLine": 75,
+        "startChar": 49,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "a12abe3079d6e68866ab038cad448da077e606f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
