@@ -16,6 +16,24 @@
       "revId": "546bc8e5cdd1444e0e207cb49cd4c1cd8c881850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb193c8d_45f63ee1",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-10T05:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b032c5fc_4a7fb68c",
+      "revId": "546bc8e5cdd1444e0e207cb49cd4c1cd8c881850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
