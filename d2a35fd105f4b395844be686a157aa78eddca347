@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d49fccc2_c1070a65",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19d1255_c4213985",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eebc171_62cf6741",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9232409e_4682bf86",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eebc171_62cf6741",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b43f850f_e021baa2",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f284d6c_f49a1ae9",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a1572c_12ec515b",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-10T18:05:28Z",
       "side": 1,
       "message": "Is this simpler than having HangoutsMediaRouteController override InitMojoConnections?",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165cf910_acf55e39",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "It would be simpler, but it would also be more error-prone, if subclass forgets to call MediaRouteController::InitMojoConnections(). That\u0027s why I went with this pattern instead, but I don\u0027t feel strongly.",
+      "parentUuid": "81a1572c_12ec515b",
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6cb098d2_05214036",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "The method takes a raw pointer because it is also called from MRDesktop using the raw pointers stored in the route controller map. (MR doesn\u0027t take ownership of MRCs; only observers do).\n\nI think it\u0027s fine to take raw pointer here; it\u0027s a way to signal the method does not assume ownership of the MRC.",
+      "parentUuid": "76a00619_94c1b802",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dde5955_9593a89e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-10T18:05:28Z",
       "side": 1,
       "message": "Would it be simpler to pass |route_id| from GetRouteController?",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cae0fd0_12119baa",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "This method needs access to the MRC object.",
+      "parentUuid": "3dde5955_9593a89e",
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2de554ea_f708344a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc1edcab_0a58a4ac",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73bc7532_ee7224d6",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-10T18:05:28Z",
       "side": 1,
       "message": "Perhaps CreateMediaRouteController should pass back route_id with its response to simplify the bookkeeping here.",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8549ec02_fccdf479",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T19:33:38Z",
+      "side": 1,
+      "message": "Since we don\u0027t expect the MRP to pass back a different route_id than what\u0027s passed in, I don\u0027t think that\u0027s necessary.",
+      "parentUuid": "73bc7532_ee7224d6",
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
