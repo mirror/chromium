@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -268,6 +269,8 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   void LockToOrigin(const GURL& gurl) {
     origin_lock_ = gurl;
   }
+
+  const GURL& origin_lock() { return origin_lock_; }
 
   ChildProcessSecurityPolicyImpl::CheckOriginLockResult CheckOriginLock(
       const GURL& gurl) {
@@ -1052,7 +1055,27 @@ bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
     // workaround for https://crbug.com/600441
     return true;
   }
-  return state->second->CanAccessDataForOrigin(site_url);
+  bool can_access = state->second->CanAccessDataForOrigin(site_url);
+  if (!can_access) {
+    // Returning false here will result in a renderer kill.  Set some crash
+    // keys that will help understand the circumstances of that kill.
+    base::debug::SetCrashKeyValue("cpsp_requested_site_url", site_url.spec());
+    base::debug::SetCrashKeyValue("cpsp_requested_origin",
+                                  url.GetOrigin().spec());
+    base::debug::SetCrashKeyValue("cpsp_requestor_origin_lock",
+                                  state->second->origin_lock().spec());
+
+    std::string site_isolation_mode;
+    if (SiteIsolationPolicy::UseDedicatedProcessesForAllSites())
+      site_isolation_mode += "spp ";
+    if (SiteIsolationPolicy::IsTopDocumentIsolationEnabled())
+      site_isolation_mode += "tdi ";
+    if (SiteIsolationPolicy::AreIsolatedOriginsEnabled())
+      site_isolation_mode += "io ";
+    base::debug::SetCrashKeyValue("cpsp_site_isolation_modes",
+                                  site_isolation_mode);
+  }
+  return can_access;
 }
 
 bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
