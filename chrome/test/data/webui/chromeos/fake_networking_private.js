@@ -5,7 +5,7 @@
 /**
  * @fileoverview Fake implementation of chrome.networkingPrivate for testing.
  */
-cr.define('settings', function() {
+cr.define('chrome', function() {
   /**
    * @constructor
    * @implements {NetworkingPrivate}
@@ -17,8 +17,11 @@ cr.define('settings', function() {
     /** @type {!Array<!CrOnc.NetworkStateProperties>} */
     this.networkStates_ = [];
 
-    /** @type {!{chrome.networkingPrivate.GlobalPolicy}} */
-    this.globalPolicy_ = {};
+    /** @type {!{chrome.networkingPrivate.GlobalPolicy}|undefined} */
+    this.globalPolicy_ = undefined;
+
+    /** @type {!{chrome.networkingPrivate.CertificateLists}|undefined} */
+    this.certificateLists_ = undefined;
 
     this.resetForTest();
   }
@@ -38,6 +41,10 @@ cr.define('settings', function() {
       ];
 
       this.globalPolicy_ = {};
+      this.certificateLists_ = {
+        serverCaCertificates: [],
+        userCertificates: [],
+      };
     },
 
     /** @param {!Array<!CrOnc.NetworkStateProperties>} network */
@@ -54,7 +61,12 @@ cr.define('settings', function() {
     },
 
     /** @override */
-    getProperties: assertNotReached,
+    getProperties: function(guid) {
+      var result = this.networkStates_.find(function(state) {
+        return state.GUID == guid;
+      });
+      return result;
+    },
 
     /** @override */
     getManagedProperties: function(guid) {
@@ -156,6 +168,11 @@ cr.define('settings', function() {
       callback(this.globalPolicy_);
     },
 
+    /** @override */
+    getCertificateLists: function(callback) {
+      callback(this.certificateLists_);
+    },
+
     /** @type {!FakeChromeEvent} */
     onNetworksChanged: new FakeChromeEvent(),
 
@@ -167,6 +184,9 @@ cr.define('settings', function() {
 
     /** @type {!FakeChromeEvent} */
     onPortalDetectionCompleted: new FakeChromeEvent(),
+
+    /** @type {!FakeChromeEvent} */
+    onCertificateListsChanged: new FakeChromeEvent(),
   };
 
   return {FakeNetworkingPrivate: FakeNetworkingPrivate};
