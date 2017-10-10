@@ -39,6 +39,24 @@
       "revId": "3eb58fbb5c7bda8f99843f9f3fa516ef741284bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a5ae59_e71981c7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-10-10T13:32:24Z",
+      "side": 0,
+      "message": "It seems like for some reason UITableView doesn\u0027t take into account the navbar in this case. Another solution to this problem is to adjust the visibleRect to be offset by the height of the navbar.",
+      "parentUuid": "f32e3d8a_c319a490",
+      "revId": "3eb58fbb5c7bda8f99843f9f3fa516ef741284bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

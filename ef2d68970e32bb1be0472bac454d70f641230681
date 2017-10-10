@@ -16,6 +16,24 @@
       "revId": "ef2d68970e32bb1be0472bac454d70f641230681",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a92d10_7d06229e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-10-10T13:32:24Z",
+      "side": 1,
+      "message": "Storing content offset will make the position wrong should we change the bookmark cell height. Maybe store contentOffset/(normal cell height) and restore (normal cell height)*contentOffset?",
+      "parentUuid": "9d4c6bdc_143fc7be",
+      "revId": "ef2d68970e32bb1be0472bac454d70f641230681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
