@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "bc6f7b5e_8d805caa",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-10T02:04:05Z",
+      "side": 0,
+      "message": "Device status listener will send the first call with NotifyStatusChange(). I think it\u0027s OK not to do db updates in this case if we are disconnected and not charging? \n\nIn UpdateDriverState, only HandleCompleteDownload will do db IO.",
+      "parentUuid": "f4e61d03_e69536a7",
+      "range": {
+        "startLine": 582,
+        "startChar": 2,
+        "endLine": 582,
+        "endChar": 23
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "473f871d_65c99961",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 8

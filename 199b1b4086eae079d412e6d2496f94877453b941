@@ -22,6 +22,30 @@
       "revId": "199b1b4086eae079d412e6d2496f94877453b941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04222bd7_19144955",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-10T02:04:05Z",
+      "side": 1,
+      "message": "Done,  using a separate delay makes sense, they are a little bit different.\nAlso adds some comment for the start up case.",
+      "parentUuid": "e7f36e91_6d431ac3",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "199b1b4086eae079d412e6d2496f94877453b941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
