@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04c405c5_5ef5bff3",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-10T21:13:52Z",
+      "side": 1,
+      "message": "Yes, it is taken into account. horizontalPadding in line 691 excludes the KNSButtonBuildinMargin.",
+      "parentUuid": "69c17ff5_268ad445",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d5c741_5bd28a5e",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0853f1_71286b1d",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-10T21:13:52Z",
+      "side": 1,
+      "message": "Oops. Removed.",
+      "parentUuid": "72d5c741_5bd28a5e",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5d815d3a_5be3dc53",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-10T21:13:52Z",
+      "side": 1,
+      "message": "ACK. Other dialogs (children of DialogDelegate) actually handle the button order at the UI framework level. And since these two buttons are not exactly the Cancel|OK buttons in a dialog (since we\u0027re not using the dialog framework here), I have to do it explicitly.",
+      "parentUuid": "b84a3e01_74155371",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c84a3bc_d9e7d309",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e6b05aad_160dffdc",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-10T21:13:52Z",
+      "side": 1,
+      "message": "Oops, sorry, this is actually to add padding to the top. So it won\u0027t create indent.",
+      "parentUuid": "4c84a3bc_d9e7d309",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec0e5bb_01deac6c",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38edc097_07008407",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-10T21:13:52Z",
+      "side": 1,
+      "message": "Sorry for my confusing constant name (I was confused too). This is actually to add padding at the top of the container.",
+      "parentUuid": "eec0e5bb_01deac6c",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
