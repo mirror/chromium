@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a30a95_4beedbba",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:59:44Z",
+      "side": 1,
+      "message": "Could this simply be ash::Shell::Get()-\u003eRemoveShellOverser(this)? I\u0027m guessing if |this| is not registered as an observer the call will have no effect.\n\nYou could remove shell_ if that works.",
+      "revId": "203150830aaca2df691a22d877004502f06047af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd61bec4_d4d0dbc6",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:59:44Z",
+      "side": 1,
+      "message": "You might want to add a note that it is safe to delete a weakptr since the dtor will unregister this client, removing any other non weak reference to it (including the caller of ReclaimResources).",
+      "revId": "203150830aaca2df691a22d877004502f06047af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12661e1a_9645d727",
+        "filename": "components/exo/layer_tree_frame_sink_holder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-10T19:59:44Z",
+      "side": 1,
+      "message": "Any chance we can dedup some code with LayerTreeFrameSinkHolder::DeleteWhenLastResourceHasBeenReclaimed?",
+      "revId": "203150830aaca2df691a22d877004502f06047af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
