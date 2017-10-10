@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7b23adf_e48137ac",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6d9fc66_7cfd178b",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d33836c_f1ff749d",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33235e16_f871a9ff",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d33836c_f1ff749d",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d83405e8_07728ce2",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57631b4e_5a194790",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191353b2_e186c12a",
         "filename": "device/u2f/u2f_register.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7aa6aa2_38eb75bb",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191353b2_e186c12a",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "a4856a2c_7db466c0",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a29269_a8b54f43",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0cdc237_333a9810",
         "filename": "device/u2f/u2f_sign.h",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5a9c8b_11ce69b7",
+        "filename": "device/u2f/u2f_sign.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0cdc237_333a9810",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

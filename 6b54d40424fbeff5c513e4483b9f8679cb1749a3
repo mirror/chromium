@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "a2494dcc_b3a573fd",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Done, I decided to do it in the ctor, as this is convenient for most callers. E.g., it does not require modification of U2fRequests\u0027 subclasses.",
+      "parentUuid": "a9443536_e3ef40d6",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24328bf5_6fc822cb",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 3
@@ -398,6 +416,24 @@
       "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3812278_f1b05ef5",
+        "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-10T11:31:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ac267a85_bde14315",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
