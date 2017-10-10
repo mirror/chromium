@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26912e3b_00e25124",
+        "filename": "components/translate/core/browser/translate_accept_languages.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-10T16:38:04Z",
+      "side": 1,
+      "message": "Do we really need to go through this process?  Your optimization is a clear win (a lot of JNI calls vs one call).  Shouldn\u0027t we just go ahead with it?\n\nAdding a measurement is ok, but having feature-flag (it\u0027s not really a feature !) disabled by default seems a bit excessive.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4fcb6a_69b153a6",
+        "filename": "components/translate/core/browser/translate_accept_languages_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-10T16:38:04Z",
+      "side": 1,
+      "message": "Is |CanBeAcceptLanguage| expected to handle zh-Hans, es-419, zh-Hant, etc or not?\n\nGiven that it calls ToChromeLanguageSynonym, I guess it\u0027s expected to handle them. If so, would you test it here?",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 70
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
