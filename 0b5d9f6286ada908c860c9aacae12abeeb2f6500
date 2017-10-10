@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684b497e_c1857ae6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T22:52:47Z",
+      "side": 1,
+      "message": "The survey cache technically won\u0027t be cleared until the user restarts the browser. This is probably OK, but let\u0027s confirm with privacy on the email thread.\n\nIf it needs to be cleared as soon as  metrics reporting is disabled, we can hook into the Java settings page.",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
