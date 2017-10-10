@@ -70,6 +70,12 @@ PermissionRequest::IconId PermissionRequestImpl::GetIconId() const {
       return IDR_ANDROID_INFOBAR_MEDIA_STREAM_CAMERA;
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       return IDR_ANDROID_INFOBAR_ACCESSIBILITY_EVENTS;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_FULL:
+      return IDR_ANDROID_INFOBAR_CLIPBOARD_FULL;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
+      return IDR_ANDROID_INFOBAR_CLIPBOARD_READ;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE:
+      return IDR_ANDROID_INFOBAR_CLIPBOARD_WRITE;
     default:
       NOTREACHED();
       return IDR_ANDROID_INFOBAR_WARNING;
@@ -96,6 +102,12 @@ PermissionRequest::IconId PermissionRequestImpl::GetIconId() const {
       return vector_icons::kVideocamIcon;
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       return vector_icons::kAccessibilityIcon;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_FULL:
+      return vector_icons::kClipboardFullIcon;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
+      return vector_icons::kClipboardReadIcon;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE:
+      return vector_icons::kClipboardWriteIcon;
     default:
       NOTREACHED();
       return kExtensionIcon;
@@ -128,6 +140,15 @@ base::string16 PermissionRequestImpl::GetMessageText() const {
       break;
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       message_id = IDS_ACCESSIBILITY_EVENTS_INFOBAR_QUESTION;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_FULL:
+      message_id = IDS_CLIPBOARD_FULL_INFOBAR_QUESTION;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
+      message_id = IDS_CLIPBOARD_READ_INFOBAR_QUESTION;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE:
+      message_id = IDS_CLIPBOARD_WRITE_INFOBAR_QUESTION;
       break;
     default:
       NOTREACHED();
@@ -169,6 +190,15 @@ base::string16 PermissionRequestImpl::GetMessageTextFragment() const {
       break;
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       message_id = IDS_ACCESSIBILITY_EVENTS_PERMISSION_FRAGMENT;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_FULL:
+      message_id = IDS_CLIPBOARD_FULL_PERMISSION_FRAGMENT;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_READ:
+      message_id = IDS_CLIPBOARD_READ_PERMISSION_FRAGMENT;
+      break;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE:
+      message_id = IDS_CLIPBOARD_WRITE_PERMISSION_FRAGMENT;
       break;
     default:
       NOTREACHED();

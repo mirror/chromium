@@ -9,6 +9,7 @@
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "bindings/modules/v8/V8ClipboardPermissionDescriptor.h"
 #include "bindings/modules/v8/V8MidiPermissionDescriptor.h"
 #include "bindings/modules/v8/V8PermissionDescriptor.h"
 #include "bindings/modules/v8/V8PushPermissionDescriptor.h"
@@ -120,6 +121,13 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
       return nullptr;
     }
     return CreatePermissionDescriptor(PermissionName::ACCESSIBILITY_EVENTS);
+  }
+  if (name == "clipboard") {
+    ClipboardPermissionDescriptor clipboard_permission =
+        NativeValueTraits<ClipboardPermissionDescriptor>::NativeValue(
+            script_state->GetIsolate(), raw_permission.V8Value(),
+            exception_state);
+    return CreateClipboardPermissionDescriptor(clipboard_permission.access());
   }
 
   return nullptr;

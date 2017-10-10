@@ -13,6 +13,7 @@ enum PermissionName {
     "gyroscope",
     "magnetometer",
     "accessibility-events",
+    "clipboard",
 };
 
 // The PermissionDescriptor dictionary is a base to describe permissions. Some

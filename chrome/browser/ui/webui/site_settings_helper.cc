@@ -94,9 +94,14 @@ const ContentSettingsTypeNameEntry kContentSettingsTypeGroupNames[] = {
     {CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, nullptr},
     {CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION, nullptr},
     {CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT, nullptr},
+    // TYPE_SOUND is listed twice (here and up above with "sound"), but
+    // CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS is missing from this list.
     {CONTENT_SETTINGS_TYPE_SOUND, nullptr},
     {CONTENT_SETTINGS_TYPE_CLIENT_HINTS, nullptr},
     {CONTENT_SETTINGS_TYPE_SENSORS, nullptr},
+    {CONTENT_SETTINGS_TYPE_CLIPBOARD_FULL, nullptr},
+    {CONTENT_SETTINGS_TYPE_CLIPBOARD_READ, nullptr},
+    {CONTENT_SETTINGS_TYPE_CLIPBOARD_WRITE, nullptr},
 };
 static_assert(arraysize(kContentSettingsTypeGroupNames) ==
                   // ContentSettingsType starts at -1, so add 1 here.

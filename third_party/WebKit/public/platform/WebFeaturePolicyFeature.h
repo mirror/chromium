@@ -49,6 +49,10 @@ enum class WebFeaturePolicyFeature {
   kAccessibilityEvents,
   // Controls use of WebVR API.
   kWebVr,
+  // Controls access to system clipboard: full, read, write access.
+  kClipboardFull,
+  kClipboardRead,
+  kClipboardWrite,
   LAST_FEATURE = kWebVr
 };
 
