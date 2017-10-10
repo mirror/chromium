@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28badf88_3f139bff",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-10T19:56:34Z",
+      "side": 1,
+      "message": "This method checks that the frame is not independent. If the frame is independent, this will fire a DCHECK, and then loop backwards through all frames until it cycles back to kNotFound (which is max size_t). It also could return an incorrect frame along the way.",
+      "range": {
+        "startLine": 221,
+        "startChar": 32,
+        "endLine": 221,
+        "endChar": 60
+      },
+      "revId": "1cf2058b053817a9c63cd24660b3e8dd7b0c4e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
