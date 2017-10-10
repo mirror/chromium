@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a36b5251_c0ce44de",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 32
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-10T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7502149_3c180891",
+      "range": {
+        "startLine": 111,
+        "startChar": 33,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a75116_b0318772",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
         "patchSetId": 32
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T21:54:57Z",
       "side": 1,
       "message": "why not use time mojo type?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9e9536_5e8cd2ad",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-10T22:33:07Z",
+      "side": 1,
+      "message": "I mentioned it in a previous comment on the mojo Time type. Some cumbersome issue include VALIDATION_ERROR_UNEXPECTED_STRUCT_HEADER and net::ERR_CONTENT_DECODING_FAILED. It feels like unnecessary work, while at the end, there is no representation of mojo Time type in Javascript since it is only the millisecond. In my opinion, it is much simpler just to use the int64 millisecond representation of the time for now.",
+      "parentUuid": "b2a75116_b0318772",
       "range": {
         "startLine": 27,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81b52ea_740bbf81",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-10T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5b97e16_426726a1",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
