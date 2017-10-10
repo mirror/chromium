@@ -46,6 +46,30 @@
       "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7874abb_d76f0f74",
+        "filename": "extensions/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-10T21:41:16Z",
+      "side": 0,
+      "message": "\u003e might compile fine and then fail at a later date when someone touches a file that does the conversion.\n\nUhh, ok so if I understand correctly, the build might pass successfully, even with existing conversions, since all files are not being re-compiled?",
+      "parentUuid": "92079382_c27e03a3",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 36
+      },
+      "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
