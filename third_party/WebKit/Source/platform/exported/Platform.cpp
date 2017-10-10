@@ -292,4 +292,16 @@ std::unique_ptr<WebFeaturePolicy> Platform::DuplicateFeaturePolicyWithOrigin(
   return nullptr;
 }
 
+bool Platform::IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature,
+                                         const WebSecurityOrigin&,
+                                         const WebFeaturePolicy*) const {
+  return false;
+}
+
+WebVector<WebString> Platform::GetOriginsForFeature(
+    WebFeaturePolicyFeature,
+    const WebFeaturePolicy*) const {
+  return std::vector<WebString>();
+}
+
 }  // namespace blink
