@@ -297,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "9cc26d18_044fab47",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Not this class, the call sites may need to distinguish this one from nodes and/or (coming) \"views\".\n\nWe may introduce \"views\" in pretty near future, I think, and then the call sites will look like the following:\n  x \u003d web_idl.collection.find_definition(identifier)\n  y \u003d upcoming.views.find_definition(identifier)\nwhere |x| and |y| will be in different structures with different contents.  I\u0027m afraid that it\u0027ll be confusing.\n\nFrom the same point of view (uniqueness of naming), I\u0027d prefer |ast_node| to |node|, which is too general.",
+      "parentUuid": "f450d34f_dafb5052",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0c0e135_8a254f58",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -986,6 +1010,24 @@
     },
     {
       "key": {
+        "uuid": "6338ef7f_7574250b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "I think that the following is a reasonable implementation of enum, but I\u0027m not insisting on this one.\n\n  class Enum(frozenset):\n    def __getattr__(self, name):\n      if name in self:\n        return name\n      raise AttributeError\n\n  STRING_TYPES \u003d Enum((\u0027DOMString\u0027, \u0027ByteString\u0027, \u0027USVString\u0027))\n\nwhere\n  STRING_TYPES.DOMString \u003d\u003e \u0027DOMString\u0027\n  STRING_TYPES.DoesntExist \u003d\u003e excepttion\n  len(STRING_TYPES) \u003d\u003e 3\n  STRING_TYPES.add(\u0027foo\u0027) \u003d\u003e exception\n  STRING_TYPES[\u0027foo\u0027]\u003d\u0027foo\u0027 \u003d\u003e exception\n\nThis is reasonably simple and works in Python 2.7.",
+      "parentUuid": "c80a6994_e65f24b3",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0591301_1ee969d0",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 13
@@ -1479,6 +1521,24 @@
     },
     {
       "key": {
+        "uuid": "d50a7316_30c0729e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Yes, I knew, of course ;)\n\nMy question is \"how do we handle constructors?\".  Constructors need the overload resolution, etc.  Does each client code need to say |\u0027Constructors\u0027 in interface.extended_attributes|, etc. (the code will be duplicated here and there)?  Are you planning to introduce helper functions somewhere outside this class?  Or, supposing that we\u0027re going to introduce some \"views\" soon, is it views\u0027 responsibility?\n\nAs you said, Exposed is so special, why not Constructor?",
+      "parentUuid": "727ffb89_e073abb7",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa20ddcb_a674f49d",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
         "patchSetId": 13
@@ -1667,6 +1727,30 @@
     },
     {
       "key": {
+        "uuid": "847c898b_74c1aeb5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "I meant \"article\": \"**an** identifier, **a** map, or **a** list\".  Maybe it\u0027s okay, but \"an identifier, map or list\" would be more common, I guess?",
+      "parentUuid": "64865a24_71b74762",
+      "range": {
+        "startLine": 137,
+        "startChar": 72,
+        "endLine": 137,
+        "endChar": 75
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8518a75_29a4e8e5",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
         "patchSetId": 13
@@ -1699,6 +1783,24 @@
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518dfc18_9c7449a8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca31f472_efac030d",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,596 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9079428_bd70ef4f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "We may want a helper function:\n  assert_too_many_args(kwargs)\nfor example.  I see so many copy\u0026pastes in this CL.  I don\u0027t want to imagine a case that we needed to change the message or format.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80097118_a57fffae",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "The filename is \"blink_types.py\" which confuses me.  This is \"ECMAScript primitive type(s)\", isn\u0027t it?   Then, it shouldn\u0027t be Blink-specific type(s).",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e259fc3_c82938d7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/blink_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "I\u0027d like to have assertions for _type_name.  We can pass any name without assertions.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a07904_7abee441",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/callback_function.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Question: Is CallbackFunction a type or not?\nWeb IDL says \"A callback function is a definition (...) used to declare a function type.\"  Ditto for Enumeration, Dictionary, etc.",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd25cc2_16c25c6b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Don\u0027t we have self._callback_interfaces?\n\nCallback interface is somewhat the same as interface, but actually they\u0027re quite different (from my point of view).  When we say \"give us all \u0027interfaces\u0027\", then do we want callback interfaces, too?\n\nI\u0027d vote for making a separation on callback / non-callback interfaces.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e88ec1_c0834219",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t make sense to me.  Everything in this directory (or even in //blink/bindings/) is to support binding layers.",
+      "range": {
+        "startLine": 34,
+        "startChar": 55,
+        "endLine": 34,
+        "endChar": 77
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a96be5f_befbd16a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d recommend to use None here as same as find_non_partial_definition.  Given \u0027\u003cunknown\u003e\u0027, it\u0027s more difficult to handle error case.\n\n  x \u003d find_filepath(entry)\n  if not x:\n    raise Error\n\n  x \u003d find_filepath(entry) or \u0027\u003cunknown\u003e\u0027\n\nwould work better, I think.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7f9a75_0cf6b461",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "I\u0027m not yet sure why we need this, maybe convenient though.\n\nReturning self._interfaces breaks immutability.\n  x \u003d collection.interfaces\n  x.clear()\n  x[\u0027foo\u0027] \u003d foo\nThis is not great.  It\u0027s almost meaningless to define a property accessor.\n\n  def interface_items(self):\n    return self._interfaces.items()\nwould work if the usage is\n  for x in collection.interface_items:\n    ...\nand\n  def interface_identifiers(self):\n    return self._interfaces.keys()\nwould work if the clients only need a list of identifiers (and later they can call find_xxx as necessary).\n\nHaving said that, again I\u0027m not yet quite sure if we really want |interface_items| which only returns non partial things.  interface_identifiers may be useful though.\n\nI\u0027m vaguely expecting that we\u0027ll introduce some \"views\" soon, then only \"views\" will be the clients of Collection.  We wouldn\u0027t need much accessors.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a835ebf_3cd972a7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "I\u0027d put this class inside Collection as an inner class, maybe _Metadata to be private.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523e49b2_f5b68624",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "We\u0027d better to avoid the name of |type| because it\u0027s confusing with Web IDL types, primitive types, string types, etc.  This is not a \"type\".\n\nI prefer \"is_custom\" and \"is_named_constructor\".  FWIW, \"named constructor\" is NOT an interface object while \"constructor\" IS.  There could be (almost) no case that we\u0027d like to handle constructors and named constructors together, then it wouldn\u0027t make sense to represent a named constructor as a web_idl.Constructor.\n\nI means that, if we need to write the following for 98%,\n  for c in constructors:\n    if c.is_named_constructor:\n      continue\n    ...\nor\n  [c for c in constructors if not c.is_named_constructor]\nthen, it\u0027s just annoying.  I think that it\u0027s better to make a separate class NamedConstructor and interface.named_constructors.  At least, we\u0027d better to have interface.constructors and interface.named_constructors separated.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5f0960_fcc5bafa",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "|e| and |r| don\u0027t make much sense without an explanation.\n\n\"[Exposed\u003dglobal_interface]\" is represented as Exposure(global_interface), and\n\"[Exposed(global_interface runtime_enabled_feature)] is represented as Exposure(global_interface, runtime_enabled_feature).",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef15e1ee_76b0e4cc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Did you mean \"global_interface(_identifier)\"?",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b422132_20da3585",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "It\u0027s not clear for me what this property returns and what the __init__ takes.  Is this a runtime enabled feature name or runtime enabled condition?  I think that this is a feature name, and prefer |runtime_enabled_feature| or |runtime_enabled_feature_name|.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d1c4a4_1ac6ae55",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Why not ReferenceType or TypeReferenceType?  All other types are named \"FooType\".\n\nIf we\u0027re going to use this type to represent all named types such as interfaces, callback interfaces, callback functions, typedefs, etc., then we cannot distinguish them as types.\n  if type(value) is ReferenceType:  # True for all named types\n\nIn this CL, collection.py says:\n  elif type(definition) \u003d\u003d Enumeration:\nwhere Enumeration doesn\u0027t inherit from TypeBase, nor TypeReference is never used in Collection.register_definition or other functions.\n\nI don\u0027t see what the design plan is...",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4409890e_6026057e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "\"Type of key K\"?\n\nIf we think of \"a list of pairs of key and value\", then \"Type of key K of an element\".  But I think \"Type of key K\" is clearer.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c15c8b_68c8722d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "s/element_type/value_type/",
+      "range": {
+        "startLine": 201,
+        "startChar": 22,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6eb9b0c_af85893c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "s/the type/the value type/",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 53
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5059e3_e5a4a9ab",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Did you mean \"Type of the promise\u0027s result T\"?\n\"its\" in this context is a bit unclear to me.",
+      "range": {
+        "startLine": 237,
+        "startChar": 42,
+        "endLine": 237,
+        "endChar": 54
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4675f10_549c946f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "self._member_types \u003d tuple(kwargs.pop(\u0027member_types\u0027))\n\nmakes self._member_types immutable.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb52db77_d2a2bc16",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Given count_nullable_member_type() \u003d\u003d 1, should self._is_nullable be True?",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d5cf30_68b387b3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "We don\u0027t need to save the number of nullable member types as a field, don\u0027t we?  It should be zero or one after verification, and it should match with |is_nullable|.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0e9737_0e1c36c1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Just FYI, we can optionally define AnyType.__eq__ so that\n  member is AnyType()\nand\n  member \u003d\u003d AnyType()\nwork.  Otherwise,\n  a \u003d AnyType()\n  b \u003d AnyType()\n  a \u003d\u003d b  # \u003d\u003e False\n(Yes, with the current implementation, it\u0027s False!  Maybe the upcoming code generator wouldn\u0027t need the comparison between values.  I\u0027m fine with that we don\u0027t define __eq__ unless we really need it.)",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d2e2ea_079433cf",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Why don\u0027t we do this in __init__ and save the result as self._flattened_member_types?  Is this rarely used?",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297f7879_416441df",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "There is no clue what this returns.  I imagine that this may return a name in string or a definition, but not sure which this returns.\n\nIf this returns just a name, then I\u0027d prefer implementer_name.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538cf18f_b84ae4d5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "\"inherit\" is a verb, not a noun.  I\u0027m a bit uneasy with this naming.  It\u0027s not clear what this represents.  Why don\u0027t you simply follow the spec\u0027s name: inherited_interface?\n\nI understand that people don\u0027t like long names, and I do not, too.  However, avoiding long names too much would be harmful.  Ambiguity is more harmful than long names.  In other words, easier to understand \u003e\u003e easier to read.",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6eec06_b079ab46",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Again, I\u0027m quite suspicious if we really want to represent callback interfaces as Interface.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082aa16f_5fc75d53",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "super nit: key_type first and value_type last?",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ff57a1_0b6c0273",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "super nit: ditto",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6ff4f4_c297c7a3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Question: Do serializers have its own identifier?\nAt a glance, named serializers seem already gone.",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c141ab9c_024c24f1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "Please avoid confusing / unclear names.  \"identifiers_to_be_serialized\" is a crystal clear name to me.  Or \"attribute_names_to_serialize\".",
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0adf8533_2c434c23",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "s/tokes/tokens/",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff70ff9_eebea3c6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-10T15:33:04Z",
+      "side": 1,
+      "message": "IIUC, there is no type named \"NULL\" in the spec (the null token and null value are defined, though).  And no null type in this CL, too.  And I\u0027d like to avoid the use of string literals as much as possible.  I don\u0027t like to write\n  literal \u003d Literal(type_name\u003d\u0027Null\u0027)  # ES defines Null.\n  # This doesn\u0027t work because \u0027Null\u0027 !\u003d \u0027NULL\u0027.\n\na) Should we compare |value| with \u0027null\u0027 rather than |type_name|?\nb) Let\u0027s define the null token (or value) as a constant, like NullType.NULL_TOKEN.",
+      "range": {
+        "startLine": 30,
+        "startChar": 34,
+        "endLine": 30,
+        "endChar": 38
+      },
+      "revId": "62a9c29b41f7ccd98c0efbcd57bef5bffe483aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
