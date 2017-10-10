@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f6e0438_f2055be3",
+        "filename": "ui/views/cocoa/widget_owner_nswindow_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-10T10:22:50Z",
+      "side": 1,
+      "message": "Yah - well spotted :). It doesn\u0027t look like AppKit has any guarantees around this -- occlusion state changes come from a separate/concurrent source. I\u0027ve updated the comment. But also nothing bad happens - the observer already needs to handle uninteresting occlusion changes (since there\u0027s no separate occluded/unoccluded notification; they get bundled together). \n\nAnd there\u0027s lots of DCHECKs, but even if they did trigger, it would just show the window again.",
+      "parentUuid": "555766cb_69c3e460",
+      "range": {
+        "startLine": 77,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "4ed8606bf3a07506710a51be62cb318fffb3f8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50c2c062_d82f039b",
         "filename": "ui/views/cocoa/widget_owner_nswindow_adapter.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4ed8606bf3a07506710a51be62cb318fffb3f8c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd5ed79_bab5353c",
+        "filename": "ui/views/cocoa/widget_owner_nswindow_adapter.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-10T10:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c2c062_d82f039b",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 6
+      },
+      "revId": "4ed8606bf3a07506710a51be62cb318fffb3f8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
