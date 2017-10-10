@@ -126,6 +126,14 @@ This file contains the strings for Chromecast settings.
                use_name_for_id="true">
         en-US,en
       </message>
+      <message name="IDS_CHROMECAST_SETTINGS_SURROUND_SOUND_MESSAGE"
+               use_name_for_id="true">
+        Surround sound enabled. To adjust volume, use your TV's remote control.
+      </message>
+      <message name="IDS_CHROMECAST_SETTINGS_VOLUME_MAX_MESSAGE"
+               use_name_for_id="true">
+        Chromecast is at max volume. Still too quiet? Increase your TV's volume.
+      </message>
     </messages>
   </release>
 </grit>
