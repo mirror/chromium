@@ -70,7 +70,8 @@ void StubNotificationDisplayService::RemoveNotification(
     return;
 
   if (!silent) {
-    NotificationHandler* handler = GetNotificationHandler(notification_type);
+    NotificationHandler* handler =
+        GetNotificationHandler(notification_type, notification_id);
     DCHECK(handler);
 
     handler->OnClose(profile_, iter->notification.origin_url().spec(),
@@ -83,12 +84,11 @@ void StubNotificationDisplayService::RemoveNotification(
 void StubNotificationDisplayService::RemoveAllNotifications(
     NotificationCommon::Type notification_type,
     bool by_user) {
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK(handler);
   for (auto iter = notifications_.begin(); iter != notifications_.end();) {
     if (iter->type == notification_type) {
-      handler->OnClose(profile_, iter->notification.origin_url().spec(),
-                       iter->notification.id(), by_user);
+      GetNotificationHandler(notification_type, iter->notification.id())
+          ->OnClose(profile_, iter->notification.origin_url().spec(),
+                    iter->notification.id(), by_user);
       iter = notifications_.erase(iter);
     } else {
       iter++;
@@ -105,7 +105,8 @@ void StubNotificationDisplayService::Display(
   // notification's delegate is not meant to be invoked in this situation.
   Close(notification_type, notification_id);
 
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
+  NotificationHandler* handler =
+      GetNotificationHandler(notification_type, notification_id);
   DCHECK(handler);
 
   handler->OnShow(profile_, notification_id);
@@ -116,7 +117,7 @@ void StubNotificationDisplayService::Display(
                               std::move(metadata));
 }
 
-void StubNotificationDisplayService::Close(
+void StubNotificationDisplayService::DoClose(
     NotificationCommon::Type notification_type,
     const std::string& notification_id) {
   notifications_.erase(

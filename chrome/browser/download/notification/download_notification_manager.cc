@@ -103,7 +103,8 @@ DownloadNotificationManagerForProfile::DownloadNotificationManagerForProfile(
     : profile_(profile), parent_manager_(parent_manager) {
   NotificationDisplayService* service =
       NotificationDisplayServiceFactory::GetForProfile(profile);
-  DCHECK(!service->GetNotificationHandler(NotificationCommon::DOWNLOAD));
+  DCHECK(!service->GetNotificationHandler(NotificationCommon::DOWNLOAD,
+                                          std::string()));
   service->AddNotificationHandler(
       NotificationCommon::DOWNLOAD,
       std::make_unique<DownloadNotificationHandler>(this));

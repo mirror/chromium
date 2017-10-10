@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "chrome/browser/chromeos/file_system_provider/notification_manager_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/ui/app_icon_loader.h"
 
 class Profile;
@@ -22,10 +23,6 @@ class Image;
 class ImageSkia;
 }  // message gfx
 
-namespace message_center {
-class Notification;
-}  // namespace message_center
-
 namespace chromeos {
 namespace file_system_provider {
 
@@ -33,7 +30,8 @@ namespace file_system_provider {
 // up to one notification. If more than one request is unresponsive, then
 // all of them will be aborted when clicking on the notification button.
 class NotificationManager : public NotificationManagerInterface,
-                            public AppIconLoaderDelegate {
+                            public AppIconLoaderDelegate,
+                            public NotificationHandler {
  public:
   NotificationManager(Profile* profile,
                       const ProvidedFileSystemInfo& file_system_info);
@@ -55,11 +53,26 @@ class NotificationManager : public NotificationManagerInterface,
   void OnAppImageUpdated(const std::string& id,
                          const gfx::ImageSkia& image) override;
 
+  // NotificationHandler overrides:
+  void OnClose(Profile* profile,
+               const std::string& origin,
+               const std::string& notification_id,
+               bool by_user) override;
+  void OnClick(Profile* profile,
+               const std::string& origin,
+               const std::string& notification_id,
+               const base::Optional<int>& action_index,
+               const base::Optional<base::string16>& reply) override;
+
  private:
   typedef std::map<int, NotificationCallback> CallbackMap;
 
-  // Creates a notification object for the actual state of the manager.
-  std::unique_ptr<message_center::Notification> CreateNotification();
+  std::string GetNotificationId();
+
+  // Creates and displays a notification object for the actual state of the
+  // manager. This will either add a new one or update the existing
+  // notification.
+  void ShowNotification();
 
   // Handles a notification result by calling all registered callbacks and
   // clearing the list.
