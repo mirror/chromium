@@ -15,6 +15,7 @@ extern const char kAppShellHostWindowSize[];
 extern const char kAppShellPreferredNetwork[];
 extern const char kAppShellRefreshToken[];
 extern const char kAppShellUser[];
+extern const char kHelp[];
 
 }  // namespace switches
 }  // namespace extensions
