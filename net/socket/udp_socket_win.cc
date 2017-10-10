@@ -300,7 +300,7 @@ void UDPSocketWin::Close() {
     return;
 
   if (qos_handle_)
-    QwaveAPI::Get().CloseHandle(qos_handle_);
+    GetQwaveAPI().CloseHandle(qos_handle_);
 
   // Zero out any pending read/write callback state.
   read_callback_.Reset();
@@ -1005,6 +1005,10 @@ int UDPSocketWin::RandomBind(const IPAddress& address) {
   return DoBind(IPEndPoint(address, 0));
 }
 
+QwaveAPI& UDPSocketWin::GetQwaveAPI() {
+  return QwaveAPI::Get();
+}
+
 int UDPSocketWin::JoinGroup(const IPAddress& group_address) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!is_connected())
@@ -1122,7 +1126,7 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
   if (!is_connected())
     return ERR_SOCKET_NOT_CONNECTED;
 
-  QwaveAPI& qos(QwaveAPI::Get());
+  QwaveAPI& qos(GetQwaveAPI());
 
   if (!qos.qwave_supported())
     return ERROR_NOT_SUPPORTED;
