@@ -38,7 +38,11 @@ enum class CheckerImagingDecision {
 
   // 10 used to be kVetoedNotRequiredForActivation.
 
-  kCheckerImagingDecisionCount = 11,
+  // Vetoed to avoid potential flickering issues from async painting of this
+  // image.
+  kVetoedForPotentialFlicker = 11,
+
+  kCheckerImagingDecisionCount = 12,
 };
 
 std::string ToString(PaintImage::Id paint_image_id,
@@ -259,8 +263,10 @@ void CheckerImageTracker::DidFinishImageDecode(
   client_->NeedsInvalidationForCheckerImagedTiles();
 }
 
-bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
-                                             WhichTree tree) {
+bool CheckerImageTracker::ShouldCheckerImage(
+    const DrawImage& draw_image,
+    WhichTree tree,
+    const FlickerVetoCallback& veto_cb) {
   const PaintImage& image = draw_image.paint_image();
   PaintImage::Id image_id = image.stable_id();
   TRACE_EVENT1("cc", "CheckerImageTracker::ShouldCheckerImage", "image_id",
@@ -309,6 +315,13 @@ bool CheckerImageTracker::ShouldCheckerImage(const DrawImage& draw_image,
       // images that were not checkered only because checker-imaging was force
       // disabled.
       decision = CheckerImagingDecision::kVetoedForceDisable;
+    }
+
+    // Flicker veto is expensive to call, use it only if all other conditions
+    // are satisfied.
+    if (decision == CheckerImagingDecision::kCanChecker &&
+        veto_cb.Run(image_id)) {
+      decision = CheckerImagingDecision::kVetoedForPotentialFlicker;
     }
 
     it->second.policy = decision == CheckerImagingDecision::kCanChecker

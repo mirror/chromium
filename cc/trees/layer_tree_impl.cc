@@ -338,6 +338,7 @@ gfx::ScrollOffset LayerTreeImpl::TotalMaxScrollOffset() const {
 std::unique_ptr<OwnedLayerImplList> LayerTreeImpl::DetachLayers() {
   root_layer_for_testing_ = nullptr;
   layer_list_.clear();
+  picture_layers_with_images_.reset();
   render_surface_list_.clear();
   set_needs_update_draw_properties();
   std::unique_ptr<OwnedLayerImplList> ret = std::move(layers_);
@@ -1105,7 +1106,16 @@ bool LayerTreeImpl::UpdateDrawProperties() {
                        source_frame_number_);
     size_t layers_updated_count = 0;
     bool tile_priorities_updated = false;
+
+    const bool has_picture_layer_impls_with_images =
+        picture_layers_with_images_.has_value();
+    if (!has_picture_layer_impls_with_images)
+      picture_layers_with_images_.emplace();
+
     for (PictureLayerImpl* layer : picture_layers_) {
+      if (!has_picture_layer_impls_with_images && layer->HasDiscardableImages())
+        picture_layers_with_images_->push_back(layer);
+
       if (!layer->HasValidTilePriorities())
         continue;
       ++layers_updated_count;
