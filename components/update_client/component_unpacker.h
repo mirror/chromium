@@ -24,10 +24,6 @@ namespace update_client {
 class CrxInstaller;
 class ComponentPatcher;
 
-// Deserializes the CRX manifest. The top level must be a dictionary.
-std::unique_ptr<base::DictionaryValue> ReadManifest(
-    const base::FilePath& unpack_path);
-
 // In charge of unpacking the component CRX package and verifying that it is
 // well formed and the cryptographic signature is correct.
 //

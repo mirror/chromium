@@ -359,16 +359,15 @@ TEST_F(SupervisedUserWhitelistInstallerTest, InstallNewWhitelist) {
   // installer only calls |ComponentReady| if the install of the component
   // has succeeded.
   component->installer->Install(
-      std::move(manifest_), unpacked_path,
-      base::Bind(
-          [](WhitelistLoadObserver* observer,
-             const update_client::CrxInstaller::Result& result) {
-            EXPECT_EQ(0, result.error);
-            EXPECT_EQ(0, result.extended_error);
-            if (result.error)
-              observer->Quit();
-          },
-          &observer));
+      unpacked_path, base::Bind(
+                         [](WhitelistLoadObserver* observer,
+                            const update_client::CrxInstaller::Result& result) {
+                           EXPECT_EQ(0, result.error);
+                           EXPECT_EQ(0, result.extended_error);
+                           if (result.error)
+                             observer->Quit();
+                         },
+                         &observer));
 
   scoped_task_environment_.RunUntilIdle();
 
