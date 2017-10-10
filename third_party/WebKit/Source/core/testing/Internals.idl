@@ -396,4 +396,9 @@ enum EffectiveConnectionType {
     boolean isLowEndDevice();
 
     sequence<DOMString> supportedTextEncodingLabels();
+
+    // Bypass the threshold of 'script-compile' of long-task attribution in
+    // PerformanceMonitor for testing. "PerformanceObserver should be observing
+    // 'longtask' while calling BypassLongCompileThresholdOnce.
+    [RaisesException] void BypassLongCompileThresholdOnce();
 };
