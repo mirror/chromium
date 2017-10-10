@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32a0bc5d_cd39e567",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T19:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b9657e_f97b52bf",
+      "range": {
+        "startLine": 152,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 18
+      },
+      "revId": "cafb0eab62b8d60dcffcbcfbce6ec2253291ab69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b249b05_845f713e",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7799b7c3_3f7b1da2",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T19:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b249b05_845f713e",
+      "range": {
+        "startLine": 343,
+        "startChar": 35,
+        "endLine": 343,
+        "endChar": 36
+      },
+      "revId": "cafb0eab62b8d60dcffcbcfbce6ec2253291ab69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed4fa6b_3f943988",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-10T16:40:35Z",
       "side": 1,
       "message": "It\u0027s not clear from the name what this means. How about Hide()?",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "cafb0eab62b8d60dcffcbcfbce6ec2253291ab69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a9ba81_c74c0517",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T19:42:37Z",
+      "side": 1,
+      "message": "Hide() already exists as a private override function of ExclusiveAccessBubble...\n\nWe could merge them and have a Hide function that shows a shorter animation when the hide timer is still running, and show the longer animation otherwise. Not sure whether that\u0027s a good idea...",
+      "parentUuid": "5ed4fa6b_3f943988",
       "range": {
         "startLine": 56,
         "startChar": 7,
