@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da3f00b3_4d0b82e1",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T20:31:30Z",
+      "side": 1,
+      "message": "nit: drop \"explicit\" since it is no longer a single arg ctor.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "0f6c06911df9f41552bfda215a55d49d026f822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39fee62_4cc9df88",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T20:31:30Z",
+      "side": 1,
+      "message": "Do you want to make it const since we don\u0027t plan to change it after ctor?",
+      "revId": "0f6c06911df9f41552bfda215a55d49d026f822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
