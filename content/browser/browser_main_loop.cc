@@ -519,6 +519,47 @@ class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
 }  // namespace internal
 #endif
 
+namespace {
+
+// Provides a bridge whereby display::win::ScreenWin can ask the GPU process
+// about the HDR status of the system.
+class HDRStatusProxy {
+ public:
+  static void Initialize() {
+#if defined(OS_WIN)
+    display::win::ScreenWin::SetRequestHDRStatusCallback(base::Bind(DoRequest));
+#endif
+  }
+
+ private:
+  static void DoRequest(base::Callback<void(bool)> got_result) {
+    DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+    auto do_request_on_io_thread =
+        [](base::Callback<void(bool)> got_result_on_ui) {
+          auto* gpu_process_host = GpuProcessHost::Get(
+              GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
+          if (gpu_process_host) {
+            gpu_process_host->RequestHDRStatus(
+                base::Bind(&HDRStatusProxy::GotResult, got_result_on_ui));
+          } else {
+            bool hdr_enabled = false;
+            BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                                    base::Bind(got_result_on_ui, hdr_enabled));
+          }
+        };
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::Bind(do_request_on_io_thread, got_result));
+  }
+  static void GotResult(base::Callback<void(bool)> got_result_on_ui,
+                        bool hdr_enabled) {
+    DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::Bind(got_result_on_ui, hdr_enabled));
+  }
+};
+
+}  // namespace
+
 // The currently-running BrowserMainLoop.  There can be one or zero.
 BrowserMainLoop* g_current_browser_main_loop = NULL;
 
@@ -1513,6 +1554,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   }
 #endif  // defined(USE_AURA)
 #endif  // defined(OS_ANDROID)
+
+  HDRStatusProxy::Initialize();
 
 #if defined(OS_ANDROID)
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

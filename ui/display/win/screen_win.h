@@ -111,6 +111,11 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // you are targeting.
   static float GetSystemScaleFactor();
 
+  // Set the callback
+  typedef base::Callback<void(bool)> HDRStatusCallback;
+  static void SetRequestHDRStatusCallback(
+      HDRStatusCallback request_hdr_status_callback);
+
   // Returns the HWND associated with the NativeView.
   virtual HWND GetHWNDFromNativeView(gfx::NativeView view) const;
 
@@ -155,6 +160,7 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
  private:
   void Initialize();
   void OnWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
+  void OnGetHDRStatus(bool hdr_enabled);
 
   // Returns the ScreenWinDisplay closest to or enclosing |hwnd|.
   ScreenWinDisplay GetScreenWinDisplayNearestHWND(HWND hwnd) const;
@@ -207,6 +213,10 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // TODO(ccameron): Set this via the GPU process when the system "HDR and
   // advanced color" setting is enabled.
   bool hdr_enabled_ = false;
+
+  // Callback to make when the HDR status may have changed. This will ultimately
+  // make the query in the GPU process.
+  HDRStatusCallback request_hdr_status_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
 };
