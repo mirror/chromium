@@ -45,6 +45,29 @@
       "revId": "cafb0eab62b8d60dcffcbcfbce6ec2253291ab69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed4fa6b_3f943988",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T16:40:35Z",
+      "side": 1,
+      "message": "It\u0027s not clear from the name what this means. How about Hide()?",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "cafb0eab62b8d60dcffcbcfbce6ec2253291ab69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
