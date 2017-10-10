@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "623084a1_b6340b38",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T20:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f51747a_db36fbf1",
+      "range": {
+        "startLine": 145,
+        "startChar": 48,
+        "endLine": 145,
+        "endChar": 0
+      },
+      "revId": "54389d95e6f3e1e09533a59094e9d24a3af2307e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c5f1c91_dbca902a",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "54389d95e6f3e1e09533a59094e9d24a3af2307e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53873f3_df632790",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T20:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c5f1c91_dbca902a",
+      "range": {
+        "startLine": 169,
+        "startChar": 67,
+        "endLine": 169,
+        "endChar": 68
+      },
+      "revId": "54389d95e6f3e1e09533a59094e9d24a3af2307e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b97f0ff_68cfaa84",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T20:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95bbdfad_9e8d2d8c",
+      "range": {
+        "startLine": 425,
+        "startChar": 0,
+        "endLine": 425,
+        "endChar": 18
+      },
+      "revId": "54389d95e6f3e1e09533a59094e9d24a3af2307e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ee2e3fd_3ad73b19",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-10T19:25:42Z",
       "side": 1,
       "message": "This is getting a bit much. I was going to suggest moving it to before summary_output, but OK for now. We should probably make a BootfsArgs struct to hold all the paraphernalia/detritus required to build a bootfs at some point (no need to do it in this CL though).",
+      "range": {
+        "startLine": 195,
+        "startChar": 35,
+        "endLine": 195,
+        "endChar": 61
+      },
+      "revId": "54389d95e6f3e1e09533a59094e9d24a3af2307e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ced7ae2_542df5a3",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-10T20:37:35Z",
+      "side": 1,
+      "message": "Agreed; and yes, let\u0027s do some cleanup in follow-up CL(s).\n\nWe should also fix the generated stub scripts not to need to use execv(), while we\u0027re cleaning things up, and perhaps break some of the runner_common.py into separate modules since it has become rather more complex over time.",
+      "parentUuid": "3ee2e3fd_3ad73b19",
       "range": {
         "startLine": 195,
         "startChar": 35,
