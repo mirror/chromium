@@ -32,6 +32,10 @@ class WebContents;
 class SubresourceFilterContentSettingsManager;
 class TestSafeBrowsingDatabaseHelper;
 
+namespace safe_browsing {
+enum class SubresourceFilterType;
+}
+
 namespace subresource_filter {
 
 class SubresourceFilterBrowserTest : public InProcessBrowserTest {
@@ -55,6 +59,10 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
   void ConfigureAsPhishingURL(const GURL& url);
 
   void ConfigureAsSubresourceFilterOnlyURL(const GURL& url);
+
+  void ConfigureURLWithWarning(
+      const GURL& url,
+      const std::vector<safe_browsing::SubresourceFilterType>& filter_types);
 
   content::WebContents* web_contents() const;
 
@@ -106,6 +114,13 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
   SubresourceFilterContentSettingsManager* settings_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterBrowserTest);
+};
+
+// This class automatically syncs the SubresourceFilter SafeBrowsing list
+// without needing a chrome branded build.
+class SubresourceFilterListInsertingBrowserTest
+    : public SubresourceFilterBrowserTest {
+  std::unique_ptr<TestSafeBrowsingDatabaseHelper> CreateTestDatabase() override;
 };
 
 }  // namespace subresource_filter
