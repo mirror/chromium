@@ -68,6 +68,29 @@
       "revId": "50bdd404ccdc338fe8cf14129bff060abc49311e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c34567_72bba4ee",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-10T07:49:25Z",
+      "side": 1,
+      "message": "This variable name does not sound matching to the condition: !isOnDrive \u0026\u0026 !isOnMTP.\n\nI don\u0027t come up with a good name, but how about isOnEligibleLocation or something like that?",
+      "range": {
+        "startLine": 1335,
+        "startChar": 8,
+        "endLine": 1335,
+        "endChar": 30
+      },
+      "revId": "50bdd404ccdc338fe8cf14129bff060abc49311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
