@@ -24,6 +24,7 @@ namespace {
 const int kVendorMicrosoft = 0x045e;
 const int kProductXbox360Controller = 0x028e;
 const int kProductXboxOneController = 0x02d1;
+const int kProductXboxOneSController = 0x02ea;
 
 const int kXbox360ReadEndpoint = 1;
 const int kXbox360ControlEndpoint = 2;
@@ -303,6 +304,15 @@ bool XboxController::OpenDevice(io_service_t service) {
       request.bInterfaceProtocol = 208;
       request.bAlternateSetting = kIOUSBFindInterfaceDontCare;
       break;
+    case kProductXboxOneSController:
+      controller_type_ = XBOX_ONE_S_CONTROLLER;
+      read_endpoint_ = kXboxOneReadEndpoint;
+      control_endpoint_ = kXboxOneControlEndpoint;
+      request.bInterfaceClass = 255;
+      request.bInterfaceSubClass = 71;
+      request.bInterfaceProtocol = 208;
+      request.bAlternateSetting = kIOUSBFindInterfaceDontCare;
+      break;
     default:
       return false;
   }
@@ -420,7 +430,8 @@ bool XboxController::OpenDevice(io_service_t service) {
     } else if (i == control_endpoint_) {
       if (direction != kUSBOut)
         return false;
-      if (controller_type_ == XBOX_ONE_CONTROLLER)
+      if (controller_type_ == XBOX_ONE_CONTROLLER ||
+          controller_type_ == XBOX_ONE_S_CONTROLLER)
         WriteXboxOneInit();
     }
   }
@@ -457,14 +468,27 @@ void XboxController::SetLEDPattern(LEDPattern pattern) {
 }
 
 int XboxController::GetVendorId() const {
-  return kVendorMicrosoft;
+  switch (controller_type_) {
+    case XBOX_360_CONTROLLER:
+    case XBOX_ONE_CONTROLLER:
+    case XBOX_ONE_S_CONTROLLER:
+      return kVendorMicrosoft;
+    default:
+      return 0;
+  }
 }
 
 int XboxController::GetProductId() const {
-  if (controller_type_ == XBOX_360_CONTROLLER)
-    return kProductXbox360Controller;
-  else
-    return kProductXboxOneController;
+  switch (controller_type_) {
+    case XBOX_360_CONTROLLER:
+      return kProductXbox360Controller;
+    case XBOX_ONE_CONTROLLER:
+      return kProductXboxOneController;
+    case XBOX_ONE_S_CONTROLLER:
+      return kProductXboxOneSController;
+    default:
+      return 0;
+  }
 }
 
 XboxController::ControllerType XboxController::GetControllerType() const {
@@ -586,13 +610,16 @@ void XboxController::IOError() {
 }
 
 void XboxController::WriteXboxOneInit() {
-  const UInt8 length = 2;
+  const UInt8 length = 5;
 
   // This buffer will be released in WriteComplete when WritePipeAsync
   // finishes.
   UInt8* buffer = new UInt8[length];
   buffer[0] = 0x05;
   buffer[1] = 0x20;
+  buffer[2] = 0x00;
+  buffer[3] = 0x01;
+  buffer[4] = 0x00;
   kern_return_t kr =
       (*interface_)
           ->WritePipeAsync(interface_, control_endpoint_, buffer,
@@ -678,6 +705,11 @@ bool XboxDataFetcher::RegisterForNotifications() {
   if (!RegisterForDeviceNotifications(
           kVendorMicrosoft, kProductXboxOneController,
           &xbox_one_device_added_iter_, &xbox_one_device_removed_iter_))
+    return false;
+
+  if (!RegisterForDeviceNotifications(
+          kVendorMicrosoft, kProductXboxOneSController,
+          &xbox_one_s_device_added_iter_, &xbox_one_s_device_removed_iter_))
     return false;
 
   if (!RegisterForDeviceNotifications(

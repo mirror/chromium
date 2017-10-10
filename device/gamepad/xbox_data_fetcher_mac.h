@@ -30,7 +30,8 @@ class XboxController {
   enum ControllerType {
     UNKNOWN_CONTROLLER,
     XBOX_360_CONTROLLER,
-    XBOX_ONE_CONTROLLER
+    XBOX_ONE_CONTROLLER,
+    XBOX_ONE_S_CONTROLLER
   };
 
   enum LEDPattern {
@@ -190,6 +191,8 @@ class XboxDataFetcher : public GamepadDataFetcher,
   base::mac::ScopedIOObject<io_iterator_t> xbox_360_device_removed_iter_;
   base::mac::ScopedIOObject<io_iterator_t> xbox_one_device_added_iter_;
   base::mac::ScopedIOObject<io_iterator_t> xbox_one_device_removed_iter_;
+  base::mac::ScopedIOObject<io_iterator_t> xbox_one_s_device_added_iter_;
+  base::mac::ScopedIOObject<io_iterator_t> xbox_one_s_device_removed_iter_;
 
   DISALLOW_COPY_AND_ASSIGN(XboxDataFetcher);
 };
