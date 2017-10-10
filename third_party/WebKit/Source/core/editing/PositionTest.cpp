@@ -228,4 +228,17 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
             ToPositionInFlatTree(Position(shadow_root, 0)));
 }
 
+TEST_F(PositionTest, IsConnectedInFlatTree) {
+  SelectionInDOMTree selection = SetSelectionTextToBody(
+      "<div>f^oo<template data-mode=open>b|ar</template></div>");
+
+  Position foo_position = selection.Base();
+  EXPECT_TRUE(foo_position.IsConnected());
+  EXPECT_FALSE(ToPositionInFlatTree(foo_position).IsConnected());
+
+  Position bar_position = selection.Extent();
+  EXPECT_TRUE(bar_position.IsConnected());
+  EXPECT_TRUE(ToPositionInFlatTree(bar_position).IsConnected());
+}
+
 }  // namespace blink
