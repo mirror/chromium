@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8988a795_a6fd7559",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T15:52:23Z",
+      "side": 1,
+      "message": "shouldn\u0027t have an explicit value for max",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "e8abd919dfd9458484e149a1e6797f4babe45c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea809427_6e825fcb",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T15:52:23Z",
+      "side": 1,
+      "message": "it\u0027s generally better design to have the macro only written once. i.e. keep the stream format as an variable, and emit it at the end of the method. This way you ensure it\u0027s only written to once (this may be simple now, but with refactoring, etc. there\u0027s risk of errors)",
+      "revId": "e8abd919dfd9458484e149a1e6797f4babe45c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05247c_dc4aa45d",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T15:52:23Z",
+      "side": 1,
+      "message": "and shouldn\u0027t need the +1 on the max",
+      "revId": "e8abd919dfd9458484e149a1e6797f4babe45c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
