@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6330f424_003ae3a9",
+        "filename": "third_party/WebKit/Source/core/editing/PositionTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T05:57:34Z",
+      "side": 1,
+      "message": "Could you add test case for PositionInFlatTree::IsConnected() returns true?",
+      "revId": "01c3b808046db4c8a49a2440b5e1cc15c19dc427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
