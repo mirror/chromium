@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5984dcaa_14597bfd",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-10T23:57:32Z",
+      "side": 1,
+      "message": "WebMediaPlayerImpl::BufferingHaveEnough ? This is fired in many circumstances and not always around a seek. I.e. if we underflow we may also fire this.\n\nDo you really need the seek target here? It won\u0027t be accurate if multiple seeks are occurring since we may just overwrite the seek time without triggering a have enough for it. |seek_time| will always be the latest one. Even if there\u0027s an earlier one still pending.",
+      "revId": "dc47393744a569866f9f477ca4afa169e9553f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
