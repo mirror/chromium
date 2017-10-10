@@ -103,7 +103,7 @@ void NotifyHeapProfilingEnabledOnMDPThread(
 inline bool ShouldEnableMDPAllocatorHooks(HeapProfilingMode mode) {
   return (mode == kHeapProfilingModePseudo) ||
          (mode == kHeapProfilingModeNative) ||
-         (mode == kHeapProfilingModeNoStack);
+         (mode == kHeapProfilingModeBackground);
 }
 
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
@@ -211,12 +211,12 @@ HeapProfilingMode MemoryDumpManager::GetHeapProfilingModeFromCommandLine() {
   std::string profiling_mode =
       CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kEnableHeapProfiling);
+  if (profiling_mode == switches::kEnableHeapProfilingTaskProfiler)
+    return kHeapProfilingModeTaskProfiler;
   if (profiling_mode == switches::kEnableHeapProfilingModePseudo)
     return kHeapProfilingModePseudo;
   if (profiling_mode == switches::kEnableHeapProfilingModeNative)
     return kHeapProfilingModeNative;
-  if (profiling_mode == switches::kEnableHeapProfilingTaskProfiler)
-    return kHeapProfilingModeTaskProfiler;
 #endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
   return kHeapProfilingModeInvalid;
 }
@@ -254,6 +254,17 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
   }
 
   switch (profiling_mode) {
+    case kHeapProfilingModeTaskProfiler:
+      if (!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
+        base::debug::ThreadHeapUsageTracker::EnableHeapTracking();
+      notify_mdps = false;
+      break;
+
+    case kHeapProfilingModeBackground:
+      AllocationContextTracker::SetCaptureMode(
+          AllocationContextTracker::CaptureMode::PSEUDO_STACK);
+      break;
+
     case kHeapProfilingModePseudo:
       AllocationContextTracker::SetCaptureMode(
           AllocationContextTracker::CaptureMode::PSEUDO_STACK);
@@ -265,17 +276,6 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
       // using base::debug::StackTrace, which may be slow.
       AllocationContextTracker::SetCaptureMode(
           AllocationContextTracker::CaptureMode::NATIVE_STACK);
-      break;
-
-    case kHeapProfilingModeNoStack:
-      AllocationContextTracker::SetCaptureMode(
-          AllocationContextTracker::CaptureMode::NO_STACK);
-      break;
-
-    case kHeapProfilingModeTaskProfiler:
-      if (!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
-        base::debug::ThreadHeapUsageTracker::EnableHeapTracking();
-      notify_mdps = false;
       break;
 
     case kHeapProfilingModeDisabled:
