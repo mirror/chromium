@@ -22,6 +22,23 @@
       "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510183ec_d1ba974e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-10T23:23:34Z",
+      "side": 1,
+      "message": "Why round at all? I think you\u0027ll have the same number of buckets in the UMA either way, but if you round 90% of them will be emtpy.",
+      "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
