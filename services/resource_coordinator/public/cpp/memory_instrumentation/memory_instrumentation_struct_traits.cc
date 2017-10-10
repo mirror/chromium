@@ -108,8 +108,8 @@ EnumTraits<memory_instrumentation::mojom::HeapProfilingMode,
       return memory_instrumentation::mojom::HeapProfilingMode::PSEUDO_STACK;
     case base::trace_event::HeapProfilingMode::kHeapProfilingModeNative:
       return memory_instrumentation::mojom::HeapProfilingMode::NATIVE_STACK;
-    case base::trace_event::HeapProfilingMode::kHeapProfilingModeNoStack:
-      return memory_instrumentation::mojom::HeapProfilingMode::NO_STACK;
+    case base::trace_event::HeapProfilingMode::kHeapProfilingModeBackground:
+      return memory_instrumentation::mojom::HeapProfilingMode::BACKGROUND;
     case base::trace_event::HeapProfilingMode::kHeapProfilingModeTaskProfiler:
       return memory_instrumentation::mojom::HeapProfilingMode::TASK_PROFILER;
     case base::trace_event::HeapProfilingMode::kHeapProfilingModeDisabled:
@@ -133,8 +133,8 @@ bool EnumTraits<memory_instrumentation::mojom::HeapProfilingMode,
     case memory_instrumentation::mojom::HeapProfilingMode::NATIVE_STACK:
       *out = base::trace_event::HeapProfilingMode::kHeapProfilingModeNative;
       return true;
-    case memory_instrumentation::mojom::HeapProfilingMode::NO_STACK:
-      *out = base::trace_event::HeapProfilingMode::kHeapProfilingModeNoStack;
+    case memory_instrumentation::mojom::HeapProfilingMode::BACKGROUND:
+      *out = base::trace_event::HeapProfilingMode::kHeapProfilingModeBackground;
       return true;
     case memory_instrumentation::mojom::HeapProfilingMode::TASK_PROFILER:
       *out =
