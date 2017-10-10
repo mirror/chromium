@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "810719d8_1d2428d5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-10T20:12:53Z",
+      "side": 1,
+      "message": "I\u0027d go with for (uint32_t feature : ...) and remove the check.\n\nBut are you sure you want to check() in the browser?  Could this value have come from an untrusted source, in which case we crash the whole browser?",
+      "range": {
+        "startLine": 887,
+        "startChar": 5,
+        "endLine": 887,
+        "endChar": 13
+      },
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a72f25_ff7b407c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 12
@@ -31,6 +54,24 @@
       "side": 1,
       "message": "tsepez: do you have security advise here? It sort of bothers me to do `const auto\u0026` and then don\u0027t bother checking \u003e\u003d 0 since we \"know\" it\u0027s unsigned. Could we just do `uint32_t feature : version-\u003eused_features()`  (are we guaranteed the compiler complains if used_features becomes signed later?)\n\nIf not, I\u0027d prefer just doing the CHECK \u003e\u003d 0 and \u003c kNumFeatures now. This code should eventually go away when everything is using WebFeature natively.",
       "parentUuid": "c9a72f25_ff7b407c",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf5f3ab_4d8ebaa0",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-10T20:12:53Z",
+      "side": 1,
+      "message": "The compiler won\u0027t warn .. but if used_features became signed, then given the uint32_t declaration, you get a silent promotion of a negative value to a huge positive one, and the subsequent \u003c kNumberOfFeatures catches it.",
+      "parentUuid": "21e2596b_8499484e",
       "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
