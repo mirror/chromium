@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e740f258_0fe05d75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-10T23:40:54Z",
+      "side": 1,
+      "message": "nit: This line should max out around ~74 characters long",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7890c0b4_1514849b",
         "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
         "patchSetId": 10
