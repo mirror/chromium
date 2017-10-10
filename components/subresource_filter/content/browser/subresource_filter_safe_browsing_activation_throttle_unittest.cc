@@ -104,6 +104,7 @@ class MockSubresourceFilterClient : public SubresourceFilterClient {
   MOCK_METHOD0(ShowNotification, void());
   MOCK_METHOD0(OnNewNavigationStarted, void());
   MOCK_METHOD0(ForceActivationInCurrentWebContents, bool());
+  MOCK_METHOD0(OnFirstSubresourceLoadDisallowed, void());
 
   void ClearWhitelist() { whitelisted_hosts_.clear(); }
 

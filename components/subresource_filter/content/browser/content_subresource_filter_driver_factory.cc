@@ -137,6 +137,8 @@ bool ContentSubresourceFilterDriverFactory::ShouldDisallowNewWindow(
 }
 
 void ContentSubresourceFilterDriverFactory::OnFirstSubresourceLoadDisallowed() {
+  client_->OnFirstSubresourceLoadDisallowed();
+
   if (activation_options().should_suppress_notifications)
     return;
   // This shouldn't happen normally, but in the rare case that an IPC from a

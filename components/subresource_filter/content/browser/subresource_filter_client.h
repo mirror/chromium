@@ -46,6 +46,8 @@ class SubresourceFilterClient {
   // Returns whether this navigation should be forced to be activated. This is
   // currently only used for devtools.
   virtual bool ForceActivationInCurrentWebContents() = 0;
+
+  virtual void OnFirstSubresourceLoadDisallowed() = 0;
 };
 
 }  // namespace subresource_filter

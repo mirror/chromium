@@ -110,10 +110,7 @@ void ChromeSubresourceFilterClient::ShowNotification() {
   // Do not show the UI if we're forcing activation due to a devtools toggle.
   // This complicates the meaning of our persistent storage (e.g. our metadata
   // that assumes showing UI implies site is blacklisted).
-  if (activated_via_devtools_) {
-    LogAction(kActionForcedActivationNoUIResourceBlocked);
-    return;
-  }
+  DCHECK(!activated_via_devtools_);
   if (did_show_ui_for_navigation_)
     return;
 
@@ -216,4 +213,10 @@ void ChromeSubresourceFilterClient::ShowUI(const GURL& url) {
   }
   did_show_ui_for_navigation_ = true;
   settings_manager_->OnDidShowUI(url);
+}
+
+void ChromeSubresourceFilterClient::OnFirstSubresourceLoadDisallowed() {
+  if (activated_via_devtools_) {
+    LogAction(kActionForcedActivationNoUIResourceBlocked);
+  }
 }
