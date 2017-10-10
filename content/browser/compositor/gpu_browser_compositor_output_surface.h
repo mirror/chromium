@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "content/browser/compositor/browser_compositor_output_surface.h"
 #include "content/browser/compositor/gpu_vsync_begin_frame_source.h"
+#include "gpu/vulkan/features.h"
 #include "ui/gfx/swap_result.h"
 
 namespace viz {
@@ -82,6 +83,9 @@ class GpuBrowserCompositorOutputSurface : public BrowserCompositorOutputSurface,
 
   // GpuVSyncControl implementation.
   void SetNeedsVSync(bool needs_vsync) override;
+#if BUILDFLAG(ENABLE_VULKAN)
+  gpu::VulkanSurface* GetVulkanSurface() override;
+#endif
 
  protected:
   gpu::CommandBufferProxyImpl* GetCommandBufferProxy();

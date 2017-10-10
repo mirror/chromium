@@ -29,10 +29,6 @@
 #include "gpu/vulkan/features.h"
 #include "ui/gfx/buffer_types.h"
 
-#if BUILDFLAG(ENABLE_VULKAN)
-#include "cc/output/vulkan_renderer.h"
-#endif
-
 namespace viz {
 
 Display::Display(SharedBitmapManager* bitmap_manager,
@@ -198,9 +194,9 @@ void Display::InitializeRenderer() {
           &settings_, output_surface_.get(), resource_provider_.get());
     }
   } else if (output_surface_->vulkan_context_provider()) {
-#if defined(ENABLE_VULKAN)
+#if BUILDFLAG(ENABLE_VULKAN)
     DCHECK(texture_mailbox_deleter_);
-    renderer_ = base::MakeUnique<VulkanRenderer>(
+    renderer_ = base::MakeUnique<SkiaRenderer>(
         &settings_, output_surface_.get(), resource_provider_.get());
 #else
     NOTREACHED();
