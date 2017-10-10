@@ -70,6 +70,30 @@
       "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9114d70_492a9ca3",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-10T17:57:45Z",
+      "side": 1,
+      "message": "Done. There are still a couple of calls left in InitializeAppRequestContext(), but I assume these context will be eventually gone?",
+      "parentUuid": "8effda6e_325ff5a1",
+      "range": {
+        "startLine": 222,
+        "startChar": 10,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
