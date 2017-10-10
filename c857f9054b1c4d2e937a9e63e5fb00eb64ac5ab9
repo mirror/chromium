@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "306b8346_280bffd6",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-10T13:42:32Z",
+      "side": 1,
+      "message": "Do you need a custom window subclass? I think you can either:\n\n- Set the key equivalents on the ignoreButton_ directly in the view controller\n- Handle https://developer.apple.com/documentation/appkit/nsresponder/1535347-canceloperation?language\u003dobjc in the view controller",
+      "revId": "c857f9054b1c4d2e937a9e63e5fb00eb64ac5ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26a3eb1_6cbef6ba",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-10T13:42:32Z",
+      "side": 1,
+      "message": "This method is deprecated. https://developer.apple.com/documentation/appkit/nswindow/1419653-beginsheet?language\u003dobjc is the replacement.",
+      "revId": "c857f9054b1c4d2e937a9e63e5fb00eb64ac5ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
