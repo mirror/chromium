@@ -41,6 +41,7 @@ class BrowserSideControllerServiceWorker
 
  private:
   class ResponseCallback;
+  class AutoAbortDispatchFetchEventCallback;
   using StatusCallback = base::OnceCallback<void(ServiceWorkerStatusCode)>;
 
   void DispatchFetchEventInternal(
@@ -66,7 +67,7 @@ class BrowserSideControllerServiceWorker
   // Not owned; |this| should go away before the version goes away.
   ServiceWorkerVersion* receiver_version_;
 
-  base::IDMap<std::unique_ptr<DispatchFetchEventCallback>>
+  base::IDMap<std::unique_ptr<AutoAbortDispatchFetchEventCallback>>
       fetch_event_callbacks_;
 
   base::WeakPtrFactory<BrowserSideControllerServiceWorker> weak_factory_;

@@ -102,6 +102,28 @@ class BrowserSideControllerServiceWorker::ResponseCallback
   DISALLOW_COPY_AND_ASSIGN(ResponseCallback);
 };
 
+class BrowserSideControllerServiceWorker::AutoAbortDispatchFetchEventCallback {
+ public:
+  AutoAbortDispatchFetchEventCallback(DispatchFetchEventCallback callback)
+      : callback_(std::move(callback)) {}
+
+  ~AutoAbortDispatchFetchEventCallback() {
+    if (!callback_)
+      return;
+    std::move(callback_).Run(blink::mojom::ServiceWorkerEventStatus::ABORTED,
+                             base::Time());
+  }
+
+  void Run(blink::mojom::ServiceWorkerEventStatus status,
+           base::Time dispatch_event_time) {
+    DCHECK(callback_);
+    std::move(callback_).Run(status, dispatch_event_time);
+  }
+
+ private:
+  DispatchFetchEventCallback callback_;
+};
+
 // BrowserSideControllerServiceWorker ----------------------------------
 
 BrowserSideControllerServiceWorker::BrowserSideControllerServiceWorker(
@@ -124,7 +146,8 @@ void BrowserSideControllerServiceWorker::DispatchFetchEvent(
     DispatchFetchEventCallback callback) {
   DVLOG(1) << "FetchEvent [" << request.url.spec();
   const int internal_fetch_event_id = fetch_event_callbacks_.Add(
-      std::make_unique<DispatchFetchEventCallback>(std::move(callback)));
+      std::make_unique<AutoAbortDispatchFetchEventCallback>(
+          std::move(callback)));
 
   if (receiver_version_->running_status() == EmbeddedWorkerStatus::RUNNING) {
     DispatchFetchEventInternal(internal_fetch_event_id, request,
