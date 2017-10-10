@@ -19,6 +19,7 @@ class EquivalenceMap;
 class ImageIndex;
 class OrderedLabelManager;
 class PatchElementWriter;
+class ReferenceBytesMixer;
 
 // Creates an ImageIndex and initializes it with references from |disasm|.
 // Returns nullopt on error.
@@ -67,6 +68,7 @@ bool GenerateRawDelta(ConstBufferView old_image,
                       ConstBufferView new_image,
                       const EquivalenceMap& equivalence_map,
                       const ImageIndex& new_image_index,
+                      const ReferenceBytesMixer& reference_bytes_mixer,
                       PatchElementWriter* patch_writer);
 
 // Writes reference delta between references from |old_index| and from

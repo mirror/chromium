@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "chrome/installer/zucchini/disassembler.h"
+#include "chrome/installer/zucchini/disassembler_dex.h"
+#include "chrome/installer/zucchini/disassembler_elf.h"
 #include "chrome/installer/zucchini/disassembler_no_op.h"
 #include "chrome/installer/zucchini/disassembler_win32.h"
 
@@ -36,6 +38,24 @@ std::unique_ptr<Disassembler> MakeDisassemblerWithoutFallback(
       return disasm;
   }
 
+  ExecutableType type = QuickDetectElf(image);
+  if (type != kExeTypeUnknown) {
+    std::unique_ptr<Disassembler> disasm;
+    if (type == kExeTypeElfX86)
+      disasm = DisassemblerElfX86::Make(image);
+    else if (type == kExeTypeElfArm32)
+      disasm = DisassemblerElfARM32::Make(image);
+    else if (type == kExeTypeElfAArch64)
+      disasm = DisassemblerElfAArch64::Make(image);
+    if (disasm && disasm->size() >= kMinProgramSize)
+      return disasm;
+  }
+
+  if (DisassemblerDex::QuickDetect(image)) {
+    auto disasm = DisassemblerDex::Make(image);
+    if (disasm && disasm->size() >= kMinProgramSize)
+      return disasm;
+  }
   return nullptr;
 }
 
@@ -46,6 +66,14 @@ std::unique_ptr<Disassembler> MakeDisassemblerOfType(ConstBufferView image,
       return DisassemblerWin32X86::Make(image);
     case kExeTypeWin32X64:
       return DisassemblerWin32X64::Make(image);
+    case kExeTypeElfX86:
+      return DisassemblerElfX86::Make(image);
+    case kExeTypeElfArm32:
+      return DisassemblerElfARM32::Make(image);
+    case kExeTypeElfAArch64:
+      return DisassemblerElfAArch64::Make(image);
+    case kExeTypeDex:
+      return DisassemblerDex::Make(image);
     case kExeTypeNoOp:
       return DisassemblerNoOp::Make(image);
     default:

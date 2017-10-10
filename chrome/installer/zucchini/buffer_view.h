@@ -25,13 +25,6 @@ struct BufferRegion {
   size_t InclusiveClamp(size_t v) const {
     return zucchini::InclusiveClamp(v, lo(), hi());
   }
-  friend bool operator==(const BufferRegion& a, const BufferRegion& b) {
-    return a.offset == b.offset && a.size == b.size;
-  }
-  friend bool operator!=(const BufferRegion& a, const BufferRegion& b) {
-    return !(a == b);
-  }
-
   size_t offset;
   size_t size;
 };
@@ -65,8 +58,13 @@ class BufferViewBase {
       : first_(first), last_(first_ + size) {
     DCHECK_GE(last_, first_);
   }
+
   template <class U>
-  explicit BufferViewBase(const BufferViewBase<U>& that)
+  BufferViewBase(const BufferViewBase<U>& that)
+      : first_(that.begin()), last_(that.end()) {}
+
+  template <class U>
+  BufferViewBase(BufferViewBase<U>&& that)
       : first_(that.begin()), last_(that.end()) {}
 
   BufferViewBase(const BufferViewBase&) = default;
@@ -117,6 +115,17 @@ class BufferViewBase {
     *reinterpret_cast<U*>(begin() + pos) = value;
   }
 
+  template <class U>
+  U& modify(size_type pos) {
+    CHECK_LE(pos + sizeof(U), size());
+    return *reinterpret_cast<U*>(begin() + pos);
+  }
+
+  template <class U>
+  bool can_access(size_type pos) const {
+    return pos < size() && size() - pos >= sizeof(U);
+  }
+
   // Returns a BufferRegion describing the full view.
   BufferRegion region() const { return BufferRegion{0, size()}; }
 
@@ -138,6 +147,10 @@ class BufferViewBase {
     DCHECK_GE(pos, begin());
     DCHECK_LE(pos, end());
     first_ = pos;
+  }
+
+  bool equals(BufferViewBase other) const {
+    return size() == other.size() && std::equal(begin(), end(), other.begin());
   }
 
  private:

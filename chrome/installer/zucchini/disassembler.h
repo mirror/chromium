@@ -18,6 +18,11 @@ namespace zucchini {
 
 class Disassembler;
 
+// A vacuous ReferenceReader that produces no references.
+struct EmptyReferenceReader : public ReferenceReader {
+  base::Optional<Reference> GetNext() override;
+};
+
 // A ReferenceGroup is associated with a specific |type| and has convenience
 // methods to obtain readers and writers for that type. A ReferenceGroup does
 // not store references; it is a lightweight class that communicates with the

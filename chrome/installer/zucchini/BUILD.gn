@@ -3,14 +3,17 @@
 # found in the LICENSE file.
 
 import("//chrome/process_version_rc_template.gni")
-import("//testing/libfuzzer/fuzzer_test.gni")
 import("//testing/test.gni")
 
 static_library("zucchini_lib") {
   sources = [
+    "abs32_utils.cc",
+    "abs32_utils.h",
     "address_translator.cc",
     "address_translator.h",
     "algorithm.h",
+    "arm_utils.cc",
+    "arm_utils.h",
     "binary_data_histogram.cc",
     "binary_data_histogram.h",
     "buffer_sink.cc",
@@ -22,6 +25,10 @@ static_library("zucchini_lib") {
     "crc32.h",
     "disassembler.cc",
     "disassembler.h",
+    "disassembler_dex.cc",
+    "disassembler_dex.h",
+    "disassembler_elf.cc",
+    "disassembler_elf.h",
     "disassembler_no_op.cc",
     "disassembler_no_op.h",
     "disassembler_win32.cc",
@@ -30,6 +37,8 @@ static_library("zucchini_lib") {
     "element_detection.h",
     "encoded_view.cc",
     "encoded_view.h",
+    "ensemble.cc",
+    "ensemble.h",
     "equivalence_map.cc",
     "equivalence_map.h",
     "image_index.cc",
@@ -44,6 +53,8 @@ static_library("zucchini_lib") {
     "patch_utils.h",
     "patch_writer.cc",
     "patch_writer.h",
+    "reference_bytes_mixer.cc",
+    "reference_bytes_mixer.h",
     "rel32_finder.cc",
     "rel32_finder.h",
     "rel32_utils.cc",
@@ -53,6 +64,8 @@ static_library("zucchini_lib") {
     "suffix_array.h",
     "targets_affinity.cc",
     "targets_affinity.h",
+    "type_dex.h",
+    "type_elf.h",
     "type_win_pe.h",
     "typed_value.h",
     "zucchini.h",
@@ -111,28 +124,21 @@ if (is_win) {
   }
 }
 
-fuzzer_test("zucchini_patch_fuzzer") {
-  sources = [
-    "patch_fuzzer.cc",
-  ]
-  deps = [
-    ":zucchini_lib",
-    "//base",
-  ]
-  seed_corpus = "testdata/patch_fuzzer"
-}
-
 test("zucchini_unittests") {
   sources = [
+    "abs32_utils_unittest.cc",
     "address_translator_unittest.cc",
     "algorithm_unittest.cc",
+    "arm_utils_unittest.cc",
     "binary_data_histogram_unittest.cc",
     "buffer_sink_unittest.cc",
     "buffer_source_unittest.cc",
     "buffer_view_unittest.cc",
     "crc32_unittest.cc",
+    "disassembler_dex_unittest.cc",
     "element_detection_unittest.cc",
     "encoded_view_unittest.cc",
+    "ensemble_unittest.cc",
     "equivalence_map_unittest.cc",
     "image_index_unittest.cc",
     "image_utils_unittest.cc",
@@ -150,6 +156,8 @@ test("zucchini_unittests") {
     "test_disassembler.h",
     "test_reference_reader.cc",
     "test_reference_reader.h",
+    "test_utils.cc",
+    "test_utils.h",
     "typed_value_unittest.cc",
     "zucchini_apply_unittest.cc",
     "zucchini_gen_unittest.cc",
@@ -157,20 +165,6 @@ test("zucchini_unittests") {
 
   deps = [
     ":zucchini_io",
-    ":zucchini_lib",
-    "//base",
-    "//base/test:run_all_unittests",
-    "//base/test:test_support",
-    "//testing/gtest",
-  ]
-}
-
-test("zucchini_integration_test") {
-  sources = [
-    "integration_test.cc",
-  ]
-
-  deps = [
     ":zucchini_lib",
     "//base",
     "//base/test:run_all_unittests",
