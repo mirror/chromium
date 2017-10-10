@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93d2a663_38a134a5",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-10T21:29:56Z",
+      "side": 1,
+      "message": "Using the #define is fine for human-readable output but I need to be able to parse it later on.  For that reason, it\u0027s better to be explicit both here and there to guarantee compatibility across architectures and into the future.",
+      "parentUuid": "5d87d039_cc9dd48d",
+      "range": {
+        "startLine": 878,
+        "startChar": 60,
+        "endLine": 878,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "876fd767_eaaef732",
         "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3973a5b5_f2b0fc0e",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-10T21:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876fd767_eaaef732",
+      "range": {
+        "startLine": 176,
+        "startChar": 53,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8a5ce806_705b0a48",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-10T21:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8851bd_b7a7f846",
+      "range": {
+        "startLine": 182,
+        "startChar": 60,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e00dfc93_88d60f4f",
         "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314396ab_25fed8c8",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-10T21:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00dfc93_88d60f4f",
+      "range": {
+        "startLine": 202,
+        "startChar": 6,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
