@@ -176,8 +176,12 @@ class GFX_EXPORT RenderText {
   // On Mac, while selecting text if the cursor is outside the vertical text
   // bounds, drag to the end of the text.
   static constexpr bool kDragToEndIfOutsideVerticalBounds = true;
+  // Mac supports a selection that is "undirected". When undirected, the cursor
+  // doesn't know which end of the selection it's at until it first moves.
+  static constexpr bool kSelectionIsAlwaysDirected = false;
 #else
   static constexpr bool kDragToEndIfOutsideVerticalBounds = false;
+  static constexpr bool kSelectionIsAlwaysDirected = true;
 #endif
 
   // The character used for displaying obscured text. Use a bullet character.
@@ -287,10 +291,12 @@ class GFX_EXPORT RenderText {
   }
 
   const SelectionModel& selection_model() const { return selection_model_; }
-
   const Range& selection() const { return selection_model_.selection(); }
-
   size_t cursor_position() const { return selection_model_.caret_pos(); }
+
+  // Set the cursor to |position|, with the caret affinity trailing the previous
+  // grapheme, or if there is no previous grapheme, leading the cursor position.
+  // See SelectionModel::caret_affinity_ for details.
   void SetCursorPosition(size_t position);
 
   // Moves the cursor left or right. Cursor movement is visual, meaning that
@@ -306,13 +312,13 @@ class GFX_EXPORT RenderText {
   // Returns true if the cursor position or selection range changed.
   // If any index in |selection_model| is not a cursorable position (not on a
   // grapheme boundary), it is a no-op and returns false.
-  bool MoveCursorTo(const SelectionModel& selection_model);
+  bool SetSelection(const SelectionModel& selection);
 
   // Moves the cursor to the text index corresponding to |point|. If |select| is
   // true, a selection is made with the current selection start index. If the
   // resultant text indices do not lie on valid grapheme boundaries, it is a no-
   // op and returns false.
-  bool MoveCursorTo(const gfx::Point& point, bool select);
+  bool MoveCursorToPoint(const gfx::Point& point, bool select);
 
   // Set the selection_model_ based on |range|.
   // If the |range| start or end is greater than text length, it is modified
@@ -562,8 +568,11 @@ class GFX_EXPORT RenderText {
   SelectionModel LineSelectionModel(size_t line_index,
                                     gfx::VisualCursorDirection direction);
 
-  // Sets the selection model, the argument is assumed to be valid.
-  virtual void SetSelectionModel(const SelectionModel& model);
+  // Sets the selection model, |model| is assumed to be valid. If |key_directed|
+  // is provided, it indicates that the new |model| was from a directed keyboard
+  // input. See |has_directed_selection_|. Mouse inputs, clearing, or select all
+  // should pass false.
+  void SetSelectionModel(const SelectionModel& model, bool key_directed);
 
   // Get the visual bounds containing the logical substring within the |range|.
   // If |range| is empty, the result is empty. These bounds could be visually
@@ -654,12 +663,18 @@ class GFX_EXPORT RenderText {
  private:
   friend class test::RenderTextTestApi;
 
-  // Set the cursor to |position|, with the caret trailing the previous
-  // grapheme, or if there is no previous grapheme, leading the cursor position.
-  // If |select| is false, the selection start is moved to the same position.
-  // If the |position| is not a cursorable position (not on grapheme boundary),
-  // it is a NO-OP.
-  void MoveCursorTo(size_t position, bool select);
+  // Returns a SelectionModel for the *end* of the current selection, after
+  // resolving what direction the current selection should have. If the current
+  // selection is undirected, |direction| determines the new direction, which
+  // may cause the gfx::Range of the current selection to be reversed.
+  // If |clearing_selection| is true, any current direction is ignored: directed
+  // inputs that don't extend the selection always move to that end.
+  SelectionModel ResolveDirectedCursor(VisualCursorDirection direction,
+                                       bool clearing_selection);
+
+  // Performs an update to the current cursor position, which preserves or
+  // discards the directional state according to |key_directed|.
+  bool UpdateCursor(const SelectionModel& model, bool key_directed);
 
   // Updates |layout_text_| and |display_text_| as needed (or marks them dirty).
   void OnTextAttributeChanged();
@@ -722,6 +737,12 @@ class GFX_EXPORT RenderText {
   // Specifies whether the cursor is enabled. If disabled, no space is reserved
   // for the cursor when positioning text.
   bool cursor_enabled_;
+
+  // Whether the current selection has a known direction. That is, whether a
+  // directional input (e.g. arrow key) has been received for the current
+  // selection to indicate which end of the selection has the caret. When true,
+  // directed inputs preserve (rather than replace) the selection affinity.
+  bool has_directed_selection_;
 
   // The color used for drawing selected text.
   SkColor selection_color_;
