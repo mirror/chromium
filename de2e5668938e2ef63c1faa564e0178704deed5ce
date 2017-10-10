@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b71034e5_033e7663",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T15:19:15Z",
+      "side": 1,
+      "message": "nit: prefer empty line here to break this logical block from the next block",
+      "revId": "de2e5668938e2ef63c1faa564e0178704deed5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
