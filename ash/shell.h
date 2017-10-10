@@ -507,10 +507,12 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
-  // Toggles cursor compositing on/off. Native cursor is disabled when cursor
+  // Updates cursor compositing on/off. Native cursor is disabled when cursor
   // compositing is enabled, and vice versa.
-  void SetCursorCompositingEnabled(bool enabled);
+  void UpdateCursorCompositingEnabled(PrefService* prefs);
 
+  // Force setting compositing on/off without checking dependency.
+  void SetCursorCompositingEnabled(bool enabled);
 
   // Returns true if split view mode is active.
   bool IsSplitViewModeActive() const;
@@ -609,6 +611,11 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Destroys all child windows including widgets across all roots.
   void CloseAllRootWindowChildWindows();
+
+  // If at least one of the features that use cursor compositing is enabled, it
+  // should not be disabled. Future features that require cursor compositing
+  // should be added in this function.
+  bool ShouldEnableCursorCompositing(PrefService* prefs);
 
   // SystemModalContainerEventFilterDelegate:
   bool CanWindowReceiveEvents(aura::Window* window) override;

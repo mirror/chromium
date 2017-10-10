@@ -163,7 +163,7 @@ void AccessibilityController::UpdateLargeCursorFromPref() {
   ShellPort::Get()->SetCursorSize(
       large_cursor_enabled_ ? ui::CursorSize::kLarge : ui::CursorSize::kNormal);
   Shell::Get()->SetLargeCursorSizeInDip(large_cursor_size_in_dip_);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
+  Shell::Get()->UpdateCursorCompositingEnabled(prefs);
 }
 
 void AccessibilityController::UpdateHighContrastFromPref() {
@@ -190,7 +190,7 @@ void AccessibilityController::UpdateHighContrastFromPref() {
 
   // Under classic ash high contrast mode is handled internally.
   Shell::Get()->high_contrast_controller()->SetEnabled(enabled);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
+  Shell::Get()->UpdateCursorCompositingEnabled(prefs);
 }
 
 }  // namespace ash
