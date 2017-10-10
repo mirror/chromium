@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb714d56_88b9b0e9",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-10-10T23:23:15Z",
+      "side": 1,
+      "message": "Hm, you\u0027re probably right. I was thinking of catching ValueError and setting to False, but silently doing the wrong thing could potentially be worse than failing.",
+      "parentUuid": "130344ac_0ad7ec3e",
+      "revId": "c33556474f52e562bf54a7397c09790f3ecb955f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2f42e13_50eeb616",
         "filename": "tools/clang/scripts/update.py",
         "patchSetId": 3
