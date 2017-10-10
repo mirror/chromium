@@ -46,6 +46,30 @@
       "revId": "9c0ec54e33e5d02650eb00fb9469452da63dcfd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d35fcc1_6014f305",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-10T19:39:52Z",
+      "side": 0,
+      "message": "I created that patch here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/709947",
+      "parentUuid": "5e6b5b1f_d5d2c10e",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 36
+      },
+      "revId": "9c0ec54e33e5d02650eb00fb9469452da63dcfd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
