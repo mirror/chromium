@@ -49,9 +49,9 @@ int64_t TimestampUnroller::GetUnrolledTimestamp(int64_t timestamp) {
   // - possible overflows are not considered here since 64 bits on a 90kHz
   // timescale is way enough to represent several years of playback.
   int64_t previous_unrolled_time_high = (previous_unrolled_timestamp_ >> nbits);
-  int64_t time0 = ((previous_unrolled_time_high - 1) << nbits) | timestamp;
-  int64_t time1 = ((previous_unrolled_time_high + 0) << nbits) | timestamp;
-  int64_t time2 = ((previous_unrolled_time_high + 1) << nbits) | timestamp;
+  int64_t time1 = (previous_unrolled_time_high << nbits) | timestamp;
+  int64_t time0 = time1 - (1 << nbits);
+  int64_t time2 = time1 + (1 << nbits);
 
   // Select the min absolute difference with the current time
   // so as to ensure time continuity.
