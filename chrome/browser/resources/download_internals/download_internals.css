@@ -11,3 +11,31 @@ h1 {
 .status {
   font-size: 15px;
 }
+
+.service-entry-new {
+  background-color: rgba(242, 242, 242, 1)
+}
+
+.service-entry-available {
+  background-color: rgba(242, 242, 242, 1)
+}
+
+.service-entry-active {
+  background-color: rgba(214, 249, 245, 1)
+}
+
+.service-entry-paused {
+  background-color: rgba(240, 200, 125, 1)
+}
+
+.service-entry-success {
+  background-color: rgba(157, 239, 133, 1)
+}
+
+.service-entry-fail {
+  background-color: rgba(215, 180, 180, 1)
+}
+
+.service-entry-blocked {
+  background-color: rgba(239, 235, 133, 1)
+}
