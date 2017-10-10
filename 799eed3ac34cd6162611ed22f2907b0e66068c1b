@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e44c05f_6c964f2c",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-10T03:31:30Z",
+      "side": 1,
+      "message": "Yeah, that. :-)",
+      "revId": "799eed3ac34cd6162611ed22f2907b0e66068c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "207e4e4a_532ba023",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4298,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-10T03:31:30Z",
+      "side": 1,
+      "message": "optional: You could add a Reset() method to TestShelfController, which would avoid these counts. (It\u0027s unfortunate for this particular test that the counts don\u0027t start at 0, I presume from side effects of InitLauncherController.)",
+      "revId": "799eed3ac34cd6162611ed22f2907b0e66068c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
