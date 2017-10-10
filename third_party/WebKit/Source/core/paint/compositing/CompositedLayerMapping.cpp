@@ -486,17 +486,27 @@ void CompositedLayerMapping::UpdateCompositedBounds() {
 
 void CompositedLayerMapping::UpdateAfterPartResize() {
   if (GetLayoutObject().IsLayoutEmbeddedContent()) {
-    if (PaintLayerCompositor* inner_compositor =
-            PaintLayerCompositor::FrameContentsCompositor(
-                ToLayoutEmbeddedContent(GetLayoutObject()))) {
-      inner_compositor->FrameViewDidChangeSize();
-      // We can floor this point because our frameviews are always aligned to
-      // pixel boundaries.
-      DCHECK(composited_bounds_.Location() ==
-             FlooredIntPoint(composited_bounds_.Location()));
-      inner_compositor->FrameViewDidChangeLocation(
-          FlooredIntPoint(ContentsBox().Location()));
-    }
+      if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+        Document* document = ToHTMLFrameOwnerElement(
+            GetLayoutObject().GetNode())->contentDocument();
+        GraphicsLayer* document_layer = document->GetLayoutView()->
+            Layer()->GetCompositedLayerMapping()->MainGraphicsLayer();
+        LayoutPoint point = ContentsBox().Location();
+        FloatPoint location(point.X().ToFloat(), point.Y().ToFloat());
+        document_layer->SetPosition(location);
+      } else {
+        if (PaintLayerCompositor* inner_compositor =
+                PaintLayerCompositor::FrameContentsCompositor(
+                    ToLayoutEmbeddedContent(GetLayoutObject()))) {
+          inner_compositor->FrameViewDidChangeSize();
+          // We can floor this point because our frameviews are always aligned to
+          // pixel boundaries.
+          DCHECK(composited_bounds_.Location() ==
+                 FlooredIntPoint(composited_bounds_.Location()));
+          inner_compositor->FrameViewDidChangeLocation(
+              FlooredIntPoint(ContentsBox().Location()));
+        }
+      }
   }
 }
 
@@ -1095,6 +1105,7 @@ void CompositedLayerMapping::UpdateGraphicsLayerGeometry(
                              relative_compositing_bounds,
                              offset_from_composited_ancestor,
                              snapped_offset_from_composited_ancestor);
+
 
   IntPoint graphics_layer_parent_location;
   ComputeGraphicsLayerParentLocation(compositing_container,
