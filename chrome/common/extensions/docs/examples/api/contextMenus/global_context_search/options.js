@@ -1,0 +1,57 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+function createForm() {
+  let removed = []
+  chrome.storage.sync.get(['removedContextMenu'], function(list) {
+    if (list.removedContextMenu != null) {
+        list.removedContextMenu.forEach(function(object) {
+          removed.push(object)
+        })
+    } else {
+      removed.push('null')
+    }
+    let form = document.getElementById('form');
+    for (let key of Object.keys(countryLocales)) {
+      let div = document.createElement('div');
+      let checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = true;
+      for (var i=0; i<removed.length; i++){
+        console.log(key)
+        if(key === removed[i]) {
+          checkbox.checked = false;
+        }
+      }
+      checkbox.name = key;
+      checkbox.value = countryLocales[key];
+      let span = document.createElement('span');
+      span.textContent = countryLocales[key];
+      div.appendChild(checkbox);
+      div.appendChild(span);
+      form.appendChild(div);
+    }
+  });
+}
+
+createForm();
+
+document.getElementById('optionsSubmit').onclick = function() {
+  let checkboxes = document.getElementsByTagName('input');
+  let removed = [];
+    for(i=0; i<checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        chrome.contextMenus.create({
+          id: checkboxes[i].name,
+          type: 'normal',
+          title: checkboxes[i].value,
+          contexts: ['selection']
+        });
+      } else {
+          removed.push(checkboxes[i].name);
+        }
+      }
+  chrome.storage.sync.set({removedContextMenu: removed});
+  window.close()
+}
