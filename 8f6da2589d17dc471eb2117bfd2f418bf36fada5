@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "936b42e6_7072f55b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T23:42:19Z",
+      "side": 1,
+      "message": "The histogram code would put the data in an underflow/overflow bucket by default.  (Note that for percentile histograms, the underflow bucket is the first bucket, since it\u0027s assumed that percents don\u0027t really underflow.)\n\nChecking that the max is non-zero is probably a good idea indeed, as dividing by zero is no fun.  The other checks I\u0027m less sure about – I would kind of expect the Android APIs to guarantee sane output, but maybe I\u0027m being overly optimistic?",
+      "parentUuid": "31065cd6_41e0ff40",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8d0034d_c59ba9b9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7

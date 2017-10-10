@@ -39,6 +39,24 @@
       "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c3c5b2_b9d6e74e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T23:42:19Z",
+      "side": 1,
+      "message": "FWIW, there will be fewer buckets on the server this way, but I still partly agree: It\u0027s probably appropriate either to use a sparse histogram (recordSparseSlowlyHistogram) or to skip the rounding if using recordPercentageHistogram.",
+      "parentUuid": "510183ec_d1ba974e",
+      "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
