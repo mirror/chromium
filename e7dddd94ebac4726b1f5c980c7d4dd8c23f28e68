@@ -33,6 +33,24 @@
       "revId": "e7dddd94ebac4726b1f5c980c7d4dd8c23f28e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3953f80c_3070db03",
+        "filename": "chromeos/dbus/shill_client_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T03:59:49Z",
+      "side": 1,
+      "message": "Using DBusMethodCallback with an empty type (e.g. std::tuple\u003c\u003e or nullptr_t) is consistent with other callback types and it\u0027s template magic friendly (not sure if we\u0027re going to need this after all, though).\nThat being said, I agree that the most readable option is just having a callback with a single bool argument which indicates if the method call was successful or not.\n\nI\u0027ll be happy with either way.",
+      "parentUuid": "fc3f4ca9_9cfe1a3d",
+      "revId": "e7dddd94ebac4726b1f5c980c7d4dd8c23f28e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
