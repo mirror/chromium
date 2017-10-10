@@ -84,6 +84,11 @@ class ExportedTextureDeleter : public ui::CompositorObserver {
 struct FastInkView::Resource {
   Resource() {}
   ~Resource() {
+    // context_provider might be null in unit tests when ran with --mash
+    // TODO(kaznacheev) Have MASH provide a context provider for tests
+    // when crbug/772562 is fixed
+    if (!context_provider)
+      return;
     gpu::gles2::GLES2Interface* gles2 = context_provider->ContextGL();
     if (texture) {
       // We shouldn't delete exported textures.

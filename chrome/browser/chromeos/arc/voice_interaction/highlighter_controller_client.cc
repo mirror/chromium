@@ -4,11 +4,12 @@
 
 #include "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.h"
 
-#include "ash/highlighter/highlighter_controller.h"
-#include "ash/highlighter/highlighter_selection_observer.h"
-#include "ash/shell.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
+#include "content/public/common/service_manager_connection.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace arc {
 
@@ -18,15 +19,30 @@ constexpr int kSelectionReportDelayMs = 600;
 
 HighlighterControllerClient::HighlighterControllerClient(
     ArcVoiceInteractionFrameworkService* service)
-    : service_(service) {
-  ash::Shell::Get()->highlighter_controller()->SetObserver(this);
+    : binding_(this), service_(service) {}
+
+HighlighterControllerClient::~HighlighterControllerClient() = default;
+
+void HighlighterControllerClient::Attach() {
+  ConnectToHighlighterController();
+  ash::mojom::HighlighterControllerClientPtr client;
+  binding_.Bind(mojo::MakeRequest(&client));
+  highlighter_controller_->AttachClient(std::move(client));
 }
 
-HighlighterControllerClient::~HighlighterControllerClient() {
-  if (ash::Shell::HasInstance() &&
-      ash::Shell::Get()->highlighter_controller()) {
-    ash::Shell::Get()->highlighter_controller()->SetObserver(nullptr);
-  }
+void HighlighterControllerClient::Detach() {
+  highlighter_controller_->DetachClient();
+  binding_.Close();
+}
+
+void HighlighterControllerClient::ConnectToHighlighterController() {
+  // Tests may bind to their own HighlighterController.
+  if (highlighter_controller_)
+    return;
+
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &highlighter_controller_);
 }
 
 void HighlighterControllerClient::HandleSelection(const gfx::Rect& rect) {
@@ -39,8 +55,6 @@ void HighlighterControllerClient::HandleSelection(const gfx::Rect& rect) {
       false /* is_repeating */);
   delay_timer_->Reset();
 }
-
-void HighlighterControllerClient::HandleFailedSelection() {}
 
 void HighlighterControllerClient::HandleEnabledStateChange(bool enabled) {
   // ArcVoiceInteractionFrameworkService::HideMetalayer() causes the container
