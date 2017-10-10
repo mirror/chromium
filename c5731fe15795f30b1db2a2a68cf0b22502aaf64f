@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03451128_e8e19247",
+        "filename": "chrome/browser/chromeos/accessibility/magnification_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T17:36:51Z",
+      "side": 1,
+      "message": "+jamescook@\n\nWe\u0027re still calling ash from cros/accessibility. Will this be changed to mojo? If so, how does/will pref changes become visible in ash side?",
+      "revId": "c5731fe15795f30b1db2a2a68cf0b22502aaf64f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
