@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "41ebe904_e80dbf04",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:54:08Z",
+      "side": 1,
+      "message": "Yeah, I was kind of hoping things could move in that direction, but I guess it might not make sense for dedicated workers.\n\nI think I\u0027d rather just pass up the script origin, and then check on the browser side that it\u0027s same-origin to the current document or unique: then we can more easily audit the bits of \u0027interesting\u0027 state that are coming from the renderer in the future for things like site isolation. Does that sound OK to you?",
+      "parentUuid": "92a26b54_c135f2a7",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe8469b_60171346",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
         "patchSetId": 5
