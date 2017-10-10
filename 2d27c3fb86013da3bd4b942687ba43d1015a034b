@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50d2c797_de1b917a",
+        "filename": "services/ui/public/interfaces/ime/ime_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:39:39Z",
+      "side": 1,
+      "message": "This is mildly confusing to have a multi-line ifdef in the body of a function. Please move the define above the function (same commeont on line 225).",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 41
+      },
+      "revId": "2d27c3fb86013da3bd4b942687ba43d1015a034b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

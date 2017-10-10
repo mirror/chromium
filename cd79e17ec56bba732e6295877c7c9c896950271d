@@ -16,6 +16,24 @@
       "revId": "cd79e17ec56bba732e6295877c7c9c896950271d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6147b19_14d873a2",
+        "filename": "services/ui/public/interfaces/ime/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:39:39Z",
+      "side": 0,
+      "message": "ime.mojom directly includes from ui/gfx, so you shouldn\u0027t remove this dep.",
+      "parentUuid": "1166d5df_294b46ef",
+      "revId": "cd79e17ec56bba732e6295877c7c9c896950271d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
