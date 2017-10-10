@@ -12,6 +12,32 @@
  */
 var ServiceStatus;
 
+/**
+ * @typedef {{
+ *   client: string,
+ *   guid: string,
+ *   state: string,
+ *   url: string,
+ *   bytes_downloaded: number,
+ *   result: string,
+ *   driver: {{
+ *     state: string,
+ *     paused: boolean,
+ *     done: boolean
+ *   }}
+ * }}
+ */
+var ServiceEntry;
+
+/**
+ * @typedef {{
+ *   client: string,
+ *   guid: string,
+ *   result: string
+ * }}
+ */
+var ServiceRequest;
+
 cr.define('downloadInternals', function() {
   /** @interface */
   class DownloadInternalsBrowserProxy {
@@ -21,6 +47,13 @@ cr.define('downloadInternals', function() {
      *     status is fetched.
      */
     getServiceStatus() {}
+
+    /**
+     * Gets the current list of downloads the Download Service is aware of.
+     * @return {!Promise<ServiceEntry>} A promise firing when the list of
+     *     downloads is fetched.
+     */
+    getServiceDownloads() {}
   }
 
   /**
@@ -30,6 +63,11 @@ cr.define('downloadInternals', function() {
     /** @override */
     getServiceStatus() {
       return cr.sendWithPromise('getServiceStatus');
+    }
+
+    /** @override */
+    getServiceDownloads() {
+      return cr.sendWithPromise('getServiceDownloads');
     }
   }
 
