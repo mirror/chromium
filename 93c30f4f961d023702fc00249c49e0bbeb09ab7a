@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a24ad90_4edf8e91",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-10T17:57:43Z",
+      "side": 1,
+      "message": "Sure. I\u0027ve removed them.",
+      "parentUuid": "1f9e5249_6e77a7d1",
+      "revId": "93c30f4f961d023702fc00249c49e0bbeb09ab7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8d757d7_2b36d142",
         "filename": "chrome/browser/custom_handlers/protocol_handler_registry.h",
         "patchSetId": 32
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T06:29:16Z",
       "side": 1,
       "message": "Nit: Cleck should be Check.",
+      "revId": "93c30f4f961d023702fc00249c49e0bbeb09ab7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaec7535_ccb9b859",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-10T17:57:43Z",
+      "side": 1,
+      "message": "Done. Sorry for the typo.",
+      "parentUuid": "c8d757d7_2b36d142",
       "revId": "93c30f4f961d023702fc00249c49e0bbeb09ab7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
