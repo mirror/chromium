@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d3f5a73_f518eb69",
+        "filename": "ui/events/ozone/evdev/touch_evdev_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-10-10T20:23:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616793bd_84bdb44d",
+      "revId": "7725263b83ec1faf5e5d9c07f7c51c9cdfeaaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb943833_80297688",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "7725263b83ec1faf5e5d9c07f7c51c9cdfeaaea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0297745d_951eeb0b",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-10-10T20:23:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb943833_80297688",
+      "range": {
+        "startLine": 807,
+        "startChar": 37,
+        "endLine": 807,
+        "endChar": 66
+      },
+      "revId": "7725263b83ec1faf5e5d9c07f7c51c9cdfeaaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
