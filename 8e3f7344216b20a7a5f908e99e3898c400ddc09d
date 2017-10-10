@@ -33,6 +33,24 @@
       "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0ac409_f96d9d69",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T16:47:35Z",
+      "side": 1,
+      "message": "Since SetProcessDPIAware isn\u0027t documented to check the last error, we really shouldn\u0027t be checking it. It will give the impression to readers that it is set. If we do get a value, it won\u0027t be clear what that means.\n\nNow, if this does change in the docs in the future, we can check the last error then, but this is unlikely to happen as all of the DPI updates are happening in SetProcessDpiAwareness.",
+      "parentUuid": "8219ada0_6a0326a4",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
