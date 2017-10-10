@@ -197,6 +197,11 @@ IPC_STRUCT_TRAITS_BEGIN(content::FrameOwnerProperties)
   IPC_STRUCT_TRAITS_MEMBER(required_csp)
 IPC_STRUCT_TRAITS_END()
 
+IPC_STRUCT_TRAITS_BEGIN(content::FramePolicy)
+  IPC_STRUCT_TRAITS_MEMBER(sandbox_flags)
+  IPC_STRUCT_TRAITS_MEMBER(container_policy)
+IPC_STRUCT_TRAITS_END()
+
 IPC_STRUCT_TRAITS_BEGIN(content::PageImportanceSignals)
   IPC_STRUCT_TRAITS_MEMBER(had_form_interaction)
 IPC_STRUCT_TRAITS_END()
@@ -433,11 +438,10 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::FrameReplicationState)
   IPC_STRUCT_TRAITS_MEMBER(origin)
-  IPC_STRUCT_TRAITS_MEMBER(sandbox_flags)
   IPC_STRUCT_TRAITS_MEMBER(name)
   IPC_STRUCT_TRAITS_MEMBER(unique_name)
   IPC_STRUCT_TRAITS_MEMBER(feature_policy_header)
-  IPC_STRUCT_TRAITS_MEMBER(container_policy)
+  IPC_STRUCT_TRAITS_MEMBER(frame_policy)
   IPC_STRUCT_TRAITS_MEMBER(accumulated_csp_headers)
   IPC_STRUCT_TRAITS_MEMBER(scope)
   IPC_STRUCT_TRAITS_MEMBER(insecure_request_policy)
@@ -560,8 +564,7 @@ IPC_STRUCT_BEGIN(FrameHostMsg_CreateChildFrame_Params)
   IPC_STRUCT_MEMBER(blink::WebTreeScopeType, scope)
   IPC_STRUCT_MEMBER(std::string, frame_name)
   IPC_STRUCT_MEMBER(std::string, frame_unique_name)
-  IPC_STRUCT_MEMBER(blink::WebSandboxFlags, sandbox_flags)
-  IPC_STRUCT_MEMBER(content::ParsedFeaturePolicyHeader, container_policy)
+  IPC_STRUCT_MEMBER(content::FramePolicy, frame_policy)
   IPC_STRUCT_MEMBER(content::FrameOwnerProperties, frame_owner_properties)
 IPC_STRUCT_END()
 
@@ -848,9 +851,7 @@ IPC_MESSAGE_ROUTED1(FrameMsg_Collapse, bool /* collapsed */)
 
 // Notifies the frame that its parent has changed the frame's sandbox flags or
 // container policy.
-IPC_MESSAGE_ROUTED2(FrameMsg_DidUpdateFramePolicy,
-                    blink::WebSandboxFlags,
-                    content::ParsedFeaturePolicyHeader)
+IPC_MESSAGE_ROUTED1(FrameMsg_DidUpdateFramePolicy, content::FramePolicy)
 
 // Update a proxy's window.name property.  Used when the frame's name is
 // changed in another process.
@@ -1144,10 +1145,12 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_DidChangeName,
                     std::string /* name */,
                     std::string /* unique_name */)
 
-// Notifies the browser process that a non-empty Feature-Policy HTTP header was
-// delivered with the document being loaded into the frame. |parsed_header| is
-// a list of an origin whitelist for each feature in the policy.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_DidSetFeaturePolicyHeader,
+// Notifies the browser process that HTTP headers which affect the frame
+// polices were delivered with the document being lodaded into the frame. This
+// can be either or both of 'Feature-Policy' or 'Content-Security-Policy' (which
+// can set sandbox flags).
+IPC_MESSAGE_ROUTED2(FrameHostMsg_DidSetFramePolicyHeaders,
+                    blink::WebSandboxFlags,
                     content::ParsedFeaturePolicyHeader /* parsed_header */)
 
 // Notifies the browser process about a new Content Security Policy that needs
@@ -1221,11 +1224,10 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidChangeOpener, int /* opener_routing_id */)
 
 // Notifies the browser that sandbox flags or container policy have changed for
 // a subframe of this frame.
-IPC_MESSAGE_ROUTED3(
+IPC_MESSAGE_ROUTED2(
     FrameHostMsg_DidChangeFramePolicy,
     int32_t /* subframe_routing_id */,
-    blink::WebSandboxFlags /* updated_flags */,
-    content::ParsedFeaturePolicyHeader /* updated container policy */)
+    content::FramePolicy /* updated sandbox flags and container policy */)
 
 // Notifies the browser that frame owner properties have changed for a subframe
 // of this frame.

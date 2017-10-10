@@ -887,8 +887,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAccessInitialDocument)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeOpener, OnDidChangeOpener)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeName, OnDidChangeName)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFeaturePolicyHeader,
-                        OnDidSetFeaturePolicyHeader)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFramePolicyHeaders,
+                        OnDidSetFramePolicyHeaders)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidAddContentSecurityPolicies,
                         OnDidAddContentSecurityPolicies)
     IPC_MESSAGE_HANDLER(FrameHostMsg_EnforceInsecureRequestPolicy,
@@ -1149,10 +1149,8 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   // policy, since it is being created as part of the navigation that will
   // commit it. (I.e., the RenderFrame needs to know the policy to use when
   // initializing the new document once it commits).
-  params->replication_state.sandbox_flags =
-      frame_tree_node()->pending_sandbox_flags();
-  params->replication_state.container_policy =
-      frame_tree_node()->pending_container_policy();
+  params->replication_state.frame_policy =
+      frame_tree_node()->pending_frame_policy();
 
   params->frame_owner_properties =
       FrameOwnerProperties(frame_tree_node()->frame_owner_properties());
@@ -1305,8 +1303,7 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     blink::WebTreeScopeType scope,
     const std::string& frame_name,
     const std::string& frame_unique_name,
-    blink::WebSandboxFlags sandbox_flags,
-    const ParsedFeaturePolicyHeader& container_policy,
+    const FramePolicy& frame_policy,
     const FrameOwnerProperties& frame_owner_properties) {
   // TODO(lukasza): Call ReceivedBadMessage when |frame_unique_name| is empty.
   DCHECK(!frame_unique_name.empty());
@@ -1319,8 +1316,8 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     return;
 
   frame_tree_->AddFrame(frame_tree_node_, GetProcess()->GetID(), new_routing_id,
-                        scope, frame_name, frame_unique_name, sandbox_flags,
-                        container_policy, frame_owner_properties);
+                        scope, frame_name, frame_unique_name, frame_policy,
+                        frame_owner_properties);
 }
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
@@ -2173,11 +2170,13 @@ void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
   delegate_->DidChangeName(this, name);
 }
 
-void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
+void RenderFrameHostImpl::OnDidSetFramePolicyHeaders(
+    blink::WebSandboxFlags sandbox_flags,
     const ParsedFeaturePolicyHeader& parsed_header) {
   frame_tree_node()->SetFeaturePolicyHeader(parsed_header);
   ResetFeaturePolicy();
   feature_policy_->SetHeaderPolicy(parsed_header);
+  frame_tree_node()->UpdateActiveSandboxFlags(sandbox_flags);
 }
 
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(
@@ -2226,8 +2225,7 @@ FrameTreeNode* RenderFrameHostImpl::FindAndVerifyChild(
 
 void RenderFrameHostImpl::OnDidChangeFramePolicy(
     int32_t frame_routing_id,
-    blink::WebSandboxFlags flags,
-    const ParsedFeaturePolicyHeader& container_policy) {
+    const FramePolicy& frame_policy) {
   // Ensure that a frame can only update sandbox flags or feature policy for its
   // immediate children.  If this is not the case, the renderer is considered
   // malicious and is killed.
@@ -2237,8 +2235,7 @@ void RenderFrameHostImpl::OnDidChangeFramePolicy(
   if (!child)
     return;
 
-  child->SetPendingSandboxFlags(flags);
-  child->SetPendingContainerPolicy(container_policy);
+  child->SetPendingFramePolicy(frame_policy);
 
   // Notify the RenderFrame if it lives in a different process from its parent.
   // The frame's proxies in other processes also need to learn about the updated
@@ -2248,7 +2245,7 @@ void RenderFrameHostImpl::OnDidChangeFramePolicy(
   RenderFrameHost* child_rfh = child->current_frame_host();
   if (child_rfh->GetSiteInstance() != GetSiteInstance()) {
     child_rfh->Send(new FrameMsg_DidUpdateFramePolicy(child_rfh->GetRoutingID(),
-                                                      flags, container_policy));
+                                                      frame_policy));
   }
 }
 
@@ -4047,7 +4044,9 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
   const FeaturePolicy* parent_policy =
       parent_frame_host ? parent_frame_host->feature_policy() : nullptr;
   ParsedFeaturePolicyHeader container_policy =
-      frame_tree_node()->effective_container_policy();
+      frame_tree_node()
+          ->current_replication_state()
+          .frame_policy.container_policy;
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
 }

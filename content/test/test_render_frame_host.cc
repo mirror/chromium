@@ -97,8 +97,7 @@ TestRenderFrameHost* TestRenderFrameHost::AppendChild(
   std::string frame_unique_name = base::GenerateGUID();
   OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
                      blink::WebTreeScopeType::kDocument, frame_name,
-                     frame_unique_name, blink::WebSandboxFlags::kNone,
-                     ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                     frame_unique_name, FramePolicy(), FrameOwnerProperties());
   return static_cast<TestRenderFrameHost*>(
       child_creation_observer_.last_created_frame());
 }
@@ -275,7 +274,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFeaturePolicyHeader(header);
+  OnDidSetFramePolicyHeaders(blink::WebSandboxFlags::kNone, header);
 }
 
 void TestRenderFrameHost::SendNavigate(int nav_entry_id,

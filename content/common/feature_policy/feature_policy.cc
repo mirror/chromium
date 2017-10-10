@@ -84,6 +84,16 @@ bool FeaturePolicy::Whitelist::Contains(const url::Origin& origin) const {
   return false;
 }
 
+FramePolicy::FramePolicy()
+    : sandbox_flags(blink::WebSandboxFlags::kNone), container_policy({}) {}
+FramePolicy::FramePolicy(blink::WebSandboxFlags sandbox_flags,
+                         const ParsedFeaturePolicyHeader& container_policy)
+    : sandbox_flags(sandbox_flags), container_policy(container_policy) {}
+FramePolicy::FramePolicy(const FramePolicy& lhs)
+    : sandbox_flags(lhs.sandbox_flags),
+      container_policy(lhs.container_policy) {}
+FramePolicy::~FramePolicy() {}
+
 // static
 std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
     const FeaturePolicy* parent_policy,

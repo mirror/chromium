@@ -56,8 +56,8 @@ class RenderFrameHostFeaturePolicyTest
                                      const std::vector<std::string>& origins) {
     RenderFrameHost* current = *rfh;
     SimulateNavigation(&current, current->GetLastCommittedURL());
-    static_cast<TestRenderFrameHost*>(current)->OnDidSetFeaturePolicyHeader(
-        CreateFPHeader(feature, origins));
+    static_cast<TestRenderFrameHost*>(current)->OnDidSetFramePolicyHeaders(
+        blink::WebSandboxFlags::kNone, CreateFPHeader(feature, origins));
     *rfh = current;
   }
 
@@ -66,8 +66,8 @@ class RenderFrameHostFeaturePolicyTest
                           blink::WebFeaturePolicyFeature feature,
                           const std::vector<std::string>& origins) {
     static_cast<TestRenderFrameHost*>(parent)->OnDidChangeFramePolicy(
-        child->GetRoutingID(), blink::WebSandboxFlags(),
-        CreateFPHeader(feature, origins));
+        child->GetRoutingID(),
+        {blink::WebSandboxFlags::kNone, CreateFPHeader(feature, origins)});
   }
 
   void SimulateNavigation(RenderFrameHost** rfh, const GURL& url) {

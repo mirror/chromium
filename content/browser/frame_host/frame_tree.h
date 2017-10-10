@@ -127,8 +127,7 @@ class CONTENT_EXPORT FrameTree {
                 blink::WebTreeScopeType scope,
                 const std::string& frame_name,
                 const std::string& frame_unique_name,
-                blink::WebSandboxFlags sandbox_flags,
-                const ParsedFeaturePolicyHeader& container_policy,
+                const FramePolicy& frame_policy,
                 const FrameOwnerProperties& frame_owner_properties);
 
   // Removes a frame from the frame tree. |child|, its children, and objects

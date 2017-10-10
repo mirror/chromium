@@ -134,8 +134,7 @@ class FrameTreeNodeBlameContextTest : public RenderViewHostImplTestHarness {
       tree()->AddFrame(node, process_id(), child_id,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        base::StringPrintf("uniqueName%d", child_id),
-                       blink::WebSandboxFlags::kNone,
-                       ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                       FramePolicy(), FrameOwnerProperties());
       FrameTreeNode* child = node->child_at(child_num - 1);
       consumption += CreateSubframes(child, child_id, shape + consumption);
     }

@@ -274,8 +274,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                           blink::WebTreeScopeType scope,
                           const std::string& frame_name,
                           const std::string& frame_unique_name,
-                          blink::WebSandboxFlags sandbox_flags,
-                          const ParsedFeaturePolicyHeader& container_policy,
+                          const FramePolicy& frame_policy,
                           const FrameOwnerProperties& frame_owner_properties);
 
   // Update this frame's last committed origin.
@@ -764,7 +763,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
-  void OnDidSetFeaturePolicyHeader(
+  void OnDidSetFramePolicyHeaders(
+      blink::WebSandboxFlags sandbox_flags,
       const ParsedFeaturePolicyHeader& parsed_header);
 
   // A new set of CSP |policies| has been added to the document.
@@ -773,10 +773,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
   void OnUpdateToUniqueOrigin(bool is_potentially_trustworthy_unique_origin);
-  void OnDidChangeFramePolicy(
-      int32_t frame_routing_id,
-      blink::WebSandboxFlags flags,
-      const ParsedFeaturePolicyHeader& container_policy);
+  void OnDidChangeFramePolicy(int32_t frame_routing_id,
+                              const FramePolicy& frame_policy);
   void OnDidChangeFrameOwnerProperties(int32_t frame_routing_id,
                                        const FrameOwnerProperties& properties);
   void OnUpdateTitle(const base::string16& title,
