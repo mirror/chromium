@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2456ef1f_0d849086",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-10T01:27:47Z",
+      "side": 1,
+      "message": "Can you be specific: \"to avoid the profiler thread\u0027s destruction racing with main thread destruction.\"\n\n(and in the destructor documentation)",
+      "range": {
+        "startLine": 98,
+        "startChar": 57,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29221b1_2ce079fd",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-10T01:27:47Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e4c5f9_5e18580d",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-10T01:27:47Z",
+      "side": 1,
+      "message": "This class is essentially dedicated to setting up profiling of main thread startup, so probably should be called something like MainThreadStackSamplingProfiler. base::StackSamplingProfiler is already a scoped stack sampling profiler, so \u0027ScopedStackSamplingProfiler\u0027 doesn\u0027t differentiate its behavior from that class.\n\nAlso, please call out early in the comment that this is intended for main thread startup.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
