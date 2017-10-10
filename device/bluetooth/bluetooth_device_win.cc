@@ -11,6 +11,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "device/bluetooth/bluetooth_adapter_win.h"
+#include "device/bluetooth/bluetooth_gatt_connection.h"
 #include "device/bluetooth/bluetooth_remote_gatt_service_win.h"
 #include "device/bluetooth/bluetooth_service_record_win.h"
 #include "device/bluetooth/bluetooth_socket_thread.h"
@@ -100,8 +101,7 @@ bool BluetoothDeviceWin::IsConnected() const {
 }
 
 bool BluetoothDeviceWin::IsGattConnected() const {
-  NOTIMPLEMENTED();
-  return false;
+  return gatt_connected_;
 }
 
 bool BluetoothDeviceWin::IsConnectable() const {
@@ -214,8 +214,7 @@ void BluetoothDeviceWin::ConnectToServiceInsecurely(
 void BluetoothDeviceWin::CreateGattConnection(
       const GattConnectionCallback& callback,
       const ConnectErrorCallback& error_callback) {
-  // TODO(armansito): Implement.
-  error_callback.Run(ERROR_UNSUPPORTED_DEVICE);
+  callback.Run(base::MakeUnique<BluetoothGattConnection>(adapter_, address_));
 }
 
 const BluetoothServiceRecordWin* BluetoothDeviceWin::GetServiceRecord(
@@ -233,6 +232,7 @@ bool BluetoothDeviceWin::IsEqual(
       bluetooth_class_ != device_state.bluetooth_class ||
       visible_ != device_state.visible ||
       connected_ != device_state.connected ||
+      gatt_connected_ != device_state.connected ||
       paired_ != device_state.authenticated) {
     return false;
   }
@@ -273,6 +273,11 @@ void BluetoothDeviceWin::Update(
   bluetooth_class_ = device_state.bluetooth_class;
   visible_ = device_state.visible;
   connected_ = device_state.connected;
+  if (!device_state.is_bluetooth_classic()) {
+    // If the device is not GATT connected, Windows will automatically
+    // reconnect.
+    gatt_connected_ = true;
+  }
   paired_ = device_state.authenticated;
   UpdateServices(device_state);
 }
@@ -383,6 +388,7 @@ void BluetoothDeviceWin::UpdateGattServices(
     }
   }
 
+  SetGattServicesDiscoveryComplete(true);
   adapter_->NotifyGattServicesDiscovered(this);
 }
 
