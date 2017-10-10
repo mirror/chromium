@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c33731cb_a5e92cd9",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "nit: This exactly matches the MessageOptions struct. It seems natural to do this:\n\nMessageOptions params;\n// set params.channel_name, params_out, etc.\n*params_out \u003d std::move(params);\nreturn SUCCESS;\n\ninstead.",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ddb42a_c983beb6",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "Even if you don\u0027t want the gin conversion logic (which doesn\u0027t exactly match what you want here), gin::Dictionary can help a little here:\n\ngin::Dictionary options(isolate, v8_options);\nif (!options.Get(\"includeTlsChannelId\", \u0026v8_include_tls_channel_id)) ||\n    (check_for_channel_name \u0026\u0026 !options.Get(\"name\", \u0026v8_channel_name))) {\n  // ...\n}\n\nSecondly: if you\u0027re just going to immediately rethrow all the time, you don\u0027t need to catch at all here; you could just leave the exception to the next handler up. (Then you don\u0027t need this TryCatch at all.)",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e149baa8_608d8d05",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "If it\u0027s \"unsuccessful\", shouldn\u0027t we tell the caller? Or is it fine to continue?",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbdddc0_19423042",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "This operation is more or less pop_back, right? You could do it on the vector itself, or if you don\u0027t want to modify it (because you want to allow for simply returning to abort), what about doing this:\n\nbase::span\u003cconst v8::Local\u003cv8::Value\u003e\u003e arguments \u003d *arguments_out;\nif (arguments.empty())\n  return;\n\nv8::Local\u003cv8::Value\u003e target_id \u003d v8::Null(isolate);\nv8::Local\u003cv8::Value\u003e message \u003d v8::Null(isolate);\nv8::Local\u003cv8::Value\u003e options \u003d v8::Null(isolate);\nv8::Local\u003cv8::Value\u003e response_callback \u003d v8::Null(isolate);\n\n// If the last argument is a function, it is the response callback.\n// Ignore it for the purposes of further argument parsing.\nif (!arguments.empty() \u0026\u0026 (*arguments.rbegin())-\u003eIsFunction()) {\n  response_callback \u003d *arguments.rbegin();\n  arguments \u003d arguments.first(arguments.size() - 1);\n}\n\nswitch (arguments.size()) {\n  case 0:\n    // Required argument (message) is missing.\n    // Early-out and rely on normal signature parsing to report this error.\n    return;\n  case 1:\n    // Argument must be the message.\n    message \u003d arguments[0];\n    break;\n  case 2:\n    // Assume the meaning is (id, message) if id would be a string.\n    // Otherwise the meaning is (message, options).\n    if (arguments[0]-\u003eIsString()) {\n      target_id \u003d arguments[0];\n      message \u003d arguments[1];\n    } else {\n      message \u003d arguments[0];\n      options \u003d arguments[1];\n    }\n    break;\n  case 3:\n    // The meaning in this case is unambiguous.\n    target_id \u003d arguments[0];\n    message \u003d arguments[1];\n    options \u003d arguments[2];\n    break;\n  default:\n    NOTREACHED();\n}\n\n*arguments_out \u003d {target_id, message, options, response_callback};\n\nIs this equivalent to the present logic? (I think it is, in which case I think it\u0027s clearer. But I\u0027m not 100% certain.)",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f5b71d_eb0106d0",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "nit: \"static const\"? (the compiler might notice anyway, but for the humans)\n\nYou also don\u0027t have to name the struct if you don\u0027t use the name anywhere. (I usually just say \"static const struct {\" for this pattern.)",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e52c394_b3818c16",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T19:50:16Z",
+      "side": 1,
+      "message": "Do we know that the ScriptContext isn\u0027t torn down by now? Based on our recent discussion, it seems ScriptContext dies in the WillReleaseScriptContext callback, but script can keep objects alive and invoke functions as long as it pleases (e.g. by grabbing an object reference to a same-origin frame and then navigating that frame).\n\nI don\u0027t presently see (but may have forgotten about) a check earlier for this case.\n\nIf not, this DCHECK is invalid.",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
