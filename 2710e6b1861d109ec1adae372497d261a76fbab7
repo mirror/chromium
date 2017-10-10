@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81185488_476e3457",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-10T18:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "022f13b2_0db559ec",
+      "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e3c71d8_9eccfc57",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T19:32:28Z",
       "side": 1,
       "message": "optional nit: define a utility method to get current indicator type.",
+      "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc3feba_d4ff7f22",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-10T18:45:31Z",
+      "side": 1,
+      "message": "i actually did this in a follow up cl, so i\u0027ll leave this one unchanged for now :-)",
+      "parentUuid": "9e3c71d8_9eccfc57",
       "revId": "2710e6b1861d109ec1adae372497d261a76fbab7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
