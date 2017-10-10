@@ -240,6 +240,7 @@ vs-chromium-project.txt
 /tools/luci-go/win64/isolate.exe
 # See third_party/.gitignore for entries covering src/third_party.
 /tools/.bisect-builds-cache.json
+/tools/cygprofile/*.wprgo
 /tools/distcc
 /tools/gn/bin/linux
 /tools/gn/bin/mac
