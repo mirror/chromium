@@ -16,6 +16,24 @@
       "revId": "a23e3f0fe055f533f03ca405ae0d1ceb3bc040de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dec787_7067592e",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/filtered_events_after_restart/sw.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-10T17:19:07Z",
+      "side": 1,
+      "message": "Good idea, added the check.",
+      "parentUuid": "b690daaf_98bb8dbb",
+      "revId": "a23e3f0fe055f533f03ca405ae0d1ceb3bc040de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
