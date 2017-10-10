@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7368565a_6307a631",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-10T20:56:15Z",
+      "side": 1,
+      "message": "This container will make sure the window pop up will be displayed in front and show changes as commented here: https://cs.chromium.org/chromium/src/ash/public/cpp/shell_window_ids.h?type\u003dcs\u0026q\u003dkShellWindowId_SettingBubbleContainer\u0026sq\u003dpackage:chromium\u0026l\u003d109",
+      "parentUuid": "8df0dc1a_e6ebd9db",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 56
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf95eeea_5a086593",
         "filename": "ui/chromeos/BUILD.gn",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-09T16:14:28Z",
       "side": 1,
       "message": "This is not the same thing as GetDsiplayNearestWindow.",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 56
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd406022_e638b5f4",
+        "filename": "ui/chromeos/ime/candidate_window_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-10T20:56:15Z",
+      "side": 1,
+      "message": "I agree this solution is not optimal, unless we have more information beside |bounds| to identify the active display.",
+      "parentUuid": "580403fc_4677856d",
       "range": {
         "startLine": 68,
         "startChar": 38,
