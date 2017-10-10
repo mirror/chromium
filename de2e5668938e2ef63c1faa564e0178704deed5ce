@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39c89f62_bc1052cd",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T15:26:50Z",
+      "side": 1,
+      "message": "Ah good point, +1 for unit test if possible",
+      "parentUuid": "0686354e_080343dd",
+      "revId": "de2e5668938e2ef63c1faa564e0178704deed5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71034e5_033e7663",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 5
