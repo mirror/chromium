@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d7e791a_e4991375",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-10T20:24:01Z",
+      "side": 1,
+      "message": "Do you think that \"pause and resume\" is clear enough?  Since this is related to the machine going in and out of standby, I wonder if folks will realize that or if they might confuse this with playing and pausing an audio stream (e.g. when hitting pause).",
+      "range": {
+        "startLine": 2279,
+        "startChar": 25,
+        "endLine": 2279,
+        "endChar": 30
+      },
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
