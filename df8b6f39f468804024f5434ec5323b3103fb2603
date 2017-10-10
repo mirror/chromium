@@ -22,6 +22,30 @@
       "revId": "df8b6f39f468804024f5434ec5323b3103fb2603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76090ad_6e42e9a1",
+        "filename": "components/download/internal/debugging_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T18:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3746b53d_36a0d5d9",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "df8b6f39f468804024f5434ec5323b3103fb2603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
