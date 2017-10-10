@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fd4223c_b17e6372",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-10T16:14:22Z",
+      "side": 1,
+      "message": "Yup, changed it, but \"git cl format\" split it again.",
+      "parentUuid": "8ce04ec2_d97fec16",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 52
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f68fa68b_9c81fe4d",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T15:18:58Z",
       "side": 1,
       "message": "activity.getTabModelSelector().getTotalTabCount()?",
+      "range": {
+        "startLine": 172,
+        "startChar": 42,
+        "endLine": 172,
+        "endChar": 99
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a363c23_737b763a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-10T16:14:22Z",
+      "side": 1,
+      "message": "Oops, missed that.",
+      "parentUuid": "f68fa68b_9c81fe4d",
       "range": {
         "startLine": 172,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "828183a9_e962d226",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-10T16:14:22Z",
+      "side": 1,
+      "message": "Yes, but we won\u0027t report actual tab count, which might be useful (considering the history of flakiness of this test).",
+      "parentUuid": "6749980d_6f9583e9",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "965b361f_dc26d315",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999660ab_106d2c2f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-10T16:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965b361f_dc26d315",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
