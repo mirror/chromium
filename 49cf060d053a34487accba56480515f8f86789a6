@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c55ce2c_61e46c20",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-10T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9617b78e_f57c299a",
+      "revId": "49cf060d053a34487accba56480515f8f86789a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1180b0d4_6b95ed47",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "49cf060d053a34487accba56480515f8f86789a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b71c1f0_e59c3b85",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-10T08:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1180b0d4_6b95ed47",
+      "revId": "49cf060d053a34487accba56480515f8f86789a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
