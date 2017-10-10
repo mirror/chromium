@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38959ec5_3f76d58e",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-10T23:41:26Z",
+      "side": 1,
+      "message": "this could also be:\n// Hide TLS option if the network is shared, and shared state cannot be changed.\nif (shareNetwork \u0026\u0026 (guid || !shareAllowEnable))\n\nbut I think it\u0027s fine either way",
+      "revId": "967d36a5f27ef0d195e8f25eca7a1c48c77ca5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
