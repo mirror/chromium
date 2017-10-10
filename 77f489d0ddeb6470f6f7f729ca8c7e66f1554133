@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1e7e3f4b_48cb7cbb",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-10T22:26:36Z",
+      "side": 1,
+      "message": "It\u0027s difficult to speculate as to how the Gecko results would look if they had \u0027width\u0027 and \u0027height\u0027 as presentation attributes in these cases, but with this patch we should at least align with WebKit. The question mark is the TODO I added in the code - which is also the reason I raised the GH issue. I guess we can call that reasonably concluded on the \"computed\" vs \"used\" value front, so with that fixed I can adjust the test to reflect that, as well as move it to WPT. (Also, FWIW, Edge appears to be using a form of used value already, since they seem to return \"0px\" for \u0027width\u0027 and \u0027height\u0027 when the initial value ought to be \"auto\" - so they obviously resolved \"auto\" to \"0px\".)",
+      "parentUuid": "7c83c8b6_82296ee3",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf626da8_85ef39e9",
         "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
         "patchSetId": 4
@@ -100,6 +118,24 @@
       "writtenOn": "2017-10-10T21:09:08Z",
       "side": 1,
       "message": "Can you help me understand this TODO? Is this the reason for the tests of rect/text/etc being not as comprehensive? Would 772707 be the bug tracking bug for this?",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6dc392_691f989a",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-10T22:26:36Z",
+      "side": 1,
+      "message": "This is the reason I raised the GH issue, so this was intended to be revisited when that had reached some form of consensus. Regardless though, it seemed like a decent idea to change this in phases. We can use 772707 to track this, or file a new one. (I\u0027ll add a bug ref here when that is decided.)",
+      "parentUuid": "646090cc_7bb24313",
       "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
