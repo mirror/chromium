@@ -16,6 +16,24 @@
       "revId": "a9caaf2e2ae50740af286360109a5f72f2807438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae108cab_f4279bc4",
+        "filename": "third_party/leveldatabase/leveldb_exports.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T20:35:50Z",
+      "side": 1,
+      "message": "This file no longer exists, but I added this to the internal CL 169976543",
+      "parentUuid": "d9d19d3c_baf8c20f",
+      "revId": "a9caaf2e2ae50740af286360109a5f72f2807438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
