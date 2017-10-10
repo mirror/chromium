@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -29,6 +30,11 @@
 #include "net/base/network_delegate.h"
 #include "net/url_request/url_request_redirect_job.h"
 #include "ui/base/l10n/l10n_util.h"
+
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#include "chrome/installer/util/shell_util.h"
+#endif
 
 using content::BrowserThread;
 using content::ChildProcessSecurityPolicy;
@@ -259,6 +265,17 @@ void ProtocolHandlerRegistry::Delegate::RegisterWithOSAsDefaultClient(
       ->StartSetAsDefault();
 }
 
+void ProtocolHandlerRegistry::Delegate::CleckDefaultClientWithOS(
+    const std::string& protocol,
+    ProtocolHandlerRegistry* registry) {
+  // The worker pointer is reference counted. While it is running, the
+  // sequence it runs on will hold references it will be automatically freed
+  // once all its tasks have finished.
+  base::MakeRefCounted<shell_integration::DefaultProtocolClientWorker>(
+      registry->GetDefaultWebClientCallback(protocol), protocol)
+      ->StartCheckIsDefault();
+}
+
 // ProtocolHandlerRegistry -----------------------------------------------------
 
 ProtocolHandlerRegistry::ProtocolHandlerRegistry(
@@ -409,8 +426,7 @@ void ProtocolHandlerRegistry::InitProtocolSettings() {
   if (ShouldRemoveHandlersNotInOS()) {
     for (ProtocolHandlerMap::const_iterator p = default_handlers_.begin();
          p != default_handlers_.end(); ++p) {
-      ProtocolHandler handler = p->second;
-      delegate_->RegisterWithOSAsDefaultClient(handler.protocol(), this);
+      delegate_->CleckDefaultClientWithOS(p->second.protocol(), this);
     }
   }
 }
