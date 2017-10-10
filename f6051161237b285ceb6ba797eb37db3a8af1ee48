@@ -70,6 +70,30 @@
       "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba50afc_717cc8da",
+        "filename": "extensions/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T21:46:57Z",
+      "side": 0,
+      "message": "Correct :(  We have clobber options for some trybots, but not a win64.",
+      "parentUuid": "d7874abb_d76f0f74",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 36
+      },
+      "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
