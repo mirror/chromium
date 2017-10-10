@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8378ba54_3c38fb1e",
+        "filename": "base/pending_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T04:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b40dab_15a7ae43",
+      "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7cb47a_e3761a25",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacea374_efe6438c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T04:30:59Z",
+      "side": 1,
+      "message": "This is TaskQueue::PostedTask, not base::PendingTask. Did you mean we should add default arguments to PostedTask? I tend to be against that since PostedTask is just a simple data carrier.",
+      "parentUuid": "ba7cb47a_e3761a25",
+      "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
