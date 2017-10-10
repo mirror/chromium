@@ -16,6 +16,40 @@
       "revId": "64c92959b687d5c1f62995eb47d43f6a029cc4ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d347133d_448ca4cd",
+        "filename": "chromecast/base/file_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-10T22:59:23Z",
+      "side": 1,
+      "message": "I think these changes are unnecessary now since this file isn\u0027t compiled on Fuchsia (and Fuchsia doesn\u0027t have file locking, so it wouldn\u0027t make a ton of sense anyway)",
+      "revId": "64c92959b687d5c1f62995eb47d43f6a029cc4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500eedb1_813f270f",
+        "filename": "chromecast/net/network_change_notifier_factory_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-10T22:59:23Z",
+      "side": 1,
+      "message": "We should have a TODO with a link to a crbug for the port so we can track down places we need to do more work for Fuchsia",
+      "revId": "64c92959b687d5c1f62995eb47d43f6a029cc4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
