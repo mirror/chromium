@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b47b2a_bca11a4e",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:36:23Z",
+      "side": 1,
+      "message": "(optional as it could be outside scope of this patch) could we just convert this to std::map now and use a nice C++11 ranged based for loop? Also I don\u0027t think we need std::unique_ptr for these callbacks.",
+      "revId": "ffdf0d262a2d6d7e75be80658fc335fa539b2282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
