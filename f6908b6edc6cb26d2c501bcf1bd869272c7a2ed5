@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1139e67f_8bce9e00",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T23:35:22Z",
+      "side": 1,
+      "message": "It\u0027s conceptually better to just leave the pref unassigned here, and handle this case in the code that uses the pref. Because the code here is just a converter, which shouldn\u0027t know much about interpretation of the policy values, including the default behavior.\n\nHaving said that, there are already several counterexamples across this file - therefore won\u0027t be blocking on this change.",
+      "range": {
+        "startLine": 596,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 63
+      },
+      "revId": "f6908b6edc6cb26d2c501bcf1bd869272c7a2ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
