@@ -13,6 +13,18 @@ config("freetype_config") {
     "include",
     "src/include",
   ]
+
+  defines = [
+    # Long directory name to avoid accidentally using wrong headers.
+    # GN currently does not escape '<' and '>' when generating xml based Visual
+    # Studio project files. As a result, use quotes instead of pointy brackets
+    # in these defines.
+    "FT_CONFIG_CONFIG_H=\"freetype-custom-config/ftconfig.h\"",
+  ]
+
+  if (is_mac && !is_component_build) {
+    defines += [ "MAC_RESTRICT_VISIBILITY" ]
+  }
 }
 
 config("freetype-warnings") {
@@ -108,19 +120,11 @@ source_set("freetype_source") {
     sources += [ "src/src/base/ftsynth.c" ]
   }
 
-  if (is_mac && !is_component_build) {
-    defines += [ "MAC_RESTRICT_VISIBILITY" ]
-  }
-
   defines += [
     "FT2_BUILD_LIBRARY",
-    "DARWIN_NO_CARBON",
 
-    # Long directory name to avoid accidentally using wrong headers.
-    # GN currently does not escape '<' and '>' when generating xml based Visual
-    # Studio project files. As a result, use quotes instead of pointy brackets
-    # in these defines.
-    "FT_CONFIG_CONFIG_H=\"freetype-custom-config/ftconfig.h\"",
+    # These headers are only included from within freetype's sources. Thus,
+    # these defines don't need to be part of freetype_config.  
     "FT_CONFIG_MODULES_H=\"freetype-custom-config/ftmodule.h\"",
     "FT_CONFIG_OPTIONS_H=\"freetype-custom-config/ftoption.h\"",
   ]
