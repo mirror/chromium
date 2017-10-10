@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c77e01be_c08c762c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T00:27:15Z",
+      "side": 1,
+      "message": "Oops - my mistake!",
+      "parentUuid": "4021fe36_5d75b23c",
+      "range": {
+        "startLine": 515,
+        "startChar": 4,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57d882f7_efd01a04",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 2
