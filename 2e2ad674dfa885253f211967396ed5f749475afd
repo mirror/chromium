@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "a48960d3_51bd2fb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-10-10T08:15:28Z",
+      "side": 1,
+      "message": "+1 for Patrick\u0027s answer.",
+      "parentUuid": "e1cf6c86_42650a11",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
