@@ -16,6 +16,24 @@
       "revId": "deaa110c492ecb5511bddc2360652191b7ed4e63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77c70ae_a25f089d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:49:02Z",
+      "side": 1,
+      "message": "When we use \"|bar1\", \"bar2\" becomes kInside and \"bar1\" is kEnd.\nIt seems SPAN@0 and \"|bar1\" are different in LayoutSelection.\n\nAs you mentioned in the patch[1], we should avoid to have\n|end_offset \u003d\u003d 0| in |MarkEnd()|.\n\nNote: SetSelectionTextToBody() can\u0027t set selection to SPAN@0 in\nthis case.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/644649/35/third_party/WebKit/Source/core/editing/LayoutSelection.cpp#504",
+      "parentUuid": "19faa231_abd8bc30",
+      "revId": "deaa110c492ecb5511bddc2360652191b7ed4e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
