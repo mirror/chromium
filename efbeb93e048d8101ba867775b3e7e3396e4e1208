@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "228ebbb8_1758f210",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T06:52:14Z",
+      "side": 1,
+      "message": "Let\u0027s follow the spec[1]. It seems we don\u0027t need to exclude editable\nnode.\n\n[1] https://html.spec.whatwg.org/multipage/dnd.html#immediate-user-selection",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0598e782_616e6e48",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T06:52:14Z",
+      "side": 1,
+      "message": "Could you introduce FlatTreeTraversal::InclusiveAncestorsOf) and\nuse range based for-statement?\n\nSee the patch[1] introduced FlatTreeTraversal::ChildrenOf()\n\n[1] http://crrev.com/c/695044: Introduce FlatTreeTraversal::ChildrenOf()",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1287d59f_e80d22fd",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T06:52:14Z",
+      "side": 1,
+      "message": "Do we really need to traverse flat tree? It seems the spec[1] doesn\u0027t\nmention about flat tree to check \"draggable\" attribute.\n\n[1] https://html.spec.whatwg.org/multipage/dnd.html#drag-and-drop-processing-model",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82fb9260_23375a2f",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
