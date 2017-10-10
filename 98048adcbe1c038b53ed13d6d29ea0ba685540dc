@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a4c82f_95d037e9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:26:08Z",
+      "side": 1,
+      "message": "`static const char* kTimeToActionHistogramName[] \u003d ...`",
+      "revId": "98048adcbe1c038b53ed13d6d29ea0ba685540dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311e7ae7_da651b94",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:26:08Z",
+      "side": 1,
+      "message": "Would it make sense to try to imitate the base/metrics/histogram_macros.h time macros (UMA_HISTOGRAM_MEDIUM_TIMES sounds like a good pick)?",
+      "revId": "98048adcbe1c038b53ed13d6d29ea0ba685540dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5a62d7_67f13ae2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31605,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:26:08Z",
+      "side": 1,
+      "message": "Do we care about what was done with the menu as in if it was dismissed or if an action was taken? One way to do that would be to have TimeToAction and TimeToDismiss with TimeToAction being recorded when a click is received and TimeToDismiss when SetIsWanted(false) is called while time_shown_ isn\u0027t null. Would that make sense?",
+      "revId": "98048adcbe1c038b53ed13d6d29ea0ba685540dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
