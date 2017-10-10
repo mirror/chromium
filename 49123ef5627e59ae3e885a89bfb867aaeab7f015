@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41fe5034_dc0fbb86",
+        "filename": "content/browser/tracing/background_memory_tracing_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-10T17:36:31Z",
+      "side": 1,
+      "message": "nit: newline above",
+      "revId": "49123ef5627e59ae3e885a89bfb867aaeab7f015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca354eab_b37327aa",
+        "filename": "content/browser/tracing/background_memory_tracing_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-10T17:36:31Z",
+      "side": 1,
+      "message": "nit: auto (like in the test below).",
+      "revId": "49123ef5627e59ae3e885a89bfb867aaeab7f015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
