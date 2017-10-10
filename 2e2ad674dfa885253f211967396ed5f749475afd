@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db58f879_d6713f08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-10-10T07:56:53Z",
+      "side": 1,
+      "message": "\u003e By the way, how do you think if a change is created by FindIt but someone else pushes a new patch set to it? The change can still meet condition 1-.\n\nI might be wrong, but IIUC when someone else pushes a new patch set to a revert change created by Findit, Findit\u0027s change is not any more a pure revert of the reverted change referred to by the revert_of field, and as a result it is not submittable.",
+      "parentUuid": "b032f492_2f5a1311",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
