@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0188341_d87d0754",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-10T00:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047d0578_771f588f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a3591fa_37056396",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4021fe36_5d75b23c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-10T00:17:00Z",
+      "side": 1,
+      "message": "This is why I added a call for timer_-\u003eStop() below. In your example, step 3 would conclude with the timer being stopped. I have verified on a real device that only one enum of the metric is logged on session start. I also previously added a test to ensure this timer is canceled -- see TestBluetoothNotPresent_FalsePositive.",
+      "parentUuid": "1a3591fa_37056396",
+      "range": {
+        "startLine": 515,
+        "startChar": 4,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c0bfcfc2_a0900298",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-10T00:17:00Z",
+      "side": 1,
+      "message": "Much better :p, done. Moved this documentation to the method body, PTAL.",
+      "parentUuid": "57d882f7_efd01a04",
+      "range": {
+        "startLine": 197,
+        "startChar": 7,
+        "endLine": 197,
+        "endChar": 64
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a882982_c52b73c8",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "29710674_92644b7c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-10T00:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a882982_c52b73c8",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 73
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f71948f0_35014d39",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf062d77_58466347",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-10T00:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f71948f0_35014d39",
+      "range": {
+        "startLine": 326,
+        "startChar": 16,
+        "endLine": 326,
+        "endChar": 17
+      },
+      "revId": "df652faff5aa399e30215cc06fde729dc452e0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
