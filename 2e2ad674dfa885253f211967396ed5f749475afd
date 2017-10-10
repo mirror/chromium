@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "e1cf6c86_42650a11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1171339
+      },
+      "writtenOn": "2017-10-10T08:12:47Z",
+      "side": 1,
+      "message": "See my previous comment :)",
+      "parentUuid": "d125a3bb_7235e399",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
