@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48cc67d8_7708e5a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 62223,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-10T23:54:45Z",
+      "side": 1,
+      "message": "add enum\u003d\"BooleanEnabled\"",
+      "range": {
+        "startLine": 62223,
+        "startChar": 54,
+        "endLine": 62223,
+        "endChar": 55
+      },
+      "revId": "dc90f45f26b48f422b36c1d393eebbbeaaa15b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
