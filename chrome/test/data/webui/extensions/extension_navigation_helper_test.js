@@ -8,6 +8,7 @@ cr.define('extension_navigation_helper_tests', function() {
     Basic: 'basic',
     Conversions: 'conversions',
     PushAndReplaceState: 'push and replace state',
+    SupportedRoutes: 'supported routes'
   };
 
   /**
@@ -161,6 +162,28 @@ cr.define('extension_navigation_helper_tests', function() {
       extensions.navigation.updateHistory(
           {page: Page.DETAILS, extensionId: id2});
       expectEquals(++expectedLength, history.length);
+    });
+
+    test(assert(TestNames.SupportedRoutes), function() {
+      function testRouteSupport(url, supported) {
+        var f = supported ? expectTrue : expectFalse;
+        history.pushState({}, '', url);
+        f(extensions.navigation.isRouteSupported());
+      }
+
+      loadTimeData.overrideValues({isGuest: false});
+      testRouteSupport('chrome://extensions/', true);
+      testRouteSupport('chrome://extensions/shortcuts', true);
+      testRouteSupport('chrome://extensions/apps', true);
+      testRouteSupport('chrome://extensions/fake-route', false);
+      // Test trailing slash works.
+      testRouteSupport('chrome://extensions/shortcuts/', true);
+
+      loadTimeData.overrideValues({isGuest: true});
+      testRouteSupport('chrome://extensions/', true);
+      testRouteSupport('chrome://extensions/shortcuts', false);
+      testRouteSupport('chrome://extensions/apps', false);
+      testRouteSupport('chrome://extensions/fake-route', false);
     });
   });
 

@@ -133,6 +133,11 @@ cr.define('extensions', function() {
 
     /** @override */
     created: function() {
+      if (!extensions.navigation.isRouteSupported()) {
+        location.pathname = '/';
+        return;
+      }
+
       this.readyPromiseResolver = new PromiseResolver();
     },
 
