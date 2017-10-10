@@ -80,10 +80,10 @@ class CORE_EXPORT WorkerGlobalScope
   KURL CompleteURL(const String&) const;
 
   // WorkerOrWorkletGlobalScope
-  void EvaluateClassicScript(const KURL& script_url,
-                             String source_code,
-                             std::unique_ptr<Vector<char>> cached_meta_data,
-                             V8CacheOptions) override;
+  void EvaluateClassicScript(
+      const KURL& script_url,
+      String source_code,
+      std::unique_ptr<Vector<char>> cached_meta_data) override;
   bool IsClosing() const final { return closing_; }
   virtual void Dispose();
   WorkerThread* GetThread() const final { return thread_; }
@@ -154,6 +154,7 @@ class CORE_EXPORT WorkerGlobalScope
  protected:
   WorkerGlobalScope(const KURL&,
                     const String& user_agent,
+                    V8CacheOptions,
                     WorkerThread*,
                     double time_origin,
                     std::unique_ptr<SecurityOrigin::PrivilegeData>,
@@ -163,10 +164,6 @@ class CORE_EXPORT WorkerGlobalScope
       const ContentSecurityPolicyResponseHeaders&);
   void ApplyContentSecurityPolicyFromVector(
       const Vector<CSPHeaderAndType>& headers);
-
-  void SetV8CacheOptions(V8CacheOptions v8_cache_options) {
-    v8_cache_options_ = v8_cache_options;
-  }
 
   // ExecutionContext
   void ExceptionThrown(ErrorEvent*) override;
@@ -210,7 +207,7 @@ class CORE_EXPORT WorkerGlobalScope
 
   const KURL url_;
   const String user_agent_;
-  V8CacheOptions v8_cache_options_;
+  const V8CacheOptions v8_cache_options_;
   std::unique_ptr<WorkerSettings> worker_settings_;
 
   mutable Member<WorkerLocation> location_;

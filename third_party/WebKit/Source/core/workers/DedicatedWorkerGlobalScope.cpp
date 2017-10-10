@@ -49,8 +49,9 @@ DedicatedWorkerGlobalScope* DedicatedWorkerGlobalScope::Create(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     double time_origin) {
   DedicatedWorkerGlobalScope* context = new DedicatedWorkerGlobalScope(
-      creation_params->script_url, creation_params->user_agent, thread,
-      time_origin, std::move(creation_params->starter_origin_privilege_data),
+      creation_params->script_url, creation_params->user_agent,
+      creation_params->v8_cache_options, thread, time_origin,
+      std::move(creation_params->starter_origin_privilege_data),
       creation_params->worker_clients);
   context->ApplyContentSecurityPolicyFromVector(
       *creation_params->content_security_policy_parsed_headers);
@@ -66,6 +67,7 @@ DedicatedWorkerGlobalScope* DedicatedWorkerGlobalScope::Create(
 DedicatedWorkerGlobalScope::DedicatedWorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
+    V8CacheOptions v8_cache_options,
     DedicatedWorkerThread* thread,
     double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
@@ -73,6 +75,7 @@ DedicatedWorkerGlobalScope::DedicatedWorkerGlobalScope(
     WorkerClients* worker_clients)
     : WorkerGlobalScope(url,
                         user_agent,
+                        v8_cache_options,
                         thread,
                         time_origin,
                         std::move(starter_origin_privilege_data),
