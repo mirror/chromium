@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "949b0b7f_a4333f51",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T21:24:36Z",
+      "side": 1,
+      "message": "Ah. Just realized I forgot to type one case: the case where four non-callback arguments are provided:\n\ncase 4:\n  // Too many arguments. Early-out and rely on normal signature parsing to report this error.\n  return;\n\nWe can NOTREACHED in every other case due to the \u003e4u check you have at the beginning. :)",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3959c479_a1f02f36",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T21:24:36Z",
+      "side": 1,
+      "message": "missing file; maybe should be extensions/renderer/native_extension_bindings_system_test_base.h?",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccff4896_f4e16639",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T21:24:36Z",
+      "side": 1,
+      "message": "super-nit: you quote both here and below; single-quote are unnecessary here",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd895452_60419618",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T21:24:36Z",
+      "side": 1,
+      "message": "nit: Passing no arguments is so common, maybe it\u0027s worth having overloads that take two parameters and fill in 0 and nullptr for the last two, just to avoid the noise all over the tests? Not urgent.",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
