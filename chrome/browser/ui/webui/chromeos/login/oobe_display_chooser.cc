@@ -55,6 +55,8 @@ void OobeDisplayChooser::TryToPlaceUiOnTouchDisplay() {
       display::Screen::GetScreen()->GetPrimaryDisplay();
 
   if (primary_display.is_valid() && !TouchSupportAvailable(primary_display)) {
+    LOG(ERROR) << "Primary display: " << primary_display.id();
+    LOG(ERROR) << "Does not have touch support!";
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&OobeDisplayChooser::MaybeMoveToTouchDisplay,
@@ -67,6 +69,7 @@ void OobeDisplayChooser::MaybeMoveToTouchDisplay() {
       ui::InputDeviceManager::GetInstance();
   if (input_device_manager->AreDeviceListsComplete() &&
       input_device_manager->AreTouchscreenTargetDisplaysValid()) {
+    LOG(ERROR) << "Move to touch display now!";
     MoveToTouchDisplay();
   } else if (!scoped_observer_.IsObserving(input_device_manager)) {
     scoped_observer_.Add(input_device_manager);
@@ -75,15 +78,18 @@ void OobeDisplayChooser::MaybeMoveToTouchDisplay() {
 
 void OobeDisplayChooser::MoveToTouchDisplay() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
+  LOG(ERROR) << "Moving to touch displya";
   scoped_observer_.RemoveAll();
 
   const ui::InputDeviceManager* input_device_manager =
       ui::InputDeviceManager::GetInstance();
   for (const ui::TouchscreenDevice& device :
        input_device_manager->GetTouchscreenDevices()) {
+    LOG(ERROR) << "Looking at device: " << device.id
+               << " with target display: " << device.target_display_id;
     if (IsWhiteListedVendorId(device.vendor_id) &&
         device.target_display_id != display::kInvalidDisplayId) {
+      LOG(ERROR) << "now changing primary display";
       ash::Shell::Get()->window_tree_host_manager()->SetPrimaryDisplayId(
           device.target_display_id);
       break;

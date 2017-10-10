@@ -1380,8 +1380,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNonTouchDisplay) {
   bool success = DisplayInfoProvider::Get()->StartCustomTouchCalibration(
       id, &error);
 
-  ASSERT_FALSE(success);
-  EXPECT_EQ(expected_err, error);
+  ASSERT_TRUE(success);
 }
 
 TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
