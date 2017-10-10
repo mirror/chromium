@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676ca950_f5857a9a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-10T23:08:28Z",
+      "side": 1,
+      "message": "The try bots hit this DCHECK now even though the condition hasn\u0027t changed.",
+      "range": {
+        "startLine": 196,
+        "startChar": 16,
+        "endLine": 196,
+        "endChar": 20
+      },
+      "revId": "e9ada3a66592d592387b96196e922145116ff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
