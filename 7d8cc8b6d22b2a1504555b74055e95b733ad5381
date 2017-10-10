@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d43645e1_8c1a3f66",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-10T13:55:29Z",
+      "side": 1,
+      "message": "Thanks, done!",
+      "parentUuid": "4e7b0900_5d76c92f",
+      "range": {
+        "startLine": 955,
+        "startChar": 4,
+        "endLine": 955,
+        "endChar": 26
+      },
+      "revId": "7d8cc8b6d22b2a1504555b74055e95b733ad5381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a996221e_eba4c3c8",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "7d8cc8b6d22b2a1504555b74055e95b733ad5381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9756382_d1774620",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-10T13:55:29Z",
+      "side": 1,
+      "message": "Thanks, fixed.",
+      "parentUuid": "a996221e_eba4c3c8",
+      "range": {
+        "startLine": 304,
+        "startChar": 22,
+        "endLine": 304,
+        "endChar": 38
+      },
+      "revId": "7d8cc8b6d22b2a1504555b74055e95b733ad5381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
