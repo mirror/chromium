@@ -15,7 +15,12 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
+
+namespace base {
+class SingleThreadTaskRunner;
+}
 
 namespace blink {
 class WebServiceWorkerRegistrationProxy;
@@ -37,8 +42,10 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
     : public blink::WebServiceWorkerRegistration,
       public base::RefCounted<WebServiceWorkerRegistrationImpl> {
  public:
+  // |binding_task_runner| is used to bind |registration_object_host_|.
   explicit WebServiceWorkerRegistrationImpl(
-      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
+      scoped_refptr<base::SingleThreadTaskRunner> binding_task_runner_);
 
   void SetInstalling(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
   void SetWaiting(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
@@ -101,8 +108,30 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
 
   void RunQueuedTasks();
 
+  void OnUpdated(std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks,
+                 blink::mojom::ServiceWorkerErrorType error,
+                 const base::Optional<std::string>& error_msg);
+
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info_;
   blink::WebServiceWorkerRegistrationProxy* proxy_;
+
+  // In case of service worker clients contexts(document, shared worker,
+  // dedicated worker), is bound and used on the main thread.
+  //
+  // In case of service worker execution context, is bound on the IO thread and
+  // used on the worker thread. The reason why we do not bind it also on the
+  // worker thread is that the legacy IPC channel-associated interfaces
+  // specifically are not usable on any thread other than the main thread or the
+  // IO thread, so we binds it on the IO thread now to keep ordering with other
+  // messages sent via |ServiceWorkerDispatcher::thread_safe_sender_|.
+  // TODO(leonhsl): Once we can detach this interface out from the legacy IPC
+  // channel-associated interfaces world, we should bind it always on the worker
+  // thread on which |this| lives.
+  //
+  // Although it is a scoped_refptr, the only one owner is |this|.
+  scoped_refptr<
+      blink::mojom::ThreadSafeServiceWorkerRegistrationObjectHostAssociatedPtr>
+      registration_object_host_;
 
   std::vector<QueuedTask> queued_tasks_;
 
