@@ -57,6 +57,31 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
     AGGREGATED_REQUEST_RESULT_MAX
   };
 
+  // This enum is used for UMA reporting. It is used to tell a UI location from
+  // which an offline page is launched.
+  // NOTE: because this is used for UMA reporting, these values should not be
+  // changed or reused; new values should be ended immediately before the MAX
+  // value. Make sure to update the histogram enum (OfflinePagesAcessEntryPoint
+  // in histograms.xml) accordingly.
+  enum class AccessEntryPoint {
+    // Launched from the NTP suggestions.
+    NTP_SUGGESTIONS,
+    // Launched from Downloads home.
+    DOWNLOADS,
+    // Launched from the omnibox.
+    OMNIBOX,
+    // Launched from Chrome Custom Tabs.
+    CCT,
+    // Launched due to clicking a link in a page.
+    LINK,
+    // Launched due to hitting the reload button or hitting enter in the
+    // omnibox.
+    RELOAD,
+    // Any other cases not listed above.
+    OTHERS,
+    MAX
+  };
+
   // Delegate that allows tests to overwrite certain behaviors.
   class Delegate {
    public:
@@ -97,7 +122,8 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
   void OnSeekComplete(int64_t result) override;
   void OnReadComplete(net::IOBuffer* buf, int result) override;
 
-  void OnOfflineFilePathAvailable(const base::FilePath& offline_file_path);
+  void OnOfflineFilePathAvailable(const std::string& name_space,
+                                  const base::FilePath& offline_file_path);
   void OnOfflineRedirectAvailabe(const GURL& redirected_url);
 
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
@@ -115,6 +141,8 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
 
   // Restarts the request job in order to fall back to the default handling.
   void FallbackToDefault();
+
+  AccessEntryPoint GetAccessEntryPoint() const;
 
   std::unique_ptr<Delegate> delegate_;
 
