@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95d9b988_1c96e5b2",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T23:44:51Z",
+      "side": 1,
+      "message": "Disagree; it gets used twice in the following line.",
+      "parentUuid": "1883ac1b_57ec2bf4",
+      "revId": "e76098fa83b199caa28d91a4bae10948ab7c5775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8f44e41_cb2abb8a",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e76098fa83b199caa28d91a4bae10948ab7c5775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5861a95a_ed0f62e6",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T23:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f44e41_cb2abb8a",
+      "revId": "e76098fa83b199caa28d91a4bae10948ab7c5775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
