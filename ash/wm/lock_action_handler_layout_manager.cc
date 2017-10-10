@@ -11,6 +11,7 @@
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller.h"
+#include "ash/system/lock_screen_action/lock_screen_action_background_controller_impl.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_window_state.h"
@@ -18,11 +19,19 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "base/bind.h"
+#include "base/command_line.h"
+#include "chromeos/chromeos_switches.h"
 #include "ui/wm/core/window_animations.h"
 
 namespace ash {
 
 namespace {
+
+// Returns true if the md-based login/lock UI is enabled.
+bool IsUsingMdLogin() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kShowMdLogin);
+}
 
 bool ShowChildWindows(mojom::TrayActionState action_state,
                       LockScreenActionBackgroundState background_state) {
@@ -37,10 +46,17 @@ LockActionHandlerLayoutManager::LockActionHandlerLayoutManager(
     aura::Window* window,
     Shelf* shelf)
     : LockLayoutManager(window, shelf),
-      action_background_controller_(
-          std::make_unique<LockScreenActionBackgroundControllerStub>()),
       tray_action_observer_(this),
       action_background_observer_(this) {
+  if (IsUsingMdLogin()) {
+    action_background_controller_ =
+        std::make_unique<LockScreenActionBackgroundControllerImpl>();
+  } else {
+    action_background_controller_ =
+        std::make_unique<LockScreenActionBackgroundControllerStub>();
+  }
+  action_background_controller_->SetParentWindow(window);
+
   TrayAction* tray_action = Shell::Get()->tray_action();
   tray_action_observer_.Add(tray_action);
   action_background_observer_.Add(action_background_controller_.get());
