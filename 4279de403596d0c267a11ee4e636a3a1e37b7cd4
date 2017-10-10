@@ -593,6 +593,30 @@
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb24b90_151f3f1c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-10T18:35:58Z",
+      "side": 1,
+      "message": "I talked with Charlie today and a high-level bit of information is that guest view is associated with a separate storage partition - therefore a Chrome Web Store loaded inside the guest view would not be able to interact with the main profile / install things in the main profile.  Therefore relaxing the kills for guest view (and ignoring CWS in this case) seems okay.",
+      "parentUuid": "6685754f_a3ed0c9b",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
