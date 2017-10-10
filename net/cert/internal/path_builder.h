@@ -26,34 +26,51 @@ struct GeneralizedTime;
 class CertPathIter;
 class CertIssuerSource;
 
-// CertPath describes a chain of certificates in the "forward" direction.
+// Base class for custom data that CertPathBuilderDelegate can attach to paths.
+class NET_EXPORT CertPathBuilderDelegateData {
+ public:
+  virtual ~CertPathBuilderDelegateData() {}
+};
+
+// Represents a single candidate path that was built or is being processed.
 //
-// By convention:
-//   certs[0] is the target certificate
-//   certs[i] was issued by certs[i+1]
-//   certs.back() is the root certificate.
+// This is used both to represent valid paths, as well as invalid/partial ones.
+// Consumers must test |errors.IsValid()|.
 //
-// Note that the final certificate may or may not be a trust achor -- inspect
+// Note that the final certificate may or may not be a trust anchor -- inspect
 // |last_cert_trust| to determine it (or use GetTrustedCert())
-struct NET_EXPORT CertPath {
-  CertPath();
-  ~CertPath();
+struct NET_EXPORT CertPathBuilderResultPath {
+  CertPathBuilderResultPath();
+  ~CertPathBuilderResultPath();
+
+  // Returns true if the candidate path is valid, false otherwise.
+  bool IsValid() const;
+
+  // Returns the chain's root certificate or nullptr if the chain doesn't
+  // chain to a trust anchor.
+  const ParsedCertificate* GetTrustedCert() const;
+
+  // Path in the forward direction:
+  //
+  //   certs[0] is the target certificate
+  //   certs[i] was issued by certs[i+1]
+  //   certs.back() is the root certificate.
+  ParsedCertificateList certs;
 
   // Contains information on whether certs.back() is trusted.
   CertificateTrust last_cert_trust;
 
-  // Path in the forward direction (see class description).
-  ParsedCertificateList certs;
+  // The set of policies that the certificate is valid for (of the
+  // subset of policies user requested during verification).
+  std::set<der::Input> user_constrained_policy_set;
 
-  // Resets the path to empty path (same as if default constructed).
-  void Clear();
+  // Slot for per-path data that may set by CertPathBuilderDelegate. The
+  // specific type is chosen by the delegate. Can be nullptr when unused.
+  std::unique_ptr<CertPathBuilderDelegateData> delegate_data;
 
-  // TODO(eroman): Can we remove this? Unclear on how this relates to validity.
-  bool IsEmpty() const;
-
-  // Returns the chain's root certificate or nullptr if the chain doesn't chain
-  // to a trust anchor.
-  const ParsedCertificate* GetTrustedCert() const;
+  // The errors/warnings from this path. Use |IsValid()| to determine if the
+  // path is valid.
+  CertPathErrors errors;
 };
 
 // CertPathBuilderDelegate controls policies for certificate verification and
@@ -65,8 +82,7 @@ class NET_EXPORT CertPathBuilderDelegate
   // been run through RFC 5280 verification. |path| may already have errors
   // and warnings set on it. Delegates can "reject" a candidate path from path
   // building by adding high severity errors.
-  virtual void CheckPathAfterVerification(const CertPath& path,
-                                          CertPathErrors* errors) = 0;
+  virtual void CheckPathAfterVerification(CertPathBuilderResultPath* path) = 0;
 };
 
 // Checks whether a certificate is trusted by building candidate paths to trust
@@ -77,28 +93,6 @@ class NET_EXPORT CertPathBuilderDelegate
 // before using it.
 class NET_EXPORT CertPathBuilder {
  public:
-  // Represents a single candidate path that was built.
-  struct NET_EXPORT ResultPath {
-    ResultPath();
-    ~ResultPath();
-
-    // Returns true if the candidate path is valid, false otherwise.
-    bool IsValid() const;
-
-    // The (possibly partial) certificate path. Consumers must always test
-    // |errors.IsValid()| before using |path|. When invalid,
-    // |path.trust_anchor| may be null, and the path may be incomplete.
-    CertPath path;
-
-    // The set of policies that the certificate is valid for (of the
-    // subset of policies user requested during verification).
-    std::set<der::Input> user_constrained_policy_set;
-
-    // The errors/warnings from this path. Use |IsValid()| to determine if the
-    // path is valid.
-    CertPathErrors errors;
-  };
-
   // Provides the overall result of path building. This includes the paths that
   // were attempted.
   struct NET_EXPORT Result {
@@ -108,15 +102,15 @@ class NET_EXPORT CertPathBuilder {
     // Returns true if there was a valid path.
     bool HasValidPath() const;
 
-    // Returns the ResultPath for the best valid path, or nullptr if there
-    // was none.
-    const ResultPath* GetBestValidPath() const;
+    // Returns the CertPathBuilderResultPath for the best valid path, or nullptr
+    // if there was none.
+    const CertPathBuilderResultPath* GetBestValidPath() const;
 
     // Resets to the initial value.
     void Clear();
 
     // List of paths that were attempted and the result for each.
-    std::vector<std::unique_ptr<ResultPath>> paths;
+    std::vector<std::unique_ptr<CertPathBuilderResultPath>> paths;
 
     // Index into |paths|. Before use, |paths.empty()| must be checked.
     // NOTE: currently the definition of "best" is fairly limited. Valid is
@@ -171,7 +165,7 @@ class NET_EXPORT CertPathBuilder {
   void Run();
 
  private:
-  void AddResultPath(std::unique_ptr<ResultPath> result_path);
+  void AddResultPath(std::unique_ptr<CertPathBuilderResultPath> result_path);
 
   std::unique_ptr<CertPathIter> cert_path_iter_;
   CertPathBuilderDelegate* delegate_;
