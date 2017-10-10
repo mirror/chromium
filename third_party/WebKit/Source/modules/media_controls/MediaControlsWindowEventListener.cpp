@@ -8,6 +8,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
+#include "modules/media_controls/elements/MediaControlElementsHelper.h"
 #include "modules/media_controls/elements/MediaControlPanelElement.h"
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 #include "modules/media_controls/elements/MediaControlVolumeSliderElement.h"
@@ -119,7 +120,25 @@ void MediaControlsWindowEventListener::handleEvent(
 
   if (!is_active_)
     return;
-  callback_();
+
+  // In order to record the time the overflow menu was shown and whether it was
+  // dismissed or not we need to identify if this event occured from an overflow
+  // button. If it did then it was an action rather than a dismissal.
+  bool was_dismissed = true;
+  if (event->HasEventPath()) {
+    for (size_t i = 0; i < event->GetEventPath().size(); ++i) {
+      Node* path_node = event->GetEventPath().at(i).GetNode();
+      if (path_node->IsMediaControlElement()) {
+        if (MediaControlElementsHelper::GetMediaControlElementType(path_node) ==
+            MediaControlElementType::kMediaOverflowList) {
+          was_dismissed = false;
+          break;
+        }
+      }
+    }
+  }
+
+  callback_(was_dismissed);
 }
 
 DEFINE_TRACE(MediaControlsWindowEventListener) {

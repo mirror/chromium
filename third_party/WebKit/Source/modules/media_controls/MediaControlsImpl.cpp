@@ -1348,13 +1348,23 @@ void MediaControlsImpl::ToggleOverflowMenu() {
   PositionPopupMenu(overflow_list_);
 
   overflow_list_->SetIsWanted(!overflow_list_->IsWanted());
+
+  if (!overflow_list_->IsWanted()) {
+    overflow_list_->MaybeRecordTimeTaken(
+        MediaControlOverflowMenuListElement::kTimeToDismiss);
+  }
 }
 
-void MediaControlsImpl::HideAllMenus() {
+void MediaControlsImpl::HideAllMenus(bool was_dismissed) {
   window_event_listener_->Stop();
 
-  if (overflow_list_->IsWanted())
+  if (overflow_list_->IsWanted()) {
     overflow_list_->SetIsWanted(false);
+    if (was_dismissed) {
+      overflow_list_->MaybeRecordTimeTaken(
+          MediaControlOverflowMenuListElement::kTimeToDismiss);
+    }
+  }
   if (text_track_list_->IsWanted())
     text_track_list_->SetVisible(false);
 }
@@ -1379,6 +1389,11 @@ MediaDownloadInProductHelpManager* MediaControlsImpl::DownloadInProductHelp() {
 
 void MediaControlsImpl::OnWaiting() {
   UpdateCSSClassFromState();
+}
+
+void MediaControlsImpl::MaybeRecordOverflowTimeToAction() {
+  overflow_list_->MaybeRecordTimeTaken(
+      MediaControlOverflowMenuListElement::kTimeToAction);
 }
 
 DEFINE_TRACE(MediaControlsImpl) {
