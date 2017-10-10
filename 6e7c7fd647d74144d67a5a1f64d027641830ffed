@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d90e7696_5221b67e",
+        "filename": "chrome/browser/data_usage/tab_id_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T16:27:44Z",
+      "side": 1,
+      "message": "While we are here, can you add a comment on why this is necessary.",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "6e7c7fd647d74144d67a5a1f64d027641830ffed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
