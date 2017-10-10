@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/file_manager/zip_file_creator.h"
+#include "chrome/services/chrome_file_util/public/cpp/zip_file_creator.h"
 
 #include <vector>
 
@@ -13,11 +13,12 @@
 #include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/zlib/google/zip_reader.h"
 
-namespace file_manager {
+namespace chrome {
 
 namespace {
 
@@ -57,7 +58,8 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, FailZipForAbsentFile) {
        base::Bind(&TestCallback, &success,
                   content::GetDeferredQuitTaskForRunLoop(&run_loop)),
        zip_base_dir(), paths, zip_archive_path()))
-      ->Start();
+      ->Start(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
   content::RunThisRunLoop(&run_loop);
   EXPECT_FALSE(success);
@@ -86,7 +88,8 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, SomeFilesZip) {
        base::Bind(&TestCallback, &success,
                   content::GetDeferredQuitTaskForRunLoop(&run_loop)),
        zip_base_dir(), paths, zip_archive_path()))
-      ->Start();
+      ->Start(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
   content::RunThisRunLoop(&run_loop);
   EXPECT_TRUE(success);
@@ -118,4 +121,4 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, SomeFilesZip) {
   }
 }
 
-}  // namespace file_manager
+}  // namespace chrome
