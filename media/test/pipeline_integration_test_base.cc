@@ -36,6 +36,7 @@ using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::Invoke;
 using ::testing::InvokeWithoutArgs;
+using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::SaveArg;
 
@@ -224,17 +225,22 @@ PipelineStatus PipelineIntegrationTestBase::StartInternal(
       .Times(AnyNumber());
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_NOTHING))
       .Times(AnyNumber());
-  // If the test is expected to have reliable duration information, permit at
-  // most two calls to OnDurationChange.  CheckDuration will make sure that no
-  // more than one of them is a finite duration.  This allows the pipeline to
-  // call back at the end of the media with the known duration.
-  //
-  // In the event of unreliable duration information, just set the expectation
-  // that it's called at least once. Such streams may repeatedly update their
-  // duration as new packets are demuxed.
-  if (test_type & kUnreliableDuration) {
+  if (test_type & kFFmpegRegression) {
+    // Avoid any form of duration expectations from FFmpeg regression tests.
+    // These tests are focused on not triggering a crash under asan tooling and
+    // do not have consistent duration-change behavior (i.e. some tests will not
+    // have a single OnDurationChange() call, while others may have hundreds).
+    EXPECT_CALL(*this, OnDurationChange()).Times(AnyNumber());
+  } else if (test_type & kUnreliableDuration) {
+    // In the event of unreliable duration information, just set the expectation
+    // that it's called at least once. Such streams may repeatedly update their
+    // duration as new packets are demuxed.
     EXPECT_CALL(*this, OnDurationChange()).Times(AnyNumber());
   } else {
+    // If the test is expected to have reliable duration information, permit at
+    // most two calls to OnDurationChange.  CheckDuration will make sure that no
+    // more than one of them is a finite duration.  This allows the pipeline to
+    // call back at the end of the media with the known duration.
     EXPECT_CALL(*this, OnDurationChange())
         .Times(AtMost(2))
         .WillRepeatedly(
@@ -322,15 +328,23 @@ void PipelineIntegrationTestBase::Pause() {
 }
 
 bool PipelineIntegrationTestBase::Seek(base::TimeDelta seek_time) {
-  ended_ = false;
+  // Enforce that BUFFERING_HAVE_ENOUGH is the first call below.
+  ::testing::InSequence dummy;
 
+  ended_ = false;
   base::RunLoop run_loop;
+
+  // Should always transition to HAVE_ENOUGH once the seek completes.
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_ENOUGH))
       .WillOnce(InvokeWithoutArgs(&run_loop, &base::RunLoop::Quit));
+
+  // After initial HAVE_ENOUGH, any buffering state change is allowed as
+  // playback may cause any number of underflow/preroll events.
+  EXPECT_CALL(*this, OnBufferingStateChange(_)).Times(AnyNumber());
+
   pipeline_->Seek(seek_time, base::Bind(&PipelineIntegrationTestBase::OnSeeked,
                                         base::Unretained(this), seek_time));
   RunUntilIdle(&run_loop);
-  EXPECT_CALL(*this, OnBufferingStateChange(_)).Times(AnyNumber());
   return (pipeline_status_ == PIPELINE_OK);
 }
 

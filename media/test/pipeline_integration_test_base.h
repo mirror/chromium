@@ -84,6 +84,7 @@ class PipelineIntegrationTestBase : public Pipeline::Client {
     kExpectDemuxerFailure = 4,
     kUnreliableDuration = 8,
     kWebAudio = 16,
+    kFFmpegRegression = 32,
   };
 
   // Starts the pipeline with a file specified by |filename|, optionally with a
