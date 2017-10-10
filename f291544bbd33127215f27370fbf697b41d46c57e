@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7e2bcb_9004b6e9",
+        "filename": "chrome/browser/resources/md_extensions/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T17:57:29Z",
+      "side": 1,
+      "message": "If these are copied, why do they need to be excluded?",
+      "revId": "f291544bbd33127215f27370fbf697b41d46c57e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
