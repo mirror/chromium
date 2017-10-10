@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14097b6a_f2d8e8ac",
+        "filename": "extensions/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-10T20:57:59Z",
+      "side": 0,
+      "message": "Do you know if we still have such conversions (without a static/checked cast) in this build target? Seems this was done for Windows X64 builds. Do you know if we have a trybot with that config?",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 36
+      },
+      "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
