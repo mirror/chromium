@@ -22,6 +22,7 @@
 #include "base/optional.h"
 #include "base/scoped_observer.h"
 #include "base/strings/string16.h"
+#include "base/time/time.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/ntp_tiles/ntp_tile.h"
@@ -225,7 +226,8 @@ class MostVisitedSites : public history::TopSitesObserver,
   NTPTilesVector CreatePopularSitesTiles(
       const PopularSites::SitesVector& sites_vector,
       const std::set<std::string>& hosts_to_skip,
-      size_t num_max_tiles);
+      size_t num_max_tiles,
+      const base::Time& last_download_time);
 
   // Initiates a query for the home page tile if needed and calls
   // |SaveTilesAndNotify| in the end.
