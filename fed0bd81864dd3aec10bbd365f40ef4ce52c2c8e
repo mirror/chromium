@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f881582_d143776d",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T18:12:44Z",
+      "side": 1,
+      "message": "The message name looks too generic - it should better be closer to the name of the policy, given that the policy is a simple boolean, but not a dictionary. Suggesting, for instance,\n\n  // Whether the user avatar videos are allowed.\n  message AllowUserAvatarVideosProto {\n\nOr, if you think that the new policy may need additional fields in the near future, then you\u0027d have to define it as a dictionary now.",
+      "range": {
+        "startLine": 904,
+        "startChar": 8,
+        "endLine": 904,
+        "endChar": 31
+      },
+      "revId": "fed0bd81864dd3aec10bbd365f40ef4ce52c2c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a60b24a_7dc452bc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 9810,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T18:12:44Z",
+      "side": 1,
+      "message": "nit: Maybe add\n\n  \", that represent the users on the login screen\"\n\n?",
+      "range": {
+        "startLine": 9810,
+        "startChar": 47,
+        "endLine": 9810,
+        "endChar": 48
+      },
+      "revId": "fed0bd81864dd3aec10bbd365f40ef4ce52c2c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
