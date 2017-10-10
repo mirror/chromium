@@ -1163,7 +1163,8 @@ TEST_F(DisplayManagerTest, TouchCalibrationTest) {
   // Clearing touch calibration data from the secondary display.
   display_manager()->ClearTouchCalibrationData(GetDisplayInfoAt(1).id(),
                                                touch_device_identifier_2);
-  EXPECT_FALSE(GetDisplayInfoAt(1).touch_calibration_data_map().size());
+  EXPECT_FALSE(
+      GetDisplayInfoAt(1).HasTouchCalibrationData(touch_device_identifier_2));
 
   // Make sure that SetTouchCalibrationData() is idempotent.
   display::TouchCalibrationData::CalibrationPointPairQuad point_pair_quad_2 =
