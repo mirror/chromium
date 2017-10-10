@@ -19,10 +19,11 @@ gpu::GpuMemoryBufferManager* g_gpu_buffer_manager = nullptr;
 
 VideoCaptureDeviceFactoryChromeOS::VideoCaptureDeviceFactoryChromeOS(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_screen_observer,
-    gpu::GpuMemoryBufferManager* gpu_buffer_manager)
+    gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory)
     : task_runner_for_screen_observer_(task_runner_for_screen_observer),
       camera_hal_ipc_thread_("CameraHalIpcThread"),
-      initialized_(Init()) {
+      initialized_(Init(jpeg_decoder_factory)) {
   g_gpu_buffer_manager = gpu_buffer_manager;
 }
 
@@ -84,7 +85,8 @@ void VideoCaptureDeviceFactoryChromeOS::SetBufferManagerForTesting(
   g_gpu_buffer_manager = buffer_manager;
 }
 
-bool VideoCaptureDeviceFactoryChromeOS::Init() {
+bool VideoCaptureDeviceFactoryChromeOS::Init(
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory) {
   if (!camera_hal_ipc_thread_.Start()) {
     LOG(ERROR) << "Module thread failed to start";
     return false;
@@ -96,8 +98,8 @@ bool VideoCaptureDeviceFactoryChromeOS::Init() {
     return false;
   }
 
-  camera_hal_delegate_ =
-      new CameraHalDelegate(camera_hal_ipc_thread_.task_runner());
+  camera_hal_delegate_ = new CameraHalDelegate(
+      camera_hal_ipc_thread_.task_runner(), jpeg_decoder_factory);
   camera_hal_delegate_->RegisterCameraClient();
   return true;
 }
@@ -107,7 +109,8 @@ bool VideoCaptureDeviceFactoryChromeOS::Init() {
 VideoCaptureDeviceFactory*
 VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_screen_observer,
-    gpu::GpuMemoryBufferManager* gpu_buffer_manager) {
+    gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory) {
   // On Chrome OS we have to support two use cases:
   //
   // 1. For devices that have the camera HAL v3 service running on Chrome OS,
@@ -119,7 +122,8 @@ VideoCaptureDeviceFactory::CreateVideoCaptureDeviceFactory(
   //    v3.
   if (VideoCaptureDeviceFactoryChromeOS::ShouldEnable()) {
     return new VideoCaptureDeviceFactoryChromeOS(
-        task_runner_for_screen_observer, gpu_buffer_manager);
+        task_runner_for_screen_observer, gpu_buffer_manager,
+        jpeg_decoder_factory);
   } else {
     return new VideoCaptureDeviceFactoryLinux(task_runner_for_screen_observer);
   }
