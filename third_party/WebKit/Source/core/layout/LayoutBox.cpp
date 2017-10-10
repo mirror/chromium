@@ -3623,11 +3623,7 @@ LayoutUnit LayoutBox::ComputeReplacedLogicalHeightUsing(
         LayoutUnit new_content_height = computed_values.extent_ -
                                         block->BorderAndPaddingLogicalHeight() -
                                         block->ScrollbarLogicalHeight();
-        LayoutUnit new_height =
-            block->AdjustContentBoxLogicalHeightForBoxSizing(
-                new_content_height);
-        return AdjustContentBoxLogicalHeightForBoxSizing(
-            ValueForLength(logical_height, new_height));
+        return ValueForLength(logical_height, new_content_height);
       }
 
       // FIXME: availableLogicalHeight() is wrong if the replaced element's
@@ -3749,10 +3745,8 @@ LayoutUnit LayoutBox::AvailableLogicalHeightUsing(
     LogicalExtentComputedValues computed_values;
     block->ComputeLogicalHeight(block->LogicalHeight(), LayoutUnit(),
                                 computed_values);
-    LayoutUnit new_content_height = computed_values.extent_ -
-                                    block->BorderAndPaddingLogicalHeight() -
-                                    block->ScrollbarLogicalHeight();
-    return AdjustContentBoxLogicalHeightForBoxSizing(new_content_height);
+    return computed_values.extent_ - block->BorderAndPaddingLogicalHeight() -
+           block->ScrollbarLogicalHeight();
   }
 
   // FIXME: This is wrong if the containingBlock has a perpendicular writing
