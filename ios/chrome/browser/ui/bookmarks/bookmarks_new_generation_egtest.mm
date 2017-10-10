@@ -1418,17 +1418,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Second URL")]
       assertWithMatcher:grey_notNil()];
 
-  // Verify Delete is disabled.
-  [[EarlGrey selectElementWithMatcher:ContextBarLeadingButtonWithLabel(
-                                          [BookmarksNewGenTestCase
-                                              contextBarDeleteString])]
-      assertWithMatcher:grey_allOf(grey_notNil(),
-                                   grey_accessibilityTrait(
-                                       UIAccessibilityTraitNotEnabled),
-                                   nil)];
-
-  // Cancel edit mode.
-  [BookmarksNewGenTestCase closeContextBarEditMode];
+  // Verify edit mode is closed (context bar back to default state).
+  [self verifyContextBarInDefaultStateWithSelectEnabled:YES];
 }
 
 - (void)testDeleteSingleFolderNode {
@@ -1466,17 +1457,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Folder 1")]
       assertWithMatcher:grey_notNil()];
 
-  // Verify Delete is disabled.
-  [[EarlGrey selectElementWithMatcher:ContextBarLeadingButtonWithLabel(
-                                          [BookmarksNewGenTestCase
-                                              contextBarDeleteString])]
-      assertWithMatcher:grey_allOf(grey_notNil(),
-                                   grey_accessibilityTrait(
-                                       UIAccessibilityTraitNotEnabled),
-                                   nil)];
-
-  // Cancel edit mode.
-  [BookmarksNewGenTestCase closeContextBarEditMode];
+  // Verify edit mode is closed (context bar back to default state).
+  [self verifyContextBarInDefaultStateWithSelectEnabled:YES];
 }
 
 - (void)testDeleteMultipleNodes {
@@ -1520,8 +1502,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Folder 1")]
       assertWithMatcher:grey_notNil()];
 
-  // Cancel edit mode.
-  [BookmarksNewGenTestCase closeContextBarEditMode];
+  // Verify edit mode is closed (context bar back to default state).
+  [self verifyContextBarInDefaultStateWithSelectEnabled:YES];
 }
 
 // Tests that the promo view is only seen at root level and not in any of the
