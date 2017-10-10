@@ -86,7 +86,8 @@ public class SuggestionsCarouselAdapter
         mSuggestionsList.addAll(suggestions);
 
         if (mObserver != null) {
-            mObserver.updateOfflinableSuggestionsAvailability();
+            mObserver.updateOfflinableSuggestionsAvailability(
+                    /*reportPrefetchedSuggestionsCount = */ false);
         }
 
         notifyDataSetChanged();
