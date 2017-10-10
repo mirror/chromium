@@ -16,6 +16,9 @@
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
 
+#include "base/feature_list.h"
+#include "media/base/media_switches.h"
+
 namespace media {
 
 using pulse::AutoPulseLock;
@@ -44,6 +47,9 @@ AudioManagerPulse::AudioManagerPulse(std::unique_ptr<AudioThread> audio_thread,
   DCHECK(input_mainloop_);
   DCHECK(input_context_);
   SetMaxOutputStreamsAllowed(kMaxOutputStreams);
+
+  if (base::FeatureList::IsEnabled(kSerializeCoreAudioPauseResume))
+    printf("******** Nämen!\n");
 }
 
 AudioManagerPulse::~AudioManagerPulse() = default;
