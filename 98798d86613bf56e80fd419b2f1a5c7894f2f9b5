@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "561822e9_2217bedc",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-10T17:02:40Z",
+      "side": 1,
+      "message": "IIUC We can use the family of DPLOG macros in this \nand similar cases throughout the file to append the\nlast system error in string format.\n\n[1] https://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dDPLOG\u0026sq\u003dpackage:chromium\u0026l\u003d127",
+      "range": {
+        "startLine": 222,
+        "startChar": 16,
+        "endLine": 222,
+        "endChar": 63
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cfbe26_1f7e3762",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-10T17:02:40Z",
+      "side": 1,
+      "message": "nit: TODO(junwei.fu)  (like your email).",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 17
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3283a226_0cb0fb10",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-10T17:02:40Z",
+      "side": 1,
+      "message": "nit: no {} for one-line bodies.",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 3
+      },
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
