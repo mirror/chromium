@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd90f914_0a9c01cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-10T20:09:21Z",
+      "side": 1,
+      "message": "Instead (or in addition to) the timeout, you could have the other window posttask to this window, and then we can stop once we\u0027ve received the posttask.\n\nThat should reduce the test runtime enough to be worth doing, I think.",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f8da12_d7b2253b",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-10T20:09:21Z",
+      "side": 1,
+      "message": "Can we avoid the \u0026\u0026 \u0026?\nEven just moving local_root_ to the left hand side...",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 24
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5075179b_fbf83668",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-10T20:09:21Z",
+      "side": 1,
+      "message": "What about tasks which don\u0027t include script?",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 39
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
