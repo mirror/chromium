@@ -48,6 +48,19 @@ InsecureSensitiveInputDriverFactory::GetDriverForFrame(
   return mapping == frame_driver_map_.end() ? nullptr : mapping->second.get();
 }
 
+void InsecureSensitiveInputDriverFactory::RenderFrameHasVisiblePasswordField(
+    content::RenderFrameHost* render_frame_host) {
+  frames_with_visible_password_fields_.insert(render_frame_host);
+}
+
+void InsecureSensitiveInputDriverFactory::RenderFrameHasNoVisiblePasswordFields(
+    content::RenderFrameHost* render_frame_host) {
+  frames_with_visible_password_fields_.erase(render_frame_host);
+}
+
+bool InsecureSensitiveInputDriverFactory::HasVisiblePasswordFields() const {
+  return !frames_with_visible_password_fields_.empty();
+}
 void InsecureSensitiveInputDriverFactory::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {
   auto insertion_result =
@@ -62,6 +75,9 @@ void InsecureSensitiveInputDriverFactory::RenderFrameCreated(
 
 void InsecureSensitiveInputDriverFactory::RenderFrameDeleted(
     content::RenderFrameHost* render_frame_host) {
+  // After a renderer crashes, it has no visible password fields.
+  RenderFrameHasNoVisiblePasswordFields(render_frame_host);
+
   frame_driver_map_.erase(render_frame_host);
 }
 
