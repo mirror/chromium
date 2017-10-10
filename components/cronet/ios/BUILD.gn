@@ -53,6 +53,7 @@ _cronet_deps = [
   ":cronet_version_header",
   ":generate_accept_languages",
   "//base:base",
+  "//components/cronet/interfaces:cronet_c_impl",
   "//components/grpc_support",
   "//components/metrics:metrics",
   "//components/metrics/proto:proto",
