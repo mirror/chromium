@@ -25,6 +25,11 @@ SERVICE_MANAGER_SANDBOX_EXPORT extern const char kCdmSandbox[];
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kPdfCompositorSandbox[];
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kProfilingSandbox[];
 
+// Flags owned by the service manager sandbox.
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kAllowNoSandboxJob[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kEnableAppContainer[];
+SERVICE_MANAGER_SANDBOX_EXPORT extern const char kDisableAppContainer[];
+
 // Flags spied upon from other layers.
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kGpuProcess[];
 SERVICE_MANAGER_SANDBOX_EXPORT extern const char kPpapiBrokerProcess[];

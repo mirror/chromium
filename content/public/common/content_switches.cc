@@ -40,14 +40,6 @@ const char kAllowInsecureLocalhost[] = "allow-insecure-localhost";
 const char kAllowLoopbackInPeerConnection[] =
     "allow-loopback-in-peer-connection";
 
-// Enables the sandboxed processes to run without a job object assigned to them.
-// This flag is required to allow Chrome to run in RemoteApps or Citrix. This
-// flag can reduce the security of the sandboxed processes and allow them to do
-// certain API calls like shut down Windows or access the clipboard. Also we
-// lose the chance to kill some processes until the outer job that owns them
-// finishes.
-const char kAllowNoSandboxJob[]             = "allow-no-sandbox-job";
-
 // Allows debugging of sandboxed processes (see zygote_main_linux.cc).
 const char kAllowSandboxDebugging[]         = "allow-sandbox-debugging";
 
@@ -681,10 +673,6 @@ const char kNoSandbox[]                     = "no-sandbox";
 // should also be used together with this flag because the sandbox needs the
 // zygote to work.
 const char kNoZygote[] = "no-zygote";
-
-// Enable or disable appcontainer/lowbox for renderer on Win8+ platforms.
-const char kEnableAppContainer[]           = "enable-appcontainer";
-const char kDisableAppContainer[]          = "disable-appcontainer";
 
 // Number of worker threads used to rasterize content.
 const char kNumRasterThreads[]              = "num-raster-threads";
