@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ee2cec_993dd8cd",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-10T16:16:38Z",
+      "side": 1,
+      "message": "Now that I think about it, I think I\u0027d rather these all be kept together (and go into the config along with all the defines they need). This is mostly because this is in fact a rather subtle issue to discover, and if some random third_party thing (like pdfium) starts including FT_CONFIG_OPTIONS_H or FT_CONFIG_MODULES_H to go look at FreeType defines for some strange reason I\u0027d like that to work correctly. Unfortunately, as long as ft2build.h is exporting FT_CONFIG_MODULES_H and FT_CONFIG_OPTIONS_H to some defaults when they\u0027re not already set it seems we should make sure these end up in the config (seems to be the same reason distros package them up as well).",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 64
+      },
+      "revId": "e5f82f6839a8b429af86755a1a3f4f68c6c70dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
