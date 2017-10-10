@@ -509,7 +509,11 @@ void RenderText::SetDisplayRect(const Rect& r) {
 }
 
 void RenderText::SetCursorPosition(size_t position) {
-  MoveCursorTo(position, false);
+  size_t cursor = std::min(position, text().length());
+  if (IsValidCursorIndex(cursor)) {
+    SetSelectionModel(SelectionModel(
+        cursor, (cursor == 0) ? CURSOR_FORWARD : CURSOR_BACKWARD));
+  }
 }
 
 void RenderText::MoveCursor(BreakType break_type,
@@ -570,29 +574,18 @@ void RenderText::MoveCursor(BreakType break_type,
       break;
   }
 
-  MoveCursorTo(cursor);
+  UpdateCursor(cursor);
 }
 
-bool RenderText::MoveCursorTo(const SelectionModel& model) {
-  // Enforce valid selection model components.
-  size_t text_length = text().length();
-  Range range(std::min(model.selection().start(),
-                       static_cast<uint32_t>(text_length)),
-              std::min(model.caret_pos(), text_length));
-  // The current model only supports caret positions at valid cursor indices.
-  if (!IsValidCursorIndex(range.start()) || !IsValidCursorIndex(range.end()))
-    return false;
-  SelectionModel sel(range, model.caret_affinity());
-  bool changed = sel != selection_model_;
-  SetSelectionModel(sel);
-  return changed;
+bool RenderText::SetSelection(const SelectionModel& model) {
+  return UpdateCursor(model);
 }
 
-bool RenderText::MoveCursorTo(const gfx::Point& point, bool select) {
+bool RenderText::MoveCursorToPoint(const gfx::Point& point, bool select) {
   gfx::SelectionModel model = FindCursorPosition(point);
   if (select)
     model.set_selection_start(selection().start());
-  return MoveCursorTo(model);
+  return UpdateCursor(model);
 }
 
 bool RenderText::SelectRange(const Range& range) {
@@ -1351,12 +1344,19 @@ int RenderText::DetermineBaselineCenteringText(const int display_height,
   return baseline + std::max(min_shift, std::min(max_shift, baseline_shift));
 }
 
-void RenderText::MoveCursorTo(size_t position, bool select) {
-  size_t cursor = std::min(position, text().length());
-  if (IsValidCursorIndex(cursor))
-    SetSelectionModel(SelectionModel(
-        Range(select ? selection().start() : cursor, cursor),
-        (cursor == 0) ? CURSOR_FORWARD : CURSOR_BACKWARD));
+bool RenderText::UpdateCursor(const SelectionModel& model) {
+  // Enforce valid selection model components.
+  size_t text_length = text().length();
+  Range range(
+      std::min(model.selection().start(), static_cast<uint32_t>(text_length)),
+      std::min(model.caret_pos(), text_length));
+  // The current model only supports caret positions at valid cursor indices.
+  if (!IsValidCursorIndex(range.start()) || !IsValidCursorIndex(range.end()))
+    return false;
+  SelectionModel sel(range, model.caret_affinity());
+  bool changed = sel != selection_model_;
+  SetSelectionModel(sel);
+  return changed;
 }
 
 void RenderText::OnTextAttributeChanged() {
