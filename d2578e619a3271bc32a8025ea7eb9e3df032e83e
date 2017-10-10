@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d19591a0_c18a2f45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T21:06:38Z",
+      "side": 1,
+      "message": "Maybe at least mention the unused code removal here, otherwise the not-directly-related removal is confusing.",
+      "revId": "d2578e619a3271bc32a8025ea7eb9e3df032e83e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3a617c_e7406e38",
         "filename": "chrome/browser/notifications/profile_notification.h",
         "patchSetId": 1
@@ -34,6 +51,24 @@
       "revId": "d2578e619a3271bc32a8025ea7eb9e3df032e83e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcc6b80_3dac82b6",
+        "filename": "chrome/browser/notifications/profile_notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T21:06:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a044ed59_ef15cf33",
+      "revId": "d2578e619a3271bc32a8025ea7eb9e3df032e83e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
