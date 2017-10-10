@@ -21,6 +21,9 @@ extern leveldb::Cache* GetSharedBrowserBlockCache();
 // Creates an in-memory Env for which all files are stored in the heap.
 extern leveldb::Env* NewMemEnv(leveldb::Env* base_env);
 
+// Report leveldb UMA values.
+extern void UpdateHistograms();
+
 }  // namespace leveldb_chrome
 
 #endif  // THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
