@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "5782cfa4_ed702912",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-10T18:37:39Z",
+      "side": 1,
+      "message": "In find, line 147. Repeating one here (and other clients) would be redundant, so the question is what to do",
+      "parentUuid": "ec92526b_721c5e17",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -508,6 +532,30 @@
       "side": 1,
       "message": "I don\u0027t believe it does. So it\u0027s a tradeoff between safety and maintainability. I\u0027m more worried about forgetting to add future members to the move constructor than I am about reusing a moved object. But I\u0027ll leave it up to you.",
       "parentUuid": "21539c85_ec96a2e1",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4963d07f_d5a92146",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-10T18:37:39Z",
+      "side": 1,
+      "message": "It\u0027s a correctness issue, though --- something needs to prevent ~FileHandle that got moved away from calling Release. (Kind of like if a moved-away-from unique_ptr didn\u0027t null its fields, you would get a double-delete).",
+      "parentUuid": "2dcfe4fe_23704220",
       "range": {
         "startLine": 189,
         "startChar": 24,
