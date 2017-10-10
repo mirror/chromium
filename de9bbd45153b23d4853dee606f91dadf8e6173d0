@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880f2a35_3f3b3be1",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Should we be using db_lock_ to protect our use of db_?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb847c4_07ce6c5a",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Can this ever be null?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af98c432_7b14126f",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "An early return here means the dump won\u0027t be created at all. Is this correct?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe2b701_7cdae00b",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Nit: make db const.",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4902ed_1b7adf88",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "This can never be null.",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63583d6c_85f1bbba",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Nit: Maybe rename block_cache_share_count to num_shared_block_cache_users. As is; a value of 1 might be confusing - is it being shared with one other database - implying the use count would be 2?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add5cbbf_aada0683",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Isn\u0027t web_cache_dump-\u003eGetSizeInternal() the same as calling cache-\u003eTotalCache()? If so can you pull this (and browser_cache_dump above) outside of the if/else check?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de654116_c32c1010",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Minor nit: \"mem_table\" implies this is memory used just for tables, but it\u0027s used for other things too (iterators, etc.). What about \"/unshared\"? OK - not a great name, but any ideas come to mine?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98e7147_82137069",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "How about instead of \"accounted correctly\" say \"equally attributed to each database sharing it\" since it\u0027s not really a correct accounting - only an estimate.",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0c000d_14626998",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Can you add a DCHECK_GE(..., 0)?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f284be41_461feea0",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9eb2a_1b9365b8",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "This is only going to be at most two keys large right? How about a base::flat_map?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a894596_e2cd1cac",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "I don\u0027t see any use of leveldb::WriteBatch in this file.",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7d3391_2b30899c",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "An empty cache will still return a TotalCharge \u003e 0. Maybe get the size before the Put, and then expect size \u003e before.",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a98e162_589413c7",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "Is there a way we can check the cache\u003d\u003edb attribution? Or am I just missing that?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb7c268_3c366808",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-10T18:27:12Z",
+      "side": 1,
+      "message": "EXPECT_GT",
+      "range": {
+        "startLine": 467,
+        "startChar": 2,
+        "endLine": 467,
+        "endChar": 11
+      },
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
