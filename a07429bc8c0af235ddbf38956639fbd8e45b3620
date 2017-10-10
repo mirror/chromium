@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7502149_3c180891",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 32
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 111,
+        "startChar": 33,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a75116_b0318772",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "why not use time mojo type?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b97e16_426726a1",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "nit: this is not needed since unique ptrs are set to null by default.",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 59
+      },
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -143,6 +143,29 @@
     },
     {
       "key": {
+        "uuid": "b799206e_d6f757e0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "s/handler_request/handler_request_/\n\nSame comment for all other member variables.",
+      "range": {
+        "startLine": 117,
+        "startChar": 50,
+        "endLine": 117,
+        "endChar": 65
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56787703_9f0c3d32",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
         "patchSetId": 27
@@ -324,6 +347,53 @@
         "startChar": 49,
         "endLine": 78,
         "endChar": 72
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f2f599_2c22c0f6",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "It\u0027s also possible (albeit a bit more cumbersome) to check that the observer has been removed by posting  log on the logger, and verifying that the test does not crash.",
+      "parentUuid": "dd899c59_a0ff8b18",
+      "range": {
+        "startLine": 78,
+        "startChar": 49,
+        "endLine": 78,
+        "endChar": 72
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c7bf2b_617f13ca",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T21:54:57Z",
+      "side": 1,
+      "message": "s/messages/message/",
+      "range": {
+        "startLine": 18,
+        "startChar": 34,
+        "endLine": 18,
+        "endChar": 42
       },
       "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
