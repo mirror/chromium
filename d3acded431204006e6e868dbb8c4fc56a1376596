@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56701d7_e160098c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-10T16:28:33Z",
+      "side": 1,
+      "message": "I\u0027d really like to avoid this, but this is called at construction time, so we cannot just override this with a no-op implementation in TestRenderFrameHost. Any ideas?",
+      "revId": "d3acded431204006e6e868dbb8c4fc56a1376596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
