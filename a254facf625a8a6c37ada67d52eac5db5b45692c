@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ab3d0873_9a7543c4",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-10T21:13:07Z",
+      "side": 1,
+      "message": "The primary developer left google.\n\nI moved all the histogram literals to anonymous namespace in .cc. Tests use two of them. Probably in tests they can just use string literal since histogram name should not change?\n\nsteven, what do you think here?",
+      "parentUuid": "5fe24d4c_8b2414ed",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "a254facf625a8a6c37ada67d52eac5db5b45692c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c06e157a_2ad90492",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3

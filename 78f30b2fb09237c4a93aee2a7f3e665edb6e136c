@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "725ca45c_1689693f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7815,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-10T21:13:07Z",
+      "side": 1,
+      "message": "How about BooleanPresent?\n\nI adopted your suggestion. Yes, we would like to know the rate. The new change I made is to record the boolean rate that chrome pulls offline vs non-offline detection result.",
+      "parentUuid": "5954718d_ea2e63e2",
+      "range": {
+        "startLine": 7815,
+        "startChar": 10,
+        "endLine": 7815,
+        "endChar": 20
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd9bf1e_8c4c3452",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -105,6 +129,30 @@
       "writtenOn": "2017-10-10T19:55:28Z",
       "side": 1,
       "message": "I think this histogram would be easier to understand if you listed the motivation for gathering this data, as you did in the comment in the C++ code.",
+      "range": {
+        "startLine": 7818,
+        "startChar": 4,
+        "endLine": 7819,
+        "endChar": 65
+      },
+      "revId": "78f30b2fb09237c4a93aee2a7f3e665edb6e136c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615dde21_95c3a552",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-10T21:13:07Z",
+      "side": 1,
+      "message": "done, thanks for the suggestion.",
+      "parentUuid": "44cc1739_a7b2191c",
       "range": {
         "startLine": 7818,
         "startChar": 4,
