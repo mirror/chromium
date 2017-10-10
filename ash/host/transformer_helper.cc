@@ -87,7 +87,7 @@ void TransformerHelper::SetRootWindowTransformer(
   window->SetTransform(transformer_->GetTransform());
   // If the layer is not animating with a transform animation, then we need to
   // update the root window size immediately.
-  if (!window->layer()->GetAnimator()->IsAnimatingProperty(
+  if (!window->layer()->GetAnimator()->IsAnimatingProperties(
           ui::LayerAnimationElement::TRANSFORM)) {
     host->UpdateRootWindowSizeInPixels(host->GetBoundsInPixels().size());
   }

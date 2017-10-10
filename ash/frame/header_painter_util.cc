@@ -89,9 +89,9 @@ bool HeaderPainterUtil::CanAnimateActivation(views::Widget* widget) {
 
   ui::LayerAnimator* parent_layer_animator =
       window->parent()->layer()->GetAnimator();
-  return !parent_layer_animator->IsAnimatingProperty(
+  return !parent_layer_animator->IsAnimatingProperties(
              ui::LayerAnimationElement::OPACITY) &&
-         !parent_layer_animator->IsAnimatingProperty(
+         !parent_layer_animator->IsAnimatingProperties(
              ui::LayerAnimationElement::VISIBILITY);
 }
 

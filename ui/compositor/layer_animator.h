@@ -171,11 +171,11 @@ class COMPOSITOR_EXPORT LayerAnimator : public base::RefCounted<LayerAnimator>,
   // the queue until they complete, so this includes running animations).
   bool is_animating() const { return !animation_queue_.empty(); }
 
-  // Returns true if there is an animation in the queue that animates the given
-  // property (animations remain in the queue until they complete, so this
-  // includes running animations).
-  bool IsAnimatingProperty(
-      LayerAnimationElement::AnimatableProperty property) const;
+  // Returns true if there is an animation in the queue that animates at least
+  // one of the given property (animations remain in the queue until they
+  // complete, so this includes running animations).
+  bool IsAnimatingProperties(
+      LayerAnimationElement::AnimatableProperties properties) const;
 
   // Stops animating the given property. No effect if there is no running
   // animation for the given property. Skips to the final state of the
