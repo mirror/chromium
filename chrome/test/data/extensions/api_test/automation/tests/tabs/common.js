@@ -31,13 +31,18 @@ function setUpAndRunTests(allTests, opt_path) {
   var path = opt_path || 'index.html';
   getUrlFromConfig(path, function(url) {
     createTab(url, function(unused_tab) {
+      console.warn('Created tab');
       chrome.automation.getTree(function (returnedRootNode) {
+        console.warn('got tree');
         rootNode = returnedRootNode;
         if (rootNode.docLoaded) {
+          console.warn('Running');
           chrome.test.runTests(allTests);
           return;
         }
+        console.warn('Maybe');
         rootNode.addEventListener('loadComplete', function() {
+          console.warn('Waiting');
           chrome.test.runTests(allTests);
         });
       });

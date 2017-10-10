@@ -5,16 +5,20 @@
 var allTests = [
   // Basic query from root node.
   function testQuerySelector() {
+    console.warn('Running one');
     var cancelButton = rootNode.children[3];
     function assertCorrectResult(queryResult) {
+      console.warn('Assert');
       assertEq(queryResult, cancelButton);
       chrome.test.succeed();
     }
+    console.warn('Running');
     rootNode.domQuerySelector('body > button:nth-of-type(2)',
                               assertCorrectResult);
   },
 
   function testQuerySelectorNoMatch() {
+    console.warn('Next');
     function assertCorrectResult(queryResult) {
       assertEq(null, queryResult);
       chrome.test.succeed();
