@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898a17c3_542b3ae3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-10T06:43:46Z",
+      "side": 0,
+      "message": "It seems visibleCells failed to take the navigation bar into account and the rows under the navigation bar will always be counted as visible.",
+      "range": {
+        "startLine": 293,
+        "startChar": 43,
+        "endLine": 293,
+        "endChar": 55
+      },
+      "revId": "3eb58fbb5c7bda8f99843f9f3fa516ef741284bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32e3d8a_c319a490",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-10T06:43:46Z",
+      "side": 0,
+      "message": "when restoring the position, it failed to take navigation bar into account again and it will scroll the first row to the top of the screen (under navigation bar).  And this cause the upshift of the scrolling position.",
+      "revId": "3eb58fbb5c7bda8f99843f9f3fa516ef741284bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
