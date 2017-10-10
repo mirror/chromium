@@ -6,6 +6,8 @@ package org.chromium.chrome.browser.multiwindow;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.test.filters.SmallTest;
@@ -18,6 +20,8 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ContextUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
@@ -198,8 +202,9 @@ public class MultiWindowUtilsTest {
                 ChromeTabbedActivity2.class, secondActivityClass);
 
         // Create an intent and start the second ChromeTabbedActivity.
-        Intent intent = new Intent(activity.getIntent());
-        intent.setClass(activity, secondActivityClass);
+        Intent intent = new Intent();
+        MultiWindowUtils.setOpenInOtherWindowIntentExtras(intent, activity, secondActivityClass);
+        MultiWindowUtils.onMultiInstanceModeStarted();
         activity.startActivity(intent);
 
         // Wait for ChromeTabbedActivity2 to be created.
@@ -220,6 +225,35 @@ public class MultiWindowUtilsTest {
             }
         }
         Assert.assertTrue(returnActivity != null);
+        waitUntilActivityResumed(returnActivity);
         return returnActivity;
+    }
+
+    private static void waitUntilActivityResumed(final Activity activity) {
+        CriteriaHelper.pollUiThread(Criteria.equals(ActivityState.RESUMED, new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return ApplicationStatus.getStateForActivity(activity);
+            }
+        }));
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static void moveActivityToFront(final Activity activity) {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                Context context = ContextUtils.getApplicationContext();
+                ActivityManager activityManager =
+                        (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                for (ActivityManager.AppTask task : activityManager.getAppTasks()) {
+                    if (activity.getTaskId() == task.getTaskInfo().id) {
+                        task.moveToFront();
+                        break;
+                    }
+                }
+            }
+        });
+        waitUntilActivityResumed(activity);
     }
 }
