@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3e474c2_dfad3d6e",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "I am not entirely sure about the lock usage here. I tried to read the code and didn\u0027t manage to understand when the lock must be used.\n\nI will ask michael to review this issue.",
+      "parentUuid": "880f2a35_3f3b3be1",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb847c4_07ce6c5a",
         "filename": "content/browser/dom_storage/session_storage_database.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "17b6fbe4_2975b64a",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "replied below. It is true for the providers which sub-allocate.",
+      "parentUuid": "4cb847c4_07ce6c5a",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af98c432_7b14126f",
         "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-10T18:27:12Z",
       "side": 1,
       "message": "An early return here means the dump won\u0027t be created at all. Is this correct?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b3c8a2_5cbe06c7",
+        "filename": "content/browser/indexed_db/leveldb/leveldb_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Yes, the dump wont be created at all.\nthis only happens in a case where we triggered a dump and we called Db tracker OnMemoryDump. Between this point and before we call LevelDBDatabase::OnMemoryDump(), the database gets created and added to the tracker. In this case the tracker would not have the dump we asked for.\n\nWhat can be done is we can get the size of database and log here. But it will definitely go wrong because of the shared cache calculations which were made without accounting for this database.\n\nWe anyway consider memory dump as an aync snapshot and it is okay to miss this database which was crated while creating a snapshot.",
+      "parentUuid": "af98c432_7b14126f",
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "614cebe7_75e7312d",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe2b701_7cdae00b",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4902ed_1b7adf88",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dda936c_2e2db98e",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "This can be null if (MALLOC_MEMORY_TRACING_SUPPORTED) is not defined.\nThere are some platforms where we do not have the basic malloc number. So, we cannot sub-allocate from malloc total for allocations.",
+      "parentUuid": "df4902ed_1b7adf88",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4f3dc3d6_18ca4e34",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "I think you meant rename on the visitor and not the counts_ member in tracker. Fixed/",
+      "parentUuid": "63583d6c_85f1bbba",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add5cbbf_aada0683",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ba04a6_44136b90",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "um was trying not to call TotalCharge since it takes longer to calculate. But, later added another call below. Fixed it now.",
+      "parentUuid": "add5cbbf_aada0683",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c1876330_82978280",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "hm I just realized we are adding iterators usage in here.\nI removed this since the meaning of this part is changing and we don\u0027t really need to add this row.",
+      "parentUuid": "de654116_c32c1010",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f98e7147_82137069",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a13f6f_78b047b3",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f98e7147_82137069",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "ddd1ac7f_e67cdbad",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0c000d_14626998",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f284be41_461feea0",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 2
@@ -186,6 +366,24 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b27b1c2_f24d13ec",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f284be41_461feea0",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "9e915256_e70183d1",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e9eb2a_1b9365b8",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a894596_e2cd1cac",
         "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627c1f32_d06c32b9",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a894596_e2cd1cac",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "a48fe7b0_334d660c",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f7d3391_2b30899c",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a98e162_589413c7",
         "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
         "patchSetId": 2
@@ -251,6 +503,24 @@
       "writtenOn": "2017-10-10T18:27:12Z",
       "side": 1,
       "message": "Is there a way we can check the cache\u003d\u003edb attribution? Or am I just missing that?",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e7bfaa_fe8ee1d2",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "um it is really hard to test since it adds a sub-allocation under browser_cache_dump. This creates a child dump under browser_cache with a hashed name and adds an edge. https://cs.chromium.org/chromium/src/base/trace_event/process_memory_dump.cc?type\u003dcs\u0026q\u003daddsuballocation\u0026l\u003d464\nWe cannot get that dump without knowing it\u0027s name. We can get all dumps and try to match, but the code will look long and ugly.",
+      "parentUuid": "4a98e162_589413c7",
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -277,6 +547,30 @@
       "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df751571_98c38d8c",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T21:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb7c268_3c366808",
+      "range": {
+        "startLine": 467,
+        "startChar": 2,
+        "endLine": 467,
+        "endChar": 11
+      },
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
