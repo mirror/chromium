@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cddc919b_b4ab5b0f",
+        "filename": "chromecast/app/cast_main_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-10-10T23:00:02Z",
+      "side": 1,
+      "message": "Looks like these patches collided mid-flight",
+      "parentUuid": "66bc380d_df1e75ad",
+      "revId": "64c92959b687d5c1f62995eb47d43f6a029cc4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d347133d_448ca4cd",
         "filename": "chromecast/base/file_utils.cc",
         "patchSetId": 1
