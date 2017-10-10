@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2464b8da_e16758cd",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "Yeah, reading through the new patch set, I\u0027m pretty sure I\u0027d prefer the following:\n1) SetSelectionModel always sets has_directed_selection_ to false, no flag plumbing needed.\n2) ResolveDirectedCursor just flips the selection as needed, hopefully stays inlined in MoveCursor.\n(aside: flipping via just x coords is incorrect for multiline, but that\u0027s tangential)\n3) MoveCursor should just set has_directed_selection_ true as needed as its last operation.",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341ca217_c4d4d47d",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "Yikes, the established direction is ignored when a left/right key press collapses the selection? That seems odd.",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40440594_b4545b66",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "Can you check if we have sufficient coverage of collapsing selections (SELECTION_NONE)?\nIgnoring the established direction when collapsing seems easily breakable (especially on Mac?).\nI assume we do indeed already test the pre-existing selection flipping behavior of MoveCursor.",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

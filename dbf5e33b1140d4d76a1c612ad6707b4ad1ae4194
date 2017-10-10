@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "621e61a6_8d7c7147",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "Haha, I guess that\u0027s the product of a poor memory and posing devil\u0027s advocate questions on CLs!\nFair enough, this is more targeted, let\u0027s proceed with this approach.\naside: I wonder if Views should use a split cursor... I have no idea what speakers prefer.",
+      "parentUuid": "6d6c0040_b196dfa4",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa33cf06_571c1ef2",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 7
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d703618b_676902e0",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "See my inquiry below about just setting this flag true right after this line...\nI\u0027m just a proponent of making this as simple as possible for readers/maintainers.\nThe logic/plumbing shouldn\u0027t be any more complex than needed to capture the desired behavior.",
+      "parentUuid": "c60b9106_cf2d00fd",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7c806c4_b3d2ef1c",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 7
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "\u003e Why is it not valid to pass a directed selection here when the existing selection is not directed?\n\nThis is because SetSelectionModel doesn\u0027t have enough information to chose the direction -- only ResolveDirectedCursor can do that. So this basically ensures calls to SetSelectionModel that are not *clearing* the direction are always preceded by a call to ResolveDirectedCursor.\n\n\n(we could also rename |directed| to |clear_direction| and do \n\nif (clear_direction)\n  has_directed_selection_ \u003d false;\n\nbut I think the DCHECK is useful..",
       "parentUuid": "c7c806c4_b3d2ef1c",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d423a76a_751b6bc8",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T17:12:12Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m on the fence between the two flags, but mostly wishing that these functions didn\u0027t have flags at all; afaict, every caller passes false except plumbing via MoveCursor. It would be nice if SetSelectionModel always set \"has_directed_selection_ \u003d kSelectionIsAlwaysDirected\", and MoveCursor then just set \"has_directed_selection_ \u003d true;\" or maybe \"has_directed_selection_ \u003d kSelectionIsAlwaysDirected || !cursor.selection().is_empty()\" or similar at the bottom. Limiting impact may simplify things.",
+      "parentUuid": "14d69935_cbdb46af",
       "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
