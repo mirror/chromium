@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d559d0_b3d2ebc3",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-10T17:25:15Z",
+      "side": 1,
+      "message": "The last 2 crash keys are either 1) global data or 2) data specific to RenderProcessHost being killed.  So - maybe these 2 crash keys would be useful for *all* kills done via content::ReceivedBadMessage and therefore could be set by implementation of content::ReceivedBadMessage (OTOH, the BrowserMessageFilter-flavoured overload doesn\u0027t seem aware of RenderProcessHost...).  Also - in the future we might add other RPH-based data (SiteInstance?  dedicated to CWS/extensions/safe-browsing-jail?).\n\nI also wonder if something like |requested_origin| and |requested_url| are commonly known for various flavours of renderer kills - maybe these could be optional parameters of content::ReceivedBadMessage (which could then log them as crash keys if present).\n\nWDYT?",
+      "range": {
+        "startLine": 1065,
+        "startChar": 0,
+        "endLine": 1077,
+        "endChar": 3
+      },
+      "revId": "5d19fc5a8bfcaab4193fa5727387d8661cd76899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
