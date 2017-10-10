@@ -5,9 +5,11 @@
 #include "base/command_line.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/weak_ptr.h"
+#include "base/strings/stringprintf.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/bindings_policy.h"
@@ -35,6 +37,9 @@
 namespace content {
 
 namespace {
+
+int JAVASCRIPT_TEST_FAILURE = -1;
+int JAVASCRIPT_TEST_SUCCESS = 1;
 
 // A test NavigationThrottle that will return pre-determined checks and run
 // callbacks when the various NavigationThrottle methods are called. It is
@@ -1992,6 +1997,41 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplDownloadBrowserTest,
   EXPECT_FALSE(observer.is_download());
   EXPECT_TRUE(observer.is_error());
   EXPECT_TRUE(observer.was_redirected());
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
+                       ThrottleFailureWithErrorPageContent) {
+  EnableBrowserSideNavigation();
+
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
+  ASSERT_TRUE(https_server.Start());
+  GURL url(https_server.GetURL("/title1.html"));
+
+  const char body_text_content[] = "some plain text content";
+  NavigationThrottle::ThrottleCheckResult cancel_result = {
+      NavigationThrottle::CANCEL, net::ERR_CERT_COMMON_NAME_INVALID,
+      base::StringPrintf("<html><body>%s</body><html>", body_text_content)};
+
+  NavigationHandleObserver observer(shell()->web_contents(), url);
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED,
+      NavigationThrottle::PROCEED, cancel_result, NavigationThrottle::PROCEED);
+
+  EXPECT_FALSE(observer.has_committed());
+  EXPECT_FALSE(observer.is_error());
+
+  EXPECT_FALSE(NavigateToURL(shell(), url));
+
+  content::RenderFrameHost* rfh = shell()->web_contents()->GetMainFrame();
+  ASSERT_TRUE(content::WaitForRenderFrameReady(rfh));
+  int result = JAVASCRIPT_TEST_FAILURE;
+  const std::string javascript = base::StringPrintf(
+      "domAutomationController.send(document.body.textContent === \"%s\" ? %d "
+      ": %d)",
+      body_text_content, JAVASCRIPT_TEST_SUCCESS, JAVASCRIPT_TEST_FAILURE);
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(rfh, javascript, &result));
+  EXPECT_EQ(JAVASCRIPT_TEST_SUCCESS, result);
 }
 
 }  // namespace content
