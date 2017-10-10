@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "acfa51b7_e8f851bf",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b41778_5316b5f2",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dde5955_9593a89e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 2
@@ -348,6 +366,24 @@
       "side": 1,
       "message": "Yeah, but it seems like the callback result from CreateMediaRouteController doesn\u0027t make sense without the route id.\n\nI could go either way on this:\n- Make the caller bind an extra route_id parameter as you do here (resulting in code bloat for each call site)\n- Make the Mojo API a little more complicated by passing a route_id in the callback that is technically redundant.\n\nI usually favor making APIs more straightforward and foolproof to use, but if there\u0027s really only one call site, probably not worth making any changes.",
       "parentUuid": "8549ec02_fccdf479",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b9a17be_05fcfbe7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50b10422_ec609bbd",
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

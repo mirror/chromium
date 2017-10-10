@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30840336_a21f7547",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "This method actually needs to be re-invoked when reconnecting with extension MRP because the mojo objects are reset when the extension suspends. I added comment in .h explaining that.",
+      "parentUuid": "87db9ea7_f0f99f5f",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9789c807_6112c981",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T20:10:15Z",
       "side": 1,
       "message": "is_valid_ \u003d false ?",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e84c6d8_1c576bda",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "is_valid_ indicates whether Invalidate() has been called from MediaRouter (e.g. when the associated MediaRoute no longer exists), which would cause it to be deleted soon. Clarified a bit in the comments.\n\nCome to think of it, is_valid_ is only used in the dtor (Besides DCHECK). I initially thought it\u0027s redundant, since MediaRouterMojoImpl already erases the MRC entry from the map after Invalidate() is called. But it\u0027s actually used to prevent concurrent map modification inside the for-loop in MediaRouterMojoImpl::RemoveInvalidRouteControllers(). Hmm... I wonder if we can rewrite this in a better way to eliminate this coupling behavior. Probably best tackled in a followup. Added a TODO in .h.",
+      "parentUuid": "9789c807_6112c981",
       "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "edaa7e98_7e8a3b2a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b42536f_80f7daf9",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4311183f_42544875",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bea164_69ef379a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-10T22:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4311183f_42544875",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
