@@ -22,6 +22,30 @@
       "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92079382_c27e03a3",
+        "filename": "extensions/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T21:21:43Z",
+      "side": 0,
+      "message": "I\u0027m not sure if we have any such conversions left, but if we do, this should help us find them!  The fact that it compiles makes me optimistic that we perhaps don\u0027t, and this should help us keep it that way (hopefully).\n\nWe do have 64-bit trybots - I thought they were included in the default CQ, but apparently not.  I\u0027ve added one.  However, my worry is that removing this doesn\u0027t cause a clobber, so it might compile fine and then fail at a later date when someone touches a file that does the conversion.\n\nI have a 64-bit windows machine that I used to compile this from scratch, and it did so with no errors.  But, that\u0027s still not a hard guarantee.  However, I\u0027m not sure how much more we can do to preemptively check.",
+      "parentUuid": "14097b6a_f2d8e8ac",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 36
+      },
+      "revId": "f6051161237b285ceb6ba797eb37db3a8af1ee48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
