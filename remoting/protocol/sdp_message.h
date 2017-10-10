@@ -43,6 +43,9 @@ class SdpMessage {
   // not found.
   bool PreferVideoCodec(const std::string& codec);
 
+  // Appends |parameter| to the end of the SDP message.
+  void AppendParameter(const std::string& parameter);
+
  private:
   // Finds the first line of the form "a=rtpmap:<payload_type> <codec>/.." with
   // the specified |codec|. Sets |line_num| to line number and |payload_type| to

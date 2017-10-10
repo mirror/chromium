@@ -213,6 +213,8 @@ class DesktopSessionAgent
 
   CurrentProcessStatsAgent current_process_stats_;
 
+  base::Time capture_start_;
+
   // Used to disable callbacks to |this|.
   base::WeakPtrFactory<DesktopSessionAgent> weak_factory_;
 

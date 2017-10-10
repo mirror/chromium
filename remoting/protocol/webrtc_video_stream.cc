@@ -235,6 +235,18 @@ void WebrtcVideoStream::OnFrameEncoded(
          current_frame_stats_->capture_started_time) -
         stats.capture_delay;
 
+    if (current_frame_stats_->capture_ended_time -
+        current_frame_stats_->capture_started_time >
+        base::TimeDelta::FromMilliseconds(500)) {
+      LOG(ERROR) << "Debugging: capturing takes longer time than expected "
+                 << current_frame_stats_->capture_ended_time -
+                    current_frame_stats_->capture_started_time;
+    }
+    if (stats.capture_overhead_delay > base::TimeDelta::FromMilliseconds(500)) {
+      LOG(ERROR) << "Debugging: capture_overhead_delay is unexpectedly high "
+                 << stats.capture_overhead_delay;
+    }
+
     stats.encode_pending_delay = current_frame_stats_->encode_started_time -
                                  current_frame_stats_->capture_ended_time;
 

@@ -488,6 +488,7 @@ void WebrtcTransport::OnLocalSessionDescriptionCreated(
   if (!preferred_video_codec_.empty()) {
     sdp_message.PreferVideoCodec(preferred_video_codec_);
   }
+  sdp_message.AppendParameter("b=AS:5000");
   description_sdp = sdp_message.ToString();
   webrtc::SdpParseError parse_error;
   description.reset(webrtc::CreateSessionDescription(

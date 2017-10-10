@@ -95,6 +95,10 @@ bool SdpMessage::PreferVideoCodec(const std::string& codec) {
   return false;
 }
 
+void SdpMessage::AppendParameter(const std::string& parameter) {
+  sdp_lines_.push_back(parameter);
+}
+
 bool SdpMessage::FindCodec(const std::string& codec,
                            int* line_num,
                            std::string* payload_type) const {

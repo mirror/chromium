@@ -134,6 +134,7 @@ WebrtcFrameSchedulerSimple::~WebrtcFrameSchedulerSimple() {
 
 void WebrtcFrameSchedulerSimple::OnKeyFrameRequested() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  LOG(ERROR) << "OnKeyFrameRequested()";
   encoder_ready_ = true;
   key_frame_request_ = true;
   ScheduleNextFrame(base::TimeTicks::Now());
@@ -143,6 +144,7 @@ void WebrtcFrameSchedulerSimple::OnChannelParameters(int packet_loss,
                                                      base::TimeDelta rtt) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  // LOG(ERROR) << "OnChannelParameters(" << rtt << ")";
   rtt_estimate_ = rtt;
 }
 
@@ -151,6 +153,8 @@ void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
   base::TimeTicks now = base::TimeTicks::Now();
   pacing_bucket_.UpdateRate(bandwidth_kbps * 1000 / 8, now);
   encoder_bitrate_.SetBandwidthEstimate(bandwidth_kbps, now);
+  // LOG(ERROR) << "OnTargetBitrateChanged(" << bandwidth_kbps << ")";
+
   ScheduleNextFrame(now);
 }
 

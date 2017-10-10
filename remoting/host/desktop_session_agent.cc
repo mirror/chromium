@@ -326,6 +326,13 @@ void DesktopSessionAgent::OnCaptureResult(
     std::unique_ptr<webrtc::DesktopFrame> frame) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
+  base::Time capture_finish = base::Time::Now();
+
+  if (capture_finish - capture_start_ >= base::TimeDelta::FromMilliseconds(500)) {
+    LOG(ERROR) << "Debugging: DesktopSessionAgent capturing takes unexpectedly long time "
+               << capture_finish - capture_start_;
+  }
+
   // Serialize webrtc::DesktopFrame.
   SerializedDesktopFrame serialized_frame;
   if (frame) {
@@ -345,6 +352,13 @@ void DesktopSessionAgent::OnCaptureResult(
 
   SendToNetwork(base::MakeUnique<ChromotingDesktopNetworkMsg_CaptureResult>(
       result, serialized_frame));
+
+  capture_finish = base::Time::Now();
+
+  if (capture_finish - capture_start_ >= base::TimeDelta::FromMilliseconds(500)) {
+    LOG(ERROR) << "Debugging: DesktopSessionAgent capturing and sending takes unexpectedly long time "
+               << capture_finish - capture_start_;
+  }
 }
 
 void DesktopSessionAgent::OnMouseCursor(webrtc::MouseCursor* cursor) {
@@ -446,6 +460,8 @@ void DesktopSessionAgent::Stop() {
 
 void DesktopSessionAgent::OnCaptureFrame() {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
+
+  capture_start_ = base::Time::Now();
 
   mouse_cursor_monitor_->Capture();
 
