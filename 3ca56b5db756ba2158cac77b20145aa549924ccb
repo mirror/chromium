@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a085da0f_f334b379",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T23:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dce7268_569eaba9",
+      "revId": "3ca56b5db756ba2158cac77b20145aa549924ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99fb6b49_b52985b8",
         "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T01:36:31Z",
       "side": 1,
       "message": "Do we need \nif (!this.shareAllowEnable) {\n  this.shareNetwork_ \u003d this.shareDefault;\n  return;\n}\n\nbefore setting this.shareNetwork_ for insecure wifi?",
+      "revId": "3ca56b5db756ba2158cac77b20145aa549924ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d00dc3c_c012d59a",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T23:11:42Z",
+      "side": 1,
+      "message": "The UI shouldn\u0027t allow a state where the rules below are inconsistent with that, but I can wrap the two checks below in \u0027if (this.shareAllowEnable)\u0027 to make that completely clear.",
+      "parentUuid": "99fb6b49_b52985b8",
       "revId": "3ca56b5db756ba2158cac77b20145aa549924ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

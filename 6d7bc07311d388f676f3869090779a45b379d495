@@ -70,6 +70,24 @@
       "revId": "6d7bc07311d388f676f3869090779a45b379d495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c03165_d6ebcc3c",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T23:11:42Z",
+      "side": 1,
+      "message": "Oh, you\u0027re describing \"visible\" but not \"known\" WiFi networks?\n\nsetProperties should \"just work\" in that case but it\u0027s possible it does not, I haven\u0027t thoroughly test that yet. I will investigate and address that in a separate CL.",
+      "parentUuid": "3a45b3d3_f56f3cdd",
+      "revId": "6d7bc07311d388f676f3869090779a45b379d495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
