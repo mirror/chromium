@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "8addcbe1_a7784f12",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T21:22:27Z",
+      "side": 1,
+      "message": "Done. I will say seeing something like this inlined in the header file but not these trivial constructors certainly seems wrong.",
+      "parentUuid": "d59c263d_42bd6f23",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "258fca89_48e6f5c0",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 2
@@ -690,6 +708,30 @@
     },
     {
       "key": {
+        "uuid": "4c47e053_a7468d55",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T21:22:27Z",
+      "side": 1,
+      "message": "I\u0027d rather know that DeletePendingTasks() takes care of all the pending tasks than worry about seeing triplets around the codebase. If it was a single operation to DeletePendingTasks(), I would agree. Since DeletePendingTasks() handles multiple data structures, it\u0027s better off separate.",
+      "parentUuid": "3c25f44f_dc59fcf7",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a9e6c9c_5e514994",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -740,6 +782,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcb6309_1a5f722e",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T21:22:27Z",
+      "side": 1,
+      "message": "Gotcha. I understand what you mean now. I\u0027ve done some sleuthing and found this introduced in\nhttps://codereview.chromium.org/6463013/diff/77001/base/message_loop.cc\nand was removed in\nhttps://codereview.chromium.org/9903003/diff/1/base/message_loop.cc\n\nSo the only oddity that remains is deleting delayed work last, so I\u0027ve commented that this is what we\u0027ve always done.",
+      "parentUuid": "d5fdd8cf_216d91ef",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -802,6 +862,30 @@
       "side": 1,
       "message": "Oops my bad, somehow forgot this was inside scope of a loop..!\n\nUse \"else if\" below then? (that was my initial comment but I then incorrectly convinced myself we can do even cleaner..)",
       "parentUuid": "66bdfeb4_f790bad6",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 7
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec2108d6_4d73070d",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-10T21:22:27Z",
+      "side": 1,
+      "message": "Sure, else if below is equivalent. Done.",
+      "parentUuid": "8723504b_86262140",
       "range": {
         "startLine": 451,
         "startChar": 6,
