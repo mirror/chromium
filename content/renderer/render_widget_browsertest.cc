@@ -123,6 +123,17 @@ TEST_F(RenderWidgetInitialSizeTest, InitialSize) {
   EXPECT_TRUE(next_paint_is_resize_ack());
 }
 
+TEST_F(RenderWidgetTest, HitTestAPI) {
+  LoadHTML(
+      "<body style='padding: 0px; margin: 0px'>"
+      "<div style='background: green; padding: 100px; margin: 0px;'>"
+      "<iframe style='width: 200px; height: 100px;'"
+      "srcdoc='<body style=\"margin: 0px; height: 100px; width: 200px;\">"
+      "</body>'></iframe><div></body>");
+  EXPECT_EQ(6, widget()->GetWidgetRoutingIdAtPoint(gfx::Point(10, 10)));
+  EXPECT_EQ(10, widget()->GetWidgetRoutingIdAtPoint(gfx::Point(150, 150)));
+}
+
 TEST_F(RenderWidgetTest, GetCompositionRangeValidComposition) {
   LoadHTML(
       "<div contenteditable>EDITABLE</div>"

@@ -16,6 +16,7 @@
 #include "content/common/input/input_event_ack.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/renderer/gpu/render_widget_compositor.h"
 #include "content/renderer/ime_event_guard.h"
 #include "content/renderer/input/render_widget_input_handler_delegate.h"
@@ -28,6 +29,7 @@
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
 #include "third_party/WebKit/public/platform/WebTouchEvent.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
+#include "third_party/WebKit/public/web/WebNode.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/latency/latency_info.h"
@@ -152,6 +154,15 @@ RenderWidgetInputHandler::RenderWidgetInputHandler(
 }
 
 RenderWidgetInputHandler::~RenderWidgetInputHandler() {}
+
+int RenderWidgetInputHandler::GetWidgetRoutingIdAtPoint(
+    const gfx::Point& point) {
+  return RenderFrame::GetRoutingIdForWebFrame(
+      widget_->GetWebWidget()
+          ->HitTestResultAt(blink::WebPoint(point.x(), point.y()))
+          .GetNode()
+          .ContentFrame());
+}
 
 void RenderWidgetInputHandler::HandleInputEvent(
     const blink::WebCoalescedInputEvent& coalesced_event,
