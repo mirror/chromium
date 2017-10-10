@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb2dbfa0_6b7d328c",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-10T17:58:20Z",
+      "side": 1,
+      "message": "Consider moving this near the top of DidCompleteJob?",
+      "revId": "fc8552a67952778ece06924f1e5e6181b614985e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8de9a08_0da5b9d4",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-10T17:58:20Z",
+      "side": 1,
+      "message": "I don\u0027t see any code that verifies the validity?",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 52
+      },
+      "revId": "fc8552a67952778ece06924f1e5e6181b614985e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b1a147_a217882c",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-10T17:58:20Z",
+      "side": 1,
+      "message": "Nit: Make this an ordinary member, since its lifetime exactly matches the Context.",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "fc8552a67952778ece06924f1e5e6181b614985e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fd10b2_aa268d78",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-10T17:58:20Z",
+      "side": 1,
+      "message": "That\u0027s rather important functionality for what looks like a dumb setter. Consider renaming this to |Init| to clarify that it must be called for every instance. (Or the better solution might be to ditch the deprecated TypeConverter and instead have a function that converts from BackgroundFetchRegistrationPtr to fully-initialized BackgroundFetchRegistration by taking an additional ServiceWorkerRegistration* parameter.)",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "fc8552a67952778ece06924f1e5e6181b614985e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c421e36a_2ada373c",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-10T17:58:20Z",
+      "side": 1,
+      "message": "Remind me why we use uint64_t here and unsigned long long elsewhere in this file?",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "fc8552a67952778ece06924f1e5e6181b614985e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
