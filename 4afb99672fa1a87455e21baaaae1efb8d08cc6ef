@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f52270ce_fc6a4888",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-10T13:55:14Z",
+      "side": 1,
+      "message": "Histograms are created all the time and in many places within the code.  If a shared memory segment has been specified (SetHistogramMemory), then newly created histograms are allocated from that.  If not, they\u0027re allocated from the heap.\n\nShared (aka \"persistent\") histograms are directly accessible from the parent process (that sent the SetHistogramMemory message).  Others need to be fetched via RPC.\n\nBecause the SetHistogramMemory message occurs after startup and thus reside on the heap, there\u0027s always a couple histograms created before it.  Or, if persistence is disabled globally, all of them reside on the heap.\n\nIf you\u0027re trying to send heap histograms via RPC, there is no shared memory to worry about because that\u0027s done elsewhere.  If you\u0027re trying to handle the message that initializes the shared memory, there are no histograms involved.\n\nSomething named \"ChildHistogramFactoryPtr\" sounds like an object for creating child histograms but all histograms are created through FactoryGet methods (usually via macros) and managed by the StatisticsRecorder.",
+      "parentUuid": "fc816648_1698490b",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ff8597_8dc52ad1",
         "filename": "content/browser/histogram_controller.cc",
         "patchSetId": 19
