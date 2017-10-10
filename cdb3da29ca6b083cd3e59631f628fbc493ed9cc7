@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9af7638_9489dbab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:05:14Z",
+      "side": 1,
+      "message": "nit: Please remove a leading whitespace.",
+      "revId": "cdb3da29ca6b083cd3e59631f628fbc493ed9cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9d5e60_5730afb7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:05:14Z",
+      "side": 1,
+      "message": "nit: Please remove a leading whitespace.",
+      "revId": "cdb3da29ca6b083cd3e59631f628fbc493ed9cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb753345_af8c16b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:05:14Z",
+      "side": 1,
+      "message": "nit: Please remove a leading whitespace.",
+      "revId": "cdb3da29ca6b083cd3e59631f628fbc493ed9cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
