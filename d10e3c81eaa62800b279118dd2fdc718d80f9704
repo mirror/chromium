@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e23122de_8699277e",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T21:57:52Z",
+      "side": 1,
+      "message": "We moved the underlay to client (wayland service) side. Do we still need this?",
+      "revId": "d10e3c81eaa62800b279118dd2fdc718d80f9704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
