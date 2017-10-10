@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7b76870_34139de9",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-10T22:53:29Z",
+      "side": 1,
+      "message": "I feel the code in this patch (patch 10, in which you only used one query) is a bit complicated. How about the following codes? This way, you don\u0027t need |pending_check_callback_| and |pending_check_| variables.\n- Rename CheckInputDevicesList() to OnGetDevicesList(), and accept a callback parameter.\n- in constructor:\n  input_service_proxy_.AddObserver(this);\n  GetInputDevicesList(base::Bind(\u0026OnGetDevicesList, ..., base::Bind(\u0026DoNothing)));\n\n- in CheckIsScreenRequired():\n  if (!enumerated_)\n    GetInputDevicesList(base::Bind(\u0026OnGetDevicesList, ..., on_check_done));\n  else\n    OnGetDevicesList(on_check_done);\n\n- in destructor:\n  input_service_proxy_.RemoveObserver(this);\n\nWdyt?",
+      "parentUuid": "ff38e909_dd1ca5d5",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d10f2f_3c19633f",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-07T04:24:00Z",
       "side": 1,
       "message": "We have to run the UpdateDevices in Async way.\n\nSome browsertest(at least in BluetoothHostPairingBrowsertest), they depends on the logic that the GetInputDeviceListForCheck() never synchronously call the TryInitateBTDeviceUpdate().\n\nWith this change, we merged the GetInputDeviceListForCheck() and GetInputDeviceList(). When it arrives here, if it is in the logic of original GetInputDeviceListForCheck(), the TryInitateBTDeviceUpdate() will be called synchronously, then the BluetoothHostPairingBrowsertest will fail.\n\nI also feel that the GetInputDeviceListForCheck is only used by WizardController to check whether needs to show screen, while the GetInputDeviceList needs to addObserver and maintains the device list. That\u0027s why I decide to not merge them. Although there will be 2 mojo connections, the code is more clear, one more mojo connection is not expensive.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 63
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d5e495_b71e0204",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-10T22:53:29Z",
+      "side": 1,
+      "message": "If it only breaks the tests, it might be the problem with the tests. But I haven\u0027t looked into it deeper, so I could not really tell.",
+      "parentUuid": "a7d10f2f_3c19633f",
       "range": {
         "startLine": 147,
         "startChar": 4,
