@@ -151,6 +151,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin : public BluetoothDevice {
   // the device.
   bool paired_;
   bool connected_;
+  bool gatt_connected_;
 
   // Used to send change notifications when a device disappears during
   // discovery.
