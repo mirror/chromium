@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b1c1af_56f6236e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "WDYT about a test for this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 41,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b33a2ad_1899a88d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "after FRE?",
+      "range": {
+        "startLine": 10,
+        "startChar": 52,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479291f5_ee8ce4f0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "Please update the comment as well.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 28
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d40c5a_80b4b84e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "We have a loading indication for Fetch More as well, thus, it would be great to specify precisely which indication you mean.",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9e61b5_8455b8eb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "It is not obvious why this is false here.",
+      "range": {
+        "startLine": 451,
+        "startChar": 49,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c568251e_d6a5722f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:14:57Z",
+      "side": 1,
+      "message": "I guess it worth adding a comment explaining why we need an indicator during background fetch (because the user may open NTP before the fetch finishes).",
+      "range": {
+        "startLine": 461,
+        "startChar": 4,
+        "endLine": 461,
+        "endChar": 40
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
