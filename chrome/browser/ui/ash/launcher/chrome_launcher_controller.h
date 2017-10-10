@@ -244,6 +244,8 @@ class ChromeLauncherController
 
   void SetProfileForTest(Profile* profile);
 
+  void FlushForTesting();
+
   // Helpers that call through to corresponding ShelfModel functions.
   void PinAppWithID(const std::string& app_id);
   bool IsAppPinned(const std::string& app_id);
