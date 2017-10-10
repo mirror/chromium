@@ -113,6 +113,23 @@ bool FinalizeFutureItems(PrefetchItemState state,
   return statement.Run();
 }
 
+// If there is a bug in our code, an item might be stuck in the queue waiting
+// on an event that didn't happen.  If so, remove that item.
+bool FinalizeStuckItems(base::Time now, sql::Connection* db) {
+  static const char kSql[] =
+      "UPDATE prefetch_items SET state = ?, error_code = ?"
+      " WHERE creation_time < ?";
+  const int64_t earliest_valid_creation_time =
+      ToDatabaseTime(now - base::TimeDelta::FromDays(5));
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  statement.BindInt(0, static_cast<int>(PrefetchItemState::FINISHED));
+  statement.BindInt(1,
+                    static_cast<int>(PrefetchItemErrorCode::STALE_AT_UNKNOWN));
+  statement.BindInt64(2, earliest_valid_creation_time);
+
+  return statement.Run();
+}
+
 Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
                                 sql::Connection* db) {
   if (!db)
@@ -139,6 +156,11 @@ Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
     if (!FinalizeFutureItems(state, now, db))
       return Result::NO_MORE_WORK;
   }
+
+  // Items could also be stuck in a non-expirable state due to a bug, clean them
+  // too.
+  if (!FinalizeStuckItems(now, db))
+    return Result::NO_MORE_WORK;
 
   Result result = Result::MORE_WORK_NEEDED;
   if (!MoreWorkInQueue(db))

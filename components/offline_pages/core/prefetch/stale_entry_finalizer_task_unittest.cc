@@ -72,6 +72,7 @@ PrefetchItem StaleEntryFinalizerTaskTest::CreateAndInsertItem(
   PrefetchItem item(item_generator()->CreateItem(state));
   item.freshness_time =
       fake_now_ + base::TimeDelta::FromHours(time_delta_in_hours);
+  item.creation_time = item.freshness_time;
   EXPECT_TRUE(store_util()->InsertPrefetchItem(item))
       << "Failed inserting item with state " << static_cast<int>(state);
   return item;
@@ -174,7 +175,7 @@ TEST_F(StaleEntryFinalizerTaskTest, HandlesFreshnessTimesCorrectly) {
 // their freshness dates are really old.
 TEST_F(StaleEntryFinalizerTaskTest, HandlesStalesInAllStatesCorrectly) {
   // Insert "stale" items for every state.
-  const int many_hours = -7 * 24;
+  const int many_hours = -4 * 24;
   CreateAndInsertItem(PrefetchItemState::NEW_REQUEST, many_hours);
   CreateAndInsertItem(PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE, many_hours);
   CreateAndInsertItem(PrefetchItemState::AWAITING_GCM, many_hours);
@@ -369,6 +370,45 @@ TEST_F(StaleEntryFinalizerTaskTest,
   EXPECT_EQ(1U, Filter(post_items, PrefetchItemState::IMPORTING).size());
   EXPECT_EQ(6U, Filter(post_items, PrefetchItemState::FINISHED).size());
   EXPECT_EQ(1U, Filter(post_items, PrefetchItemState::ZOMBIE).size());
+}
+
+// Verifies that expired and non-expired items from all expirable states are
+// properly handled.
+TEST_F(StaleEntryFinalizerTaskTest, HandlesStuckItemsCorrectly) {
+  // Insert fresh and stale items for all expirable states from all buckets.
+  PrefetchItem item1_recent =
+      CreateAndInsertItem(PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE, 1);
+  PrefetchItem item2_stuck =
+      CreateAndInsertItem(PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE, -170);
+
+  // Check inserted initial items.
+  std::set<PrefetchItem> initial_items = {item1_recent, item2_stuck};
+  std::set<PrefetchItem> all_inserted_items;
+  EXPECT_EQ(2U, store_util()->GetAllItems(&all_inserted_items));
+  EXPECT_EQ(initial_items, all_inserted_items);
+
+  // Execute the expiration task.
+  ExpectTaskCompletes(stale_finalizer_task_.get());
+  stale_finalizer_task_->Run();
+  RunUntilIdle();
+  EXPECT_EQ(Result::MORE_WORK_NEEDED, stale_finalizer_task_->final_status());
+
+  // Create the expected finished version of each stale item.
+  PrefetchItem item1_finished(item1_recent);
+  item1_finished.state = PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE;
+  item1_finished.error_code = PrefetchItemErrorCode::SUCCESS;
+  PrefetchItem item2_finished(item2_stuck);
+  item2_finished.state = PrefetchItemState::FINISHED;
+  item2_finished.error_code = PrefetchItemErrorCode::STALE_AT_UNKNOWN;
+
+  // Creates the expected set of final items and compares with what's in
+  // store.
+  std::set<PrefetchItem> expected_final_items = {item1_finished,
+                                                 item2_finished};
+  EXPECT_EQ(2U, expected_final_items.size());
+  std::set<PrefetchItem> all_items_post_expiration;
+  EXPECT_EQ(2U, store_util()->GetAllItems(&all_items_post_expiration));
+  EXPECT_EQ(expected_final_items, all_items_post_expiration);
 }
 
 }  // namespace offline_pages
