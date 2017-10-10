@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa88ea0d_077fa08f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-10T19:35:41Z",
+      "side": 1,
+      "message": "nit: just Unknown (for the histogram string)?",
+      "range": {
+        "startLine": 786,
+        "startChar": 42,
+        "endLine": 786,
+        "endChar": 57
+      },
+      "revId": "83aac70a98d00cf6b83d6905c2b5ba1b205b01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a466464_272dac45",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-10T19:35:41Z",
+      "side": 1,
+      "message": "Note that did_autofill_some_possible_fields doesn\u0027t let you know to which form-type the autofilled fields belong. The user may have autofilled a email address adjacent to a credit-card field and this will record both as having had autofill involvement.\n\nI don\u0027t think this is the end of the world. But it\u0027s something to keep in mind when analyzing the metrics later.\n\nI\u0027d suggest landing this as is, for now, and consider whether to do a follow-on CL (for early in M64?) to track per-field type whether or not there was autofill implication for a given field type.",
+      "revId": "83aac70a98d00cf6b83d6905c2b5ba1b205b01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b037074f_fd88e341",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 94767,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-10T19:35:41Z",
+      "side": 1,
+      "message": "nit: just Unknown for the histogram suffix?",
+      "range": {
+        "startLine": 94767,
+        "startChar": 16,
+        "endLine": 94767,
+        "endChar": 31
+      },
+      "revId": "83aac70a98d00cf6b83d6905c2b5ba1b205b01f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
