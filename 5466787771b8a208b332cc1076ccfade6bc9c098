@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d50cf59_0319df00",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:05:31Z",
+      "side": 1,
+      "message": "Nit (optional): I think a more common terminology (at least to readers familiar with SQL) for those variables is \"skip\"/\"offset\" and \"limit\" respectively.",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba17c82f_43a63f21",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:05:31Z",
+      "side": 1,
+      "message": "Nit (optional): It took me a sec to undrestand what -cookies meant. Maybe just rephrase as follows?\n\nTODO(dschuyler): Rename to function to reload().",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cb9ed8_6b1c7a84",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:05:31Z",
+      "side": 1,
+      "message": "window.setTimeout() is generally an anti-pattern. For example is not friendly to testing.\n\nDo we need the timeout at all given that there is an async call to the browser side anyway? Because of this, the UI should have a chance to update itself already without needing the 20ms timeout.",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c61b57_5fe911d5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:05:31Z",
+      "side": 1,
+      "message": "When/why can his happen? If indeed this check is unavoidable, can we add a comment explaining? Is this happening because teh element gets detached while the async timeout callbacks still run?",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9fa51c_b386ba52",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:05:31Z",
+      "side": 1,
+      "message": "Same concern here. Should we go for a \"task queue\" approach if we need this kind of throttling? Where one can create post a task (say fetch 20 items), and let the queue execute all pending tasks based on some policy?",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
