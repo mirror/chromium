@@ -133,14 +133,17 @@ scoped_refptr<Extension> Extension::Create(const base::FilePath& path,
   if (!manifest->ValidateManifest(utf8_error, &install_warnings)) {
     return NULL;
   }
-
   scoped_refptr<Extension> extension = new Extension(path, std::move(manifest));
-  extension->install_warnings_.swap(install_warnings);
 
   if (!extension->InitFromValue(flags, &error)) {
     *utf8_error = base::UTF16ToUTF8(error);
     return NULL;
   }
+  if (!ManifestHandler::ValidateExtension(extension.get(), utf8_error,
+                                          &install_warnings)) {
+    return nullptr;
+  }
+  extension->install_warnings_.swap(install_warnings);
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
