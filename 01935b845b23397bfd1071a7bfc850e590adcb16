@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7240229f_ad600ea6",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-10T23:53:53Z",
+      "side": 1,
+      "message": "Xiaoqian, Thanks!\nIt is great idea to let OnGetDevicesList take a callback parameter so the |pending_check_callback_| is not needed.\n\nBut in this way we back to call the GetInputDevicesList() twice, if we have to query twice, I prefer not to merge the OnGetDevicesListForCheck() and the OnGetDevicesList() into one, just like PS14 does.",
+      "parentUuid": "f7b76870_34139de9",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d10f2f_3c19633f",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 10
