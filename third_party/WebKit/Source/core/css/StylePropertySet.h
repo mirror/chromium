@@ -56,7 +56,8 @@ class CORE_EXPORT StylePropertySet
         : property_set_(&property_set), index_(index) {}
 
     CSSPropertyID Id() const {
-      return static_cast<CSSPropertyID>(PropertyMetadata().property_id_);
+      return static_cast<CSSPropertyID>(
+          PropertyMetadata().PropertyAPI().PropertyID());
     }
     CSSPropertyID ShorthandID() const {
       return PropertyMetadata().ShorthandID();
