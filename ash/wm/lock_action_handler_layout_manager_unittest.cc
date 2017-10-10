@@ -172,6 +172,7 @@ class LockActionHandlerLayoutManagerTest : public AshTestBase {
     // Allow a virtual keyboard (and initialize it per default).
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         keyboard::switches::kEnableVirtualKeyboard);
+
     AshTestBase::SetUp();
 
     views::Widget::InitParams widget_params(
@@ -209,15 +210,6 @@ class LockActionHandlerLayoutManagerTest : public AshTestBase {
     DCHECK_EQ(show, keyboard->keyboard_visible());
   }
 
-  TestBackgroundController* SetUpBackgroundController() {
-    auto scoped_background_controller =
-        std::make_unique<TestBackgroundController>();
-    auto* background_controller = scoped_background_controller.get();
-    GetLockActionHandlerLayoutManager()->SetBackgroundControllerForTesting(
-        std::move(scoped_background_controller));
-    return background_controller;
-  }
-
   void SetUpTrayActionClientAndLockSession(mojom::TrayActionState state) {
     Shell::Get()->tray_action()->SetClient(
         tray_action_client_.CreateInterfacePtrAndBind(), state);
@@ -231,6 +223,34 @@ class LockActionHandlerLayoutManagerTest : public AshTestBase {
   TestTrayActionClient tray_action_client_;
 
   DISALLOW_COPY_AND_ASSIGN(LockActionHandlerLayoutManagerTest);
+};
+
+class LockActionHandlerLayoutManagerWithBackgroundTest
+    : public LockActionHandlerLayoutManagerTest {
+ public:
+  LockActionHandlerLayoutManagerWithBackgroundTest() = default;
+  ~LockActionHandlerLayoutManagerWithBackgroundTest() override = default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch("show-md-login");
+    LockActionHandlerLayoutManagerTest::SetUp();
+    SetUpBackgroundController();
+  }
+
+  TestBackgroundController* background_controller() {
+    return background_controller_.get();
+  }
+
+ private:
+  void SetUpBackgroundController() {
+    background_controller_ = std::make_unique<TestBackgroundController>();
+    GetLockActionHandlerLayoutManager()->SetBackgroundControllerForTesting(
+        background_controller_.get());
+  }
+
+  std::unique_ptr<TestBackgroundController> background_controller_;
+
+  DISALLOW_COPY_AND_ASSIGN(LockActionHandlerLayoutManagerWithBackgroundTest);
 };
 
 TEST_F(LockActionHandlerLayoutManagerTest, PreserveNormalWindowBounds) {
@@ -514,8 +534,8 @@ TEST_F(LockActionHandlerLayoutManagerTest, MultipleMonitors) {
   EXPECT_EQ(target_bounds.ToString(), window->GetBoundsInScreen().ToString());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhileBackgroundShowing) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
+       WindowAddedWhileBackgroundShowing) {
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
@@ -524,9 +544,9 @@ TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhileBackgroundShowing) {
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
   EXPECT_EQ(LockScreenActionBackgroundState::kShowing,
-            background_controller->state());
+            background_controller()->state());
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   // Move action to active - this will make the app window showable. Though,
   // showing the window should be delayed until the background finishes
@@ -535,14 +555,14 @@ TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhileBackgroundShowing) {
       mojom::TrayActionState::kActive);
 
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   // Finish showing the background - this should make the app window visible.
-  ASSERT_TRUE(background_controller->FinishShow());
+  ASSERT_TRUE(background_controller()->FinishShow());
 
   EXPECT_TRUE(window->IsVisible());
   EXPECT_TRUE(window->HasFocus());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   // Move action state back to available - this should hide the app window, and
   // request the background window to be hidden.
@@ -550,23 +570,23 @@ TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhileBackgroundShowing) {
       mojom::TrayActionState::kAvailable);
 
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
-  ASSERT_TRUE(background_controller->FinishHide());
+  ASSERT_TRUE(background_controller()->FinishHide());
 
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_FALSE(background_controller->window()->IsVisible());
+  EXPECT_FALSE(background_controller()->window()->IsVisible());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhenBackgroundShown) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
+       WindowAddedWhenBackgroundShown) {
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kActive);
   // Finish showing the background - this should make the app window visible
   // once it's created.
-  ASSERT_TRUE(background_controller->FinishShow());
+  ASSERT_TRUE(background_controller()->FinishShow());
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
       views::Widget::InitParams(views::Widget::InitParams::TYPE_WINDOW),
@@ -574,9 +594,9 @@ TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhenBackgroundShown) {
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
   EXPECT_TRUE(window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_EQ(LockScreenActionBackgroundState::kShown,
-            background_controller->state());
+            background_controller()->state());
 
   // Move action state back to not available - this should immediately hide both
   // the app and background window,
@@ -584,18 +604,17 @@ TEST_F(LockActionHandlerLayoutManagerTest, WindowAddedWhenBackgroundShown) {
       mojom::TrayActionState::kNotAvailable);
 
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_FALSE(background_controller->window()->IsVisible());
+  EXPECT_FALSE(background_controller()->window()->IsVisible());
   EXPECT_EQ(LockScreenActionBackgroundState::kHidden,
-            background_controller->state());
+            background_controller()->state());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest,
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
        SecondWindowAddedWhileShowingBackground) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   EXPECT_EQ(LockScreenActionBackgroundState::kShowing,
-            background_controller->state());
+            background_controller()->state());
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
       views::Widget::InitParams(views::Widget::InitParams::TYPE_WINDOW),
@@ -603,7 +622,7 @@ TEST_F(LockActionHandlerLayoutManagerTest,
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
   EXPECT_FALSE(window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   std::unique_ptr<aura::Window> second_window = CreateTestingWindow(
       views::Widget::InitParams(views::Widget::InitParams::TYPE_WINDOW),
@@ -612,15 +631,15 @@ TEST_F(LockActionHandlerLayoutManagerTest,
 
   EXPECT_FALSE(window->IsVisible());
   EXPECT_FALSE(second_window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   // Finish showing the background. The app windows should be not be shown yet,
   // as the note actio is not active.
-  ASSERT_TRUE(background_controller->FinishShow());
+  ASSERT_TRUE(background_controller()->FinishShow());
 
   EXPECT_FALSE(window->IsVisible());
   EXPECT_FALSE(second_window->IsVisible());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kActive);
@@ -629,7 +648,7 @@ TEST_F(LockActionHandlerLayoutManagerTest,
   EXPECT_FALSE(window->HasFocus());
   EXPECT_TRUE(second_window->IsVisible());
   EXPECT_TRUE(second_window->HasFocus());
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
 
   // Deactivate the action - the windows should get hidden.
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
@@ -638,11 +657,11 @@ TEST_F(LockActionHandlerLayoutManagerTest,
   EXPECT_FALSE(window->IsVisible());
   EXPECT_FALSE(second_window->IsVisible());
   EXPECT_EQ(LockScreenActionBackgroundState::kHiding,
-            background_controller->state());
+            background_controller()->state());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest, RelaunchWhilehidingBackground) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
+       RelaunchWhilehidingBackground) {
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
@@ -650,12 +669,12 @@ TEST_F(LockActionHandlerLayoutManagerTest, RelaunchWhilehidingBackground) {
       kShellWindowId_LockActionHandlerContainer,
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
-  ASSERT_TRUE(background_controller->FinishShow());
+  ASSERT_TRUE(background_controller()->FinishShow());
 
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kAvailable);
   ASSERT_EQ(LockScreenActionBackgroundState::kHiding,
-            background_controller->state());
+            background_controller()->state());
 
   // Create new app window to show.
   window = CreateTestingWindow(
@@ -666,21 +685,20 @@ TEST_F(LockActionHandlerLayoutManagerTest, RelaunchWhilehidingBackground) {
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kActive);
   ASSERT_EQ(LockScreenActionBackgroundState::kShowing,
-            background_controller->state());
+            background_controller()->state());
 
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_FALSE(window->IsVisible());
 
-  background_controller->FinishShow();
+  background_controller()->FinishShow();
 
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_TRUE(window->IsVisible());
   EXPECT_TRUE(window->HasFocus());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest,
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
        ActionDeactivatedWhileShowingTheBackground) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
@@ -688,21 +706,20 @@ TEST_F(LockActionHandlerLayoutManagerTest,
       kShellWindowId_LockActionHandlerContainer,
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_FALSE(window->IsVisible());
 
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kAvailable);
 
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_FALSE(window->IsVisible());
   EXPECT_EQ(LockScreenActionBackgroundState::kHiding,
-            background_controller->state());
+            background_controller()->state());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest,
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
        ActionDisabledWhileShowingTheBackground) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kLaunching);
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
@@ -710,20 +727,20 @@ TEST_F(LockActionHandlerLayoutManagerTest,
       kShellWindowId_LockActionHandlerContainer,
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
-  EXPECT_TRUE(background_controller->window()->IsVisible());
+  EXPECT_TRUE(background_controller()->window()->IsVisible());
   EXPECT_FALSE(window->IsVisible());
 
   Shell::Get()->tray_action()->UpdateLockScreenNoteState(
       mojom::TrayActionState::kNotAvailable);
 
-  EXPECT_FALSE(background_controller->window()->IsVisible());
+  EXPECT_FALSE(background_controller()->window()->IsVisible());
   EXPECT_FALSE(window->IsVisible());
 }
 
-TEST_F(LockActionHandlerLayoutManagerTest, BackgroundWindowBounds) {
-  TestBackgroundController* background_controller = SetUpBackgroundController();
+TEST_F(LockActionHandlerLayoutManagerWithBackgroundTest,
+       BackgroundWindowBounds) {
   SetUpTrayActionClientAndLockSession(mojom::TrayActionState::kActive);
-  ASSERT_TRUE(background_controller->FinishShow());
+  ASSERT_TRUE(background_controller()->FinishShow());
 
   std::unique_ptr<aura::Window> window = CreateTestingWindow(
       views::Widget::InitParams(views::Widget::InitParams::TYPE_WINDOW),
@@ -731,7 +748,7 @@ TEST_F(LockActionHandlerLayoutManagerTest, BackgroundWindowBounds) {
       std::make_unique<TestWindowDelegate>(true /*can_activate*/));
 
   ASSERT_TRUE(window->IsVisible());
-  ASSERT_TRUE(background_controller->window()->IsVisible());
+  ASSERT_TRUE(background_controller()->window()->IsVisible());
 
   // Verify that the window bounds are equal to work area for the bottom shelf
   // alignment, which matches how the shelf is aligned on the lock screen,
@@ -742,7 +759,7 @@ TEST_F(LockActionHandlerLayoutManagerTest, BackgroundWindowBounds) {
   EXPECT_EQ(target_app_window_bounds, window->GetBoundsInScreen());
 
   EXPECT_EQ(display::Screen::GetScreen()->GetPrimaryDisplay().bounds(),
-            background_controller->window()->GetBoundsInScreen());
+            background_controller()->window()->GetBoundsInScreen());
 }
 
 }  // namespace ash

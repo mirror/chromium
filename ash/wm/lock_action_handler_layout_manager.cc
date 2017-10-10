@@ -11,8 +11,6 @@
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller.h"
-#include "ash/system/lock_screen_action/lock_screen_action_background_controller_impl.h"
-#include "ash/system/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_window_state.h"
 #include "ash/wm/window_state.h"
@@ -26,12 +24,6 @@
 namespace ash {
 
 namespace {
-
-// Returns true if the md-based login/lock UI is enabled.
-bool IsUsingMdLogin() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kShowMdLogin);
-}
 
 // Whether child windows should be shown depending on lock screen note action
 // state and lock screen action background state.
@@ -47,25 +39,15 @@ bool ShowChildWindows(mojom::TrayActionState action_state,
 
 LockActionHandlerLayoutManager::LockActionHandlerLayoutManager(
     aura::Window* window,
-    Shelf* shelf)
+    Shelf* shelf,
+    LockScreenActionBackgroundController* action_background_controller)
     : LockLayoutManager(window, shelf),
+      action_background_controller_(action_background_controller),
       tray_action_observer_(this),
       action_background_observer_(this) {
-  // Web UI based lock screen implements its own background - use the stub
-  // lock action background controller implementation unless md-based lock UI
-  // is used.
-  if (IsUsingMdLogin()) {
-    action_background_controller_ =
-        std::make_unique<LockScreenActionBackgroundControllerImpl>();
-  } else {
-    action_background_controller_ =
-        std::make_unique<LockScreenActionBackgroundControllerStub>();
-  }
-  action_background_controller_->SetParentWindow(window);
-
   TrayAction* tray_action = Shell::Get()->tray_action();
   tray_action_observer_.Add(tray_action);
-  action_background_observer_.Add(action_background_controller_.get());
+  action_background_observer_.Add(action_background_controller_);
 }
 
 LockActionHandlerLayoutManager::~LockActionHandlerLayoutManager() = default;
@@ -131,14 +113,25 @@ void LockActionHandlerLayoutManager::OnLockScreenNoteStateChanged(
 
 void LockActionHandlerLayoutManager::OnLockScreenActionBackgroundStateChanged(
     LockScreenActionBackgroundState state) {
+  // Stack the container over the shelf when the background is animating, as the
+  // animation should be seen as covering the shelf..
+  if (state == LockScreenActionBackgroundState::kShowing ||
+      state == LockScreenActionBackgroundState::kHiding) {
+    window()->parent()->StackChildAbove(
+        window(), root_window()->GetChildById(kShellWindowId_ShelfContainer));
+  } else {
+    window()->parent()->StackChildBelow(
+        window(), root_window()->GetChildById(kShellWindowId_ShelfContainer));
+  }
+
   UpdateChildren(Shell::Get()->tray_action()->GetLockScreenNoteState(), state);
 }
 
 void LockActionHandlerLayoutManager::SetBackgroundControllerForTesting(
-    std::unique_ptr<LockScreenActionBackgroundController> controller) {
+    LockScreenActionBackgroundController* controller) {
   action_background_observer_.RemoveAll();
-  action_background_controller_ = std::move(controller);
-  action_background_observer_.Add(action_background_controller_.get());
+  action_background_controller_ = controller;
+  action_background_observer_.Add(action_background_controller_);
 
   OnLockScreenActionBackgroundStateChanged(
       action_background_controller_->state());
