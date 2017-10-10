@@ -20,6 +20,9 @@ mojom::blink::PermissionDescriptorPtr CreatePermissionDescriptor(
 mojom::blink::PermissionDescriptorPtr CreateMidiPermissionDescriptor(
     bool sysex);
 
+mojom::blink::PermissionDescriptorPtr CreateClipboardPermissionDescriptor(
+    String access);
+
 }  // namespace blink
 
 #endif  // PermissionUtils_h

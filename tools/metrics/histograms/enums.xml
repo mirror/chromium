@@ -6168,6 +6168,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="37" label="Client hints setting"/>
   <int value="38" label="Sensors setting"/>
   <int value="39" label="Accessibility events setting"/>
+  <int value="40" label="Clipboard full access setting"/>
+  <int value="41" label="Clipboard read access setting"/>
+  <int value="42" label="Clipboard write access setting"/>
 </enum>
 
 <enum name="ContentTypeParseableResult">
@@ -30927,6 +30930,9 @@ from previous Chrome versions.
   <int value="13" label="PERMISSION_MEDIASTREAM_MIC"/>
   <int value="14" label="PERMISSION_MEDIASTREAM_CAMERA"/>
   <int value="15" label="PERMISSION_ACCESSIBILITY_EVENTS"/>
+  <int value="16" label="PERMISSION_CLIPBOARD_FULL"/>
+  <int value="17" label="PERMISSION_CLIPBOARD_READ"/>
+  <int value="18" label="PERMISSION_CLIPBOARD_WRITE"/>
 </enum>
 
 <enum name="PermissionStatus">

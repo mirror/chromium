@@ -52,4 +52,14 @@ PermissionDescriptorPtr CreateMidiPermissionDescriptor(bool sysex) {
   return descriptor;
 }
 
+PermissionDescriptorPtr CreateClipboardPermissionDescriptor(String access) {
+  auto descriptor =
+      CreatePermissionDescriptor(mojom::blink::PermissionName::CLIPBOARD);
+  auto clipboard_extension = mojom::blink::ClipboardPermissionDescriptor::New();
+  clipboard_extension->access = access;
+  descriptor->extension = mojom::blink::PermissionDescriptorExtension::New();
+  descriptor->extension->set_clipboard(std::move(clipboard_extension));
+  return descriptor;
+}
+
 }  // namespace blink

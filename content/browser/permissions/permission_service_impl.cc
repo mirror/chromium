@@ -58,6 +58,18 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::SENSORS;
     case PermissionName::ACCESSIBILITY_EVENTS:
       return PermissionType::ACCESSIBILITY_EVENTS;
+    case PermissionName::CLIPBOARD:
+      if (descriptor->extension && descriptor->extension->is_clipboard()) {
+        std::string access = descriptor->extension->get_clipboard()->access;
+        if (access == "full")
+          return PermissionType::CLIPBOARD_FULL;
+        else if (access == "read")
+          return PermissionType::CLIPBOARD_READ;
+        else if (access == "write")
+          return PermissionType::CLIPBOARD_WRITE;
+      }
+      NOTREACHED();
+      return PermissionType::NUM;
   }
 
   NOTREACHED();
@@ -85,6 +97,9 @@ blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     case PermissionType::FLASH:
     case PermissionType::SENSORS:
     case PermissionType::ACCESSIBILITY_EVENTS:
+    case PermissionType::CLIPBOARD_FULL:
+    case PermissionType::CLIPBOARD_READ:
+    case PermissionType::CLIPBOARD_WRITE:
     case PermissionType::NUM:
       // These aren't exposed by feature policy.
       return blink::WebFeaturePolicyFeature::kNotFound;
