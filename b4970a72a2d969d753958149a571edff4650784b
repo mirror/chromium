@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd1bf60c_2de338f0",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:15:53Z",
+      "side": 1,
+      "message": "Bind() already does this DCHECK (though admittedly, somewhat indirectly: https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/lib/binding_state.cc?rcl\u003d146147a4c4c699c6738bc469c774e8624b496850\u0026l\u003d90)",
+      "revId": "b4970a72a2d969d753958149a571edff4650784b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a72622_7672b621",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:15:53Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be simpler to just automatically detach when the message pipe for the previously passed interface pointer is closed?",
+      "revId": "b4970a72a2d969d753958149a571edff4650784b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
