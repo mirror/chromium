@@ -34,11 +34,6 @@ template <typename T>
 using RefPtr = scoped_refptr<T>;
 
 template <typename T>
-inline T* GetPtr(const RefPtr<T>& p) {
-  return p.get();
-}
-
-template <typename T>
 class RefPtrValuePeeker {
   DISALLOW_NEW();
 
@@ -53,10 +48,7 @@ class RefPtrValuePeeker {
   T* ptr_;
 };
 
-template <typename T>
-RefPtr<T> AdoptRef(T* p) {
-  return RefPtr<T>(base::AdoptRef(p));
-}
+using base::AdoptRef;
 
 template <typename T>
 RefPtr<T> WrapRefPtr(T* ptr) {
