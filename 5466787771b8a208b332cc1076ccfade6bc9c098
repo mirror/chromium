@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "27158ce2_19f45aac",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T01:18:20Z",
+      "side": 1,
+      "message": "Should there be a call to clear the timeout here?\nwindow.clearTimeout(this.extendSiteListTimeout_);\n\nI am also struggling to understand if having both updateSiteList and extendSiteList use extendSiteListTimeout_ is OK. It seems that they could stomp an each other.",
+      "revId": "5466787771b8a208b332cc1076ccfade6bc9c098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01cb9ed8_6b1c7a84",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 11
