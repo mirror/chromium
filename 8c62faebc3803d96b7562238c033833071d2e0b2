@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c1e08e_c39ee437",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T06:13:44Z",
+      "side": 1,
+      "message": "Is this a speced task?\n\nOtherwise it would make more sense to use TaskType::UnspecedLoading.",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733c1924_7bf1055e",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T06:13:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8553c3_cc5b45e6",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T06:13:44Z",
+      "side": 1,
+      "message": "Not related to this CL, but FetchContext::GetLoadingTaskRunner returns the per-thread default task runner. Is it expected?",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
