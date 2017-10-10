@@ -81,6 +81,7 @@
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
 #include "ash/system/palette/palette_tray.h"
+#include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/power/peripheral_battery_notifier.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
@@ -337,6 +338,7 @@ bool Shell::ShouldUseIMEService() {
 // static
 void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
   PaletteTray::RegisterLocalStatePrefs(registry);
+  PaletteWelcomeBubble::RegisterLocalStatePrefs(registry);
   WallpaperController::RegisterLocalStatePrefs(registry);
   BluetoothPowerController::RegisterLocalStatePrefs(registry);
 }
