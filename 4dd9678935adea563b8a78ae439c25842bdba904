@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e6ca455_2d8ae1f2",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-10T14:25:09Z",
+      "side": 1,
+      "message": "Why is this call necessary?",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ac31fe_06c83239",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-10T14:25:09Z",
+      "side": 1,
+      "message": "Why does style have to be clean here?",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f139f49_4fcb4edb",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-10T14:25:09Z",
+      "side": 1,
+      "message": "Is it worthwhile asserting here that target.getAnimations() is empty?",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9b058c_0f211240",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-10T14:25:09Z",
+      "side": 1,
+      "message": "I don\u0027t follow the purpose of measuring the effects second run of the animation over time - can you explain what purpose measureProgress() serves?",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
