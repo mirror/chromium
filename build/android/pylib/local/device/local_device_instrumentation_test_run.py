@@ -103,7 +103,7 @@ def DidPackageCrashOnDevice(package_name, device):
   # loop or we are failing to dismiss.
   try:
     for _ in xrange(10):
-      package = device.DismissCrashDialogIfNeeded()
+      package = device.DismissCrashDialogIfNeeded(timeout=10, retries=1)
       if not package:
         return False
       # Assume test package convention of ".test" suffix
@@ -532,10 +532,23 @@ class LocalDeviceInstrumentationTestRun(
         for u in test_names.difference(results_names))
 
     # Update the result type if we detect a crash.
-    if DidPackageCrashOnDevice(self._test_instance.test_package, device):
-      for r in results:
-        if r.GetType() == base_test_result.ResultType.UNKNOWN:
-          r.SetType(base_test_result.ResultType.CRASH)
+    try:
+      if DidPackageCrashOnDevice(self._test_instance.test_package, device):
+        for r in results:
+          if r.GetType() == base_test_result.ResultType.UNKNOWN:
+            r.SetType(base_test_result.ResultType.CRASH)
+    except device_errors.CommandTimeoutError:
+      logging.warning('timed out when detecting/dismissing error dialogs')
+      # Attach screenshot to the test to help with debugging the dialog boxes.
+      with contextlib_ext.Optional(
+          tempfile_ext.NamedTemporaryDirectory(),
+          self._test_instance.screenshot_dir is None and
+              self._test_instance.gs_results_bucket) as screenshot_host_dir:
+        screenshot_host_dir = (
+            self._test_instance.screenshot_dir or screenshot_host_dir)
+        self._SaveScreenshot(device, screenshot_host_dir,
+                             screenshot_device_file, test_display_name,
+                             results)
 
     # Handle failures by:
     #   - optionally taking a screenshot
