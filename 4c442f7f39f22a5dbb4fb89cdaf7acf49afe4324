@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "d6cff3ca_2c7a03e9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-10T18:44:23Z",
+      "side": 1,
+      "message": "The general rule is you either DCHECK or handle the case, not both. In this case, since it\u0027d be a logic bug to get to this state, I\u0027d keep the DCHECK in Find() and not handle it here. I\u0027d also remove the second parameter to Find.",
+      "parentUuid": "5782cfa4_ed702912",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -565,6 +589,30 @@
       "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211bc748_8122c138",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-10T18:44:23Z",
+      "side": 1,
+      "message": "Ah, right. Ack.",
+      "parentUuid": "4963d07f_d5a92146",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
