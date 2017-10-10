@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31adff91_7aeb299b",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T23:04:27Z",
+      "side": 1,
+      "message": "This is vestigial. Removed.",
+      "parentUuid": "5b7fa39e_f81ad49e",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5c1e08e_c39ee437",
         "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fdd0d326_faf5d338",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T23:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c1e08e_c39ee437",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "733c1924_7bf1055e",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc1b9b6_7989bd9d",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T23:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733c1924_7bf1055e",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "1bd88a4c_8c7b2009",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T23:04:27Z",
+      "side": 1,
+      "message": "kinuko@ is correct, GetLoadingTaskRunner() will only return the per-thread default for a MockFetchContext or after the real context is detached.",
+      "parentUuid": "07a936a8_08cadab7",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e014fc8_c2bd2e3d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 3
@@ -102,6 +174,24 @@
       "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eca930b_28995dbd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-10T23:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e014fc8_c2bd2e3d",
+      "revId": "8c62faebc3803d96b7562238c033833071d2e0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
