@@ -59,6 +59,7 @@ void PopulateResourceResponse(
   response->head.request_time = request->request_time();
   response->head.response_time = request->response_time();
   response->head.headers = request->response_headers();
+  response->head.url = request->url();
   request->GetCharset(&response->head.charset);
   response->head.content_length = request->GetExpectedContentSize();
   request->GetMimeType(&response->head.mime_type);

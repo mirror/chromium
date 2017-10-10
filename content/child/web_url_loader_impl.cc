@@ -210,6 +210,7 @@ int GetInfoFromDataURL(const GURL& url,
     return result;
 
   info->headers = headers;
+  info->url = url;
   info->mime_type.swap(mime_type);
   info->charset.swap(charset);
   info->content_length = data->length();

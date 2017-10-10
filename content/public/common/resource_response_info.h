@@ -44,6 +44,9 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // The response headers or NULL if the URL type does not support headers.
   scoped_refptr<net::HttpResponseHeaders> headers;
 
+  // URL where the response comes from (must not be identical to request URL)
+  GURL url;
+
   // The mime type of the response.  This may be a derived value.
   std::string mime_type;
 

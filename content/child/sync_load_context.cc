@@ -76,6 +76,7 @@ bool SyncLoadContext::OnReceivedRedirect(const net::RedirectInfo& redirect_info,
 
 void SyncLoadContext::OnReceivedResponse(const ResourceResponseInfo& info) {
   response_->headers = info.headers;
+  response_->url = info.url;
   response_->mime_type = info.mime_type;
   response_->charset = info.charset;
   response_->request_time = info.request_time;

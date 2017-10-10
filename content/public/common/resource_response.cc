@@ -16,6 +16,7 @@ scoped_refptr<ResourceResponse> ResourceResponse::DeepCopy() const {
     new_response->head.headers =
         new net::HttpResponseHeaders(head.headers->raw_headers());
   }
+  new_response->head.url = head.url;
   new_response->head.mime_type = head.mime_type;
   new_response->head.charset = head.charset;
   new_response->head.has_major_certificate_errors =
