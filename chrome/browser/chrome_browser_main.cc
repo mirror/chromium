@@ -66,7 +66,6 @@
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/first_run/first_run.h"
-#include "chrome/browser/geolocation/chrome_access_token_store.h"
 #include "chrome/browser/gpu/gpu_profile_cache.h"
 #include "chrome/browser/gpu/three_d_api_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
@@ -294,14 +293,11 @@ using content::BrowserThread;
 
 namespace {
 
-// A provider of Geolocation services to override AccessTokenStore.
+// Embedder-provided Geolocation services. Chrome doesn't currently override any
+// defaults.
 class ChromeGeolocationDelegate : public device::GeolocationDelegate {
  public:
   ChromeGeolocationDelegate() = default;
-
-  scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
-    return new ChromeAccessTokenStore();
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ChromeGeolocationDelegate);
