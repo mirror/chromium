@@ -284,8 +284,7 @@ void TaskPostedBeforeStart(PlatformThreadRef* platform_thread_ref,
 }  // namespace
 
 // Verify that 2 tasks posted before Start() to a SchedulerWorkerPoolImpl with
-// more than 2 workers are scheduled on different workers when Start() is
-// called.
+// more than 2 workers run on different workers when Start() is called.
 TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest,
        PostTasksBeforeStart) {
   PlatformThreadRef task_1_thread_ref;
@@ -296,8 +295,9 @@ TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest,
                                  WaitableEvent::InitialState::NOT_SIGNALED);
 
   // This event is used to prevent a task from completing before the other task
-  // is scheduled. If that happened, both tasks could run on the same worker and
-  // this test couldn't verify that the correct number of workers were woken up.
+  // starts running. If that happened, both tasks could run on the same worker
+  // and this test couldn't verify that the correct number of workers were woken
+  // up.
   WaitableEvent barrier(WaitableEvent::ResetPolicy::MANUAL,
                         WaitableEvent::InitialState::NOT_SIGNALED);
 
@@ -320,11 +320,11 @@ TEST_F(TaskSchedulerWorkerPoolImplPostTaskBeforeStartTest,
 
   StartWorkerPool(TimeDelta::Max(), kNumWorkersInWorkerPool);
 
-  // Tasks should be scheduled shortly after the pool is started.
+  // Tasks should run shortly after the pool is started.
   task_1_scheduled.Wait();
   task_2_scheduled.Wait();
 
-  // Tasks should be scheduled on different threads.
+  // Tasks should run on different threads.
   EXPECT_NE(task_1_thread_ref, task_2_thread_ref);
 
   barrier.Signal();
