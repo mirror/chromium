@@ -3547,6 +3547,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(TabUnderNavigationThrottle::kBlockTabUnders)},
 #endif  // defined(OS_ANDROID)
 
+#if defined(OS_MACOSX)
+    {"serialize-coreaudio-pause-resume",
+     flag_descriptions::kSerializeCoreAudioPauseResumeName,
+     flag_descriptions::kSerializeCoreAudioPauseResumeDescription, kOsMac,
+     FEATURE_VALUE_TYPE(media::kSerializeCoreAudioPauseResume)},
+#endif  // defined(OS_MACOSX)
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
