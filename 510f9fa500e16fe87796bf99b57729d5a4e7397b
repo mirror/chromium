@@ -121,6 +121,24 @@
       "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e579e61_8dbe0473",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T19:54:33Z",
+      "side": 1,
+      "message": "Correct. Thanks!\n\n(Yep, that\u0027s one example where the issue manifests as a bug. I\u0027d actually be curious to see how many higher-level tests break with an empty preload list.)",
+      "parentUuid": "b0ca9467_cf5c897b",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
