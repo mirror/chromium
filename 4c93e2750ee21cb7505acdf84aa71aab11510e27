@@ -46,6 +46,30 @@
       "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1619ff5_eff9590a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T18:22:35Z",
+      "side": 1,
+      "message": "I wonder if we could make the parent of all the new classes, SessionDurationUpdater, not a KeyedService, but instead owned by the respective FeatureTracker. That way, you could possibly re-use the class as it is, and remove the factory, and just pass in the pref name in the constructor. For the pref registration, you could put that static method on the FeatureTracker instead.\n\nDo you think you could look into whether it would be possible doing something like that instead?",
+      "parentUuid": "707b4044_b2a74b21",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
