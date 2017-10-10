@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fbae7f3_3ef01ccb",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Could you change this back to check. If reallocation happens then whoever has old pointer will read/write god knows which data.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0415d021_067a3a3f",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7df3ed4_3d9dad1c",
+        "filename": "components/sync/driver/about_sync_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "It is not a security threat, but I\u0027d revert this one too.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e08c71_515f1ad6",
+        "filename": "components/sync/driver/data_type_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Pop on empty is undefined behavior. Should be fine so I\u0027m not insisting.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627c9038_e639d79e",
+        "filename": "components/sync/engine_impl/commit_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Could you revert this one to CHECK. If we miss this we\u0027ll be sending users passwords to server in plaintext.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45be822c_5ba5fea0",
+        "filename": "components/sync/engine_impl/get_commit_ids.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure, I\u0027d probably leave this as a CHECK. If we run into this issue it will go quiet for a long time.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f3c858_a7180461",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "This one is fine since I know it is coming from direct call from LoopbackConnectionManager. If it was comig from network better error handling would be needed here.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d4d818_093bb340",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Could you revert checks on all iterators. end() doesn\u0027t point to nullptr. Dereferencing it is undefined behavior, it wouldn\u0027t crash, but instead would modify someone else\u0027s memory. Typically vector\u0027s end points right behind the array, map\u0027s points to some random memory location.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823812e6_505ae6d8",
+        "filename": "components/sync/syncable/model_neutral_mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "Could you change back this one as well.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e797360_85e7ac51",
+        "filename": "components/sync/syncable/model_neutral_mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "This one too.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f82b0ed_3ea8ac2a",
+        "filename": "components/sync/syncable/mutable_entry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "This one too.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c78218d_d1d6e702",
+        "filename": "components/sync/syncable/write_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-10-10T19:07:30Z",
+      "side": 1,
+      "message": "This one too.",
+      "revId": "8978d71f7198cf6da3d31facda02e294ed36d639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
