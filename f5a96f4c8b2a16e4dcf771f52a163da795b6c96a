@@ -22,6 +22,30 @@
       "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4726032e_409edce2",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-10T21:38:52Z",
+      "side": 0,
+      "message": "this CL is based on the other one, this will be fixed after a rebase.\nmark it as resolved",
+      "parentUuid": "f98be9ca_9f219666",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
