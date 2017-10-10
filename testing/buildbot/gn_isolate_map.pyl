@@ -1169,6 +1169,11 @@
     "label": "//android_webview/tools/automated_ui_tests:webview_ui_test_app_test_apk",
     "type": "console_test_launcher",
   },
+  "webui_closure_compile": {
+    "label": "//third_party/closure_compiler:closure_compile",
+    "type": "script",
+    "script": "//testing/scripts/run_webui_check.py",
+  },
   "wm_unittests": {
     "label": "//ui/wm:wm_unittests",
     "type": "windowed_test_launcher",
