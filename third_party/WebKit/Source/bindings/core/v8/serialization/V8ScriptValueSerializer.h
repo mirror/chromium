@@ -101,17 +101,30 @@ class CORE_EXPORT V8ScriptValueSerializer
                                size_t* actual_size) override;
   void FreeBufferMemory(void* buffer) override;
 
+  v8::Maybe<uint32_t> StartBundle(const uint8_t* image_version,
+                                  size_t version_size);
+  v8::Maybe<uint32_t> StartItem(size_t item_size,
+                                v8::ValueSerializer::VersionPredicate);
+  std::pair<uint8_t*, size_t> NextItemBuffer();
+  void ReleaseItemBuffer();
+  void EndItem();
+  bool EndBundle();
+
   RefPtr<ScriptState> script_state_;
   RefPtr<SerializedScriptValue> serialized_script_value_;
   v8::ValueSerializer serializer_;
   const Transferables* transferables_ = nullptr;
   const ExceptionState* exception_state_ = nullptr;
   WebBlobInfoArray* blob_info_array_ = nullptr;
+  SerializedScriptValue::BundleArray* bundle_array_ = nullptr;
   ArrayBufferArray shared_array_buffers_;
   Options::WasmSerializationPolicy wasm_policy_;
   bool for_storage_ = false;
 #if DCHECK_IS_ON()
   bool serialize_invoked_ = false;
+  bool bundle_opened_ = false;
+  bool bundle_item_opened_ = false;
+  bool bundle_item_buffer_locked_ = false;
 #endif
 };
 

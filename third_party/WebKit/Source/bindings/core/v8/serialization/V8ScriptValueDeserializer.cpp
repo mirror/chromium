@@ -591,4 +591,80 @@ V8ScriptValueDeserializer::GetWasmModuleFromId(v8::Isolate* isolate,
   return v8::MaybeLocal<v8::WasmCompiledModule>();
 }
 
+bool V8ScriptValueDeserializer::OpenBundle(uint32_t bundle_id) {
+  if (!bundle_array_)
+    return false;
+
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_opened_) << "OpenBundle() called twice without CloseBundle()";
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  if (bundle_id >= bundle_array_->size()) {
+    return false;
+  }
+
+  opened_bundle_ = &(*bundle_array_)[bundle_id];
+#if DCHECK_IS_ON()
+  bundle_opened_ = true;
+#endif  // DCHECK_IS_ON()
+  return true;
+}
+
+v8::Maybe<size_t> V8ScriptValueDeserializer::OpenItem(uint32_t item_id) {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_opened_) << "OpenItem() called without OpenBundle()";
+  DCHECK(!bundle_item_opened_) << "OpenItem() called twice without CloseItem()";
+  bundle_item_opened_ = true;
+#endif  // DCHECK_IS_ON()
+
+  if (item_id >= opened_bundle_->items.size())
+    return v8::Nothing<size_t>();
+
+  opened_bundle_item_ = &opened_bundle_->items[item_id];
+// TODO: DCHECK that the bundle's predicate evaluates to true.
+
+#if DCHECK_IS_ON()
+  bundle_item_opened_ = true;
+#endif  // DCHECK_IS_ON()
+  return v8::Just<size_t>(opened_bundle_item_->data.size());
+}
+
+std::pair<const uint8_t*, size_t> V8ScriptValueDeserializer::NextItemBuffer() {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_opened_) << "NextItemBuffer() called without OpenItem()";
+  DCHECK(!bundle_item_buffer_locked_)
+      << "NextItemBuffer() called twice without ReleaseItemBuffer()";
+  bundle_item_buffer_locked_ = true;
+#endif  // DCHECK_IS_ON()
+
+  return std::make_pair(opened_bundle_item_->data.data(),
+                        opened_bundle_item_->data.size());
+}
+
+void V8ScriptValueDeserializer::ReleaseItemBuffer() {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_buffer_locked_)
+      << "ReleaseItemBuffer() called without NextItemBuffer()";
+  bundle_item_buffer_locked_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
+void V8ScriptValueDeserializer::CloseItem() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_buffer_locked_)
+      << "CloseItem() called before ReleaseItemBuffer()";
+  DCHECK(bundle_item_opened_) << "CloseItem() called without OpenItem()";
+  bundle_item_opened_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
+void V8ScriptValueDeserializer::CloseBundle() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_opened_) << "CloseBundle() called before CloseItem()";
+  DCHECK(bundle_opened_) << "CloseBundle() called without OpenBundle()";
+  bundle_opened_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
 }  // namespace blink

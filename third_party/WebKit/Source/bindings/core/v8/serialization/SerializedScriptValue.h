@@ -67,6 +67,27 @@ class CORE_EXPORT SerializedScriptValue
   using TransferredWasmModulesArray =
       WTF::Vector<v8::WasmCompiledModule::TransferrableModule>;
 
+  // Packages pieces of data that are conditionally fetched for deserialization.
+  //
+  // Currently used to serialize WebAssembly Modules to IndexedDB.
+  struct Bundle {
+    // Data whose deserialization does not need a continuous linear address
+    // space.
+    struct Item {
+      // Determines if the item is available for deserialization.
+      v8::ValueSerializer::VersionPredicate predicate;
+      // Points to the Blob that contains the item's data.
+      size_t blob_index;
+      // Guaranteed to be populated if the predicate is true.
+      Vector<uint8_t> data;
+    };
+
+    // Used to evaluate the predicate of each item in the bundle.
+    String version;
+    Vector<Item> items;
+  };
+  using BundleArray = Vector<Bundle>;
+
   // Increment this for each incompatible change to the wire format.
   // Version 2: Added StringUCharTag for UChar v8 strings.
   // Version 3: Switched to using uuids as blob data identifiers.
@@ -125,6 +146,7 @@ class CORE_EXPORT SerializedScriptValue
     WebBlobInfoArray* blob_info = nullptr;
     WasmSerializationPolicy wasm_policy = kTransfer;
     StoragePolicy for_storage = kNotForStorage;
+    BundleArray* bundles = nullptr;
   };
   static RefPtr<SerializedScriptValue> Serialize(v8::Isolate*,
                                                  v8::Local<v8::Value>,
