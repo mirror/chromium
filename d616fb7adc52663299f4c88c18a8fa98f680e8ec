@@ -25,6 +25,64 @@
     },
     {
       "key": {
+        "uuid": "34af2246_e5a5650a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "agreed",
+      "parentUuid": "ea84b181_65c02923",
+      "range": {
+        "startLine": 204,
+        "startChar": 57,
+        "endLine": 205,
+        "endChar": 56
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f3c43f_4889a1e6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "just to check, is tlsdated always listening by the time that chrome makes this call at startup? i spent a lot of time trying to clean up d-bus log spam a while back caused by chrome calling services before they were available.\n\nif it isn\u0027t guaranteed to be ready, it\u0027d probably be good to give this class to register a callback that\u0027ll be run when it\u0027s available -- see ServiceInitiallyAvailable in SystemClockClient, and the various WaitForServiceToBeAvailable methods in other classes in //chromeos/dbus.",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f85c6d_867811c8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "is this message just for your own debugging? DVLOG gets compiled out of released binaries, afaik.",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33236841_cf9b8d3b",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 35
@@ -94,6 +152,30 @@
     },
     {
       "key": {
+        "uuid": "91c52b50_8eb577fe",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "i think we usually just use |foo| around variables, not classes. it\u0027s usually obvious that something like SystemClockClient is a class or method name, but it\u0027s less obvious when you\u0027re referring to a variable named \"time\" or \"now\" or \"this\" or whatever, so we put pipes around them to make it clearer.",
+      "parentUuid": "a573830e_f3d8e5af",
+      "range": {
+        "startLine": 327,
+        "startChar": 9,
+        "endLine": 327,
+        "endChar": 26
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f551600e_4b974c40",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 35
@@ -117,6 +199,108 @@
     },
     {
       "key": {
+        "uuid": "47787338_efb75a3a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "nit: keep overrides at the end of the list of methods (and also make this public to match the PowerManagerClient::Observer method)",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c97992a_7814d949",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "nit: s/Call/Called/",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a680b4ad_1029a877",
+        "filename": "chromeos/dbus/fake_system_clock_client.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "delete this (see below)",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a218b4d9_132b1bd9",
+        "filename": "chromeos/dbus/fake_system_clock_client.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "nit: add a comment here like \"Calls SystemClockUpdated for |observers_|.\"",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d46b51_d5fb3a75",
+        "filename": "chromeos/dbus/fake_system_clock_client.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "nit: i think we usually put non-overridden methods first, with inline methods on top, e.g.:\n\n  c\u0027tor\n  d\u0027tor\n\n  inlined methods\n\n  non-overridden methods\n\n  overrides",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d281abe8_fa5257a3",
+        "filename": "chromeos/dbus/fake_system_clock_client.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "delete this; you\u0027re not using it",
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60592b8e_1c0aa18f",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 35
@@ -128,6 +312,30 @@
       "writtenOn": "2017-10-10T15:20:53Z",
       "side": 1,
       "message": "nit: Add \".\" for consistency?",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bf002d_424b1612",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T18:19:17Z",
+      "side": 1,
+      "message": "i think it\u0027s more common to not put periods on the end of log messages in chrome, but either way\u0027s fine with me (this file already has both styles)",
+      "parentUuid": "60592b8e_1c0aa18f",
       "range": {
         "startLine": 36,
         "startChar": 64,
