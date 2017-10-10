@@ -240,7 +240,7 @@ void TrustStoreMac::GetTrust(const scoped_refptr<ParsedCertificate>& cert,
       IsSecCertificateTrustedForPolicy(cert_handle, policy_oid_);
   switch (trust_status) {
     case TrustStatus::TRUSTED:
-      *trust = CertificateTrust::ForTrustAnchor();
+      *trust = CertificateTrust::ForTrustAnchorOrLeaf();
       return;
     case TrustStatus::DISTRUSTED:
       *trust = CertificateTrust::ForDistrusted();

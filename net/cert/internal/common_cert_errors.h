@@ -26,18 +26,20 @@ NET_EXPORT extern const CertErrorId kValidityFailedNotBefore;
 // from other revocation mechanisms).
 NET_EXPORT extern const CertErrorId kDistrustedByTrustStore;
 
+// The certificate is a trust anchor, but was attempted to be used as an
+// end-entity in a chain of length 1.
+NET_EXPORT extern const CertErrorId kTrustAnchorUsedAsLeaf;
+
+// The certificate is trusted as an end-entity, but was attempted to be used as
+// a trust anchor.
+NET_EXPORT extern const CertErrorId kTrustLeafUsedAsAnchor;
+
 // The certificate disagrees on what the signature algorithm was
 // (Certificate.signatureAlgorithm != TBSCertificate.signature).
 NET_EXPORT extern const CertErrorId kSignatureAlgorithmMismatch;
 
 // Certificate verification was called with an empty chain.
 NET_EXPORT extern const CertErrorId kChainIsEmpty;
-
-// Certificate verification was called with a chain of length 1, which is not
-// currently supported (i.e. the target certificate cannot also be a trusted
-// certificate).
-// TODO(eroman): Remove this.
-NET_EXPORT extern const CertErrorId kChainIsLength1;
 
 // The certificate contains an unknown extension which is marked as critical.
 NET_EXPORT extern const CertErrorId kUnconsumedCriticalExtension;

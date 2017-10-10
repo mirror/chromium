@@ -92,23 +92,32 @@ void TrustStoreNSS::GetTrust(const scoped_refptr<ParsedCertificate>& cert,
     return;
   }
 
-  int trust_flags = SEC_GET_TRUST_FLAGS(&trust, trust_type_);
+  int relevant_trust_flags =
+      SEC_GET_TRUST_FLAGS(&trust, trust_type_) &
+      (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED_CA | CERTDB_TRUSTED);
 
   // Determine if the certificate is distrusted.
-  if ((trust_flags & (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED_CA |
-                      CERTDB_TRUSTED)) == CERTDB_TERMINAL_RECORD) {
+  if (relevant_trust_flags == CERTDB_TERMINAL_RECORD) {
     *out_trust = CertificateTrust::ForDistrusted();
     return;
   }
 
-  // Determine if the certificate is a trust anchor.
-  if ((trust_flags & CERTDB_TRUSTED_CA) == CERTDB_TRUSTED_CA) {
-    *out_trust = CertificateTrust::ForTrustAnchor();
+  if (relevant_trust_flags ==
+      (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED_CA | CERTDB_TRUSTED)) {
+    *out_trust = CertificateTrust::ForTrustAnchorOrLeaf();
     return;
   }
 
-  // TODO(mattm): handle trusted server certs (CERTDB_TERMINAL_RECORD +
-  // CERTDB_TRUSTED)
+  if (relevant_trust_flags == (CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED)) {
+    *out_trust = CertificateTrust::ForTrustLeaf();
+    return;
+  }
+
+  // Determine if the certificate is a trust anchor.
+  if ((relevant_trust_flags & CERTDB_TRUSTED_CA) == CERTDB_TRUSTED_CA) {
+    *out_trust = CertificateTrust::ForTrustAnchor();
+    return;
+  }
 
   *out_trust = CertificateTrust::ForUnspecified();
   return;

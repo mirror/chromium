@@ -18,6 +18,18 @@ CertificateTrust CertificateTrust::ForTrustAnchorEnforcingConstraints() {
   return result;
 }
 
+CertificateTrust CertificateTrust::ForTrustAnchorOrLeaf() {
+  CertificateTrust result;
+  result.type = CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF;
+  return result;
+}
+
+CertificateTrust CertificateTrust::ForTrustLeaf() {
+  CertificateTrust result;
+  result.type = CertificateTrustType::TRUSTED_LEAF;
+  return result;
+}
+
 CertificateTrust CertificateTrust::ForUnspecified() {
   CertificateTrust result;
   result.type = CertificateTrustType::UNSPECIFIED;
@@ -34,9 +46,11 @@ bool CertificateTrust::IsTrustAnchor() const {
   switch (type) {
     case CertificateTrustType::DISTRUSTED:
     case CertificateTrustType::UNSPECIFIED:
+    case CertificateTrustType::TRUSTED_LEAF:
       return false;
     case CertificateTrustType::TRUSTED_ANCHOR:
     case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+    case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
       return true;
   }
 
@@ -51,6 +65,8 @@ bool CertificateTrust::IsDistrusted() const {
     case CertificateTrustType::UNSPECIFIED:
     case CertificateTrustType::TRUSTED_ANCHOR:
     case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+    case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+    case CertificateTrustType::TRUSTED_LEAF:
       return false;
   }
 
@@ -65,6 +81,8 @@ bool CertificateTrust::HasUnspecifiedTrust() const {
     case CertificateTrustType::DISTRUSTED:
     case CertificateTrustType::TRUSTED_ANCHOR:
     case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+    case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+    case CertificateTrustType::TRUSTED_LEAF:
       return false;
   }
 
