@@ -5,6 +5,7 @@
 #include "components/autofill/content/browser/content_autofill_driver.h"
 
 #include <utility>
+#include <vector>
 
 #include "base/command_line.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
@@ -177,12 +178,18 @@ gfx::RectF ContentAutofillDriver::TransformBoundingBoxToViewportCoordinates(
 }
 
 void ContentAutofillDriver::DidInteractWithCreditCardForm() {
-  // Notify the WebContents about credit card inputs on HTTP pages.
+  // If there is an autofill manager, notify its client about credit card
+  // inputs on non-secure pages.
+  if (!autofill_manager_)
+    return;
+
   content::WebContents* contents =
       content::WebContents::FromRenderFrameHost(render_frame_host_);
   if (contents->GetVisibleURL().SchemeIsCryptographic())
     return;
-  contents->OnCreditCardInputShownOnHttp();
+
+  autofill_manager_->client()->DidInteractWithCreditCardInput(
+      render_frame_host_);
 }
 
 void ContentAutofillDriver::FormsSeen(const std::vector<FormData>& forms,
