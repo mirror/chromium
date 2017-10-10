@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+.reset-overflow {
+  counter-reset: c 2147483646;
+}
+
+.reset-overflow h3:before {
+  counter-increment: c 1;
+}
+
+.increment-overflow {
+  counter-reset: c 0;
+}
+
+.increment-overflow h3:before {
+  counter-increment: c 2147483647;
+}
+
+.reset-underflow {
+  counter-reset: c -2147483646;
+}
+
+.reset-underflow h3:before {
+  counter-increment: c -1;
+}
+
+.increment-underflow {
+  counter-reset: c 0;
+}
+
+.increment-underflow h3:before {
+  counter-increment: c -2147483647;
+}
+
+h3::before {
+  content: counter(c);
+}
+</style>
+<div id="headings">
+<h3 id="first">First</h3>
+<h3 id="second">Second</h3>
+<h3 id="third">Third</h3>
+</div>
+<script>
+var headings = document.getElementById('headings');
+
+var items = [
+  document.getElementById('first'),
+  document.getElementById('second'),
+  document.getElementById('third')
+]
+
+function assert_list_has_valid_counters() {
+  for (var i = 1; i < items.length; i++) {
+    var prev_value = parseInt(window.internals.counterValue(items[i - 1]));
+    var value = parseInt(window.internals.counterValue(items[i]));
+    assert_greater_than_equal(value, prev_value);
+  }
+}
+
+test(function() {
+  headings.className = 'reset-overflow';
+  assert_list_has_valid_counters();
+}, 'large reset does not overflow');
+
+test(function() {
+  headings.className = 'increment-overflow';
+}, 'large increment does not overflow');
+
+test(function() {
+  headings.className = 'reset-underflow';
+}, 'small reset does not underflow');
+
+test(function() {
+  headings.className = 'increment-underflow';
+}, 'small increment does not underflow');
+
+</script>

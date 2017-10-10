@@ -142,11 +142,13 @@ CounterNode* CounterNode::PreviousInPreOrder() const {
 }
 
 int CounterNode::ComputeCountInParent() const {
+  // https://drafts.csswg.org/css-lists-3/#valdef-counter-reset-custom-ident-integer
+  // As allowed by the spec, we clamp the counter to be representable by an int.
   int increment = ActsAsReset() ? 0 : value_;
   if (previous_sibling_)
-    return previous_sibling_->count_in_parent_ + increment;
+    return WTF::MakeClampedNum(previous_sibling_->count_in_parent_) + increment;
   DCHECK_EQ(parent_->first_child_, this);
-  return parent_->value_ + increment;
+  return WTF::MakeClampedNum(parent_->value_) + increment;
 }
 
 void CounterNode::AddLayoutObject(LayoutCounter* value) {
