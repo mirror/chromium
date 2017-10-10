@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9366f696_c124742e",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T19:46:03Z",
+      "side": 1,
+      "message": "This explicit value and MAX+1 is required by media precommit, I had to add it :(",
+      "parentUuid": "bca08f2f_69c59ae4",
+      "range": {
+        "startLine": 233,
+        "startChar": 21,
+        "endLine": 233,
+        "endChar": 22
+      },
+      "revId": "0ef2d2c5ec4cfcfafbf485ac3fd6c73d60981f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67139273_1c660339",
         "filename": "media/audio/audio_output_resampler.cc",
         "patchSetId": 3
