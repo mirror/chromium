@@ -19,6 +19,7 @@ cd "$1"
   --enable-deterministic-archives \
   --enable-gold=default \
   --enable-plugins \
+  --enable-targets=x86_64-linux,aarch64-linux,aarch64-elf,i686-linux-elf \
   --enable-threads \
   --prefix=/build/output
 
