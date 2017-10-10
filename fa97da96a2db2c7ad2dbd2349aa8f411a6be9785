@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5d4c50_dcc6f8e2",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T21:07:16Z",
+      "side": 1,
+      "message": "Any reason this isn\u0027t just a member variable? This will break if we ever support multiprofile.",
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870df9c5_873c38f7",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-10T21:07:16Z",
+      "side": 1,
+      "message": "use suffixes instead, and just add all the namespaces to this metric",
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
