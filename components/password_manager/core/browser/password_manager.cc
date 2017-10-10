@@ -49,6 +49,8 @@ namespace password_manager {
 namespace {
 
 const char kSpdyProxyRealm[] = "/SpdyProxy";
+const char kGoogleChangePasswordPageUrl[] =
+    "https://myaccount.google.com/signinoptions/password";
 
 // Shorten the name to spare line breaks. The code provides enough context
 // already.
@@ -199,6 +201,10 @@ PasswordFormManager* FindMatchedManager(
   return matched_manager_it == pending_login_managers.end()
              ? nullptr
              : matched_manager_it->get();
+}
+
+bool IsGaiaChangePasswordForm(const PasswordForm& form) {
+  return form.origin == kGoogleChangePasswordPageUrl;
 }
 
 }  // namespace
@@ -769,10 +775,8 @@ void PasswordManager::OnLoginSuccessful() {
     }
   }
 
-  if (base::FeatureList::IsEnabled(features::kDropSyncCredential)) {
-    DCHECK(provisional_save_manager_->submitted_form());
-    if (!client_->GetStoreResultFilter()->ShouldSave(
-            *provisional_save_manager_->submitted_form())) {
+  DCHECK(provisional_save_manager_->submitted_form());
+  if (ShouldDropSyncCredential(*provisional_save_manager_->submitted_form())) {
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
       // When |username_value| is empty, it's not clear whether the submitted
@@ -790,13 +794,14 @@ void PasswordManager::OnLoginSuccessful() {
         }
       }
 #endif
-      provisional_save_manager_->WipeStoreCopyIfOutdated();
+      if (!IsGaiaChangePasswordForm(
+              *provisional_save_manager_->submitted_form()))
+        provisional_save_manager_->WipeStoreCopyIfOutdated();
       client_->GetMetricsRecorder().RecordProvisionalSaveFailure(
           PasswordManagerMetricsRecorder::SYNC_CREDENTIAL, main_frame_url_,
           provisional_save_manager_->observed_form().origin, logger.get());
       provisional_save_manager_.reset();
       return;
-    }
   }
 
   provisional_save_manager_->LogSubmitPassed();
@@ -981,6 +986,13 @@ PasswordFormManager* PasswordManager::GetMatchingPendingManager(
     }
   }
   return matched_manager;
+}
+
+bool PasswordManager::ShouldDropSyncCredential(
+    const PasswordForm& submitted_form) {
+  return base::FeatureList::IsEnabled(features::kDropSyncCredential) &&
+         (!client_->GetStoreResultFilter()->ShouldSave(submitted_form) ||
+          IsGaiaChangePasswordForm(submitted_form));
 }
 
 }  // namespace password_manager

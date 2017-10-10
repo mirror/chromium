@@ -244,6 +244,8 @@ class PasswordManager : public LoginModel {
   PasswordFormManager* GetMatchingPendingManager(
       const autofill::PasswordForm& form);
 
+  bool ShouldDropSyncCredential(const autofill::PasswordForm& submitted_form);
+
   // Note about how a PasswordFormManager can transition from
   // pending_login_managers_ to provisional_save_manager_ and the infobar.
   //
