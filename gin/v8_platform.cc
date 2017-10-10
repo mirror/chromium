@@ -220,6 +220,11 @@ void V8Platform::CallOnBackgroundThread(
 
 void V8Platform::CallOnForegroundThread(v8::Isolate* isolate, v8::Task* task) {
   PerIsolateData* data = PerIsolateData::From(isolate);
+  PerIsolateData::PerIsolateDataScope scope(data);
+  if (!scope.IsValid()) {
+    delete task;
+    return;
+  }
   if (data->access_mode() == IsolateHolder::kUseLocker) {
     data->task_runner()->PostTask(
         FROM_HERE, base::Bind(RunWithLocker, base::Unretained(isolate),
@@ -234,6 +239,11 @@ void V8Platform::CallDelayedOnForegroundThread(v8::Isolate* isolate,
                                                v8::Task* task,
                                                double delay_in_seconds) {
   PerIsolateData* data = PerIsolateData::From(isolate);
+  PerIsolateData::PerIsolateDataScope scope(data);
+  if (!scope.IsValid()) {
+    delete task;
+    return;
+  }
   if (data->access_mode() == IsolateHolder::kUseLocker) {
     data->task_runner()->PostDelayedTask(
         FROM_HERE,
@@ -249,6 +259,11 @@ void V8Platform::CallDelayedOnForegroundThread(v8::Isolate* isolate,
 void V8Platform::CallIdleOnForegroundThread(v8::Isolate* isolate,
                                             v8::IdleTask* task) {
   PerIsolateData* data = PerIsolateData::From(isolate);
+  PerIsolateData::PerIsolateDataScope scope(data);
+  if (!scope.IsValid()) {
+    delete task;
+    return;
+  }
   DCHECK(data->idle_task_runner());
   if (data->access_mode() == IsolateHolder::kUseLocker) {
     data->idle_task_runner()->PostIdleTask(

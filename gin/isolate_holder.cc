@@ -91,7 +91,13 @@ IsolateHolder::IsolateHolder(const intptr_t* reference_table,
   SetUp(nullptr);
 }
 
+void IsolateHolder::WillBeDestroyed() {
+  isolate_data_->WillBeDestroyed();
+}
+
 IsolateHolder::~IsolateHolder() {
+  // Call WillBeDestroyed again, in case it has not yet been called.
+  isolate_data_->WillBeDestroyed();
   if (task_observer_.get())
     base::MessageLoop::current()->RemoveTaskObserver(task_observer_.get());
 #if defined(OS_WIN)
@@ -106,8 +112,8 @@ IsolateHolder::~IsolateHolder() {
   }
 #endif
   isolate_memory_dump_provider_.reset();
-  isolate_data_.reset();
   isolate_->Dispose();
+  isolate_data_.reset();
   isolate_ = nullptr;
 }
 
