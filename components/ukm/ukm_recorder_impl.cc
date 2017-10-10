@@ -82,7 +82,11 @@ void StoreEntryProto(const mojom::UkmEntry& in, Entry* out) {
 
 }  // namespace
 
-UkmRecorderImpl::UkmRecorderImpl() : recording_enabled_(false) {}
+UkmRecorderImpl::UkmRecorderImpl(
+    scoped_refptr<base::SequencedTaskRunner> task_runner)
+    : recording_enabled_(false),
+      task_runner_(task_runner),
+      weak_factory_(this) {}
 UkmRecorderImpl::~UkmRecorderImpl() = default;
 
 void UkmRecorderImpl::EnableRecording() {
@@ -96,11 +100,13 @@ void UkmRecorderImpl::DisableRecording() {
 }
 
 void UkmRecorderImpl::Purge() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   sources_.clear();
   entries_.clear();
 }
 
 void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   for (const auto& kv : sources_) {
     Source* proto_source = report->add_sources();
     kv.second->PopulateProto(proto_source);
@@ -120,7 +126,28 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
 
 void UkmRecorderImpl::UpdateSourceURL(ukm::SourceId source_id,
                                       const GURL& url) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (task_runner_->RunsTasksInCurrentSequence()) {
+    UpdateSourceURLInternal(source_id, url);
+    return;
+  }
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&UkmRecorderImpl::UpdateSourceURLInternal,
+                                weak_factory_.GetWeakPtr(), source_id, url));
+}
+
+void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
+  if (task_runner_->RunsTasksInCurrentSequence()) {
+    AddEntryInternal(std::move(entry));
+    return;
+  }
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&UkmRecorderImpl::AddEntryInternal,
+                                weak_factory_.GetWeakPtr(), std::move(entry)));
+}
+
+void UkmRecorderImpl::UpdateSourceURLInternal(ukm::SourceId source_id,
+                                              const GURL& url) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (!recording_enabled_) {
     RecordDroppedSource(DroppedDataReason::RECORDING_DISABLED);
@@ -145,8 +172,8 @@ void UkmRecorderImpl::UpdateSourceURL(ukm::SourceId source_id,
   sources_.insert(std::make_pair(source_id, std::move(source)));
 }
 
-void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+void UkmRecorderImpl::AddEntryInternal(mojom::UkmEntryPtr entry) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (!recording_enabled_) {
     RecordDroppedEntry(DroppedDataReason::RECORDING_DISABLED);
@@ -167,6 +194,7 @@ void UkmRecorderImpl::AddEntry(mojom::UkmEntryPtr entry) {
 }
 
 void UkmRecorderImpl::StoreWhitelistedEntries() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   const auto entries =
       base::SplitString(GetWhitelistEntries(), ",", base::TRIM_WHITESPACE,
                         base::SPLIT_WANT_NONEMPTY);
