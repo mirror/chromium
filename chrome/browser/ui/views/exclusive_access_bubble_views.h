@@ -52,6 +52,9 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
   // Repositions |popup_| if it is visible.
   void RepositionIfVisible();
 
+  // Hides |popup_| before timeout if it is visible.
+  void Interrupt();
+
   views::View* GetView();
 
  private:
@@ -90,6 +93,8 @@ class ExclusiveAccessBubbleViews : public ExclusiveAccessBubble,
 
   // views::LinkListener override:
   void LinkClicked(views::Link* source, int event_flags) override;
+
+  void RunHideCallbackIfNeeded(ExclusiveAccessBubbleHideReason reason);
 
   ExclusiveAccessBubbleViewsContext* const bubble_view_context_;
 
