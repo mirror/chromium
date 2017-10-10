@@ -189,8 +189,14 @@ StyleRecalcChange ComputedStyle::StylePropagationDiff(
       old_style->JustifyItems() != new_style->JustifyItems())
     return kInherit;
 
-  if (*old_style == *new_style)
-    return DiffPseudoStyles(*old_style, *new_style);
+  if (*old_style == *new_style) {
+    StyleRecalcChange pseudo_change = DiffPseudoStyles(*old_style, *new_style);
+    if (pseudo_change != kNoChange)
+      return pseudo_change;
+    if (old_style->CustomFieldsEqual(*new_style))
+      return kNoChange;
+    return kCustomFlags;
+  }
 
   if (old_style->HasExplicitlyInheritedProperties())
     return kInherit;

@@ -52,6 +52,7 @@ enum BoxSide { kBSTop, kBSRight, kBSBottom, kBSLeft };
 // See core/dom/stylerecalc.md for an explanation on what each state means
 enum StyleRecalcChange {
   kNoChange,
+  kCustomFlags,
   kNoInherit,
   kUpdatePseudoElements,
   kIndependentInherit,
