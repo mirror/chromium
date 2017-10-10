@@ -16,6 +16,24 @@
       "revId": "a3564c2252a6007727899e26eb1facb6f2e245eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a26617f_f972fe21",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-10T16:45:38Z",
+      "side": 1,
+      "message": "does these show up in feedback report?\n\ndoes JSON.stringify() throw any errors on bad input?",
+      "parentUuid": "761a6eee_3694c068",
+      "revId": "a3564c2252a6007727899e26eb1facb6f2e245eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
