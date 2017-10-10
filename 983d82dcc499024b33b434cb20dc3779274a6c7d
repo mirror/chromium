@@ -37,6 +37,167 @@
     },
     {
       "key": {
+        "uuid": "3500d02b_c7770cce",
+        "filename": "content/network/network_context.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this makes sense.  RCMI\u0027s look to be per-document, and this only allows one for the entire network context.  Given that this isn\u0027t being accessed (?), I\u0027d just leave it out of the CL.",
+      "range": {
+        "startLine": 145,
+        "startChar": 18,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12edc057_52698ae8",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "I\u0027m biased against using strong bindings; instead, I\u0027d suggest having the bindings object be owned by the RestrictedCookieManagerImpl and hence automatically torn down when this object is torn down.  This relies on Mojo error handling resulting in tearing down the binding, and it doesn\u0027t make sense to me to rely on error handling when you don\u0027t need to.  And I care a fair amount of about having clean ownership chains, and thus destruction ordering.\n\nHaving said all that, I realize this counts as a style issue and that I probably shouldn\u0027t push it that strongly, so if you mind the other pattern a lot I\u0027ll yield.  But I prefer clean ownership chains.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542d2918_53af21c6",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "Let\u0027s VC on this at some point.  It\u0027s my belief that that call is needed for distinguishing between extension processes (which do Weird Things with the cookie store) and normal renderer processes (for which request_context_-\u003eGetURLRequestContext() is the right call).  If I\u0027m correct, I\u0027d much much rather that as part of servicification we shifted over to simply pushing different RestrictedCookieManager interfaces to the two different kinds of processes.  \n\nI had been expecting that that would be a big thing on my plate after you were done with your work, and I\u0027m not trying to shift it between plates.  But I also don\u0027t want to port the current bogosity (IMNVHO) over to new servicification code.  So if you can do your work making sure it\u0027s not used for extension processes and leave this stuff out, I think that\u0027s the best path.",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b480b9_801fb16d",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "This can probably be done via cookie.IsCanonical()?",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48929bb1_f0624074",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "Why isn\u0027t this set from the renderer?",
+      "range": {
+        "startLine": 137,
+        "startChar": 22,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48df680_de1bd7a0",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "Huh?",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4469779_d095d3b5",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "Ditto?  Actually, more than that, shouldn\u0027t any document.cookie like access have modify_http_only \u003d false?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32041fe1_95dd200c",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 33
@@ -81,6 +242,53 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "501651a0_df830a87",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "If you really want you could twist me arm, but it feels like a step backwards to me.  We\u0027re going to be getting rid of URLRequestContextGetter as part of the whole servicification stuff, so depending on it in a servicification CL feels wrong.  OTOH, one of us will eventually have to do it for the same reason, so I\u0027m not worried about it not getting done :-}.  So I\u0027d like this as part of this CL, but I won\u0027t block it.\n\nHaving said all that, is there a reason why SiteContext-\u003eBrowserContext-\u003eStoragePartition-\u003eNetworkContext wouldn\u0027t work?  That would mean that the NetworkContext would be vending the RestrictedCookieManager interface in response to the security info, which is currently in the form of render_process_id/render_frame_id, which is broken, but it\u0027s closer to right than using URLRequestContextGetter (because we\u0027re going to need to keep rpid/rfid around for a bit anyway).  \n\nDo you agree with my vision that eventually the RestrictedCookieManager will be vended from the URLLoaderFactory?  Is there some reason you can\u0027t do that now?  (I don\u0027t know if URLLoaderFactory s are being pushed to the renderer yet--maybe that\u0027s the problem.)",
+      "parentUuid": "96aee8eb_9aca5320",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9848fa7f_b5d23f64",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "Why?  Why not just have callers construct a new instance of RCMI?\n\nETA: Ah, I see you\u0027re matching an existing idiom in rfhi.cc.  I may want to come back to this after we resolve the issues around URLRequestContextGetter and the related issue of who vends this interface.",
+      "range": {
+        "startLine": 64,
+        "startChar": 37,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -154,6 +362,30 @@
       "side": 1,
       "message": "The url and site_for_cookies arguments are populated by the renderer, and represent the page making the request. The URL here is populated by the Web application. This will be used to let apps fetch path-scoped cookies (that they\u0027d be able to see via document.cookie).",
       "parentUuid": "37b2faf9_d4262534",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71913691_b7e79bed",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-10T18:52:07Z",
+      "side": 1,
+      "message": "If you could document that, I\u0027d be grateful.\n\nHaving said that, do we need this expansion of the interface?  We\u0027ll want to do browser side security checks on whatever request the renderer makes.  Given that, why do we care what the renderer thinks the page url and the site_for_cookies urls are?  We just care about what the URL the app wants to get cookies for, and we\u0027ll check that against our security principle to figure out if that\u0027s valid.",
+      "parentUuid": "78080f3a_106925af",
       "range": {
         "startLine": 18,
         "startChar": 11,
