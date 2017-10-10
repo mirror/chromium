@@ -46,6 +46,30 @@
       "revId": "c83641911607ac388d8461f3b380488bec011d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88bf252_2407682f",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-10T21:27:47Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "0afdd291_ed7cf1cb",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
