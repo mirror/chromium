@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad84b655_1046dca4",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd880b9a_004f4486",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cc3aa8_c703e1a5",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T18:45:07Z",
       "side": 1,
       "message": "Why do we clear local storage here?",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11b78aa_f81e27fa",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "It was resetting settings, which is no longer needed. Removed it.",
+      "parentUuid": "84cc3aa8_c703e1a5",
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "640f0e80_4b6ba56c",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7f2017_f6f4f51d",
+      "range": {
+        "startLine": 21,
+        "startChar": 60,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d196cd9_69c10acb",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0b1077_d3a1c55a",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d196cd9_69c10acb",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0ab1ef5b_6478afed",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7fafbc_992c7323",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f31af2_b7fffcb9",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33b4b6d_18fb9af2",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f31af2_b7fffcb9",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "23abe79d_f03718d4",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef927a2_896518ee",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a6b27b1_2adccdbe",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
         "patchSetId": 4
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "6361662d_002cdad7",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a6b27b1_2adccdbe",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8236fca4_776704bb",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
         "patchSetId": 4
@@ -158,6 +308,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15051c85_552e1c3a",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8236fca4_776704bb",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "f4d8393f_376fcc7d",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c1b6bb_84f67f9a",
+      "range": {
+        "startLine": 5,
+        "startChar": 19,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e84c5b86_e1fed637",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
         "patchSetId": 4
@@ -198,6 +390,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a568d77_8ebeab61",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e84c5b86_e1fed637",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "586522da_c6549085",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb291e0_4485df2b",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2cadab_5f931c91",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
         "patchSetId": 4
@@ -235,6 +469,24 @@
       "writtenOn": "2017-10-09T18:45:07Z",
       "side": 1,
       "message": "I think we could probably combine createForm and checkForm pretty easily, so that we don\u0027t have to check and then uncheck the value for checkboxes.  I think the snippet here [1] will work?\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/685456/2/chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js#6",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4f6910_89822569",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Fixed, mostly. There was an issue with building the form with either check or do not check - with the two loops on forEach for removedContextMenu and the locales it would work properly if only one item was removed. However, with multiple items it would loop over the list again and check a previous unchecked item. To work around this, removedContextMenu items are pushed into an array, which is looped over inside the build, everything is still given checked as true, but is immediately removed before appended if it matches a removed item. Hope that made sense, happy to explain it further.",
+      "parentUuid": "2c2cadab_5f931c91",
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "7fde720f_a938c848",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730fad39_43b8ca42",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36158928_25178353",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
         "patchSetId": 4
@@ -272,6 +542,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d936ef9f_d1e7869d",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36158928_25178353",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +591,24 @@
       "writtenOn": "2017-10-09T18:45:07Z",
       "side": 1,
       "message": "hmm... most of these would already be added.  I think we should only create entries for the items that have changed.",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1184e5c_d55deb94",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-10T17:48:32Z",
+      "side": 1,
+      "message": "You are correct, most of the context menus already exist - but I haven\u0027t been able to find a way to pull information on context menu items that already exist without storing them in local/global storage, which was the general idea of what is happening here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/685456/2/chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js#20\n\nPart of this code was comparing which boxes had been checked to the object that were in \"keep\" (created) if they weren\u0027t stored there, the context menu was created.\n\nPlease let me know if I\u0027m missing something - if not, I can go back to storing created items and comparing them before creating the context menu items. \n\nBut the current code does work, it just throws \"already created\" errors, but doesn\u0027t effect functionality  --but I understand the issue behind sample extensions throwing errors. \n\nHope this makes sense",
+      "parentUuid": "0b16a639_216407c3",
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
