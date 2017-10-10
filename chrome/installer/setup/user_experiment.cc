@@ -22,7 +22,6 @@
 #include "base/win/registry.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/scoped_process_information.h"
-#include "base/win/win_util.h"
 #include "base/win/windows_version.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
@@ -41,6 +40,7 @@
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/util_constants.h"
 #include "ui/base/fullscreen_win.h"
+#include "ui/base/win/tablet.h"
 
 namespace installer {
 
@@ -396,7 +396,7 @@ void RunUserExperiment(const base::CommandLine& command_line,
     return;
   }
 
-  if (base::win::IsTabletDevice(nullptr)) {
+  if (ui::IsTabletDevice()) {
     VLOG(1) << "Aborting experiment due to tablet device.";
     experiment.SetState(ExperimentMetrics::kIsTabletDevice);
     storage_lock->StoreExperiment(experiment);
