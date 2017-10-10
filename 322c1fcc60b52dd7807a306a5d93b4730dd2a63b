@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae114ac_b1a1c650",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-10T23:38:50Z",
+      "side": 1,
+      "message": "It seems like other ui controls have this same defect:\nhttps://cs.chromium.org/search/?q\u003dSetAccessibleName+f:h$\nThey should also be fixed; maybe we need a views::View impl?",
+      "revId": "322c1fcc60b52dd7807a306a5d93b4730dd2a63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
