@@ -502,15 +502,6 @@ bool GetPasswordForm(
   if (passwords.empty())
     return false;
 
-  // Call HTML based username detector, only if corresponding flag is enabled.
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableHtmlBasedUsernameDetector)) {
-    if (username_element.IsNull()) {
-      GetUsernameFieldBasedOnHtmlAttributes(
-          all_possible_usernames, password_form->form_data, &username_element);
-    }
-  }
-
   WebInputElement password;
   WebInputElement new_password;
   WebInputElement confirmation_password;
