@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0264998c_2d5eaec4",
+        "filename": "services/service_manager/public/cpp/mojo_init.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-10T23:31:34Z",
+      "side": 1,
+      "message": "I don\u0027t have time to review this fully yet, but in general I am opposed to spreading usage of this class further. Responsibility for initializing Mojo with an appropriate configuration should have clear ownership in any given process, and using the lazy singleton initializer pattern makes that impossible.",
+      "revId": "3abb5a3115c097a8392ddedda622aac828b317b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
