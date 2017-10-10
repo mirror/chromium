@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e25dd8_25944dc7",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 39
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T15:20:30Z",
+      "side": 1,
+      "message": "nit: \u0027render-populated\u0027 is impl-specific, maybe say like \u0027Note that values are populated by untrusted clients\u0027? (Or security reviewers may have better ideas what should be noted here)",
+      "revId": "53ee3a9c4243ec36ae1eef9f581922c01c9cb3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
