@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d93e2be0_e792b5f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "Is this true? I thought you could have more than 20 suggestions per section? Or is this the maximum number of preloaded suggestions per section?",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4081f7ab_3be4631d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
         "patchSetId": 3
@@ -46,6 +69,213 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e4414d8_75c34216",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "Why do you pass this in from the two call sites instead of figuring it out in this function? You have the category, so you could just call shouldReportPrefetchedSuggestionsCount(cateogry) down on line 123.",
+      "range": {
+        "startLine": 91,
+        "startChar": 54,
+        "endLine": 91,
+        "endChar": 86
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a50f12f_2672038b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "Nit: Can you indent this line to 8 spaces please? And do the same for line 462?",
+      "range": {
+        "startLine": 464,
+        "startChar": 7,
+        "endLine": 464,
+        "endChar": 18
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28673afd_520b72f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "nit: space before reportPrefetchedSuggestionsCount",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 54
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45dc820_eb5a4b5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "Can you make this a private *static* class please?\nAlso can you move it to the bottom of the containing class?",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f083729_5da30c4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "I think we could make this class a bit more useful by letting it take care of the counting and reporting once done (I renamed it since it\u0027s more responsible now):\n\nprivate static class NumberPrefetchedReporter {\n    private int mRemainingRequests;\n    private int mPrefetched;\n\n    public NumberPrefetchedReporter(int requests) {\n        mRemainingRequests \u003d requests;\n    }\n\n    public void requestCompleted(boolean prefetched) {\n        mRemainingRequests--;\n        if (prefetched) mPrefetched++;\n        if (mRemainingRequests \u003d\u003d 0) {\n            NewTabPageUma.recordPrefetchedArticleSuggestionsCount(mPrefetched);\n        }\n    }\n}\n\nNow on line 100 we call counter.requestCompleted(false).\n\nNow the entire block of 120-130 becomes:\nif (reporter !\u003d null) {\n    reporter.requestCompleted(item !\u003d null\n            \u0026\u0026 TextUtils.equals(item.getClientId().getNamespace(),\n                 OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE));\n}",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95de379_22924262",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "In java member variables are initialized to a zero value, so you don\u0027t need this line.",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02265fdf_eaa48346",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "I\u0027m finding the name of this method and the next one to be quite hard to read, do you mind renaming:\n\nupdateOfflinableSuggestionsAvailability -\u003e updateAllSuggestionsOfflineAvailability\nupdateOfflinableSuggestionAvailability -\u003e updateSuggestionOfflineAvailability",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e50eb05_a6ef69a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "Can we add some javadoc to these two methods please?",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84665b14_7fd3cc8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-10T14:09:05Z",
+      "side": 1,
+      "message": "We have some redundancy here - if reportPrefetchedSuggestionsCount is true, the counter must not be null, and if reportPrefetchedSuggestionsCount is false, we don\u0027t touch the counter.\n\nIt would be more concise to just take a @Nullable final RequestsCounter counter, and if it is null we don\u0027t do any reporting.",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 83
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
