@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a6526020_64914368",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-10T09:38:52Z",
+      "side": 1,
+      "message": "The code for grabbing the desktop was removed in https://crrev.com/297755. The snapshot code that was re-added in https://crrev.com/462631 doesn\u0027t include the BitBlt path for grabbing the desktop. I\u0027m not too familiar with what\u0027s going on there, but I don\u0027t see mention in MSDN that PrintWindow will work with the desktop. I\u0027ll see what I can work out.",
+      "parentUuid": "9718088a_58e02e19",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 43
+      },
+      "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31c87c65_f23da5c5",
         "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
         "patchSetId": 1
