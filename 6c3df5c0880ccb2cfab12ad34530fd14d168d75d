@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5feacde0_dfe62278",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-10T07:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7995569d_400f8dd5",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 2
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25073e5_9f2b8686",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bbff81_3f2f3bca",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-10T07:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25073e5_9f2b8686",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 74
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "cc79ca5c_c71e7787",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-10T07:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb0b2c9_87f01a96",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 66
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdf92a3b_be088512",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-10T07:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced58bc8_8a5e6fe9",
+      "range": {
+        "startLine": 305,
+        "startChar": 40,
+        "endLine": 305,
+        "endChar": 64
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4a13654_3f3eb857",
         "filename": "ash/message_center/message_center_view.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df85fa4_566f5ab9",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-10T07:15:00Z",
+      "side": 1,
+      "message": "Done. Also renamed BUTTONS_ONLY to LOCKED, because previously BUTTONS_ONLY \u003d NO_NOTIFICATIONS + LOCKED.",
+      "parentUuid": "b4a13654_3f3eb857",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 75
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
