@@ -61,6 +61,21 @@ class OfflineMetricsCollectorImpl : public OfflineMetricsCollector {
     MAX_USAGE = 5,
   };
 
+  // The kind of Offlien Page Prefetch usage during a day.
+  // This class is used in UMA reporting. Keep it in sync with
+  // OfflinePagesPrefetchUsage enum in histograms. Public for testing.
+  enum class PrefetchUsageType {
+    // Prefetch subsystem has unexpired prefetched pages.
+    HAS_PAGES = 0,
+    // New pages has been fetched during the day.
+    FETCHED_NEW_PAGES = 1,
+    // The prefetched offline pages were opened during the day.
+    OPENED_PAGES = 2,
+    // The pages were both fetched and opened during the day.
+    FETCHED_AND_OPENED_PAGES = 3,
+    MAX_USAGE = 4,
+  };
+
   explicit OfflineMetricsCollectorImpl(PrefService* prefs);
   ~OfflineMetricsCollectorImpl() override;
 
@@ -68,6 +83,10 @@ class OfflineMetricsCollectorImpl : public OfflineMetricsCollector {
   void OnAppStartupOrResume() override;
   void OnSuccessfulNavigationOnline() override;
   void OnSuccessfulNavigationOffline() override;
+  void OnPrefetchEnabled() override;
+  void OnHasPrefetchedPagesDetected() override;
+  void OnSuccessfulPagePrefetch() override;
+  void OnPrefetchedPageOpened() override;
   void ReportAccumulatedStats() override;
 
   void SetClockForTesting(base::Clock* clock);
@@ -87,6 +106,7 @@ class OfflineMetricsCollectorImpl : public OfflineMetricsCollector {
 
   // Reports to UMA 1 day of specified usage.
   void ReportUsageForOneDayToUma(DailyUsageType usage_type);
+  void ReportPrefetchUsageForOneDayToUma(PrefetchUsageType usage_type);
 
   // Used to retrieve current time, overrideable in tests.
   base::Time Now() const;
@@ -97,6 +117,14 @@ class OfflineMetricsCollectorImpl : public OfflineMetricsCollector {
   bool chrome_start_observed_ = false;
   bool offline_navigation_observed_ = false;
   bool online_navigation_observed_ = false;
+
+  // Prefetch tracking, boolean bits indicating which prefetch events were
+  // observed during the day. At the end of the day, they are used to increment
+  // corresponding prefetch counters.
+  bool prefetch_is_enabled_observed_ = false;
+  bool prefetch_has_pages_observed_ = false;
+  bool prefetch_fetch_observed_ = false;
+  bool prefetch_open_observed_ = false;
 
   // The midnight that starts the day for which current tracking is happening.
   // It is used to determine if the time of the observable usage is still during
@@ -112,6 +140,12 @@ class OfflineMetricsCollectorImpl : public OfflineMetricsCollector {
   int offline_days_count_ = 0;
   int online_days_count_ = 0;
   int mixed_days_count_ = 0;
+
+  int prefetch_enable_count_ = 0;
+  int prefetch_has_pages_count_ = 0;
+  int prefetch_fetched_count_ = 0;
+  int prefetch_opened_count_ = 0;
+  int prefetch_mixed_count_ = 0;
 
   // Has the same lifetime as profile, so should outlive this subcomponent
   // of profile's PrefetchService.

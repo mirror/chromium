@@ -51688,6 +51688,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Size of the saved copy of an offline page.</summary>
 </histogram>
 
+<histogram name="OfflinePages.PrefetchEnabled" enum="Boolean">
+  <owner>dimich@chromium.org</owner>
+  <summary>
+    Whether the Offline Pages Prefetch was effectively enabled during the day.
+    Determined by a combination of flags and user preferences. Reported at the
+    same moment as OfflinePages.OfflineUsage.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.Prefetching.ActionAttempts" units="attempts">
   <owner>dewittj@chromium.org</owner>
   <summary>
@@ -51783,6 +51792,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>petewil@chromium.org</owner>
   <summary>
     A prefetch item was seen in this state when starting the background task.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.PrefetchUsage" enum="OfflinePagesPrefetchUsage">
+  <owner>dimich@chromium.org</owner>
+  <summary>
+    Enum-based buckets reflect the number of days the Offline Pages Prefetch was
+    able to fetch new pages, and/or user was opening those pages. This data is
+    accumulated locally and reported when connection is likely to succeed
+    (usually after successful online navigation).
   </summary>
 </histogram>
 

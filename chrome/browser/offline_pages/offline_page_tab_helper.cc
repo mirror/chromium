@@ -44,6 +44,7 @@ OfflinePageTabHelper::OfflinePageTabHelper(content::WebContents* web_contents)
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   prefetch_service_ = PrefetchServiceFactory::GetForBrowserContext(
       web_contents->GetBrowserContext());
+  policy_controller_ = base::MakeUnique<ClientPolicyController>();
 }
 
 OfflinePageTabHelper::~OfflinePageTabHelper() {}
@@ -102,6 +103,12 @@ void OfflinePageTabHelper::DidFinishNavigation(
     offline_info_.offline_header = provisional_offline_info_.offline_header;
     offline_info_.is_showing_offline_preview =
         provisional_offline_info_.is_showing_offline_preview;
+
+    // Report prefetch usage to OfflineMetricsCollector.
+    if (policy_controller_->IsSuggested(
+            offline_info_.offline_page->client_id.name_space)) {
+      prefetch_service_->GetOfflineMetricsCollector()->OnPrefetchedPageOpened();
+    }
   }
   provisional_offline_info_.Clear();
 

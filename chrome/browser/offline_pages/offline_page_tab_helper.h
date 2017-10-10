@@ -122,6 +122,8 @@ class OfflinePageTabHelper :
 
   // Service, overlives this object.
   PrefetchService* prefetch_service_ = nullptr;
+  // Table of OfflinePages policies.
+  std::unique_ptr<ClientPolicyController> policy_controller_;
 
   base::WeakPtrFactory<OfflinePageTabHelper> weak_ptr_factory_;
 
