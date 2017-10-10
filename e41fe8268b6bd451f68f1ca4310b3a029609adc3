@@ -430,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "63a56b88_46281fb6",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T06:41:59Z",
+      "side": 1,
+      "message": "Threw a checked_cast in there. The string is still necessary because Extension Manifests don\u0027t support uints, only ints. Using a base::Optional in the web app manifest doesn\u0027t fix this either.",
+      "parentUuid": "8f5ce817_9238c00a",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58d680d1_b578b72f",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 13
