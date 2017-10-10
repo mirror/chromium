@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b345dd69_2dad6111",
+        "filename": "chrome/common/profiling/profiling_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T03:33:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be wrapped in unique_ptr: instead, just use the single-argument version of Bind: https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding.h?rcl\u003df38d51553fb6384ff3af0a8a7343dcbde0b7669d\u0026l\u003d96 (and construct it with the single-argument overload of Binding in the initializer list)",
+      "revId": "034d12912a743de64d33efaca538e9a23c5b3740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dc2244_fe54a8e5",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T03:33:30Z",
+      "side": 1,
+      "message": "Nit: it\u0027s generally considered OK to DCHECK() if the IPC is driven by the browser (if the browser process doesn\u0027t know what\u0027s going on, what hope does anything else have of being correct)",
+      "revId": "034d12912a743de64d33efaca538e9a23c5b3740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31784082_fc60394e",
+        "filename": "chrome/profiling/profiling_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T03:33:30Z",
+      "side": 1,
+      "message": "t \u003d\u003e tion",
+      "range": {
+        "startLine": 43,
+        "startChar": 32,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "034d12912a743de64d33efaca538e9a23c5b3740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
