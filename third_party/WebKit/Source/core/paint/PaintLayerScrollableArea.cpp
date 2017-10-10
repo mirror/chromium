@@ -1961,9 +1961,8 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
   CheckedNumeric<int> size = VisibleContentRect().Width();
   size *= VisibleContentRect().Height();
   if (!layer_has_been_composited &&
-      ((RuntimeEnabledFeatures::SkipCompositingSmallScrollersEnabled() &&
-        size.ValueOrDefault(std::numeric_limits<int>::max()) <
-            kSmallScrollerThreshold) ||
+      (size.ValueOrDefault(std::numeric_limits<int>::max()) <
+           kSmallScrollerThreshold ||
        !LayerNodeMayNeedCompositedScrolling(layer))) {
     return false;
   }
