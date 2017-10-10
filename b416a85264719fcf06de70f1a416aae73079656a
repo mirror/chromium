@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e83d1dd7_bf8a866b",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-10T18:20:35Z",
+      "side": 1,
+      "message": "Did you mean to change findbugs as well? Not mentioned in CL description.",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24aaed26_c01d27ae",
         "filename": "components/web_restrictions/browser/junit/src/org/chromium/components/webrestrictions/browser/WebRestrictionsClientTest.java",
         "patchSetId": 1
