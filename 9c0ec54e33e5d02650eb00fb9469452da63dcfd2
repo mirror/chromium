@@ -22,6 +22,30 @@
       "revId": "9c0ec54e33e5d02650eb00fb9469452da63dcfd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6b5b1f_d5d2c10e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-10T17:33:04Z",
+      "side": 0,
+      "message": "Oh, thanks.\n\nI just looked through the patch that added this and I\u0027m glad it was caught.\nI think we can optimize it a little bit and not need the extra member. I\u0027ll make a patch for that.",
+      "parentUuid": "ef6c7b7d_69ac9e33",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 36
+      },
+      "revId": "9c0ec54e33e5d02650eb00fb9469452da63dcfd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
