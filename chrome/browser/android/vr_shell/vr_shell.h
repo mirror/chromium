@@ -37,6 +37,7 @@ class WindowAndroid;
 
 namespace vr {
 class BrowserUiInterface;
+class SpeechRecognizer;
 class ToolbarHelper;
 class WebContentsEventForwarder;
 }  // namespace vr
@@ -58,8 +59,6 @@ enum UiAction {
   OPEN_NEW_TAB,
   EXIT_PRESENT,
 };
-
-class VrMetricsHelper;
 
 // The native instance of the Java VrShell. This class is not threadsafe and
 // must only be used on the UI thread.
@@ -181,6 +180,8 @@ class VrShell : device::GvrGamepadDataProvider,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice);
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds);
+  void OnVoiceSearchStart();
+  void OnVoiceSearchResult(std::string url);
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
@@ -236,6 +237,7 @@ class VrShell : device::GvrGamepadDataProvider,
   std::unique_ptr<vr::WebContentsEventForwarder> web_contents_event_forwarder_;
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
   std::unique_ptr<VrMetricsHelper> metrics_helper_;
+  std::unique_ptr<vr::SpeechRecognizer> speech_recognizer_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;
@@ -259,6 +261,7 @@ class VrShell : device::GvrGamepadDataProvider,
   bool gvr_gamepad_source_active_ = false;
   bool cardboard_gamepad_source_active_ = false;
   bool pending_cardboard_trigger_ = false;
+  bool voice_input_started_ = false;
 
   // Registered fetchers, must remain alive for UpdateGamepadData calls.
   // That's ok since the fetcher is only destroyed from VrShell's destructor.

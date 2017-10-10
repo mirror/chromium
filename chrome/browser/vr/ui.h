@@ -65,6 +65,7 @@ class Ui : public BrowserUiInterface, public UiInterface {
   void SetBluetoothConnectedIndicator(bool enabled) override;
   void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
+  void SetVoiceSearchResult(std::string url) override;
 
   // UiInterface
   bool ShouldRenderWebVr() override;

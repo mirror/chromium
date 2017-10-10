@@ -91,6 +91,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateToasts();
   CreateSplashScreen();
   CreateUnderDevelopmentNotice();
+  CreateVoiceSearchButton();
 
   ConfigureScene();
 }
@@ -415,6 +416,19 @@ void UiSceneManager::CreateViewportAwareRoot() {
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
 }
 
+void UiSceneManager::CreateVoiceSearchButton() {
+  auto element = base::MakeUnique<Button>(
+      base::Bind(&UiSceneManager::OnVoiceSearchButtonClicked,
+                 base::Unretained(this)),
+      base::MakeUnique<CloseButtonTexture>());
+  element->set_name(kVoiceSearchButton);
+  element->set_draw_phase(kPhaseForeground);
+  element->SetTranslate(0.f, 0.f, -kCloseButtonDistance);
+  element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+  voice_search_button_ = element.get();
+  scene_->AddUiElement(k2dBrowsingForeground, std::move(element));
+}
+
 void UiSceneManager::CreateUrlBar(Model* model) {
   auto url_bar = base::MakeUnique<UrlBar>(
       512,
@@ -701,6 +715,7 @@ void UiSceneManager::ConfigureScene() {
   // Close button is a special control element that needs to be hidden when in
   // WebVR, but it needs to be visible when in cct or fullscreen.
   close_button_->SetVisible(browsing_mode && (fullscreen_ || in_cct_));
+  voice_search_button_->SetVisible(true);
 
   // Content elements.
   for (UiElement* element : content_elements_) {
@@ -944,6 +959,15 @@ void UiSceneManager::OnCloseButtonClicked() {
   if (in_cct_) {
     browser_->ExitCct();
   }
+}
+
+void UiSceneManager::OnVoiceSearchButtonClicked() {
+  // Start voice input.
+  browser_->OnVoiceSearchStart();
+}
+
+void UiSceneManager::SetVoiceSearchResult(std::string url) {
+  browser_->OnVoiceSearchResult(url);
 }
 
 void UiSceneManager::OnUnsupportedMode(UiUnsupportedMode mode) {

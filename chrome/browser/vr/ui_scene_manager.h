@@ -59,9 +59,11 @@ struct UiInitialState;
 //       kExclusiveScreenToastTransientParent
 //         kExclusiveScreenToast
 //       kCloseButton
+//       kVoiceSearchButton
 //       kUrlBar
 //         kLoadingIndicator
 //         kExitButton
+//         kUnderDevelopmentNotice
 //     kFullscreenToast
 //     kScreenDimmer
 //     k2dBrowsingViewportAwareRoot
@@ -92,7 +94,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
                  const UiInitialState& ui_initial_state);
   ~UiSceneManager() override;
 
-  // UiBrowserInterface.
+  // BrowserUiInterface.
   void SetFullscreen(bool fullscreen) override;
   void SetIncognito(bool incognito) override;
   void SetToolbarState(const ToolbarState& state) override;
@@ -105,6 +107,8 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void SetLocationAccessIndicator(bool enabled) override;
   void SetBluetoothConnectedIndicator(bool enabled) override;
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
+  void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
+  void SetVoiceSearchResult(std::string url) override;
 
   // TODO(vollick): once we have migrated to a model, these methods can be
   // removed. They will be left here for now as BrowserUiInterface is an
@@ -122,8 +126,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void OnWebVrTimedOut() override;
 
   void OnSplashScreenHidden(TransientElementHideReason);
-  void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) override;
-
   void OnSecurityIconClickedForTesting();
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
@@ -146,6 +148,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateVoiceSearchButton();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -158,6 +161,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
+  void OnVoiceSearchButtonClicked();
   ColorScheme::Mode mode() const;
 
   TransientElement* AddTransientParent(UiElementName name,
@@ -188,6 +192,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
+  UiElement* voice_search_button_ = nullptr;
   UrlBar* url_bar_ = nullptr;
   TransientElement* webvr_url_toast_transient_parent_ = nullptr;
   WebVrUrlToast* webvr_url_toast_ = nullptr;
