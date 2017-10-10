@@ -6,6 +6,7 @@ include_rules = [
   "+content/common/content_export.h",
   "+content/common/loader_util.h",
   "+content/network",
+  "+content/public/browser/ignore_errors_cert_verifier.h",
   "+content/public/common/appcache_info.h",
   "+content/public/common/content_client.h",
   "+content/public/common/content_switches.h",
