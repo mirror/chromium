@@ -161,9 +161,10 @@ TEST(MemoryAllocatorDumpTest, DumpIntoProcessMemoryDump) {
   ASSERT_FALSE(attrs->HasKey(MemoryAllocatorDump::kNameSize));
   ASSERT_FALSE(attrs->HasKey(MemoryAllocatorDump::kNameObjectCount));
 
-  // Check that the AsValueInfo doesn't hit any DCHECK.
+  // Check that calling serialization routines doesn't cause a crash.
   std::unique_ptr<TracedValue> traced_value(new TracedValue);
-  pmd.AsValueInto(traced_value.get());
+  pmd.SerializeAllocatorDumpsInto(traced_value.get());
+  pmd.SerializeHeapProfilerDumpsInto(traced_value.get());
 }
 
 TEST(MemoryAllocatorDumpTest, GetSize) {
