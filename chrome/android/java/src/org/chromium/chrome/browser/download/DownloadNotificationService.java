@@ -421,6 +421,10 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        // Record instance of task removed.
+        DownloadNotificationUmaHelper.recordDownloadNotificationServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.TASK_REMOVED);
+
         super.onTaskRemoved(rootIntent);
         // If we've lost all Activities, cancel the off the record downloads and validate that we
         // should still be showing any download notifications at all.
@@ -428,6 +432,14 @@ public class DownloadNotificationService extends Service {
             cancelOffTheRecordDownloads();
             hideSummaryNotificationIfNecessary(-1);
         }
+    }
+
+    @Override
+    public void onLowMemory() {
+        // Record instance of service with low memory.
+        DownloadNotificationUmaHelper.recordDownloadNotificationServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.LOW_MEMORY);
+        super.onLowMemory();
     }
 
     @Override
@@ -445,6 +457,10 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public void onDestroy() {
+        // Record instance of service being destroyed.
+        DownloadNotificationUmaHelper.recordDownloadNotificationServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.DESTROYED);
+
         updateNotificationsForShutdown();
         rescheduleDownloads();
         super.onDestroy();
@@ -458,6 +474,10 @@ public class DownloadNotificationService extends Service {
         if (useForegroundService() && intent != null) startForegroundInternal();
 
         if (intent == null) {
+            // Record instance of service restarting.
+            DownloadNotificationUmaHelper.recordDownloadNotificationServiceStopHistogram(
+                    DownloadNotificationUmaHelper.ServiceStopped.START_STICKY);
+
             // Intent is only null during a process restart because of returning START_STICKY.  In
             // this case cancel the off the record notifications and put the normal notifications
             // into a pending state, then try to restart.  Finally validate that we are actually
@@ -714,6 +734,10 @@ public class DownloadNotificationService extends Service {
         // will shut down.  That is okay because they will only unbind from us when they are ok with
         // us going away (e.g. we shouldn't be unbound while in the foreground).
         stopSelf();
+
+        // Record instance of service being stopped intentionally.
+        DownloadNotificationUmaHelper.recordDownloadNotificationServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.STOPPED);
         return true;
     }
 

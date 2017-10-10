@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
+
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
@@ -20,6 +22,8 @@ import org.chromium.chrome.browser.AppHooks;
  */
 public class DownloadForegroundService extends Service {
     private final IBinder mBinder = new LocalBinder();
+    // Only tracking for UMA purposes.
+    private int mPinnedNotification = INVALID_NOTIFICATION_ID;
 
     /**
      * Start the foreground service with this given context.
@@ -41,12 +45,31 @@ public class DownloadForegroundService extends Service {
         }
 
         startForeground(notificationId, notification);
+
+        // Record when starting foreground and when updating pinned notification.
+        if (mPinnedNotification == INVALID_NOTIFICATION_ID) {
+            DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
+                    DownloadNotificationUmaHelper.ForegroundLifecycle.START);
+        } else {
+            if (mPinnedNotification != notificationId) {
+                DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
+                        DownloadNotificationUmaHelper.ForegroundLifecycle.UPDATE);
+            }
+        }
+        mPinnedNotification = notificationId;
     }
 
     /**
      * Stop the foreground service that is running.
      */
     public void stopDownloadForegroundService(boolean isCancelled) {
+        // Record when stopping foreground.
+        DownloadNotificationUmaHelper.recordForegroundServiceLifecycleHistogram(
+                DownloadNotificationUmaHelper.ForegroundLifecycle.STOP);
+        DownloadNotificationUmaHelper.recordForegroundServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.STOPPED);
+        mPinnedNotification = INVALID_NOTIFICATION_ID;
+
         // If it's not cancelled, just detach the notification from the service, if possible.
         if (!isCancelled && Build.VERSION.SDK_INT >= 24) {
             stopForeground(STOP_FOREGROUND_DETACH);
@@ -61,6 +84,9 @@ public class DownloadForegroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // In the case the service was restarted when the intent is null.
         if (intent == null) {
+            DownloadNotificationUmaHelper.recordForegroundServiceStopHistogram(
+                    DownloadNotificationUmaHelper.ServiceStopped.START_STICKY);
+
             DownloadForegroundServiceObservers.alertObserversServiceRestarted();
 
             // Allow observers to restart service on their own, if needed.
@@ -73,14 +99,25 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public void onDestroy() {
+        DownloadNotificationUmaHelper.recordForegroundServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.DESTROYED);
         DownloadForegroundServiceObservers.alertObserversServiceDestroyed();
         super.onDestroy();
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        DownloadNotificationUmaHelper.recordForegroundServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.TASK_REMOVED);
         DownloadForegroundServiceObservers.alertObserversTaskRemoved();
         super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
+    public void onLowMemory() {
+        DownloadNotificationUmaHelper.recordForegroundServiceStopHistogram(
+                DownloadNotificationUmaHelper.ServiceStopped.LOW_MEMORY);
+        super.onLowMemory();
     }
 
     @Nullable
