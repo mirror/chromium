@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9d9e5c_18bfb64e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T18:14:05Z",
+      "side": 1,
+      "message": "Should we also mention that we\u0027re rolling findbugs and why it\u0027s necessary in this CL description?",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aaed26_c01d27ae",
+        "filename": "components/web_restrictions/browser/junit/src/org/chromium/components/webrestrictions/browser/WebRestrictionsClientTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T18:14:05Z",
+      "side": 1,
+      "message": "Nit: Are we supposed to use:\n\n  ProviderInfo info \u003d new ProviderInfo();\n  info.authority \u003d authority;\n  Robolectric.buildContentProvider(ContentProvider.class).create(info);\n\n?\nOr is that just more or less impossible since it\u0027s mocked with Mockito?",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80482448_f2942489",
+        "filename": "third_party/robolectric/local/robolectric/src/main/resources/robolectric-version.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T18:14:05Z",
+      "side": 1,
+      "message": "Why is this 3.2 and not 3.4.2?",
+      "range": {
+        "startLine": 1,
+        "startChar": 20,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
