@@ -228,6 +228,8 @@ static_library("safe_browsing") {
         "services_delegate_impl.h",
         "signature_evaluator_mac.h",
         "signature_evaluator_mac.mm",
+        "test_safe_browsing_database_helper.cc",
+        "test_safe_browsing_database_helper.h",
         "trigger_creator.cc",
         "trigger_creator.h",
         "v4_test_utils.cc",
