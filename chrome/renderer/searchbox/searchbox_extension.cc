@@ -866,8 +866,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
   if (!render_frame)
     return;
 
-  if (args.Length() < 4 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
-      !args[2]->IsNumber() || !args[3]->IsNumber()) {
+  if (args.Length() < 5 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
+      !args[2]->IsNumber() || !args[3]->IsNumber() || !args[4]->IsNumber()) {
     ThrowInvalidParameters(args);
     return;
   }
@@ -878,6 +878,9 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
           static_cast<int>(ntp_tiles::TileTitleSource::LAST) &&
       args[2]->Uint32Value() <= static_cast<int>(ntp_tiles::TileSource::LAST) &&
       args[3]->Uint32Value() <= ntp_tiles::TileVisualType::TILE_TYPE_MAX) {
+    const base::Time data_generation_time =
+        base::Time::UnixEpoch() +
+        base::TimeDelta::FromMicroseconds(args[4]->IntegerValue());
     const ntp_tiles::NTPTileImpression impression(
         /*index=*/args[0]->IntegerValue(),
         /*source=*/static_cast<ntp_tiles::TileSource>(args[2]->Uint32Value()),
@@ -885,6 +888,7 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        data_generation_time,
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedImpression(impression);
   }
@@ -898,8 +902,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
   if (!render_frame)
     return;
 
-  if (args.Length() < 4 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
-      !args[2]->IsNumber() || !args[3]->IsNumber()) {
+  if (args.Length() < 5 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
+      !args[2]->IsNumber() || !args[3]->IsNumber() || !args[4]->IsNumber()) {
     ThrowInvalidParameters(args);
     return;
   }
@@ -910,6 +914,9 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
           static_cast<int>(ntp_tiles::TileTitleSource::LAST) &&
       args[2]->Uint32Value() <= static_cast<int>(ntp_tiles::TileSource::LAST) &&
       args[3]->Uint32Value() <= ntp_tiles::TileVisualType::TILE_TYPE_MAX) {
+    const base::Time data_generation_time =
+        base::Time::UnixEpoch() +
+        base::TimeDelta::FromMicroseconds(args[4]->IntegerValue());
     const ntp_tiles::NTPTileImpression impression(
         /*index=*/args[0]->IntegerValue(),
         /*source=*/static_cast<ntp_tiles::TileSource>(args[2]->Uint32Value()),
@@ -917,6 +924,7 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        data_generation_time,
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedNavigation(impression);
   }
