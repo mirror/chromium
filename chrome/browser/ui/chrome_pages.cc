@@ -90,6 +90,8 @@ void ShowHelpImpl(Browser* browser, Profile* profile, HelpSource source) {
       extensions::ExtensionRegistry::Get(profile)->GetExtensionById(
           genius_app::kGeniusAppId,
           extensions::ExtensionRegistry::EVERYTHING);
+  if (!extension)
+    return;
   extensions::AppLaunchSource app_launch_source(extensions::SOURCE_UNTRACKED);
   switch (source) {
     case HELP_SOURCE_KEYBOARD:
