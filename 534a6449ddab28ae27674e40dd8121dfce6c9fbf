@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c4263e8_5a76ce87",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-10T23:24:45Z",
+      "side": 1,
+      "message": "Cool, the protobuf thing looks interesting, I\u0027ll take a look.",
+      "parentUuid": "829742de_4eec38f4",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d78d1eaa_ea79a1bd",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T01:36:26Z",
       "side": 1,
       "message": "I\u0027d like to know what Marty thinks about this, but I think it would be better to dedicate the 0th element of data to deciding the mode (eg parser_mode \u003d data[0] % blink::CSSParserMode::kNumCSSParserModes) rather than looping through each mode.\nThis code does what I have in mind: https://cs.chromium.org/chromium/src/testing/libfuzzer/fuzzers/string_tokenizer_fuzzer.cc?l\u003d27",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dd3a5a_2f1d3128",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-10T23:24:45Z",
+      "side": 1,
+      "message": "Yeah, that was my original intention (using FuzzedDataProvider), but a recent patch did it with hashes: https://chromium-review.googlesource.com/c/chromium/src/+/701855",
+      "parentUuid": "d78d1eaa_ea79a1bd",
       "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
