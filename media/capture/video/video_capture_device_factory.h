@@ -10,8 +10,12 @@
 #include "base/threading/thread_checker.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "media/capture/video/video_capture_device.h"
+#include "media/gpu/mojo/jpeg_decoder.mojom.h"
 
 namespace media {
+
+using GpuJpegDecoderMojoFactoryCB =
+    base::Callback<void(media::mojom::GpuJpegDecodeAcceleratorRequest)>;
 
 // VideoCaptureDeviceFactory is the base class for creation of video capture
 // devices in the different platforms. VCDFs are created by MediaStreamManager
@@ -29,7 +33,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactory {
  public:
   static std::unique_ptr<VideoCaptureDeviceFactory> CreateFactory(
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-      gpu::GpuMemoryBufferManager* gpu_buffer_manager);
+      gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+      GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory);
 
   VideoCaptureDeviceFactory();
   virtual ~VideoCaptureDeviceFactory();
@@ -59,7 +64,8 @@ class CAPTURE_EXPORT VideoCaptureDeviceFactory {
  private:
   static VideoCaptureDeviceFactory* CreateVideoCaptureDeviceFactory(
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-      gpu::GpuMemoryBufferManager* gpu_buffer_manager);
+      gpu::GpuMemoryBufferManager* gpu_buffer_manager,
+      GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory);
 
   DISALLOW_COPY_AND_ASSIGN(VideoCaptureDeviceFactory);
 };

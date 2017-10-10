@@ -43,7 +43,8 @@ class LocalCameraClientObserver : public CameraClientObserver {
 }  // namespace
 
 CameraHalDelegate::CameraHalDelegate(
-    scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner,
+    GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory)
     : camera_module_has_been_set_(
           base::WaitableEvent::ResetPolicy::MANUAL,
           base::WaitableEvent::InitialState::NOT_SIGNALED),
@@ -55,6 +56,8 @@ CameraHalDelegate::CameraHalDelegate(
       ipc_task_runner_(std::move(ipc_task_runner)),
       camera_module_callbacks_(this) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
+  CameraHalDispatcherImpl::GetInstance()->SetGpuJpegDecoderFactory(
+      jpeg_decoder_factory);
 }
 
 CameraHalDelegate::~CameraHalDelegate() {}
