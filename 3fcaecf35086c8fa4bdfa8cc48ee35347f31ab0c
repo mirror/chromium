@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1adc3e9b_31fb98b5",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "989b23bc_ec133f92",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7b611e_8e4a2c6e",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 16
@@ -111,6 +135,24 @@
       "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39a2fe0_43da5c64",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "be7b611e_8e4a2c6e",
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +251,54 @@
     },
     {
       "key": {
+        "uuid": "1d0fc1ba_3bccefd2",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "So in order for NetworkChangeManagerImpl to get the initial connection type, I made the constructor to call GetConnectionType(). This means that we will essentially block until NCN gives us the current connection type, right?",
+      "parentUuid": "3e34c1b2_740d59f2",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d4f14a_2e4d8bfc",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Done. Sorry, missed your previous comment.\nI sent the current state to new clients.\nAck the second part that we can\u0027t block.",
+      "parentUuid": "e2f0873c_474a3f1b",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a13e37_aeeced5b",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 16
@@ -277,6 +367,30 @@
       "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91277575_5d07f48b",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Ack. You are absolutely right! It doesn\u0027t need to be a std::unique_ptr.\n\nI had to make some changes in the new patch to make the tests pass.  The new changess (ifdefs for Android and ChromeOS in network_service_impl.cc) need this member to be a std::unique_ptr.",
+      "parentUuid": "7a56c389_968e7146",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 68
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

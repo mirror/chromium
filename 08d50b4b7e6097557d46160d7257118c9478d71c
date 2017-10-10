@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6661a058_60fcf418",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "If I understand correctly, this net::NetworkChangeNotifier::GetConnectionType() is a synchronous blocking call.\nLet me know if there is an issue with using this.",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ec4f0d_188a879f",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Per suggestion. I made it so new clients received the current |connection_type_| upon registration.",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce32e905_a9d2d726",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "I used net::NetworkChangeNotifier::CreateMock() here so the tests are platform independent.",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5159b992_50513018",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:00:02Z",
+      "side": 1,
+      "message": "Matt, I added platform-dependent NCN initialization here. The reason is that I want to use a mock NCN when testing NetworkChangeManagerImpl",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 22
+      },
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
