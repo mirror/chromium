@@ -7,11 +7,11 @@
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_floats_utils.h"
-#include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_positioned_float.h"
 #include "core/style/ComputedStyle.h"
@@ -22,7 +22,7 @@ namespace blink {
 NGLineBreaker::NGLineBreaker(
     NGInlineNode node,
     const NGConstraintSpace& space,
-    NGFragmentBuilder* container_builder,
+    NGBaseFragmentBuilder* container_builder,
     Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
     const NGInlineBreakToken* break_token)
     : node_(node),
@@ -879,12 +879,14 @@ void NGLineBreaker::SkipCollapsibleWhitespaces() {
   }
 }
 
-RefPtr<NGInlineBreakToken> NGLineBreaker::CreateBreakToken() const {
+RefPtr<NGInlineBreakToken> NGLineBreaker::CreateBreakToken(
+    std::unique_ptr<const NGInlineLayoutStateStack> state_stack) const {
   const Vector<NGInlineItem>& items = node_.Items();
   if (item_index_ >= items.size())
     return NGInlineBreakToken::Create(node_);
   return NGInlineBreakToken::Create(node_, item_index_, offset_,
-                                    line_.is_after_forced_break);
+                                    line_.is_after_forced_break,
+                                    std::move(state_stack));
 }
 
 }  // namespace blink
