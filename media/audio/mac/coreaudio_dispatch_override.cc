@@ -11,6 +11,7 @@
 #include "base/atomicops.h"
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
+#include "base/metrics/histogram_macros.h"
 
 namespace {
 struct dyld_interpose_tuple {
@@ -32,6 +33,23 @@ extern "C" void dyld_dynamic_interpose(
 
 namespace media {
 namespace {
+// These values are persisted to logs. Entries should not be renumbered and
+// numeric values should never be reused.
+enum DispatchOverrideStatus {
+  STATUS_NOT_SUPPORTED = 0,
+  STATUS_INITIALIZED = 1,
+  STATUS_DYNAMIC_INTERPOSE_NOT_FOUND = 2,
+  STATUS_COREAUDIO_DLOPEN_FAILED = 3,
+  STATUS_COREAUDIO_SYMBOL_NOT_FOUND = 4,
+  STATUS_COREAUDIO_MACH_HEADER_NOT_FOUND = 5,
+  STATUS_MAX = STATUS_COREAUDIO_MACH_HEADER_NOT_FOUND,
+};
+
+void LogStatusChange(DispatchOverrideStatus status) {
+  UMA_HISTOGRAM_ENUMERATION("Media.Audio.CoreAudioDispatchOverrideStatus",
+                            status, STATUS_MAX + 1);
+}
+
 const char kCoreAudioPath[] =
     "/System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio";
 
@@ -104,12 +122,14 @@ bool InitializeCoreAudioDispatchOverride() {
   DCHECK_EQ(g_pause_resume_queue, nullptr);
 
   if (!base::mac::IsAtLeastOS10_10()) {
+    LogStatusChange(STATUS_NOT_SUPPORTED);
     return false;
   }
 
   // This function should be available in macOS > 10.10.
   if (dyld_dynamic_interpose == nullptr) {
     LOG(ERROR) << "Unable to resolve dyld_dynamic_interpose()";
+    LogStatusChange(STATUS_DYNAMIC_INTERPOSE_NOT_FOUND);
     return false;
   }
   // Get CoreAudio handle
@@ -117,6 +137,7 @@ bool InitializeCoreAudioDispatchOverride() {
   if (!coreaudio) {
     LOG(ERROR) << "Could not load CoreAudio while trying to initialize "
                   "dispatch override";
+    LogStatusChange(STATUS_COREAUDIO_DLOPEN_FAILED);
     return false;
   }
   // Retrieve the base address (also address of Mach header). For this
@@ -125,6 +146,7 @@ bool InitializeCoreAudioDispatchOverride() {
   if (!symbol) {
     LOG(ERROR) << "Unable to resolve AudioObjectGetPropertyData in "
                   "CoreAudio library";
+    LogStatusChange(STATUS_COREAUDIO_SYMBOL_NOT_FOUND);
     return false;
   }
   // From the address of that symbol, we can get the address of the library's
@@ -132,6 +154,7 @@ bool InitializeCoreAudioDispatchOverride() {
   Dl_info info = {};
   if (!dladdr(symbol, &info)) {
     LOG(ERROR) << "Unable to find Mach header for CoreAudio library.";
+    LogStatusChange(STATUS_COREAUDIO_MACH_HEADER_NOT_FOUND);
     return false;
   }
   const auto* header = reinterpret_cast<const mach_header*>(info.dli_fbase);
@@ -141,6 +164,7 @@ bool InitializeCoreAudioDispatchOverride() {
                                      &dispatch_get_global_queue);
   dyld_dynamic_interpose(header, &interposition, 1);
   g_dispatch_override_installed = true;
+  LogStatusChange(STATUS_INITIALIZED);
   return true;
 }
 
