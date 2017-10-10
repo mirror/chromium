@@ -198,8 +198,13 @@ void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
           info.GetAbsMtSlotValueWithDefault(ABS_MT_PRESSURE, i, 0));
       int tool_type = info.GetAbsMtSlotValueWithDefault(ABS_MT_TOOL_TYPE, i,
                                                         MT_TOOL_FINGER);
-      events_[i].cancelled = (tool_type == MT_TOOL_PALM) ||
-                             (major_max_ > 0 && touch_major == major_max_);
+      if ((tool_type == MT_TOOL_PALM) ||
+          (major_max_ > 0 && touch_major == major_max_))
+        events_[i].SetCancelReason(CANCEL_BY_PALM);
+      else {
+        events_[i].ResetCancelReason(CANCEL_BY_PALM);
+        events_[i].was_cancelled = events_[i].cancelled;
+      }
       if (events_[i].cancelled)
         cancelled_state = true;
     }
@@ -220,7 +225,7 @@ void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
     events_[0].cancelled = false;
   }
   if (cancelled_state)
-    CancelAllTouches();
+    CancelAllTouches(CANCEL_BY_PALM);
 
   bool touch_noise_filtering =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -398,7 +403,13 @@ void TouchEventConverterEvdev::ProcessAbs(const input_event& input) {
       // by either sending ABS_MT_TOOL_TYPE/MT_TOOL_PALM, or by setting
       // touch major to max.
       if (major_max_ > 0 && input.value == major_max_)
-        events_[current_slot_].cancelled = true;
+        events_[current_slot_].SetCancelReason(CANCEL_BY_PALM);
+      else {
+        // If the slot was cancelled only because it's a palm, we should reset
+        // the was_cancelled because TrackingID update did not do so.
+        events_[current_slot_].ResetCancelReason(CANCEL_BY_PALM);
+        events_[current_slot_].was_cancelled = events_[current_slot_].cancelled;
+      }
       break;
     case ABS_MT_TOUCH_MINOR:
       events_[current_slot_].radius_y = input.value / 2.0f;
@@ -411,7 +422,11 @@ void TouchEventConverterEvdev::ProcessAbs(const input_event& input) {
       break;
     case ABS_MT_TOOL_TYPE:
       if (input.value == MT_TOOL_PALM)
-        events_[current_slot_].cancelled = true;
+        events_[current_slot_].SetCancelReason(CANCEL_BY_PALM);
+      else {
+        events_[current_slot_].ResetCancelReason(CANCEL_BY_PALM);
+        events_[current_slot_].was_cancelled = events_[current_slot_].cancelled;
+      }
       break;
     case ABS_MT_TRACKING_ID:
       UpdateTrackingId(current_slot_, input.value);
@@ -504,13 +519,13 @@ void TouchEventConverterEvdev::ReportTouchEvent(
       details, timestamp, flags));
 }
 
-void TouchEventConverterEvdev::CancelAllTouches() {
+void TouchEventConverterEvdev::CancelAllTouches(TouchCancelReason reason) {
   // TODO(denniskempin): Remove once upper layers properly handle single
   // cancelled touches.
   for (size_t i = 0; i < events_.size(); i++) {
     InProgressTouchEvdev* event = &events_[i];
     if (event->was_touching || event->touching) {
-      event->cancelled = true;
+      event->SetCancelReason(reason);
       event->altered = true;
     }
   }
@@ -530,7 +545,7 @@ void TouchEventConverterEvdev::ReportEvents(base::TimeTicks timestamp) {
     if (event->altered && (event->cancelled ||
                            (false_touch_finder_ &&
                             false_touch_finder_->SlotHasNoise(event->slot)))) {
-      CancelAllTouches();
+      CancelAllTouches(CANCEL_BY_NOISE);
       break;
     }
   }
@@ -572,14 +587,18 @@ void TouchEventConverterEvdev::UpdateTrackingId(int slot, int tracking_id) {
   event->altered = true;
 
   if (tracking_id >= 0) {
-    event->was_cancelled = false;
-    event->cancelled = !IsEnabled();
+    if (IsEnabled()) {
+      event->ResetCancelReason(CANCEL_BY_DISABLE);
+      event->ResetCancelReason(CANCEL_BY_NOISE);
+    }
+    if (!event->CheckCancelReason(CANCEL_BY_PALM))
+      event->was_cancelled = false;
   }
 }
 
 void TouchEventConverterEvdev::ReleaseTouches() {
   for (size_t slot = 0; slot < events_.size(); slot++) {
-    events_[slot].cancelled = true;
+    events_[slot].SetCancelReason(CANCEL_BY_DISABLE);
     events_[slot].altered = true;
   }
 

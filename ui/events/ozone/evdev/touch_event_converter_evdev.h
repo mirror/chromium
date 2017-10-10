@@ -28,12 +28,12 @@
 #include "ui/events/ozone/evdev/events_ozone_evdev_export.h"
 #include "ui/events/ozone/evdev/scoped_input_device.h"
 #include "ui/events/ozone/evdev/touch_evdev_debug_buffer.h"
+#include "ui/events/ozone/evdev/touch_evdev_types.h"
 
 namespace ui {
 
 class DeviceEventDispatcherEvdev;
 class FalseTouchFinder;
-struct InProgressTouchEvdev;
 
 class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
     : public EventConverterEvdev {
@@ -91,7 +91,7 @@ class EVENTS_OZONE_EVDEV_EXPORT TouchEventConverterEvdev
   void UpdateTrackingId(int slot, int tracking_id);
   void ReleaseTouches();
   void ReleaseButtons();
-  void CancelAllTouches();
+  void CancelAllTouches(TouchCancelReason reason);
   // Normalize pressure value to [0, 1].
   float ScalePressure(int32_t value);
 

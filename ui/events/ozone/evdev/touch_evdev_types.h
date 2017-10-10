@@ -16,6 +16,17 @@ namespace ui {
 // value >= kNumTouchEvdevSlots are ignored.
 const int kNumTouchEvdevSlots = 20;
 
+// Reason for cancelling the touch slot.
+enum TouchCancelReason {
+  // This slot was cancelled because we think it's a palm.
+  CANCEL_BY_PALM = 1 << 0,
+  // This slot was cancelled because of noise.
+  CANCEL_BY_NOISE = 1 << 1,
+  // This slot cancelled because the converter was disabled, and all events was
+  // cancelled.
+  CANCEL_BY_DISABLE = 1 << 2,
+};
+
 // Contains information about an in progress touch.
 struct EVENTS_OZONE_EVDEV_EXPORT InProgressTouchEvdev {
   InProgressTouchEvdev();
@@ -29,8 +40,13 @@ struct EVENTS_OZONE_EVDEV_EXPORT InProgressTouchEvdev {
   // new touch is initiated.
   bool was_cancelled = false;
 
-  // Whether the touch is going to be canceled.
-  bool cancelled = false;
+  // Whether the touch is going to be canceled. And the cancel reason.
+  int cancelled = 0;
+
+  // Helper functions to set/reset/check the touch cancel reason.
+  void SetCancelReason(TouchCancelReason reason);
+  void ResetCancelReason(TouchCancelReason reason);
+  bool CheckCancelReason(TouchCancelReason reason);
 
   // Whether the touch is delayed at first appearance. Will not be reported yet.
   bool delayed = false;

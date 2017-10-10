@@ -14,4 +14,14 @@ InProgressTouchEvdev::InProgressTouchEvdev(const InProgressTouchEvdev& other) =
 
 InProgressTouchEvdev::~InProgressTouchEvdev() {}
 
+void InProgressTouchEvdev::SetCancelReason(TouchCancelReason reason) {
+  cancelled |= reason;
+}
+void InProgressTouchEvdev::ResetCancelReason(TouchCancelReason reason) {
+  cancelled &= (~reason);
+}
+bool InProgressTouchEvdev::CheckCancelReason(TouchCancelReason reason) {
+  return cancelled & reason;
+}
+
 }  // namespace ui
