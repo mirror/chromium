@@ -60,6 +60,8 @@ struct IssuerEntryComparator {
     switch (trust.type) {
       case CertificateTrustType::TRUSTED_ANCHOR:
       case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+      case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+      case CertificateTrustType::TRUSTED_LEAF:
         return 1;
       case CertificateTrustType::UNSPECIFIED:
         return 2;
@@ -342,6 +344,8 @@ const ParsedCertificate* CertPath::GetTrustedCert() const {
   switch (last_cert_trust.type) {
     case CertificateTrustType::TRUSTED_ANCHOR:
     case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+    case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+    case CertificateTrustType::TRUSTED_LEAF:
       return certs.back().get();
     case CertificateTrustType::UNSPECIFIED:
     case CertificateTrustType::DISTRUSTED:
@@ -419,15 +423,41 @@ void CertPathIter::GetNextPath(CertPath* out_path) {
       }
     }
 
+    // If the cert is trusted but for the wrong type given its location in the
+    // path, treat it as having unspecified trust. This may allow a successful
+    // path to be built to a different root.
+    switch (next_issuer_.trust.type) {
+      case CertificateTrustType::TRUSTED_ANCHOR:
+      case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+        if (cur_path_.Empty()) {
+          DVLOG(1) << "Leaf is a trust anchor, considering as UNSPECIFIED";
+          next_issuer_.trust = CertificateTrust::ForUnspecified();
+        }
+        break;
+      case CertificateTrustType::TRUSTED_LEAF:
+        if (!cur_path_.Empty()) {
+          DVLOG(1) << "Issuer has leaf trust, considering as UNSPECIFIED";
+          next_issuer_.trust = CertificateTrust::ForUnspecified();
+        }
+        break;
+      case CertificateTrustType::DISTRUSTED:
+      case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+      case CertificateTrustType::UNSPECIFIED:
+        // No override necessary.
+        break;
+    }
+
     switch (next_issuer_.trust.type) {
       // If the trust for this issuer is "known" (either becuase it is
       // distrusted, or because it is trusted) then stop building and return the
       // path.
       case CertificateTrustType::DISTRUSTED:
       case CertificateTrustType::TRUSTED_ANCHOR:
-      case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS: {
+      case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+      case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+      case CertificateTrustType::TRUSTED_LEAF: {
         // If the issuer has a known trust level, can stop building the path.
-        DVLOG(1) << "CertPathIter got anchor: "
+        DVLOG(1) << "CertPathIter got known trust: "
                  << CertDebugString(next_issuer_.cert.get());
         cur_path_.CopyPath(&out_path->certs);
         out_path->certs.push_back(std::move(next_issuer_.cert));

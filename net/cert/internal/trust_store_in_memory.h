@@ -32,6 +32,13 @@ class NET_EXPORT TrustStoreInMemory : public TrustStore {
   // the certificate. See VerifyCertificateChain for details.
   void AddTrustAnchorWithConstraints(scoped_refptr<ParsedCertificate> cert);
 
+  // Adds a certificate that may be used both as a trust anchor and as a
+  // trusted end-entity.
+  void AddTrustAnchorOrLeaf(scoped_refptr<ParsedCertificate> cert);
+
+  // Adds a certificate as a trusted end-entity.
+  void AddTrustLeaf(scoped_refptr<ParsedCertificate> cert);
+
   // TODO(eroman): This is marked "ForTest" as the current implementation
   // requires an exact match on the certificate DER (a wider match by say
   // issuer/serial is probably what we would want for a real implementation).

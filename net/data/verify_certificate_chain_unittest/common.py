@@ -522,4 +522,7 @@ def create_intermediate_certificate(name, issuer):
 def create_end_entity_certificate(name, issuer):
   return Certificate(name, TYPE_END_ENTITY, issuer)
 
+def create_self_signed_end_entity_certificate(name):
+  return Certificate(name, TYPE_END_ENTITY, None)
+
 init(sys.argv[0])

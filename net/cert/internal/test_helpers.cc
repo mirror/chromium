@@ -234,6 +234,10 @@ bool ReadVerifyCertChainTestFromFile(const std::string& file_path_ascii,
       } else if (value == "TRUSTED_ANCHOR_WITH_CONSTRAINTS") {
         test->last_cert_trust =
             CertificateTrust::ForTrustAnchorEnforcingConstraints();
+      } else if (value == "TRUSTED_ANCHOR_OR_LEAF") {
+        test->last_cert_trust = CertificateTrust::ForTrustAnchorOrLeaf();
+      } else if (value == "TRUSTED_LEAF") {
+        test->last_cert_trust = CertificateTrust::ForTrustLeaf();
       } else if (value == "DISTRUSTED") {
         test->last_cert_trust = CertificateTrust::ForDistrusted();
       } else if (value == "UNSPECIFIED") {

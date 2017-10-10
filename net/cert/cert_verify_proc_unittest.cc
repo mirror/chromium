@@ -191,6 +191,12 @@ const std::vector<CertVerifyProcType> kAllCertVerifiers = {
 // successfully as a target certificate with chain of length 1 on the given
 // CertVerifyProcType.
 bool ScopedTestRootCanTrustTargetCert(CertVerifyProcType verify_proc_type) {
+#if defined(USE_NSS_CERTS) || (defined(OS_MACOSX) && !defined(OS_IOS))
+  // For CertVerifyProcBuiltin this depends on which platform TrustStore is
+  // being used.
+  if (verify_proc_type == CERT_VERIFY_PROC_BUILTIN)
+    return true;
+#endif
   return verify_proc_type == CERT_VERIFY_PROC_MAC ||
          verify_proc_type == CERT_VERIFY_PROC_IOS ||
          verify_proc_type == CERT_VERIFY_PROC_NSS ||
@@ -355,10 +361,7 @@ TEST_P(CertVerifyProcInternalTest, TrustedTargetCertWithEVPolicy) {
   int flags = CertVerifier::VERIFY_EV_CERT;
   int error = Verify(cert.get(), "policy_test.example", flags,
                      nullptr /*crl_set*/, CertificateList(), &verify_result);
-  // TODO(eroman): builtin verifier cannot verify a chain of length 1.
-  if (verify_proc_type() == CERT_VERIFY_PROC_BUILTIN) {
-    EXPECT_THAT(error, IsError(ERR_CERT_INVALID));
-  } else if (ScopedTestRootCanTrustTargetCert(verify_proc_type())) {
+  if (ScopedTestRootCanTrustTargetCert(verify_proc_type())) {
     EXPECT_THAT(error, IsOk());
     ASSERT_TRUE(verify_result.verified_cert);
     EXPECT_TRUE(
@@ -396,10 +399,7 @@ TEST_P(CertVerifyProcInternalTest,
   int flags = CertVerifier::VERIFY_EV_CERT;
   int error = Verify(cert.get(), "policy_test.example", flags,
                      nullptr /*crl_set*/, CertificateList(), &verify_result);
-  // TODO(eroman): builtin verifier cannot verify a chain of length 1.
-  if (verify_proc_type() == CERT_VERIFY_PROC_BUILTIN) {
-    EXPECT_THAT(error, IsError(ERR_CERT_INVALID));
-  } else if (ScopedTestRootCanTrustTargetCert(verify_proc_type())) {
+  if (ScopedTestRootCanTrustTargetCert(verify_proc_type())) {
     EXPECT_THAT(error, IsOk());
     ASSERT_TRUE(verify_result.verified_cert);
     EXPECT_TRUE(

@@ -267,11 +267,23 @@ TEST_F(TrustStoreNSSTest, TrustedServer) {
   AddCertsToNSS();
   TrustServerCert(target_.get());
 
-  // TODO(mattm): server-trusted certificates are handled as UNSPECIFIED since
-  // we don't currently support the notion of explictly trusted server certs.
-  EXPECT_TRUE(HasTrust({oldroot_, newroot_, target_, oldintermediate_,
-                        newintermediate_, newrootrollover_},
+  EXPECT_TRUE(HasTrust({oldroot_, newroot_, oldintermediate_, newintermediate_,
+                        newrootrollover_},
                        CertificateTrustType::UNSPECIFIED));
+  EXPECT_TRUE(HasTrust({target_}, CertificateTrustType::TRUSTED_LEAF));
+}
+
+// Trust a certificate for both server and CA uses.
+TEST_F(TrustStoreNSSTest, TrustedCAOrServer) {
+  AddCertsToNSS();
+  ChangeCertTrust(target_.get(), CERTDB_TRUSTED_CA | CERTDB_VALID_CA |
+                                     CERTDB_TERMINAL_RECORD | CERTDB_TRUSTED);
+
+  EXPECT_TRUE(HasTrust({oldroot_, newroot_, oldintermediate_, newintermediate_,
+                        newrootrollover_},
+                       CertificateTrustType::UNSPECIFIED));
+  EXPECT_TRUE(
+      HasTrust({target_}, CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF));
 }
 
 // Trust multiple self-signed CA certificates with the same name.

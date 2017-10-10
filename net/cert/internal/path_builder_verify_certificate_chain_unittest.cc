@@ -29,6 +29,12 @@ class PathBuilderTestDelegate {
       case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
         trust_store.AddTrustAnchorWithConstraints(test.chain.back());
         break;
+      case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+        trust_store.AddTrustAnchorOrLeaf(test.chain.back());
+        break;
+      case CertificateTrustType::TRUSTED_LEAF:
+        trust_store.AddTrustLeaf(test.chain.back());
+        break;
       case CertificateTrustType::UNSPECIFIED:
         trust_store.AddCertificateWithUnspecifiedTrust(test.chain.back());
         break;

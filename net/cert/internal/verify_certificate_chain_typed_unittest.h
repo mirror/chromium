@@ -45,6 +45,7 @@ TYPED_TEST_CASE_P(VerifyCertificateChainSingleRootTest);
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, Simple) {
   this->RunTest("target-and-intermediate/main.test");
+  this->RunTest("target-and-intermediate/trusted-anchor-or-leaf.test");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, BasicConstraintsCa) {
@@ -84,6 +85,19 @@ TYPED_TEST_P(VerifyCertificateChainSingleRootTest, WrongSignature) {
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, LastCertificateNotTrusted) {
   this->RunTest("target-and-intermediate/distrusted-root.test");
   this->RunTest("target-and-intermediate/unspecified-trust-root.test");
+  this->RunTest("target-and-intermediate/leaf-trust-root.test");
+}
+
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest, TargetCertificateTrusted) {
+  this->RunTest("target-only/trusted-as-leaf.test");
+  this->RunTest("target-only/trusted-as-anchor-or-leaf.test");
+}
+
+TYPED_TEST_P(VerifyCertificateChainSingleRootTest,
+             TargetCertificateNotTrusted) {
+  this->RunTest("target-only/distrusted-target.test");
+  this->RunTest("target-only/unspecified-trust-target.test");
+  this->RunTest("target-only/trusted-as-anchor.test");
 }
 
 TYPED_TEST_P(VerifyCertificateChainSingleRootTest, WeakPublicKey) {
@@ -188,6 +202,8 @@ REGISTER_TYPED_TEST_CASE_P(VerifyCertificateChainSingleRootTest,
                            WeakSignature,
                            WrongSignature,
                            LastCertificateNotTrusted,
+                           TargetCertificateTrusted,
+                           TargetCertificateNotTrusted,
                            WeakPublicKey,
                            TargetSignedUsingEcdsa,
                            Expired,
