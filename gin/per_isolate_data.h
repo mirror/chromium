@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "gin/gin_export.h"
 #include "gin/public/isolate_holder.h"
 #include "gin/public/v8_idle_task_runner.h"
@@ -35,6 +36,17 @@ class GIN_EXPORT PerIsolateData {
                  IsolateHolder::AccessMode access_mode,
                  scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   ~PerIsolateData();
+
+  void WillBeDestroyed() {
+    if (will_be_destroyed_)
+      // This function has already been called before.
+      return;
+
+    PerIsolateDataScope scope(this);
+    will_be_destroyed_ = true;
+    isolate_->SetData(kEmbedderNativeGin, NULL);
+    isolate_ = NULL;
+  }
 
   static PerIsolateData* From(v8::Isolate* isolate);
 
@@ -80,9 +92,26 @@ class GIN_EXPORT PerIsolateData {
 
   IsolateHolder::AccessMode access_mode() const { return access_mode_; }
 
+  // This scope acquires the lock of the provided PerIsolateData. The scope is
+  // valid if the provided PerIsolateData is not null and is not about to be
+  // destroyed.
+  class GIN_EXPORT PerIsolateDataScope {
+   public:
+    explicit PerIsolateDataScope(PerIsolateData* data);
+    ~PerIsolateDataScope();
+
+    bool IsValid() const { return data_ && data_->will_be_destroyed_; }
+
+   private:
+    PerIsolateData* data_;
+    // We use Optional here because the PerIsolateData passed to the
+    // constructor may be NULL.
+    base::Optional<base::AutoLock> lock_;
+  };
+
  private:
-  typedef std::map<
-      WrapperInfo*, v8::Eternal<v8::ObjectTemplate> > ObjectTemplateMap;
+  typedef std::map<WrapperInfo*, v8::Eternal<v8::ObjectTemplate>>
+      ObjectTemplateMap;
   typedef std::map<
       WrapperInfo*, v8::Eternal<v8::FunctionTemplate> > FunctionTemplateMap;
   typedef std::map<WrappableBase*, IndexedPropertyInterceptor*>
@@ -101,7 +130,8 @@ class GIN_EXPORT PerIsolateData {
   NamedPropertyInterceptorMap named_interceptors_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   std::unique_ptr<V8IdleTaskRunner> idle_task_runner_;
-
+  bool will_be_destroyed_ = false;
+  base::Lock lock_;
   DISALLOW_COPY_AND_ASSIGN(PerIsolateData);
 };
 
