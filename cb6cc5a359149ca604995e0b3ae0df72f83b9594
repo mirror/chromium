@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "095c63bc_d2c8c53e",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "The destructor of a derived class needs access to the destructor of the base class, even if the call isn\u0027t explicit.",
+      "parentUuid": "f8da14d9_dbbeb484",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd1bbc3_63b9cead",
         "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
         "patchSetId": 23
@@ -199,6 +217,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee59fb0c_3cc3963c",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Let\u0027s say that the maximum number of background tasks that can run concurrently is 1.\n\nTHREAD_1: Post TASK_A1 in SEQUENCE_A.\n          WillScheduleSequence allows SEQUENCE_A to be scheduled.\nTHREAD_1: Post TASK_B1 in SEQUENCE_B.\n          WillScheduleSequence preempts SEQUENCE_B.\nTHREAD_1: Post TASK_A2 in SEQUENCE_A.\n          Since TASK_A2 is not the first task in its sequence,\n          WillScheduleSequence is not called.\nTHREAD_2: GetWork() returns SEQUENCE_A.\n          RunNextTask(SEQUENCE_A).\n          ***\n\n*** After TASK_A1 runs, TaskTracker must preempt SEQUENCE_A and schedule SEQUENCE_B if we want TASK_B1 to be the next task that runs. That\u0027s the purpose of this code.",
+      "parentUuid": "707b3433_57c1ef35",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

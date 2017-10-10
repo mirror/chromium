@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "564d4303_1d9e7998",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5526fdc5_4d9d40ed",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f816b6f6_9d8cb769",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "75250b88332356f2670a70798dea81f4bdad9432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ccd2a6_a2d09b27",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f816b6f6_9d8cb769",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1ad14f3c_efa09e19",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41382fc_619f4b4e",
+      "range": {
+        "startLine": 622,
+        "startChar": 11,
+        "endLine": 624,
+        "endChar": 16
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80743aba_85eed24e",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 26
@@ -79,6 +139,30 @@
       "revId": "75250b88332356f2670a70798dea81f4bdad9432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f323b6a_c0413b47",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done\n\n// |background_sequence_to_dispatch.sequence| may be null if there was no\n// preempted background sequence.",
+      "parentUuid": "80743aba_85eed24e",
+      "range": {
+        "startLine": 658,
+        "startChar": 6,
+        "endLine": 658,
+        "endChar": 46
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a4a2823d_d973cc98",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Used \"schedule\" instead, as discussed on Hangouts.",
+      "parentUuid": "0308141d_98b6ac24",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9000ed6_82ace8a2",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 26
@@ -119,6 +227,24 @@
       "revId": "75250b88332356f2670a70798dea81f4bdad9432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24a022b_32480f6e",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9000ed6_82ace8a2",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "dd64839e_220cb3fb",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf07918a_d5c172b7",
+      "range": {
+        "startLine": 975,
+        "startChar": 3,
+        "endLine": 976,
+        "endChar": 49
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bc244ba_9b23268e",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 26
@@ -159,6 +309,24 @@
       "revId": "75250b88332356f2670a70798dea81f4bdad9432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b43bc5a_6edb53a3",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-10T18:53:00Z",
+      "side": 1,
+      "message": "Done\n\nAssigned the sequenced time explicitly rather than sleeping.",
+      "parentUuid": "8bc244ba_9b23268e",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
