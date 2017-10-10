@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87db9ea7_f0f99f5f",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "All of these preconditions should be true in the MediaRouteController ctor.\nShould this code just be moved there?  Then you don\u0027t need to worry about it being invoked repeatedly.",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9789c807_6112c981",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "is_valid_ \u003d false ?",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b42536f_80f7daf9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "Requests the creation of a MediaRouteController implementation by passing the interface request to |media_route_provider_|.",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4311183f_42544875",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "Typo in since",
+      "revId": "e80d3ba684d88d1948f1a52bb40a3fad3142c7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

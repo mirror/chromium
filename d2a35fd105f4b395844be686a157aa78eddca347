@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b4684e3c_8240783c",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "That\u0027s true.  But it looks like InitAdditionalMojoConnections is only needed in one place.  And people should know that if you override a superclass method without invoking it, YMMV.\n\nThat being said, I don\u0027t feel strongly either way.",
+      "parentUuid": "165cf910_acf55e39",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76a00619_94c1b802",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 2
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "The method takes a raw pointer because it is also called from MRDesktop using the raw pointers stored in the route controller map. (MR doesn\u0027t take ownership of MRCs; only observers do).\n\nI think it\u0027s fine to take raw pointer here; it\u0027s a way to signal the method does not assume ownership of the MRC.",
       "parentUuid": "76a00619_94c1b802",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b41778_5316b5f2",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "Can you document the ownership assumption in the .h?",
+      "parentUuid": "6cb098d2_05214036",
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +245,24 @@
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a9b18b_0f2dc27f",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5cae0fd0_12119baa",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +333,24 @@
       "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b10422_ec609bbd",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T20:10:15Z",
+      "side": 1,
+      "message": "Yeah, but it seems like the callback result from CreateMediaRouteController doesn\u0027t make sense without the route id.\n\nI could go either way on this:\n- Make the caller bind an extra route_id parameter as you do here (resulting in code bloat for each call site)\n- Make the Mojo API a little more complicated by passing a route_id in the callback that is technically redundant.\n\nI usually favor making APIs more straightforward and foolproof to use, but if there\u0027s really only one call site, probably not worth making any changes.",
+      "parentUuid": "8549ec02_fccdf479",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
