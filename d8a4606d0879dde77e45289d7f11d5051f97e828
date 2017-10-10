@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c118d8dd_ed19c6fd",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-10-10T18:03:32Z",
+      "side": 1,
+      "message": "Un-indent here? Or is diff just not showing it?",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 6
+      },
+      "revId": "d8a4606d0879dde77e45289d7f11d5051f97e828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
