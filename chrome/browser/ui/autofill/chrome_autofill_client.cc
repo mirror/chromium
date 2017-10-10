@@ -20,6 +20,8 @@
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo_util.h"
+#include "chrome/browser/ssl/insecure_sensitive_input_driver.h"
+#include "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/autofill/autofill_popup_controller_impl.h"
 #include "chrome/browser/ui/autofill/create_card_unmask_prompt_view.h"
@@ -346,6 +348,27 @@ void ChromeAutofillClient::DidFillOrPreviewField(
   AutofillLoggerAndroid::DidFillOrPreviewField(autofilled_value,
                                                profile_full_name);
 #endif  // defined(OS_ANDROID)
+}
+
+void ChromeAutofillClient::DidInteractWithCreditCardInput(
+    content::RenderFrameHost* rfh) {
+  //  retrieve the InsecureSensitiveInputObserver
+  // (with GetOrCreateForWebContents) and call a method on it to set the credit
+  // card field on the InsecureInputStatus.
+  LOG(WARNING) << "GOT CREDIT CARD INPUT!!!";
+  InsecureSensitiveInputDriverFactory* factory =
+      InsecureSensitiveInputDriverFactory::FromWebContents(web_contents());
+
+  // If a factory does not yet exist for |web_contents|, create one.
+  if (!factory) {
+    content::WebContentsUserData<InsecureSensitiveInputDriverFactory>::
+        CreateForWebContents(web_contents());
+    factory =
+        InsecureSensitiveInputDriverFactory::FromWebContents(web_contents());
+  }
+  InsecureSensitiveInputDriver* driver = factory->GetDriverForFrame(rfh);
+  if (driver)
+    driver->DidEditCreditCardFieldInInsecureContext();  // HACKERY
 }
 
 bool ChromeAutofillClient::IsContextSecure() {

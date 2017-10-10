@@ -37,6 +37,19 @@ class InsecureSensitiveInputDriverFactory
   InsecureSensitiveInputDriver* GetDriverForFrame(
       content::RenderFrameHost* render_frame_host);
 
+  // This method should be called when there is a message notifying
+  // the browser process that the renderer has a visible password
+  // field.
+  void RenderFrameHasVisiblePasswordField(
+      content::RenderFrameHost* render_frame_host);
+
+  // This method should be called when there is a message notifying the browser
+  // process that the renderer has no visible password fields anymore.
+  void RenderFrameHasNoVisiblePasswordFields(
+      content::RenderFrameHost* render_frame_host);
+
+  bool HasVisiblePasswordFields() const;
+
   // content::WebContentsObserver:
   void RenderFrameCreated(content::RenderFrameHost* render_frame_host) override;
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
@@ -50,6 +63,8 @@ class InsecureSensitiveInputDriverFactory
   std::map<content::RenderFrameHost*,
            std::unique_ptr<InsecureSensitiveInputDriver>>
       frame_driver_map_;
+
+  std::set<content::RenderFrameHost*> frames_with_visible_password_fields_;
 
   DISALLOW_COPY_AND_ASSIGN(InsecureSensitiveInputDriverFactory);
 };

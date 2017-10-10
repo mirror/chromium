@@ -5,6 +5,7 @@
 #include "components/autofill/content/browser/content_autofill_driver.h"
 
 #include <utility>
+#include <vector>
 
 #include "base/command_line.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
@@ -182,7 +183,9 @@ void ContentAutofillDriver::DidInteractWithCreditCardForm() {
       content::WebContents::FromRenderFrameHost(render_frame_host_);
   if (contents->GetVisibleURL().SchemeIsCryptographic())
     return;
-  contents->OnCreditCardInputShownOnHttp();
+  // REPLACE contents->OnCreditCardInputShownOnHttp();
+  autofill_manager_->client()->DidInteractWithCreditCardInput(
+      render_frame_host_);
 }
 
 void ContentAutofillDriver::FormsSeen(const std::vector<FormData>& forms,
