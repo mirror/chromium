@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4cae060_396b8404",
+        "filename": "chrome/browser/resources/download_internals/download_internals.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "nit, all: use rgb instead of rgba when alpha \u003d 1",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc66c3_616e68ea",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "nit: order alphabetically unless order really matters (does list.css use/override something in text_defaults.css?)",
+      "range": {
+        "startLine": 8,
+        "startChar": 56,
+        "endLine": 8,
+        "endChar": 60
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb43f9b2_ce38cda9",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "this is a duplicate -- the cr.html import, above, already has this \u003cscript\u003e.\n\nUsing HTML imports ensures we don\u0027t double-include scripts. When you add \u003cscript src\u003d\"\"\u003e, the script gets executed again regardless.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40107c95_23509cbb",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "For the same reason, please consider changing all these \u003cscript\u003es to \u003clink rel\u003d\"import\"\u003es pointing to the corresponding HTML file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 57
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b30bc5_6c7a11fd",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "wrap long lines, to the extent possible",
+      "range": {
+        "startLine": 44,
+        "startChar": 34,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9063f0_dda61b63",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "please provide Closure annotations for these functions, specifying the types of the params and return values (if any). this helps prevent unintended breakages in the future, which is important for -internals pages that tend to be less tested than our \"production\" pages",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06dbc27_bbaa83e4",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "use Array.prototype.findIndex instead of a loop, e.g.:\n\n  var index \u003d list.findIndex(entry \u003d\u003e entry.guid \u003d\u003d guid);\n  if (index !\u003d -1)\n    list.splice(index, 1);\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f563984_54325279",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4f80a5_d4824834",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "check for enum values (see below)",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18388115_ffeef8bc",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "please make this an enum, so we aren\u0027t comparing against a bunch of repeated string literals.\n\nrandom example: https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_types.js?type\u003dcs\u0026q\u003dfile:%5C.js+@enum+file:cr_elements\u0026l\u003d10",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4715ed53_678bf773",
+        "filename": "chrome/browser/resources/download_internals/download_internals_visuals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "add this file to compiled_resources2.gyp",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec78b82_b9dc62fc",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-10T21:58:46Z",
+      "side": 1,
+      "message": "add AllowJavascript() call",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
