@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3dbc547_40b68f95",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03789a67_4645e169",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c1db571_37f108ca",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4d46af_9b706bf1",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c1db571_37f108ca",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "78e2d104_fad492e6",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Gives a compile error for vector:\n../../third_party/googletest/src/googletest/include/gtest/gtest-message.h:131:10: error: invalid operands to binary expression (\u0027std::__1::basic_stringstream\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e \u003e\u0027 and \u0027const std::__1::vector\u003cstd::__1::basic_string\u003cchar\u003e, std::__1::allocator\u003cstd::__1::basic_string\u003cchar\u003e \u003e \u003e\u0027)\n    *ss_ \u003c\u003c val;",
+      "parentUuid": "d5150e2d_88f2d740",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3327f8c1_24bd6e97",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb16fa64_f3c94f85",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3327f8c1_24bd6e97",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "005330d0_e0b87f49",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f440b465_d8f36695",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58f21f6_f09cd269",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc82359_bac7fb82",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Abusive preset uses ABUSIVE as the list but we are using ConfigureAsSubresourceFilterOnlyURLWithWarning which uses SUBRESOURCE_FILTER as the list. I guess we could enhance the harness to incorporate ABUSIVE list but I think that can be done as a separate Cl since all other tests in this file are also still using SUBRESOURCE_FILTER list. wdyt?",
+      "parentUuid": "f58f21f6_f09cd269",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "f8d0851e_a3a3e710",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Right, changed the expected and not-expected messages.",
+      "parentUuid": "9d219f66_03a51ec2",
+      "range": {
+        "startLine": 234,
+        "startChar": 45,
+        "endLine": 234,
+        "endChar": 70
+      },
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde878e2_eae017c5",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
@@ -141,6 +273,24 @@
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8575fe_3c09af19",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde878e2_eae017c5",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "ad4d6ba7_76979735",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Agree, should not be needed as long as every navigation goes through DidFinishNavigation. Added a dcheck for it to be empty.",
+      "parentUuid": "93f213f6_195a8cbb",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1888f6a_0dc2f2bc",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
         "patchSetId": 7
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "37e5b26e_22212f29",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Keeping it the same but using a boolean which can be used here and in the dcheck above instead of invoking the MakeForForcedActivation twice.",
+      "parentUuid": "c1888f6a_0dc2f2bc",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0cdf13_26e30579",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
         "patchSetId": 7
@@ -192,6 +378,24 @@
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f87835_932428dc",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T18:15:34Z",
+      "side": 1,
+      "message": "Split the condition so that we clear the messages after the check for main frame but before checking if its a commit or not so that they are cleared in ERR_ABORTED cases also .",
+      "parentUuid": "9b0cdf13_26e30579",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
