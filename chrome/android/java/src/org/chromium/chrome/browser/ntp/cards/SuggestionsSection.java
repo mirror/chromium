@@ -539,8 +539,11 @@ public class SuggestionsSection extends InnerNode {
     /**
      * Fetches additional suggestions only for this section.
      * @param onFailure A {@link Runnable} that will be run if the fetch fails.
+     * @param onNoNewSuggestions A {@link Runnable} that will be run if the fetch succeeds but
+     *                           provides no new suggestions.
      */
-    public void fetchSuggestions(@Nullable final Runnable onFailure) {
+    public void fetchSuggestions(@Nullable final Runnable onFailure,
+            @Nullable Runnable onNoNewSuggestions) {
         assert !isLoading();
 
         if (getSuggestionsCount() == 0 && getCategoryInfo().isRemote()) {
@@ -557,7 +560,11 @@ public class SuggestionsSection extends InnerNode {
                     if (!isAttached()) return; // The section has been dismissed.
 
                     mMoreButton.updateState(ActionItem.State.BUTTON);
+
                     appendSuggestions(suggestions, /* keepSectionSize = */ false);
+                    if (onNoNewSuggestions != null && suggestions.size() == 0) {
+                        onNoNewSuggestions.run();
+                    }
                 },
                 () -> {  /* failureRunnable */
                     if (!isAttached()) return; // The section has been dismissed.
