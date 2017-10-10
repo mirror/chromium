@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d03f57_44059edc",
+        "filename": "chrome/android/java/res/layout/custom_preference_with_divider.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-10T18:55:13Z",
+      "side": 1,
+      "message": "I tried following custom_preference route, but then realized that newly-added custom_preference_with_divider doesn\u0027t make much sense outside of personalized promos, so I merged it into personalized_signin_promo_view_settings.xml.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 72
+      },
+      "revId": "00ad55624f954ed24c7988d0187b07f3da7f5b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

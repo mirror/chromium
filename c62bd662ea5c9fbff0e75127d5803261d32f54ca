@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c5ca51_3b03e916",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 36088,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-10T18:55:13Z",
+      "side": 1,
+      "message": "I put Jérôme as an owner to be consistent with other MobileSignInPromo.* histograms.",
+      "range": {
+        "startLine": 36088,
+        "startChar": 0,
+        "endLine": 36088,
+        "endChar": 36
+      },
+      "revId": "c62bd662ea5c9fbff0e75127d5803261d32f54ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
