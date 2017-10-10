@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "dee516ea_9fbb0bda",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T18:40:05Z",
+      "side": 1,
+      "message": "I think individual allocations is confusing. I don\u0027t understand either?\nThe main difference is that the free is not discounted in the same task which the allocation register does. I changed it a bit",
+      "parentUuid": "cd94833c_e00d1529",
+      "range": {
+        "startLine": 43,
+        "startChar": 60,
+        "endLine": 43,
+        "endChar": 79
+      },
+      "revId": "5d2f8e2a794ecf5413d2a4aa651d5863bd3eec28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54116e7a_77007a51",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T18:40:05Z",
+      "side": 1,
+      "message": "nvm, I was hoping to fit the comment in same line :P",
+      "parentUuid": "9f542f01_e7862fd6",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "5d2f8e2a794ecf5413d2a4aa651d5863bd3eec28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d075d4_c407b154",
         "filename": "base/trace_event/memory_dump_manager.h",
         "patchSetId": 2
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e339a75_663104a7",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T18:40:05Z",
+      "side": 1,
+      "message": "good point. done.",
+      "parentUuid": "86d075d4_c407b154",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 2
+      },
+      "revId": "5d2f8e2a794ecf5413d2a4aa651d5863bd3eec28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b91597_eb1abe31",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5d2f8e2a794ecf5413d2a4aa651d5863bd3eec28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a751b974_5abd4485",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-10T18:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b91597_eb1abe31",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "5d2f8e2a794ecf5413d2a4aa651d5863bd3eec28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
