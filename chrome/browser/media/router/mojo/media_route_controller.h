@@ -76,15 +76,16 @@ class MediaRouteController
     DISALLOW_COPY_AND_ASSIGN(Observer);
   };
 
+  using InitMojoResult =
+      std::pair<mojom::MediaControllerRequest, mojom::MediaStatusObserverPtr>;
+
   // Constructs a MediaRouteController that forwards media commands to
   // |mojo_media_controller_|. |media_router_| will be notified when the
   // MediaRouteController is destroyed via DetachRouteController().
   MediaRouteController(const MediaRoute::Id& route_id,
                        content::BrowserContext* context);
 
-  // Overridable by subclasses to request interfaces for additional comamnds.
-  // Valid to call only once after |mojo_media_controller_| is bound.
-  virtual void InitAdditionalMojoConnnections();
+  InitMojoResult InitMojoConnections();
 
   virtual RouteControllerType GetType() const;
 
@@ -103,15 +104,6 @@ class MediaRouteController
   // Notifies |observers_| to dispose their references to the controller. The
   // controller gets destroyed when all the references are disposed.
   void Invalidate();
-
-  // Returns an interface request tied to |mojo_media_controller_|, to be bound
-  // to an implementation. |mojo_media_controller_| gets reset whenever this is
-  // called.
-  mojom::MediaControllerRequest CreateControllerRequest();
-
-  // Returns a mojo pointer bound to |this| by |binding_|. This must only be
-  // called at most once in the lifetime of the controller.
-  mojom::MediaStatusObserverPtr BindObserverPtr();
 
   MediaRoute::Id route_id() const { return route_id_; }
 
@@ -140,6 +132,19 @@ class MediaRouteController
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
+
+  // Returns an interface request tied to |mojo_media_controller_|, to be bound
+  // to an implementation. |mojo_media_controller_| gets reset whenever this is
+  // called.
+  mojom::MediaControllerRequest CreateControllerRequest();
+
+  // Returns a mojo pointer bound to |this| by |binding_|. This must only be
+  // called at most once in the lifetime of the controller.
+  mojom::MediaStatusObserverPtr BindObserverPtr();
+
+  // Overridable by subclasses to request interfaces for additional comamnds.
+  // Valid to call only once after |mojo_media_controller_| is bound.
+  virtual void InitAdditionalMojoConnections() {}
 
   // Overridable by subclasses to perform additional cleanup before the main
   // logic in |Invalidate()| executes.
@@ -184,7 +189,6 @@ class HangoutsMediaRouteController : public MediaRouteController {
                                content::BrowserContext* context);
 
   // MediaRouteController
-  void InitAdditionalMojoConnnections() override;
   RouteControllerType GetType() const override;
 
   void SetLocalPresent(bool local_present);
@@ -193,6 +197,8 @@ class HangoutsMediaRouteController : public MediaRouteController {
   ~HangoutsMediaRouteController() override;
 
  private:
+  // MediaRouteController
+  void InitAdditionalMojoConnections() override;
   void OnMojoConnectionError() override;
   void InvalidateInternal() override;
 
