@@ -22,6 +22,30 @@
       "revId": "c83641911607ac388d8461f3b380488bec011d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afdd291_ed7cf1cb",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-10T21:26:00Z",
+      "side": 1,
+      "message": "(hello from the peanut gallery!)\n\nandroid webview artifacts are here -\u003e http://shortn/_zsjpsv5wiz and the \u0027gn-args-passed.txt\u0027 contains the GN flags and I see:\n\nis_official_build \u003d true\n\nso I think they are built with official build",
+      "parentUuid": "d5e798f6_2b8cbc7b",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
