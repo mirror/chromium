@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ece69dc_5e0e213f",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:13:29Z",
+      "side": 1,
+      "message": "nit, we usually suggest not having an explicit value for the MAX, and then having it be STATUS_MAX and not STATUS_MAX+1 in the macro call",
+      "revId": "cecbcbb9a172e6faebad1bfbd89de91b08f57586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8373b5b_02498ff8",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-10T16:13:29Z",
+      "side": 1,
+      "message": "i want to check it makes sense for these statuses within AddressIsPauseOrResume to be in the same histogram as the statuses in InitializeCoreAudio. It\u0027s simpler to understand a metric when there is a single call to it.",
+      "revId": "cecbcbb9a172e6faebad1bfbd89de91b08f57586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
