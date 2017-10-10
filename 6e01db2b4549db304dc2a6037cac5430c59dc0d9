@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b96df8a_0f0db8b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-10T09:40:26Z",
+      "side": 1,
+      "message": "Can you add an empty private constructor so the class can\u0027t be instantiated?",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
