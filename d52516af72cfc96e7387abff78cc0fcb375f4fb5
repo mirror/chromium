@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5dbce04f_8d70c4d5",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T18:29:26Z",
+      "side": 1,
+      "message": "This is to do the same as views does. I renamed/restructured a bit to make it more clear.",
+      "parentUuid": "a760727b_52078206",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "d52516af72cfc96e7387abff78cc0fcb375f4fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9da32a9_f45f0e3f",
         "filename": "ui/views/view_unittest.cc",
         "patchSetId": 21
