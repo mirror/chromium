@@ -20,6 +20,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::Unused;
@@ -54,7 +55,8 @@ class MockTest : public testing::Test {
 
     // Set an expectation so mock_proxy's CallMethod() will use
     // HandleMockProxyResponseWithMessageLoop() to return responses.
-    EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+    EXPECT_CALL(*mock_proxy_.get(),
+                DoCallMethod(_, _, A<ObjectProxy::ResponseCallback*>()))
         .WillRepeatedly(
             Invoke(this, &MockTest::HandleMockProxyResponseWithMessageLoop));
 

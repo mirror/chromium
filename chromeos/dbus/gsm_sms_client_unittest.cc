@@ -27,6 +27,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Invoke;
 using ::testing::Return;
 
@@ -212,7 +213,8 @@ TEST_F(GsmSMSClientTest, Delete) {
   // Set expectations.
   const uint32_t kIndex = 42;
   expected_index_ = kIndex;
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillOnce(Invoke(this, &GsmSMSClientTest::OnDelete));
   base::MockCallback<GsmSMSClient::DeleteCallback> callback;
   EXPECT_CALL(callback, Run()).Times(1);
@@ -231,7 +233,8 @@ TEST_F(GsmSMSClientTest, Get) {
   // Set expectations.
   const uint32_t kIndex = 42;
   expected_index_ = kIndex;
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillOnce(Invoke(this, &GsmSMSClientTest::OnGet));
   base::MockCallback<GsmSMSClient::GetCallback> callback;
   EXPECT_CALL(callback, Run(_))
@@ -267,7 +270,8 @@ TEST_F(GsmSMSClientTest, Get) {
 
 TEST_F(GsmSMSClientTest, List) {
   // Set expectations.
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillOnce(Invoke(this, &GsmSMSClientTest::OnList));
   base::MockCallback<GsmSMSClient::ListCallback> callback;
   EXPECT_CALL(callback, Run(_))

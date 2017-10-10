@@ -23,6 +23,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 using ::testing::_;
+using ::testing::A;
 using ::testing::Invoke;
 using ::testing::Return;
 
@@ -197,7 +198,8 @@ TEST_F(ModemMessagingClientTest, Delete) {
   // Set expectations.
   const dbus::ObjectPath kSmsPath("/SMS/0");
   expected_sms_path_ = kSmsPath;
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillOnce(Invoke(this, &ModemMessagingClientTest::OnDelete));
   MockDeleteCallback callback;
   EXPECT_CALL(callback, Run()).Times(1);
@@ -215,7 +217,8 @@ TEST_F(ModemMessagingClientTest, Delete) {
 
 TEST_F(ModemMessagingClientTest, List) {
   // Set expectations.
-  EXPECT_CALL(*mock_proxy_.get(), DoCallMethod(_, _, _))
+  EXPECT_CALL(*mock_proxy_.get(),
+              DoCallMethod(_, _, A<dbus::ObjectProxy::ResponseCallback*>()))
       .WillOnce(Invoke(this, &ModemMessagingClientTest::OnList));
   MockListCallback callback;
   EXPECT_CALL(callback, Run(_))
