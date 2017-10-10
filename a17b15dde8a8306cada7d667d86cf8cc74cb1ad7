@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "911b1d36_a8ac3cbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T23:00:33Z",
+      "side": 1,
+      "message": "Just a reminder to update the commit description given the latest changes.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "a17b15dde8a8306cada7d667d86cf8cc74cb1ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
