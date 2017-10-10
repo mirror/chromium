@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308d70c5_660f2082",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T21:35:17Z",
+      "side": 1,
+      "message": "Sorry, to be clear I meant to test the actual code that generates this filename. So extract it to a helper function out of persistent_histogram_allocator.cc and test that.\n\nAlso, ideally both the function to create the name and the function to parse the name should exist in the same .cc file so they\u0027re together. Right now it\u0027s split up, which means you have the c/b/metrics code depending on an implementation detail of persistent_histogram_allocator.cc which is not ideal.",
+      "range": {
+        "startLine": 20,
+        "startChar": 73,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "47c052b8fd123260a582b5a454ae4df12cf54c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
