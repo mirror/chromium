@@ -58,12 +58,12 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
     PostedTask(base::OnceClosure callback,
                base::Location posted_from,
                base::TimeDelta delay,
-               bool nestable);
+               base::Nestable nestable);
 
     base::OnceClosure callback;
     base::Location posted_from;
     base::TimeDelta delay;
-    bool nestable;
+    base::Nestable nestable;
   };
 
   // Unregisters the task queue after which no tasks posted to it will run and
