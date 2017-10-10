@@ -325,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "103b2cd7_508e2a4a",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T17:51:35Z",
+      "side": 1,
+      "message": "The DB (currently silently) does a nuke on init-failure on corruption. Read failures could be transient, so logging to UMA to see if affects you heavily is probably a great idea. :-)",
+      "parentUuid": "c7cef023_dc356b40",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b5b5fdf_bc4e9c28",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
