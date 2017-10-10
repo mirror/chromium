@@ -405,6 +405,7 @@ UserSessionManager::UserSessionManager()
       weak_factory_(this) {
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
   user_manager::UserManager::Get()->AddSessionStateObserver(this);
+  user_manager::UserManager::Get()->AddObserver(this);
 }
 
 UserSessionManager::~UserSessionManager() {
@@ -412,8 +413,10 @@ UserSessionManager::~UserSessionManager() {
   // still exists.
   // TODO(nkostylev): fix order of destruction of UserManager
   // / UserSessionManager objects.
-  if (user_manager::UserManager::IsInitialized())
+  if (user_manager::UserManager::IsInitialized()) {
     user_manager::UserManager::Get()->RemoveSessionStateObserver(this);
+    user_manager::UserManager::Get()->RemoveObserver(this);
+  }
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 }
 
@@ -939,6 +942,15 @@ void UserSessionManager::OnProfilePrepared(Profile* profile,
 
   // Restore other user sessions if any.
   RestorePendingUserSessions();
+}
+
+void UserSessionManager::OnDeviceSignInSettingsChanged() {
+  user_manager::UserManager* user_manager = user_manager::UserManager::Get();
+  auto* current_user = user_manager->GetActiveUser();
+  if (current_user && !user_manager->IsUserAllowed(*current_user)) {
+    LOG(ERROR) << "Current user isn't allowed. User is signed out.";
+    chrome::AttemptUserExit();
+  }
 }
 
 void UserSessionManager::ChildAccountStatusReceivedCallback(Profile* profile) {

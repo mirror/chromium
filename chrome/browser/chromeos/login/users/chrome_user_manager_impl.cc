@@ -223,6 +223,19 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
         base::BindOnce(&ChromeUserManagerImpl::RetrieveTrustedDevicePolicies,
                        weak_factory_.GetWeakPtr()));
   }
+  allow_guest_subscription_ = cros_settings_->AddSettingsObserver(
+      kAccountsPrefAllowGuest,
+      base::Bind(&UserManager::NotifyDeviceSignInSettingsChanged,
+                 weak_factory_.GetWeakPtr()));
+  allow_supervised_user_subscription_ = cros_settings_->AddSettingsObserver(
+      kAccountsPrefSupervisedUsersEnabled,
+      base::Bind(&UserManager::NotifyDeviceSignInSettingsChanged,
+                 weak_factory_.GetWeakPtr()));
+  // user whitelist
+  users_subscription_ = cros_settings_->AddSettingsObserver(
+      kAccountsPrefUsers,
+      base::Bind(&UserManager::NotifyDeviceSignInSettingsChanged,
+                 weak_factory_.GetWeakPtr()));
 
   local_accounts_subscription_ = cros_settings_->AddSettingsObserver(
       kAccountsPrefDeviceLocalAccounts,
@@ -1157,6 +1170,37 @@ bool ChromeUserManagerImpl::AreSupervisedUsersAllowed() const {
   cros_settings_->GetBoolean(kAccountsPrefSupervisedUsersEnabled,
                              &supervised_users_allowed);
   return supervised_users_allowed;
+}
+
+bool ChromeUserManagerImpl::AreGuestUsersAllowed() const {
+  bool is_guest_allowed = false;
+  cros_settings_->GetBoolean(kAccountsPrefAllowGuest, &is_guest_allowed);
+  return is_guest_allowed;
+}
+
+bool ChromeUserManagerImpl::IsGaiaUserAllowed(
+    const user_manager::User& user) const {
+  return CrosSettings::IsWhitelisted(user.GetAccountId().GetUserEmail(),
+                                     nullptr);
+}
+
+bool ChromeUserManagerImpl::IsUserAllowed(
+    const user_manager::User& user) const {
+  std::vector<user_manager::UserType> allowed_user_types = {
+      user_manager::USER_TYPE_REGULAR, user_manager::USER_TYPE_GUEST,
+      user_manager::USER_TYPE_SUPERVISED, user_manager::USER_TYPE_CHILD};
+  DCHECK(std::find(allowed_user_types.begin(), allowed_user_types.end(),
+                   user.GetType()) != allowed_user_types.end());
+
+  if (user.GetType() == user_manager::USER_TYPE_GUEST &&
+      !AreGuestUsersAllowed())
+    return false;
+  if (user.GetType() == user_manager::USER_TYPE_SUPERVISED &&
+      !AreSupervisedUsersAllowed())
+    return false;
+  if (user.HasGaiaAccount() && !IsGaiaUserAllowed(user))
+    return false;
+  return true;
 }
 
 UserFlow* ChromeUserManagerImpl::GetDefaultUserFlow() const {

@@ -54,6 +54,10 @@ class USER_MANAGER_EXPORT UserManager {
     // Called when the child status of the given user has changed.
     virtual void OnChildStatusChanged(const User& user);
 
+    // Called when device cros settings which are responsible for user sign in
+    // are changed.
+    virtual void OnDeviceSignInSettingsChanged();
+
    protected:
     virtual ~Observer();
   };
@@ -325,6 +329,7 @@ class USER_MANAGER_EXPORT UserManager {
   virtual void NotifyUserProfileImageUpdated(
       const User& user,
       const gfx::ImageSkia& profile_image) = 0;
+  virtual void NotifyDeviceSignInSettingsChanged() = 0;
 
   // Changes the child status and notifies observers.
   virtual void ChangeUserChildStatus(User* user, bool is_child) = 0;
@@ -335,6 +340,18 @@ class USER_MANAGER_EXPORT UserManager {
 
   // Returns true if supervised users allowed.
   virtual bool AreSupervisedUsersAllowed() const = 0;
+
+  // Returns true if guest users are allowed.
+  virtual bool AreGuestUsersAllowed() const = 0;
+
+  // Returns true if regular |user| is allowed according to DeviceUserWhitelist
+  // policy.
+  virtual bool IsGaiaUserAllowed(const User& user) const = 0;
+
+  // Return true if |user| is allowed depends on device policies.
+  // Accepted user types: USER_TYPE_REGULAR, USER_TYPE_GUEST,
+  // USER_TYPE_SUPERVISED, USER_TYPE_CHILD.
+  virtual bool IsUserAllowed(const User& user) const = 0;
 
   // Returns "Local State" PrefService instance.
   virtual PrefService* GetLocalState() const = 0;
