@@ -7,9 +7,11 @@
 #include "base/optional.h"
 #include "chrome/browser/ui/autofill/autofill_popup_controller.h"
 #include "chrome/browser/ui/autofill/autofill_popup_layout_model.h"
+#include "chrome/browser/ui/views/autofill/autofill_popup_expanded_view_views.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/browser/popup_item_ids.h"
 #include "components/autofill/core/browser/suggestion.h"
+#include "components/password_manager/core/common/password_manager_features.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -264,6 +266,10 @@ AutofillPopupView* AutofillPopupView::Create(
   if (!observing_widget)
     return NULL;
 
+  if (base::FeatureList::IsEnabled(
+          password_manager::features::kExpandedPopupViews)) {
+    return new AutofillPopupExpandedViewViews(controller, observing_widget);
+  }
   return new AutofillPopupViewViews(controller, observing_widget);
 }
 
