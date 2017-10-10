@@ -94,6 +94,30 @@
       "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4439956_62afd43a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-10T18:18:52Z",
+      "side": 1,
+      "message": "In the case (!IsVIOobe \u0026\u0026 !IsCurrentUserNew), It definitely cannot be Arc OOBE OptIn. So we \ncan either explicitly return false or let the SCREEN_ARC_TERMS_OF_SERVICE check to fail. Which one do you prefer?\n\nAnd we no longer want to check the screen for non-VI situation, since the Arc enable signal fired on corporate account is earlier than the OOBE OptIn page shows up (which I think is caused by a recent change, since on early version of M62 it still works fine), which will fail the screen check unexpectedly.\n\nAbout the comments, the cases to return false seems to be kind of straight, so I am considering add comments for the cases return true like the followings:\n\n// Make sure the user is new and the login host is active for first sign-in OOBE OptIn flow.\nif (!host-\u003eIsVIOobe())\n...\n...\n// Make sure the wizard controller is active and have the Arc ToS screen showing for the voice interaction OptIn flow.",
+      "parentUuid": "3299fbe6_898d5739",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
