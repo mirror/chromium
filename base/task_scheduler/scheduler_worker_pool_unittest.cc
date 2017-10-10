@@ -303,7 +303,7 @@ TEST_P(TaskSchedulerWorkerPoolTest, PostBeforeStart) {
 
   StartWorkerPool();
 
-  // Tasks should be scheduled shortly after the pool is started.
+  // Tasks should run shortly after the pool is started.
   task_1_scheduled.Wait();
   task_2_scheduled.Wait();
 
