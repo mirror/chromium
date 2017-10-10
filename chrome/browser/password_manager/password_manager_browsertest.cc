@@ -2155,6 +2155,84 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
   ASSERT_EQ("", empty_password);
 }
 
+// Check that a username form in an iframe of different origin will be
+// filled in even when iframe on a different domain.
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, CrossSiteframeFillTest) {
+  GURL main_frame_url = embedded_test_server()->GetURL(
+      "www.foo.com", "/password/password_form_in_crosssite_iframe.html");
+  NavigationObserver observer(WebContents());
+  ui_test_utils::NavigateToURL(browser(), main_frame_url);
+  observer.Wait();
+
+  // Create an iframe and navigate cross-site.
+  NavigationObserver iframe_observer(WebContents());
+  iframe_observer.SetPathToWaitFor("/password/crossite_iframe_content.html");
+  GURL iframe_url = embedded_test_server()->GetURL(
+      "abc.foo.com", "/password/crossite_iframe_content.html");
+  std::string create_iframe =
+      base::StringPrintf("create_iframe('%s');", iframe_url.spec().c_str());
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(RenderFrameHost(),
+                                                       create_iframe));
+  iframe_observer.Wait();
+
+  // Store a password for autofill later.
+  NavigationObserver init_observer(WebContents());
+  init_observer.SetPathToWaitFor("/password/done.html");
+  std::unique_ptr<BubbleObserver> prompt_observer(
+      new BubbleObserver(WebContents()));
+  std::string init_form = "sendMessage('fill_and_submit');";
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), init_form));
+  init_observer.Wait();
+  EXPECT_TRUE(prompt_observer->IsSavePromptShownAutomatically());
+  prompt_observer->AcceptSavePrompt();
+
+  // Visit the form again.
+  NavigationObserver reload_observer(WebContents());
+  //  NavigateToFile("/password/password_form_in_crosssite_iframe.html");
+  ui_test_utils::NavigateToURL(browser(), main_frame_url);
+  reload_observer.Wait();
+
+  NavigationObserver ifrm_observer_2(WebContents());
+  ifrm_observer_2.SetPathToWaitFor("/password/crossite_iframe_content.html");
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(RenderFrameHost(),
+                                                       create_iframe));
+  ifrm_observer_2.Wait();
+  std::string username_field;
+  std::string password_field;
+
+  // Simulate the user interaction in the iframe which should trigger autofill.
+  // Click in the middle of the frame to avoid the border.
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(
+      RenderFrameHost(),
+      "var iframeRect = document.getElementById("
+      "'iframe').getBoundingClientRect();"));
+  int y;
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(
+      RenderFrameHost(),
+      "window.domAutomationController.send((iframeRect.top +"
+      "iframeRect.bottom) / 2);",
+      &y));
+  int x;
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(
+      RenderFrameHost(),
+      "window.domAutomationController.send((iframeRect.left + iframeRect.right)"
+      "/ 2);",
+      &x));
+
+  content::SimulateMouseClickAt(
+      WebContents(), 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(x, y));
+
+  // Verify username has been autofilled
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractString(
+      RenderFrameHost(), "sendMessage('get_username');", &username_field));
+  ASSERT_EQ("temp", username_field);
+
+  // Verify password has been autofilled
+  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractString(
+      RenderFrameHost(), "sendMessage('get_password');", &password_field));
+  ASSERT_EQ("pa55w0rd", password_field);
+}
+
 // Check that a password form in an iframe of same origin will not be
 // filled in until user interact with the iframe.
 IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
