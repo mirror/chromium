@@ -967,7 +967,6 @@ if (!is_android && !is_fuchsia) {
       "//components/sync",
       "//components/sync:test_support_fake_server",
       "//components/sync:test_support_model",
-      "//components/sync:test_support_testserver",
       "//content/test:test_support",
       "//net",
       "//skia",
@@ -1004,6 +1003,9 @@ if (!is_android && !is_fuchsia) {
         "//components/arc:arc_test_support",
         "//components/user_manager:test_support",
       ]
+    }
+    if (!is_fuchsia) {
+      deps += [ "//components/sync:test_support_testserver" ]
     }
   }
 
@@ -5104,7 +5106,7 @@ if (safe_browsing_mode == 1 && is_mac) {
   }
 }
 
-if (!is_android) {
+if (!is_android && !is_fuchsia) {
   # TODO(609855): Make this compile on Android and run on the bots.
   test("chrome_app_unittests") {
     sources = [

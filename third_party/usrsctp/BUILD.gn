@@ -122,6 +122,8 @@ static_library("usrsctp") {
       "__Userspace_os_Darwin",
     ]
     cflags += [ "-U__APPLE__" ]
+  } else if (is_fuchsia) {
+    defines += [ "__Userspace_os_Fuchsia" ]
   }
 
   if (is_win) {
