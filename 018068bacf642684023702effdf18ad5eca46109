@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deec84df_d4b24b45",
+        "filename": "content/browser/bad_message.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-10T16:58:50Z",
+      "side": 1,
+      "message": "You\u0027re likely to collide with https://chromium-review.googlesource.com/c/chromium/src/+/668037, so be careful.",
+      "revId": "018068bacf642684023702effdf18ad5eca46109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
