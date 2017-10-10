@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ce04ec2_d97fec16",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T15:18:58Z",
+      "side": 1,
+      "message": "Did git cl format split this into two lines? It looks odd.",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 52
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68fa68b_9c81fe4d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T15:18:58Z",
+      "side": 1,
+      "message": "activity.getTabModelSelector().getTotalTabCount()?",
+      "range": {
+        "startLine": 172,
+        "startChar": 42,
+        "endLine": 172,
+        "endChar": 99
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6749980d_6f9583e9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T15:18:58Z",
+      "side": 1,
+      "message": "Criteria has a constructor that takes the failure string as a param, so this can be simplified to:\n\nnew Criteria(\"...\") {\n    @Override\n    public boolean isSatisified() {\n        return expectedTotalTabCount \u003d\u003d actualTotalTabCount;\n    }\n}",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965b361f_dc26d315",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-10T15:18:58Z",
+      "side": 1,
+      "message": "nit: early return if expectedActiveTabId \u003d\u003d Tab.INVALID_TAB_ID to avoid indenting",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "2d0d1a30ab3e71837fdc7c3a6819b3f010da8980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
