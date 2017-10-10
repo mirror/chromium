@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e0abe56_41499a88",
+        "filename": "chrome/renderer/extensions/chrome_extensions_renderer_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-10T21:36:43Z",
+      "side": 1,
+      "message": "Any plans to also migrate this away from render_view? :)  Seems like it\u0027s also handling just one IPC, ExtensionMsg_AutomationQuerySelector, and sending it through the RenderView.",
+      "revId": "b7f0c1ed74aa03c82c74f875144d17f4567d9309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
