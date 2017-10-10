@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264497ed_56dd34a6",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-10T18:11:03Z",
+      "side": 1,
+      "message": "I would guess removing this line caused the regression.",
+      "range": {
+        "startLine": 420,
+        "startChar": 22,
+        "endLine": 420,
+        "endChar": 31
+      },
+      "revId": "8363eff556dd6aae506f08e7e25be8a4d568cad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
