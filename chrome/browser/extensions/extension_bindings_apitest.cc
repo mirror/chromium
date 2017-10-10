@@ -326,6 +326,26 @@ IN_PROC_BROWSER_TEST_P(ExtensionBindingsApiTest, ValidationInterception) {
   EXPECT_TRUE(caught);
 }
 
+// Verify that when a web frame embeds an extension subframe, the subframe gets
+// proper JS bindings.  See https://crbug.com/760341.
+IN_PROC_BROWSER_TEST_P(ExtensionBindingsApiTest,
+                       ExtensionSubframeGetsBindings) {
+  const extensions::Extension* extension =
+      LoadExtension(test_data_dir_.AppendASCII("bindings")
+                        .AppendASCII("extension_subframe_gets_bindings"));
+  ASSERT_TRUE(extension);
+
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/iframe.html"));
+
+  GURL extension_url(extension->GetResourceURL("page.html"));
+  ResultCatcher catcher;
+  content::NavigateIframeToURL(web_contents, "test", extension_url);
+  ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
+}
+
 // Run core bindings API tests with both native and JS-based bindings. This
 // ensures we have some minimum level of coverage while in the experimental
 // phase, when native bindings may be enabled on trunk but not at 100% stable.
