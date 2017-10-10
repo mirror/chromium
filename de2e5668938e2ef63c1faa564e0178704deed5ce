@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0686354e_080343dd",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T15:23:22Z",
+      "side": 1,
+      "message": "Oh yeah, thanks.  Do you think this could have a unittest or should layout test be fine?",
+      "revId": "de2e5668938e2ef63c1faa564e0178704deed5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71034e5_033e7663",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 5
