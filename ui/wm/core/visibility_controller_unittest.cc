@@ -43,8 +43,8 @@ TEST_F(VisibilityControllerTest, AnimateTransparencyToZeroAndHideHides) {
   window->layer()->SetOpacity(0.0);
   EXPECT_TRUE(window->layer()->visible());
   EXPECT_TRUE(window->IsVisible());
-  EXPECT_TRUE(window->layer()->GetAnimator()->
-      IsAnimatingProperty(ui::LayerAnimationElement::OPACITY));
+  EXPECT_TRUE(window->layer()->GetAnimator()->IsAnimatingProperties(
+      ui::LayerAnimationElement::OPACITY));
   EXPECT_EQ(0.0f, window->layer()->GetTargetOpacity());
 
   // Check that the visibility is correct after the hide animation has finished.

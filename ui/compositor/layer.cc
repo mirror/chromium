@@ -349,8 +349,8 @@ void Layer::SetTransform(const gfx::Transform& transform) {
 }
 
 gfx::Transform Layer::GetTargetTransform() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::TRANSFORM)) {
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::TRANSFORM)) {
     return animator_->GetTargetTransform();
   }
   return transform();
@@ -366,8 +366,8 @@ void Layer::SetSubpixelPositionOffset(const gfx::Vector2dF& offset) {
 }
 
 gfx::Rect Layer::GetTargetBounds() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::BOUNDS)) {
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::BOUNDS)) {
     return animator_->GetTargetBounds();
   }
   return bounds_;
@@ -401,7 +401,7 @@ void Layer::SetLayerTemperature(float value) {
 
 float Layer::GetTargetTemperature() const {
   if (animator_ &&
-      animator_->IsAnimatingProperty(LayerAnimationElement::TEMPERATURE)) {
+      animator_->IsAnimatingProperties(LayerAnimationElement::TEMPERATURE)) {
     return animator_->GetTargetTemperature();
   }
   return layer_temperature();
@@ -429,8 +429,8 @@ void Layer::SetLayerBrightness(float brightness) {
 }
 
 float Layer::GetTargetBrightness() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::BRIGHTNESS)) {
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::BRIGHTNESS)) {
     return animator_->GetTargetBrightness();
   }
   return layer_brightness();
@@ -441,8 +441,8 @@ void Layer::SetLayerGrayscale(float grayscale) {
 }
 
 float Layer::GetTargetGrayscale() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::GRAYSCALE)) {
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::GRAYSCALE)) {
     return animator_->GetTargetGrayscale();
   }
   return layer_grayscale();
@@ -542,8 +542,8 @@ void Layer::SetLayerBackgroundFilters() {
 }
 
 float Layer::GetTargetOpacity() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::OPACITY))
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::OPACITY))
     return animator_->GetTargetOpacity();
   return opacity();
 }
@@ -553,8 +553,8 @@ void Layer::SetVisible(bool visible) {
 }
 
 bool Layer::GetTargetVisibility() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::VISIBILITY))
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::VISIBILITY))
     return animator_->GetTargetVisibility();
   return visible_;
 }
@@ -852,8 +852,8 @@ void Layer::UpdateNinePatchOcclusion(const gfx::Rect& occlusion) {
 void Layer::SetColor(SkColor color) { GetAnimator()->SetColor(color); }
 
 SkColor Layer::GetTargetColor() const {
-  if (animator_ && animator_->IsAnimatingProperty(
-      LayerAnimationElement::COLOR))
+  if (animator_ &&
+      animator_->IsAnimatingProperties(LayerAnimationElement::COLOR))
     return animator_->GetTargetColor();
   return cc_layer_->background_color();
 }
