@@ -29,6 +29,7 @@
 import logging
 
 _log = logging.getLogger(__name__)
+canned_responses = ['Mock user response']
 
 
 class MockUser(object):
@@ -38,7 +39,12 @@ class MockUser(object):
 
     @classmethod
     def prompt(cls, message, repeat=1, raw_input=raw_input):
-        return 'Mock user response'
+        return canned_responses.pop(0)
+
+    @classmethod
+    def set_canned_responses(cls, responses):
+        global canned_responses
+        canned_responses = responses
 
     @classmethod
     def prompt_with_list(cls, list_title, list_items, can_choose_multiple=False, raw_input=raw_input):
