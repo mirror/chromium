@@ -6,6 +6,7 @@
 
 #include "core/dom/events/Event.h"
 #include "modules/media_controls/MediaControlsImpl.h"
+#include "platform/Histogram.h"
 
 namespace blink {
 
@@ -17,11 +18,35 @@ MediaControlOverflowMenuListElement::MediaControlOverflowMenuListElement(
   SetIsWanted(false);
 }
 
+void MediaControlOverflowMenuListElement::MaybeRecordTimeTaken(
+    TimeTakenHistogram histogram_name) {
+  DCHECK(time_shown_);
+
+  LinearHistogram histogram(histogram_name == kTimeToAction
+                                ? "Media.Controls.Overflow.TimeToAction"
+                                : "Media.Controls.Overflow.TimeToDismiss",
+                            1, 100, 100);
+  histogram.Count(static_cast<int32_t>(
+      (TimeTicks::Now() - time_shown_.value()).InSeconds()));
+
+  time_shown_.reset();
+}
+
 void MediaControlOverflowMenuListElement::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::click)
     event->SetDefaultHandled();
 
   MediaControlDivElement::DefaultEventHandler(event);
+}
+
+void MediaControlOverflowMenuListElement::SetIsWanted(bool wanted) {
+  MediaControlDivElement::SetIsWanted(wanted);
+
+  // Record the time the overflow menu was shown to a histogram.
+  if (wanted) {
+    DCHECK(!time_shown_);
+    time_shown_ = TimeTicks::Now();
+  }
 }
 
 }  // namespace blink
