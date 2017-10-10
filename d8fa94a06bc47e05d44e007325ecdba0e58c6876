@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6e17c3a2_ac15c71e",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T21:01:26Z",
+      "side": 1,
+      "message": "Right but \"possible\" is not great because it actually is possible to pile-on more frames. How about \"IfNotBlocked\"",
+      "parentUuid": "4ff5c75e_ee676e93",
+      "range": {
+        "startLine": 92,
+        "startChar": 41,
+        "endLine": 92,
+        "endChar": 73
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ecfd234_8c8d930b",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 8
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Same reason as above. The function is overridden in unit test.",
       "parentUuid": "9ecfd234_8c8d930b",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682d4510_1df5a007",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T21:01:26Z",
+      "side": 1,
+      "message": "Yep, makes sense.",
+      "parentUuid": "53865c74_8fd0271f",
       "range": {
         "startLine": 116,
         "startChar": 5,
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "This method is overridden in the unit test.",
       "parentUuid": "6da9befd_cda642a8",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd5cfe8_ab978d85",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T21:01:26Z",
+      "side": 1,
+      "message": "Right. Please add a comment: // virtual for unit testing.",
+      "parentUuid": "1d09a03d_7b23f880",
       "range": {
         "startLine": 83,
         "startChar": 2,
