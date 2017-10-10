@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613b1c11_39969248",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "Could this be an assertion instead?  Or are there valid cases where the sanity check may fail?",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d0034d_c59ba9b9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57447,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "Optional: I\u0027m a little confused as to what the difference between the existing name sets \"Permission.Engagement.Accepted\" and \"Permission.Prompt.Accepted\" is, but I\u0027d suggest perhaps grouping this as \"Permissions.Prompt.Accepted.BatteryLevel.Geolocation\".  At any rate, the existing convention seems to be that \"Permissions\" precedes \"Accepted\" precedes an additional qualifier precedes the permission type (e.g. \"Geolocation\").",
+      "range": {
+        "startLine": 57447,
+        "startChar": 17,
+        "endLine": 57447,
+        "endChar": 56
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e441c3_2cee647c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57451,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "nit: Why not log an actual percentage, e.g. 10*floor(battery-percentage/10)?  If you\u0027re concerned about using too many distinct buckets, consider using a sparse histogram.",
+      "range": {
+        "startLine": 57451,
+        "startChar": 36,
+        "endLine": 57451,
+        "endChar": 64
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04849f10_9376973d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57458,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "nit: denied",
+      "range": {
+        "startLine": 57458,
+        "startChar": 64,
+        "endLine": 57458,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bece27c6_28b6b104",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57467,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "nit: dismissed",
+      "range": {
+        "startLine": 57467,
+        "startChar": 64,
+        "endLine": 57467,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81813766_304cd278",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57472,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "Should I know what \"LSD\" means?  I don\u0027t... at least not in this context ;-)",
+      "range": {
+        "startLine": 57472,
+        "startChar": 37,
+        "endLine": 57472,
+        "endChar": 40
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06e2284_49b16535",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57475,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "How does this differ from the GeolocationAccepted histogram?",
+      "range": {
+        "startLine": 57475,
+        "startChar": 30,
+        "endLine": 57475,
+        "endChar": 52
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a147f52_092c5a82",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57480,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "Should there be a histogram for dismissed?",
+      "range": {
+        "startLine": 57480,
+        "startChar": 70,
+        "endLine": 57480,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934c97f2_9d7f6834",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57483,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:38:51Z",
+      "side": 1,
+      "message": "nit: denied",
+      "range": {
+        "startLine": 57483,
+        "startChar": 64,
+        "endLine": 57483,
+        "endChar": 72
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
