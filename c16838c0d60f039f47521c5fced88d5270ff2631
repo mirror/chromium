@@ -151,6 +151,24 @@
       "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bd67f02_422abc5d",
+        "filename": "components/leveldb_proto/leveldb_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T17:44:49Z",
+      "side": 1,
+      "message": "Telling the caller about that we just delorted all their data makes total sense to me.",
+      "parentUuid": "37f6af8d_6a7762bd",
+      "revId": "c16838c0d60f039f47521c5fced88d5270ff2631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

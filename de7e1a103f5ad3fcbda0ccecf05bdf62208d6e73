@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c483f3_9c7ca261",
+        "filename": "components/leveldb_proto/proto_database_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T17:44:49Z",
+      "side": 1,
+      "message": "Nit: Could you just add a short comment that explains that \"CURRENT\" is in fact the filename of the current DB? New readers might not remember the inner details of LevelDB and it\u0027s naming scheme.",
+      "range": {
+        "startLine": 740,
+        "startChar": 52,
+        "endLine": 740,
+        "endChar": 61
+      },
+      "revId": "de7e1a103f5ad3fcbda0ccecf05bdf62208d6e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
