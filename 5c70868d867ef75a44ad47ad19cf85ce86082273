@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "015de399_7b87a6a5",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-10T06:29:30Z",
+      "side": 1,
+      "message": "The method currently does 2 things:\n1) blacklist the language\n2) add it to the language list\n\nIn my change I have removed 2).\n\nRegarding 1), you are correct that my change adds a call to ToTranslateLanguageSynonym() before it. However, in the current usage, this call is no-op because all |input_language| params are already in the translate format. I have added the call because my new changes will not guarantee that it\u0027s called with |input_language| is the translate format already.",
+      "parentUuid": "be20bae6_463fe8c2",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e9a371_9cbdb441",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78570ec7_c40d3eba",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-10T06:29:30Z",
+      "side": 1,
+      "message": "There is no case that I am aware of that leaves it empty. It is just an optimization check.",
+      "parentUuid": "e9e9a371_9cbdb441",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b07776f0_6d0e3d9d",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-10T06:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd727e86_f9e324ee",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41638ac1_35d959fd",
         "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "906817a8_6ad28f63",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-10T06:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41638ac1_35d959fd",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "464e72d8_405cf472",
         "filename": "components/translate/core/common/translate_util_unittest.cc",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946b28cd_d29c8b86",
+        "filename": "components/translate/core/common/translate_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-10T06:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464e72d8_405cf472",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
