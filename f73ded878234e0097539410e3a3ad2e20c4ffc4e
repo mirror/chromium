@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1712d266_9e01a298",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:54:50Z",
+      "side": 1,
+      "message": "This name and the comment are no longer accurate. Also, the member may not even be needed any more, or may be able to be replaced with ScopedObserver.",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b26dfc_8c6ac570",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:54:50Z",
+      "side": 1,
+      "message": "This should be the outer if here.",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30382602_d669376d",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:54:50Z",
+      "side": 1,
+      "message": "It seems like we need to also test TabletModeClient::Get() here, or not test it above.",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3081e27_1d7c7066",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:54:50Z",
+      "side": 1,
+      "message": "Same here?",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
