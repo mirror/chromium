@@ -22,6 +22,30 @@
       "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc2771a_8a7240b0",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T18:59:20Z",
+      "side": 0,
+      "message": "I think in the chrome-driver, we may not know what the active display is.\n\nWould it make sense to use a special id for the \u0027display-id\u0027 property [1] when creating the window, which tells ash to put the window in whatever happens to be the active display? Perhaps some constant kActiveDisplay, similar to kInvalidDisplayId [2]\n\n[1] https://cs.chromium.org/chromium/src/services/ui/public/interfaces/window_manager.mojom?l\u003d66\n[2] https://cs.chromium.org/chromium/src/ui/display/types/display_constants.h?l\u003d14",
+      "parentUuid": "f94e1088_235ac39d",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
