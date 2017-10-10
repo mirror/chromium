@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e938a32_7e17f03a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-10T14:09:21Z",
+      "side": 1,
+      "message": "nit: I\u0027d change history to be an appendix. Readers are primarily interested in today, and only occasionally in yesterday.",
+      "revId": "e9156d6de5af00882236527f8ebe9f90e63709d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
