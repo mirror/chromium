@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "63ab6438_aed83350",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T23:37:32Z",
+      "side": 1,
+      "message": "nit: Remove this whitespace line",
+      "revId": "a07429bc8c0af235ddbf38956639fbd8e45b3620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7502149_3c180891",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 32
