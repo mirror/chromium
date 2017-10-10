@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "e245cfc0_ae27e1d7",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-10T20:53:21Z",
+      "side": 1,
+      "message": "Added logs to both the asserts (for expected and not-expected messages)",
+      "parentUuid": "fd88022f_cde58db1",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3327f8c1_24bd6e97",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
