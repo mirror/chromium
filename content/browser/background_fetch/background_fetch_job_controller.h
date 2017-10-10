@@ -70,6 +70,10 @@ class CONTENT_EXPORT BackgroundFetchJobController final
   // BackgroundFetchDelegateProxy::Controller implementation:
   void DidStartRequest(const scoped_refptr<BackgroundFetchRequestInfo>& request,
                        const std::string& download_guid) override;
+  void DidUpdateRequest(
+      const scoped_refptr<BackgroundFetchRequestInfo>& request,
+      const std::string& download_guid,
+      uint64_t bytes_downloaded) override;
   void DidCompleteRequest(
       const scoped_refptr<BackgroundFetchRequestInfo>& request) override;
 

@@ -72,6 +72,21 @@ void BackgroundFetchJobController::DidStartRequest(
                                       download_guid);
 }
 
+void BackgroundFetchJobController::DidUpdateRequest(
+    const scoped_refptr<BackgroundFetchRequestInfo>& request,
+    const std::string& download_guid,
+    uint64_t bytes_downloaded) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // TODO: Bail out if a previous DidUpdateRequest call was made for the
+  // |download_guid| with an identical |bytes_downloaded| value.
+
+  // TODO: Compute the |download_total| for the current job.
+
+  // TODO: Fire BackgroundFetchRegistrationNotifier::Notify() with the updated
+  // values to inform the developer.
+}
+
 void BackgroundFetchJobController::DidCompleteRequest(
     const scoped_refptr<BackgroundFetchRequestInfo>& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
