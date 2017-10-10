@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f50b58e_d288794c",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:47:37Z",
+      "side": 1,
+      "message": "s/Launchers/Launches/",
+      "revId": "41d6c49a4b811fe79177b7b0e8e3e840464203d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d47b0d_ee609a73",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:47:37Z",
+      "side": 1,
+      "message": "Just use:\nProfileManager::GetPrimaryUserProfile()\n\nI know that the comment says \"do not use this\", but we already use it below, so we should really just plan to replace all uses at once when we have a replacement.\n\n(Alternately just replace the other use of ProfileManager::GetPrimaryUserProfile(), I don\u0027t feel to strongly but we shouldn\u0027t be using both).",
+      "revId": "41d6c49a4b811fe79177b7b0e8e3e840464203d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
