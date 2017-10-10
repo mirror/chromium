@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a996221e_eba4c3c8",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-10T09:19:06Z",
+      "side": 1,
+      "message": "The parameter is still called opt_normalizedOrigin",
+      "range": {
+        "startLine": 304,
+        "startChar": 22,
+        "endLine": 304,
+        "endChar": 38
+      },
+      "revId": "7d8cc8b6d22b2a1504555b74055e95b733ad5381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
