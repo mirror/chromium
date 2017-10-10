@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4392d69f_71a17fa9",
+        "filename": "content/browser/gpu/browser_gpu_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T19:56:57Z",
+      "side": 1,
+      "message": "The id needs to be a constant at least. The GpuClient can definitely be destroyed / recreated. I think BrowserGpuMemoryBufferManager can also destroyed / recreated since all the memory allocated by the GPU process would be invalidated.\n\nThis class lives on the IO thread, so BrowserMainLoop wouldn\u0027t be an appropriately place for it.",
+      "parentUuid": "91fa5304_03d87254",
+      "revId": "d490cf443a11c5aa4d2ba7d0d79de366968861e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7163d2e_6ee8fbb0",
         "filename": "content/browser/gpu/gpu_process_host.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T19:30:24Z",
       "side": 1,
       "message": "Who is/will-be calling this?",
+      "revId": "d490cf443a11c5aa4d2ba7d0d79de366968861e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a68cc3b_3a073082",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-10T19:56:57Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/703274/7/content/browser/compositor/viz_process_transport_factory.cc#32",
+      "parentUuid": "a7163d2e_6ee8fbb0",
       "revId": "d490cf443a11c5aa4d2ba7d0d79de366968861e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
