@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1534c504_4615fd51",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-10T02:15:14Z",
+      "side": 1,
+      "message": "Are there reasons not to expose ComputeOffsetMappingIfNeeded() directly? It looks more natural to me and saves some cycles if callers need multiple functions?",
+      "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
