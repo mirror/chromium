@@ -22,6 +22,30 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630799db_0f0f5ae6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-10T13:46:58Z",
+      "side": 1,
+      "message": "AFAIK OfflinePages model is Android only, so yes.",
+      "parentUuid": "4081f7ab_3be4631d",
+      "range": {
+        "startLine": 316,
+        "startChar": 75,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
