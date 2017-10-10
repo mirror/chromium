@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8fa322d_37187e23",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "This method is only handling the namespaces listed below which doesn\u0027t cover all existing, well-known namespaces [1]. I think a better approach would be to iterate over the namespaces contained in |pages| -- simply assuming they are all valid -- and have something like a dynamically populated std::unordered_map\u003cstring, int\u003e to store the results.\n\nOn how to better manage this kind of histogram set PTAL at existing cases ([2] for instance) or this ongoing CL that is very similar to yours [3].\n\n[1] https://cs.chromium.org/chromium/src/components/offline_pages/core/client_namespace_constants.cc\n\n[2] https://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model_impl.cc?type\u003dcs\u0026q\u003d\"AddHistogramSuffix\"\n\n[3] https://chromium-review.googlesource.com/c/chromium/src/+/707691",
+      "range": {
+        "startLine": 189,
+        "startChar": 32,
+        "endLine": 189,
+        "endChar": 53
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d5d4c50_dcc6f8e2",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 1
@@ -19,6 +42,52 @@
     },
     {
       "key": {
+        "uuid": "8e81b63a_9852945c",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "nit: ran or did_run.",
+      "range": {
+        "startLine": 194,
+        "startChar": 14,
+        "endLine": 194,
+        "endChar": 17
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd348f2_4c8c2920",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "See my previous comment",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 9
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "870df9c5_873c38f7",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 1
@@ -30,6 +99,75 @@
       "writtenOn": "2017-10-10T21:07:16Z",
       "side": 1,
       "message": "use suffixes instead, and just add all the namespaces to this metric",
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b34df0d_14d6777b",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "The suggested name for this series of histograms is: OfflinePages.ClearStoragePreRunUsage.[namespace]. It conforms better with other existing histograms realted to storage manager.",
+      "range": {
+        "startLine": 217,
+        "startChar": 9,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27bc22e_b4b6f937",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51993,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "nit: MiB as the current standard states (https://en.wikipedia.org/wiki/Mebibyte).",
+      "range": {
+        "startLine": 51993,
+        "startChar": 67,
+        "endLine": 51993,
+        "endChar": 69
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff82baa5_06b27120",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51995,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T21:32:23Z",
+      "side": 1,
+      "message": "nit: The total storage size used by all offline pages from a specific client namespace.",
+      "range": {
+        "startLine": 51995,
+        "startChar": 11,
+        "endLine": 51995,
+        "endChar": 69
+      },
       "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
