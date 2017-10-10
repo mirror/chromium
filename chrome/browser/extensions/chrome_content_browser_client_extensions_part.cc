@@ -398,11 +398,6 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
     // Hosted app URLs may load in any process (e.g., in an iframe).
     if (new_extension->is_hosted_app() && new_extension->id() != kWebStoreAppId)
       return true;
-
-    // TODO(lukasza): Remove the if statement below after PlzNavigate ships.
-    // Without PlzNavigate we sometimes commit in an unexpected process.
-    if (!content::IsBrowserSideNavigationEnabled())
-      return true;
   }
 
   // Do not allow committing the |url|, unless an earlier SiteInstanceGotProcess
