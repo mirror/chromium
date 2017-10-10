@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1aba19_8dde7e0b",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:47:35Z",
+      "side": 1,
+      "message": "Should this also have \u0027role\u003d\"link\"\u0027? (What does that do?)",
+      "range": {
+        "startLine": 39,
+        "startChar": 44,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "f4937c0006b5db3e741a1e4e92f5b29d26828e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c011fc_8dfd52ae",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:47:35Z",
+      "side": 1,
+      "message": "Huh, might this accidentally make things easier to test as well? Maybe now calling .click() will actually do what we want...",
+      "revId": "f4937c0006b5db3e741a1e4e92f5b29d26828e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
