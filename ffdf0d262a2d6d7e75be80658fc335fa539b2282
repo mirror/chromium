@@ -16,6 +16,24 @@
       "revId": "ffdf0d262a2d6d7e75be80658fc335fa539b2282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff975167_a9d24ac7",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-10T06:44:14Z",
+      "side": 1,
+      "message": "std::unique_ptr was just for IDMap (wasn\u0027t happy with that either...). I\u0027m happy if this code\u0027s cleaned up, while this code path is destined to be deprecated (at least in the current plan) so maybe not worth spending too much here.",
+      "parentUuid": "16b47b2a_bca11a4e",
+      "revId": "ffdf0d262a2d6d7e75be80658fc335fa539b2282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
