@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ab78066d_de1b8288",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T08:34:54Z",
+      "side": 1,
+      "message": "I removed RB label from the issue. Since, the scenario in the issue isn\u0027t\npopular.\n\nRather than adding more ad-hoc, we would like to have cleaner and spec\ncomplaint code.",
+      "parentUuid": "051cdbc6_033c000a",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0598e782_616e6e48",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
