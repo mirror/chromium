@@ -16,6 +16,24 @@
       "revId": "bbcb163d960a2448ab469ab85cd1f4551c9e9b02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1982f1_24779df3",
+        "filename": "chrome/browser/profiles/profile_attributes_entry.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2017-10-10T15:48:44Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/search/?q\u003dGetNameOfProfileAtIndex\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nAfter this CL the only place that requires GetNameOfProfileAtIndex are tests of ProfileInfoCache, and functions that are called by these tests only (and they sadly duplicated in the same way).\n\nI prefer to keep those tests running until we actually the remove ProfileInfoCache class. And we certainly don\u0027t want to move everything in the same CL. So do you prefer:\n\n(1) to make the duplicated functions in ProfileInfoCache wrap around the migrated functions?\n\n(2) OR just not to wrap them, because this is done with the risk of introducing additional bugs?\n\n(3) OR is there some other concerns related to GetName() that I\u0027m unaware of?",
+      "parentUuid": "130d5e1f_cb01fdb5",
+      "revId": "bbcb163d960a2448ab469ab85cd1f4551c9e9b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
