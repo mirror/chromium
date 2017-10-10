@@ -12,12 +12,19 @@
 #include "ash/public/interfaces/vpn_list.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/time/time.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace ash {
 
 // Describes a VPN provider.
 struct ASH_EXPORT VPNProvider {
+  enum ProviderType {
+    OPN_VPN = 0,
+    THIRD_PARTY_VPN,
+    ARC_VPN,
+  };
+
   // Constructs the built-in VPN provider.
   VPNProvider();
 
@@ -25,17 +32,36 @@ struct ASH_EXPORT VPNProvider {
   VPNProvider(const std::string& extension_id,
               const std::string& third_party_provider_name);
 
+  // Constructs an Arc VPN provider.
+  VPNProvider(const std::string& package_name,
+              const std::string& app_name,
+              const std::string& app_id,
+              const base::Time& last_launch_time);
+
+  // Explicit copy constructor.
+  VPNProvider(const VPNProvider& other);
+
+  // Constructs an Arc VPN provider.
+
   bool operator==(const VPNProvider& other) const;
 
-  // Whether this key represents a built-in or third-party VPN provider.
-  bool third_party;
+  // Whether this key represents a built-in or third-party VPN or Arc VPN
+  // provider.
+  ProviderType provider_type;
 
-  // ID of the extension that implements this provider. Used for third-party
-  // VPN providers only.
-  std::string extension_id;
+  // Property used by third-party VPN providers and Arc VPN providers. Empty for
+  // built-in VPN.
+  // App id of the extension or Arc app that implements this provider.
+  std::string app_id;
+  // Human-readable name.
+  std::string provider_name;
 
-  // Human-readable name if |third_party| is true, otherwise empty.
-  std::string third_party_provider_name;
+  // Property used by Arc VPN providers. Empty for built-in VPN and third-party
+  // VPN providers.
+  // Package name of the Arc VPN provider. e.g. package.name.foo.bar
+  std::string package_name;
+  // Last launch time is used to sort Arc VPN providers.
+  base::Time last_launch_time;
 };
 
 // This delegate provides UI code in ash, e.g. |VPNListView|, with access to the
@@ -61,10 +87,14 @@ class ASH_EXPORT VpnList : public mojom::VpnList {
   ~VpnList() override;
 
   const std::vector<VPNProvider>& vpn_providers() { return vpn_providers_; }
+  const std::vector<VPNProvider>& arc_vpn_providers() {
+    return arc_vpn_providers_;
+  }
 
-  // Returns |true| if at least one third-party VPN provider is enabled in the
-  // primary user's profile, in addition to the built-in OpenVPN/L2TP provider.
-  bool HaveThirdPartyVPNProviders() const;
+  // Returns |true| if at least one third-party VPN provider or at least one Arc
+  // VPN provider is enabled in the primary user's profile, in addition to the
+  // built-in OpenVPN/L2TP provider.
+  bool HaveThirdPartyOrArcVPNProviders() const;
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
@@ -75,6 +105,11 @@ class ASH_EXPORT VpnList : public mojom::VpnList {
   // mojom::VpnList:
   void SetThirdPartyVpnProviders(
       std::vector<mojom::ThirdPartyVpnProviderPtr> providers) override;
+  void SetArcVpnProviders(
+      std::vector<mojom::ArcVpnProviderPtr> arc_providers) override;
+  void AddOrUpdateArcVPNProvider(
+      mojom::ArcVpnProviderPtr arc_provider) override;
+  void RemoveArcVPNProvider(const std::string& package_name) override;
 
  private:
   // Notify observers that the list of VPN providers enabled in the primary
@@ -90,6 +125,10 @@ class ASH_EXPORT VpnList : public mojom::VpnList {
   // Cache of VPN providers, including the built-in OpenVPN/L2TP provider and
   // other providers added by extensions in the primary user's profile.
   std::vector<VPNProvider> vpn_providers_;
+
+  // Cache of Arc VPN providers. Will be sorted based on last launch time when
+  // creating vpn list view.
+  std::vector<VPNProvider> arc_vpn_providers_;
 
   base::ObserverList<Observer> observer_list_;
 
