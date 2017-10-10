@@ -65,6 +65,8 @@ class CC_EXPORT PictureLayerImpl
   bool HasValidTilePriorities() const override;
   bool RequiresHighResToDraw() const override;
   gfx::Rect GetEnclosingRectInTargetSpace() const override;
+  bool HasDifferentImageOnActiveTree(
+      PaintImage::Id paint_image_id) const override;
 
   // ImageAnimationController::AnimationDriver overrides.
   bool ShouldAnimate(PaintImage::Id paint_image_id) const override;
@@ -114,6 +116,20 @@ class CC_EXPORT PictureLayerImpl
   bool RasterSourceUsesLCDTextForTesting() const { return can_use_lcd_text_; }
 
   const Region& InvalidationForTesting() const { return invalidation_; }
+
+  // Returns whether the layer has a different image at the given location in
+  // screen space. A null value is returned if the layer does not draw at the
+  // given position (transparent or occluded).
+  enum class ImageQueryResult {
+    kDifferentImageExists,
+    kDifferentImageDoesNotExist,
+    kLayerDoesNotCoverRegion
+  };
+  ImageQueryResult HasDifferentImageAt(
+      const PaintImage::Id paint_image_id,
+      const gfx::Rect& screen_space_position) const;
+
+  bool HasDiscardableImages() const;
 
  protected:
   PictureLayerImpl(LayerTreeImpl* tree_impl,

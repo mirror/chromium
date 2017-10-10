@@ -890,6 +890,9 @@ void TileManager::PartitionImagesForCheckering(
   prioritized_tile.raster_source()->GetDiscardableImagesInRect(
       tile->enclosing_layer_rect(), &images_in_tile);
   WhichTree tree = tile->tiling()->tree();
+  CheckerImageTracker::FlickerVetoCallback veto_cb =
+      base::Bind(&TileManager::ShouldVetoCheckeringForPotentialFlicker,
+                 base::Unretained(this), prioritized_tile);
 
   for (const auto* original_draw_image : images_in_tile) {
     size_t frame_index = client_->GetFrameIndexForImage(
@@ -901,7 +904,7 @@ void TileManager::PartitionImagesForCheckering(
           frame_index;
     }
 
-    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree))
+    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree, veto_cb))
       checkered_images->push_back(draw_image.paint_image());
     else
       sync_decoded_images->push_back(std::move(draw_image));
@@ -918,16 +921,33 @@ void TileManager::AddCheckeredImagesToDecodeQueue(
   prioritized_tile.raster_source()->GetDiscardableImagesInRect(
       tile->enclosing_layer_rect(), &images_in_tile);
   WhichTree tree = tile->tiling()->tree();
+  CheckerImageTracker::FlickerVetoCallback veto_cb =
+      base::Bind(&TileManager::ShouldVetoCheckeringForPotentialFlicker,
+                 base::Unretained(this), prioritized_tile);
 
   for (const auto* original_draw_image : images_in_tile) {
     size_t frame_index = client_->GetFrameIndexForImage(
         original_draw_image->paint_image(), tree);
     DrawImage draw_image(*original_draw_image, tile->raster_transform().scale(),
                          frame_index, raster_color_space);
-    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree)) {
+    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree, veto_cb)) {
       image_decode_queue->emplace_back(draw_image.paint_image(), decode_type);
     }
   }
+}
+
+bool TileManager::ShouldVetoCheckeringForPotentialFlicker(
+    const PrioritizedTile& prioritized_tile,
+    PaintImage::Id paint_image_id) const {
+  // If the tile is on the active tree, we are not replacing any new content.
+  // This means there is no possibility of causing any flicker issues.
+  if (prioritized_tile.tile()->tiling()->tree() == WhichTree::ACTIVE_TREE)
+    return false;
+
+  return prioritized_tile.tile()
+      ->tiling()
+      ->client()
+      ->HasDifferentImageOnActiveTree(paint_image_id);
 }
 
 void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {

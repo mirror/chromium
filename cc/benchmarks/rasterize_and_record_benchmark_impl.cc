@@ -116,6 +116,9 @@ class FixedInvalidationPictureLayerTilingClient
   bool RequiresHighResToDraw() const override {
     return base_client_->RequiresHighResToDraw();
   }
+  bool HasDifferentImageOnActiveTree(PaintImage::Id id) const override {
+    return true;
+  }
 
  private:
   PictureLayerTilingClient* base_client_;
