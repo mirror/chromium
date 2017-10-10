@@ -22,6 +22,10 @@ body {
   padding: 0;
 }
 
+button[id^=show-all-properties-] {
+  margin: 10px !important;
+}
+
 h1 {
   color: rgb(92, 97, 102);
 }
