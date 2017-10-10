@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8fd7b4_a2949a18",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-with-object-element.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-10T07:15:03Z",
+      "side": 1,
+      "message": "Note: There are no way to know whether we need to these CSS properties\nor not. Since we have no way to the detail of the bug, since details\nare described in Apple\u0027s internal bug tracking system[1].\n\n\n[1] https://chromium.googlesource.com/chromium/src/+/04575f5a563424cbbbd4cad9865af41e23c84924",
+      "revId": "2d2c5f6252952a2d7097dba6606d75ddcfed9783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
