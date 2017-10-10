@@ -10574,7 +10574,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   EXPECT_TRUE(ExecuteScript(
       root, "document.getElementById('child-2').setAttribute('allow','')"));
   EXPECT_EQ(2UL, root->child_at(2)->effective_container_policy().size());
-  EXPECT_EQ(0UL, root->child_at(2)->pending_container_policy_.size());
+  EXPECT_EQ(0UL, root->child_at(2)->pending_container_policy().size());
 
   // Navigate the frame; pending policy should be committed.
   NavigateFrameToURL(root->child_at(2), nav_url);
@@ -10658,7 +10658,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   const ParsedFeaturePolicyHeader updated_effective_policy =
       root->child_at(2)->effective_container_policy();
   const ParsedFeaturePolicyHeader updated_pending_policy =
-      root->child_at(2)->pending_container_policy_;
+      root->child_at(2)->pending_container_policy();
   EXPECT_EQ(1UL, updated_effective_policy[0].origins.size());
   EXPECT_FALSE(updated_effective_policy[0].origins[0].unique());
   EXPECT_EQ(1UL, updated_pending_policy[0].origins.size());
@@ -12023,5 +12023,85 @@ IN_PROC_BROWSER_TEST_F(TouchSelectionControllerClientAndroidSiteIsolationTest,
 }
 
 #endif  // defined(OS_ANDROID)
+
+// Verify that "csp" property on frame elements propagates to child frames
+// correctly. See  https://crbug.com/647588
+// //// Check that browser gets initial sandbox flags
+// Test: sandbox from CSP header in main doc
+// sandbox from CSP header applied to subframe
+// Sandbox from CSP header + more restrictions in frame
+// Sandbox from CSP header + more restrictions in subdoc
+// Cross process navigation preserves flags
+IN_PROC_BROWSER_TEST_F(SitePerProcessEmbedderCSPEnforcementBrowserTest,
+                       SandboxFlagsMaintainedAcrossNavigation) {
+  GURL main_url(
+      embedded_test_server()->GetURL("a.com", "/sandbox_main_frame_csp.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  ASSERT_EQ(1u, root->child_count());
+
+  EXPECT_EQ(
+      " Site A\n"
+      "   +--Site A\n"
+      "Where A = http://a.com/",
+      DepictFrameTree(root));
+
+  FrameTreeNode* child_node = root->child_at(0);
+
+  EXPECT_EQ(shell()->web_contents()->GetSiteInstance(),
+            child_node->current_frame_host()->GetSiteInstance());
+
+  // Main page is served with a CSP header applying sandbox flags allow-popups,
+  // allow-poointer-lock and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kNone, root->pending_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kNone, root->effective_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->total_combined_sandbox_flags());
+
+  // Child frame has iframe sandbox flags allow-popups, allow-scripts, and
+  // allow-orientation-lock. It should receive the intersection of those with
+  // the parent sandbox flags: allow-popups and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->pending_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->effective_sandbox_flags());
+  // Document in child frame is served with a CSP header giving sandbox flags
+  // allow-popups and allow-pointer-lock. The final effective flags should only
+  // include allow-popups.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups,
+            root->child_at(0)->total_combined_sandbox_flags());
+
+  // Navigate the child frame to a new page. This should clear any CSP-applied
+  // sandbox flags.
+  GURL frame_url(embedded_test_server()->GetURL("b.com", "/title1.html"));
+  NavigateFrameToURL(root->child_at(0), frame_url);
+
+  EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
+            child_node->current_frame_host()->GetSiteInstance());
+
+  // Navigating should reset the sandbox flags to the frame owner flags:
+  // allow-popups and allow-scripts.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->total_combined_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->pending_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kScripts &
+                ~blink::WebSandboxFlags::kAutomaticFeatures,
+            root->child_at(0)->effective_sandbox_flags());
+}
 
 }  // namespace content

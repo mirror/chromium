@@ -133,8 +133,9 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
     web_frame = parent->web_frame()->CreateRemoteChild(
         replicated_state.scope,
         blink::WebString::FromUTF8(replicated_state.name),
-        replicated_state.sandbox_flags,
-        FeaturePolicyHeaderToWeb(replicated_state.container_policy),
+        replicated_state.frame_policy.sandbox_flags,
+        FeaturePolicyHeaderToWeb(
+            replicated_state.frame_policy.container_policy),
         proxy.get(), opener);
     proxy->unique_name_ = replicated_state.unique_name;
     render_view = parent->render_view();
@@ -264,7 +265,7 @@ void RenderFrameProxy::DidCommitCompositorFrame() {
 void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   DCHECK(web_frame_);
   web_frame_->SetReplicatedOrigin(state.origin);
-  web_frame_->SetReplicatedSandboxFlags(state.sandbox_flags);
+  web_frame_->SetReplicatedSandboxFlags(state.frame_policy.sandbox_flags);
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(state.name));
   web_frame_->SetReplicatedInsecureRequestPolicy(state.insecure_request_policy);
   web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
@@ -294,12 +295,11 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
 // properly if this proxy ever parents a local frame.  The proxy's FrameOwner
 // flags are also updated here with the caveat that the FrameOwner won't learn
 // about updates to its flags until they take effect.
-void RenderFrameProxy::OnDidUpdateFramePolicy(
-    blink::WebSandboxFlags flags,
-    const ParsedFeaturePolicyHeader& container_policy) {
-  web_frame_->SetReplicatedSandboxFlags(flags);
-  web_frame_->SetFrameOwnerPolicy(flags,
-                                  FeaturePolicyHeaderToWeb(container_policy));
+void RenderFrameProxy::OnDidUpdateFramePolicy(const FramePolicy& frame_policy) {
+  web_frame_->SetReplicatedSandboxFlags(frame_policy.sandbox_flags);
+  web_frame_->SetFrameOwnerPolicy(
+      frame_policy.sandbox_flags,
+      FeaturePolicyHeaderToWeb(frame_policy.container_policy));
 }
 
 void RenderFrameProxy::MaybeUpdateCompositingHelper() {

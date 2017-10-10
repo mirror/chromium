@@ -434,6 +434,8 @@ void RenderFrameHostManager::OnCrossSiteResponse(
 void RenderFrameHostManager::DidNavigateFrame(
     RenderFrameHostImpl* render_frame_host,
     bool was_caused_by_user_gesture) {
+  frame_tree_node_->SetTotalCombinedSandboxFlags(
+      blink::WebSandboxFlags::kNone);  // NO no
   CommitPendingIfNecessary(render_frame_host, was_caused_by_user_gesture);
 
   // Make sure any dynamic changes to this frame's sandbox flags and feature
@@ -544,19 +546,20 @@ void RenderFrameHostManager::CommitPendingFramePolicy() {
   if (!frame_tree_node_->CommitPendingFramePolicy())
     return;
 
-  // Policy updates can only happen when the frame has a parent.
-  CHECK(frame_tree_node_->parent());
+  DCHECK(frame_tree_node_->parent());
+  SiteInstance* parent_site_instance = nullptr;
+  if (frame_tree_node_->parent()) {
+    parent_site_instance =
+        frame_tree_node_->parent()->current_frame_host()->GetSiteInstance();
+  }
 
-  // Notify all of the frame's proxies about updated policies, excluding
-  // the parent process since it already knows the latest state.
-  SiteInstance* parent_site_instance =
-      frame_tree_node_->parent()->current_frame_host()->GetSiteInstance();
+  // Notify all of the frame's proxies about updated policies, excluding the
+  // parent process (if it exists) since it already knows the latest state.
   for (const auto& pair : proxy_hosts_) {
     if (pair.second->GetSiteInstance() != parent_site_instance) {
       pair.second->Send(new FrameMsg_DidUpdateFramePolicy(
           pair.second->GetRoutingID(),
-          frame_tree_node_->current_replication_state().sandbox_flags,
-          frame_tree_node_->current_replication_state().container_policy));
+          frame_tree_node_->current_replication_state().frame_policy));
     }
   }
 }

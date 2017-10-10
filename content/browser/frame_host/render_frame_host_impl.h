@@ -667,6 +667,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   mojo::AssociatedBinding<mojom::FrameHost>& frame_host_binding_for_testing() {
     return frame_host_associated_binding_;
   }
+  blink::WebSandboxFlags sandbox_flags() { return sandbox_flags_; }
 
  protected:
   friend class RenderFrameHostFactory;
@@ -763,6 +764,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
   void OnDidSetFeaturePolicyHeader(
+      blink::WebSandboxFlags sandbox_flags,
       const ParsedFeaturePolicyHeader& parsed_header);
 
   // A new set of CSP |policies| has been added to the document.
@@ -771,10 +773,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
   void OnUpdateToUniqueOrigin(bool is_potentially_trustworthy_unique_origin);
-  void OnDidChangeFramePolicy(
-      int32_t frame_routing_id,
-      blink::WebSandboxFlags flags,
-      const ParsedFeaturePolicyHeader& container_policy);
+  void OnDidChangeFramePolicy(int32_t frame_routing_id,
+                              const FramePolicy& frame_policy);
   void OnDidChangeFrameOwnerProperties(int32_t frame_routing_id,
                                        const FrameOwnerProperties& properties);
   void OnUpdateTitle(const base::string16& title,
@@ -1281,6 +1281,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // A bitwise OR of bindings types that have been enabled for this RenderFrame.
   // See BindingsPolicy for details.
   int enabled_bindings_ = 0;
+
+  // Tracks the sandbox flags which are currently in effect in this frame
+  blink::WebSandboxFlags sandbox_flags_;
 
   // Tracks the feature policy which has been set on this frame.
   std::unique_ptr<FeaturePolicy> feature_policy_;

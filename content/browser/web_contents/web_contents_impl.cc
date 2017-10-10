@@ -691,11 +691,14 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
   // See https://html.spec.whatwg.org/#attr-iframe-sandbox.
   FrameTreeNode* new_root = new_contents->GetFrameTree()->root();
   if (opener) {
-    blink::WebSandboxFlags opener_flags = opener->effective_sandbox_flags();
+    // audit
+    blink::WebSandboxFlags opener_flags =
+        opener->total_combined_sandbox_flags();
     const blink::WebSandboxFlags inherit_flag =
         blink::WebSandboxFlags::kPropagatesToAuxiliaryBrowsingContexts;
     if ((opener_flags & inherit_flag) == inherit_flag) {
-      new_root->SetPendingSandboxFlags(opener_flags);
+      // TODO(iclelland): Transfer correct frame policy from opener as well.
+      new_root->SetPendingFramePolicy({opener_flags, {}});
       new_root->CommitPendingFramePolicy();
     }
   }

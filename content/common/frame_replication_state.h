@@ -29,6 +29,7 @@ struct CONTENT_EXPORT FrameReplicationState {
                         const std::string& name,
                         const std::string& unique_name,
                         blink::WebSandboxFlags sandbox_flags,
+                        // FramePolicy frame_policy,
                         blink::WebInsecureRequestPolicy insecure_request_policy,
                         bool has_potentially_trustworthy_unique_origin,
                         bool has_received_user_gesture);
@@ -46,20 +47,6 @@ struct CONTENT_EXPORT FrameReplicationState {
   // (if ever). This would reduce leaking a user's browsing history into a
   // compromized renderer.
   url::Origin origin;
-
-  // Sandbox flags currently in effect for the frame.  |sandbox_flags| are
-  // initialized for new child frames using the value of the <iframe> element's
-  // "sandbox" attribute, combined with any sandbox flags in effect for the
-  // parent frame.
-  //
-  // When a parent frame updates an <iframe>'s sandbox attribute via
-  // JavaScript, |sandbox_flags| are updated only after the child frame commits
-  // a navigation that makes the updated flags take effect.  This is also the
-  // point at which updates are sent to proxies (see
-  // CommitPendingSandboxFlags()). The proxies need updated flags so that they
-  // can be inherited properly if a proxy ever becomes a parent of a local
-  // frame.
-  blink::WebSandboxFlags sandbox_flags;
 
   // The assigned name of the frame (see WebFrame::assignedName()).
   //
@@ -90,8 +77,24 @@ struct CONTENT_EXPORT FrameReplicationState {
   // document.
   ParsedFeaturePolicyHeader feature_policy_header;
 
-  // Container Policy. May be empty if this is the top-level frame.
-  ParsedFeaturePolicyHeader container_policy;
+  blink::WebSandboxFlags
+      total_combined_sandbox_flags;  // from header **AND** frame
+
+  // Iframe sandbox flags and container policy currently in effect for the
+  // frame. Container policy may be empty if this is the top-level frame.
+  // |sandbox_flags| are initialized for new child frames using the value of the
+  // <iframe> element's "sandbox" attribute, combined with any sandbox flags in
+  // effect for the parent frame. This does *not* include any flags set by a
+  // Content-Security-Policy header delivered with the framed document.
+  //
+  // When a parent frame updates an <iframe>'s sandbox attribute via
+  // JavaScript, |sandbox_flags| are updated only after the child frame commits
+  // a navigation that makes the updated flags take effect.  This is also the
+  // point at which updates are sent to proxies (see
+  // CommitPendingSandboxFlags()). The proxies need updated flags so that they
+  // can be inherited properly if a proxy ever becomes a parent of a local
+  // frame.
+  FramePolicy frame_policy;
 
   // Accumulated CSP headers - gathered from http headers, <meta> elements,
   // parent frames (in case of about:blank frames).

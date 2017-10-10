@@ -500,6 +500,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      sandbox_flags_(blink::WebSandboxFlags::kNone),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -1149,9 +1150,9 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   // policy, since it is being created as part of the navigation that will
   // commit it. (I.e., the RenderFrame needs to know the policy to use when
   // initializing the new document once it commits).
-  params->replication_state.sandbox_flags =
+  params->replication_state.frame_policy.sandbox_flags =
       frame_tree_node()->pending_sandbox_flags();
-  params->replication_state.container_policy =
+  params->replication_state.frame_policy.container_policy =
       frame_tree_node()->pending_container_policy();
 
   params->frame_owner_properties =
@@ -2174,10 +2175,13 @@ void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
 }
 
 void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
+    blink::WebSandboxFlags sandbox_flags,
     const ParsedFeaturePolicyHeader& parsed_header) {
   frame_tree_node()->SetFeaturePolicyHeader(parsed_header);
   ResetFeaturePolicy();
   feature_policy_->SetHeaderPolicy(parsed_header);
+  sandbox_flags_ = sandbox_flags;
+  frame_tree_node()->SetTotalCombinedSandboxFlags(sandbox_flags);
 }
 
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(
@@ -2226,8 +2230,7 @@ FrameTreeNode* RenderFrameHostImpl::FindAndVerifyChild(
 
 void RenderFrameHostImpl::OnDidChangeFramePolicy(
     int32_t frame_routing_id,
-    blink::WebSandboxFlags flags,
-    const ParsedFeaturePolicyHeader& container_policy) {
+    const FramePolicy& frame_policy) {
   // Ensure that a frame can only update sandbox flags or feature policy for its
   // immediate children.  If this is not the case, the renderer is considered
   // malicious and is killed.
@@ -2237,8 +2240,7 @@ void RenderFrameHostImpl::OnDidChangeFramePolicy(
   if (!child)
     return;
 
-  child->SetPendingSandboxFlags(flags);
-  child->SetPendingContainerPolicy(container_policy);
+  child->SetPendingFramePolicy(frame_policy);
 
   // Notify the RenderFrame if it lives in a different process from its parent.
   // The frame's proxies in other processes also need to learn about the updated
@@ -2248,7 +2250,7 @@ void RenderFrameHostImpl::OnDidChangeFramePolicy(
   RenderFrameHost* child_rfh = child->current_frame_host();
   if (child_rfh->GetSiteInstance() != GetSiteInstance()) {
     child_rfh->Send(new FrameMsg_DidUpdateFramePolicy(child_rfh->GetRoutingID(),
-                                                      flags, container_policy));
+                                                      frame_policy));
   }
 }
 
