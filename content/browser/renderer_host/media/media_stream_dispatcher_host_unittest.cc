@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
@@ -79,10 +80,9 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
                                       public mojom::MediaStreamDispatcher {
  public:
   MockMediaStreamDispatcherHost(
-      const std::string& salt,
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       MediaStreamManager* manager)
-      : MediaStreamDispatcherHost(kProcessId, salt, manager),
+      : MediaStreamDispatcherHost(kProcessId, manager),
         task_runner_(task_runner) {}
   ~MockMediaStreamDispatcherHost() override {}
 
@@ -99,11 +99,10 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
   void OnGenerateStream(int render_frame_id,
                         int page_request_id,
                         const StreamControls& controls,
-                        const url::Origin& security_origin,
                         const base::Closure& quit_closure) {
     quit_closures_.push(quit_closure);
     MediaStreamDispatcherHost::GenerateStream(render_frame_id, page_request_id,
-                                              controls, security_origin, false);
+                                              controls, false);
   }
 
   void OnStopStreamDevice(int render_frame_id,
@@ -115,11 +114,10 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
                     int page_request_id,
                     const std::string& device_id,
                     MediaStreamType type,
-                    const url::Origin& security_origin,
                     const base::Closure& quit_closure) {
     quit_closures_.push(quit_closure);
     MediaStreamDispatcherHost::OpenDevice(render_frame_id, page_request_id,
-                                          device_id, type, security_origin);
+                                          device_id, type);
   }
 
   void OnStreamStarted(const std::string label) {
@@ -256,8 +254,10 @@ class MediaStreamDispatcherHostTest : public testing::Test {
         std::move(mock_video_capture_provider));
 
     host_ = std::make_unique<MockMediaStreamDispatcherHost>(
-        browser_context_.GetMediaDeviceIDSalt(),
         base::ThreadTaskRunnerHandle::Get(), media_stream_manager_.get());
+    host_->set_salt_and_origin_callback_for_testing(
+        base::BindRepeating(&MediaStreamDispatcherHostTest::GetSaltAndOrigin,
+                            base::Unretained(this)));
     mojom::MediaStreamDispatcherPtr dispatcher =
         host_->CreateInterfacePtrAndBind();
     host_->SetMediaStreamDispatcherForTesting(kRenderId, std::move(dispatcher));
@@ -342,7 +342,7 @@ class MediaStreamDispatcherHostTest : public testing::Test {
     EXPECT_CALL(*host_, OnStreamGenerationSuccess(page_request_id,
                                                   expected_audio_array_size,
                                                   expected_video_array_size));
-    host_->OnGenerateStream(render_frame_id, page_request_id, controls, origin_,
+    host_->OnGenerateStream(render_frame_id, page_request_id, controls,
                             run_loop.QuitClosure());
     run_loop.Run();
     EXPECT_FALSE(DoesContainRawIds(host_->audio_devices_));
@@ -360,7 +360,7 @@ class MediaStreamDispatcherHostTest : public testing::Test {
       EXPECT_CALL(*host_,
                   OnStreamGenerationFailure(page_request_id, expected_result));
       host_->OnGenerateStream(render_frame_id, page_request_id, controls,
-                              origin_, run_loop.QuitClosure());
+                              run_loop.QuitClosure());
       run_loop.Run();
   }
 
@@ -369,8 +369,7 @@ class MediaStreamDispatcherHostTest : public testing::Test {
                                        const std::string& device_id) {
     base::RunLoop run_loop;
     host_->OnOpenDevice(render_frame_id, page_request_id, device_id,
-                        MEDIA_DEVICE_VIDEO_CAPTURE, origin_,
-                        run_loop.QuitClosure());
+                        MEDIA_DEVICE_VIDEO_CAPTURE, run_loop.QuitClosure());
     run_loop.Run();
     EXPECT_FALSE(DoesContainRawIds(host_->video_devices_));
     EXPECT_TRUE(DoesEveryDeviceMapToRawId(host_->video_devices_, origin_));
@@ -419,6 +418,11 @@ class MediaStreamDispatcherHostTest : public testing::Test {
         return false;
     }
     return true;
+  }
+
+  std::pair<std::string, url::Origin> GetSaltAndOrigin(int /* process_id */,
+                                                       int /* frame_id */) {
+    return std::make_pair(browser_context_.GetMediaDeviceIDSalt(), origin_);
   }
 
   std::unique_ptr<MockMediaStreamDispatcherHost> host_;
@@ -611,9 +615,9 @@ TEST_F(MediaStreamDispatcherHostTest, GenerateStreamsWithoutWaiting) {
   }
   base::RunLoop run_loop1;
   base::RunLoop run_loop2;
-  host_->OnGenerateStream(kRenderId, kPageRequestId, controls, origin_,
+  host_->OnGenerateStream(kRenderId, kPageRequestId, controls,
                           run_loop1.QuitClosure());
-  host_->OnGenerateStream(kRenderId, kPageRequestId + 1, controls, origin_,
+  host_->OnGenerateStream(kRenderId, kPageRequestId + 1, controls,
                           run_loop2.QuitClosure());
 
   run_loop1.Run();
@@ -750,7 +754,7 @@ TEST_F(MediaStreamDispatcherHostTest,
   EXPECT_CALL(*host_, OnStreamGenerationSuccess(kPageRequestId + 1, 0, 1));
 
   base::RunLoop run_loop1;
-  host_->OnGenerateStream(kRenderId, kPageRequestId + 1, controls, origin_,
+  host_->OnGenerateStream(kRenderId, kPageRequestId + 1, controls,
                           run_loop1.QuitClosure());
 
   // Stop the video stream device from stream 1 while waiting for the
@@ -769,7 +773,7 @@ TEST_F(MediaStreamDispatcherHostTest, CancelPendingStreams) {
   // Create multiple GenerateStream requests.
   size_t streams = 5;
   for (size_t i = 1; i <= streams; ++i) {
-    host_->OnGenerateStream(kRenderId, kPageRequestId + i, controls, origin_,
+    host_->OnGenerateStream(kRenderId, kPageRequestId + i, controls,
                             run_loop.QuitClosure());
   }
 
