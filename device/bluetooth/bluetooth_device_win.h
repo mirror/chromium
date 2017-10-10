@@ -83,9 +83,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin : public BluetoothDevice {
       const BluetoothUUID& uuid,
       const ConnectToServiceCallback& callback,
       const ConnectToServiceErrorCallback& error_callback) override;
-  void CreateGattConnection(
-      const GattConnectionCallback& callback,
-      const ConnectErrorCallback& error_callback) override;
 
   // Used by BluetoothProfileWin to retrieve the service record for the given
   // |uuid|.
@@ -151,6 +148,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin : public BluetoothDevice {
   // the device.
   bool paired_;
   bool connected_;
+  bool gatt_connected_;
 
   // Used to send change notifications when a device disappears during
   // discovery.
