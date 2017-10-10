@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7890c0b4_1514849b",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-10T23:10:45Z",
+      "side": 1,
+      "message": "I don\u0027t know this code at all, nor have I tested it, so this comment may be incorrect. But it looks to me like |state.status| will be CAPTIVE_PORTAL_STATUS_PORTAL if |result| is RESULT_NO_RESPONSE and network-\u003eis_captive_portal() is true?",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ce791e_b7843292",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-10T23:10:45Z",
+      "side": 1,
+      "message": "It would be nice if this referenced go/bad-portal somehow, to provide information on the client blacklisting problem.",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
