@@ -72567,6 +72567,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Search.ContextualSearchPanelOpenedIPHShown" enum="Boolean">
+  <owner>donnd@chromium.org</owner>
+  <owner>mahmoudi@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    The number of times the Contextual Search panel is opened, categorized by
+    whether In-Prodcut Help for opening the panel was shown before. Logged when
+    the panel is opened. Implemented for Android.
+  </summary>
+</histogram>
+
 <histogram name="Search.ContextualSearchPeekPromoCount" units="count">
   <owner>donnd@chromium.org</owner>
   <owner>pedrosimonetti@chromium.org</owner>
