@@ -65,7 +65,8 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   virtual WorkerThread* GetThread() const = 0;
 
   // Available only when off-main-thread-fetch is enabled.
-  ResourceFetcher* GetResourceFetcher();
+  ResourceFetcher* Fetcher() const override;
+  ResourceFetcher* EnsureResourceFetcher();
 
   WorkerClients* Clients() const { return worker_clients_.Get(); }
 
