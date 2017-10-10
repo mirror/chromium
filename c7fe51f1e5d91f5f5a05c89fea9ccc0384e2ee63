@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b6e20da8_2c6cd4f4",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T20:32:24Z",
+      "side": 1,
+      "message": "That\u0027s saying you don\u0027t have an entry for LevelDB.SharedCache.DBCount.Unified in histograms.xml. Did you forget to add it?",
+      "parentUuid": "9aa25e3b_bce84189",
+      "range": {
+        "startLine": 1376,
+        "startChar": 78,
+        "endLine": 1376,
+        "endChar": 0
+      },
+      "revId": "c7fe51f1e5d91f5f5a05c89fea9ccc0384e2ee63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d66bcb_74f8437e",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 3
