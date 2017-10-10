@@ -22,5 +22,8 @@ const char kAppShellRefreshToken[] = "app-shell-refresh-token";
 // User email address of the current user.
 const char kAppShellUser[] = "app-shell-user";
 
+// Prints help information and quits.
+const char kHelp[] = "help";
+
 }  // namespace switches
 }  // namespace extensions
