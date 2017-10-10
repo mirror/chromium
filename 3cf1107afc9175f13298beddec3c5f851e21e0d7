@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "8fbba130_00dfc233",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-10T08:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c59b21_8c995efb",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15334ab_d9865a08",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 4
@@ -383,6 +401,30 @@
       "side": 1,
       "message": "Although I agree we want to avoid channel associated interfaces, I\u0027m a bit wary of not having ordering guarantees even if we think the web-exposed behavior doesn\u0027t need it. I\u0027m worried more about stability than web-exposed behavior. Since we expect SWDispatcher to eventually be removed, and then we won\u0027t have any legacy IPCs then and can remove the channel associated interface, it might be worth it to just continue as coded with the TODO. WDYT?",
       "parentUuid": "b9c5a93d_87acbb7c",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c934f6_784c6450",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-10T08:31:44Z",
+      "side": 1,
+      "message": "Yeah I agree we play for safety currently so we can focus on mojofication work now, we can re-consider all the Mojo connections arrangement at last.",
+      "parentUuid": "88247678_6dd40eeb",
       "range": {
         "startLine": 123,
         "startChar": 32,
