@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "93c59b21_8c995efb",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:47:41Z",
+      "side": 1,
+      "message": "Maybe nicer to just require the latter to pass base::ThreadTaskRunnerHandle::Get() to make things more explcit. Or else introduce factory methods like CreateForServiceWorkerClient and CreateForServiceWorkerGlobalScope",
+      "parentUuid": "4aa6d581_9e5f72ad",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d15334ab_d9865a08",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 4
@@ -341,6 +359,30 @@
       "side": 1,
       "message": "For the following code I mean developers usually should not have the assumption that getRegistration must get back earlier than update.\n\n  // Use other methods to preapre a registration object named as |old_reg|.\n  navigator.serviceWorker.getRegistration(xxx).then(function(reg) \n      { XXX });\n  old_reg.update().then(function() { XXX });",
       "parentUuid": "36c2d7df_c4216ce1",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88247678_6dd40eeb",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:47:41Z",
+      "side": 1,
+      "message": "Although I agree we want to avoid channel associated interfaces, I\u0027m a bit wary of not having ordering guarantees even if we think the web-exposed behavior doesn\u0027t need it. I\u0027m worried more about stability than web-exposed behavior. Since we expect SWDispatcher to eventually be removed, and then we won\u0027t have any legacy IPCs then and can remove the channel associated interface, it might be worth it to just continue as coded with the TODO. WDYT?",
+      "parentUuid": "b9c5a93d_87acbb7c",
       "range": {
         "startLine": 123,
         "startChar": 32,
