@@ -10,6 +10,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_timeouts.h"
 #include "build/build_config.h"
 #include "content/public/browser/browser_thread.h"
@@ -111,16 +112,18 @@ class WorkerTest : public ContentBrowserTest {
 class WorkerFetchTest : public testing::WithParamInterface<bool>,
                         public WorkerTest {
  public:
-  ~WorkerFetchTest() override {}
-  void SetUpCommandLine(base::CommandLine* command_line) override {
+  WorkerFetchTest() {
     if (GetParam()) {
-      command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                      features::kOffMainThreadFetch.name);
+      scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
     } else {
-      command_line->AppendSwitchASCII(switches::kDisableFeatures,
-                                      features::kOffMainThreadFetch.name);
+      scoped_feature_list_.InitAndDisableFeature(features::kOffMainThreadFetch);
     }
   }
+
+  ~WorkerFetchTest() override {}
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(WorkerTest, SingleWorker) {
