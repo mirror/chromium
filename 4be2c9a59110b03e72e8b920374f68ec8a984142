@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c17ff5_268ad445",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T20:35:57Z",
+      "side": 1,
+      "message": "Does this take into account the space between the buttons, i.e. due to built-in margins?\n(I honestly don\u0027t remember, but it seems like your code treats it that way. I thought I\u0027d double-check.)",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d5c741_5bd28a5e",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T20:35:57Z",
+      "side": 1,
+      "message": "Nit: Remove extra +",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84a3e01_74155371",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T20:35:57Z",
+      "side": 1,
+      "message": "Nit: It would be nice to do this calculation in a place that is shared by other dialogs. But I don\u0027t know if that exists.",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c84a3bc_d9e7d309",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T20:35:57Z",
+      "side": 1,
+      "message": "If this appears on a second line in an RTL layout, will it appear indented?",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec0e5bb_01deac6c",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T20:35:57Z",
+      "side": 1,
+      "message": "I think we can get rid of the containers now that BoxLayout has kSpacingBetweenButtons?",
+      "revId": "4be2c9a59110b03e72e8b920374f68ec8a984142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
