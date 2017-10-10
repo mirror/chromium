@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1b69b2f_0702e00f",
+        "filename": "remoting/ios/app/help_and_feedback.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T23:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f185fd2_cf1663cb",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb705ba5_d824bb59",
         "filename": "remoting/ios/keychain_wrapper.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T21:55:05Z",
       "side": 1,
       "message": "Not for this CL, but this file seems like it could benefit from ScopedCFTypeRef for things like this to avoid calling CFRelease in multiple places.",
+      "range": {
+        "startLine": 56,
+        "startChar": 47,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00d1ad36_226a66a8",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T23:07:14Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "bb705ba5_d824bb59",
       "range": {
         "startLine": 56,
         "startChar": 47,
@@ -68,6 +116,30 @@
       "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4539b231_a4e78ee8",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T23:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069f3de5_b97bc230",
+      "range": {
+        "startLine": 71,
+        "startChar": 53,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
