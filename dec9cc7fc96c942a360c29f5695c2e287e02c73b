@@ -90,6 +90,24 @@
       "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc9a784_2c92b1ea",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T22:58:11Z",
+      "side": 1,
+      "message": "Sorry, nevermind - didn\u0027t notice the locale appending.",
+      "parentUuid": "7e45d706_8651ff61",
+      "revId": "dec9cc7fc96c942a360c29f5695c2e287e02c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
