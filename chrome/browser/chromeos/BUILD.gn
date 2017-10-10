@@ -72,6 +72,7 @@ source_set("chromeos") {
     "//components/certificate_reporting:cert_logger_proto",
     "//components/constrained_window",
     "//components/content_settings/core/browser",
+    "//components/component_updater:crl_set_installer",
     "//components/crash/content/app",
     "//components/crx_file",
     "//components/cryptauth",
