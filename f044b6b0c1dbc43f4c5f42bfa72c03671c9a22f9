@@ -46,6 +46,30 @@
       "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4732238_ee2be14e",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T23:35:46Z",
+      "side": 0,
+      "message": "If you don\u0027t specify a display we use Shell::GetRootWindowForNewWindows() [1]. That doesn\u0027t seem to always change with the active window. I propose we make it, which I think would mean you don\u0027t need anything special.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/ash/mus/top_level_window_factory.cc#76",
+      "parentUuid": "1bc2771a_8a7240b0",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
