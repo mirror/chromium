@@ -1088,6 +1088,8 @@ Output.prototype = {
             this.format_(node, '@' + msg, buff);
           }
         } else if (token == 'state') {
+          console.log('role = ' + node.role + ' state = ');
+          console.log(node.state);
           if (node.state) {
             Object.getOwnPropertyNames(node.state).forEach(function(s) {
               var stateInfo = Output.STATE_INFO_[s];
@@ -1483,6 +1485,7 @@ Output.prototype = {
         continue;
 
       var roleBlock = getMergedRoleBlock(formatPrevNode.role);
+      console.log('role=' + formatPrevNode.role);
       if (roleBlock.leave && localStorage['useVerboseMode'] == 'true')
         this.format_(formatPrevNode, roleBlock.leave, buff, prevNode);
     }
@@ -1532,6 +1535,7 @@ Output.prototype = {
 
     // Navigate is the default event.
     var eventBlock = Output.RULES[type] || Output.RULES['navigate'];
+    console.log('node role=' + node.role);
     var roleBlock = eventBlock[node.role] || {};
     var parentRole = (Output.ROLE_INFO_[node.role] || {}).inherits;
     var parentRoleBlock = eventBlock[parentRole || ''] || {};
