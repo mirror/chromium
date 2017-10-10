@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54846530_bc0e7ccf",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-10-10T21:13:45Z",
+      "side": 1,
+      "message": "Can we say here that if IsValid() then the final certificate will always be the trust anchor? That seems to be the assumption in the cast certificate code.",
+      "revId": "2f85ac847ff2ce17a3870ba0c21fde250a9f93ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
