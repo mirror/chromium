@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd5bbd72_e30614c5",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T21:04:31Z",
+      "side": 1,
+      "message": "nit: maybe SystemClockInitiallyAvailable to be consistent with the rest of the code?",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 37
+      },
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1a3a0f_707139b3",
+        "filename": "chromeos/dbus/fake_system_clock_client.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T21:04:31Z",
+      "side": 1,
+      "message": "use PostTask here as well to mimic how the real code works (running just-passed-in callbacks synchronously is dangerous if the caller doesn\u0027t expect it)",
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5329fe6_a3d89e3a",
+        "filename": "chromeos/dbus/system_clock_client.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-10T21:04:31Z",
+      "side": 1,
+      "message": "mind renaming this to match the methods on other clients? most/all use WaitForServiceToBeAvailable, iirc. please also add a comment describing what it does, e.g.\n\n  // Runs the callback as soon as the service becomes available.",
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
