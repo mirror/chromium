@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "578d2262_ecf980a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-10T18:29:57Z",
+      "side": 1,
+      "message": "the \u0027false\u0027 cases should come before the \u0027true\u0027 ones.",
+      "revId": "719fed6d7b0d629678d13b98f6690837cb184545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
