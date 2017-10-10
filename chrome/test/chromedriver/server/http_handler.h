@@ -46,6 +46,12 @@ enum HttpMethod {
   kDelete,
 };
 
+enum CommandType {
+  kW3C = 0,
+  kOSS,
+  kChromeDriver,
+};
+
 struct CommandMapping {
   CommandMapping(HttpMethod method,
                  const std::string& path_pattern,
@@ -87,10 +93,18 @@ class HttpHandler {
   Command WrapToCommand(const char* name, const WindowCommand& window_command);
   Command WrapToCommand(const char* name,
                         const ElementCommand& element_command);
+                        bool MatchesCommand(std::unique_ptr<CommandMap> command_map,
+                                                       const net::HttpServerRequestInfo& request,
+                                                       const std::string& trimmed_path,
+                                                       std::string& session_id,
+                                                       base::DictionaryValue& params,
+                                                       const HttpResponseSenderFunc& send_response_func
+                                                     CommandMap& command);
   void HandleCommand(const net::HttpServerRequestInfo& request,
                      const std::string& trimmed_path,
                      const HttpResponseSenderFunc& send_response_func);
-  void PrepareResponse(const std::string& trimmed_path,
+  void PrepareResponse(const std::string& command_type,
+                       const std::string& trimmed_path,
                        const HttpResponseSenderFunc& send_response_func,
                        const Status& status,
                        std::unique_ptr<base::Value> value,
@@ -115,7 +129,9 @@ class HttpHandler {
   scoped_refptr<URLRequestContextGetter> context_getter_;
   SyncWebSocketFactory socket_factory_;
   SessionThreadMap session_thread_map_;
-  std::unique_ptr<CommandMap> command_map_;
+  std::unique_ptr<CommandMap> w3c_command_map_;
+  std::unique_ptr<CommandMap> oss_command_map_;
+  std::unique_ptr<CommandMap> chromedriver_command_map_;
   std::unique_ptr<Adb> adb_;
   std::unique_ptr<DeviceManager> device_manager_;
   std::unique_ptr<PortServer> port_server_;
@@ -130,7 +146,7 @@ namespace internal {
 
 extern const char kNewSessionPathPattern[];
 
-bool MatchesCommand(const std::string& method,
+bool MatchesCommandHelper(const std::string& method,
                     const std::string& path,
                     const CommandMapping& command,
                     std::string* session_id,
