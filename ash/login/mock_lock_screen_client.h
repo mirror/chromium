@@ -24,9 +24,17 @@ class MockLockScreenClient : public mojom::LockScreenClient {
                     bool authenticated_by_pin,
                     AuthenticateUserCallback& callback));
 
+  MOCK_METHOD2(AttemptUnlock_,
+               void(const AccountId& account_id,
+                    AttemptUnlockCallback& callback));
+
   // Set the result that should be passed to |callback| in |AuthenticateUser|.
   void set_authenticate_user_callback_result(bool value) {
     authenticate_user_callback_result_ = value;
+  }
+  // Set the result that should be passed to |callback| in |AttemptUnlock|.
+  void set_attempt_unlock_callback_result(bool value) {
+    attempt_unlock_callback_result_ = value;
   }
 
   // mojom::LockScreenClient:
@@ -34,7 +42,8 @@ class MockLockScreenClient : public mojom::LockScreenClient {
                         const std::string& password,
                         bool authenticated_by_pin,
                         AuthenticateUserCallback callback) override;
-  MOCK_METHOD1(AttemptUnlock, void(const AccountId& account_id));
+  void AttemptUnlock(const AccountId& account_id,
+                     AttemptUnlockCallback callback) override;
   MOCK_METHOD1(HardlockPod, void(const AccountId& account_id));
   MOCK_METHOD1(RecordClickOnLockIcon, void(const AccountId& account_id));
   MOCK_METHOD1(OnFocusPod, void(const AccountId& account_id));
@@ -48,6 +57,7 @@ class MockLockScreenClient : public mojom::LockScreenClient {
 
  private:
   bool authenticate_user_callback_result_ = true;
+  bool attempt_unlock_callback_result_ = true;
 
   mojo::Binding<mojom::LockScreenClient> binding_;
 

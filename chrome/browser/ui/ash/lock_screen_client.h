@@ -12,6 +12,8 @@
 
 using AuthenticateUserCallback =
     ash::mojom::LockScreenClient::AuthenticateUserCallback;
+using AttemptUnlockCallback =
+    ash::mojom::LockScreenClient::AttemptUnlockCallback;
 
 // Handles method calls sent from ash to chrome. Also sends messages from chrome
 // to ash.
@@ -29,7 +31,8 @@ class LockScreenClient : public ash::mojom::LockScreenClient {
                                         const std::string& hashed_password,
                                         bool authenticated_by_pin,
                                         AuthenticateUserCallback callback) = 0;
-    virtual void HandleAttemptUnlock(const AccountId& account_id) = 0;
+    virtual void HandleAttemptUnlock(const AccountId& account_id,
+                                     AttemptUnlockCallback callback) = 0;
     virtual void HandleHardlockPod(const AccountId& account_id) = 0;
     virtual void HandleRecordClickOnLockIcon(const AccountId& account_id) = 0;
     virtual void HandleOnFocusPod(const AccountId& account_id) = 0;
@@ -50,7 +53,8 @@ class LockScreenClient : public ash::mojom::LockScreenClient {
                         const std::string& hashed_password,
                         bool authenticated_by_pin,
                         AuthenticateUserCallback callback) override;
-  void AttemptUnlock(const AccountId& account_id) override;
+  void AttemptUnlock(const AccountId& account_id,
+                     AttemptUnlockCallback callback) override;
   void HardlockPod(const AccountId& account_id) override;
   void RecordClickOnLockIcon(const AccountId& account_id) override;
   void OnFocusPod(const AccountId& account_id) override;
