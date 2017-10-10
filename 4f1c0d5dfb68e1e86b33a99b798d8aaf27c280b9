@@ -16,6 +16,24 @@
       "revId": "4f1c0d5dfb68e1e86b33a99b798d8aaf27c280b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dfc6eb_96e33248",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-10T21:51:32Z",
+      "side": 0,
+      "message": "Done. And also updated equivalent logic in cc which I had missed.",
+      "parentUuid": "b80d728b_124dc496",
+      "revId": "4f1c0d5dfb68e1e86b33a99b798d8aaf27c280b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
