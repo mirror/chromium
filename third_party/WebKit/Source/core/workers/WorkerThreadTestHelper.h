@@ -56,12 +56,14 @@ class FakeWorkerGlobalScope : public WorkerGlobalScope {
  public:
   FakeWorkerGlobalScope(const KURL& url,
                         const String& user_agent,
+                        V8CacheOptions v8_cache_options,
                         WorkerThread* thread,
                         std::unique_ptr<SecurityOrigin::PrivilegeData>
                             starter_origin_privilege_data,
                         WorkerClients* worker_clients)
       : WorkerGlobalScope(url,
                           user_agent,
+                          v8_cache_options,
                           thread,
                           MonotonicallyIncreasingTime(),
                           std::move(starter_origin_privilege_data),
@@ -125,7 +127,8 @@ class WorkerThreadForTest : public WorkerThread {
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
     return new FakeWorkerGlobalScope(
-        creation_params->script_url, creation_params->user_agent, this,
+        creation_params->script_url, creation_params->user_agent,
+        creation_params->v8_cache_options, this,
         std::move(creation_params->starter_origin_privilege_data),
         std::move(creation_params->worker_clients));
   }

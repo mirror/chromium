@@ -57,7 +57,8 @@ SharedWorkerGlobalScope* SharedWorkerGlobalScope::Create(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     double time_origin) {
   SharedWorkerGlobalScope* context = new SharedWorkerGlobalScope(
-      name, creation_params->script_url, creation_params->user_agent, thread,
+      name, creation_params->script_url, creation_params->user_agent,
+      creation_params->v8_cache_options, thread,
       std::move(creation_params->starter_origin_privilege_data),
       creation_params->worker_clients, time_origin);
   context->ApplyContentSecurityPolicyFromVector(
@@ -75,6 +76,7 @@ SharedWorkerGlobalScope::SharedWorkerGlobalScope(
     const String& name,
     const KURL& url,
     const String& user_agent,
+    V8CacheOptions v8_cache_options,
     SharedWorkerThread* thread,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilege_data,
@@ -82,6 +84,7 @@ SharedWorkerGlobalScope::SharedWorkerGlobalScope(
     double time_origin)
     : WorkerGlobalScope(url,
                         user_agent,
+                        v8_cache_options,
                         thread,
                         time_origin,
                         std::move(starter_origin_privilege_data),

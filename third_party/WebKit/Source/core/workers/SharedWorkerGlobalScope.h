@@ -69,13 +69,14 @@ class SharedWorkerGlobalScope final : public WorkerGlobalScope {
   SharedWorkerGlobalScope(const String& name,
                           const KURL&,
                           const String& user_agent,
+                          V8CacheOptions,
                           SharedWorkerThread*,
                           std::unique_ptr<SecurityOrigin::PrivilegeData>,
                           WorkerClients*,
                           double time_origin);
   void ExceptionThrown(ErrorEvent*) override;
 
-  String name_;
+  const String name_;
 };
 
 CORE_EXPORT MessageEvent* CreateConnectEvent(MessagePort*);

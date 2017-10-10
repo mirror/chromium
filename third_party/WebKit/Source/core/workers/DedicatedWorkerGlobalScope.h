@@ -76,6 +76,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
 
   DedicatedWorkerGlobalScope(const KURL&,
                              const String& user_agent,
+                             V8CacheOptions,
                              DedicatedWorkerThread*,
                              double time_origin,
                              std::unique_ptr<SecurityOrigin::PrivilegeData>,

@@ -77,11 +77,11 @@ ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     double time_origin) {
   ServiceWorkerGlobalScope* global_scope = new ServiceWorkerGlobalScope(
-      creation_params->script_url, creation_params->user_agent, thread,
-      time_origin, std::move(creation_params->starter_origin_privilege_data),
+      creation_params->script_url, creation_params->user_agent,
+      creation_params->v8_cache_options, thread, time_origin,
+      std::move(creation_params->starter_origin_privilege_data),
       creation_params->worker_clients);
 
-  global_scope->SetV8CacheOptions(creation_params->v8_cache_options);
   global_scope->SetWorkerSettings(std::move(creation_params->worker_settings));
   global_scope->SetAddressSpace(creation_params->address_space);
 
@@ -111,6 +111,7 @@ ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
 ServiceWorkerGlobalScope::ServiceWorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
+    V8CacheOptions v8_cache_options,
     ServiceWorkerThread* thread,
     double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
@@ -118,22 +119,18 @@ ServiceWorkerGlobalScope::ServiceWorkerGlobalScope(
     WorkerClients* worker_clients)
     : WorkerGlobalScope(url,
                         user_agent,
+                        v8_cache_options,
                         thread,
                         time_origin,
                         std::move(starter_origin_privilege_data),
-                        worker_clients),
-      did_evaluate_script_(false),
-      script_count_(0),
-      script_total_size_(0),
-      script_cached_metadata_total_size_(0) {}
+                        worker_clients) {}
 
 ServiceWorkerGlobalScope::~ServiceWorkerGlobalScope() {}
 
 void ServiceWorkerGlobalScope::EvaluateClassicScript(
     const KURL& script_url,
     String source_code,
-    std::unique_ptr<Vector<char>> cached_meta_data,
-    V8CacheOptions v8_cache_options) {
+    std::unique_ptr<Vector<char>> cached_meta_data) {
   DCHECK(IsContextThread());
 
   // Receive the main script via script streaming if needed.
@@ -185,8 +182,8 @@ void ServiceWorkerGlobalScope::EvaluateClassicScript(
         content_security_policy_raw_headers.value(), referrer_policy);
   }
 
-  WorkerGlobalScope::EvaluateClassicScript(
-      script_url, source_code, std::move(cached_meta_data), v8_cache_options);
+  WorkerGlobalScope::EvaluateClassicScript(script_url, source_code,
+                                           std::move(cached_meta_data));
 }
 
 void ServiceWorkerGlobalScope::CountWorkerScript(size_t script_size,

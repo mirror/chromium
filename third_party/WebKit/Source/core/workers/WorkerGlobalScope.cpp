@@ -91,8 +91,7 @@ KURL WorkerGlobalScope::CompleteURL(const String& url) const {
 void WorkerGlobalScope::EvaluateClassicScript(
     const KURL& script_url,
     String source_code,
-    std::unique_ptr<Vector<char>> cached_meta_data,
-    V8CacheOptions v8_cache_options) {
+    std::unique_ptr<Vector<char>> cached_meta_data) {
   DCHECK(IsContextThread());
   CachedMetadataHandler* handler = CreateWorkerScriptCachedMetadataHandler(
       script_url, cached_meta_data.get());
@@ -102,7 +101,7 @@ void WorkerGlobalScope::EvaluateClassicScript(
       cached_meta_data.get() ? cached_meta_data->size() : 0);
   bool success = ScriptController()->Evaluate(
       ScriptSourceCode(source_code, script_url), nullptr /* error_event */,
-      handler, v8_cache_options);
+      handler, v8_cache_options_);
   ReportingProxy().DidEvaluateWorkerScript(success);
 }
 
@@ -365,6 +364,7 @@ ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
 WorkerGlobalScope::WorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
+    V8CacheOptions v8_cache_options,
     WorkerThread* thread,
     double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
@@ -375,7 +375,7 @@ WorkerGlobalScope::WorkerGlobalScope(
                                  thread->GetWorkerReportingProxy()),
       url_(url),
       user_agent_(user_agent),
-      v8_cache_options_(kV8CacheOptionsDefault),
+      v8_cache_options_(v8_cache_options),
       thread_(thread),
       event_queue_(WorkerEventQueue::Create(this)),
       timers_(TaskRunnerHelper::Get(TaskType::kJavascriptTimer, this)),

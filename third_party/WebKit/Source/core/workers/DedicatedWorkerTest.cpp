@@ -35,8 +35,9 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
     return new DedicatedWorkerGlobalScope(
-        creation_params->script_url, creation_params->user_agent, this,
-        time_origin_, std::move(creation_params->starter_origin_privilege_data),
+        creation_params->script_url, creation_params->user_agent,
+        creation_params->v8_cache_options, this, time_origin_,
+        std::move(creation_params->starter_origin_privilege_data),
         std::move(creation_params->worker_clients));
   }
 
