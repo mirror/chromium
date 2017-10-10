@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de654bb6_35bb1838",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T14:55:32Z",
+      "side": 1,
+      "message": "optional nit: since you are already here, we could also change this conditional to\nspdy_session_key.proxy_server() !\u003d key.proxy_server() ||\nspdy_session_key.privacy_mode() !\u003d key.privacy_mode()\n\nThe original writing is a bit verbose.",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fa49a1_f7901824",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T14:55:32Z",
+      "side": 1,
+      "message": "I thought SpdySession doesn\u0027t support http. I am surprised that there is non-cryptographic push. Could you point me to the code?",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b411914e_e2d809ef",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T14:55:32Z",
+      "side": 1,
+      "message": "minor nit: Use third-person singular.\n\"Registers\" and \"Returns\" instead of Register and Return",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f8ad6a_a02f6b78",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T14:55:32Z",
+      "side": 1,
+      "message": "minor nit: same here to use Unregisters.",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
