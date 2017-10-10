@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46b5dbb7_7aed1381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T21:37:54Z",
+      "side": 1,
+      "message": "Nit: Could you move this down to before the last if-block?",
+      "revId": "25666465ee596c39353c046e051c5a5d21be8255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5286481b_906deff3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-10T21:37:54Z",
+      "side": 1,
+      "message": "Nit: Maybe move this one down too? Maybe even inline it in the if-conditional? The name of the method is already quite helpful.",
+      "revId": "25666465ee596c39353c046e051c5a5d21be8255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
