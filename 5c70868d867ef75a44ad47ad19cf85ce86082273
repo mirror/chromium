@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be20bae6_463fe8c2",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T05:48:51Z",
+      "side": 1,
+      "message": "Just to confirm: does this change the existing behavior by calling ToTranslateLanguageSynonym first?",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e9a371_9cbdb441",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T05:48:51Z",
+      "side": 1,
+      "message": "When is |value| empty?",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd727e86_f9e324ee",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T05:48:51Z",
+      "side": 1,
+      "message": "nit: |force_blocked|",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41638ac1_35d959fd",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T05:48:51Z",
+      "side": 1,
+      "message": "The term \u0027blacklist\u0027 for languages was used for old and deprecated black list. ExpectBlockedLanguageListContent is suitable here.",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464e72d8_405cf472",
+        "filename": "components/translate/core/common/translate_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-10T05:48:51Z",
+      "side": 1,
+      "message": "I\u0027d use string literals here instead of using |language|",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
