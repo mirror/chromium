@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f68e3db_f1c7388c",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T16:23:36Z",
+      "side": 1,
+      "message": "Can you use PostTaskWithTraitsAndReplyWithResult() instead? That will avoid having to declare members that are only used in one thread and make the whole process easier to reason about. Also, by providing the method with all the information needed, you can move that method to the anonymous namespace. This _also_ has the benefit of not requiring you to pass base::Unretained(this), which is unsafe to use when passing stuff across threads.",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc7100b_84bed549",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T16:23:36Z",
+      "side": 1,
+      "message": "ReadFileOnBlockingThread? All functions that don\u0027t run in the UI thread should have OnXxxThread suffix, that\u0027ll also save you the comment.",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 15
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b4db05_426a7333",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T16:23:36Z",
+      "side": 1,
+      "message": "You\u0027ll eventually want to create a typemapping instead of doing manual conversions (security reviewers will ask you to do this). See https://cs.chromium.org/chromium/src/components/arc/common/app.typemap for an example.",
+      "range": {
+        "startLine": 186,
+        "startChar": 25,
+        "endLine": 186,
+        "endChar": 37
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc73578_049c7095",
+        "filename": "components/arc/common/print.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T16:23:36Z",
+      "side": 1,
+      "message": "Will there be a design doc? Some interface changes might be needed, but I\u0027ll wait until either this is not WIP anymore or there is a doc I can read to make early suggestions.",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de58c29e_907ccd2f",
         "filename": "printing/print_settings.h",
         "patchSetId": 7
