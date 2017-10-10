@@ -38,8 +38,7 @@ GIFImageDecoder::GIFImageDecoder(AlphaOption alpha_option,
                                  size_t max_decoded_bytes)
     : ImageDecoder(alpha_option, color_behavior, max_decoded_bytes),
       codec_(),
-      segment_stream_(nullptr),
-      prior_frame_(SkCodec::kNone) {}
+      segment_stream_(nullptr) {}
 
 GIFImageDecoder::~GIFImageDecoder() = default;
 
@@ -219,15 +218,14 @@ void GIFImageDecoder::Decode(size_t index) {
   UpdateAggressivePurging(index);
 
   ImageFrame& frame = frame_buffer_cache_[index];
+  size_t previous_frame_index = GetViableReferenceFrameIndex(index);
   if (frame.GetStatus() == ImageFrame::kFrameEmpty) {
     size_t required_previous_frame_index = frame.RequiredPreviousFrameIndex();
     if (required_previous_frame_index == kNotFound) {
       frame.AllocatePixelData(Size().Width(), Size().Height(),
                               ColorSpaceForSkImages());
       frame.ZeroFillPixelData();
-      prior_frame_ = SkCodec::kNone;
     } else {
-      size_t previous_frame_index = GetViableReferenceFrameIndex(index);
       if (previous_frame_index == kNotFound) {
         previous_frame_index = required_previous_frame_index;
         Decode(previous_frame_index);
@@ -247,7 +245,6 @@ void GIFImageDecoder::Decode(size_t index) {
         SetFailed();
         return;
       }
-      prior_frame_ = previous_frame_index;
     }
   }
 
@@ -258,7 +255,9 @@ void GIFImageDecoder::Decode(size_t index) {
 
     SkCodec::Options options;
     options.fFrameIndex = index;
-    options.fPriorFrame = prior_frame_;
+    options.fPriorFrame = previous_frame_index;
+    if (previous_frame_index == kNotFound)
+      options.fPriorFrame = SkCodec::kNone;
     options.fZeroInitialized = SkCodec::kNo_ZeroInitialized;
 
     SkCodec::Result start_incremental_decode_result =
