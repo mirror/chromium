@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3660f4b6_9136991c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:38:05Z",
+      "side": 1,
+      "message": "Please add some detail here about why you\u0027re doing what you\u0027re doing.\n\nI\u0027d also suggest rephrasing this along the lines of \"Pass `ResourceResponseHead` when handling `URLLoaderThrottle::WillProcessResponse`.\"",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374afb7e_7070a325",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:38:05Z",
+      "side": 1,
+      "message": "Hrm. Where does this get called? It seems unfortunate that we\u0027d ever potentially handle a response without having header information.\n\n---\n\nSkimming through a little bit, I\u0027m not sure that changing `content::ResourceThrottle::WillProcessResponse()`\u0027s signature is reasonable for this patch (though I\u0027m also surprised that they\u0027ve gotten away without passing in data to the handler?). Still, I\u0027d prefer that we not make this a pointer-based API. Instead, how about just constructing an empty `ResourceResponseHead` here and passing it in as a `const ResourceResponseHead\u0026`?",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e91527_98e4d313",
+        "filename": "content/public/common/url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:38:05Z",
+      "side": 1,
+      "message": "As above, I\u0027d prefer for this to be `const ResourceResponseHead\u0026` rather than dealing with `nullptr` checks in the throttles.",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
