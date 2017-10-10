@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d3312164_57d32bdd",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T15:30:40Z",
+      "side": 1,
+      "message": "There\u0027s 2 interactions to think about:\n- For WebGL it may be using software renderering (swiftshader or not)\n- The Compositor itself may be using software or not.\n\nWhen swiftshader is on, compositor doesn\u0027t use gpu, so WebGL needs to readback to a texture. But in other cases if the compositor decides to not use gpu, WebGL needs to behave similarly, doing a readback to a bitmap to give to the compositor.\n\nThis patch is working toward addressing the Compositor\u0027s mode, of which swiftshader is one (stable, that\u0027s helpful) input. But the Compositor\u0027s mode can change at any time from gpu to software (when swiftshder is not on).",
+      "parentUuid": "5ff9ce38_bdec68de",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "724a5be8_7e44431a",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 5
