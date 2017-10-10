@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790602fb_9c84970a",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-10T09:53:12Z",
+      "side": 0,
+      "message": "The XHR spec passes the received data directly to the JSON parse algorithm. Doesn\u0027t this change break it?",
+      "revId": "b9af439c6acb4bc23e99968f0b43269c47f48c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
