@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d56e55f_a2974063",
+        "filename": "media/audio/simple_sources.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Add a DCHECK for |sample_rate| to be positive?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d666ecb0_0323c57b",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "under |time_lock_|?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207f921b_523cd6ae",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "guard |errors_| with a lock or use atomic?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57e2a7d_dc59ac7a",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "both const?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64062f20_2b936d30",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d031485_ce91be8e",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "under lock?",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8613be13_1967971c",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Also non thread-safe.",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728dfd56_697e3bf3",
+        "filename": "media/audio/simple_sources.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Could you add comments for data members?\nAlso, base::Optional\u003c\u003e is preferable to \"-1\" as \"not defined\".\nOverall, I don\u0027t think adding this logic to a simple source is the right way to go, see my comment above.",
+      "revId": "5f23d00adeb0eb7c604b45551f8ab6e95ddd0fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

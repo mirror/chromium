@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2dde468b_5639b1d2",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure  SineWaveAudioSource is the right place, since simple source classes are not advertised or built as \"for tests only\" (though they seem to be used exclusively for tests now).\nSo I would do the opposite: cleanup SineWaveAudioSource to hide\nvoid CapSamples(int cap);\nvoid Reset();\nint callbacks();\nint errors();\nfrom the interface: they are used for SinceWaveAudioSource unittests only; and I would have a helper TestSource class which aggregates SineWaveAudioSource and does all the calculations.\nExposing the four methods above is also dangerous because they are not thread-safe.",
+      "parentUuid": "c0f052ec_97f11763",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58be7876_ddac18b7",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Updated the tests to call these functions only after Stop(), so there is no race.",
       "parentUuid": "58be7876_ddac18b7",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4992df2b_180be762",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Could you add a comment that they should be called after Stop() only?",
+      "parentUuid": "c02db42b_95a0ce9a",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "2aad9923_3c009b65",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db3d4162_cbafad82",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d7636f1_45299f88",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "Many other tests already do that, so I don\u0027t think we need it here.",
       "parentUuid": "7d7636f1_45299f88",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b803e663_82fc2a4c",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Not sure what \"many other tests\" you mean. Default-created AudioParameters are quite common to be passed around and can end up in MakeAudioOutputStream() if upper layers missed a check.\nSince these unit tests are for both current and future implementations of AudioOutputStream, we want to make sure this case is covered.",
+      "parentUuid": "889848e6_86efe2e5",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "dd0f132e_4b0e77c3",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Right, we have crbug/768515 for that.",
+      "parentUuid": "721496cb_6ede78bb",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0f1828b_49f079a7",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -241,6 +331,24 @@
       "side": 1,
       "message": "Done. IMO, some of these should really be replaced with (D)CHECKs in AudioParameters (e.g. for negative period size).",
       "parentUuid": "d0f1828b_49f079a7",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f63379c_ae1e2499",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Thanks! Things like that should be covered in AudioParameters::IsValid() - feel free to add whatever you feel is missing (in a separate CL :) )\nhttps://cs.chromium.org/chromium/src/media/base/audio_parameters.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d91",
+      "parentUuid": "f47f4a4b_dd7e25b6",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -317,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "cb6f6b8e_683c4ff2",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "399dc0c2_5c585ab6",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "109fdc05_9875badd",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -352,6 +478,24 @@
     },
     {
       "key": {
+        "uuid": "12eb2e58_7a645cc6",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "624c0858_64f868b8",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0824d235_44820ea1",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
@@ -381,6 +525,24 @@
       "side": 1,
       "message": "IMO it\u0027s better to test for stream position instead of number of callbacks. Also the problem is that the stream may take some time to initialize, which means that even if we run it for .2 seconds, it doesn\u0027t mean that the system will request .2 worth of samples. I just added basic checks that verify that stream position moves past 0.",
       "parentUuid": "0824d235_44820ea1",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44be687f_21030ff3",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-10T10:41:45Z",
+      "side": 1,
+      "message": "But we know when the first callback is received, right? So we can run the test for a specific period of time after the stream is actually started.\nWhat we want is to test that the physical stream is open at the sample rate/buffer size we passed to it.",
+      "parentUuid": "33ed6358_e7cc305c",
       "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
