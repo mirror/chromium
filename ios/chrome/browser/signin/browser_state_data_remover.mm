@@ -11,8 +11,10 @@
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/reading_list/reading_list_remover_helper.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
+//#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+//#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
+#import "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h"
+#import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -53,14 +55,28 @@ void BrowserStateDataRemover::RemoveBrowserStateData(ProceduralBlock callback) {
   DCHECK(!callback_);
   callback_.reset([callback copy]);
 
-  ClearBrowsingDataCommand* command = [[ClearBrowsingDataCommand alloc]
-      initWithBrowserState:browser_state_
-                      mask:kRemoveAllDataMask
-                timePeriod:browsing_data::TimePeriod::ALL_TIME];
+  //  ClearBrowsingDataCommand* command = [[ClearBrowsingDataCommand alloc]
+  //      initWithBrowserState:browser_state_
+  //                      mask:kRemoveAllDataMask
+  //                timePeriod:browsing_data::TimePeriod::ALL_TIME];
+  //
+  //  UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
+  //  DCHECK(mainWindow);
+  //  [mainWindow chromeExecuteCommand:command];
 
-  UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
-  DCHECK(mainWindow);
-  [mainWindow chromeExecuteCommand:command];
+  BrowsingDataRemovalController* browsingDataRemovalController =
+      [[BrowsingDataRemovalController alloc] init];
+  [browsingDataRemovalController
+      removeBrowsingDataFromBrowserState:browser_state_
+                                    mask:kRemoveAllDataMask
+                              timePeriod:browsing_data::TimePeriod::ALL_TIME
+                       completionHandler:nil];
+
+  base::Time beginDeleteTime = browsing_data::CalculateBeginDeleteTime(
+      browsing_data::TimePeriod::ALL_TIME);
+  [ChromeWebViewFactory clearExternalCookies:browser_state_
+                                    fromTime:beginDeleteTime
+                                      toTime:base::Time::Max()];
 }
 
 void BrowserStateDataRemover::NotifyWithDetails(

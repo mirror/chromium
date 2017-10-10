@@ -45,9 +45,11 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+//#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
+//#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
+#import "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h"
+#import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/icons/chrome_icon.h"
 #import "ios/chrome/browser/ui/settings/time_range_selector_collection_view_controller.h"
@@ -635,11 +637,25 @@ const int kMaxTimesHistoryNoticeShown = 1;
 
 - (void)clearDataForDataTypes:(int)dataTypeMask {
   DCHECK(dataTypeMask);
-  ClearBrowsingDataCommand* command =
-      [[ClearBrowsingDataCommand alloc] initWithBrowserState:_browserState
-                                                        mask:dataTypeMask
-                                                  timePeriod:_timePeriod];
-  [self chromeExecuteCommand:command];
+  //  ClearBrowsingDataCommand* command =
+  //      [[ClearBrowsingDataCommand alloc] initWithBrowserState:_browserState
+  //                                                        mask:dataTypeMask
+  //                                                  timePeriod:_timePeriod];
+  //  [self chromeExecuteCommand:command];
+
+  BrowsingDataRemovalController* browsingDataRemovalController =
+      [[BrowsingDataRemovalController alloc] init];
+  [browsingDataRemovalController
+      removeBrowsingDataFromBrowserState:_browserState
+                                    mask:dataTypeMask
+                              timePeriod:_timePeriod
+                       completionHandler:nil];
+
+  base::Time beginDeleteTime =
+      browsing_data::CalculateBeginDeleteTime(_timePeriod);
+  [ChromeWebViewFactory clearExternalCookies:_browserState
+                                    fromTime:beginDeleteTime
+                                      toTime:base::Time::Max()];
 
   // Send the "Cleared Browsing Data" event to the feature_engagement::Tracker
   // when the user initiates a clear browsing data action. No event is sent if

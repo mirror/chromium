@@ -106,7 +106,7 @@
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
+//#import "ios/chrome/browser/ui/commands/clear_browsing_data_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
@@ -1556,37 +1556,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 - (IBAction)chromeExecuteCommand:(id)sender {
   NSInteger command = [sender tag];
-
-  switch (command) {
-    case IDC_CLEAR_BROWSING_DATA_IOS: {
-      // Clear both the main browser state and the associated incognito
-      // browser state.
-      ClearBrowsingDataCommand* command =
-          base::mac::ObjCCastStrict<ClearBrowsingDataCommand>(sender);
-      ios::ChromeBrowserState* browserState =
-          [command browserState]->GetOriginalChromeBrowserState();
-      int mask = [command mask];
-      browsing_data::TimePeriod timePeriod = [command timePeriod];
-      [self removeBrowsingDataFromBrowserState:browserState
-                                          mask:mask
-                                    timePeriod:timePeriod
-                             completionHandler:nil];
-
-      if (mask & IOSChromeBrowsingDataRemover::REMOVE_COOKIES) {
-        base::Time beginDeleteTime =
-            browsing_data::CalculateBeginDeleteTime(timePeriod);
-        [ChromeWebViewFactory clearExternalCookies:browserState
-                                          fromTime:beginDeleteTime
-                                            toTime:base::Time::Max()];
-      }
-      break;
-    }
-    default:
-      // Unknown commands get dropped with a warning.
-      NOTREACHED() << "Unknown command id " << command;
-      LOG(WARNING) << "Unknown command id " << command;
-      break;
-  }
 }
 
 #pragma mark - chromeExecuteCommand helpers
