@@ -4,7 +4,6 @@
 
 #include "ash/system/palette/palette_utils.h"
 
-#include "ash/palette_delegate.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
@@ -55,14 +54,6 @@ bool HasStylusInput() {
 bool IsPaletteEnabledOnEveryDisplay() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAshEnablePaletteOnAllDisplays);
-}
-
-bool ShouldShowPalette() {
-  return HasStylusInput() &&
-         (display::Display::HasInternalDisplay() ||
-          IsPaletteEnabledOnEveryDisplay()) &&
-         Shell::Get()->palette_delegate() &&
-         Shell::Get()->palette_delegate()->ShouldShowPalette();
 }
 
 bool PaletteContainsPointInScreen(const gfx::Point& point) {
