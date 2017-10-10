@@ -452,6 +452,7 @@ if (!is_android) {
       "../browser/extensions/updater/extension_cache_fake.h",
       "../browser/extensions/window_open_interactive_apitest.cc",
       "../browser/mouseleave_browsertest.cc",
+      "../browser/notifications/message_center_notification_manager_interactive_uitest.cc",
       "../browser/notifications/message_center_notifications_browsertest.cc",
       "../browser/password_manager/password_generation_interactive_uitest.cc",
       "../browser/password_manager/password_manager_interactive_uitest.cc",
