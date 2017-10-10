@@ -11,7 +11,13 @@ version_id: 4
 # https://captive-portal.badssl.com leaf.
 # This is a test certificate, always keep it at the top.
 captive_portal_cert {
+  # SPKI:
   sha256_hash: "sha256/fjZPHewEHTrMDX3I1ecEIeoy3WFxHyGplOLv28kIbtI="
+}
+
+captive_portal_cert {
+  # DER Hash:
+  sha256_hash: "sha256/IuPg6BWHVn2mT/Xcz6bfSCltlmoA3HYb3metiu3DuYY="
 }
 
 ################################################################################
