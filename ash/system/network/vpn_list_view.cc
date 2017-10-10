@@ -44,22 +44,31 @@ namespace ash {
 namespace tray {
 namespace {
 
+struct CompareArcVPNProviderByLastLaunchTime {
+  bool operator()(const VPNProvider& provider1, const VPNProvider& provider2) {
+    return provider1.last_launch_time > provider2.last_launch_time;
+  }
+};
+
 // Indicates whether |network| belongs to this VPN provider.
 bool VpnProviderMatchesNetwork(const VPNProvider& provider,
                                const chromeos::NetworkState& network) {
   // Never display non-VPN networks or ARC VPNs.
   if (network.type() != shill::kTypeVPN)
     return false;
-  if (network.vpn_provider_type() == shill::kProviderArcVpn)
-    return false;
+
+  // Package name is the vpn provider id for ArcVPNProvider in network state.
+  if (network.vpn_provider_type() == shill::kProviderArcVpn) {
+    return provider.provider_type == VPNProvider::ARC_VPN &&
+           network.vpn_provider_id() == provider.package_name;
+  }
 
   const bool network_uses_third_party_provider =
       network.vpn_provider_type() == shill::kProviderThirdPartyVpn;
-  if (!provider.third_party)
+  if (provider.provider_type != VPNProvider::THIRD_PARTY_VPN)
     return !network_uses_third_party_provider;
   return network_uses_third_party_provider &&
-         network.third_party_vpn_provider_extension_id() ==
-             provider.extension_id;
+         network.vpn_provider_id() == provider.app_id;
 }
 
 // A list entry that represents a VPN provider.
@@ -98,11 +107,11 @@ class VPNListProviderEntry : public views::ButtonListener, public views::View {
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     // If the user clicks on a provider entry, request that the "add network"
     // dialog for this provider be shown.
-    if (vpn_provider_.third_party) {
+    if (vpn_provider_.provider_type == VPNProvider::THIRD_PARTY_VPN) {
       Shell::Get()->metrics()->RecordUserMetricsAction(
           UMA_STATUS_AREA_VPN_ADD_THIRD_PARTY_CLICKED);
       Shell::Get()->system_tray_controller()->ShowThirdPartyVpnCreate(
-          vpn_provider_.extension_id);
+          vpn_provider_.app_id);
     } else {
       Shell::Get()->metrics()->RecordUserMetricsAction(
           UMA_STATUS_AREA_VPN_ADD_BUILT_IN_CLICKED);
@@ -317,9 +326,9 @@ void VPNListView::AddProviderAndNetworks(
         TrayPopupUtils::CreateListSubHeaderSeparator());
   }
   std::string vpn_name =
-      vpn_provider.third_party
-          ? vpn_provider.third_party_provider_name
-          : l10n_util::GetStringUTF8(IDS_ASH_STATUS_TRAY_VPN_BUILT_IN_PROVIDER);
+      vpn_provider.provider_type == VPNProvider::OPN_VPN
+          ? l10n_util::GetStringUTF8(IDS_ASH_STATUS_TRAY_VPN_BUILT_IN_PROVIDER)
+          : vpn_provider.provider_name;
 
   // Add a list entry for the VPN provider.
   views::View* provider_view = nullptr;
@@ -341,17 +350,31 @@ void VPNListView::AddProvidersAndNetworks(
   // Get the list of VPN providers enabled in the primary user's profile.
   std::vector<VPNProvider> providers =
       Shell::Get()->vpn_list()->vpn_providers();
+  // Get the list of Arc VPN providers installed in the primary user's profile.
+  std::vector<VPNProvider> arc_providers =
+      Shell::Get()->vpn_list()->arc_vpn_providers();
+  std::sort(arc_providers.begin(), arc_providers.end(),
+            CompareArcVPNProviderByLastLaunchTime());
 
-  // Add connected ARCVPN networks. These are not normally displayed in
-  // the menu because the OS connects and disconnects them in response
-  // to events from ARC. They will never be matched in
-  // VpnProviderMatchesNetwork(), and they will not be "nested" under a
-  // provider view.
+  // Add connected ARCVPN network. If we can find the correct provider, nest
+  // the network under the provider. Otherwise list it unnested.
   for (const chromeos::NetworkState* const& network : networks) {
     if (network->vpn_provider_type() == shill::kProviderArcVpn &&
         network->IsConnectingOrConnected()) {
-      AddNetwork(network);
-      list_empty_ = false;
+      bool found_provider = false;
+      for (auto arc_provider = arc_providers.begin();
+           arc_provider != arc_providers.end(); ++arc_provider) {
+        if (!VpnProviderMatchesNetwork(*arc_provider, *network))
+          continue;
+        AddProviderAndNetworks(*arc_provider, networks);
+        arc_providers.erase(arc_provider);
+        found_provider = true;
+        break;
+      }
+      // No matched provider found for this network. Show it unnested.
+      // TODO(lgcheng@) add UMA status to track this.
+      if (!found_provider)
+        AddNetwork(network);
     }
   }
 
@@ -369,10 +392,20 @@ void VPNListView::AddProvidersAndNetworks(
     }
   }
 
+  // Create a local networkstate list. Help AddProviderAndNetworks() by passing
+  // empty list of network states.
+  chromeos::NetworkStateHandler::NetworkStateList networkstate_empty_list;
+
   // Add providers without any configured networks, in the order that the
   // providers were returned by the extensions system.
   for (const VPNProvider& provider : providers)
-    AddProviderAndNetworks(provider, networks);
+    AddProviderAndNetworks(provider, networkstate_empty_list);
+
+  // Add Arc VPN providers without any connected or connecting networks. These
+  // providers are sorted by last launch time.
+  for (const VPNProvider& arc_provider : arc_providers) {
+    AddProviderAndNetworks(arc_provider, networkstate_empty_list);
+  }
 }
 
 }  // namespace tray
