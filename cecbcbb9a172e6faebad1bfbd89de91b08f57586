@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a211304_e4929c98",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-10T18:02:01Z",
+      "side": 1,
+      "message": "I tried this initially (having a STATUS_COUNT at the end) but there\u0027s a presubmit check that enforces this construct (MAX and MAX + 1 in the call) for stuff in media/. I can bring in dalecurtis@ for some more feedback on this.",
+      "parentUuid": "8ece69dc_5e0e213f",
+      "revId": "cecbcbb9a172e6faebad1bfbd89de91b08f57586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8373b5b_02498ff8",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T16:13:29Z",
       "side": 1,
       "message": "i want to check it makes sense for these statuses within AddressIsPauseOrResume to be in the same histogram as the statuses in InitializeCoreAudio. It\u0027s simpler to understand a metric when there is a single call to it.",
+      "revId": "cecbcbb9a172e6faebad1bfbd89de91b08f57586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3657bd2_1f9ce2e2",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-10T18:02:01Z",
+      "side": 1,
+      "message": "You\u0027re probably right. I was vacillating on this myself. I\u0027ll separate these three statuses out into their own histogram.",
+      "parentUuid": "e8373b5b_02498ff8",
       "revId": "cecbcbb9a172e6faebad1bfbd89de91b08f57586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
