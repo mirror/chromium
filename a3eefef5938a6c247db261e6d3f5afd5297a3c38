@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2d1736_5ae24385",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "s/time of time/time/",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2d5d7b_e937f8c9",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "Explain the format in comments:\nIs it milliseconds since Unix epoch?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04aa14d4_5529a2f3",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "rm explicit.\nIt\u0027s only needed when the ctor takes exactly one argument.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56787703_9f0c3d32",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "forward declaration should be enough here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 35,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c01535_0f958c28",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "s/notify/notified/",
+      "range": {
+        "startLine": 73,
+        "startChar": 56,
+        "endLine": 73,
+        "endChar": 62
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4132d849_f8aa97c1",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "s/These/This/",
+      "range": {
+        "startLine": 73,
+        "startChar": 33,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4990f259_d531c135",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "Where is this used in tests? It feels a bit unusual that AddAndNotifyObserver() does not need to be virtual, but RemoveObserver() has to be.",
+      "range": {
+        "startLine": 78,
+        "startChar": 49,
+        "endLine": 78,
+        "endChar": 72
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d29e4a4_fbc1b382",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-10T00:01:22Z",
+      "side": 1,
+      "message": "s/PreviewsUIService/of |this|/",
+      "range": {
+        "startLine": 58,
+        "startChar": 40,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "a3eefef5938a6c247db261e6d3f5afd5297a3c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
