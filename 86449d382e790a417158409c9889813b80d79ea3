@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dcebe78_3a3a33f0",
+        "filename": "chrome/browser/extensions/extension_bindings_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-10T00:46:13Z",
+      "side": 1,
+      "message": "move this to chrome/test/data/extensions/api_test/bindings/ for consistency with other tests in the file.",
+      "range": {
+        "startLine": 330,
+        "startChar": 32,
+        "endLine": 330,
+        "endChar": 58
+      },
+      "revId": "86449d382e790a417158409c9889813b80d79ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
