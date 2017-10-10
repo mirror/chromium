@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea84b181_65c02923",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nit: I feel this sentence is extra - it\u0027s already obvious from the code what is the callback for the call.\nDitto in line 328.",
+      "range": {
+        "startLine": 204,
+        "startChar": 57,
+        "endLine": 205,
+        "endChar": 56
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33236841_cf9b8d3b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nit: Maybe \"unavailable\"?",
+      "range": {
+        "startLine": 270,
+        "startChar": 14,
+        "endLine": 270,
+        "endChar": 27
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b51406_1cca2e73",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nits:\n\"the device time\"\n\"the \"OffHours\" mode\"\n\"too, because\"\n\"the current device time\"",
+      "range": {
+        "startLine": 324,
+        "startChar": 5,
+        "endLine": 326,
+        "endChar": 17
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a573830e_f3d8e5af",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nit: \"|SystemClockClient|\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 9,
+        "endLine": 327,
+        "endChar": 26
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f551600e_4b974c40",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nit: \"the network synchronization of the system time\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 55,
+        "endLine": 328,
+        "endChar": 38
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60592b8e_1c0aa18f",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T15:20:53Z",
+      "side": 1,
+      "message": "nit: Add \".\" for consistency?",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "d616fb7adc52663299f4c88c18a8fa98f680e8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
