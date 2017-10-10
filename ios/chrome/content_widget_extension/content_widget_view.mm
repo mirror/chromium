@@ -5,6 +5,7 @@
 #import "ios/chrome/content_widget_extension/content_widget_view.h"
 
 #include "base/logging.h"
+#include "components/favicon_base/favicon_types.h"
 #import "ios/chrome/browser/ui/favicon/favicon_view.h"
 #import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
@@ -182,7 +183,9 @@ const int kRows = 2;
           URLByAppendingPathComponent:site.faviconFileName];
       UIImage* faviconImage = [UIImage imageWithContentsOfFile:filePath.path];
       if (faviconImage) {
-        attributes = [FaviconAttributes attributesWithImage:faviconImage];
+        attributes =
+            [FaviconAttributes attributesWithImage:faviconImage
+                                          iconType:favicon_base::INVALID_ICON];
       }
     }
     if (!attributes) {
@@ -203,11 +206,12 @@ const int kRows = 2;
                                                        alpha:1];
         site.fallbackIsDefaultColor = YES;
       }
-      attributes = [FaviconAttributes
-          attributesWithMonogram:site.fallbackMonogram
-                       textColor:site.fallbackTextColor
-                 backgroundColor:site.fallbackBackgroundColor
-          defaultBackgroundColor:site.fallbackIsDefaultColor];
+      attributes =
+          [FaviconAttributes attributesWithMonogram:site.fallbackMonogram
+                                          textColor:site.fallbackTextColor
+                                    backgroundColor:site.fallbackBackgroundColor
+                             defaultBackgroundColor:site.fallbackIsDefaultColor
+                                           iconType:favicon_base::INVALID_ICON];
     }
     [tileView.faviconView configureWithAttributes:attributes];
     tileView.alpha = 1;

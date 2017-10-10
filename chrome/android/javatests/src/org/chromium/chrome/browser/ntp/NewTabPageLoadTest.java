@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.suggestions.TileVisualType;
 import org.chromium.chrome.browser.tab.Tab;
@@ -91,9 +92,8 @@ public class NewTabPageLoadTest {
         }
 
         @Override
-        public void recordTileImpression(
-                int index, int type, int nameSource, int source, String url) {
-            assertNotEquals(TileVisualType.NONE, type);
+        public void recordTileImpression(Tile tile) {
+            assertNotEquals(TileVisualType.NONE, tile.getType());
         }
     }
 
@@ -105,7 +105,8 @@ public class NewTabPageLoadTest {
                 @Override
                 public void run() {
                     callback.onLargeIconAvailable(
-                            Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false);
+                            Bitmap.createBitmap(148, 148, Bitmap.Config.ALPHA_8), 0, false,
+                            IconType.INVALID_ICON);
                 }
             }, 0);
 

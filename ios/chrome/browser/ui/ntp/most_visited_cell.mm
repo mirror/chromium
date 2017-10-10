@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/favicon/core/fallback_url_util.h"
+#import "ios/chrome/browser/ui/favicon/favicon_attributes.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -139,25 +140,24 @@ const CGFloat kMaximumHeight = 100;
   [self setURL:URL];
   __weak MostVisitedCell* weakSelf = self;
 
-  void (^faviconImageBlock)(UIImage*) = ^(UIImage* favicon) {
+  void (^faviconAttributesBlock)(FaviconAttributes*) = ^(
+      FaviconAttributes* attributes) {
 
-    if (URL == [weakSelf URL])  // Tile has not been reused.
-      [weakSelf setImage:favicon];
+    if (URL == [weakSelf URL]) {  // Tile has not been reused.
+      if (attributes.faviconImage) {
+        [weakSelf setImage:faviconAttributes.faviconImage];
+      } else {
+        [weakSelf updateIconLabelWithColor:attributes.textColor
+                           backgroundColor:attributes.backgroundColor
+                  isDefaultBackgroundColor:attributes.defaultBackgroundColor];
+      }
+    }
   };
 
-  void (^faviconFallbackBlock)(UIColor*, UIColor*, BOOL) =
-      ^(UIColor* textColor, UIColor* backgroundColor, BOOL isDefaultColor) {
-        if (URL == [weakSelf URL])  // Tile has not been reused.
-          [weakSelf updateIconLabelWithColor:textColor
-                             backgroundColor:backgroundColor
-                    isDefaultBackgroundColor:isDefaultColor];
-      };
-
-  [_dataSource getFaviconForURL:URL
-                           size:kFaviconSize
-                       useCache:YES
-                  imageCallback:faviconImageBlock
-               fallbackCallback:faviconFallbackBlock];
+  [_dataSource getFaviconForPageURL:URL
+                               size:kFaviconSize
+                           useCache:YES
+                           callback:faviconAttributesBlock];
 }
 
 - (void)removePlaceholderImage {

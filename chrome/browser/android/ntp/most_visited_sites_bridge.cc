@@ -21,6 +21,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/browser/thumbnails/thumbnail_list_source.h"
+#include "components/favicon_base/favicon_types.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/ntp_tiles/metrics.h"
 #include "components/ntp_tiles/most_visited_sites.h"
@@ -250,6 +251,7 @@ void MostVisitedSitesBridge::RecordTileImpression(
     const JavaParamRef<jobject>& obj,
     jint jindex,
     jint jtype,
+    jint jicon_type,
     jint jtitle_source,
     jint jsource,
     const JavaParamRef<jstring>& jurl) {
@@ -257,9 +259,12 @@ void MostVisitedSitesBridge::RecordTileImpression(
   TileTitleSource title_source = static_cast<TileTitleSource>(jtitle_source);
   TileSource source = static_cast<TileSource>(jsource);
   TileVisualType type = static_cast<TileVisualType>(jtype);
+  favicon_base::IconType icon_type =
+      static_cast<favicon_base::IconType>(jicon_type);
 
   ntp_tiles::metrics::RecordTileImpression(
-      ntp_tiles::NTPTileImpression(jindex, source, title_source, type, url),
+      ntp_tiles::NTPTileImpression(jindex, source, title_source, type,
+                                   icon_type, url),
       g_browser_process->rappor_service());
 }
 
@@ -270,11 +275,11 @@ void MostVisitedSitesBridge::RecordOpenedMostVisitedItem(
     jint tile_type,
     jint title_source,
     jint source) {
-  ntp_tiles::metrics::RecordTileClick(
-      ntp_tiles::NTPTileImpression(index, static_cast<TileSource>(source),
-                                   static_cast<TileTitleSource>(title_source),
-                                   static_cast<TileVisualType>(tile_type),
-                                   /*url_for_rappor=*/GURL()));
+  ntp_tiles::metrics::RecordTileClick(ntp_tiles::metrics::NTPTileImpression(
+      index, static_cast<TileSource>(source),
+      static_cast<TileTitleSource>(title_source),
+      static_cast<TileVisualType>(tile_type), favicon_base::INVALID_ICON,
+      /*url_for_rappor=*/GURL()));
 }
 
 static jlong Init(JNIEnv* env,

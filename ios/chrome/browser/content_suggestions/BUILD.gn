@@ -31,6 +31,7 @@ source_set("content_suggestions") {
   deps = [
     "//base",
     "//components/favicon/core",
+    "//components/favicon_base",
     "//components/ntp_snippets",
     "//components/ntp_tiles",
     "//components/rappor",
@@ -56,6 +57,7 @@ source_set("content_suggestions") {
     "//ios/chrome/browser/ui/content_suggestions/cells:cells_ui",
     "//ios/chrome/browser/ui/content_suggestions/identifier",
     "//ios/chrome/browser/ui/favicon",
+    "//ios/chrome/browser/ui/favicon:favicon_ui",
     "//ios/chrome/browser/ui/ntp",
     "//ios/chrome/browser/ui/ntp:ntp_header",
     "//ios/chrome/browser/ui/ntp:ntp_internal",
