@@ -138,6 +138,7 @@ class CC_EXPORT LayerTreeImpl {
   bool SmoothnessTakesPriority() const;
   VideoFrameControllerClient* GetVideoFrameControllerClient() const;
   MutatorHost* mutator_host() const { return host_impl_->mutator_host(); }
+  LayerTreeImpl* active_tree() const { return host_impl_->active_tree(); }
 
   // Tree specific methods exposed to layer-impl tree.
   // ---------------------------------------------------------------------------
@@ -455,6 +456,15 @@ class CC_EXPORT LayerTreeImpl {
     return picture_layers_;
   }
 
+  void reset_picture_layers_with_images() {
+    picture_layers_with_images_.reset();
+  }
+  const std::vector<PictureLayerImpl*>* picture_layers_with_images() {
+    return picture_layers_with_images_.has_value()
+               ? &*picture_layers_with_images_
+               : nullptr;
+  }
+
   void RegisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer);
   void UnregisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer);
   ScrollbarSet ScrollbarsFor(ElementId scroll_element_id) const;
@@ -615,6 +625,7 @@ class CC_EXPORT LayerTreeImpl {
       element_id_to_scrollbar_layer_ids_;
 
   std::vector<PictureLayerImpl*> picture_layers_;
+  base::Optional<std::vector<PictureLayerImpl*>> picture_layers_with_images_;
 
   base::flat_set<viz::SurfaceId> surface_layer_ids_;
 
