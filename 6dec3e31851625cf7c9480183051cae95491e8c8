@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5065335e_62b3db40",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T19:40:34Z",
+      "side": 1,
+      "message": "We now have histogram_functions.h which already provided wrappers over the low-level details.\n\nCan you use them?\n\ni.e. this can be a call to UmaHistogramCustomTimes() and the ones above can likely be cleaned up as well.",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d3ef06_31c84a30",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T19:40:34Z",
+      "side": 1,
+      "message": "If your max is 14-days, are you sure logging in milliseconds is the right granularity? For example, if you only care about minutes then I would suggest to log in minutes - using a regular non-times histogram.",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63340335_9e94746e",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-10T19:40:34Z",
+      "side": 1,
+      "message": "We generally discourage 100-bucket histograms because they result in a lot of data use. Suggest starting with 50 and you can always revise if you find 50 is not sufficient.",
+      "range": {
+        "startLine": 57,
+        "startChar": 76,
+        "endLine": 57,
+        "endChar": 79
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
