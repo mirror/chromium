@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcdbc6f_388ea4ef",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "auto it \u003d std::find_if(...);\nif (it !\u003d displays-\u003eend())\n  return *it;\nreturn nullptr;",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07bf342_7655b124",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "nit: drop |of|, so just num_displays_....",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f08d54_f8930e0a",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Use array syntax, maybe *(*displays)[1]?\n\nIt\u0027s not as pretty but displays-\u003ebegin() + 1 is a bit of an unusual pattern and makes me wonder why it is not in array syntax, so then I start trying to figure out if there is some special case going on.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931fb599_a03df644",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Declare this in the order it is used below.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754ca264_35aa7b35",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Use a while loop instead of eliding the ++device_it",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7a243e_b3356594",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "local lambda will probably increase readability here, ie,\n\n  auto try_find_display_in_preferences \u003d [](){ ... }\n\nthat will return nullptr if the display is not present.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be1bae1_e394e81e",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "nit: intenrnal -\u003e internal",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98be873d_8dd8c746",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Why? The user should open display prefs and calibrate it there instead.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bac6e0_1dab678a",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "The function should be renamed, AssociateRemainingDevicesToInternalDisplayOrRandomDisplay, otherwise this comment and if are confusing since the name implies the associated display is internal.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f40c8f6_01f30bde",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Update comment. Why do we no longer remove from |displays|? Maybe it\u0027d be better to maintain two lists, paired and unpaired display lists? I\u0027m worried that not removing from |displays| will introduce subtle bugs since it is not obvious.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1d1665_e212b517",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "It seems like touch_device_identifiers are getting passed around a lot, they should have their own type instead of uint32_t, even if it is just using TouchDeviceId \u003d uint32_t.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4813fd_1146f4ec",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Don\u0027t use temporary variable",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5457c39d_c989873c",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T21:30:32Z",
+      "side": 1,
+      "message": "Don\u0027t use temporary variable",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
