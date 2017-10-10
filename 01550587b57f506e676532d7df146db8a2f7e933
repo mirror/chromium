@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4b2762_4dfee7f0",
+        "filename": "components/download/internal/config.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T16:12:36Z",
+      "side": 1,
+      "message": "Can we make this name relate more to network state startup delay?",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "01550587b57f506e676532d7df146db8a2f7e933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

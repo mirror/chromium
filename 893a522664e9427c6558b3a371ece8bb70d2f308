@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "cf68a4ea_895af964",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T16:12:36Z",
+      "side": 0,
+      "message": "I guess my question is, if the network is conceptually down, should this and the call below do anything other than cancel/finalize any failed downloads?  I\u0027m assuming the network listener will return \"offline\" until the start delay goes by?",
+      "parentUuid": "bc6f7b5e_8d805caa",
+      "range": {
+        "startLine": 582,
+        "startChar": 2,
+        "endLine": 582,
+        "endChar": 23
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "473f871d_65c99961",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 8
