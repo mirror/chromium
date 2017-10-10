@@ -4,6 +4,8 @@
 
 #include "content/child/child_url_loader_factory_getter_impl.h"
 
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
+
 namespace content {
 
 ChildURLLoaderFactoryGetter::Info::Info(
@@ -55,6 +57,15 @@ ChildURLLoaderFactoryGetterImpl::GetClonedInfo() {
 
   return Info(std::move(network_loader_factory_info),
               std::move(blob_loader_factory_info));
+}
+
+mojom::URLLoaderFactory* ChildURLLoaderFactoryGetterImpl::GetFactoryForRequest(
+    blink::WebURLRequest& request) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
+      request.Url().ProtocolIs(url::kBlobScheme)) {
+    return GetBlobLoaderFactory();
+  }
+  return GetNetworkLoaderFactory();
 }
 
 mojom::URLLoaderFactory*
