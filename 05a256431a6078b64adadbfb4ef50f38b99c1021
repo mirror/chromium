@@ -343,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "bdbf1d6b_ff0077ed",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T18:12:05Z",
+      "side": 1,
+      "message": "LevelDB tries to distinguish between corruption and IO errors. On corruption, the right answer is always to nuke and rebuild. On IO error, nuking might still be the right answer -- some low-level disk corruption is surfaced as IO errors to us.",
+      "parentUuid": "103b2cd7_508e2a4a",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b5b5fdf_bc4e9c28",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
