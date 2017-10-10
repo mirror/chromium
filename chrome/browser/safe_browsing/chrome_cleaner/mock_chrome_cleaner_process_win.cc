@@ -165,7 +165,7 @@ int MockChromeCleanerProcess::Run() {
   if (options_.crash_point() == CrashPoint::kOnStartup)
     exit(kDeliberateCrashExitCode);
 
-  mojo::edk::Init();
+  mojo::edk::Init(true);
   base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
   base::Thread io_thread("IPCThread");
   EXPECT_TRUE(io_thread.StartWithOptions(thread_options));

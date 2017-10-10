@@ -62,14 +62,12 @@ ContentServiceManagerMainDelegate::OverrideProcessType() {
   return content_main_params_.delegate->OverrideProcessType();
 }
 
-void ContentServiceManagerMainDelegate::OverrideMojoConfiguration(
-    mojo::edk::Configuration* config) {
+bool ContentServiceManagerMainDelegate::ShouldBeBrokerProcess() {
   // If this is the browser process and there's no remote service manager, we
   // will serve as the global Mojo broker.
-  if (!service_manager::ServiceManagerIsRemote() &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kProcessType))
-    config->is_broker_process = true;
+  return !service_manager::ServiceManagerIsRemote() &&
+         !base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kProcessType);
 }
 
 std::unique_ptr<base::Value>

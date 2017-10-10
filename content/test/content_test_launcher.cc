@@ -29,12 +29,12 @@
 
 #if defined(OS_ANDROID)
 #include "base/message_loop/message_loop.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/common/url_schemes.h"
 #include "content/public/common/content_paths.h"
 #include "content/public/test/nested_message_pump_android.h"
 #include "content/shell/browser/shell_content_browser_client.h"
 #include "content/shell/common/shell_content_client.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "ui/base/ui_base_paths.h"
 #endif
 
@@ -83,7 +83,7 @@ class ContentBrowserTestSuite : public ContentTestSuiteBase {
     ui::RegisterPathProvider();
     RegisterInProcessThreads();
 
-    InitializeMojo();
+    service_manager::InitializeMojo();
 #endif
 
     ContentTestSuiteBase::Initialize();

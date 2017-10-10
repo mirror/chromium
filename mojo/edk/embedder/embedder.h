@@ -39,6 +39,16 @@ MOJO_SYSTEM_IMPL_EXPORT void Init(const Configuration& configuration);
 // Like above but uses a default Configuration.
 MOJO_SYSTEM_IMPL_EXPORT void Init();
 
+// TODO(crbug.com/?): the following two variants are hacks to run Init several
+// times in a process in tests.
+MOJO_SYSTEM_IMPL_EXPORT void Init(const Configuration& configuration,
+                                  bool multi_call_is_ok);
+MOJO_SYSTEM_IMPL_EXPORT void Init(bool multi_call_is_ok);
+
+// Sets this process as the broker process within its graph of interconnected
+// Mojo-embedder processes.
+MOJO_SYSTEM_IMPL_EXPORT void SetAsBrokerProcess();
+
 // Sets a default callback to invoke when an internal error is reported but
 // cannot be associated with a specific child process. Calling this is optional.
 MOJO_SYSTEM_IMPL_EXPORT void SetDefaultProcessErrorCallback(
