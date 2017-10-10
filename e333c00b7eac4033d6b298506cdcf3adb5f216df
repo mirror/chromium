@@ -52,6 +52,24 @@
       "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36839e3c_2b6f3dca",
+        "filename": "ui/base/clipboard/clipboard_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-10T17:14:57Z",
+      "side": 1,
+      "message": "I share your lack of fondness for arraysize(src_url_str) - 1 (although it\u0027s better than the sizeof(src_url_str) - 1 I started with).\n\nI\u0027m going to wait for the constexpr StringPiece change to land before updating the patch, but quick tests show that these two variants work nicely. The .data() one is \"discouraged\" because it assumes that the string is null-terminated - but we know that it is so I\u0027m inclined to prefer it.\n\n    const base::StringPiece src_url_str(\"SourceURL:\");\n    size_t line_start \u003d cf_html.find(src_url_str.data());\n\n    const base::StringPiece src_url_str(\"SourceURL:\");\n    size_t line_start \u003d base::StringPiece(cf_html).find(src_url_str);",
+      "parentUuid": "e4fff8d6_4155fb94",
+      "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
