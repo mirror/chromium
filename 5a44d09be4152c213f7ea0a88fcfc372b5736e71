@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a4352ae0_20e0fe34",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-10T21:47:33Z",
+      "side": 1,
+      "message": "no, I used |\u003d default|. I do not use a default constructor on line 109. This is not a constructor. I\u0027m using a default implementation for an operator. I can\u0027t compile with an inline constructor.",
+      "parentUuid": "bbc280b3_6bb509e1",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b2c9872_f10d1c9f",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 13
