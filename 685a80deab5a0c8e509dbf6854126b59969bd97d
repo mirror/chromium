@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "846ae508_5c514aa8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T05:59:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e639def_f313b24a",
+      "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44936db3_03903605",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Can you change the bucketing to be something like [0, 10), [10, 20), ..., [90, 100] so there isn\u0027t the weird little bucket at the end? And then have BATTERY_BUCKETS \u003d 10.",
       "parentUuid": "e4b38981_c78d2a06",
+      "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bae7597_ee15ff39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-10T05:59:36Z",
+      "side": 1,
+      "message": "I thought about it a bit... I think it\u0027s nicer as is, since otherwise we need to specially handle full battery here, and the histogram description is more complicated.",
+      "parentUuid": "1bf310d3_18bc5377",
       "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
