@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "a8926df1_0a2e7cfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-10-10T08:15:10Z",
+      "side": 1,
+      "message": "Many thanks Patrick and Changcheng for your help!\n\nIt seems we are all good with this v1 submit rule expect the CL description should be updated to be more accurate.",
+      "parentUuid": "d125a3bb_7235e399",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
