@@ -21,7 +21,12 @@ class TargetPolicy;
 class TargetServices;
 }
 
+extern sandbox::BrokerServices* g_broker_services;
+
 namespace content {
+
+sandbox::ResultCode AddPolicyForSandboxedProcess(sandbox::TargetPolicy* policy);
+sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy);
 
 // Wrapper around sandbox::TargetPolicy::SetJobLevel that checks if the sandbox
 // should be let to run without a job object assigned.
@@ -42,8 +47,8 @@ sandbox::ResultCode AddWin32kLockdownPolicy(sandbox::TargetPolicy* policy,
                                             bool enable_opm);
 
 bool InitBrokerServices(sandbox::BrokerServices* broker_services);
-
 bool InitTargetServices(sandbox::TargetServices* target_services);
+void LogLaunchWarning(sandbox::ResultCode last_warning, DWORD last_error);
 
 }  // namespace content
 
