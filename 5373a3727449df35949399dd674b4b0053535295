@@ -53,6 +53,63 @@
     },
     {
       "key": {
+        "uuid": "ee440dfc_e1b40e7e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T08:36:32Z",
+      "side": 1,
+      "message": "DCHECK(worker_thread-\u003eIsCurrentThread());",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9139755_dd1ed6e9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T08:36:32Z",
+      "side": 1,
+      "message": "ToAudioWorkletGlobalScope()",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490bebeb_640f1f7b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T08:36:32Z",
+      "side": 1,
+      "message": "According to the comment on the header file, this function is called from the render thread, but we check here whether we\u0027re on the audio thread. I know the render thread is equals to the audio thread, but code readers who are not familiar with the WebAudio design could get confused. How about making terms consistent, for example AudioRenderThread, in following CLs?",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70ae4deb_baa5c620",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 28
@@ -64,6 +121,23 @@
       "writtenOn": "2017-10-10T05:56:46Z",
       "side": 1,
       "message": "DCHECK(Context()-\u003eIsAudioThread()); ?",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e10f3d9_7b38ed37",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T08:36:32Z",
+      "side": 1,
+      "message": "Nice diagram! :)",
       "revId": "5373a3727449df35949399dd674b4b0053535295",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
