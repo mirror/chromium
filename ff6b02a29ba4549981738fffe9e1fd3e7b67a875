@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b8faca3_719f3134",
+        "filename": "ui/base/ime/input_method_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T16:02:06Z",
+      "side": 1,
+      "message": "Do you need the USE_AURA check here?",
+      "revId": "ff6b02a29ba4549981738fffe9e1fd3e7b67a875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddb3489_258ccd1c",
+        "filename": "ui/base/ime/input_method_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T16:02:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ff6b02a29ba4549981738fffe9e1fd3e7b67a875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
