@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8c5e77_e157db2e",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-10T17:25:20Z",
+      "side": 1,
+      "message": "This seems like you\u0027re trying to fix up the disposition after the fact and assuming this should always happen. Can\u0027t the caller correctly set the disposition?",
+      "range": {
+        "startLine": 437,
+        "startChar": 2,
+        "endLine": 440,
+        "endChar": 3
+      },
+      "revId": "19ad9274417dddd8ba48290ffacd1b403d1db343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
