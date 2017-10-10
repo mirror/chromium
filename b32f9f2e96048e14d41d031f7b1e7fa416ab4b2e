@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6401d6e_3c734cdf",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-10T15:46:50Z",
+      "side": 1,
+      "message": "You can\u0027t use the histogram macro with dynamic histogram names.\n\nUse the function instead: UmaHistogramCustomtimes()\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_functions.h?rcl\u003da726bfa56c224c00f7e31ab5a61c849f99f92b02\u0026l\u003d91",
+      "revId": "b32f9f2e96048e14d41d031f7b1e7fa416ab4b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
