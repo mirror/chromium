@@ -135,10 +135,6 @@ class NetworkServiceTestWithService
 
   void StartLoadingURL(const ResourceRequest& request, uint32_t process_id) {
     client_.reset(new TestURLLoaderClient());
-    mojom::NetworkContextParamsPtr context_params =
-        mojom::NetworkContextParams::New();
-    network_service_->CreateNetworkContext(mojo::MakeRequest(&network_context_),
-                                           std::move(context_params));
     mojom::URLLoaderFactoryPtr loader_factory;
     network_context_->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory),
                                              process_id);
@@ -166,6 +162,10 @@ class NetworkServiceTestWithService
     ASSERT_TRUE(test_server_.Start());
     service_manager::test::ServiceTest::SetUp();
     connector()->BindInterface(mojom::kNetworkServiceName, &network_service_);
+    mojom::NetworkContextParamsPtr context_params =
+        mojom::NetworkContextParams::New();
+    network_service_->CreateNetworkContext(mojo::MakeRequest(&network_context_),
+                                           std::move(context_params));
   }
 
   net::EmbeddedTestServer test_server_;
