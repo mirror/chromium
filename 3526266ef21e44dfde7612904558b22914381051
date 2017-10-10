@@ -34,6 +34,24 @@
       "revId": "3526266ef21e44dfde7612904558b22914381051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1827c23a_b3cbebd6",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T14:01:17Z",
+      "side": 1,
+      "message": "Hmm, I tested 1locally and I could escape pretty easily. Can you use minimum value that works for you?",
+      "parentUuid": "56195fe2_801980ab",
+      "revId": "3526266ef21e44dfde7612904558b22914381051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
