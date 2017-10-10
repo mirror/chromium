@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "chromeos/dbus/system_clock_client.h"
 
 namespace policy {
 
@@ -54,7 +55,11 @@ ApplyOffHoursPolicyToProto(
 // policies in PrefValueMap and PolicyMap. The system will revert to the default
 // behavior for the removed policies. And behavior of policies is handled during
 // decoding process from proto to PolicyMap.
-class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
+//
+// "OffHours" mode is never on until device time is synchronized with
+// network time because in this case device time could be incorrect.
+class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
+                                 public chromeos::PowerManagerClient::Observer {
  public:
   // Observer interface.
   class Observer {
@@ -89,6 +94,10 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
   // when "OffHours" mode is off.
   base::TimeTicks GetOffHoursEndTime() const { return off_hours_end_time_; }
 
+  // Information about time synchronization with network comes from
+  // SystemClockClient observer, but FakesystemClientObserver does nothing.
+  void SetNetworkSynchronizedForTesting(bool network_synchronized);
+
  private:
   // Run OnOffHoursEndTimeChanged() for observers.
   void NotifyOffHoursEndTimeChanged() const;
@@ -113,6 +122,13 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
   void StartOffHoursTimer(base::TimeDelta delay);
   void StopOffHoursTimer();
 
+  // chromeos::SystemClockClient::Observer:
+  void SystemClockUpdated() override;
+
+  // Call when the system time synchronization status with network time is
+  // changed.
+  void NetworkSynchronizationUpdated(bool network_synchronized);
+
   base::ObserverList<Observer> observers_;
 
   // The main value of "OffHours" policy which indicates current "OffHours" mode
@@ -127,11 +143,17 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
   // or at the end of current "OffHours" interval.
   base::OneShotTimer timer_;
 
+  // Value is false until the system time is synchronized with network time.
+  bool network_synchronized_ = false;
+
   // Current "OffHours" time intervals.
   std::vector<off_hours::OffHoursInterval> off_hours_intervals_;
 
+  base::WeakPtrFactory<DeviceOffHoursController> weak_ptr_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(DeviceOffHoursController);
 };
+
 }  // namespace policy
 
 #endif  // CHROME_BROWSER_CHROMEOS_POLICY_DEVICE_OFF_HOURS_CONTROLLER_H_
