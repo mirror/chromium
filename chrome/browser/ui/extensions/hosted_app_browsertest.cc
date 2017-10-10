@@ -80,22 +80,7 @@ class HostedAppTest : public ExtensionBrowserTest {
     ASSERT_TRUE(app);
 
     // Launch it in a window.
-    ASSERT_TRUE(OpenApplication(AppLaunchParams(
-        browser()->profile(), app, extensions::LAUNCH_CONTAINER_WINDOW,
-        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST)));
-
-    for (auto* b : *BrowserList::GetInstance()) {
-      if (b == browser())
-        continue;
-
-      std::string browser_app_id =
-          web_app::GetExtensionIdFromApplicationName(b->app_name());
-      if (browser_app_id == app->id()) {
-        app_browser_ = b;
-        break;
-      }
-    }
-
+    app_browser_ = LaunchAppBrowser(app);
     ASSERT_TRUE(app_browser_);
     ASSERT_TRUE(app_browser_ != browser());
   }
@@ -248,6 +233,21 @@ IN_PROC_BROWSER_TEST_F(HostedAppTest, SubframeRedirectsToHostedApp) {
       subframe, "window.domAutomationController.send(document.body.innerText);",
       &result));
   EXPECT_EQ("This page has no title.", result);
+}
+
+IN_PROC_BROWSER_TEST_F(HostedAppTest, BookmarkAppThemeColor) {
+  WebApplicationInfo web_app_info;
+  web_app_info.app_url = GURL("http://example.org/");
+  web_app_info.scope = GURL("http://example.org/");
+  web_app_info.theme_color = SK_ColorBLUE;
+
+  const extensions::Extension* app = InstallBookmarkApp(web_app_info);
+  Browser* app_browser = LaunchAppBrowser(app);
+
+  EXPECT_EQ(web_app::GetExtensionIdFromApplicationName(app_browser->app_name()),
+            app->id());
+  EXPECT_EQ(SK_ColorBLUE,
+            app_browser->hosted_app_controller()->GetThemeColor().value());
 }
 
 class HostedAppVsTdiTest : public HostedAppTest {
