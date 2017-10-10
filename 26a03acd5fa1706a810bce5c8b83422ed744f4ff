@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94c923c_bdc91712",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T02:49:37Z",
+      "side": 1,
+      "message": "Here and below I added the missing enum values and removed the |default| case to allow for build-time checks of additions to that enum.\n\nThe weird formatting here is git-cl-format\u0027s fault.",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef38208a_c80e6b24",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T02:49:37Z",
+      "side": 1,
+      "message": "I renamed some constants to improve readability or rely more information.",
+      "range": {
+        "startLine": 47,
+        "startChar": 11,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a19be2e_8f9c21ba",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T02:49:37Z",
+      "side": 1,
+      "message": "I changed added references to different namespaces to better test the newly added histograms.",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 56
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "448b96af_c8052a9c",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T02:49:37Z",
+      "side": 1,
+      "message": "Specifically changed this value to test at least one case where the final bucket for the new histograms is not 0 KiB.",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 42
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
