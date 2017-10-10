@@ -16,6 +16,24 @@
       "revId": "c28bc89747613e899fd7cbf4632d576a01dfd38b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c105111b_4721e531",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-10T10:54:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53388505_909edc80",
+      "revId": "c28bc89747613e899fd7cbf4632d576a01dfd38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
