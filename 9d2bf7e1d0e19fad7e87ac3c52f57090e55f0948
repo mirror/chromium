@@ -16,6 +16,24 @@
       "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c447a7_6459a1c2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-10T02:24:17Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure if I understand.\n\nDo you mean you prefer moving ComputeOffsetMappingIfNeeded() to the private section?",
+      "parentUuid": "1534c504_4615fd51",
+      "revId": "9d2bf7e1d0e19fad7e87ac3c52f57090e55f0948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
