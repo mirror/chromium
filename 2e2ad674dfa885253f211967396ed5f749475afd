@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "deb09214_7217a065",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203034
+      },
+      "writtenOn": "2017-10-10T08:00:57Z",
+      "side": 1,
+      "message": "Not really. If FindIt creates a change A which reverts change B. Then someone else pushes a new patch set to A with a revert of C. Change A is still a pure-revert but with different content.",
+      "parentUuid": "db58f879_d6713f08",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
