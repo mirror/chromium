@@ -183,31 +183,25 @@ bool NetworkPortalDetectorImpl::DetectionAttemptCompletedReport::Equals(
 ////////////////////////////////////////////////////////////////////////////////
 // NetworkPortalDetectorImpl, public:
 
-const char NetworkPortalDetectorImpl::kOobeDetectionResultHistogram[] =
-    "CaptivePortal.OOBE.DetectionResult";
-const char NetworkPortalDetectorImpl::kOobeDetectionDurationHistogram[] =
-    "CaptivePortal.OOBE.DetectionDuration";
-const char NetworkPortalDetectorImpl::kOobeShillOnlineHistogram[] =
-    "CaptivePortal.OOBE.DiscrepancyWithShill_Online";
-const char NetworkPortalDetectorImpl::kOobeShillPortalHistogram[] =
-    "CaptivePortal.OOBE.DiscrepancyWithShill_RestrictedPool";
-const char NetworkPortalDetectorImpl::kOobeShillOfflineHistogram[] =
-    "CaptivePortal.OOBE.DiscrepancyWithShill_Offline";
-const char NetworkPortalDetectorImpl::kOobePortalToOnlineHistogram[] =
-    "CaptivePortal.OOBE.PortalToOnlineTransition";
+constexpr char NetworkPortalDetectorImpl::kOobeDetectionResultHistogram[];
+constexpr char NetworkPortalDetectorImpl::kOobeDetectionDurationHistogram[];
+constexpr char NetworkPortalDetectorImpl::kOobeShillOnlineHistogram[];
+constexpr char NetworkPortalDetectorImpl::kOobeShillPortalHistogram[];
+constexpr char NetworkPortalDetectorImpl::kOobeShillOfflineHistogram[];
+constexpr char NetworkPortalDetectorImpl::kOobePortalToOnlineHistogram[];
 
-const char NetworkPortalDetectorImpl::kSessionDetectionResultHistogram[] =
-    "CaptivePortal.Session.DetectionResult";
-const char NetworkPortalDetectorImpl::kSessionDetectionDurationHistogram[] =
-    "CaptivePortal.Session.DetectionDuration";
-const char NetworkPortalDetectorImpl::kSessionShillOnlineHistogram[] =
-    "CaptivePortal.Session.DiscrepancyWithShill_Online";
-const char NetworkPortalDetectorImpl::kSessionShillPortalHistogram[] =
-    "CaptivePortal.Session.DiscrepancyWithShill_RestrictedPool";
-const char NetworkPortalDetectorImpl::kSessionShillOfflineHistogram[] =
-    "CaptivePortal.Session.DiscrepancyWithShill_Offline";
-const char NetworkPortalDetectorImpl::kSessionPortalToOnlineHistogram[] =
-    "CaptivePortal.Session.PortalToOnlineTransition";
+constexpr char NetworkPortalDetectorImpl::kSessionDetectionResultHistogram[];
+constexpr char NetworkPortalDetectorImpl::kSessionDetectionDurationHistogram[];
+constexpr char NetworkPortalDetectorImpl::kSessionShillOnlineHistogram[];
+constexpr char NetworkPortalDetectorImpl::kSessionShillPortalHistogram[];
+constexpr char NetworkPortalDetectorImpl::kSessionShillOfflineHistogram[];
+constexpr char NetworkPortalDetectorImpl::kSessionPortalToOnlineHistogram[];
+
+constexpr char
+    NetworkPortalDetectorImpl::kDetectedOfflineSincePortalNetworkHistogram[];
+
+constexpr base::TimeDelta
+    NetworkPortalDetectorImpl::kDelaySincePortalNetworkForUMA;
 
 NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
@@ -354,6 +348,9 @@ void NetworkPortalDetectorImpl::DefaultNetworkChanged(
   bool connection_state_changed =
       (default_connection_state_ != default_network->connection_state());
   default_connection_state_ = default_network->connection_state();
+
+  if (default_network->is_captive_portal())
+    last_shill_reports_portal_time_ = NowTicks();
 
   NET_LOG(EVENT) << "Default network changed:"
                  << " name=" << default_network_name_
@@ -564,6 +561,14 @@ void NetworkPortalDetectorImpl::OnAttemptCompleted(
   // Observers (via OnDetectionCompleted) may already schedule new attempt.
   if (is_idle())
     ScheduleAttempt(results.retry_after_delta);
+
+  // Within one minute that default network reports portal network, but Chrome
+  // pulls offline detection result, it is likely we get blacklisted.
+  if (state.status == CAPTIVE_PORTAL_STATUS_OFFLINE &&
+      NowTicks() - last_shill_reports_portal_time_ <=
+          kDelaySincePortalNetworkForUMA) {
+    UMA_HISTOGRAM_BOOLEAN(kDetectedOfflineSincePortalNetworkHistogram, true);
+  }
 }
 
 void NetworkPortalDetectorImpl::Observe(

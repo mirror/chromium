@@ -15,6 +15,7 @@
 #include "base/metrics/histogram_samples.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/run_loop.h"
+#include "base/test/histogram_tester.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/net/network_portal_detector_test_utils.h"
@@ -112,7 +113,7 @@ class NetworkPortalDetectorImplTest
 
     if (base::HistogramBase* histogram =
             base::StatisticsRecorder::FindHistogram(
-                "CaptivePortal.OOBE.DetectionResult")) {
+                NetworkPortalDetectorImpl::kOobeDetectionResultHistogram)) {
       original_samples_ = histogram->SnapshotSamples();
     }
   }
@@ -234,6 +235,10 @@ class NetworkPortalDetectorImplTest
     network_portal_detector()->set_time_ticks_for_testing(time_ticks);
   }
 
+  void advance_time_ticks(const base::TimeDelta& delta) {
+    network_portal_detector()->advance_time_ticks_for_testing(delta);
+  }
+
   void SetBehindPortal(const std::string& service_path) {
     DBusThreadManager::Get()->GetShillServiceClient()->SetProperty(
         dbus::ObjectPath(service_path), shill::kStateProperty,
@@ -268,7 +273,7 @@ class NetworkPortalDetectorImplTest
 
   std::unique_ptr<EnumHistogramChecker> MakeResultHistogramChecker() {
     return std::unique_ptr<EnumHistogramChecker>(new EnumHistogramChecker(
-        "CaptivePortal.OOBE.DetectionResult",
+        NetworkPortalDetectorImpl::kOobeDetectionResultHistogram,
         NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_COUNT,
         original_samples_.get()));
   }
@@ -1052,6 +1057,55 @@ TEST_F(NetworkPortalDetectorImplTest, RequestTimeouts2) {
           ->Expect(NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_OFFLINE, 1)
           ->Expect(NetworkPortalDetector::CAPTIVE_PORTAL_STATUS_ONLINE, 1)
           ->Check());
+}
+
+// The randomized alternate hosts for captive portal detection is deployed but
+// we are curious what is the effect (crbug.com/742437).
+// Tests that UMA records correctly for the case that after shill reports portal
+// we may get blacklisted.
+TEST_F(NetworkPortalDetectorImplTest, BehindPortalAndThenBlacklisted) {
+  base::HistogramTester histograms_;
+  ASSERT_TRUE(is_state_idle());
+  set_delay_till_next_attempt(base::TimeDelta());
+
+  // Shill reports portal network.
+  SetBehindPortal(kStubWireless1);
+  ASSERT_TRUE(is_state_checking_for_portal());
+
+  // Then we get blacklisted, shill connects to the network service but each
+  // URL fetch gives us connection closed result.
+  advance_time_ticks(NetworkPortalDetectorImpl::kDelaySincePortalNetworkForUMA -
+                     base::TimeDelta::FromSeconds(1));
+  SetConnected(kStubWireless1);
+  ASSERT_TRUE(is_state_checking_for_portal());
+
+  CompleteURLFetch(net::ERR_CONNECTION_CLOSED,
+                   net::URLFetcher::RESPONSE_CODE_INVALID, nullptr);
+  ASSERT_EQ(1, no_response_result_count());
+  ASSERT_TRUE(is_state_portal_detection_pending());
+
+  // To run CaptivePortalDetector::DetectCaptivePortal().
+  base::RunLoop().RunUntilIdle();
+
+  histograms_.ExpectBucketCount(
+      NetworkPortalDetectorImpl::kDetectedOfflineSincePortalNetworkHistogram,
+      true, 1);
+
+  // Verifies that the offline result is not recorded after
+  // kDelaySincePortalNetworkForUMA.
+  advance_time_ticks(base::TimeDelta::FromSeconds(2));
+
+  CompleteURLFetch(net::ERR_CONNECTION_CLOSED,
+                   net::URLFetcher::RESPONSE_CODE_INVALID, nullptr);
+  ASSERT_EQ(2, no_response_result_count());
+  ASSERT_TRUE(is_state_portal_detection_pending());
+
+  // To run CaptivePortalDetector::DetectCaptivePortal().
+  base::RunLoop().RunUntilIdle();
+
+  histograms_.ExpectBucketCount(
+      NetworkPortalDetectorImpl::kDetectedOfflineSincePortalNetworkHistogram,
+      true, 1);
 }
 
 }  // namespace chromeos
