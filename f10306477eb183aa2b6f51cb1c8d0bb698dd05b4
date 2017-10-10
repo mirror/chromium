@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23f85c4c_4b571d00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1157909
+      },
+      "writtenOn": "2017-10-10T17:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adb0961_4b771850",
+      "range": {
+        "startLine": 10,
+        "startChar": 83,
+        "endLine": 10,
+        "endChar": 101
+      },
+      "revId": "f10306477eb183aa2b6f51cb1c8d0bb698dd05b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d0389ec_1c269955",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T16:58:41Z",
       "side": 1,
       "message": "The rule only controls how a change is submittable. Once it\u0027s submittable, any user with \u0027submit\u0027 permission can submit it.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "f10306477eb183aa2b6f51cb1c8d0bb698dd05b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef59c873_4bb9870e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1157909
+      },
+      "writtenOn": "2017-10-10T17:24:07Z",
+      "side": 1,
+      "message": "I have reworded below 2 cases.",
+      "parentUuid": "1d0389ec_1c269955",
       "range": {
         "startLine": 13,
         "startChar": 0,
