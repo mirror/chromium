@@ -8,6 +8,7 @@ import static org.chromium.chrome.browser.util.ViewUtils.dpToPx;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -62,6 +63,7 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.text.SpanApplier;
+import org.chromium.ui.text.TextViewUtils;
 
 /**
  * The native new tab page, represented by some basic data such as title and url, and an Android
@@ -424,11 +426,13 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             }
         };
 
+        Resources res = getResources();
         TextView textView = mNewTabPageLayout.findViewById(R.id.chrome_home_promo_text);
-        textView.setText(
-                SpanApplier.applySpans(getResources().getString(R.string.ntp_chrome_home_promo),
-                        new SpanApplier.SpanInfo("<link>", "</link>", link)));
+        textView.setText(SpanApplier.applySpans(res.getString(R.string.ntp_chrome_home_promo),
+                new SpanApplier.SpanInfo("<link>", "</link>", link)));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+        TextViewUtils.applyCompoundDrawableTint(
+                textView, ApiCompatibilityUtils.getColor(res, R.color.toolbar_light_tint));
         mNewTabPageLayout.findViewById(R.id.chrome_home_promo_container)
                 .setVisibility(View.VISIBLE);
     }
@@ -651,12 +655,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         mSearchProviderHasLogo = hasLogo;
         mSearchProviderIsGoogle = isGoogle;
 
-        // Set a bit more top padding on the tile grid if there is no logo.
-        int paddingTop = getResources().getDimensionPixelSize(shouldShowLogo()
-                        ? R.dimen.tile_grid_layout_padding_top
-                        : R.dimen.tile_grid_layout_no_logo_padding_top);
-        mSiteSectionViewHolder.itemView.setPadding(
-                0, paddingTop, 0, mSiteSectionViewHolder.itemView.getPaddingBottom());
+        updateTileGridPadding();
 
         // Hide or show the views above the tile grid as needed, including logo, search box, and
         // spacers.
@@ -690,6 +689,24 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         updateSearchBoxLogo();
 
         mSnapshotTileGridChanged = true;
+    }
+
+    /**
+     * Updates the padding for the tile grid based on what is shown above it.
+     */
+    private void updateTileGridPadding() {
+        final int paddingTop;
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+            // The Chrome Home promo has enough whitespace.
+            paddingTop = 0;
+        } else {
+            // Set a bit more top padding on the tile grid if there is no logo.
+            paddingTop = getResources().getDimensionPixelSize(shouldShowLogo()
+                            ? R.dimen.tile_grid_layout_padding_top
+                            : R.dimen.tile_grid_layout_no_logo_padding_top);
+        }
+        mSiteSectionViewHolder.itemView.setPadding(
+                0, paddingTop, 0, mSiteSectionViewHolder.itemView.getPaddingBottom());
     }
 
     /**
