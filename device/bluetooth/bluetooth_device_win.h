@@ -85,9 +85,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin
       const BluetoothUUID& uuid,
       const ConnectToServiceCallback& callback,
       const ConnectToServiceErrorCallback& error_callback) override;
-  void CreateGattConnection(
-      const GattConnectionCallback& callback,
-      const ConnectErrorCallback& error_callback) override;
   void GattDiscoveryCompleteForService(
       BluetoothAdapter* adapter,
       BluetoothRemoteGattService* service) override;
@@ -156,6 +153,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceWin
   // the device.
   bool paired_;
   bool connected_;
+  bool gatt_connected_;
 
   // Used to send change notifications when a device disappears during
   // discovery.
