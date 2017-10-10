@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1166d5df_294b46ef",
+        "filename": "services/ui/public/interfaces/ime/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-10T15:35:47Z",
+      "side": 0,
+      "message": "It seems the android build failure is caused by missing this dependency?",
+      "revId": "cd79e17ec56bba732e6295877c7c9c896950271d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
