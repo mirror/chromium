@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "633ee070_23e2c2e1",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-10T18:51:49Z",
+      "side": 1,
+      "message": "Is this replicating VideoLayerImpl::WillDraw+AppendQuads?\n\nDo you think we can/should reuse that code, maybe a static helper function/class that both can use?",
+      "revId": "747f0ff535d50b23a8b200e0b0f580e18b428e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
