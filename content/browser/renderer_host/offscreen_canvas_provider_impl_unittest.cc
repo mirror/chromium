@@ -147,7 +147,7 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
  protected:
   void SetUp() override {
 #if !defined(OS_ANDROID)
-    ImageTransportFactory::InitializeForUnitTests(
+    ImageTransportFactory::SetFactoryForTests(
         base::MakeUnique<NoTransportImageTransportFactory>());
 #endif
     host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
