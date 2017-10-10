@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "371afc50_f270257e",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T17:41:07Z",
+      "side": 1,
+      "message": "Removed comment and changed the name of the \u0027are we observing this?\u0027 boolean.",
+      "parentUuid": "1712d266_9e01a298",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86b26dfc_8c6ac570",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07c1627_94b3d5af",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T17:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b26dfc_8c6ac570",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bd8186be_8945c870",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T17:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30382602_d669376d",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3081e27_1d7c7066",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa2f42b_be72e34a",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-10T17:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3081e27_1d7c7066",
+      "revId": "f73ded878234e0097539410e3a3ad2e20c4ffc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
