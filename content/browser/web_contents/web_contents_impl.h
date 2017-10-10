@@ -1683,6 +1683,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 class CONTENT_EXPORT WebContentsImpl::FriendWrapper {
  private:
   friend class TestNavigationObserver;
+  friend class TestNavigationFinishedObserver;
   friend class WebContentsAddedObserver;
   friend class ContentBrowserSanityChecker;
 
