@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4c5922b5_cbb7925e",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-10T17:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28bbce3_ac3182ef",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 21
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "630acfd5_a82a3636",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 4
@@ -612,6 +636,30 @@
       "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69098ab9_1d97d290",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-10T17:36:47Z",
+      "side": 1,
+      "message": "Done, reverted support for Popular Sites.",
+      "parentUuid": "6faa42ef_8f4d334e",
+      "range": {
+        "startLine": 230,
+        "startChar": 24,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
