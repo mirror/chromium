@@ -14,6 +14,7 @@ import org.chromium.base.StrictModeContext;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
+import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -51,7 +52,7 @@ public class ChromeHomeSurveyController {
     }
 
     private void startDownload(Context context, TabModelSelector tabModelSelector) {
-        if (!doesUserQualifyForSurvey()) return;
+        if (!doesUserQualifyForSurvey(context)) return;
 
         mTabModelSelector = tabModelSelector;
 
@@ -75,7 +76,8 @@ public class ChromeHomeSurveyController {
         surveyController.downloadSurvey(context, siteId, "", onSuccessRunnable);
     }
 
-    private boolean doesUserQualifyForSurvey() {
+    private boolean doesUserQualifyForSurvey(Context context) {
+        if (!isUMAEnabled(context)) return false;
         if (!FeatureUtilities.isChromeHomeEnabled()) return true;
         if (CommandLine.getInstance().hasSwitch(SURVEY_FORCE_ENABLE_SWITCH)) return true;
         if (hasInfoBarBeenDisplayed()) return false;
@@ -121,6 +123,16 @@ public class ChromeHomeSurveyController {
             });
         } else {
             showSurveyInfoBar(webContents, siteId);
+        }
+    }
+
+    private boolean isUMAEnabled(Context context) {
+        PrefServiceBridge prefServiceBridge = PrefServiceBridge.getInstance();
+        if (prefServiceBridge.isMetricsReportingEnabled()) {
+            return true;
+        } else {
+            SurveyController.getInstance().clearCache(context);
+            return false;
         }
     }
 
