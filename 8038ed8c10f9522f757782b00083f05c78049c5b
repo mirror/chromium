@@ -178,6 +178,54 @@
     },
     {
       "key": {
+        "uuid": "8b0b1063_87247c05",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-10T17:02:33Z",
+      "side": 1,
+      "message": "Variable renames are enough.",
+      "parentUuid": "59b8a9b7_adbfe570",
+      "range": {
+        "startLine": 37,
+        "startChar": 52,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c05e7406_92ad17da",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-10T17:02:33Z",
+      "side": 1,
+      "message": "Variable renames are enough.",
+      "parentUuid": "59b8a9b7_adbfe570",
+      "range": {
+        "startLine": 37,
+        "startChar": 52,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55f1e55_e9cf2af7",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 8
@@ -269,6 +317,30 @@
       "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dabbb60_ff47a80c",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-10T17:02:33Z",
+      "side": 1,
+      "message": "This was clarified in the other CL. I consider it resolved.",
+      "parentUuid": "52c073f6_d2c86674",
+      "range": {
+        "startLine": 1520,
+        "startChar": 28,
+        "endLine": 1520,
+        "endChar": 34
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
