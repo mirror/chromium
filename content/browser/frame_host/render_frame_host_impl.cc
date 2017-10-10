@@ -14,6 +14,7 @@
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/process/kill.h"
@@ -91,6 +92,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/widget.mojom.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_context.h"
@@ -3040,6 +3042,15 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   }
 
   registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
+
+  registry_->AddInterface(
+      base::BindRepeating(&RestrictedCookieManagerImpl::CreateMojoService,
+                          WrapRefCounted(BrowserContext::GetStoragePartition(
+                                             GetProcess()->GetBrowserContext(),
+                                             GetSiteInstance())
+                                             ->GetURLRequestContext()),
+                          GetProcess()->GetID(), GetRoutingID()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
