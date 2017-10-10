@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b42480ac_4702c37c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4733fc0a_c95482ba",
+      "range": {
+        "startLine": 218,
+        "startChar": 14,
+        "endLine": 218,
+        "endChar": 18
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2f7e14_c1af1282",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa087b6_ad226601",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "Loosen. Done.",
+      "parentUuid": "ba2f7e14_c1af1282",
+      "range": {
+        "startLine": 220,
+        "startChar": 5,
+        "endLine": 220,
+        "endChar": 10
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa8ab223_69f340b9",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da749b9d_653331bb",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8989f49_168fff71",
         "filename": "remoting/protocol/BUILD.gn",
         "patchSetId": 12
@@ -85,6 +157,24 @@
       "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe8cd47_63228d7d",
+        "filename": "remoting/protocol/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "Yes, it\u0027s because of a bad merge.",
+      "parentUuid": "f8989f49_168fff71",
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "235944be_4df8c087",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "No, I just want to ensure this variable won\u0027t be reassigned in the long function.",
+      "parentUuid": "e4539785_fc4d3b95",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 16
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b99a1583_e5006a35",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 12
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "46742ea8_9679749a",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "I think we cannot get raid of const_cast, string_as_array accepts only std::string* instead of const std::string*.\nBut yes, using string_as_array is better.",
+      "parentUuid": "b99a1583_e5006a35",
+      "range": {
+        "startLine": 148,
+        "startChar": 51,
+        "endLine": 148,
+        "endChar": 68
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8344fea1_5860b5c9",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 12
@@ -154,6 +292,30 @@
       "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeefae9b_5effa508",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-10T17:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8344fea1_5860b5c9",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 7
+      },
+      "revId": "1d8eb085a0bf55f2ef157e1753f3116796bbdbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
