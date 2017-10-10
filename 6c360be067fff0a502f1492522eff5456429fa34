@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e3913b_cbb4032d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-10-10T06:37:04Z",
+      "side": 1,
+      "message": "Is it really that large? If so, I\u0027d rather like to skip this by default.",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "6c360be067fff0a502f1492522eff5456429fa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245ee407_2e21d7b1",
+        "filename": "DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-10-10T06:37:04Z",
+      "side": 1,
+      "message": "What does this imply for folks with an existing checkout? Would they need to manually set a variable first in .gclient to not download instrumented libraries?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "6c360be067fff0a502f1492522eff5456429fa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
