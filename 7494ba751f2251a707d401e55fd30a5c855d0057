@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ef16408_e34ecce9",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:23:30Z",
+      "side": 1,
+      "message": "add \n// -----------------------------------------------------------------\n\nhere to signify end of the section",
+      "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853afc4d_84f5b567",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:23:30Z",
+      "side": 1,
+      "message": "maybe more idiomatic to call this ScopedDispatchFetchEventCallback with a brief comment about what it does (Automatically invokes the callback with ABORTED upon destruction if the callback has not yet been called).",
+      "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d8fe23_b8f0e817",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:23:30Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b58563a_02102016",
         "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
         "patchSetId": 1
@@ -13,6 +64,24 @@
       "writtenOn": "2017-10-10T06:18:23Z",
       "side": 1,
       "message": "Since we store these in fetch_event_callbacks_ I think we can also just fire them in the dtor of BrowserSideControllerServiceWorker?",
+      "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbe6860_92b33ce2",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-10T06:23:30Z",
+      "side": 1,
+      "message": "Ah, that makes more sense actually.",
+      "parentUuid": "4b58563a_02102016",
       "revId": "7494ba751f2251a707d401e55fd30a5c855d0057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
