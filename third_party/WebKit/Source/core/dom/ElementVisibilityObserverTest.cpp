@@ -11,6 +11,7 @@
 #include "core/html/HTMLDocument.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -73,6 +74,10 @@ TEST_F(ElementVisibilityObserverTest, ObserveElementWithoutDocumentFrame) {
 TEST_F(ElementVisibilityObserverTest, ObserveElementInRemoteFrame) {
   Persistent<RemoteFrame> remote_frame =
       RemoteFrame::Create(new EmptyRemoteFrameClient(), GetPage(), nullptr);
+#if 0
+  remote_frame->GetSecurityContext()->SetReplicatedOrigin(
+      SecurityOrigin::CreateUnique());
+#endif
   LocalFrameClient()->SetParent(remote_frame);
 
   Persistent<HTMLElement> element = HTMLDivElement::Create(GetDocument());

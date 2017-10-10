@@ -11,6 +11,7 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/unguessable_token.h"
 #include "url/scheme_host_port.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_canon.h"
@@ -185,9 +186,14 @@ class URL_EXPORT Origin {
          std::string suborigin,
          SchemeHostPort::ConstructPolicy policy);
 
-  SchemeHostPort tuple_;
   bool unique_;
+
+  SchemeHostPort tuple_;
   std::string suborigin_;
+
+  // This should only be used for equality comparison when both origins are
+  // unique.
+  base::UnguessableToken unique_id_;
 };
 
 URL_EXPORT std::ostream& operator<<(std::ostream& out, const Origin& origin);

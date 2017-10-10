@@ -7,6 +7,9 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <tuple>
+#include <utility>
+
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "url/gurl.h"
@@ -34,12 +37,16 @@ GURL AddSuboriginToUrl(const GURL& url, const std::string& suborigin) {
 
 }  // namespace
 
-Origin::Origin() : unique_(true), suborigin_(std::string()) {}
+Origin::Origin()
+    : unique_(true), unique_id_(base::UnguessableToken::Create()) {}
 
-Origin::Origin(const GURL& url) : unique_(true), suborigin_(std::string()) {
-  if (!url.is_valid() || (!url.IsStandard() && !url.SchemeIsBlob()))
+Origin::Origin(const GURL& url) : unique_(true) {
+  if (!url.is_valid() || (!url.IsStandard() && !url.SchemeIsBlob())) {
+    unique_id_ = base::UnguessableToken::Create();
     return;
+  }
 
+  std::string suborigin;
   if (url.SchemeIsFileSystem()) {
     tuple_ = SchemeHostPort(*url.inner_url());
   } else if (url.SchemeIsBlob()) {
@@ -72,12 +79,16 @@ Origin::Origin(const GURL& url) : unique_(true), suborigin_(std::string()) {
     if (invalid_suborigin || tuple_.IsInvalid())
       return;
 
-    suborigin_ = host.substr(0, suborigin_end);
+    suborigin = host.substr(0, suborigin_end);
   } else {
     tuple_ = SchemeHostPort(url);
   }
 
   unique_ = tuple_.IsInvalid();
+  if (unique_)
+    unique_id_ = base::UnguessableToken::Create();
+  else
+    suborigin_ = std::move(suborigin);
 }
 
 Origin::Origin(base::StringPiece scheme,
@@ -85,10 +96,11 @@ Origin::Origin(base::StringPiece scheme,
                uint16_t port,
                base::StringPiece suborigin,
                SchemeHostPort::ConstructPolicy policy)
-    : tuple_(scheme.as_string(), host.as_string(), port, policy) {
-  unique_ = tuple_.IsInvalid();
-  suborigin_ = suborigin.as_string();
-}
+    : Origin(scheme.as_string(),
+             host.as_string(),
+             port,
+             suborigin.as_string(),
+             policy) {}
 
 Origin::Origin(std::string scheme,
                std::string host,
@@ -97,7 +109,10 @@ Origin::Origin(std::string scheme,
                SchemeHostPort::ConstructPolicy policy)
     : tuple_(std::move(scheme), std::move(host), port, policy) {
   unique_ = tuple_.IsInvalid();
-  suborigin_ = std::move(suborigin);
+  if (unique_)
+    unique_id_ = base::UnguessableToken::Create();
+  else
+    suborigin_ = std::move(suborigin);
 }
 
 Origin::~Origin() {
@@ -160,8 +175,9 @@ GURL Origin::GetURL() const {
 }
 
 bool Origin::IsSameOriginWith(const Origin& other) const {
-  if (unique_ || other.unique_)
-    return false;
+  if (unique_ || other.unique_) {
+    return unique_ && other.unique_ ? unique_id_ == other.unique_id_ : false;
+  }
 
   return tuple_.Equals(other.tuple_) && suborigin_ == other.suborigin_;
 }
@@ -175,8 +191,8 @@ bool Origin::DomainIs(base::StringPiece canonical_domain) const {
 }
 
 bool Origin::operator<(const Origin& other) const {
-  return tuple_ < other.tuple_ ||
-         (tuple_.Equals(other.tuple_) && suborigin_ < other.suborigin_);
+  return std::tie(tuple_, suborigin_, unique_id_) <
+         std::tie(other.tuple_, other.suborigin_, other.unique_id_);
 }
 
 std::ostream& operator<<(std::ostream& out, const url::Origin& origin) {
