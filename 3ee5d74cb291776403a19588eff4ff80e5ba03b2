@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0000ed5b_580e4ca7",
+        "filename": "base/values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T18:01:12Z",
+      "side": 1,
+      "message": "I made this one delegated too.",
+      "range": {
+        "startLine": 142,
+        "startChar": 42,
+        "endLine": 142,
+        "endChar": 73
+      },
+      "revId": "3ee5d74cb291776403a19588eff4ff80e5ba03b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
