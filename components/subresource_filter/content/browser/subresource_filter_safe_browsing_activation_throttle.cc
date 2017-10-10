@@ -185,11 +185,13 @@ void SubresourceFilterSafeBrowsingActivationThrottle::NotifyResult() {
   // Compute the matched list and notify observers of the check result.
   DCHECK(!database_client_ || !check_results_.empty());
   ActivationList matched_list = ActivationList::NONE;
+  bool warning = false;
   if (!check_results_.empty()) {
     const auto& check_result = check_results_.back();
     DCHECK(check_result.finished);
     matched_list = GetListForThreatTypeAndMetadata(
         check_result.threat_type, check_result.threat_metadata);
+    warning = check_result.threat_metadata.warning;
     SubresourceFilterObserverManager::FromWebContents(
         navigation_handle()->GetWebContents())
         ->NotifySafeBrowsingCheckComplete(navigation_handle(),
@@ -227,7 +229,7 @@ void SubresourceFilterSafeBrowsingActivationThrottle::NotifyResult() {
   }
 
   driver_factory->NotifyPageActivationComputed(
-      navigation_handle(), activation_decision, matched_configuration);
+      navigation_handle(), activation_decision, matched_configuration, warning);
 
   base::TimeDelta delay = defer_time_.is_null()
                               ? base::TimeDelta::FromMilliseconds(0)
