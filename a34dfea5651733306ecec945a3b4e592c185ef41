@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8b9c8679_d0a47f95",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-10T23:43:32Z",
+      "side": 1,
+      "message": "Nice, I should contact you first about this. Thanks! I will update later about my local test.\n\nYes, I didn\u0027t see RecheckPortal in chrome code. Maybe because chrome does rechecking itself.",
+      "parentUuid": "59eb6f4c_ead98518",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0ce791e_b7843292",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
