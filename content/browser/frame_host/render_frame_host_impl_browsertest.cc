@@ -754,4 +754,78 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
   }
 }
 
+IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
+                       OnBeforeUnloadSameDocumentHistoryNavigationWhileReload) {
+  ControllableHttpResponse response_1(embedded_test_server(), "/main_document");
+  ControllableHttpResponse response_2(embedded_test_server(), "/main_document");
+
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Navigate to a document that will:
+  //    * Use history.pushState() during page load.
+  //    * Use history.back() in onBeforeUnload.
+  GURL main_document_url(embedded_test_server()->GetURL("/main_document"));
+  shell()->LoadURL(main_document_url);
+  response_1.WaitForRequest();
+  response_1.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<script>"
+      "  history.pushState({}, 'page 2', '#page_2');"
+      "  window.addEventListener('beforeunload', function() {"
+      "    // window.setTimeout(()=>history.back(),0)\r\n"
+      "  });"
+      "</script>");
+  response_1.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  // 2) Reload. Two parallels navigation will happens:
+  //    * The reload.
+  //    * The history.back().
+  GURL main_document_url_page_2(main_document_url.spec() + "#page_2");
+  TestNavigationManager observer_reload(shell()->web_contents(),
+                                        main_document_url_page_2);
+  TestNavigationManager observer_back(shell()->web_contents(),
+                                      main_document_url);
+  shell()->Reload();
+
+  // 2.1) Reload reaches the ReadyToCommitNavigation stage.
+  EXPECT_TRUE(observer_reload.WaitForRequestStart());
+  observer_reload.ResumeNavigation();
+  response_2.WaitForRequest();
+  response_2.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n");
+      //"<html>"
+      //"  <body>"
+      //"    ...");
+  EXPECT_TRUE(observer_reload.WaitForResponse());
+  observer_reload.ResumeNavigation();
+
+  // 2.2) Back history navigation starts and cancel the reload navigation.
+  WebContentsImpl* wc = static_cast<WebContentsImpl*>(shell()->web_contents());
+  wc->GetController().GoToOffset(-1);
+  EXPECT_TRUE(observer_back.WaitForRequestStart());
+  observer_back.ResumeNavigation();
+  observer_reload.WaitForNavigationFinished();
+  response_2.Send(
+      "    ... body received"
+      "  </body>"
+      "</html>");
+  response_2.Done();
+  observer_back.WaitForNavigationFinished();
+
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  std::string html_content;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "domAutomationController.send(document.body.textContent)",
+      &html_content));
+  EXPECT_EQ("    ...    ...  ", html_content);
+}
+
 }  // namespace content
