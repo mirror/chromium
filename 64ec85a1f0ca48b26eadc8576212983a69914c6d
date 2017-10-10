@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecb9b2e4_df1c54d2",
+        "filename": "chrome/app/profiler/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T22:15:40Z",
+      "side": 1,
+      "message": "Done.  I just added Mike, and set the component to be Internals\u003eMetrics – does that sound about right?",
+      "parentUuid": "5331915f_c6ebe6b9",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "64ec85a1f0ca48b26eadc8576212983a69914c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381dba57_10d6cd1d",
         "filename": "chrome/gpu/chrome_content_gpu_client.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "64ec85a1f0ca48b26eadc8576212983a69914c6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ff25d7_2b3d2069",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T22:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381dba57_10d6cd1d",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "64ec85a1f0ca48b26eadc8576212983a69914c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
