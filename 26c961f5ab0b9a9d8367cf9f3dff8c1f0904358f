@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "2c578f32_a78c153f",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-10T17:53:13Z",
+      "side": 1,
+      "message": "Unfortunately Java references are closer to shared_ptr than unique_ptr because we cannot guarantee a single-owner.\n\nA safer approach would be to extend the lifetime of the native ptr as long as it is accessible through a strong ref.\n\nFor example,\n(a) only allowing access through the object that called to register the pointer to begin with.\n(b) or, giving out the pointer via \"NativePointer\" object, as long as any NativePointer instances exist, do not \"Destroy\" the native long pointer.\n\nThis way there\u0027s still a bit of issues ensuring the NativePointer is not deleted, but it\u0027s a more localized problem.\n\nBetter yet, but this costs a bit of performance, have an AutoCloseable to do this.\n\n  try (NativePointer p \u003d refHolder.getNativePtr()) {\n    jni_call(p.get());\n  }\n  // forbid any usages of p.get() if it\u0027s not in a \"try-with-using\" block. perhaps with a linter?",
+      "parentUuid": "c1697c8c_e3fec6ac",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96a62fd_e1ba68be",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
