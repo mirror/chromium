@@ -1445,6 +1445,11 @@ public class Tab
 
         reparentingParams.finalizeTabReparenting();
 
+        // Chrome Home uses what is otherwise an invalid theme color (white) as the toolbar
+        // background. This check is to prevent using the invalid theme color in the event Chrome
+        // Home is disabled via the promo (the tab will be reparented).
+        if (!ColorUtils.isValidThemeColor(mThemeColor)) mThemeColor = getDefaultThemeColor();
+
         for (TabObserver observer : mObservers) {
             observer.onReparentingFinished(this);
         }
