@@ -22,6 +22,30 @@
       "revId": "86449d382e790a417158409c9889813b80d79ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8906e02f_e8aa836d",
+        "filename": "chrome/browser/extensions/extension_bindings_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T01:40:25Z",
+      "side": 1,
+      "message": "Good idea!  Done.",
+      "parentUuid": "0dcebe78_3a3a33f0",
+      "range": {
+        "startLine": 330,
+        "startChar": 32,
+        "endLine": 330,
+        "endChar": 58
+      },
+      "revId": "86449d382e790a417158409c9889813b80d79ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
