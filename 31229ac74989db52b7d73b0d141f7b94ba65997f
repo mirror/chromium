@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "ce7f95a5_f5f3aa40",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "514c7487_b22f1aa3",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "874db7bc_86ebc266",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "514c7487_b22f1aa3",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb4a599_1357839d",
         "filename": "content/browser/indexed_db/indexed_db_class_factory.h",
         "patchSetId": 6
@@ -33,6 +69,42 @@
       "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2b9a92_2effe0b4",
+        "filename": "content/browser/indexed_db/indexed_db_class_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb4a599_1357839d",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2d46e23_6e19bc35",
+        "filename": "content/browser/indexed_db/indexed_db_class_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb4a599_1357839d",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "cc0db597_36b4468d",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "I\u0027m getting it as a reference - I\u0027ll just remove this comment as it looks confusing.",
+      "parentUuid": "7c3fc534_f82a90c8",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c67149c_6ec8d7b3",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 6
@@ -64,6 +154,24 @@
       "writtenOn": "2017-10-10T00:11:57Z",
       "side": 1,
       "message": "Same nit as above -- you can use std::move with a bit of extra code.",
+      "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc40938e_a88c2a8e",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-10T19:55:37Z",
+      "side": 1,
+      "message": "Wouldn\u0027t work - just removing the comment. Mojo gives us a const ref, so we can\u0027t std::move. We have to copy at some point  :(",
+      "parentUuid": "0c67149c_6ec8d7b3",
       "revId": "31229ac74989db52b7d73b0d141f7b94ba65997f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
