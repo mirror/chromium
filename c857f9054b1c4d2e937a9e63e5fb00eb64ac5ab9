@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9dc7f720_0730d02d",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-10T21:45:50Z",
+      "side": 1,
+      "message": "Thanks for suggesting these! I ended up doing the second one.\nI can\u0027t do it in the view controller, so I created a custom view instead",
+      "parentUuid": "306b8346_280bffd6",
+      "revId": "c857f9054b1c4d2e937a9e63e5fb00eb64ac5ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f26a3eb1_6cbef6ba",
         "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c857f9054b1c4d2e937a9e63e5fb00eb64ac5ab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de6a42e_812922ba",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-10T21:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f26a3eb1_6cbef6ba",
+      "revId": "c857f9054b1c4d2e937a9e63e5fb00eb64ac5ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
