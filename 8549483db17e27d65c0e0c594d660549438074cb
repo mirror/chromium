@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc819ca1_3e8834e0",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T15:57:32Z",
+      "side": 1,
+      "message": "nit: .get() is not necessary since unique_ptr implements operator bool.",
+      "range": {
+        "startLine": 298,
+        "startChar": 26,
+        "endLine": 298,
+        "endChar": 32
+      },
+      "revId": "8549483db17e27d65c0e0c594d660549438074cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
