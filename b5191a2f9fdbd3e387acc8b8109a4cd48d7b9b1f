@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d798b1_48533edc",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T23:55:38Z",
+      "side": 1,
+      "message": "nit: DCHECK should be good enough.",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58af7015_4bcfbb04",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T23:55:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edda19c_cb944cb1",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T23:55:38Z",
+      "side": 1,
+      "message": "This could be changed to:\n EXPECT_TRUE(histogram_tester_.GetTotalCountsForPrefix(...).empty());\nin order to checking against multiple namespace suffix.",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae40457_3ac6d3e8",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-10T23:55:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
