@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "5f72f77f_9ccb2fe3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 57447,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-10T06:42:11Z",
+      "side": 1,
+      "message": "If we use Permissions.Battery.Geolocation.Accepted (etc.) we can easily extend this to other permissions in the future.",
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45e441c3_2cee647c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
