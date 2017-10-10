@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "ba32213a_cfc9d35a",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-10T14:09:09Z",
+      "side": 1,
+      "message": "After all the rebinding mechanism is unusual and tricky, it\u0027s not a good pattern. I\u0027ve come up with another idea: make WebSWRegistrationImpl lifetime be tied with SWRegistrationHandle to maintain a real 1:1 correspondence between them. Will upload a new patch soon.",
+      "parentUuid": "5a6ab425_a4647cee",
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "995caa9b_b509d275",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 6
@@ -81,6 +99,30 @@
       "writtenOn": "2017-10-10T06:17:15Z",
       "side": 1,
       "message": "IIUC, it\u0027s not optional on ps6.",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd05133_ddeee7c9",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-10T14:09:09Z",
+      "side": 1,
+      "message": "For almost all cases it should be non-null, the only exception is at here https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_provider_host.cc?rcl\u003da60f61d3264412d6e259772d9f3657935afb36f7\u0026l\u003d1124, |handle_id| would be invalid id and both |request| and |host_ptr_info| would be nullptr.",
+      "parentUuid": "995caa9b_b509d275",
       "range": {
         "startLine": 48,
         "startChar": 45,

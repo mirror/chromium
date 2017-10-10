@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0235f172_23324716",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-10T14:09:09Z",
+      "side": 1,
+      "message": "Ah, I see, Thank you!",
+      "parentUuid": "a416d057_0b5727dd",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "129b7ff9_9a20ffcb",
         "filename": "content/browser/service_worker/service_worker_registration_handle.h",
         "patchSetId": 3
