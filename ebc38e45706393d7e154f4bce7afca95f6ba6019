@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b89e7b5_88c6005b",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T23:30:49Z",
+      "side": 1,
+      "message": "NTS: push to master first",
+      "range": {
+        "startLine": 315,
+        "startChar": 70,
+        "endLine": 315,
+        "endChar": 110
+      },
+      "revId": "ebc38e45706393d7e154f4bce7afca95f6ba6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
