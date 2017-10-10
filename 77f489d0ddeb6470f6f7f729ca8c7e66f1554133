@@ -34,6 +34,75 @@
       "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c83c8b6_82296ee3",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-10T21:09:08Z",
+      "side": 1,
+      "message": "Ahh, this is only due to the presentation attribute difference? If so, I am leaning towards not delaying this after all. I think we should do the web platform test thing though, since there\u0027s no cross-browser compat in this area.",
+      "parentUuid": "c44d4932_aceb6910",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf626da8_85ef39e9",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-10T21:09:08Z",
+      "side": 1,
+      "message": "Nit: why not also test style\u003d\"width: auto; height: 20px;\" as you did with foreign object?",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9569296e_648678c7",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-10T21:09:08Z",
+      "side": 1,
+      "message": "Nit: also here, why are some tests left off?",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646090cc_7bb24313",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-10T21:09:08Z",
+      "side": 1,
+      "message": "Can you help me understand this TODO? Is this the reason for the tests of rect/text/etc being not as comprehensive? Would 772707 be the bug tracking bug for this?",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
