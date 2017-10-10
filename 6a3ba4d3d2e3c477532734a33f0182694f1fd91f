@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99c1986d_e48e4e3d",
+        "filename": "headless/lib/browser/devtools_api/domain_externs_js.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-10T13:04:13Z",
+      "side": 1,
+      "message": "I sneakily made these modifications, will submit to CQ now.",
+      "parentUuid": "a185ae13_390660f3",
+      "range": {
+        "startLine": 106,
+        "startChar": 91,
+        "endLine": 106,
+        "endChar": 92
+      },
+      "revId": "6a3ba4d3d2e3c477532734a33f0182694f1fd91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b90e143_534c1856",
         "filename": "headless/lib/browser/devtools_api/domain_externs_js.template",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6a3ba4d3d2e3c477532734a33f0182694f1fd91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d92f1b_74a3337f",
+        "filename": "headless/lib/browser/devtools_api/domain_externs_js.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-10T13:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b90e143_534c1856",
+      "range": {
+        "startLine": 158,
+        "startChar": 91,
+        "endLine": 158,
+        "endChar": 92
+      },
+      "revId": "6a3ba4d3d2e3c477532734a33f0182694f1fd91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
