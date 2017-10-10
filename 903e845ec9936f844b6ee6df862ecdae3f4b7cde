@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103aa10e_3b1f9a6c",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-10T18:15:22Z",
+      "side": 1,
+      "message": "Very optional nit: also add 696859 to the bug line for this CL.\n\n(Thanks for updating these!)",
+      "revId": "903e845ec9936f844b6ee6df862ecdae3f4b7cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
