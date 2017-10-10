@@ -33,6 +33,8 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetterImpl
 
   Info GetClonedInfo() override;
 
+  mojom::URLLoaderFactory* GetFactoryForRequest(
+      blink::WebURLRequest& request) override;
   mojom::URLLoaderFactory* GetNetworkLoaderFactory() override;
   mojom::URLLoaderFactory* GetBlobLoaderFactory() override;
 

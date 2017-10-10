@@ -8,6 +8,10 @@
 #include "base/memory/ref_counted.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
+namespace blink {
+class WebURLRequest;
+}
+
 namespace content {
 
 // ChildProcess version's URLLoaderFactoryGetter, i.e. a getter that holds
@@ -33,6 +37,12 @@ class ChildURLLoaderFactoryGetter
   };
 
   virtual Info GetClonedInfo() = 0;
+
+  // Returns the URLLoaderFactory that can handle the given |request| (e.g.
+  // returns BlobURLLoader factory for blob: URL requests). When an appropriate
+  // factory cannot be determined Network URLLoaderFactory is returned.
+  virtual mojom::URLLoaderFactory* GetFactoryForRequest(
+      const blink::WebURLRequest& request) = 0;
 
   virtual mojom::URLLoaderFactory* GetNetworkLoaderFactory() = 0;
   virtual mojom::URLLoaderFactory* GetBlobLoaderFactory() = 0;
