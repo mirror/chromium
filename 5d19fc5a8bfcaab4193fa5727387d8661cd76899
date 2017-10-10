@@ -22,6 +22,30 @@
       "revId": "5d19fc5a8bfcaab4193fa5727387d8661cd76899",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168a1399_382d63ee",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-10T20:54:26Z",
+      "side": 1,
+      "message": "Yes, good point.  I\u0027ve moved those two crash keys into RPH::ShutdownForBadMessage, which should handle all renderer kills.  (content::ReceivedBadMessage wouldn\u0027t work for the password kills, which go through its own ReceivedBadMessage handler in components/.)\n\nThis required exposing the origin lock out of CPSPI - Charlie seemed ok with that, given that this is all still within content/.  It also means that we\u0027ll get those crash keys set on all renderer kills and not just the CPSP ones, including those outside of content/ - which I think we agree is also desirable.",
+      "parentUuid": "68d559d0_b3d2ebc3",
+      "range": {
+        "startLine": 1065,
+        "startChar": 0,
+        "endLine": 1077,
+        "endChar": 3
+      },
+      "revId": "5d19fc5a8bfcaab4193fa5727387d8661cd76899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
