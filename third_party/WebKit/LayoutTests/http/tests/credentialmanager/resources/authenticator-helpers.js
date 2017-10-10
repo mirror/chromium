@@ -16,6 +16,7 @@ class MockAuthenticator {
 
   // Returns a PublicKeyCredentialInfo to the client.
   async makeCredential(options) {
+    console.log("makeCredential mock was called with options: ", options);
     var info = null;
     if (this.status_ == webauth.mojom.AuthenticatorStatus.SUCCESS) {
       let response = new webauth.mojom.AuthenticatorResponse(
@@ -39,7 +40,7 @@ class MockAuthenticator {
 
   // Resets state of mock Authenticator.
   reset() {
-    this.status_ = webauth.mojom.AuthenticatorStatus.NOT_IMPLEMENTED;
+    this.status_ = webauth.mojom.AuthenticatorStatus.UNKNOWN_ERROR;
     this.id_ = null;
     this.rawId_ = new Uint8Array(0);
     this.clientDataJson_ = new Uint8Array(0);
