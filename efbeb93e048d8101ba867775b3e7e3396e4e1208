@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cebc6838_a33c2720",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/drags_within_user-select_combos.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T08:06:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb1fe812_c344c173",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "228ebbb8_1758f210",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T06:52:14Z",
       "side": 1,
       "message": "Let\u0027s follow the spec[1]. It seems we don\u0027t need to exclude editable\nnode.\n\n[1] https://html.spec.whatwg.org/multipage/dnd.html#immediate-user-selection",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051cdbc6_033c000a",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T08:06:28Z",
+      "side": 1,
+      "message": "I would like this CL to only do one thing: fix the bug (in case it blocks M62\u0027s release). Can we do spec alignments (new changes of behavior) in a follow up CL? I think it is safer to keep M61\u0027s behavior for now.\n\nI don\u0027t understand the spec here. Where does it say that \"draggability\" trumps edibility?",
+      "parentUuid": "228ebbb8_1758f210",
       "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f3e6ffe2_d5b9ff9d",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T08:06:28Z",
+      "side": 1,
+      "message": "Aha! New helpers :) FlatTreeTraversal::InclusiveAncestorsOf is not available on M62\u0027s branch so let\u0027s not use it in case we need to backport this to M62? I think current code\u0027s while-loop has good readability and the same semantics as FlatTreeTraversal::InclusiveAncestorsOf?",
+      "parentUuid": "0598e782_616e6e48",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1287d59f_e80d22fd",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2d78151d_cf2eb926",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T08:06:28Z",
+      "side": 1,
+      "message": "Not sure. It feels safer... What if authors create custom elements?\n\n\u003cfunkylink\u003e\n #shadow-root\n  \u003ca href\u003d\"www\"\u003eText\u003c/a\u003e\n\u003c/funkylink\u003e",
+      "parentUuid": "1287d59f_e80d22fd",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82fb9260_23375a2f",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-10T02:07:15Z",
       "side": 1,
       "message": "Since this condition is checked only once in the beginning of the loop as you say,\n could you move this out of the loop using |start_node| ?",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6ff6fb_b9743206",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T08:06:28Z",
+      "side": 1,
+      "message": "I put the call site later to save some CPU cycles. When start_node !\u003d a Text Node, for example when an \u003cimg\u003e is dragged, we don\u0027t need to run IsWithinDraggableLink.",
+      "parentUuid": "82fb9260_23375a2f",
       "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
