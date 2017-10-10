@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3a02cb_c2b4ca49",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T22:45:02Z",
+      "side": 1,
+      "message": "Should we avoid re-constructing validPathnames every time isRouteSupported is called? Maybe just store the array as a member variable?",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "129ca3c176910b3221c244e9ad847ac5d38537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b122b92a_ad0af3b5",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T22:45:02Z",
+      "side": 1,
+      "message": "Nit: Use Array#includes?",
+      "revId": "129ca3c176910b3221c244e9ad847ac5d38537d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

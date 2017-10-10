@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e75aa973_67a33d88",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T22:45:02Z",
+      "side": 1,
+      "message": "Need to wrap this with \u003cif expr\u003e after https://chromium-review.googlesource.com/c/chromium/src/+/699743 landed.",
+      "revId": "587c33110f1988d6cfcf85c6317f6da3ff1f17f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31702eaa_ae0353c9",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T22:45:02Z",
+      "side": 1,
+      "message": "Nit (optional): Wondering if we should expose a navigateToUrl() from extensions.navigation() instead of manually interacting with window.history. In MD Settings for example, the only class directly interacting with window.history is the Router class.",
+      "revId": "587c33110f1988d6cfcf85c6317f6da3ff1f17f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
