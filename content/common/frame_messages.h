@@ -1093,9 +1093,10 @@ IPC_MESSAGE_ROUTED4(FrameHostMsg_DidAddMessageToConsole,
 //
 // Each of these messages will have a corresponding FrameHostMsg_Detach message
 // sent when the frame is detached from the DOM.
-IPC_SYNC_MESSAGE_CONTROL1_1(FrameHostMsg_CreateChildFrame,
+IPC_SYNC_MESSAGE_CONTROL1_2(FrameHostMsg_CreateChildFrame,
                             FrameHostMsg_CreateChildFrame_Params,
-                            int32_t /* new_routing_id */)
+                            int32_t, /* new_routing_id */
+                            mojo::MessagePipeHandle /* interface_provider */)
 
 // Sent by the renderer to the parent RenderFrameHost when a child frame is
 // detached from the DOM.

@@ -160,6 +160,7 @@
 #include "media/blink/webmediaplayer_util.h"
 #include "mojo/edk/js/core.h"
 #include "mojo/edk/js/support.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/data_url.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -959,15 +960,17 @@ blink::WebLocalFrame* RenderFrameImpl::UniqueNameFrameAdapter::GetWebFrame()
 }
 
 // static
-RenderFrameImpl* RenderFrameImpl::Create(RenderViewImpl* render_view,
-                                         int32_t routing_id) {
+RenderFrameImpl* RenderFrameImpl::Create(
+    RenderViewImpl* render_view,
+    int32_t routing_id,
+    service_manager::mojom::InterfaceProviderPtr interfaces) {
   DCHECK(routing_id != MSG_ROUTING_NONE);
-  CreateParams params(render_view, routing_id);
+  CreateParams params(render_view, routing_id, std::move(interfaces));
 
   if (g_create_render_frame_impl)
-    return g_create_render_frame_impl(params);
+    return g_create_render_frame_impl(std::move(params));
   else
-    return new RenderFrameImpl(params);
+    return new RenderFrameImpl(std::move(params));
 }
 
 // static
@@ -988,6 +991,7 @@ RenderFrameImpl* RenderFrameImpl::FromRoutingID(int routing_id) {
 RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
     RenderViewImpl* render_view,
     int32_t routing_id,
+    service_manager::mojom::InterfaceProviderPtr interfaces,
     int32_t widget_routing_id,
     bool hidden,
     const ScreenInfo& screen_info,
@@ -998,7 +1002,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
   DCHECK_NE(MSG_ROUTING_NONE, widget_routing_id);
 
   RenderFrameImpl* render_frame =
-      RenderFrameImpl::Create(render_view, routing_id);
+      RenderFrameImpl::Create(render_view, routing_id, std::move(interfaces));
   render_frame->InitializeBlameContext(nullptr);
   WebLocalFrame* web_frame = WebLocalFrame::CreateMainFrame(
       render_view->webview(), render_frame,
@@ -1020,6 +1024,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
 // static
 void RenderFrameImpl::CreateFrame(
     int routing_id,
+    service_manager::mojom::InterfaceProviderPtr interfaces,
     int proxy_routing_id,
     int opener_routing_id,
     int parent_routing_id,
@@ -1052,8 +1057,8 @@ void RenderFrameImpl::CreateFrame(
       previous_sibling_web_frame = previous_sibling_proxy->web_frame();
 
     // Create the RenderFrame and WebLocalFrame, linking the two.
-    render_frame =
-        RenderFrameImpl::Create(parent_proxy->render_view(), routing_id);
+    render_frame = RenderFrameImpl::Create(parent_proxy->render_view(),
+                                           routing_id, std::move(interfaces));
     render_frame->InitializeBlameContext(FromRoutingID(parent_routing_id));
     render_frame->unique_name_helper_.set_propagated_name(
         replicated_state.unique_name);
@@ -1080,7 +1085,8 @@ void RenderFrameImpl::CreateFrame(
     if (!proxy)
       return;
 
-    render_frame = RenderFrameImpl::Create(proxy->render_view(), routing_id);
+    render_frame = RenderFrameImpl::Create(proxy->render_view(), routing_id,
+                                           std::move(interfaces));
     render_frame->InitializeBlameContext(nullptr);
     render_frame->proxy_routing_id_ = proxy_routing_id;
     proxy->set_provisional_frame_routing_id(routing_id);
@@ -1170,8 +1176,22 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+// RenderFrameImpl::CreateParams --------------------------------------------
+
+RenderFrameImpl::CreateParams::CreateParams(
+    RenderViewImpl* render_view,
+    int32_t routing_id,
+    service_manager::mojom::InterfaceProviderPtr interfaces)
+    : render_view(render_view),
+      routing_id(routing_id),
+      interfaces(std::move(interfaces)) {}
+RenderFrameImpl::CreateParams::~CreateParams() = default;
+RenderFrameImpl::CreateParams::CreateParams(CreateParams&&) = default;
+RenderFrameImpl::CreateParams& RenderFrameImpl::CreateParams::operator=(
+    CreateParams&&) = default;
+
 // RenderFrameImpl ----------------------------------------------------------
-RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
+RenderFrameImpl::RenderFrameImpl(CreateParams params)
     : frame_(NULL),
       is_main_frame_(true),
       unique_name_frame_adapter_(this),
@@ -1216,10 +1236,8 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
       weak_factory_(this) {
-  service_manager::mojom::InterfaceProviderPtr remote_interfaces;
-  pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
-  remote_interfaces_.reset(new service_manager::InterfaceProvider);
-  remote_interfaces_->Bind(std::move(remote_interfaces));
+  remote_interfaces_ = base::MakeUnique<service_manager::InterfaceProvider>();
+  remote_interfaces_->Bind(std::move(params.interfaces));
   blink_interface_registry_.reset(
       new BlinkInterfaceRegistryImpl(registry_.GetWeakPtr()));
 
@@ -1752,13 +1770,9 @@ void RenderFrameImpl::BindMediaEngagement(
 
 void RenderFrameImpl::BindFrame(
     const service_manager::BindSourceInfo& browser_info,
-    mojom::FrameRequest request,
-    mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker) {
+    mojom::FrameRequest request) {
   browser_info_ = browser_info;
   frame_binding_.Bind(std::move(request));
-  frame_host_interface_broker_ = std::move(frame_host_interface_broker);
-  frame_host_interface_broker_->GetInterfaceProvider(
-      std::move(pending_remote_interface_provider_request_));
 }
 
 void RenderFrameImpl::BindFrameBindingsControl(
@@ -3143,6 +3157,7 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // Synchronously notify the browser of a child frame creation to get the
   // routing_id for the RenderFrame.
   int child_routing_id = MSG_ROUTING_NONE;
+  mojo::MessagePipeHandle child_interfaces_handle;
   FrameHostMsg_CreateChildFrame_Params params;
   params.parent_routing_id = routing_id_;
   params.scope = scope;
@@ -3168,7 +3183,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   params.frame_owner_properties =
       ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
           frame_owner_properties);
-  Send(new FrameHostMsg_CreateChildFrame(params, &child_routing_id));
+  Send(new FrameHostMsg_CreateChildFrame(params, &child_routing_id,
+                                         &child_interfaces_handle));
 
   // Allocation of routing id failed, so we can't create a child frame. This can
   // happen if the synchronous IPC message above has failed.  This can
@@ -3176,6 +3192,11 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // RenderProcessHost, but the renderer process hasn't quit yet.
   if (child_routing_id == MSG_ROUTING_NONE)
     return nullptr;
+
+  DCHECK(child_interfaces_handle.is_valid());
+  service_manager::mojom::InterfaceProviderPtr child_interfaces;
+  child_interfaces.Bind(service_manager::mojom::InterfaceProviderPtrInfo(
+      mojo::ScopedMessagePipeHandle(child_interfaces_handle), 0u));
 
   // This method is always called by local frames, never remote frames.
 
@@ -3186,8 +3207,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
                "child", child_routing_id);
 
   // Create the RenderFrame and WebLocalFrame, linking the two.
-  RenderFrameImpl* child_render_frame =
-      RenderFrameImpl::Create(render_view_, child_routing_id);
+  RenderFrameImpl* child_render_frame = RenderFrameImpl::Create(
+      render_view_, child_routing_id, std::move(child_interfaces));
   child_render_frame->unique_name_helper_.set_propagated_name(
       params.frame_unique_name);
   child_render_frame->InitializeBlameContext(this);
