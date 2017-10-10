@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "53382188_5a828d35",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab6a150_0b75c870",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b72ba295_de1fb7cd",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3612288_73d89f31",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Note: I blindly copy/pasted this code from one of the duplicate implementations I mentioned above.\n\nI replaced it with a DCHECK that the namespace is well known.",
+      "parentUuid": "b72ba295_de1fb7cd",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "ad768d66_fec2d927",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d09045f_b5c0d094",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 13
+      },
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef51fe81_c393bd67",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -103,6 +169,24 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc00250_ac11a796",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "I think this is simple enough to not require a stringprintf.",
+      "parentUuid": "ef51fe81_c393bd67",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "1077b9e1_b15dba10",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "The check is not redundant for non debug builds. I would have the DCHECK inside the if-block but that would never catch the inconsistency I\u0027m checking for.\n\nCrashing on unexpected data here for debug builds seems like a good safeguard and makes it easier to detect issues early. Whenever we rely on database data that is non-static data but supposedly well-formed and/or constant then DCHECKs like these seem helpful. WDYT?",
+      "parentUuid": "bd2405a9_3708c8d2",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "facce82d_7510e14c",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -137,6 +239,24 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1200fb99_3aa77b2f",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "I initially used the {}s to allow naming both histograms the same but they are also required to not require initialization of both of them when we\u0027ll ever only use one.",
+      "parentUuid": "facce82d_7510e14c",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "998f5a4c_220fd746",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Agreed but it makes the test simpler. These are already very specific helper methods so I don\u0027t think this is necessarily bad.",
+      "parentUuid": "e5f66d5e_4067baea",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73454778_caeeebe0",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
@@ -240,6 +378,24 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53cee05_0f113786",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73454778_caeeebe0",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "3a442a9c_79ea0e07",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "I prefer to keep this one as is as it mirrors ExpectOfflinePageSizeUniqueSample keeping the API more intuitive.",
+      "parentUuid": "cfb35d63_38a58427",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75607316_ac6f8d6b",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
@@ -274,6 +448,24 @@
       "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d50774f_27b424fb",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T20:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75607316_ac6f8d6b",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
