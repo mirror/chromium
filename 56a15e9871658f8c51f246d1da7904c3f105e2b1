@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ae8a04_17f4740a",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:33:36Z",
+      "side": 1,
+      "message": "It seems surprising that a PageCU wouldn\u0027t have a UKM source ID? If that can happen, is it really OK to use 0 as the UKM source ID?",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5184a8_590ddc39",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T23:33:36Z",
+      "side": 1,
+      "message": "I know that CU uses int64 properties internally, but can we use TimeDelta for these (any int64 values can always be extracted at the end)",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
