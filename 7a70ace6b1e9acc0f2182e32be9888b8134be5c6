@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30a52a11_412f7355",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-10T21:12:27Z",
+      "side": 1,
+      "message": "Actually we wanted to make the OfflinePageDownloadBridge methods static if possible (see dtrainor@\u0027s comments in previous patchset). That way it don\u0027t have to create/destroy  OfflinePageDownloadBridge every time we want to do a download. I have updated the CL description to reflect this.",
+      "parentUuid": "f936b8b6_4f1b4529",
+      "range": {
+        "startLine": 91,
+        "startChar": 11,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "7a70ace6b1e9acc0f2182e32be9888b8134be5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e514e494_6ded3892",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7a70ace6b1e9acc0f2182e32be9888b8134be5c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2685823a_5923d9d0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-10T21:12:27Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "e514e494_6ded3892",
+      "range": {
+        "startLine": 372,
+        "startChar": 28,
+        "endLine": 372,
+        "endChar": 53
+      },
+      "revId": "7a70ace6b1e9acc0f2182e32be9888b8134be5c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
