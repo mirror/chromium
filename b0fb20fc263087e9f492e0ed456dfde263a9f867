@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7875585c_e92686e0",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-10T20:26:04Z",
+      "side": 1,
+      "message": "I have refactor a code to make it more clear:\n\nif |last_opened_profiles| is empty, try to launch browser for |last_used_profile|\notherwise launch browser for each |last_opened_profiles|\n\nIf they\u0027re all locked, we\u0027ll launch UserManager.",
+      "parentUuid": "2dd70263_db1fbf0d",
+      "range": {
+        "startLine": 791,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 17
+      },
+      "revId": "b0fb20fc263087e9f492e0ed456dfde263a9f867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75c3d696_e55b7d27",
         "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-06T23:31:16Z",
       "side": 1,
       "message": "Doesn\u0027t this mean the DCHECK on line 787 would hit?",
+      "range": {
+        "startLine": 794,
+        "startChar": 6,
+        "endLine": 798,
+        "endChar": 31
+      },
+      "revId": "b0fb20fc263087e9f492e0ed456dfde263a9f867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226792d0_f984d915",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-10T20:26:04Z",
+      "side": 1,
+      "message": "DCHECK in 787 makes sure all |*it| are not guest session. |*it| comes from |last_OPENED_profiles|\n\nline 799~801 assign |*it| to |last_USED_profile| if |last_USED_profile| is a guest session.",
+      "parentUuid": "75c3d696_e55b7d27",
       "range": {
         "startLine": 794,
         "startChar": 6,
