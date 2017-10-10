@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0af35ffa_44c536e6",
+        "filename": "third_party/WebKit/Source/modules/eventsource/EventSource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-10T03:57:17Z",
+      "side": 1,
+      "message": "from -\u003e for?",
+      "revId": "ae5b0b908f5ab919a0c2eacbd297dcdc01579311",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
