@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f044051_e490219f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T17:33:27Z",
+      "side": 1,
+      "message": "nit: trailing white space",
+      "range": {
+        "startLine": 10,
+        "startChar": 62,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "1ea48e430f51371cbe3e42f3e347182ac531c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a4642b_4139cf56",
+        "filename": "chrome/browser/signin/easy_unlock_auth_attempt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T17:33:27Z",
+      "side": 1,
+      "message": "We should only call this on |on_complete_| is null. The default impl calls ScreenlockBridge to dismiss lock screen and we don\u0027t need that if success callback is used.",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 14
+      },
+      "revId": "1ea48e430f51371cbe3e42f3e347182ac531c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bd80dc_847cdfbe",
+        "filename": "chrome/browser/signin/easy_unlock_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T17:33:27Z",
+      "side": 1,
+      "message": "nit: change to using since you are here.",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 188,
+        "endChar": 9
+      },
+      "revId": "1ea48e430f51371cbe3e42f3e347182ac531c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
