@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64a44c32_c9e757ec",
+        "filename": "chrome/common/instant_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Huh. So did this actually not work before?\nI really need to add some end-to-end tests for desktop NTP metrics...",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba8f3555_0d2a8691",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Could we actually make this a JS Date object?",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 21
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630acfd5_a82a3636",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "nit: No \"else\" after \"return\"",
+      "range": {
+        "startLine": 214,
+        "startChar": 6,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ba7cbe_4a536515",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "LogHistogramAge, for consistency with LogHistogramEvent? I\u0027d also move it below LogHistogramEvent.",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 20
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef4c190_9da94a64",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Are 7 days enough? I expect we\u0027ll get a bunch of samples in the overflow bucket.",
+      "range": {
+        "startLine": 95,
+        "startChar": 62,
+        "endLine": 95,
+        "endChar": 73
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197a5caf_ef9918b9",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually require the function - the name is static so it could use the macro. I guess using the function is better for consistency?",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acdab4c_c8f4d483",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "SuggestionsImpressionAge? (singular impression, for consistency with .SuggestionsImpression)",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 57
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921c9522_c54da0e4",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Link the bug please.\nI guess we don\u0027t care so much about the age of TopSites suggestions?",
+      "range": {
+        "startLine": 298,
+        "startChar": 22,
+        "endLine": 298,
+        "endChar": 0
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc72e58_971ec99a",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "optional: Compute this once, outside the loop?",
+      "range": {
+        "startLine": 353,
+        "startChar": 75,
+        "endLine": 353,
+        "endChar": 0
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97daa0da_60cb459e",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Unrelated: Here the param name comments are kinda pointless IMO, might as well remove them.",
+      "range": {
+        "startLine": 431,
+        "startChar": 12,
+        "endLine": 431,
+        "endChar": 25
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2546665c_24ebfb05",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Hm, so this actually has slightly different semantics than MostLikely tiles: For ML it\u0027s the actual generation time, while here it\u0027s the download time. Both might be interesting, but IMO we shouldn\u0027t put both into the same histogram.",
+      "range": {
+        "startLine": 230,
+        "startChar": 24,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4cd677_4aa386f3",
+        "filename": "components/ntp_tiles/ntp_tile_impression.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:33:19Z",
+      "side": 1,
+      "message": "Also (for ML) regardless of when it was fetched.",
+      "range": {
+        "startLine": 33,
+        "startChar": 56,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
