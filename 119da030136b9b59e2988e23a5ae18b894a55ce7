@@ -16,6 +16,75 @@
       "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b851032d_d5bdd8a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T00:11:37Z",
+      "side": 1,
+      "message": "Should we just pass in the same int/flags used by the Service API?",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 64
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0aff979_7948e701",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T00:11:37Z",
+      "side": 1,
+      "message": "Do we need to worry about failed downloads as well?",
+      "range": {
+        "startLine": 234,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 56
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1598f8_e90d9f3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T00:11:37Z",
+      "side": 1,
+      "message": "Should we pull this out to the caller so that we don\u0027t mock this logic away?",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 61
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
