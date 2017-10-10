@@ -37,6 +37,9 @@
     <color name="modern_grey_300">#DFE1E5</color>
     <color name="modern_light_grey">#F1F3F4</color>
 
+    <!-- Solid color equivalent of black_alpha_65 -->
+    <color name="dark_grey_65">#595959</color>
+
     <!-- New list of common text colors -->
     <color name="black_alpha_20">#33000000</color>
     <color name="black_alpha_30">#4d000000</color>
