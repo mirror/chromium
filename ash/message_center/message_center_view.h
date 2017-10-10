@@ -19,7 +19,7 @@
 #include "ui/views/view.h"
 
 namespace gfx {
-class MultiAnimation;
+class SlideAnimation;
 }  // namespace gfx
 
 namespace message_center {
@@ -132,6 +132,8 @@ class ASH_EXPORT MessageCenterView
   void EnableCloseAllIfAppropriate();
   void SetNotificationViewForTest(message_center::MessageView* view);
   void UpdateNotification(const std::string& notification_id);
+  int GetSettingsHeightForWidth(int width) const;
+  int GetContentHeightDuringAnimation(int width) const;
 
   message_center::MessageCenter* message_center_;
   message_center::MessageCenterTray* tray_;
@@ -147,7 +149,7 @@ class ASH_EXPORT MessageCenterView
 
   // Animation managing transition between message center and settings (and vice
   // versa).
-  std::unique_ptr<gfx::MultiAnimation> settings_transition_animation_;
+  std::unique_ptr<gfx::SlideAnimation> settings_transition_animation_;
 
   // Helper data to keep track of the transition between settings and
   // message center views.
