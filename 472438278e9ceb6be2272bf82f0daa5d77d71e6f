@@ -70,6 +70,29 @@
     },
     {
       "key": {
+        "uuid": "387ab599_ee8a3228",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:52:23Z",
+      "side": 1,
+      "message": "Rather than using FactoryGet() directly, please use one of the convenience wrapper functions in histogram_functions.h",
+      "range": {
+        "startLine": 268,
+        "startChar": 41,
+        "endLine": 268,
+        "endChar": 68
+      },
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a464a0b1_3a470214",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -81,6 +104,29 @@
       "writtenOn": "2017-10-10T21:06:28Z",
       "side": 1,
       "message": "This should not be reached.",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b48d4c_2f865e72",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51702,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:52:23Z",
+      "side": 1,
+      "message": "nit: I would add a dot after \"PageSize\", to match the convention used by most other histograms, i.e. I\u0027d name this \"OfflinePages.PageSize.AccessedOffline\"",
+      "range": {
+        "startLine": 51702,
+        "startChar": 30,
+        "endLine": 51702,
+        "endChar": 38
+      },
       "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
