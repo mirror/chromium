@@ -48,14 +48,6 @@ function renderTemplate(experimentalFeaturesData) {
     elements[i].onclick = restartBrowser;
   }
 
-  // Toggling of experiment description overflow content.
-  elements = document.querySelectorAll('.experiment .flex:first-child');
-  for (var i = 0; i < elements.length; ++i) {
-    elements[i].addEventListener('click', function(e) {
-      this.classList.toggle('expand');
-    });
-  }
-
   // Tab panel selection.
   var tabEls = document.getElementsByClassName('tab');
   for (var i = 0; i < tabEls.length; ++i) {
@@ -208,6 +200,12 @@ function handleSelectExperimentalFeatureChoice(node, index) {
  * Handles in page searching. Matches against the experiment flag name.
  */
 var FlagSearch = function() {
+  // Singleton
+  if (FlagSearch.instance_) {
+    return FlagSearch.instance_;
+  }
+  FlagSearch.instance_ = this;
+
   this.experiments_ = [];
   this.unavailableExperiments_ = [];
 
@@ -215,6 +213,7 @@ var FlagSearch = function() {
   this.noMatchMsg_ = document.querySelectorAll('.no-match');
 
   this.searchIntervalId_ = null;
+  this.initialized = false;
 };
 
 // Delay in ms following a keypress, before a search is made.
@@ -231,10 +230,19 @@ FlagSearch.prototype = {
     this.unavailableExperiments_ =
         document.querySelectorAll('#tab-content-unavailable .permalink');
 
-    this.searchBox_.addEventListener('keyup', this.debounceSearch.bind(this));
-    document.querySelector('.clear-search').addEventListener('click',
-        this.clearSearch.bind(this));
-    this.searchBox_.focus();
+    if (!this.initialized) {
+      this.searchBox_.addEventListener('keyup', this.debounceSearch.bind(this));
+      document.querySelector('.clear-search').addEventListener('click',
+          this.clearSearch.bind(this));
+
+      window.addEventListener('keyup', function(e) {
+          if (e.key == '/') {
+            this.searchBox_.focus();
+          }
+      }.bind(this));
+      this.searchBox_.focus();
+    }
+    this.initialized = true;
   },
 
   /**
@@ -312,7 +320,9 @@ FlagSearch.prototype = {
     var unavailableMatches = 0;
 
     if (searchTerm || searchTerm == '') {
-      document.body.classList.add('searching');
+      if (searchTerm) {
+        document.body.classList.add('searching');
+      }
       // Available experiments
       for (var i = 0, j = this.experiments_.length; i < j; i++) {
         if (this.highlightMatches(searchTerm, this.experiments_[i])) {
