@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56908f7_07363f03",
+        "filename": "components/policy/resources/policy_templates.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-10T12:05:51Z",
+      "side": 1,
+      "message": "(capturing our offline discussion) Maybe take a look at how other places that use Grit deal with this encoding?\n\n(added later) But I\u0027ve just done a quick grepping over the code base, and the same \"encoding\u003dutf-8\" is used in a couple of other places.",
+      "range": {
+        "startLine": 123,
+        "startChar": 108,
+        "endLine": 123,
+        "endChar": 124
+      },
+      "revId": "a47795b410cbe0338f0a527655a6048c5f8bd5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
