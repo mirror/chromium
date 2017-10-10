@@ -228,4 +228,11 @@ TEST_F(PositionTest, ToPositionInFlatTreeWithEmptyShadowRoot) {
             ToPositionInFlatTree(Position(shadow_root, 0)));
 }
 
+TEST_F(PositionTest, IsConnectedInFlatTree) {
+  Position position = SetCaretTextToBody(
+      "<div>f|oo<template data-mode=open>bar</template></div>");
+  EXPECT_TRUE(position.IsConnected());
+  EXPECT_FALSE(ToPositionInFlatTree(position).IsConnected());
+}
+
 }  // namespace blink
