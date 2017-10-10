@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "def716c9_b10f17b7",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T23:33:24Z",
+      "side": 1,
+      "message": "When is this listener removed? Should we be using the WebUIListenerBehavior, so that it is automatically removed within detached()?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620f111d_cc2ffe5c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T23:33:24Z",
+      "side": 1,
+      "message": "IIUC, lines 145-150 spawn two separate async operations.\n\n1) Updates this.sites when requestAnimationFrame() calls back\n2) Recursively calls extendSiteList_ when requestIdleCallback() calls back.\n\nIf 2 happens before 1, then this.sites.length at line 136 will have the same value it had during the previous invocation, fetching the same data again. Is there an assumption made here that 1 always calls back before 2? Can we eliminate this subtle timing? Do we need both rAf and rIc usage here?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b61260_7176539f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T23:33:24Z",
+      "side": 1,
+      "message": "The listener for onTreeItemRemoved is now added within ready() after this.browserProxy_ has been populated. Is this early return still necessary?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79b1ec6_b03d93f5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T23:33:24Z",
+      "side": 1,
+      "message": "Is |this.filter| remembered across calls between this.browserProxy_.filter and subsequent this.browserProxy_.getDisplayList()?\n\nIt is not obvious how getDisplayList() ends up respecting the filter. Can we just pass the filter explicitly to getDisplayList() and eliminate the need to  always call this.browserProxy_.filter() ?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41416b3_5c15e244",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-10T23:33:24Z",
+      "side": 1,
+      "message": "Do we need to call updateSiteList_ manually here? Does removeAll() not trigger an onTreeItemRemoved? If so, could we simply do\n\nthis.browserProxy_.removeAll().then(() \u003d\u003e {\n // Cancel pending calls to |extendSiteList_|.\n window.cancelIdleCallback(this.extendSiteListHandle_);\n window.cancelAnimationFrame(this.extendSiteListAnimationHandle_);\n this.sites \u003d [];\n});\n\ninstead of triggering another round trip with C++?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
