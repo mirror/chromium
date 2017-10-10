@@ -154,7 +154,6 @@ void DrawTextureQuad(GLenum target, const gfx::Size& size) {
   glDeleteProgram(program);
   glDeleteBuffersARB(1, &vertex_buffer);
 }
-
 }  // namespace
 
 template <typename GLImageTestDelegate>

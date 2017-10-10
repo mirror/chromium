@@ -19,6 +19,12 @@
 
 namespace gpu {
 
+template <typename T>
+class TestDelegate {
+ public:
+  static void SetUp() {}
+};
+
 template <typename GpuMemoryBufferImplType>
 class GpuMemoryBufferImplTest : public testing::Test {
  public:
@@ -33,6 +39,10 @@ class GpuMemoryBufferImplTest : public testing::Test {
                       GpuMemoryBufferImplType::AllocateForTesting(
                           size, format, usage, handle),
                       base::Unretained(destroyed));
+  }
+
+  virtual void SetUp() override {
+    TestDelegate<GpuMemoryBufferImplType>::SetUp();
   }
 
  private:

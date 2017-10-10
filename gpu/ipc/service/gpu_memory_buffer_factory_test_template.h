@@ -15,8 +15,17 @@
 
 namespace gpu {
 
+template <typename T>
+class TestDelegate {
+ public:
+  static void SetUp() {}
+};
+
 template <typename GpuMemoryBufferFactoryType>
 class GpuMemoryBufferFactoryTest : public testing::Test {
+ public:
+  void SetUp() override { TestDelegate<GpuMemoryBufferFactoryType>::SetUp(); }
+
  protected:
   GpuMemoryBufferFactoryType factory_;
 };
