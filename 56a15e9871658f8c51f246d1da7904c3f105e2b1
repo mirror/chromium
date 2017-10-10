@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62e727cf_93b96469",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-10T23:44:02Z",
+      "side": 1,
+      "message": "PageCU will only have a UKM source ID at some point once it\u0027s committed, so if it doesn\u0027t have UKM source id, GetProperty should return false. Also 0 is not a valid UKM source id.",
+      "parentUuid": "d2ae8a04_17f4740a",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5184a8_590ddc39",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
         "patchSetId": 14
