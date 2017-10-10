@@ -161,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "25465946_cbdabaa8",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-10T05:05:20Z",
+      "side": 1,
+      "message": "Previously this was |plugin_in|, and since we are moving away from plugins, we\u0027d like to avoid that name. Then it\u0027s more of a cdm-type-specific-id in the file system, hence the current name. I agreed it\u0027s confusing given we also have fsid. Maybe cdm_file_system_id?",
+      "parentUuid": "05998b8b_bed34b01",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 18
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ec02872_1be02f3e",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 10
@@ -325,6 +349,24 @@
       "side": 1,
       "message": "Presumably it\u0027s a known set though? Anyway I guess this is OK, it\u0027s just I would assume that we follow these rules in the code we\u0027re shipping with CrOS.",
       "parentUuid": "bcd00291_499dce2a",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a02ee85_3a7b6efa",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-10T05:05:20Z",
+      "side": 1,
+      "message": "Even on ChromeOS the file system id is known at compile time.\n\nWe can DCHECK all of these 3 because otherwise CdmInfo registration should fail. That\u0027s actually why we put NOTREACHED() here. I guess I had the fear that in production, if there\u0027s anything goes wrong, since we are in the browser process, we\u0027d better handle it. But I guess I was over paranoid when writing this code.",
+      "parentUuid": "06171be9_482f63cf",
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
