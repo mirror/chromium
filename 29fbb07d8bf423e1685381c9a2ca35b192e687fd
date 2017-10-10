@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9282da6d_4bb478c7",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33731cb_a5e92cd9",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57ddb42a_c983beb6",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02677b2f_57824384",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "Ah, much nicer, thanks!  Done.",
+      "parentUuid": "57ddb42a_c983beb6",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f664e15c_dbb99c33",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "It actually shouldn\u0027t matter, because then our normal parsing code should complain.  I\u0027ve added that to the comment here.",
+      "parentUuid": "e149baa8_608d8d05",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfbdddc0_19423042",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab05873_3fa5fb7a",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "Ah, quite a bit cleaner!  Thanks!",
+      "parentUuid": "dfbdddc0_19423042",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bb6efacc_22f7416b",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07f5b71d_eb0106d0",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e52c394_b3818c16",
         "filename": "extensions/renderer/runtime_hooks_delegate.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-10T19:50:16Z",
       "side": 1,
       "message": "Do we know that the ScriptContext isn\u0027t torn down by now? Based on our recent discussion, it seems ScriptContext dies in the WillReleaseScriptContext callback, but script can keep objects alive and invoke functions as long as it pleases (e.g. by grabbing an object reference to a same-origin frame and then navigating that frame).\n\nI don\u0027t presently see (but may have forgotten about) a check earlier for this case.\n\nIf not, this DCHECK is invalid.",
+      "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223436ba_85492a98",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T20:47:03Z",
+      "side": 1,
+      "message": "We should only get to this point with a valid script context, I believe.  Most everything through the API object should be routed through the APIBinding class.  That does a check that the context is valid before trying to handle the API call [1], and it\u0027s only in handling the API call that these hooks are invoked. [2]  So I think we\u0027re good here.\n\nNote, this would *not* apply to new properties added by the hooks to the API object - so, for instance, the \"id\" property on runtime could be checked *after* the script context is removed.  But that one has a null check.\n\n[1] https://chromium.googlesource.com/chromium/src/+/6740ad0f89212c6c5174ab1db1f773cf8e236a63/extensions/renderer/bindings/api_binding.cc#67\n[2] https://chromium.googlesource.com/chromium/src/+/6740ad0f89212c6c5174ab1db1f773cf8e236a63/extensions/renderer/bindings/api_binding.cc#583",
+      "parentUuid": "7e52c394_b3818c16",
       "revId": "29fbb07d8bf423e1685381c9a2ca35b192e687fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
