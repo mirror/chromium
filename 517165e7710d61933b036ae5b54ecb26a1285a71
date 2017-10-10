@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d65898f1_e455f3f0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T02:19:21Z",
+      "side": 1,
+      "message": "We generally prefer \u003ciosfwd\u003e to \u003costream\u003e. I think this is partially from legacy days when the style guide had stricter guidance against using streams, but it\u0027s probably still a good idea these days for compile speed.",
+      "revId": "517165e7710d61933b036ae5b54ecb26a1285a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab465fc5_51775fce",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T02:19:21Z",
+      "side": 1,
+      "message": "Why did this change to a \u003c \u003e style include?",
+      "revId": "517165e7710d61933b036ae5b54ecb26a1285a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab70b31_0253cb1a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/testing/AccessibilityTest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T02:19:21Z",
+      "side": 1,
+      "message": "Same comment about using iosfwd here.",
+      "revId": "517165e7710d61933b036ae5b54ecb26a1285a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
