@@ -22,6 +22,30 @@
       "revId": "56854e7a4ad2c29ca11b223721f3627ee01d7d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f1669b_95341daa",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-10T20:21:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c89b856_e15062cc",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "56854e7a4ad2c29ca11b223721f3627ee01d7d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
