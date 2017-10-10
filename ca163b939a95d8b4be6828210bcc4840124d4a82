@@ -16,6 +16,24 @@
       "revId": "ca163b939a95d8b4be6828210bcc4840124d4a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207ef64a_f596cbfc",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-10-10T09:53:00Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it as is for this change, and use constraints in a next CL.",
+      "parentUuid": "47f1c91e_576a3704",
+      "revId": "ca163b939a95d8b4be6828210bcc4840124d4a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "8dc39701e0d712a4240c5353f8d03b24c0b241ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc2e282_6a171c41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-10-10T09:53:00Z",
+      "side": 1,
+      "message": "I don\u0027t know how I managed to do this, probably this is due to me typing in another window + long standing macOS lag when switching keyboard layouts. Ю is a cyrillic letter, and on a mac it\u0027s on the same button as the period \".\" on EN-US.",
+      "parentUuid": "8729dbb6_26d23362",
+      "range": {
+        "startLine": 7,
+        "startChar": 43,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "8dc39701e0d712a4240c5353f8d03b24c0b241ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
