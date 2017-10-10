@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b3683be_3cc9d9e1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T14:07:58Z",
+      "side": 1,
+      "message": "Note: this was the only caller of RequestStop(false).\nThe \"false\" does not stop the instance for login screen.\nHowever, there should be no such a case, because state_ is assigned to ACTIVE in StartArc() only, where ASR::RequestStart() is called, so the instance should be already upgraded.\nThis CL removes the arg and RequestStop() will work as if RequestStop(true) always.",
+      "revId": "989892e7f934b12eb123259dd8d9ef62c3ae390a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
