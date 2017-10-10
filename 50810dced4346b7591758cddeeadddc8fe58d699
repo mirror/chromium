@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b90a0d_5be5763b",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-10T01:08:56Z",
+      "side": 1,
+      "message": "nit(optional): don\u0027t need to initialize.",
+      "revId": "50810dced4346b7591758cddeeadddc8fe58d699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
