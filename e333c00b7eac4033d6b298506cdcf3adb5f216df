@@ -34,6 +34,24 @@
       "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fff8d6_4155fb94",
+        "filename": "ui/base/clipboard/clipboard_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T07:05:25Z",
+      "side": 1,
+      "message": "StringPiece(cf_html).find(src_url_str) would work as well, right? It\u0027s not quite as concise, but it will become unnecessary in C++17 as well. I think it\u0027s worth experimenting to see if we can get it to work: I\u0027m not fond of arraysize(src_url_str) - 1.",
+      "parentUuid": "6ca548e8_87f60727",
+      "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
