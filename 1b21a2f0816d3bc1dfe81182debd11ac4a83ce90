@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "2cfbb527_908d66ec",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "This should probably have a TODO. Also, what will fix this? Or reference a bug to do that work.",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f023207_6c009a5d",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -30,6 +47,189 @@
       "writtenOn": "2017-10-10T15:44:18Z",
       "side": 1,
       "message": "Since you have an is_win section below already, what about removing vr_common and adding vr_common_source deps there instead?  Then the temporary Windows workarounds are contained.",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fa6776_1b2a2295",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "Rather than disabling compilation, can we mark the individual tests (or test framework) as DISABLED_ on Windows? That way, the test code doesn\u0027t rot and build problems can be caught on Windows builds. There is a pattern for changing the test name for certain compiles.",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca53b2b_78e98403",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "Instead, name the test as DISABLED_... on Windows.",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6a1b3d_446602f2",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "s/WebVR/VR device/",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56edf64b_86522fc4",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "... and Windows.",
+      "range": {
+        "startLine": 8,
+        "startChar": 39,
+        "endLine": 8,
+        "endChar": 46
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558cb32e_728ff0b3",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "I think we can drop this. It\u0027s not really important anymore and will just rot.",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ab1946_414c8401",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "Android",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e91f9e_ffa90df1",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "..es",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c662d7_20ac28e8",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "https://crbug.com/733935",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c073ce_4ddafe80",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-10T21:56:08Z",
+      "side": 1,
+      "message": "src/device/BUILD.gn and src/ui/gfx/BUILD.gn still have is_android checks. Is that correct? (If so, we should unify the order within them sometime.)\n\nNote: src/ui/gfx/font_render_params.h also has an Android check that may be related to the latter file.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 11
+      },
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
