@@ -20,6 +20,9 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/pref_service_factory.h"
+#include "content/common/devtools/devtools_network_conditions.h"
+#include "content/common/devtools/devtools_network_controller.h"
+#include "content/common/devtools/devtools_network_transaction_factory.h"
 #include "content/network/cache_url_loader.h"
 #include "content/network/http_server_properties_pref_delegate.h"
 #include "content/network/network_service_impl.h"
@@ -211,6 +214,11 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
     builder.set_proxy_service(net::ProxyService::CreateDirect());
   }
 
+  builder.SetCreateHttpTransactionFactoryCallback(
+      base::BindOnce([](net::HttpNetworkSession* session)
+                         -> std::unique_ptr<net::HttpTransactionFactory> {
+        return std::make_unique<DevToolsNetworkTransactionFactory>(session);
+      }));
   ApplyContextParamsToBuilder(&builder, network_context_params);
 
   return builder.Build();
@@ -304,6 +312,19 @@ void NetworkContext::ClearNetworkingHistorySince(
 
   url_request_context_->http_server_properties()->Clear();
   std::move(completion_callback).Run();
+}
+
+void NetworkContext::SetNetworkConditions(
+    const std::string& profile_id,
+    mojom::NetworkConditionsPtr conditions) {
+  std::unique_ptr<DevToolsNetworkConditions> devtools_conditions;
+  if (conditions) {
+    devtools_conditions.reset(new DevToolsNetworkConditions(
+        conditions->offline, conditions->latency.InMillisecondsF(),
+        conditions->download_throughput, conditions->upload_throughput));
+  }
+  DevToolsNetworkController::SetNetworkState(profile_id,
+                                             std::move(devtools_conditions));
 }
 
 }  // namespace content
