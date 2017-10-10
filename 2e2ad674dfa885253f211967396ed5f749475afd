@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "154b3c30_92a1113a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1171339
+      },
+      "writtenOn": "2017-10-10T08:00:24Z",
+      "side": 1,
+      "message": "\u003e I might be wrong, but IIUC when someone else pushes a new patch set to a revert change created by Findit, Findit\u0027s change is not any more a pure revert of the reverted change referred to by the revert_of field, and as a result it is not submittable.\n\nThat depends on what the user pushed. E.g. The change is still a pure revert if the new PS just rebases it. But I think this is intended.",
+      "parentUuid": "db58f879_d6713f08",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
