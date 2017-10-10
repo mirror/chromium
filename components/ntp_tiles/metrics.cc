@@ -50,6 +50,15 @@ void LogHistogramEvent(const std::string& histogram,
     counter->Add(position);
 }
 
+// This corresponds to UMA_HISTOGRAM_CUSTOM_TIMES (with min/max appropriate
+// for the age of suggestions) for use with dynamic histogram names.
+void LogUmaHistogramAge(const std::string& name, const base::TimeDelta& value) {
+  base::Histogram::FactoryTimeGet(
+      name, base::TimeDelta::FromSeconds(1), base::TimeDelta::FromDays(14), 100,
+      base::HistogramBase::kUmaTargetedHistogramFlag)
+      ->AddTime(value);
+}
+
 std::string GetSourceHistogramName(TileSource source) {
   switch (source) {
     case TileSource::TOP_SITES:
@@ -104,6 +113,16 @@ void RecordTileImpression(const NTPTileImpression& impression,
       "NewTabPage.SuggestionsImpression.%s", source_name.c_str());
   LogHistogramEvent(impression_histogram, impression.index, kMaxNumTiles);
 
+  if (!impression.data_generation_time.is_null()) {
+    const base::TimeDelta age =
+        base::Time::Now() - impression.data_generation_time;
+    LogUmaHistogramAge("NewTabPage.SuggestionsImpressionAge", age);
+    LogUmaHistogramAge(
+        base::StringPrintf("NewTabPage.SuggestionsImpressionAge.%s",
+                           source_name.c_str()),
+        age);
+  }
+
   UMA_HISTOGRAM_ENUMERATION("NewTabPage.TileTitle",
                             static_cast<int>(impression.title_source),
                             kLastTitleSource + 1);
@@ -147,10 +166,19 @@ void RecordTileClick(const NTPTileImpression& impression) {
   UMA_HISTOGRAM_ENUMERATION("NewTabPage.MostVisited", impression.index,
                             kMaxNumTiles);
 
+  std::string source_name = GetSourceHistogramName(impression.source);
   std::string histogram =
-      base::StringPrintf("NewTabPage.MostVisited.%s",
-                         GetSourceHistogramName(impression.source).c_str());
+      base::StringPrintf("NewTabPage.MostVisited.%s", source_name.c_str());
   LogHistogramEvent(histogram, impression.index, kMaxNumTiles);
+
+  if (!impression.data_generation_time.is_null()) {
+    const base::TimeDelta age =
+        base::Time::Now() - impression.data_generation_time;
+    LogUmaHistogramAge("NewTabPage.MostVisitedAge", age);
+    LogUmaHistogramAge(
+        base::StringPrintf("NewTabPage.MostVisitedAge.%s", source_name.c_str()),
+        age);
+  }
 
   const char* tile_type_suffix = GetTileTypeSuffix(impression.visual_type);
   if (tile_type_suffix) {
