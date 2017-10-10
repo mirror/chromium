@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee3b5d94_97d50dbd",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-10T05:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ca8c8a8_05147daa",
+      "revId": "17c70545334251e6d96bc842a46d78005da8ab0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4219cda_9c51f7ba",
         "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "17c70545334251e6d96bc842a46d78005da8ab0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5b6dad_4761df71",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-10T05:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4219cda_9c51f7ba",
+      "revId": "17c70545334251e6d96bc842a46d78005da8ab0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
