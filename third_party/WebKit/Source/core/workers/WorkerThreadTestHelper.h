@@ -54,18 +54,12 @@ class MockWorkerThreadLifecycleObserver final
 
 class FakeWorkerGlobalScope : public WorkerGlobalScope {
  public:
-  FakeWorkerGlobalScope(const KURL& url,
-                        const String& user_agent,
-                        WorkerThread* thread,
-                        std::unique_ptr<SecurityOrigin::PrivilegeData>
-                            starter_origin_privilege_data,
-                        WorkerClients* worker_clients)
-      : WorkerGlobalScope(url,
-                          user_agent,
+  FakeWorkerGlobalScope(
+      std::unique_ptr<GlobalScopeCreationParams> creation_params,
+      WorkerThread* thread)
+      : WorkerGlobalScope(std::move(creation_params),
                           thread,
-                          MonotonicallyIncreasingTime(),
-                          std::move(starter_origin_privilege_data),
-                          worker_clients) {}
+                          MonotonicallyIncreasingTime()) {}
 
   ~FakeWorkerGlobalScope() override {}
 
@@ -124,10 +118,7 @@ class WorkerThreadForTest : public WorkerThread {
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
-    return new FakeWorkerGlobalScope(
-        creation_params->script_url, creation_params->user_agent, this,
-        std::move(creation_params->starter_origin_privilege_data),
-        std::move(creation_params->worker_clients));
+    return new FakeWorkerGlobalScope(std::move(creation_params), this);
   }
 
  private:
