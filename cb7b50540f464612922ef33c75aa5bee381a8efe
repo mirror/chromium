@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de96d16_caa49c1c",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:49:34Z",
+      "side": 1,
+      "message": "Reading this, I can\u0027t help but think you should write the tests as part of this CL :)",
+      "revId": "cb7b50540f464612922ef33c75aa5bee381a8efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9170bc76_24bc920b",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:49:34Z",
+      "side": 1,
+      "message": "Could you use OnceCallback here?",
+      "revId": "cb7b50540f464612922ef33c75aa5bee381a8efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228d1091_b342068b",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:49:34Z",
+      "side": 1,
+      "message": "I think you should pass `origin` here too.",
+      "revId": "cb7b50540f464612922ef33c75aa5bee381a8efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41413162_3202abcb",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:49:34Z",
+      "side": 1,
+      "message": "I assume you have no other choice and I don\u0027t know the rest of this feature to suggest an alternative but it\u0027s a bit unfortunate that we thread jump from UI to IO and back to UI and then IO again :(",
+      "revId": "cb7b50540f464612922ef33c75aa5bee381a8efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b740238b_7da5eb24",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-10T08:49:34Z",
+      "side": 1,
+      "message": "Indeed, Unretained isn\u0027t ideal but maybe you could pass the profile instead of the PermissionManager? It should most likely end up the same but we could hope that if the profile is shut down, the monitoring would stop and you can get the PermissionManager from the profile.",
+      "revId": "cb7b50540f464612922ef33c75aa5bee381a8efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
