@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7809af0_51df2d14",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-10T15:35:24Z",
+      "side": 1,
+      "message": "Fixes a problem where reload using the keyboard can sometimes cause the warning message to disappear as the searchbox was focused at the time.",
+      "range": {
+        "startLine": 325,
+        "startChar": 7,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "f4de9621bee860c59274e265c85484535d6aaae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

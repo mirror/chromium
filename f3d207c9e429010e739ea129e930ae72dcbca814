@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56e5037_839391e5",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-10T15:35:24Z",
+      "side": 1,
+      "message": "Relative font sizing, respects user selected default font size.",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc82d76_52508749",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-10T15:35:24Z",
+      "side": 1,
+      "message": "Forces the vertical scrollbar to be displayed all the time.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22d412a_0b4cbc03",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-10T15:35:24Z",
+      "side": 1,
+      "message": "Having this as a singleton so the initialised state is kept as renderTemplate is called after each experiment is enabled / changed.",
+      "range": {
+        "startLine": 207,
+        "startChar": 30,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d0a01e_d1512e2a",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-10T15:35:24Z",
+      "side": 1,
+      "message": "Fixes a problem where reload using the keyboard can sometimes cause the warning message to disappear as the searchbox was focused at the time.",
+      "range": {
+        "startLine": 325,
+        "startChar": 7,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "f3d207c9e429010e739ea129e930ae72dcbca814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
