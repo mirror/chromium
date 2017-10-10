@@ -78,6 +78,7 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
 
  private:
   friend class NGFragmentBuilder;
+  friend class NGLineBoxFragmentBuilder;
 
   NGLayoutResult(RefPtr<NGPhysicalFragment> physical_fragment,
                  Vector<NGOutOfFlowPositionedDescendant>

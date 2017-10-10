@@ -20,11 +20,11 @@ class NGPhysicalLineBoxFragment;
 class CORE_EXPORT NGLineBoxFragmentBuilder final
     : public NGBaseFragmentBuilder {
   STACK_ALLOCATED();
-
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            RefPtr<const ComputedStyle>,
-                           NGWritingMode);
+                           NGWritingMode,
+                           TextDirection);
 
   NGLogicalSize Size() const final;
 
@@ -43,7 +43,7 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   void SetBreakToken(RefPtr<NGInlineBreakToken>);
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
+  RefPtr<NGLayoutResult> ToLineBoxFragment();
 
  private:
   NGInlineNode node_;
