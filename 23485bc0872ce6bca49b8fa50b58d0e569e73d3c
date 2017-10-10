@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff962168_233e10ab",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:26:50Z",
+      "side": 1,
+      "message": "nit: You might want to make this (USER) instead of (EVENT) if this is generally triggered by a \"user\" action. Opening an Android app can be considered a user action. (It\u0027s entirely up to you; the type is used to help identify event chains that were triggered by a user action, it doesn\u0027t affect whether they are logged).",
+      "revId": "23485bc0872ce6bca49b8fa50b58d0e569e73d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
