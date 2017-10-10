@@ -11,6 +11,7 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/unguessable_token.h"
 #include "url/scheme_host_port.h"
 #include "url/third_party/mozilla/url_parse.h"
 #include "url/url_canon.h"
@@ -90,10 +91,10 @@ class URL_EXPORT Origin {
   explicit Origin(const GURL& url);
 
   // Copyable and movable.
-  Origin(const Origin&) = default;
-  Origin& operator=(const Origin&) = default;
-  Origin(Origin&&) = default;
-  Origin& operator=(Origin&&) = default;
+  Origin(const Origin& rhs);
+  Origin& operator=(const Origin& rhs);
+  Origin(Origin&& rhs);
+  Origin& operator=(Origin&& rhs);
 
   // Creates an Origin from a |scheme|, |host|, |port| and |suborigin|. All the
   // parameters must be valid and canonicalized. Do not use this method to
@@ -185,9 +186,17 @@ class URL_EXPORT Origin {
          std::string suborigin,
          SchemeHostPort::ConstructPolicy policy);
 
-  SchemeHostPort tuple_;
   bool unique_;
-  std::string suborigin_;
+
+  union {
+    // Only valid if |unique_| is false.
+    struct {
+      SchemeHostPort tuple_;
+      std::string suborigin_;
+    };
+    // Only valid if |unique_| is true.
+    base::UnguessableToken unique_id_;
+  };
 };
 
 URL_EXPORT std::ostream& operator<<(std::ostream& out, const Origin& origin);
