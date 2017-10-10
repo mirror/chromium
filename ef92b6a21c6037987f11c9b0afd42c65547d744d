@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46b5c471_f8750201",
+        "filename": "chrome/test/chromedriver/chrome/chrome_desktop_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-10-10T17:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cdfcd0_a7b33ff6",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "ef92b6a21c6037987f11c9b0afd42c65547d744d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7434101e_0432e2fb",
         "filename": "chrome/test/chromedriver/server/http_handler.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3562d344_0d099784",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-10-10T17:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7434101e_0432e2fb",
+      "range": {
+        "startLine": 322,
+        "startChar": 29,
+        "endLine": 322,
+        "endChar": 59
+      },
+      "revId": "ef92b6a21c6037987f11c9b0afd42c65547d744d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f05bc5_0b6bb2fd",
         "filename": "chrome/test/chromedriver/session_commands.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-06T18:28:40Z",
       "side": 1,
       "message": "The drawback with this approach is we\u0027re sending two separate commands to the browser, with some additional delays, and the user can see the window moving to the new position and then changing to the new size, instead of moving and resizing at the same time. It\u0027s not a big deal though.\n\nAn alternative is to remove SetWindowPosition and SetWindowSize from ChromeDesktopImpl, add add SetWindowRect with base::Optional wrapping for its input parameters. Or we can even make SetWindowBounds public.",
+      "range": {
+        "startLine": 899,
+        "startChar": 22,
+        "endLine": 899,
+        "endChar": 39
+      },
+      "revId": "ef92b6a21c6037987f11c9b0afd42c65547d744d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46399f94_fbd7cebb",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-10-10T17:41:41Z",
+      "side": 1,
+      "message": "In my opinion I think making SetWindowBounds makes more sense. Less abstraction, but still simple that way :)",
+      "parentUuid": "57f05bc5_0b6bb2fd",
       "range": {
         "startLine": 899,
         "startChar": 22,
