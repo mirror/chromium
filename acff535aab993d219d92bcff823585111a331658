@@ -16,6 +16,24 @@
       "revId": "acff535aab993d219d92bcff823585111a331658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c78974_1dc3bfb4",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-10T16:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb5deaf_c42dfe29",
+      "revId": "acff535aab993d219d92bcff823585111a331658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
