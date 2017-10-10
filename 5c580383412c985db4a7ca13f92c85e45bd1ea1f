@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc3f5683_9eb9606f",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T16:34:03Z",
+      "side": 1,
+      "message": "use std::make_unique instead of `new`",
+      "revId": "5c580383412c985db4a7ca13f92c85e45bd1ea1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ea7979_3daf3958",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2635,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-10T16:34:03Z",
+      "side": 1,
+      "message": "use auto with std::make_unique - no need to write the whole type twice.",
+      "revId": "5c580383412c985db4a7ca13f92c85e45bd1ea1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
