@@ -87,6 +87,24 @@
       "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d38c990_18b43eb3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T18:54:55Z",
+      "side": 1,
+      "message": "It sounds like a good idea even TaskQueue::PostedTask. I suggest that we make all tasks nestable by default, have a builder-style method (PostedTask\u0026 SetNestable(base::Nestable)) and use it in the only place where we want tasks to be non-nestable (TaskQueue::PostNonNestableDelayedTask) - something like impl_-\u003ePostDelayedTask(PostedTask(...).SetNestable(kNonNestable)).\n\nP.S. This approach works well for other optional PostedTask members (like TaskType).",
+      "parentUuid": "e8ac8afe_9d9bb5c8",
+      "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
