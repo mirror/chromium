@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6ec82949_1a5b39cb",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "On second thought, I\u0027m not sure we want to remove it, I\u0027m removing the TODO for now. If we decide to remove it this would be covered by a webrtc bug filed in the future. For now it is correct to not do anything OnAddStream.",
+      "parentUuid": "8f55439a_2adec85a",
+      "range": {
+        "startLine": 1070,
+        "startChar": 24,
+        "endLine": 1070,
+        "endChar": 0
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21ab7dc_9e4b41bb",
         "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
         "patchSetId": 8
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4a87dbd2_d607cca7",
+        "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21ab7dc_9e4b41bb",
+      "range": {
+        "startLine": 1321,
+        "startChar": 12,
+        "endLine": 1321,
+        "endChar": 14
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1139579_9ebbaf22",
         "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
         "patchSetId": 8
@@ -94,6 +142,30 @@
       "writtenOn": "2017-10-02T14:37:12Z",
       "side": 1,
       "message": "At first sight this copy doesn\u0027t look so shallow, unless the Copy() methods are shallow as well. If so, can you rename them? Otherwise explain why it\u0027s actually shallow.",
+      "range": {
+        "startLine": 37,
+        "startChar": 52,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b8a9b7_adbfe570",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "The RTCRtpReceiver is a shallow copy in the sense that it represents the same underlying webrtc::RtpReceiverInterface.\n\nstream_adapter_copies is a poor name, it should be stream_adapter_ref_copies. And stream_adapters_ should be stream_adapter_refs_.\n\nThe adapter refs are copied in the sense that we get a new reference. A reference to the original adapter. Because its an \"AdapterRef\", not a \"WebAdapter\" (there\u0027s no such thing just making a comparison), it makes sense to call it Copy(), not ShallowCopy().\n\nProvided the variable renames, do you still want me to rename or add comments?",
+      "parentUuid": "d1139579_9ebbaf22",
       "range": {
         "startLine": 37,
         "startChar": 52,
@@ -129,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "086f5be0_4648f049",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55f1e55_e9cf2af7",
+      "range": {
+        "startLine": 1174,
+        "startChar": 32,
+        "endLine": 1174,
+        "endChar": 33
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7289341b_33faada8",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 8
@@ -140,6 +236,30 @@
       "writtenOn": "2017-10-02T14:37:12Z",
       "side": 1,
       "message": "Still not clear to me why this new method of creating a MediaStream is needed. Will wait for the reply to the previous CL.",
+      "range": {
+        "startLine": 1520,
+        "startChar": 28,
+        "endLine": 1520,
+        "endChar": 34
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c073f6_d2c86674",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "For example, if setRemoteDescription is called with SDP describing the following:\n  stream \"stream-1\" with track \"track-1\"\n  stream \"stream-2\" with track \"track-1\"\n\nThis will fire:\n  DidAddRemoteTrack with \"receiver-1\" having \"track-1\" and \"stream-1\":\n    \"stream-1\" created from descriptor.\n    \"track-1\" created from component.\n  DidAddRemoteTrack with \"receiver-2\" having \"track-1\" and \"stream-2\":\n    \"stream-2\" created from descriptor.\n    \"track-1\" should be reused for the component, or else we get two different JS objects\n        for the same component, and stream1.getTracks()[0] !\u003d stream2.getTracks()[0], even\n        though they are considered the same in the Content and WebRTC layers.\n\nDo you want me to add a comment here somewhere?",
+      "parentUuid": "7289341b_33faada8",
       "range": {
         "startLine": 1520,
         "startChar": 28,
@@ -175,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6c542e14_96253049",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "clarified: the blink stream",
+      "parentUuid": "8429ad5f_2e0e6e88",
+      "range": {
+        "startLine": 1527,
+        "startChar": 44,
+        "endLine": 1527,
+        "endChar": 46
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "704dca1a_4c9980e2",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
         "patchSetId": 8
@@ -195,6 +339,30 @@
       "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87205f0_ec460616",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704dca1a_4c9980e2",
+      "range": {
+        "startLine": 1531,
+        "startChar": 33,
+        "endLine": 1531,
+        "endChar": 35
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "f5cf651c_2269e0cd",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Updated it.",
+      "parentUuid": "1e2988fc_cd381c8a",
+      "range": {
+        "startLine": 1534,
+        "startChar": 29,
+        "endLine": 1534,
+        "endChar": 32
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb66d1ac_d33180cf",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.h",
         "patchSetId": 8
@@ -244,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "9ededb8b_9b1f8c0f",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb66d1ac_d33180cf",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc726ce_97aec359",
         "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
         "patchSetId": 8
@@ -264,6 +480,30 @@
       "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026ca6d6_d93bd917",
+        "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T00:37:34Z",
+      "side": 1,
+      "message": "Oh yeah, done.\n\nThe mock class gets DidAdd/RemoveRemoteTrackForMock which has the pointer workaround. This is the function you EXPECT_CALL, and DidAdd/RemoveRemoteTrack calls the ..ForMock ones.",
+      "parentUuid": "bdc726ce_97aec359",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
