@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e3e85e_94b897b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T06:17:15Z",
+      "side": 1,
+      "message": "Could you describe more about the refreshment of Mojo connection and the IPC ordering?",
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49894d0_2eb3dc74",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T06:17:15Z",
+      "side": 1,
+      "message": "Could you have a bit more detail explanation about the rebound mechanism?",
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f19c9c_55a29b6b",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T06:17:15Z",
+      "side": 1,
+      "message": "I feel \"RegistrationObject\" is WebSWRegistrationImpl itself. RefreshConnection() or something might be better.",
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6ab425_a4647cee",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T06:17:15Z",
+      "side": 1,
+      "message": "Could you describe a bit more detail? The reconnection mechanism is a bit complicated to understand since usually |binding_| is kept during whole lifecycle of the owner.\n\nThis keeps the Mojo connection to the content::ServiceWorkerRegistrationHandle in the browser process, and the connection retains the reference to the registration object on the browser. If another Mojo connection to the same registration is passed from the browser (e.g. WebSWProviderImpl::OnDidGetRegistration()), |binding_| is refreshed with the new connection by RebindRegistrationObject().",
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995caa9b_b509d275",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T06:17:15Z",
+      "side": 1,
+      "message": "IIUC, it\u0027s not optional on ps6.",
+      "range": {
+        "startLine": 48,
+        "startChar": 45,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "650ddd3b033e30e54c260558ebfcead5ead5f458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
