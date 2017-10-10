@@ -22,6 +22,30 @@
       "revId": "5182f264a65af4acd53c9cdaa8ff4f84dd06392b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9544e821_25060110",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-10T14:07:00Z",
+      "side": 0,
+      "message": "This CL does not change the behavior for RefetchWhileDisplaying. The change is that this correct error treatment is used for the cases where AreArticlesEmpty().",
+      "parentUuid": "3a7a1c58_91453f93",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 493,
+        "endChar": 3
+      },
+      "revId": "5182f264a65af4acd53c9cdaa8ff4f84dd06392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
