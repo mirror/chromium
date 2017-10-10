@@ -70,6 +70,30 @@
       "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3299fbe6_898d5739",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-10T12:18:22Z",
+      "side": 1,
+      "message": "The logic restoring is incomplete?\nIf !IsVIOobe \u0026\u0026 !IsCurrentUserNew() case, it still checks the following condition, which looks unexpected IIUC?\nAlso, we still need to check SCREEN_ARC_TERMS_OF_SERVICE condition, in non VI case, too?\n\nBecause the condition is being complicated more, could you add detailed comments about in which case we want to return true / false?",
+      "parentUuid": "36a2d00f_8106be18",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
