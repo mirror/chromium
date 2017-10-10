@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<meta charset=utf-8>
+<title>LongTask Timing: long task in another window</title>
+<body>
+
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
+<script>
+/* This test should pass even when windows share a single renderer process. */
+async_test(t => {
+  const observer = new PerformanceObserver(
+      t.step_func(function (entryList) {
+          const entries = entryList.getEntries();
+          assert_equals(entries.length, 1,
+              'Exactly one entry is expected.');
+          const longtask = entries[0];
+          assert_equals(longtask.entryType, 'longtask');
+          // If a longtask is observed, it must come from this window.
+          assert_equals(longtask.name, 'self');
+      })
+  );
+  observer.observe({entryTypes: ['longtask']});
+
+  /* Open a window with a longtask. */
+  const other_window = window.open('../resources/subframe-with-longtask.html');
+  /* After some wait, terminate the test. */
+  t.step_timeout(() => {
+    other_window.close();
+    observer.disconnect();
+    t.done();
+  }, 200);
+}, 'A longtask in a frame from window.open is not reported in original frame');
+</script>
+</body>
