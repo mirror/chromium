@@ -78,7 +78,8 @@ void WorkerInspectorController::ConnectFrontend(int session_id,
                                         nullptr, session->V8Session()));
   if (thread_->GlobalScope()->IsWorkerGlobalScope() &&
       RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->GetResourceFetcher());
+    DCHECK(
+        ToWorkerGlobalScope(thread_->GlobalScope())->EnsureResourceFetcher());
     InspectorNetworkAgent* network_agent =
         InspectorNetworkAgent::CreateForWorker(
             ToWorkerGlobalScope(thread_->GlobalScope()));
