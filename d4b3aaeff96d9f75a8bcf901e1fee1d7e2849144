@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16b44cb5_b146e414",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRCoordinateSystem.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-10T18:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764bd2c7_50dc8c09",
+      "revId": "d4b3aaeff96d9f75a8bcf901e1fee1d7e2849144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe8fd3e_a816c6be",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRStageBoundsPoint.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d4b3aaeff96d9f75a8bcf901e1fee1d7e2849144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc1ea43_23d9c1ae",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRStageBoundsPoint.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-10T18:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfe8fd3e_a816c6be",
+      "revId": "d4b3aaeff96d9f75a8bcf901e1fee1d7e2849144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
