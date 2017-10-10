@@ -1574,6 +1574,7 @@ public class ChromeTabbedActivity
             public int getHeaderResourceId() {
                 if (getBottomSheet() != null
                         && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
+                    if (!getAppMenuPropertiesDelegate().shouldShowPageMenu()) return 0;
                     return R.layout.chrome_home_promo_header;
                 }
 
