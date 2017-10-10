@@ -10,6 +10,51 @@ config("zlib_config") {
   include_dirs = [ "." ]
 }
 
+config("zlib_inflate_simd_config") {
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    defines = [ "INFLATE_SIMD_SSE2" ]
+  }
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_use_neon) {
+      defines = [ "INFLATE_SIMD_NEON" ]
+    }
+  }
+}
+
+source_set("zlib_inflate_simd") {
+  visibility = [ ":*" ]
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    include_dirs = [ "." ]
+
+    sources = [
+      "contrib/inflate/chunkcopy.h",
+      "contrib/inflate/inffast_chunk.c",
+      "contrib/inflate/inffast_chunk.h",
+      "contrib/inflate/inflate.c",
+    ]
+  }
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_use_neon) {
+      include_dirs = [ "." ]
+
+      sources = [
+        "contrib/inflate/chunkcopy.h",
+        "contrib/inflate/inffast_chunk.c",
+        "contrib/inflate/inffast_chunk.h",
+        "contrib/inflate/inflate.c",
+      ]
+    }
+  }
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  public_configs = [ ":zlib_inflate_simd_config" ]
+}
+
 config("zlib_adler32_simd_config") {
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     defines = [ "ADLER32_SIMD_SSSE3" ]
@@ -122,21 +167,6 @@ static_library("zlib") {
     "zutil.h",
   ]
 
-  if (current_cpu == "arm" || current_cpu == "arm64") {
-    if (arm_use_neon) {
-      # TODO: handle InflateBack case, see crbug.com/769880.
-      sources -= [
-        "inffast.c",
-        "inflate.c",
-      ]
-      sources += [
-        "contrib/arm/chunkcopy.h",
-        "contrib/arm/inffast.c",
-        "contrib/arm/inflate.c",
-      ]
-    }
-  }
-
   defines = []
   deps = []
 
@@ -144,11 +174,21 @@ static_library("zlib") {
     sources += [ "x86.c" ]
 
     deps += [ ":zlib_adler32_simd" ]
+
+    deps += [ ":zlib_inflate_simd" ]
+    sources -= [
+      "inflate.c"
+    ]
   }
 
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
       deps += [ ":zlib_adler32_simd" ]
+
+      deps += [ ":zlib_inflate_simd" ]
+      sources -= [
+        "inflate.c"
+      ]
     }
   }
 
