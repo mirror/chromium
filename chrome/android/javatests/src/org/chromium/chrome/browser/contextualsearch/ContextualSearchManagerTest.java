@@ -3156,4 +3156,38 @@ public class ContextualSearchManagerTest {
                 "Find Toolbar should no longer be shown once Contextual Search Panel appeared",
                 findToolbar.isShown());
     }
+
+    /**
+     * Tests a second Tap: a Tap on an existing tap-selection.
+     */
+    @Test
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    public void testSecondTap() throws InterruptedException, TimeoutException {
+        mFakeServer.reset();
+        simulateSlowResolveSearch("search");
+        waitForPanelToPeek();
+        simulateSlowResolveSearch("search");
+        waitForSelectActionBarVisible();
+        assertPanelClosedOrUndefined();
+    }
+
+    /**
+     * Tests a second Tap: a Tap on an existing tap-selection.
+     */
+    @Test
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    public void testSmartSelectSuppresses() throws InterruptedException, TimeoutException {
+        mFakeServer.reset();
+        simulateLongPressSearch("search");
+        waitForPanelToPeek();
+        closePanel();
+
+        // Tell the ContextualSearchManager that Smart Selection is enabled.
+        mManager.suppressContextualSearchForSmartSelection(true);
+        simulateLongPressSearch("search");
+        waitForSelectActionBarVisible();
+        assertPanelClosedOrUndefined();
+    }
 }
