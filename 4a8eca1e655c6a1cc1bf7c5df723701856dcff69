@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15af60c5_4724e18f",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3afcfa7_c5e3f3d9",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cf866ae_3964307e",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimator.h",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd2a404c_f2f56c07",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "The include just introduces two type aliases. Forward declaring it is not\nbuying us much specially given the complexity of forward declaring type\naliases [1, 2]. So I think we should keep it as is.\n\n[1] https://wandbox.org/permlink/h6lPqjJCHfU8q699\n[2] https://stackoverflow.com/questions/18834645/c-forward-declaration-and-alias-with-using-or-typedef",
+      "parentUuid": "1cf866ae_3964307e",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0bea1a8_e5c8f028",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-03T19:58:41Z",
       "side": 1,
       "message": "It seems like it\u0027d be more efficient to iterate and remove using the iterator rather than build an intermediate collection.",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdaa622_8f86e8b0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "I tried that first but HashMap does not support modification wile it is being\niterated.[1] This pattern of using a vector to record removals is fairly common\nwith maps in Blink AFAICT.\n\n[1] https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/HashTable.h?dr\u003dC\u0026l\u003d802",
+      "parentUuid": "d0bea1a8_e5c8f028",
       "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "84bdae81_853a6756",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e3c4da5_ce0b2b16",
+      "range": {
+        "startLine": 108,
+        "startChar": 39,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47062552_ac3ae35e",
         "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.h",
         "patchSetId": 20
@@ -87,6 +165,30 @@
       "writtenOn": "2017-10-03T19:58:41Z",
       "side": 1,
       "message": "This doesn\u0027t really add clarity over the type, but also if you were going to we would just include the name rather than putting it in a comment.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#leave-obvious-parameter-names-out-of-function-declarations",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef21a9a_14a20681",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "Done.\nI used commenting to indicate that the argument is not used [1]. But given that it is\nobvious I am removing it altogether.\n\n\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions",
+      "parentUuid": "47062552_ac3ae35e",
       "range": {
         "startLine": 41,
         "startChar": 48,
@@ -119,6 +221,30 @@
       "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53ae335_16921c2b",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-10T21:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51575af7_b39a084b",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
