@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84c3b32_438d3b4d",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-10T00:00:44Z",
+      "side": 1,
+      "message": "I realized that I still have to set this to true. Otherwise, MimeSniffingResourceHandler signals \"response started\" to the client before this throttle gets a chance to determine whether the response should be deferred. The outcome is that we commit the navigation entry before confirming that the response is safe. If the URL is unsafe, we never provide the response data to the renderer, so it is not much of a security issue. However, having a committed navigation entry of the unsafe URL breaks the \"Back To Safety\" on the interstitial page.\n\nOn the other hand, setting this to true means that MIME sniffing never starts before this throttle allows to process response (Please let me know if my understanding is incorrect on this).\n\nSo all the \"Pause/ResumeReadingBodyFromNet\" work is not actually needed. We either never ResumeReadingBodyFromNet, or ResumeReadingBodyFromNet before anyone (MIME sniffing) tries to read.\n\nIn this case, maybe I shouldn\u0027t introduce Pause/ResumeReadingBodyFromNet() in ResourceThrottle::Delegate at all?\n\n\n(Please note that ResourceLoader::Pause/ResumeReadingBodyFromNet() are still needed when we switch to option (2) described in https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/network-service-dev/7DSgDm4K_vs/EtB2CQUZAwAJ, because they will be used by the URLLoader mojom interface in the non-network-service case.)\n\nPlease let me know what you think. Thanks!",
+      "revId": "724e6e0f552a2714e4ba4ae39bffc0bdd7f8ef65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
