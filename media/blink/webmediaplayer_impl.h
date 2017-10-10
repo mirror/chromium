@@ -581,7 +581,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   bool paused_when_hidden_;
 
   // Set when starting, seeking, and resuming (all of which require a Pipeline
-  // seek). |seek_time_| is only valid when |seeking_| is true.
+  // seek). When |seeking_| is false, |seek_time_| saves the previous seek time.
   bool seeking_;
   base::TimeDelta seek_time_;
 

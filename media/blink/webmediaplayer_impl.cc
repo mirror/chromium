@@ -1307,7 +1307,6 @@ void WebMediaPlayerImpl::OnPipelineSeeked(bool time_updated) {
   TRACE_EVENT1("media", "WebMediaPlayerImpl::OnPipelineSeeked", "target",
                seek_time_.InSecondsF());
   seeking_ = false;
-  seek_time_ = base::TimeDelta();
 
   if (paused_) {
 #if defined(OS_ANDROID)  // WMPI_CAST
@@ -1592,6 +1591,8 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
       "pipeline_buffering_state", state));
 
   if (state == BUFFERING_HAVE_ENOUGH) {
+    TRACE_EVENT1("media", "BufferingHaveEnough", "target",
+                 seek_time_.InSecondsF());
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
 
