@@ -51,6 +51,24 @@
       "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9093d45c_f521bc8c",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-10T23:48:26Z",
+      "side": 1,
+      "message": "These are in seconds, I can change them to microseconds to conform, but that does not sound ideal.",
+      "parentUuid": "5e5184a8_590ddc39",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
