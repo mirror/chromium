@@ -61,6 +61,7 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   bool MaybeStartFetch(bool force_download,
                        const FinishedCallback& callback) override;
   const std::map<SectionType, SitesVector>& sections() const override;
+  base::Time GetLastDownloadTime() override;
   GURL GetLastURLFetched() const override;
   GURL GetURLToFetch() override;
   std::string GetDirectoryToFetch() override;

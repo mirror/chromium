@@ -294,7 +294,8 @@ void MostVisitedSites::OnMostVisitedURLsAvailable(
     // MostVisitedURL.title is either the title or the URL which is treated
     // exactly as the title. Differentiating here is not worth the overhead.
     tile.title_source = TileTitleSource::TITLE_TAG;
-
+    // TODO(mastiz): Populate |data_generation_time| here in order to log UMA
+    // metrics of age.
     tiles.push_back(std::move(tile));
   }
 
@@ -347,6 +348,10 @@ void MostVisitedSites::BuildCurrentTilesGivenSuggestionsProfile(
     tile.whitelist_icon_path = GetWhitelistLargeIconPath(url);
     tile.thumbnail_url = GURL(suggestion_pb.thumbnail());
     tile.favicon_url = GURL(suggestion_pb.favicon_url());
+    tile.data_generation_time =
+        base::Time::UnixEpoch() +
+        base::TimeDelta::FromMicroseconds(suggestions_profile.timestamp());
+
     if (AreNtpMostLikelyFaviconsFromServerEnabled()) {
       icon_cacher_->StartFetchMostLikely(
           url, base::Bind(&MostVisitedSites::OnIconMadeAvailable,
@@ -412,20 +417,23 @@ MostVisitedSites::CreatePopularSitesSections(
     return sections;
   }
 
+  const base::Time last_download_time = popular_sites_->GetLastDownloadTime();
+
   const std::set<std::string> no_hosts;
   for (const auto& section_type_and_sites : popular_sites()->sections()) {
     SectionType type = section_type_and_sites.first;
     const PopularSites::SitesVector& sites = section_type_and_sites.second;
     if (type == SectionType::PERSONALIZED) {
       size_t num_required_tiles = num_sites_ - num_actual_tiles;
-      sections[type] =
-          CreatePopularSitesTiles(/*popular_sites=*/sites,
-                                  /*hosts_to_skip=*/used_hosts,
-                                  /*num_max_tiles=*/num_required_tiles);
+      sections[type] = CreatePopularSitesTiles(
+          /*popular_sites=*/sites,
+          /*hosts_to_skip=*/used_hosts,
+          /*num_max_tiles=*/num_required_tiles, last_download_time);
     } else {
       sections[type] = CreatePopularSitesTiles(/*popular_sites=*/sites,
                                                /*hosts_to_skip=*/no_hosts,
-                                               /*num_max_tiles=*/num_sites_);
+                                               /*num_max_tiles=*/num_sites_,
+                                               last_download_time);
     }
   }
   return sections;
@@ -434,7 +442,8 @@ MostVisitedSites::CreatePopularSitesSections(
 NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
     const PopularSites::SitesVector& sites_vector,
     const std::set<std::string>& hosts_to_skip,
-    size_t num_max_tiles) {
+    size_t num_max_tiles,
+    const base::Time& last_download_time) {
   // Collect non-blacklisted popular suggestions, skipping those already present
   // in the personal suggestions.
   NTPTilesVector popular_sites_tiles;
@@ -458,6 +467,7 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
     tile.title_source = popular_site.title_source;
     tile.source = popular_site.baked_in ? TileSource::POPULAR_BAKED_IN
                                         : TileSource::POPULAR;
+    tile.data_generation_time = last_download_time;
     popular_sites_tiles.push_back(std::move(tile));
     base::Closure icon_available =
         base::Bind(&MostVisitedSites::OnIconMadeAvailable,
