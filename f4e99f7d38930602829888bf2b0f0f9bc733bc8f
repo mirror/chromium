@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffebbe41_1f4e9bd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "This should be a summary of what is being changed, not why.\nPlease consider something like:\n\nRelax autofilling passwords in iframes to PSL matching.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebbbcd2_8cac284f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "The key point is that the domain is different, yet related (through the same public suffix). It might be better to use the concrete domains in this explanation to avoid confusion about autofilling on any domains.",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 49
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffcaf0b_56471d93",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "typo: forms",
+      "range": {
+        "startLine": 2158,
+        "startChar": 54,
+        "endLine": 2158,
+        "endChar": 60
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973b8838_7b54793d",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "nit: You can drop \"same\" because it is implied in sharing the (only) origin between the frames.",
+      "range": {
+        "startLine": 2159,
+        "startChar": 19,
+        "endLine": 2159,
+        "endChar": 23
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f9855c_a486f55e",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "typo: missing \"that\" in front of \"don\u0027t\"",
+      "range": {
+        "startLine": 2159,
+        "startChar": 3,
+        "endLine": 2159,
+        "endChar": 8
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f68fc8_4fb1995f",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "nit: \"with\" instead of \"as\" (share something with somebody, not as somebody).",
+      "range": {
+        "startLine": 2159,
+        "startChar": 40,
+        "endLine": 2159,
+        "endChar": 42
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d586ec_a2de6fca",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "Is there already a test checking that cross-domain autofill in iframes does not happen if the domains are not PSL-related? If not, could you please add such test?",
+      "range": {
+        "startLine": 2162,
+        "startChar": 23,
+        "endLine": 2162,
+        "endChar": 50
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6495531d_4da1c0db",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "Please don\u0027t add passwords through navigation, add them directly to the TestPasswordStore instead. Navigation slows the test down and can introduce sources of failure unrelated to the tested property. See other tests using TestsPasswordStore and AddLogin for how to do that.",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2189,
+        "endChar": 38
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3287dffe_1c666e8c",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2193,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-10T14:00:59Z",
+      "side": 1,
+      "message": "If you don\u0027t want this line of code, please delete it completely before landing the CL in the codebase.",
+      "range": {
+        "startLine": 2193,
+        "startChar": 2,
+        "endLine": 2193,
+        "endChar": 73
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
