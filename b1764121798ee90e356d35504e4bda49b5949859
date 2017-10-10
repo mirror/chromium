@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bf6a9e4_cf56f499",
+        "filename": "third_party/WebKit/Source/platform/scheduler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "nit: unittest.",
+      "range": {
+        "startLine": 206,
+        "startChar": 10,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb89928_28753f7c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "Let\u0027s call it OnTracingStarted – it\u0027s more clear than TraceNow.",
+      "range": {
+        "startLine": 2119,
+        "startChar": 38,
+        "endLine": 2119,
+        "endChar": 46
+      },
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec41623_213a6495",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "I believe that we discussed TraceableValue name for this class. Are there any arguments for  having TraceableState instead?",
+      "range": {
+        "startLine": 567,
+        "startChar": 4,
+        "endLine": 567,
+        "endChar": 18
+      },
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd83468f_0d4c2b43",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "Let\u0027s merge StateTracer and this class as discussed.",
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ddaa82_0611eea2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "std::function is banned from Chromium codebase (see https://chromium-cpp.appspot.com/). Let\u0027s use base::Callback or a function pointer.",
+      "range": {
+        "startLine": 88,
+        "startChar": 18,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9726c264_513bec2d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "Let\u0027s drop getters and setters and use only assignment and conversion operators.",
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea249d6e_15503a17",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-10T16:54:56Z",
+      "side": 1,
+      "message": "T\u0026 operator\u003d?",
+      "revId": "b1764121798ee90e356d35504e4bda49b5949859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
