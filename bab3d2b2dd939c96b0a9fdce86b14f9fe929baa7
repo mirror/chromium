@@ -19,6 +19,86 @@
     },
     {
       "key": {
+        "uuid": "378e5ccc_12a41bb5",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T02:07:53Z",
+      "side": 1,
+      "message": "Can |container_request| and |features| could be in the smaller scopes?",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a4b1d5_b76af178",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T02:07:53Z",
+      "side": 1,
+      "message": "nit: you can remove the suffix (\u00271\u0027)",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 61
+      },
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83024f04_fea934ef",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T02:07:53Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 241,
+        "startChar": 47,
+        "endLine": 241,
+        "endChar": 61
+      },
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cc9915_10b2c0a3",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-10T02:07:53Z",
+      "side": 1,
+      "message": "The failure on the trybots seems real. Could you take a look?",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d5e0d6f_4186180d",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 11
