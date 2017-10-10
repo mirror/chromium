@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1fe812_c344c173",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/drags_within_user-select_combos.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-10T02:07:15Z",
+      "side": 1,
+      "message": "Could you use |id\u003d\"img\"| ?",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fb9260_23375a2f",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-10T02:07:15Z",
+      "side": 1,
+      "message": "Since this condition is checked only once in the beginning of the loop as you say,\n could you move this out of the loop using |start_node| ?",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
