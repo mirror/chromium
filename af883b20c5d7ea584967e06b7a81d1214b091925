@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3aedc37_cd3310fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-10-10T17:10:00Z",
+      "side": 1,
+      "message": "This is applicable to all parameters of contact, including X, Y, pressure, and so on. Input core suppresses what it considers \"duplicate\" events already reported for given slot.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af58b936_7e812b5f",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
         "patchSetId": 1
@@ -64,6 +87,29 @@
         "startChar": 31,
         "endLine": 410,
         "endChar": 48
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa25385_e2f5c176",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-10-10T17:10:00Z",
+      "side": 1,
+      "message": "I do not think this is quite right. The condition for palm is we either get MT_TOOL_PALM or large ABS_MT_TOUCH_MAJOR; we are not guaranteed to get both. So if you get ABS_MT_TOOL_TYPE/MT_TOOL_PALM first, and then ABS_MT_TOUCH_MAJOR with smaller value you will end up resetting cancel reason.\n\nI think you need a piece of code to \"finalize\" your touch states once you get EV_SYN/SYN_REPORT event, i.e. when you have complete picture of a contact.",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 0
       },
       "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
