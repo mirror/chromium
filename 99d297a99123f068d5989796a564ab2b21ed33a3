@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7947d72_6d8808bd",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-10T02:40:35Z",
+      "side": 1,
+      "message": "An inadvertent side-effect of this CL is that, because rtp_receivers_ is a\nHeapHashMap\u003cuintptr_t,  // webrtc::RtpReceiverInterface*\n            Member\u003cRTCRtpReceiver\u003e\u003e\nthe receiver order is no longer guaranteed. This might break some apps?\n\nI think I should change rtp_receivers_ to be a vector instead, making this the insertion order instead. WDYT?",
+      "revId": "99d297a99123f068d5989796a564ab2b21ed33a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
