@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4145e6f_53a7d9c0",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T02:03:00Z",
+      "side": 1,
+      "message": "(Unrelated to this CL) |fetcher| looks confusing. Maybe |linker|?",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5475c8_4512d13f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T02:03:00Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081582e4_7c641fae",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T02:03:00Z",
+      "side": 1,
+      "message": "I wonder if we don\u0027t need this \"#if DCHECK_IS_ON()\" because DLOG doesn\u0027t emit references to given parameters unlike DCHECK.\n\nDLOG: https://chromium.googlesource.com/chromium/src/+/35aa56bd9a4c8f6a889289c57be1ef3492b8f972/base/logging.h#791\nDCHECK: https://chromium.googlesource.com/chromium/src/+/35aa56bd9a4c8f6a889289c57be1ef3492b8f972/base/logging.h#832",
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
