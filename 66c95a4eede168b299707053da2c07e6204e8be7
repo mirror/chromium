@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d8d675e_c939b15e",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Done. (Something on the lines of your suggestion.)",
+      "parentUuid": "d0d020f8_1e74250f",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c2c1015_766d9f58",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b986ad35_294e99fe",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c2c1015_766d9f58",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01063fdb_d2c151f3",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "It\u0027s clearer when reading the constructor if the name includes Callback - you understand it\u0027s a callback and not some factory type.\n\nYes, \"CreatePowerObserverHelperCallback\" can be a bit confusing. (Personally I think the type is clear since \"Create\" is a verb, but that\u0027s how I read it. It\u0027s good if clear for all.) Changed to PowerObserverHelperFactoryCallback.",
+      "parentUuid": "011c3db8_d5cd8a47",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f034ab6b_adc5b038",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf5b5ae_d1b41ab0",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f034ab6b_adc5b038",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "975e543f_23b3ea39",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab45af78_70faf197",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b4b286_b9a6914b",
         "filename": "media/audio/alive_checker_unittest.cc",
         "patchSetId": 13
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-06T08:05:03Z",
       "side": 1,
       "message": "Would help reading to have everywhere comments what CreateAliveChecker() parameters (false/true) mean.\nAlso, why no tests for true/true case? At least it requires a comment.",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02338c8f_306cfd65",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "I\u0027ve updated the description for each test (for previous comment) and describe how it\u0027s setup for those not using false/false. That together with the function declaration should be clear enough. Wdyt?",
+      "parentUuid": "f6b4b286_b9a6914b",
       "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e1e7485f_58508448",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f83488_270a6a98",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3efd30d8_9dbd4dbe",
         "filename": "media/audio/audio_input_device.h",
         "patchSetId": 13
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7f60ac2d_51952125",
+        "filename": "media/audio/audio_input_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "Yes, as says the comment. :)",
+      "parentUuid": "3efd30d8_9dbd4dbe",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15fee1a1_1fbf3b1a",
         "filename": "media/audio/power_observer_helper_unittest.cc",
         "patchSetId": 13
@@ -152,6 +296,24 @@
       "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132449ae_5ea524e4",
+        "filename": "media/audio/power_observer_helper_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-10T10:44:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s preferable in a test class, but I\u0027ve done the change anyway. Added a Create function so that no getter for the thread is needed.",
+      "parentUuid": "15fee1a1_1fbf3b1a",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
