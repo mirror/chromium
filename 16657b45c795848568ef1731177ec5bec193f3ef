@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e87315_d1040dd7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-10T18:47:21Z",
+      "side": 0,
+      "message": "These includes were no longer being used.",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "16657b45c795848568ef1731177ec5bec193f3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
