@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09aefe9a_5ea571ff",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-10T15:16:16Z",
+      "side": 1,
+      "message": "Done.  Good catch, haven\u0027t even noticed it!",
+      "parentUuid": "de654bb6_35bb1838",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4fa49a1_f7901824",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399699ea_e9c36032",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-10T15:16:16Z",
+      "side": 1,
+      "message": "There is a thing called \"trusted proxy\" which is only allowed to push non-https resources.  My understanding is that this is the data reduction proxy case.\nhttps://cs.chromium.org/chromium/src/net/spdy/chromium/spdy_session.cc?l\u003d1585",
+      "parentUuid": "a4fa49a1_f7901824",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76efef1f_36f2c517",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-10T15:16:16Z",
+      "side": 1,
+      "message": "Done.  Also rewrote comment for Find() accordingly.  For the record, I personally prefer imperative mood, just like in commit messages, but I understand that indicative mood is the common practice in our codebase.",
+      "parentUuid": "b411914e_e2d809ef",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0f8ad6a_a02f6b78",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef15e39_841a961f",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-10T15:16:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f8ad6a_a02f6b78",
+      "revId": "071e1afe6d04d1e75149b94dfba40b1e8bc7cce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
