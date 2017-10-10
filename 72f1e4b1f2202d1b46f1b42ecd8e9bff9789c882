@@ -16,6 +16,24 @@
       "revId": "72f1e4b1f2202d1b46f1b42ecd8e9bff9789c882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edf2957_42773711",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/BreakpointManager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-10T17:37:36Z",
+      "side": 0,
+      "message": "In general we compare new state with current state. State contains scriptId and scriptHash only in case when raw debugger location is presented and this location points to anonymous script. What can happen:\n- if breakpoint is removed, disabled or script diverged - new state is null and we fast return at line 984,\n- if we don\u0027t have new debugger location then newState will contain url, null as scriptId and as scriptHash - equals(..) will return false the same way as now,\n- if breakpoint is resolved to another debugger location (it means mappings for this url was updated) then function will return false - no changes,\n- if breakpoints is resolved to the same debugger location then breakpoint should already exist in this script and we\u0027ll return true and fast return from _updateInDebugger function at line 828.\n\nAs soon as we drop support for V8 without scriptHash we should drop scriptId here as well and then everything should become less complicated since breakpoint by scriptHash or url can be set once per debugger model.",
+      "parentUuid": "4ec58d56_e3d23e03",
+      "revId": "72f1e4b1f2202d1b46f1b42ecd8e9bff9789c882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
