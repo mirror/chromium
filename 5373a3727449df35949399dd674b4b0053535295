@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4f7ab5_857677a5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T05:56:46Z",
+      "side": 1,
+      "message": "c \u003d\u003e channel_index",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efefb2f_e57807da",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T05:56:46Z",
+      "side": 1,
+      "message": "c \u003d\u003e channel_index",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff550040_b5544642",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T05:56:46Z",
+      "side": 1,
+      "message": "Should we have the following check here?\n\nif (!V8ScriptRunner::CallFunction(...).ToLocal(\u0026result))\n  return false;\n\nIn general we should immediately convert a MaybeLocal handle to a Local handle.",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ae4deb_baa5c620",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-10T05:56:46Z",
+      "side": 1,
+      "message": "DCHECK(Context()-\u003eIsAudioThread()); ?",
+      "revId": "5373a3727449df35949399dd674b4b0053535295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
