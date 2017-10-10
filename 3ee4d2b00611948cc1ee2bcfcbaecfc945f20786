@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d75ab1d_67770dc9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-10T21:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd5bbd72_e30614c5",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 37
+      },
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a1a3a0f_707139b3",
         "filename": "chromeos/dbus/fake_system_clock_client.cc",
         "patchSetId": 36
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6be47659_36bea181",
+        "filename": "chromeos/dbus/fake_system_clock_client.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-10T21:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1a3a0f_707139b3",
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5329fe6_a3d89e3a",
         "filename": "chromeos/dbus/system_clock_client.h",
         "patchSetId": 36
@@ -56,6 +98,24 @@
       "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e38226_250cf68d",
+        "filename": "chromeos/dbus/system_clock_client.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-10T21:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5329fe6_a3d89e3a",
+      "revId": "3ee4d2b00611948cc1ee2bcfcbaecfc945f20786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
