@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "926edd4c_4d1ea371",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-10T02:19:53Z",
+      "side": 1,
+      "message": "Nit for your consideration: This file was formatted with 80 char line length, while the new content is written in 100 char lines. Just slightly distracting but inconsequential.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 95
+      },
+      "revId": "565b071863e3ac34bd4dd383c2c9bd5c95d68e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2a3810_c45e7aee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-10T02:19:53Z",
+      "side": 1,
+      "message": "You didn\u0027t ask me to add a test in crrev.com/c/699714, is this a strict requirement?",
+      "range": {
+        "startLine": 68,
+        "startChar": 22,
+        "endLine": 68,
+        "endChar": 50
+      },
+      "revId": "565b071863e3ac34bd4dd383c2c9bd5c95d68e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b614fc_338e1ce6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-10T02:19:53Z",
+      "side": 1,
+      "message": "PredefinedChannels.STARTUP",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "565b071863e3ac34bd4dd383c2c9bd5c95d68e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
