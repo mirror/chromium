@@ -12,6 +12,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -355,6 +356,11 @@ void BookmarkAppHelper::UpdateWebAppInfoFromManifest(
     web_app_info->scope = manifest.scope;
   else if (manifest.start_url.is_valid())
     web_app_info->scope = manifest.start_url.Resolve(".");
+
+  if (manifest.theme_color != content::Manifest::kInvalidOrMissingColor) {
+    web_app_info->theme_color =
+        base::checked_cast<SkColor>(manifest.theme_color);
+  }
 
   // If any icons are specified in the manifest, they take precedence over any
   // we picked up from the web_app stuff.
