@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b052e951_c18ebb16",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a970b3_cedfb137",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08229147_887b60c7",
         "filename": "chrome/browser/policy/policy_browsertest.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T23:07:45Z",
       "side": 1,
       "message": "I\u0027m curious why some tests does the initialization in SetUpOnMainThread() now, vs in the test ctor.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689098dc_4b5143da",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4398,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "If the test also change feature parameters, it need to change in SetUpOnMainThread. Because in test ctor the FieldTrailList[1] is null and if we set a instance will cause a DCHECK fail when Browser start. I am thinking how to fix this since we still have 2 tests not able to move to ScopedFeatureList because of this.\n\n[1] https://cs.chromium.org/chromium/src/base/metrics/field_trial.h?q\u003dfield\u0026sq\u003dpackage:chromium\u0026l\u003d727",
+      "parentUuid": "08229147_887b60c7",
       "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "03e01b0a_5166629a",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Yes, this method takes 2 list.",
+      "parentUuid": "5e7adc44_867f1d87",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2d51393_a3ece0fc",
         "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
         "patchSetId": 8
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-27T23:07:45Z",
       "side": 1,
       "message": "Does the destruction order matter? i.e. Is it ok for ScopedFeatureList to be destroyed before any of the other member variables here.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1c2c88_9c8a8d58",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "I don\u0027t think scoped_feature_list destruction order matters.",
+      "parentUuid": "f2d51393_a3ece0fc",
       "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "ae6a6e60_3c16c78b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae1662a_5fba2fdd",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab4452f_42a7312e",
         "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
         "patchSetId": 8
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "14ccc6d2_df95a136",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab4452f_42a7312e",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5266b4d_8b2e2eb4",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
         "patchSetId": 8
@@ -124,6 +238,24 @@
       "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c39f02a_cce5ff11",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5266b4d_8b2e2eb4",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "e582d967_b3742029",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2e483c_32740688",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9aa192_c6e90e76",
         "filename": "chrome/common/chrome_features.cc",
         "patchSetId": 8
@@ -164,6 +320,24 @@
       "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174bb0af_d46e1e75",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-10T20:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9aa192_c6e90e76",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
