@@ -45,8 +45,11 @@
 #include "core/layout/line/EllipsisBox.h"
 #include "core/layout/line/GlyphOverflow.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/geometry/FloatQuad.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/text/BidiResolver.h"
 #include "platform/text/Character.h"
@@ -1899,6 +1902,25 @@ LayoutRect LayoutText::LocalSelectionRect() const {
 }
 
 int LayoutText::CaretMinOffset() const {
+  // The LayoutNG version relies on |TextLength()| property, which is correct
+  // only when fragment painting is enabled.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    if (LayoutNGBlockFlow* ng_block_flow = EnclosingNGBlockFlow()) {
+      // TODO(xiaochengh): Fix the behavior when there is ::first-letter or
+      // text-transform changing text length. Also decide if non-trivial result
+      // should be returned for generated content to match the legacy behavior.
+      if (!GetNode())
+        return 0;
+      const unsigned candidate =
+          NGInlineNode(ng_block_flow)
+              .ComputeOffsetMappingIfNeeded()
+              .StartOfNextNonCollapsedCharacter(*GetNode(), 0);
+      // Align with the legacy behavior that 0 is returned if the entire node
+      // contains only collapsed whitespaces.
+      return candidate == TextLength() ? 0 : candidate;
+    }
+  }
+
   InlineTextBox* box = FirstTextBox();
   if (!box)
     return 0;
@@ -1909,6 +1931,25 @@ int LayoutText::CaretMinOffset() const {
 }
 
 int LayoutText::CaretMaxOffset() const {
+  // The LayoutNG version relies on |TextLength()| property, which is correct
+  // only when fragment painting is enabled.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    if (LayoutNGBlockFlow* ng_block_flow = EnclosingNGBlockFlow()) {
+      // TODO(xiaochengh): Fix the behavior when there is ::first-letter or
+      // text-transform changing text length. Also decide if non-trivial result
+      // should be returned for generated content to match the legacy behavior.
+      if (!GetNode())
+        return TextLength();
+      const unsigned candidate =
+          NGInlineNode(ng_block_flow)
+              .ComputeOffsetMappingIfNeeded()
+              .EndOfLastNonCollapsedCharacter(*GetNode(), TextLength());
+      // Align with the legacy behavior that |TextLength()| is returned if the
+      // entire node contains only collapsed whitespaces.
+      return candidate == 0u ? TextLength() : candidate;
+    }
+  }
+
   InlineTextBox* box = LastTextBox();
   if (!LastTextBox())
     return TextLength();
@@ -1920,6 +1961,25 @@ int LayoutText::CaretMaxOffset() const {
 }
 
 unsigned LayoutText::ResolvedTextLength() const {
+  // The LayoutNG version relies on |TextLength()| property, which is correct
+  // only when fragment painting is enabled.
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    if (LayoutNGBlockFlow* ng_block_flow = EnclosingNGBlockFlow()) {
+      // TODO(xiaochengh): Fix the behavior when there is ::first-letter or
+      // text-transform changing text length. Also decide if non-trivial result
+      // should be returned for generated content to match the legacy behavior.
+      if (!GetNode())
+        return 0;
+      const NGOffsetMappingResult& mapping =
+          NGInlineNode(ng_block_flow).ComputeOffsetMappingIfNeeded();
+      unsigned resolved_start = mapping.GetTextContentOffset(*GetNode(), 0);
+      unsigned resolved_end =
+          mapping.GetTextContentOffset(*GetNode(), TextLength());
+      DCHECK_LE(resolved_start, resolved_end);
+      return resolved_end - resolved_start;
+    }
+  }
+
   int len = 0;
   for (InlineTextBox* box : InlineTextBoxesOf(*this))
     len += box->Len();
