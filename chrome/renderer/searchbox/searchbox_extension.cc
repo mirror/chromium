@@ -16,6 +16,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "chrome/common/search/instant_types.h"
 #include "chrome/common/search/ntp_logging_events.h"
 #include "chrome/common/url_constants.h"
@@ -180,6 +181,8 @@ v8::Local<v8::Object> GenerateMostVisitedItem(
            v8::String::NewFromUtf8(isolate, direction));
   obj->Set(v8::String::NewFromUtf8(isolate, "url"),
            UTF8ToV8String(isolate, mv_item.url.spec()));
+  obj->Set(v8::String::NewFromUtf8(isolate, "dataGenerationTimeMs"),
+           v8::Number::New(isolate, mv_item.data_generation_time.ToJsTime()));
   return obj;
 }
 
@@ -201,6 +204,15 @@ content::RenderFrame* GetRenderFrameWithCheckedOrigin(const GURL& origin) {
     return NULL;
 
   return main_frame;
+}
+
+base::Time ConvertToPossiblyNullTime(double value) {
+  // We need to special-case the "null" time because FromJsTime() doesn't do
+  // that.
+  if (value == 0)
+    return base::Time();
+
+  return base::Time::FromJsTime(value);
 }
 
 }  // namespace
@@ -866,8 +878,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
   if (!render_frame)
     return;
 
-  if (args.Length() < 4 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
-      !args[2]->IsNumber() || !args[3]->IsNumber()) {
+  if (args.Length() < 5 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
+      !args[2]->IsNumber() || !args[3]->IsNumber() || !args[4]->IsNumber()) {
     ThrowInvalidParameters(args);
     return;
   }
@@ -885,6 +897,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedImpression(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        /*data_generation_time=*/
+        ConvertToPossiblyNullTime(args[4]->NumberValue()),
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedImpression(impression);
   }
@@ -898,8 +912,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
   if (!render_frame)
     return;
 
-  if (args.Length() < 4 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
-      !args[2]->IsNumber() || !args[3]->IsNumber()) {
+  if (args.Length() < 5 || !args[0]->IsNumber() || !args[1]->IsNumber() ||
+      !args[2]->IsNumber() || !args[3]->IsNumber() || !args[4]->IsNumber()) {
     ThrowInvalidParameters(args);
     return;
   }
@@ -917,6 +931,8 @@ void SearchBoxExtensionWrapper::LogMostVisitedNavigation(
         static_cast<ntp_tiles::TileTitleSource>(args[1]->Uint32Value()),
         /*visual_type=*/
         static_cast<ntp_tiles::TileVisualType>(args[3]->Uint32Value()),
+        /*data_generation_time=*/
+        ConvertToPossiblyNullTime(args[4]->NumberValue()),
         /*url_for_rappor=*/GURL());
     SearchBox::Get(render_frame)->LogMostVisitedNavigation(impression);
   }
