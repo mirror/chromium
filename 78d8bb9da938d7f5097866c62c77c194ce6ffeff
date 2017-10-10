@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc238ba_17880582",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T20:28:52Z",
+      "side": 1,
+      "message": "nit: Log out if user is not allowed after settings are changed",
+      "revId": "78d8bb9da938d7f5097866c62c77c194ce6ffeff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888f83ff_b233037b",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-10T20:28:52Z",
+      "side": 1,
+      "message": "nit: is -\u003e are",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 48
+      },
+      "revId": "78d8bb9da938d7f5097866c62c77c194ce6ffeff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
