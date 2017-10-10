@@ -27,6 +27,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "chromeos/chromeos_switches.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
@@ -172,6 +173,12 @@ class LockActionHandlerLayoutManagerTestWithTestBackgroundController
   LockActionHandlerLayoutManagerTestWithTestBackgroundController() = default;
   ~LockActionHandlerLayoutManagerTestWithTestBackgroundController() override =
       default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        chromeos::switches::kShowMdLogin);
+    LockActionHandlerLayoutManagerTest::SetUp();
+  }
 
   void TearDown() override {
     LockActionHandlerLayoutManagerTest::TearDown();
