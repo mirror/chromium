@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef9ab289_8f9e9cd7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-10T20:46:20Z",
+      "side": 1,
+      "message": "Fair point. I was just thinking about DevTools because almost all of our tests are text-based :)\n\nIt already prints out the failure type so I think we\u0027re OK here. I think we can make this better later? (e.g. for pixel-based tests, give it the correct diff link). For now, I\u0027ll only print the link to pretty diff if it\u0027s a text mismatch.\n\nExample output:\n[1/1] http/tests/devtools/unit/list-model.js failed unexpectedly (test timed out)\nFinished running tests\nInteractive watch mode: (q)uit (r)etry",
+      "parentUuid": "157ca697_0bc7f19e",
+      "revId": "0316191530bd106ff6b4aea7f743137bce40bb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2820fa85_2ad85b38",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-07T17:04:29Z",
       "side": 1,
       "message": "If you get user input via self._port.host.user.prompt() rather than raw_input, then that would make it easier to replace in unit tests. It would be more like:\n\n    user_input \u003d self._port.host.user.prompt(\n        \u0027Interactive watch mode: (q)uit (r)etry\u0027)\n\nLooking at MockUser right now (https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/system/user_mock.py), it looks like to add tests you might want to modify MockUser to allow you to set the raw_input_func or canned user response.",
+      "revId": "0316191530bd106ff6b4aea7f743137bce40bb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47733ed_ed2c2b53",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-10T20:46:20Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "2820fa85_2ad85b38",
       "revId": "0316191530bd106ff6b4aea7f743137bce40bb33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
