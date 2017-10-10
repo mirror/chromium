@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04fb04ae_e796d1c4",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:41:18Z",
+      "side": 1,
+      "message": "See comments below about request vs response.",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880bfe22_93f74919",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:41:18Z",
+      "side": 1,
+      "message": "Hrm. I wonder if we need to copy the whole `data:` URL here. That could potentially be a ton of memory. Perhaps `GURL()` would be enough?",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8dc80d_945e9380",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-10T16:41:18Z",
+      "side": 1,
+      "message": "I don\u0027t think the `request-\u003eurl()` is updated across redirects, is it?\n\nCan you add some tests to lock things in one way or the other, and verify that we\u0027re passing the right data around in this struct?",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
