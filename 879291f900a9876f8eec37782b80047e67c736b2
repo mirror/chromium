@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24a4448_5d7c47ef",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12591,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T23:27:47Z",
+      "side": 1,
+      "message": "Boolean not success?",
+      "range": {
+        "startLine": 12591,
+        "startChar": 10,
+        "endLine": 12591,
+        "endChar": 24
+      },
+      "revId": "879291f900a9876f8eec37782b80047e67c736b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a37067_e82f94ab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12612,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T23:27:47Z",
+      "side": 1,
+      "message": "whats the net error if there is no error",
+      "revId": "879291f900a9876f8eec37782b80047e67c736b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af46d310_3562204e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12620,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T23:27:47Z",
+      "side": 1,
+      "message": "s/proxy/proxy server/",
+      "range": {
+        "startLine": 12620,
+        "startChar": 28,
+        "endLine": 12620,
+        "endChar": 33
+      },
+      "revId": "879291f900a9876f8eec37782b80047e67c736b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7a3b57_180d18dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12620,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-10T23:27:47Z",
+      "side": 1,
+      "message": "spacing",
+      "range": {
+        "startLine": 12620,
+        "startChar": 7,
+        "endLine": 12620,
+        "endChar": 8
+      },
+      "revId": "879291f900a9876f8eec37782b80047e67c736b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
