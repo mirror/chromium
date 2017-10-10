@@ -457,6 +457,7 @@ class PathVerifier {
   // follows the description in RFC 5937
   void ProcessRootCertificate(const ParsedCertificate& cert,
                               const CertificateTrust& trust,
+                              bool is_leaf_cert,
                               KeyPurpose required_key_purpose,
                               CertErrors* errors);
 
@@ -1086,6 +1087,7 @@ void PathVerifier::ApplyTrustAnchorConstraints(const ParsedCertificate& cert,
 
 void PathVerifier::ProcessRootCertificate(const ParsedCertificate& cert,
                                           const CertificateTrust& trust,
+                                          bool is_leaf_cert,
                                           KeyPurpose required_key_purpose,
                                           CertErrors* errors) {
   // Use the certificate's SPKI and subject when verifying the next certificate.
@@ -1105,9 +1107,19 @@ void PathVerifier::ProcessRootCertificate(const ParsedCertificate& cert,
       break;
     case CertificateTrustType::TRUSTED_ANCHOR:
     case CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS:
+      if (is_leaf_cert) {
+        errors->AddError(cert_errors::kTrustAnchorUsedAsLeaf);
+      }
       // If the trust anchor has constraints, enforce them.
       if (trust.type == CertificateTrustType::TRUSTED_ANCHOR_WITH_CONSTRAINTS) {
         ApplyTrustAnchorConstraints(cert, required_key_purpose, errors);
+      }
+      break;
+    case CertificateTrustType::TRUSTED_ANCHOR_OR_LEAF:
+      break;
+    case CertificateTrustType::TRUSTED_LEAF:
+      if (!is_leaf_cert) {
+        errors->AddError(cert_errors::kTrustLeafUsedAsAnchor);
       }
       break;
   }
@@ -1152,13 +1164,6 @@ void PathVerifier::Run(
   // An empty chain is necessarily invalid.
   if (certs.empty()) {
     errors->GetOtherErrors()->AddError(cert_errors::kChainIsEmpty);
-    return;
-  }
-
-  // TODO(eroman): Verifying a trusted leaf certificate is not currently
-  // permitted.
-  if (certs.size() == 1) {
-    errors->GetOtherErrors()->AddError(cert_errors::kChainIsLength1);
     return;
   }
 
@@ -1220,8 +1225,8 @@ void PathVerifier::Run(
     CertErrors* cert_errors = errors->GetErrorsForCert(index_into_certs);
 
     if (is_root_cert) {
-      ProcessRootCertificate(cert, last_cert_trust, required_key_purpose,
-                             cert_errors);
+      ProcessRootCertificate(cert, last_cert_trust, is_target_cert,
+                             required_key_purpose, cert_errors);
 
       // Don't do any other checks for root certificates.
       continue;

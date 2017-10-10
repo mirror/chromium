@@ -166,16 +166,12 @@ TEST_F(PathBuilderMultiRootTest, TargetHasNameAndSpkiOfTrustAnchor) {
 
   path_builder.Run();
 
-  ASSERT_FALSE(result.HasValidPath());
+  ASSERT_TRUE(result.HasValidPath());
 
-  // TODO(eroman): This probably should have succeeded and found the path below.
-  // It fails right now because path building stops on trust anchors (and the
-  // end entity is added as a trust anchor).
-  //
-  // const auto& path = result.GetBestValidPath()->path;
-  // ASSERT_EQ(2U, path.certs.size());
-  // EXPECT_EQ(a_by_b_, path.certs[0]);
-  // EXPECT_EQ(b_by_f_, path.certs[1]);
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(2U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+  EXPECT_EQ(b_by_f_, path.certs[1]);
 }
 
 // If the target cert is has the same name and key as a trust anchor, however
@@ -251,16 +247,14 @@ TEST_F(PathBuilderMultiRootTest, TargetIsSelfSignedTrustAnchor) {
 
   path_builder.Run();
 
-  ASSERT_FALSE(result.HasValidPath());
+  ASSERT_TRUE(result.HasValidPath());
 
-  // TODO(eroman): This test currently fails because path building stops
-  // searching once it identifies a certificate as a trust anchor. In this case
-  // the target is a trust anchor, however could be verified using the
-  // self-signedness (or even the cert itself).
-  // const auto& path = result.GetBestValidPath()->path;
-  // ASSERT_EQ(2U, path.certs.size());
-  // EXPECT_EQ(e_by_e_, path.certs[0]);
-  // EXPECT_EQ(e_by_e_, path.certs[1]);
+  // In this case the target is a trust anchor, and can be verified using the
+  // self-signedness.
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(2U, path.certs.size());
+  EXPECT_EQ(e_by_e_, path.certs[0]);
+  EXPECT_EQ(e_by_e_, path.certs[1]);
 }
 
 // If the target cert is directly issued by a trust anchor, it should verify
@@ -452,6 +446,185 @@ TEST_F(PathBuilderMultiRootTest, TestCertIssuerOrdering) {
     EXPECT_EQ(c_by_d_, path.certs[2]);
     EXPECT_EQ(d_by_d_, path.certs[3]);
   }
+}
+
+TEST_F(PathBuilderMultiRootTest, TargetEndEntityTrustedAnchorOrLeaf) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustAnchorOrLeaf(a_by_b_);
+  // This is not necessary for the test, just an extra...
+  trust_store.AddTrustAnchor(b_by_c_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(1U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+}
+
+TEST_F(PathBuilderMultiRootTest, TargetCATrustedAnchorOrLeaf) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustAnchorOrLeaf(b_by_c_);
+  // This is not necessary for the test, just an extra...
+  trust_store.AddTrustAnchor(c_by_d_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      b_by_c_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(1U, path.certs.size());
+  EXPECT_EQ(b_by_c_, path.certs[0]);
+}
+
+TEST_F(PathBuilderMultiRootTest, TargetTrustedLeaf) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustLeaf(a_by_b_);
+  // This is not necessary for the test, just an extra...
+  trust_store.AddTrustAnchor(b_by_c_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(1U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+}
+
+TEST_F(PathBuilderMultiRootTest, TargetTrustedAnchorNoValidChain) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustAnchor(a_by_b_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_FALSE(result.HasValidPath());
+}
+
+TEST_F(PathBuilderMultiRootTest,
+       TargetTrustedAnchorSucceedsThroughOtherAnchor) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustAnchor(a_by_b_);
+  trust_store.AddTrustAnchor(b_by_c_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(2U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+  EXPECT_EQ(b_by_c_, path.certs[1]);
+}
+
+TEST_F(PathBuilderMultiRootTest, RootTrustedAnchorOrLeaf) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddTrustAnchorOrLeaf(b_by_c_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(2U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+  EXPECT_EQ(b_by_c_, path.certs[1]);
+}
+
+TEST_F(PathBuilderMultiRootTest, DistrustedTarget) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddDistrustedCertificateForTest(a_by_b_);
+  trust_store.AddTrustAnchor(b_by_c_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_FALSE(result.HasValidPath());
+}
+
+TEST_F(PathBuilderMultiRootTest, DistrustedIntermediateNoValidPath) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddDistrustedCertificateForTest(b_by_c_);
+  trust_store.AddTrustAnchor(c_by_d_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+
+  path_builder.Run();
+
+  ASSERT_FALSE(result.HasValidPath());
+}
+
+TEST_F(PathBuilderMultiRootTest,
+       DistrustedIntermediateSucceedsThroughOtherPath) {
+  TrustStoreInMemory trust_store;
+  trust_store.AddDistrustedCertificateForTest(b_by_c_);
+  trust_store.AddTrustAnchor(f_by_e_);
+
+  AsyncCertIssuerSourceStatic async_certs;
+  async_certs.AddCert(b_by_f_);
+
+  CertPathBuilder::Result result;
+  CertPathBuilder path_builder(
+      a_by_b_, &trust_store, &delegate_, time_, KeyPurpose::ANY_EKU,
+      initial_explicit_policy_, user_initial_policy_set_,
+      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_, &result);
+  path_builder.AddCertIssuerSource(&async_certs);
+
+  path_builder.Run();
+
+  ASSERT_TRUE(result.HasValidPath());
+
+  const auto& path = result.GetBestValidPath()->path;
+  ASSERT_EQ(3U, path.certs.size());
+  EXPECT_EQ(a_by_b_, path.certs[0]);
+  EXPECT_EQ(b_by_f_, path.certs[1]);
+  EXPECT_EQ(f_by_e_, path.certs[2]);
 }
 
 class PathBuilderKeyRolloverTest : public ::testing::Test {

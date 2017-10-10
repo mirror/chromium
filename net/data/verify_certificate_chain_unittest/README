@@ -51,6 +51,8 @@ The possible keys are:
       maps to the CertificateTrustType enum. Possible values are:
           "TRUSTED_ANCHOR"
           "TRUSTED_ANCHOR_WITH_CONSTRAINTS"
+          "TRUSTED_ANCHOR_OR_LEAF"
+          "TRUSTED_LEAF"
           "UNSPECIFIED"
           "DISTRUSTED"
 

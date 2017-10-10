@@ -31,6 +31,13 @@ enum class CertificateTrustType {
   // verification process. See VerifyCertificateChain() for details on how
   // constraints are applied.
   TRUSTED_ANCHOR_WITH_CONSTRAINTS,
+
+  // This certificate is a trust anchor, and may also be used as a trusted
+  // end-entity certificicate.
+  TRUSTED_ANCHOR_OR_LEAF,
+
+  // This certificate is a trusted end-entity.
+  TRUSTED_LEAF,
 };
 
 // Describes the level of trust in a certificate. See CertificateTrustType for
@@ -40,6 +47,8 @@ enum class CertificateTrustType {
 struct NET_EXPORT CertificateTrust {
   static CertificateTrust ForTrustAnchor();
   static CertificateTrust ForTrustAnchorEnforcingConstraints();
+  static CertificateTrust ForTrustAnchorOrLeaf();
+  static CertificateTrust ForTrustLeaf();
   static CertificateTrust ForUnspecified();
   static CertificateTrust ForDistrusted();
 

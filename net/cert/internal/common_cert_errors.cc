@@ -11,14 +11,14 @@ namespace cert_errors {
 DEFINE_CERT_ERROR_ID(kValidityFailedNotAfter, "Time is after notAfter");
 DEFINE_CERT_ERROR_ID(kValidityFailedNotBefore, "Time is before notBefore");
 DEFINE_CERT_ERROR_ID(kDistrustedByTrustStore, "Distrusted by trust store");
+DEFINE_CERT_ERROR_ID(kTrustAnchorUsedAsLeaf, "Trust anchor used as leaf");
+DEFINE_CERT_ERROR_ID(kTrustLeafUsedAsAnchor, "Trust leaf used as anchor");
 
 DEFINE_CERT_ERROR_ID(
     kSignatureAlgorithmMismatch,
     "Certificate.signatureAlgorithm != TBSCertificate.signature");
 
 DEFINE_CERT_ERROR_ID(kChainIsEmpty, "Chain is empty");
-DEFINE_CERT_ERROR_ID(kChainIsLength1,
-                     "TODO: Cannot verify a chain of length 1");
 DEFINE_CERT_ERROR_ID(kUnconsumedCriticalExtension,
                      "Unconsumed critical extension");
 DEFINE_CERT_ERROR_ID(
