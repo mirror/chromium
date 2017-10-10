@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d56c6844_ab4e65b9",
+        "filename": "device/hid/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-10T23:06:47Z",
+      "side": 1,
+      "message": "In next CL the client library files will be moved into public/cpp folder. Before that we just put this target in public_deps. After the hid implementations are moved into //service/device, clients shouldn\u0027t depend on //device/hid any more, instead they should depends on //services/device/public/{interface|cpp}.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "16b384735ce181ceee2a5f8265bbed3c49779252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
