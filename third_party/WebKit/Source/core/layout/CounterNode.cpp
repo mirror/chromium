@@ -142,7 +142,7 @@ CounterNode* CounterNode::PreviousInPreOrder() const {
 }
 
 int CounterNode::ComputeCountInParent() const {
-  int increment = ActsAsReset() ? 0 : value_;
+  int increment = ActsAsReset() ? 0 : Value();
   if (previous_sibling_)
     return previous_sibling_->count_in_parent_ + increment;
   DCHECK_EQ(parent_->first_child_, this);

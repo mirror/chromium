@@ -22,6 +22,7 @@
 #ifndef CounterNode_h
 #define CounterNode_h
 
+#include "core/style/CounterValue.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
@@ -85,8 +86,8 @@ class CounterNode : public RefCounted<CounterNode> {
   void Recount();
 
   bool has_reset_type_;
-  int value_;
-  int count_in_parent_;
+  CounterValue value_;
+  CounterValue count_in_parent_;
   LayoutObject& owner_;
   LayoutCounter* root_layout_object_;
 
