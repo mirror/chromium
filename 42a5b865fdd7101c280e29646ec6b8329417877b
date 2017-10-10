@@ -16,6 +16,24 @@
       "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69365ed6_3bbfa537",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-10T12:59:57Z",
+      "side": 1,
+      "message": "Oh... I meant \"for tests that check console messages (i.e., UseCounter tests)\". I\u0027ll add it in the next patchset.",
+      "parentUuid": "f77f2d9b_cf3c9efb",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
