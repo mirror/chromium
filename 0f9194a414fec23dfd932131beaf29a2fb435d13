@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0e9cc1c_4536a1d6",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77cc46c5_8c22cd51",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a70d4329_0969afc7",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2c77b1f6_d1b26d48",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70d4329_0969afc7",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f2aa37a_510b83e1",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-09T15:23:32Z",
       "side": 1,
       "message": "We should reach Parse() unless it has the path (unless we ever set AlwaysParseForType())",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab91bc2_927fe69e",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "Ohhhh. Okay. Done.",
+      "parentUuid": "9f2aa37a_510b83e1",
       "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f22c24c2_54c2cd84",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "It doesn\u0027t handle alpha except for HSLA. I could change ParseCssColorString to support rgba, or make the hex color parser support #RRGGBBAA but I\u0027d rather not reparse a color string for an internal representation. I guess storing a human-readable format is good if we ever want to open this up to other apps.\n\nI\u0027m kind of leaning towards quickly implementing the rgba() parser. Devlin, any thoughts?",
+      "parentUuid": "1023d575_7eb46a06",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6531cdf3_17858658",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 15
@@ -84,6 +156,42 @@
       "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b93b68_2a90c5cd",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "6531cdf3_17858658",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dfe3dd_e555c97d",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-10T04:44:03Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "6531cdf3_17858658",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
