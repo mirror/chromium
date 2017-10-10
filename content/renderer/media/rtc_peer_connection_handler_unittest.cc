@@ -1015,9 +1015,8 @@ TEST_F(RTCPeerConnectionHandlerTest, GetRTCStats) {
   EXPECT_EQ(defined_stats_count, 1);
 }
 
-TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
+TEST_F(RTCPeerConnectionHandlerTest, VerifyInternalReceivers) {
   std::vector<blink::WebMediaStream> remote_streams;
-  std::vector<std::unique_ptr<blink::WebRTCRtpReceiver>> receivers_added;
 
   rtc::scoped_refptr<webrtc::MediaStreamInterface> remote_stream(
       AddRemoteMockMediaStream("remote_stream", "video", "audio"));
@@ -1025,10 +1024,9 @@ TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
   // added to the PC.
   EXPECT_CALL(*mock_client_.get(), DidAddRemoteTrackForMock(_))
       .WillRepeatedly(
-          Invoke([&remote_streams, &receivers_added](
+          Invoke([&remote_streams](
                      std::unique_ptr<blink::WebRTCRtpReceiver>* receiver) {
             remote_streams.push_back((*receiver)->Streams()[0]);
-            receivers_added.push_back(std::move(*receiver));
           }));
 
   rtc::scoped_refptr<webrtc::MediaStreamInterface> stream0(
@@ -1042,9 +1040,6 @@ TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
   InvokeOnAddStream(stream1);
   InvokeOnAddStream(stream2);
   RunMessageLoopsUntilIdle();
-  EXPECT_TRUE(HasReceiverForEveryTrack(stream0, receivers_added));
-  EXPECT_TRUE(HasReceiverForEveryTrack(stream1, receivers_added));
-  EXPECT_TRUE(HasReceiverForEveryTrack(stream2, receivers_added));
 
   std::set<std::string> expected_remote_track_ids;
   expected_remote_track_ids.insert("video0");
@@ -1069,9 +1064,8 @@ TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
   EXPECT_EQ(expected_remote_track_ids, remote_track_ids);
 
   blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>> receivers =
-      pc_handler_->GetReceivers();
+      pc_handler_->GetReceiversForTesting();
   EXPECT_EQ(remote_track_ids.size(), receivers.size());
-  EXPECT_EQ(receivers_added.size(), receivers.size());
   std::set<uintptr_t> receiver_ids;
   std::set<std::string> receiver_track_ids;
   for (const auto& receiver : receivers) {
@@ -1080,6 +1074,12 @@ TEST_F(RTCPeerConnectionHandlerTest, GetReceivers) {
   }
   EXPECT_EQ(expected_remote_track_ids.size(), receiver_ids.size());
   EXPECT_EQ(expected_remote_track_ids.size(), receiver_track_ids.size());
+
+  InvokeOnRemoveStream(stream0);
+  InvokeOnRemoveStream(stream1);
+  InvokeOnRemoveStream(stream2);
+  RunMessageLoopsUntilIdle();
+  EXPECT_EQ(pc_handler_->GetReceiversForTesting().size(), 0u);
 }
 
 TEST_F(RTCPeerConnectionHandlerTest, OnSignalingChange) {
