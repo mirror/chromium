@@ -148,6 +148,20 @@ void BackgroundFetchServiceImpl::GetDeveloperIds(
       service_worker_registration_id, std::move(callback));
 }
 
+void BackgroundFetchServiceImpl::AddRegistrationObserver(
+    const std::string& unique_id,
+    blink::mojom::BackgroundFetchRegistrationObserverPtr observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!base::IsValidGUID(unique_id)) {
+    bad_message::ReceivedBadMessage(render_process_id_,
+                                    bad_message::BFSI_INVALID_UNIQUE_ID);
+    return;
+  }
+
+  background_fetch_context_->AddRegistrationObserver(unique_id,
+                                                     std::move(observer));
+}
+
 bool BackgroundFetchServiceImpl::ValidateDeveloperId(
     const std::string& developer_id) {
   if (developer_id.empty() || developer_id.size() > kMaxDeveloperIdLength) {
