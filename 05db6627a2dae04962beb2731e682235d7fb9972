@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "61866a47_98c92596",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-10T21:32:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "07a679e6_774accca",
+      "range": {
+        "startLine": 1173,
+        "startChar": 49,
+        "endLine": 1173,
+        "endChar": 53
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a162f5b_618c793f",
         "filename": "content/common/BUILD.gn",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Actually, think it would be better (And simpler) to make it per-NetworkContext (With a test that only one network context is affected, though a unit test is fine)",
       "parentUuid": "72d86ea4_90b51472",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee67da8_7685214d",
+        "filename": "content/network/throttling/throttling_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-10T21:32:02Z",
+      "side": 1,
+      "message": "Sounds good, but let\u0027s rather make this as a follow-up. I\u0027m also a bit worried for AppRequestContext in the browser and the way headless it about to use it.",
+      "parentUuid": "3b747df5_a37e078c",
       "range": {
         "startLine": 77,
         "startChar": 20,
