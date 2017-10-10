@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9638aa6_b87ed03a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-10T23:55:48Z",
+      "side": 1,
+      "message": "These three methods share a lot of logic. How about adding a helper that returns an NGOffsetMappingResult object?\n\ni.e. something like\n\nconst NGOffsetMappingResult\u0026 OffsetMappingForNode() {\n  // TODO first letter\n  LayoutNGBlockFlow* ng_block_flow \u003d EnclosingNGBlockFlow();\n  // Check node etc.\n  return NGInlineNode(ng_block_flow).ComputeOffsetMappingIfNeeded();\n}",
+      "range": {
+        "startLine": 1964,
+        "startChar": 9,
+        "endLine": 1964,
+        "endChar": 17
+      },
+      "revId": "c34130439832824136e238e314f02bcba478eaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
