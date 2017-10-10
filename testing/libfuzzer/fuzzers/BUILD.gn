@@ -482,6 +482,22 @@ fuzzer_test("hash_fuzzer") {
   ]
 }
 
+source_set("css_proto_converter") {
+  sources = [
+    "css_proto_converter.cc",
+    "css_proto_converter.h",
+  ]
+  deps = [
+    ":css_proto",
+  ]
+}
+
+proto_library("css_proto") {
+  sources = [
+    "css.proto",
+  ]
+}
+
 # third_party/minizip/src is checked out only on unix platform by gclient.
 if (is_linux) {
   # TODO(yawano): Add compress test case

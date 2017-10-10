@@ -211,6 +211,7 @@ static_library("protobuf_full") {
 
     # requires descriptors & reflection; testonly.
     "//third_party/libprotobuf-mutator:*",
+    "//third_party/pdfium/testing/libfuzzer:pdf_css_proto_fuzzer",
 
     # The traffic_annotation tool is not part of Chrome itself, and needs to
     # parse human-readable protobufs.

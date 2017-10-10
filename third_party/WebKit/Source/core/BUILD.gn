@@ -1785,3 +1785,15 @@ fuzzer_test("content_security_policy_fuzzer") {
   dict = "//testing/libfuzzer/fuzzers/dicts/content_security_policy.dict"
   seed_corpus = "//testing/libfuzzer/fuzzers/content_security_policy_corpus"
 }
+
+fuzzer_test("css_parser_proto_fuzzer") {
+  sources = [
+    "css/parser/CSSParserProtoFuzzer.cpp",
+  ]
+  deps = [
+    ":core",
+    "//testing/libfuzzer/fuzzers:css_proto_converter",
+    "//third_party/WebKit/Source/platform:blink_fuzzer_test_support",
+    "//third_party/libprotobuf-mutator",
+  ]
+}
