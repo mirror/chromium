@@ -22,6 +22,10 @@ interface AudioOutputStream {
   SetVolume(double volume);
 };
 
+interface AudioOutputStreamClient {
+  OnError();
+};
+
 interface AudioOutputStreamProvider {
   // Creates a new AudioOutputStream using |params|. |shared_buffer| and
   // |socket_descriptor| are used to write data to the stream as defined
@@ -31,6 +35,6 @@ interface AudioOutputStreamProvider {
   // * |socket_descriptor| is a descriptor from which a
   //   base::CancelableSyncSocket can be constructed.
   // Can only be called once.
-  Acquire(AudioOutputStream& output_stream, AudioParameters params)
+  Acquire(AudioOutputStream& output_stream, AudioOutputStreamClient client, AudioParameters params)
   => (handle<shared_buffer> shared_buffer, handle socket_descriptor);
 };
