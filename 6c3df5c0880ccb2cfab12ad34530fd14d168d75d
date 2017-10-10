@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7995569d_400f8dd5",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-10T04:34:44Z",
+      "side": 1,
+      "message": "Please add DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 2
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25073e5_9f2b8686",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-10T04:34:44Z",
+      "side": 1,
+      "message": "When is_locked is true, I think mode_ should be Mode::BUTTONS_ONLY.",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 74
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb0b2c9_87f01a96",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-10T04:34:44Z",
+      "side": 1,
+      "message": "Can we set the bounds only for visible views? Calling SetBounds invokes Layout which is heavy and now we want to avoid unnecessary layouting.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 66
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced58bc8_8a5e6fe9",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-10T04:34:44Z",
+      "side": 1,
+      "message": "If the height must be kEmptyViewHeight, passing kEmptyViewHeight is enough?",
+      "range": {
+        "startLine": 305,
+        "startChar": 40,
+        "endLine": 305,
+        "endChar": 64
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a13654_3f3eb857",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-10T04:34:44Z",
+      "side": 1,
+      "message": "Now we have 4 mode and it gets somewhat complex. Could you add a brief explanation for each mode?",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 75
+      },
+      "revId": "6c3df5c0880ccb2cfab12ad34530fd14d168d75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
