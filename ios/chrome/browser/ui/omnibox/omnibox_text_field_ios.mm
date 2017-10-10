@@ -51,7 +51,6 @@ const CGFloat kClearButtonRightMarginIpad = 12;
 // omnibox border.
 const CGFloat kTextAreaLeadingOffset = -2;
 
-// TODO(rohitrao): Should this be pulled from somewhere else?
 const CGFloat kStarButtonWidth = 36;
 const CGFloat kVoiceSearchButtonWidth = 36.0;
 
@@ -92,8 +91,37 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 @end
 
+#pragma mark - LocationBarView
+
+@implementation LocationBarView
+@synthesize textField = _textField;
+
+- (instancetype)initWithFrame:(CGRect)frame
+                         font:(UIFont*)font
+                    textColor:(UIColor*)textColor
+                    tintColor:(UIColor*)tintColor {
+  self = [super initWithFrame:frame];
+  if (self) {
+    frame.origin.x = 0;
+    frame.origin.y = 0;
+    _textField = [[OmniboxTextFieldIOS alloc] initWithFrame:frame
+                                                       font:font
+                                                  textColor:textColor
+                                                  tintColor:tintColor];
+    [self addSubview:_textField];
+  }
+  return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.textField.frame = self.bounds;
+}
+
+@end
+
 #pragma mark -
-#pragma mark OmniboxTextFieldIOS
+#pragma mark OmniboxTextField
 
 @implementation OmniboxTextFieldIOS {
   UILabel* _selection;
@@ -502,8 +530,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // attributed string to -systemFontOfSize fixes part of the problem, but the
   // baseline changes so text is out of alignment.
   [self setFont:_font];
-  // TODO(justincohen): Find a better place to put this, and consolidate it with
-  // the same call in omniboxViewIOS.
   [self updateTextDirection];
 }
 
@@ -731,6 +757,12 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // First find how much (if any) of the scheme/host needs to be clipped so that
   // the end of the TLD fits in |rect|. Note that if the omnibox is currently
   // displaying a search query the prefix is not clipped.
+
+  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
+    // -[UITextField drawTextInRect:] ignores the argument.
+    return rect;
+  }
+
   CGFloat widthOfClippedPrefix = 0;
   url::Component scheme, host;
   AutocompleteInput::ParseForEmphasizeComponents(
@@ -783,13 +815,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 // Enumerate url components (host, path) and draw each one in different rect.
 - (void)drawTextInRect:(CGRect)rect {
-  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
-    // -[UITextField drawTextInRect:] ignores the argument, so we can't do
-    // anything on 11.1 and up.
-    [super drawTextInRect:rect];
-    return;
-  }
-
   // Save and restore the graphics state because rectForDrawTextInRect may
   // apply an image mask to fade out beginning and/or end of the URL.
   gfx::ScopedCGContextSaveGState saver(UIGraphicsGetCurrentContext());
