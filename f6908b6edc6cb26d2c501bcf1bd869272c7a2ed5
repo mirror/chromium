@@ -22,6 +22,30 @@
       "revId": "f6908b6edc6cb26d2c501bcf1bd869272c7a2ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaffa8a9_655753f8",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-10T23:46:19Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "1139e67f_8bce9e00",
+      "range": {
+        "startLine": 596,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 63
+      },
+      "revId": "f6908b6edc6cb26d2c501bcf1bd869272c7a2ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
