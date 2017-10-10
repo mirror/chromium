@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77299fc5_410cc206",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-10T01:10:08Z",
+      "side": 1,
+      "message": "I think we may have some compat issues here because Safari, Firefox, Edge, and Chrome all disagree on what should be returned in the testcase in https://crbug.com/772707.\n\nWDYT of trying to get this addressed more formally in https://github.com/w3c/svgwg/issues/349 and then creating a web platform test for this case?",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
