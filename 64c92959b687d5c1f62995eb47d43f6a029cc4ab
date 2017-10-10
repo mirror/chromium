@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66bc380d_df1e75ad",
+        "filename": "chromecast/app/cast_main_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-10T22:57:39Z",
+      "side": 1,
+      "message": "Why?  This was just changed here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/705399",
+      "revId": "64c92959b687d5c1f62995eb47d43f6a029cc4ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
