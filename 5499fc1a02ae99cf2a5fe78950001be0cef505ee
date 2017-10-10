@@ -22,6 +22,30 @@
       "revId": "5499fc1a02ae99cf2a5fe78950001be0cef505ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d232c3d5_a7e31c75",
+        "filename": "components/payments/content/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-10T14:48:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c574a5_8d5edaa6",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 34
+      },
+      "revId": "5499fc1a02ae99cf2a5fe78950001be0cef505ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
