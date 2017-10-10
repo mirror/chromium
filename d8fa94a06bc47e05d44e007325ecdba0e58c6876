@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44ccdb31_bdf9eb30",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "963232b7_c982f9e2",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c2aca3_2570dda0",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8f96dc6b_cf699f59",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c2aca3_2570dda0",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddde4f78_19aa1f8a",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-10T18:54:44Z",
       "side": 1,
       "message": "IfPossible -\u003e IfNeeded.",
+      "range": {
+        "startLine": 92,
+        "startChar": 41,
+        "endLine": 92,
+        "endChar": 73
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff5c75e_ee676e93",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "I feel that \"IfPossible\" sounds better than \"IfNeeded\" because the strategy is to post the frame whenever the main thread is available; we lean to post it. If changing it to \"IfNeeded\" it sounds like \"we lean not to post it, unless it is needed by the main thread\" which in some cases it is not true, the main thread might not call convertToBlob() or similar functions at all and it then does not need the frames but we still post them.",
+      "parentUuid": "ddde4f78_19aa1f8a",
       "range": {
         "startLine": 92,
         "startChar": 41,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "53865c74_8fd0271f",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "Same reason as above. The function is overridden in unit test.",
+      "parentUuid": "9ecfd234_8c8d930b",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8cad83_0e507634",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df3a142_0cc8d8ea",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "Done. Adding it as a DCHECK instead.",
+      "parentUuid": "9b8cad83_0e507634",
+      "range": {
+        "startLine": 410,
+        "startChar": 6,
+        "endLine": 410,
+        "endChar": 34
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0c43e9d0_8f5699fc",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "Done. Adding it to unit test as well.",
+      "parentUuid": "0fd118d9_c5cf48f5",
+      "range": {
+        "startLine": 412,
+        "startChar": 37,
+        "endLine": 412,
+        "endChar": 65
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da9befd_cda642a8",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
         "patchSetId": 8
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-10T18:54:44Z",
       "side": 1,
       "message": "Why is this virtual?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d09a03d_7b23f880",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-10-10T19:36:11Z",
+      "side": 1,
+      "message": "This method is overridden in the unit test.",
+      "parentUuid": "6da9befd_cda642a8",
       "range": {
         "startLine": 83,
         "startChar": 2,
