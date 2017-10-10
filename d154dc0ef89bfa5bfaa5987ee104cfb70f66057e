@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ea1d6c_3929b4b1",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:39:06Z",
+      "side": 1,
+      "message": "Do we want to generalize this as \u0027UserAvatar\u0027 ? I could imagine a future desire to, e.g. disallow custom avatars entirely.\n\nAlso we should document the message.",
+      "revId": "d154dc0ef89bfa5bfaa5987ee104cfb70f66057e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50c73d4_5f84b6e7",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:39:06Z",
+      "side": 1,
+      "message": "/**\n * True...",
+      "revId": "d154dc0ef89bfa5bfaa5987ee104cfb70f66057e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
