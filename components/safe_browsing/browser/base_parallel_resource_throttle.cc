@@ -72,7 +72,7 @@ void BaseParallelResourceThrottle::WillRedirectRequest(
 }
 
 void BaseParallelResourceThrottle::WillProcessResponse(bool* defer) {
-  url_loader_throttle_->WillProcessResponse(defer);
+  url_loader_throttle_->WillProcessResponse(nullptr, defer);
 }
 
 const char* BaseParallelResourceThrottle::GetNameForLogging() const {
