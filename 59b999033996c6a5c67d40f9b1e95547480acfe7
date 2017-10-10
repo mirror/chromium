@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f74ad1b3_4c6abdad",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-10T18:49:08Z",
+      "side": 1,
+      "message": "nit: Could we return \u0026\u0026 here as well for consistency?",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "59b999033996c6a5c67d40f9b1e95547480acfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d086631c_55f154cf",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPainterBase.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-10T18:49:08Z",
+      "side": 1,
+      "message": "Why do we use sync here? Could you add a comment for the other cases where this is being used?",
+      "range": {
+        "startLine": 468,
+        "startChar": 32,
+        "endLine": 468,
+        "endChar": 50
+      },
+      "revId": "59b999033996c6a5c67d40f9b1e95547480acfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd9cd83_df49daad",
+        "filename": "third_party/WebKit/Source/platform/graphics/AcceleratedStaticBitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-10T18:49:08Z",
+      "side": 1,
+      "message": "May be we can avoid the copy if the decode mode is already the same.",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 38
+      },
+      "revId": "59b999033996c6a5c67d40f9b1e95547480acfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e400e5_83f1f1d7",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-10T18:49:08Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 32
+      },
+      "revId": "59b999033996c6a5c67d40f9b1e95547480acfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
