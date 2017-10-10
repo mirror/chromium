@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "e55b6874_7b066fba",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3437,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-10-10T17:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade7c46a_1cdbe3fb",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11f7d278_32040100",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -85,6 +103,24 @@
       "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ca9467_cf5c897b",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-10-10T17:52:07Z",
+      "side": 1,
+      "message": "I\u0027ve updated the text to clarify that this is only true for net_unittests.\n\nI think Lucas is referring to higher level tests like browser_tests (and https://crbug.com/771338)?",
+      "parentUuid": "67188aab_3266e2b1",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
