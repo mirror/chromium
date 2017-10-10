@@ -11,7 +11,6 @@
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller.h"
-#include "ash/system/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_window_state.h"
 #include "ash/wm/window_state.h"

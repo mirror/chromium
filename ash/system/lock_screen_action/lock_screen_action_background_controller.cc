@@ -4,13 +4,22 @@
 
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller.h"
 
+#include "ash/system/lock_screen_action/lock_screen_action_background_controller_impl.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/system/lock_screen_action/lock_screen_action_background_observer.h"
 #include "base/callback.h"
+#include "base/command_line.h"
+#include "chromeos/chromeos_switches.h"
 
 namespace ash {
 
 namespace {
+
+// Returns true if the md-based login/lock UI is enabled.
+bool IsUsingMdLogin() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kShowMdLogin);
+}
 
 LockScreenActionBackgroundController::FactoryCallback*
     testing_factory_callback_ = nullptr;
@@ -22,7 +31,12 @@ std::unique_ptr<LockScreenActionBackgroundController>
 LockScreenActionBackgroundController::Create() {
   if (testing_factory_callback_)
     return testing_factory_callback_->Run();
-  return std::make_unique<LockScreenActionBackgroundControllerStub>();
+  // Web UI based lock screen implements its own background - use the stub
+  // lock action background controller implementation unless md-based lock UI
+  // is used.
+  if (!IsUsingMdLogin())
+    return std::make_unique<LockScreenActionBackgroundControllerStub>();
+  return std::make_unique<LockScreenActionBackgroundControllerImpl>();
 }
 
 // static
