@@ -139,6 +139,24 @@
       "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4fae54f_8b043cd4",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T19:57:20Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "4e579e61_8dbe0473",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
