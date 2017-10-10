@@ -63,7 +63,12 @@ class MediaSessionImplVisibilityBrowserTest
     : public ContentBrowserTest,
       public ::testing::WithParamInterface<VisibilityTestData> {
  public:
-  MediaSessionImplVisibilityBrowserTest() = default;
+  MediaSessionImplVisibilityBrowserTest() {
+    VisibilityTestData params = GetVisibilityTestData();
+    EnableDisableResumingBackgroundVideos(params.background_resuming ==
+                                          BackgroundResuming::ENABLED);
+  }
+
   ~MediaSessionImplVisibilityBrowserTest() override = default;
 
   void SetUpOnMainThread() override {
@@ -109,14 +114,6 @@ class MediaSessionImplVisibilityBrowserTest
       command_line->AppendSwitch(switches::kEnableMediaSuspend);
     else
       command_line->AppendSwitch(switches::kDisableMediaSuspend);
-
-    if (params.background_resuming == BackgroundResuming::ENABLED) {
-      command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                      media::kResumeBackgroundVideo.name);
-    } else {
-      command_line->AppendSwitchASCII(switches::kDisableFeatures,
-                                      media::kResumeBackgroundVideo.name);
-    }
   }
 
   const VisibilityTestData& GetVisibilityTestData() {

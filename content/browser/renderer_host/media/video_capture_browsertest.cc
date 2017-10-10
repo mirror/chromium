@@ -4,6 +4,7 @@
 
 #include "base/command_line.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
@@ -110,7 +111,13 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
                                                ExerciseAcceleratedJpegDecoding,
                                                UseMojoService>> {
  public:
-  VideoCaptureBrowserTest() { params_ = TestParams(GetParam()); }
+  VideoCaptureBrowserTest() {
+    params_ = TestParams(GetParam());
+    if (params_.use_mojo_service) {
+      scoped_feature_list_.InitAndEnableFeature(
+          video_capture::kMojoVideoCapture);
+    }
+  }
 
   void SetUpAndStartCaptureDeviceOnIOThread(base::Closure continuation) {
     video_capture_manager_ = media_stream_manager_->video_capture_manager();
@@ -157,10 +164,6 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
     } else {
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kDisableAcceleratedMjpegDecode);
-    }
-    if (params_.use_mojo_service) {
-      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
     }
   }
 
@@ -212,6 +215,9 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
   MockMediaStreamProviderListener mock_stream_provider_listener_;
   MockVideoCaptureControllerEventHandler mock_controller_event_handler_;
   base::WeakPtr<VideoCaptureController> controller_;
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_P(VideoCaptureBrowserTest, StartAndImmediatelyStop) {
