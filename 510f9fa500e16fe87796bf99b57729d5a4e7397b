@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2776b02e_dd8f9e59",
+        "filename": "net/http/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T13:30:31Z",
+      "side": 1,
+      "message": "This is much nicer than the one I had before. Thank you.",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6082aefb_24ade0a2",
         "filename": "net/http/transport_security_state_unittest.cc",
         "patchSetId": 3
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "ade7c46a_1cdbe3fb",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3437,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T13:30:31Z",
+      "side": 1,
+      "message": "optional nit: suggest adding a \"// BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)\" so it\u0027s easier to see what this endif is for, given that this block is rather long.",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11f7d278_32040100",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -30,6 +64,24 @@
       "writtenOn": "2017-10-09T21:12:59Z",
       "side": 1,
       "message": "Nit: `net_unittests` should.\n\nTests built on the network stack do use the preload list (which is something I\u0027m having fun with right now...)",
+      "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67188aab_3266e2b1",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T13:30:31Z",
+      "side": 1,
+      "message": "Lucas, I don\u0027t think I understand what you meant by \"\u0027net_unittests\u0027 should\".\nMartijn\u0027s phrasing here matches my understanding that unit tests in net_unittests should not use the real preload list with the exception of TransportSecurityStateStaticTest.",
+      "parentUuid": "11f7d278_32040100",
       "revId": "510f9fa500e16fe87796bf99b57729d5a4e7397b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

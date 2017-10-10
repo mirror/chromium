@@ -16,6 +16,24 @@
       "revId": "ddbbee86425a3b8f8e06842834fe97deab6e4e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d698ff0e_d9142456",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-10T13:30:31Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "852c17a8_9520b7ce",
+      "revId": "ddbbee86425a3b8f8e06842834fe97deab6e4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
