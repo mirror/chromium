@@ -87,14 +87,12 @@ void MetricsServicesManager::UpdatePermissions(bool current_may_record,
                                                bool current_consent_given,
                                                bool current_may_upload) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  ukm::UkmService* ukm = GetUkmService();
   // If the user has opted out of metrics, delete local UKM state. We Only check
   // consent for UKM.
-  if (consent_given_ && !current_consent_given) {
-    ukm::UkmService* ukm = GetUkmService();
-    if (ukm) {
-      ukm->Purge();
-      ukm->ResetClientId();
-    }
+  if (ukm && consent_given_ && !current_consent_given) {
+    ukm->Purge();
+    ukm->ResetClientId();
   }
 
   // Stash the current permissions so that we can update the RapporServiceImpl
