@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "721ab493_34417865",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-10T16:57:01Z",
+      "side": 1,
+      "message": "It\u0027s slightly better at conveying to the reader that \"implicit destruction is required but no explicit action on destruction is necessary.\" Just slightly though, hence the nit. :)",
+      "parentUuid": "fb6069e9_b8005381",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e4c5f9_5e18580d",
         "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.h",
         "patchSetId": 10
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I don\u0027t entirely agree: The StackSamplingProfiler doesn\u0027t start profiling until Start() is called, whereas this \"scoped\" profiler starts profiling once the constructor is called.  I think it\u0027s less clear without \"Scoped\" in the name.\n\nAs far as whether it\u0027s used for sampling the main thread, that seems rather arbitrary.  Is there anything other than GetProfilerCallback() that\u0027s currently tied to the main thread?  I was actually thinking that it might be nice to reuse this class for sampling the IO thread as well...\n\nAnyhow, I\u0027ve renamed the class for now, but I\u0027d like to get your thoughts on the above.",
       "parentUuid": "60e4c5f9_5e18580d",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ffd34f_7fe99101",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-10T16:57:01Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t entirely agree: The StackSamplingProfiler doesn\u0027t start profiling until Start() is called, whereas this \"scoped\" profiler starts profiling once the constructor is called.  I think it\u0027s less clear without \"Scoped\" in the name.\n\nMy thoughts are that \u0027scoped\u0027 indicates RAII, which is about binding the lifetime of a resource to the lifetime of an object. It doesn\u0027t necessarily imply anything about the state of the resource, just that it gets cleaned up on destruction. So whether the profiler is started or not is immaterial to its scoped-ness, analogous to how std::unique_ptr guarantees its user proper clean up independent of whether it contains a pointer to an actual object or null.\n\nThe related concern is that a \u0027ScopedStackSamplingProfiler\u0027 class wrapping a \u0027StackSamplingProfiler\u0027 class will lead readers to believe that the wrapping class is applying RAII behavior on top of a non-RAII object, à la ScopedLock/Lock. But this is not the case since StackSamplingProfiler already has RAII behavior.\n\n\u003e As far as whether it\u0027s used for sampling the main thread, that seems rather arbitrary.  Is there anything other than GetProfilerCallback() that\u0027s currently tied to the main thread?  I was actually thinking that it might be nice to reuse this class for sampling the IO thread as well...\n\nIt\u0027s not inherently tied to the main thread, but that\u0027s the only current use, and much of the code is dedicated to that purpose. Evolving this into a more general purpose implementation is a reasonable goal. However it\u0027s not totally clear what that would look like so it\u0027s better to defer abstraction in that direction until we have a better idea. In particular, there\u0027s currently an odd split of configuration state between here, CallStackProfileMetricsProvider, and StackSamplingConfiguration. This is OK for now but probably will need to be rationalized and objects reconfigured when adding IO thread support.",
+      "parentUuid": "be6948ac_5b1ef726",
       "range": {
         "startLine": 19,
         "startChar": 6,
