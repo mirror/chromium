@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f48809b_8df49171",
+        "filename": "chrome/browser/data_usage/tab_id_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-10T20:24:34Z",
+      "side": 1,
+      "message": "nit: I don\u0027t understand the move semantic here.\nWhere does the ownership of callback move to ?",
+      "revId": "6c560309cdad1d25824f67610a7fe91afe6fab61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
