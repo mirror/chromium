@@ -290,27 +290,14 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 }
 
 - (CGFloat)contentPosition {
-  UITableViewCell* cell = [[self.tableView visibleCells] firstObject];
-  if (cell) {
-    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-    if (indexPath.section == self.bookmarksSection) {
-      // Cache the content position only if the bookmarks section is visible.
-      return indexPath.row;
-    }
+  if (_currentRootNode == self.bookmarkModel->root_node()) {
+    return 0;
   }
-  return 0;
+  return self.tableView.contentOffset.y;
 }
 
 - (void)setContentPosition:(CGFloat)position {
-  NSIndexPath* path =
-      [NSIndexPath indexPathForRow:position inSection:self.bookmarksSection];
-  // Anchoring |position| as the starting point calculate the visible rect area,
-  // based on screen size.
-  CGRect visibleRect = [self.tableView rectForRowAtIndexPath:path];
-  visibleRect =
-      CGRectMake(visibleRect.origin.x, visibleRect.origin.y,
-                 visibleRect.size.width, self.tableView.frame.size.height);
-  [self.tableView scrollRectToVisible:visibleRect animated:NO];
+  [self.tableView setContentOffset:CGPointMake(0, position)];
 }
 
 #pragma mark - UITableViewDataSource
