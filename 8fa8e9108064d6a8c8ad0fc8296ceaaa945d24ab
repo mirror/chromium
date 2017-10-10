@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd0599f_9fe435b5",
+        "filename": "testing/libfuzzer/fuzzers/javascript_parser_proto_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-10T19:58:25Z",
+      "side": 1,
+      "message": "In a ready version this initialization and the next one should be removed and instead you should define a function like this:\nextern \"C\" int LLVMFuzzerInitialize(int *argc, char ***argv) {\n  v8::V8::InitializeICUDefaultLocation((*argv)[0]);\n  v8::V8::InitializeExternalStartupData((*argv)[0]);\n  return 0;\n}\n\nlibFuzzer will call this function on startup, before calling DEFINE_BINARY_PROTO_FUZZER.",
+      "revId": "8fa8e9108064d6a8c8ad0fc8296ceaaa945d24ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b60588e_32191af7",
+        "filename": "testing/libfuzzer/fuzzers/javascript_parser_proto_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-10T19:58:25Z",
+      "side": 1,
+      "message": "GC seems necessary. The fuzzer goes over 2048mb of memory usage after running for a while, which is the limit we have on ClusterFuzz.",
+      "revId": "8fa8e9108064d6a8c8ad0fc8296ceaaa945d24ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
