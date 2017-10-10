@@ -85,7 +85,9 @@ class DummyBenchmarkThree(perf_benchmark.PerfBenchmark):
   def CreateCoreTimelineBasedMeasurementOptions(self):
     options = timeline_based_measurement.Options(
         timeline_based_measurement.DEBUG_OVERHEAD_LEVEL)
-    options.SetTimelineBasedMetrics(['sampleMetric'])
+    options.SetTimelineBasedMetrics([
+        'sampleMetric',
+    ])
     return options
 
   @classmethod
