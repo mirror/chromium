@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430b4686_b94ef33d",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-10T16:02:14Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be nullopt? This used to return success\u003dfalse, in which case the base::TimeTicks argument would be ignored, so we used TimeTicks::Now() as an arbitrary value.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 28,
+        "endLine": 1137,
+        "endChar": 50
+      },
+      "revId": "4cc7b95888da4e10a0e17cd4f001ddd8e50e28c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
