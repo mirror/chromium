@@ -21,7 +21,6 @@
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/browser/renderer_host/media/media_stream_ui_proxy.h"
 #include "content/browser/renderer_host/media/video_capture_manager.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/media_device_id.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -112,9 +111,10 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
         audio_system_.get(), audio_manager_->GetTaskRunner(),
         std::move(video_capture_provider));
     host_ = std::make_unique<MediaDevicesDispatcherHost>(
-        kProcessId, kRenderId, browser_context_.GetMediaDeviceIDSalt(),
-        media_stream_manager_.get());
-    host_->SetSecurityOriginForTesting(origin_);
+        kProcessId, kRenderId, media_stream_manager_.get());
+    host_->set_salt_and_origin_callback_for_testing(
+        base::Bind(&MediaDevicesDispatcherHostTest::GetSaltAndOrigin,
+                   base::Unretained(this)));
   }
   ~MediaDevicesDispatcherHostTest() override { audio_manager_->Shutdown(); }
 
@@ -366,6 +366,11 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
       else
         EXPECT_TRUE(DoesNotContainLabels(changed_devices));
     }
+  }
+
+  std::pair<std::string, url::Origin> GetSaltAndOrigin(int /* process_id */,
+                                                       int /* frame_id */) {
+    return std::make_pair(browser_context_.GetMediaDeviceIDSalt(), origin_);
   }
 
   // The order of these members is important on teardown:
