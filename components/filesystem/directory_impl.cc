@@ -380,7 +380,6 @@ base::File DirectoryImpl::OpenFileHandleImpl(const std::string& raw_path,
     // descriptor to a directory is a sandbox escape on Windows.
     return base::File(base::File::FILE_ERROR_NOT_A_FILE);
   }
-
   return base::File(path, open_flags);
 }
 

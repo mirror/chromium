@@ -2,16 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/file_manager/zip_file_creator.h"
+#include "chrome/services/chrome_file_util/public/cpp/zip_file_creator.h"
 
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/grit/generated_resources.h"
+#include "chrome/services/chrome_file_util/public/interfaces/constants.mojom.h"
+#include "components/filesystem/directory_impl.h"
+#include "components/filesystem/lock_table.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/base/l10n/l10n_util.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace {
 
@@ -22,7 +25,7 @@ base::File OpenFileHandleAsync(const base::FilePath& zip_path) {
 
 }  // namespace
 
-namespace file_manager {
+namespace chrome {
 
 ZipFileCreator::ZipFileCreator(
     const ResultCallback& callback,
@@ -36,20 +39,22 @@ ZipFileCreator::ZipFileCreator(
   DCHECK(!callback_.is_null());
 }
 
-void ZipFileCreator::Start() {
+void ZipFileCreator::Start(service_manager::Connector* connector) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock()},
       base::Bind(&OpenFileHandleAsync, dest_file_),
-      base::Bind(&ZipFileCreator::CreateZipFile, this));
+      base::Bind(&ZipFileCreator::CreateZipFile, this,
+                 base::Unretained(connector)));
 }
 
 ZipFileCreator::~ZipFileCreator() = default;
 
-void ZipFileCreator::CreateZipFile(base::File file) {
+void ZipFileCreator::CreateZipFile(service_manager::Connector* connector,
+                                   base::File file) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK(!utility_process_mojo_client_);
+  DCHECK(!zip_file_creator_ptr_);
 
   if (!file.IsValid()) {
     LOG(ERROR) << "Failed to create dest zip file " << dest_file_.value();
@@ -57,26 +62,27 @@ void ZipFileCreator::CreateZipFile(base::File file) {
     return;
   }
 
-  utility_process_mojo_client_ = base::MakeUnique<
-      content::UtilityProcessMojoClient<chrome::mojom::ZipFileCreator>>(
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_ZIP_FILE_CREATOR_NAME));
-  utility_process_mojo_client_->set_error_callback(
+  auto directory_impl = std::make_unique<filesystem::DirectoryImpl>(
+      src_dir_, scoped_refptr<filesystem::SharedTempDir>(),
+      scoped_refptr<filesystem::LockTable>());
+  filesystem::mojom::DirectoryPtr directory_ptr;
+  mojo::MakeStrongBinding(std::move(directory_impl),
+                          mojo::MakeRequest(&directory_ptr));
+
+  connector->BindInterface(chrome::mojom::kChromeFileUtilServiceName,
+                           mojo::MakeRequest(&zip_file_creator_ptr_));
+  zip_file_creator_ptr_.set_connection_error_handler(
       base::Bind(&ZipFileCreator::ReportDone, this, false));
-
-  utility_process_mojo_client_->set_exposed_directory(src_dir_);
-
-  utility_process_mojo_client_->Start();
-
-  utility_process_mojo_client_->service()->CreateZipFile(
-      src_dir_, src_relative_paths_, std::move(file),
+  zip_file_creator_ptr_->CreateZipFile(
+      std::move(directory_ptr), src_dir_, src_relative_paths_, std::move(file),
       base::Bind(&ZipFileCreator::ReportDone, this));
 }
 
 void ZipFileCreator::ReportDone(bool success) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  utility_process_mojo_client_.reset();
+  zip_file_creator_ptr_.reset();
   base::ResetAndReturn(&callback_).Run(success);
 }
 
-}  // namespace file_manager
+}  // namespace chrome

@@ -2,17 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_FILE_MANAGER_ZIP_FILE_CREATOR_H_
-#define CHROME_BROWSER_CHROMEOS_FILE_MANAGER_ZIP_FILE_CREATOR_H_
+#ifndef CHROME_SERVICES_CHROME_FILE_UTIL_PUBLIC_CPP_ZIP_FILE_CREATOR_H_
+#define CHROME_SERVICES_CHROME_FILE_UTIL_PUBLIC_CPP_ZIP_FILE_CREATOR_H_
+
+#include <memory>
 
 #include "base/callback.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/common/zip_file_creator.mojom.h"
-#include "content/public/browser/utility_process_mojo_client.h"
+#include "base/task_scheduler/post_task.h"
+#include "chrome/services/chrome_file_util/public/interfaces/zip_file_creator.mojom.h"
 
-namespace file_manager {
+namespace service_manager {
+class Connector;
+}
+
+namespace chrome {
 
 // ZipFileCreator creates a ZIP file from a specified list of files and
 // directories under a common parent directory. This is done in a sandboxed
@@ -31,7 +37,7 @@ class ZipFileCreator : public base::RefCountedThreadSafe<ZipFileCreator> {
   // Starts creating the zip file. Must be called from the UI thread.
   // The result will be passed to |callback|. After the task is finished
   // and |callback| is run, ZipFileCreator instance is deleted.
-  void Start();
+  void Start(service_manager::Connector* connector);
 
  private:
   friend class base::RefCountedThreadSafe<ZipFileCreator>;
@@ -40,7 +46,7 @@ class ZipFileCreator : public base::RefCountedThreadSafe<ZipFileCreator> {
 
   // Called after the dest_file |file| is opened on the blocking pool to
   // create the zip file in it using a sandboxed utility process.
-  void CreateZipFile(base::File file);
+  void CreateZipFile(service_manager::Connector* connector, base::File file);
 
   void ReportDone(bool success);
 
@@ -57,12 +63,11 @@ class ZipFileCreator : public base::RefCountedThreadSafe<ZipFileCreator> {
   // The output zip file.
   base::FilePath dest_file_;
 
-  // Utility process used to create the zip file.
-  std::unique_ptr<
-      content::UtilityProcessMojoClient<chrome::mojom::ZipFileCreator>>
-      utility_process_mojo_client_;
+  chrome::mojom::ZipFileCreatorPtr zip_file_creator_ptr_;
+
+  DISALLOW_COPY_AND_ASSIGN(ZipFileCreator);
 };
 
-}  // namespace file_manager
+}  // namespace chrome
 
-#endif  // CHROME_BROWSER_CHROMEOS_FILE_MANAGER_ZIP_FILE_CREATOR_H_
+#endif  // CHROME_SERVICES_CHROME_FILE_UTIL_PUBLIC_CPP_ZIP_FILE_CREATOR_H_
