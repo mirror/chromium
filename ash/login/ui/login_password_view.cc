@@ -8,11 +8,11 @@
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/tray/size_range_layout.h"
 #include "ash/system/user/button_from_view.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/keycodes/dom/dom_code.h"
@@ -20,6 +20,7 @@
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/image_view.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
@@ -35,6 +36,9 @@ namespace {
 
 // Size (width/height) of the submit button.
 constexpr int kSubmitButtonSizeDp = 20;
+
+// Size (width/height) of the caps lock hint icon.
+constexpr int kCapsLockIconSizeDp = 20;
 
 // Width/height of the password inputfield.
 constexpr int kPasswordInputWidthDp = 184;
@@ -96,9 +100,10 @@ LoginPasswordView::LoginPasswordView() {
 
   // Password textfield. We control the textfield size by sizing the parent
   // view, as the textfield will expand to fill it.
-  auto* textfield_sizer = new NonAccessibleView();
-  textfield_sizer->SetLayoutManager(new SizeRangeLayout(
-      gfx::Size(kPasswordInputWidthDp, kPasswordInputHeightDp)));
+  textfield_sizer_ = new NonAccessibleView();
+  textfield_sizer_->SetLayoutManager(new views::FillLayout());
+  textfield_sizer_->SetPreferredSize(
+      gfx::Size(kPasswordInputWidthDp, kPasswordInputHeightDp));
   textfield_ = new views::Textfield();
   textfield_->set_controller(this);
   textfield_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
@@ -108,8 +113,16 @@ LoginPasswordView::LoginPasswordView() {
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
 
-  textfield_sizer->AddChildView(textfield_);
-  row->AddChildView(textfield_sizer);
+  textfield_sizer_->AddChildView(textfield_);
+  row->AddChildView(textfield_sizer_);
+
+  // Caps lock hint icon.
+  capslock_icon_ = new views::ImageView();
+  capslock_icon_->SetImage(gfx::CreateVectorIcon(
+      kLockScreenCapsLockIcon, kCapsLockIconSizeDp,
+      SkColorSetA(login_constants::kButtonEnabledColor,
+                  login_constants::kButtonDisabledAlpha)));
+  row->AddChildView(capslock_icon_);
 
   // Submit button.
   submit_button_ = new views::ImageButton(this);
@@ -135,9 +148,18 @@ LoginPasswordView::LoginPasswordView() {
 
   // Make sure the textfield always starts with focus.
   textfield_->RequestFocus();
+
+  chromeos::input_method::ImeKeyboard* keyboard =
+      chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
+  keyboard->AddObserver(this);
+  OnCapsLockChanged(keyboard->CapsLockIsEnabled());
 }
 
-LoginPasswordView::~LoginPasswordView() = default;
+LoginPasswordView::~LoginPasswordView() {
+  chromeos::input_method::InputMethodManager::Get()
+      ->GetImeKeyboard()
+      ->RemoveObserver(this);
+}
 
 void LoginPasswordView::Init(
     const OnPasswordSubmit& on_submit,
@@ -227,10 +249,23 @@ void LoginPasswordView::ContentsChanged(views::Textfield* sender,
   bool is_enabled = !new_contents.empty();
   submit_button_->SetEnabled(is_enabled);
   on_password_text_changed_.Run(!is_enabled);
-  separator_->SetColor(
-      is_enabled ? login_constants::kButtonEnabledColor
-                 : SkColorSetA(login_constants::kButtonEnabledColor,
-                               login_constants::kButtonDisabledAlpha));
+  SkColor color = is_enabled
+                      ? login_constants::kButtonEnabledColor
+                      : SkColorSetA(login_constants::kButtonEnabledColor,
+                                    login_constants::kButtonDisabledAlpha);
+  separator_->SetColor(color);
+  capslock_icon_->SetImage(gfx::CreateVectorIcon(kLockScreenCapsLockIcon,
+                                                 kCapsLockIconSizeDp, color));
+}
+
+void LoginPasswordView::OnCapsLockChanged(bool enabled) {
+  capslock_icon_->SetVisible(enabled);
+  int password_input_width = enabled
+                                 ? kPasswordInputWidthDp - kCapsLockIconSizeDp
+                                 : kPasswordInputWidthDp;
+  textfield_sizer_->SetPreferredSize(
+      gfx::Size(password_input_width, kPasswordInputHeightDp));
+  Layout();
 }
 
 void LoginPasswordView::SubmitPassword() {
