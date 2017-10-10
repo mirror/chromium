@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92647fe2_873dd87c",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "Merged HandleSurfaceQuad and EmitFallbackSurface.",
+      "parentUuid": "5bd271f1_f8f84474",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "884ecc50_95fa6118",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T19:23:46Z",
       "side": 1,
       "message": "Might make sense to make this loop into a helper function too.",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988321bc_36fa7ebc",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "This is unrelated to fallbacks so I\u0027ll do in a separate patch. Added a TODO.",
+      "parentUuid": "884ecc50_95fa6118",
       "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7103822c_bb5af8a8",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "Will do in a separate patch because this is unrelated to fallback surfaces. Added a TODO.",
+      "parentUuid": "f953671e_dee68b00",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e5f2d40_b9c9f70c",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 17
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b255b614_d7a945ce",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "Done. Now if the primary is not available we make the quad rect the damage rect.",
+      "parentUuid": "2e5f2d40_b9c9f70c",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713c106e_b13a4ef9",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 17
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-10T19:23:46Z",
       "side": 1,
       "message": "If primary and fallback surface has different DSF, would it affect this calculation?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d5c2e3_8db00f23",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "The visible_rect of the fallback is at most the visible rect of the primary. The DSF part is part of the TODO.",
+      "parentUuid": "713c106e_b13a4ef9",
       "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b1547105_271b3bec",
+        "filename": "components/viz/service/display/surface_aggregator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "EmitSurfaceContent? I\u0027ll try to reduce params in a separate CL. We said EmitCompositorFrameContent offline but I realized that given it takes in a surface not a CompositorFrame that is a bit confusing too...",
+      "parentUuid": "df507748_307b73d1",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c2d8828_39cf21cd",
         "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
         "patchSetId": 17
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-10T19:23:46Z",
       "side": 1,
       "message": "Is there a test for checking the fallback render pass would have the fallback size instead of primary size?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4afa1fb_9f816944",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-10T23:17:13Z",
+      "side": 1,
+      "message": "Yup, that is FallbackSurfaceReference.",
+      "parentUuid": "9c2d8828_39cf21cd",
       "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
