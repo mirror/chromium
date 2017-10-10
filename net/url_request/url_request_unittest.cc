@@ -11165,7 +11165,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndInvalidOCSP) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
+  SSLConfigService::UpgradeCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11187,7 +11187,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndRevokedOCSP) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_REVOKED;
-  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
+  SSLConfigService::UpgradeCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11215,7 +11215,7 @@ TEST_F(HTTPSEVCRLSetTest, MissingCRLSetAndGoodOCSP) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
-  SSLConfigService::SetCRLSet(scoped_refptr<CRLSet>());
+  SSLConfigService::UpgradeCRLSet(scoped_refptr<CRLSet>());
 
   CertStatus cert_status;
   DoConnection(ssl_options, &cert_status);
@@ -11238,7 +11238,7 @@ TEST_F(HTTPSEVCRLSetTest, ExpiredCRLSet) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
@@ -11262,7 +11262,7 @@ TEST_F(HTTPSEVCRLSetTest, FreshCRLSetCovered) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::ForTesting(
           false, &kOCSPTestCertSPKI, "")));
 
@@ -11288,7 +11288,7 @@ TEST_F(HTTPSEVCRLSetTest, FreshCRLSetNotCovered) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::EmptyCRLSetForTesting()));
 
   CertStatus cert_status = 0;
@@ -11321,7 +11321,7 @@ TEST_F(HTTPSEVCRLSetTest, ExpiredCRLSetAndRevokedNonEVCert) {
   SpawnedTestServer::SSLOptions ssl_options(
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_REVOKED;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
@@ -11349,7 +11349,7 @@ TEST_F(HTTPSCRLSetTest, ExpiredCRLSet) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status =
       SpawnedTestServer::SSLOptions::OCSP_INVALID_RESPONSE;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::ExpiredCRLSetForTesting()));
 
   CertStatus cert_status;
@@ -11372,7 +11372,7 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
       SpawnedTestServer::SSLOptions::CERT_AUTO);
   ssl_options.ocsp_status = SpawnedTestServer::SSLOptions::OCSP_OK;
   ssl_options.cert_serial = 10;
-  SSLConfigService::SetCRLSet(
+  SSLConfigService::UpgradeCRLSet(
       scoped_refptr<CRLSet>(CRLSet::ForTesting(
           false, &kOCSPTestCertSPKI, "\x0a")));
 
