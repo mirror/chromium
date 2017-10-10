@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6d85138c_b93eaf7a",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-10T18:18:39Z",
+      "side": 1,
+      "message": "IMO there is no reason any production code should need SineWaveAudioSource, it should be test-only code.",
+      "parentUuid": "2dde468b_5639b1d2",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58be7876_ddac18b7",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
