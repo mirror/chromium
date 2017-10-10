@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af58b936_7e812b5f",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-10-10T17:06:03Z",
+      "side": 1,
+      "message": "Don\u0027t change \"was_cancelled\" outside of the event generation code. The was_* bits belong to that code and must not be changed anywhere else. Tracking these bits is how this class ensures it only generates legal touch event streams (e.g., it will not leak a touch, or cancel the same touch twice - that kind of thing).",
+      "range": {
+        "startLine": 206,
+        "startChar": 34,
+        "endLine": 206,
+        "endChar": 35
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cb30bd_c5d048be",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-10-10T17:06:03Z",
+      "side": 1,
+      "message": "I think this is likely too much work to perform here. In fact, even setting |cancelled| here was on the edge of too much.\n\nThe design of this class is to collect all of the kernel state in one phase, and then examine it to generate a touch event a 2nd phase.\n\nWe shouldn\u0027t have a lot of complexity at the \"collect state\" phase, because that\u0027s an incremental process and we won\u0027t necessarily have enough information (in fact, the only information we\u0027re guaranteed to have is |input.value| for this event type \u0026 code. If we do a lot of work in here, it\u0027s difficult to see that we\u0027re not introducing a dependency on ordering - generally, the individual events that make up a report are unordered - swapping two events must not change the result.",
+      "range": {
+        "startLine": 406,
+        "startChar": 8,
+        "endLine": 406,
+        "endChar": 15
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54d7f0d_ad969b1b",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-10-10T17:06:03Z",
+      "side": 1,
+      "message": "This seems wrong. What if it was cancelled because of MT_TOOL_PALM? This is an example of why it\u0027s important to collect all of the kernel state, and make decisions about what events to produce only at the end in the SYN_REPORT processing.",
+      "range": {
+        "startLine": 410,
+        "startChar": 31,
+        "endLine": 410,
+        "endChar": 48
+      },
+      "revId": "af883b20c5d7ea584967e06b7a81d1214b091925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
