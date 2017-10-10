@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b8572a_69b489c0",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:43:26Z",
+      "side": 1,
+      "message": "Hmm, why did you change these to \"static constexpr\"?  I believe that this results in the data being duplicated across files where this header is imported.  Am I mistaken?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 43
+      },
+      "revId": "a254facf625a8a6c37ada67d52eac5db5b45692c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06e157a_2ad90492",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 7818,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T06:43:26Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused: Does this metric record the result of /each/ attempt that\u0027s within one minute of a captive portal detection?  To me that implies that there can be multiple attempts, or there can be zero, or there can be one, depending on some sort of triggering logic.\n\nIs the intent that there is actually guaranteed to be a single attempt, that runs one minute after event X?  If so, I\u0027d write \"Records the result of a captive portal detection attempt run one minute after ...\".",
+      "range": {
+        "startLine": 7818,
+        "startChar": 51,
+        "endLine": 7818,
+        "endChar": 59
+      },
+      "revId": "a254facf625a8a6c37ada67d52eac5db5b45692c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
