@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58fbdecd_23a8f0a9",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T04:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2456ef1f_0d849086",
+      "range": {
+        "startLine": 98,
+        "startChar": 57,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29221b1_2ce079fd",
         "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fb6069e9_b8005381",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T04:38:07Z",
+      "side": 1,
+      "message": "Sure, done.\n\nOut of curiosity, what\u0027s the reason to prefer \"\u003d default\"?  I tried to find an explanation online, and the only case that I found where it seemed to matter is if a parent class specifies \"\u003d delete\" on its destructor and the child class specifies \"\u003d default\" on its destructor.  That seems pretty esoteric, and doesn\u0027t apply here.  Is there another reason to prefer the newer syntax?",
+      "parentUuid": "b29221b1_2ce079fd",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 61
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e4c5f9_5e18580d",
         "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.h",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-10T01:27:47Z",
       "side": 1,
       "message": "This class is essentially dedicated to setting up profiling of main thread startup, so probably should be called something like MainThreadStackSamplingProfiler. base::StackSamplingProfiler is already a scoped stack sampling profiler, so \u0027ScopedStackSamplingProfiler\u0027 doesn\u0027t differentiate its behavior from that class.\n\nAlso, please call out early in the comment that this is intended for main thread startup.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "4e7866464de007ab8d5ab6045d50f31bd1ca3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6948ac_5b1ef726",
+        "filename": "chrome/app/profiler/scoped_stack_sampling_profiler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T04:38:07Z",
+      "side": 1,
+      "message": "I don\u0027t entirely agree: The StackSamplingProfiler doesn\u0027t start profiling until Start() is called, whereas this \"scoped\" profiler starts profiling once the constructor is called.  I think it\u0027s less clear without \"Scoped\" in the name.\n\nAs far as whether it\u0027s used for sampling the main thread, that seems rather arbitrary.  Is there anything other than GetProfilerCallback() that\u0027s currently tied to the main thread?  I was actually thinking that it might be nice to reuse this class for sampling the IO thread as well...\n\nAnyhow, I\u0027ve renamed the class for now, but I\u0027d like to get your thoughts on the above.",
+      "parentUuid": "60e4c5f9_5e18580d",
       "range": {
         "startLine": 19,
         "startChar": 6,
