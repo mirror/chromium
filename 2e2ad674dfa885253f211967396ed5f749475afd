@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "3034f347_adaa6661",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1171339
+      },
+      "writtenOn": "2017-10-10T08:09:50Z",
+      "side": 1,
+      "message": "\u003e Change A is still a pure-revert but with different content.\n\nNo. \u0027revertOf\u0027 is immutable, so it can\u0027t be changed after change creation. Hence \u0027pureRevert\u0027 woudl return false in this case.",
+      "parentUuid": "deb09214_7217a065",
+      "revId": "2e2ad674dfa885253f211967396ed5f749475afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54a999df_dd14bf12",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
