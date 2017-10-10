@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a29d3075_9e9fced3",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-10T18:30:37Z",
+      "side": 1,
+      "message": "Oof! Also need to change the year. Both fixed.",
+      "parentUuid": "f1fbd339_993997d2",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf6be2f3_c6d150a4",
         "filename": "ui/base/win/tablet.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266e73c7_898cb8aa",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-10T18:30:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf6be2f3_c6d150a4",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca9fbed5_9eda8b0a",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-10T18:30:37Z",
+      "side": 1,
+      "message": "Thanks for the drive-by!\nThe file was getting ugly with base::win and I eventually added \"using namespace base::win\" in line 28. Some functions like GetVersion still need the namespace reference, since there\u0027s also ::GetVersion()",
+      "parentUuid": "a384d7fb_2de66497",
+      "range": {
+        "startLine": 214,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa31b3c_19272e65",
         "filename": "ui/base/win/tablet.h",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b852e6cb_7a8a00cc",
+        "filename": "ui/base/win/tablet.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-10T18:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa31b3c_19272e65",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8100d94_696f3b87",
         "filename": "ui/base/win/tablet.h",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4c4d5b_c70db3d7",
+        "filename": "ui/base/win/tablet.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-10T18:30:37Z",
+      "side": 1,
+      "message": "Corrected in patchset 14",
+      "parentUuid": "c8100d94_696f3b87",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
