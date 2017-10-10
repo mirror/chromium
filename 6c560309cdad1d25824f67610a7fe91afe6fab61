@@ -16,6 +16,24 @@
       "revId": "6c560309cdad1d25824f67610a7fe91afe6fab61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5664ccf2_f8559720",
+        "filename": "chrome/browser/data_usage/tab_id_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-10-10T20:28:01Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/base/callback.h?q\u003dOnceCallback\u0026sq\u003dpackage:chromium\u0026l\u003d56\n\nThe ownership of the underlying callback information transfers to a local variable inside Run(), which then goes out of scope.",
+      "parentUuid": "6f48809b_8df49171",
+      "revId": "6c560309cdad1d25824f67610a7fe91afe6fab61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
