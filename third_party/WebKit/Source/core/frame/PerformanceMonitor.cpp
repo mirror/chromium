@@ -24,7 +24,13 @@ namespace blink {
 
 namespace {
 static const double kLongTaskSubTaskThresholdInSeconds = 0.012;
+static bool bypass_long_compile_threshold = false;
 }  // namespace
+
+// static
+void PerformanceMonitor::BypassLongCompileThresholdOnceForTesting() {
+  bypass_long_compile_threshold = true;
+};
 
 // static
 double PerformanceMonitor::Threshold(ExecutionContext* context,
@@ -233,8 +239,14 @@ void PerformanceMonitor::Did(const probe::V8Compile& probe) {
     return;
 
   double v8_compile_duration = probe.Duration();
-  if (v8_compile_duration <= kLongTaskSubTaskThresholdInSeconds)
-    return;
+
+  if (bypass_long_compile_threshold) {
+    bypass_long_compile_threshold = false;
+  } else {
+    if (v8_compile_duration <= kLongTaskSubTaskThresholdInSeconds)
+      return;
+  }
+
   std::unique_ptr<SubTaskAttribution> sub_task_attribution =
       SubTaskAttribution::Create(
           String("script-compile"),

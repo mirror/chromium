@@ -76,6 +76,8 @@ class CORE_EXPORT PerformanceMonitor final
                                      std::unique_ptr<SourceLocation>);
   static double Threshold(ExecutionContext*, Violation);
 
+  static void BypassLongCompileThresholdOnceForTesting();
+
   // Instrumenting methods.
   void Will(const probe::RecalculateStyle&);
   void Did(const probe::RecalculateStyle&);
