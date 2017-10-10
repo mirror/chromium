@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bbc280b3_6bb509e1",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-10T21:09:44Z",
+      "side": 1,
+      "message": "You can use default in constructors (you are using it on line 109). The compile is probably failing because you added {}, which is not supported.",
+      "parentUuid": "e8fc01ea_00e195d6",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b2c9872_f10d1c9f",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 13
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "51bb3f44_8dea1bce",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-10T21:09:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "366d4b9c_16c36d17",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 29
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6c11189_778c9635",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 13
@@ -501,6 +549,24 @@
       "side": 1,
       "message": "Do you want me to add a comment? I can also test if accountConsistencyService exists.",
       "parentUuid": "ca755bf2_53055ed6",
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c9bc55a_db33982a",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-10T21:09:44Z",
+      "side": 1,
+      "message": "The problem is that the service may exist, but it was shutdown. So adding a DCHECK(accountConsistencyService) is not good enough.\n\nOne possibility is to add a IsShutdown logic in AccountConsistencyService that would return true if AccountConsistencyService::Shutdown method is called (see https://cs.chromium.org/chromium/src/components/signin/ios/browser/account_consistency_service.mm?rcl\u003d539ea7ec25a17a456849f8edd71704f6cc1e9ef7\u0026l\u003d307\n). However I have never seen this pattern before.\n\nMaybe David has a suggestion on how to avoid calling the accountConsistencyService if the service was already shut down.",
+      "parentUuid": "e48e545e_e2587fe6",
       "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
