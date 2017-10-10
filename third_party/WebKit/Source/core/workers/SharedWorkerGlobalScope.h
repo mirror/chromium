@@ -33,7 +33,6 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/heap/Handle.h"
@@ -67,15 +66,12 @@ class SharedWorkerGlobalScope final : public WorkerGlobalScope {
 
  private:
   SharedWorkerGlobalScope(const String& name,
-                          const KURL&,
-                          const String& user_agent,
+                          std::unique_ptr<GlobalScopeCreationParams>,
                           SharedWorkerThread*,
-                          std::unique_ptr<SecurityOrigin::PrivilegeData>,
-                          WorkerClients*,
                           double time_origin);
   void ExceptionThrown(ErrorEvent*) override;
 
-  String name_;
+  const String name_;
 };
 
 CORE_EXPORT MessageEvent* CreateConnectEvent(MessagePort*);
