@@ -16,6 +16,24 @@
       "revId": "8b4e113d4ca92853eb5a0645f45774cdbfb6ba79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa39344_5aca6295",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-10-10T17:22:09Z",
+      "side": 1,
+      "message": "Sorry,  I used to do this when provide patch for kernel, it seems it\u0027s not meaningful for chrome, removed this now.",
+      "parentUuid": "35c8f3bc_446d50de",
+      "revId": "8b4e113d4ca92853eb5a0645f45774cdbfb6ba79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
