@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f1cf6c5_ecd5a92e",
+        "filename": "ui/platform_window/x11/x11_window_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T16:26:02Z",
+      "side": 1,
+      "message": "Do you know if there are any supported distro where this isn\u0027t the case?",
+      "revId": "b003bcb3f617353ca40209d0489b7d99f14213d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc86145c_2d5c8ae9",
+        "filename": "ui/platform_window/x11/x11_window_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-10T16:26:02Z",
+      "side": 1,
+      "message": "Make this private.",
+      "revId": "b003bcb3f617353ca40209d0489b7d99f14213d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
