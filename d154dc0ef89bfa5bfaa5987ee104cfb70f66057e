@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "013a6750_b3c2618c",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-10T03:08:41Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "04ea1d6c_3929b4b1",
+      "revId": "d154dc0ef89bfa5bfaa5987ee104cfb70f66057e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a50c73d4_5f84b6e7",
         "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d154dc0ef89bfa5bfaa5987ee104cfb70f66057e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cf5d97_d4c21c14",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_change_picture.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-10T03:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a50c73d4_5f84b6e7",
+      "revId": "d154dc0ef89bfa5bfaa5987ee104cfb70f66057e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
