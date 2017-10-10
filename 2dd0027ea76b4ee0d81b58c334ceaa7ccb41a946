@@ -16,6 +16,24 @@
       "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d480434_5314601e",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-10T20:37:10Z",
+      "side": 1,
+      "message": "So ScaleToEnclosingRect would break this layout test (external/wpt/css/css-transforms-2/transform3d-perspective-008.html). This test is ref-test and I assume rebaseline it could be hard since this is an external one. In this test, we scale 100*100 rect by 1.414 and enclosing would get a 142*142, leaving an edge on the side of the div. (https://storage.googleapis.com/chromium-layout-test-archives/mac10_10_blink_rel/4221/layout-test-results/results.html)",
+      "parentUuid": "bc1a4a3b_81a2c317",
+      "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
