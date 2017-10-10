@@ -105,6 +105,19 @@ void AddEdges(const base::trace_event::ProcessMemoryDump& source,
   }
 }
 
+void MarkImpplicitWeakParentsRecursively(Node* node) {
+  if (node->is_weak() || node->is_explicit())
+    return;
+
+  // Recursively mark nodes as weak then store whether all children are weak.
+  bool all_children_weak = true;
+  for (auto& path_to_child : *node->children()) {
+    MarkImpplicitWeakParentsRecursively(path_to_child.second);
+    all_children_weak = all_children_weak && path_to_child.second->is_weak();
+  }
+  node->set_weak(all_children_weak);
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
@@ -122,6 +135,17 @@ std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
   for (auto& pid_to_dump : process_dumps) {
     AddEdges(pid_to_dump.second, global_graph.get());
   }
+
+  auto* global_root = global_graph->shared_memory_graph()->root();
+
+  // Third pass: mark recursively nodes as weak if they own a node which is
+  // weak or they don't have an associated dump and all theird children are
+  // weak. Implicitly consider child nodes as weak if parent is weak.
+  MarkImpplicitWeakParentsRecursively(global_root);
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    MarkImpplicitWeakParentsRecursively(pid_to_process.second->root());
+  }
+
   return global_graph;
 }
 
