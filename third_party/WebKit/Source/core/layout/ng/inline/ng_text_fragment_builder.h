@@ -25,6 +25,7 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
                         NGWritingMode);
   NGTextFragmentBuilder(NGInlineNode, NGWritingMode);
 
+  NGLogicalSize Size() const final { return size_; }
   NGTextFragmentBuilder& SetSize(const NGLogicalSize&);
 
   NGTextFragmentBuilder& SetShapeResult(RefPtr<const ShapeResult>);
