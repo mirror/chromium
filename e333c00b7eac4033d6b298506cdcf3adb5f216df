@@ -16,6 +16,24 @@
       "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca548e8_87f60727",
+        "filename": "ui/base/clipboard/clipboard_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-10T04:38:32Z",
+      "side": 1,
+      "message": "Fair question. There isn\u0027t a constexpr StringPiece yet but the variable could just be a normal local, so that\u0027s not a real obstacle (and constexpr StringPiece will probably land tomorrow).\n\nUsing StringPiece makes the length() call simpler but seems to make the cf_html.find() call less elegant - the best I could find is cf_html.find(src_url_str.data()), which just seems ugly in a different way.\n\nI\u0027m torn.",
+      "parentUuid": "98fec1a9_9bd14164",
+      "revId": "e333c00b7eac4033d6b298506cdcf3adb5f216df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
