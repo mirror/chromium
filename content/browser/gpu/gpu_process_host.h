@@ -33,6 +33,8 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
+#include "services/ui/public/interfaces/gpu.mojom.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -53,6 +55,7 @@ struct SyncToken;
 
 namespace content {
 class BrowserChildProcessHostImpl;
+class BrowserGpuClient;
 
 class GpuProcessHost : public BrowserChildProcessHostDelegate,
                        public IPC::Sender,
@@ -147,6 +150,15 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const gpu::SyncToken& sync_token);
+
+  // Connects to FrameSinkManager running in the viz process. In this
+  // configuration the display compositor runs in the viz process and the
+  // browser must submit CompositorFrames over IPC.
+  void ConnectFrameSinkManager(viz::mojom::FrameSinkManagerRequest request,
+                               viz::mojom::FrameSinkManagerClientPtr client);
+
+  // Binds to a privileged GpuClient for the browser process.
+  void BindBrowserGpuRequest(ui::mojom::GpuRequest request);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
 
@@ -285,6 +297,9 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   static int swiftshader_crash_count_;
 
   std::unique_ptr<BrowserChildProcessHostImpl> process_;
+
+  // A privileged GpuClient for the browser process that live on the IO thread.
+  std::unique_ptr<BrowserGpuClient> browser_gpu_client_;
 
   // Track the URLs of the pages which have live offscreen contexts,
   // assumed to be associated with untrusted content such as WebGL.

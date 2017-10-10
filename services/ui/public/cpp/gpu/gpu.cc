@@ -66,6 +66,13 @@ std::unique_ptr<Gpu> Gpu::Create(
   return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
 }
 
+// static
+std::unique_ptr<Gpu> Gpu::Create(
+    GpuPtrFactory factory,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
+}
+
 scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel) {
   int32_t stream_id = 0;
