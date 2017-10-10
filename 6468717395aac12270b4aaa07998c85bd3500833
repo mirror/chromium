@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2af4e9_7307a5a7",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:58:50Z",
+      "side": 1,
+      "message": "What is an expected value for i here?  It\u0027s a bit silly to have a loop that increments a counter by 1 on each iteration, but maybe it\u0027s few enough iterations to where it doesn\u0027t matter.",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b967bbf_d1afde6a",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:58:50Z",
+      "side": 1,
+      "message": "Please document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 66,
+        "startChar": 70,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43809b6f_6e0358bf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28534,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:58:50Z",
+      "side": 1,
+      "message": "Just to clarify: Are buckets 1 and 2 emitted to as well?",
+      "range": {
+        "startLine": 28534,
+        "startChar": 61,
+        "endLine": 28534,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33024b36_6ac47ff9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51691,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:58:50Z",
+      "side": 1,
+      "message": "nit: BooleanEnabled",
+      "range": {
+        "startLine": 51691,
+        "startChar": 53,
+        "endLine": 51691,
+        "endChar": 60
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17fc184_980bfe44",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51804,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-10T21:58:50Z",
+      "side": 1,
+      "message": "Please also document the interval/frequency at which this data is recorded locally, including what the semantics are e.g. if the app is only open briefly during a day.",
+      "range": {
+        "startLine": 51801,
+        "startChar": 0,
+        "endLine": 51804,
+        "endChar": 49
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
