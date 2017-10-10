@@ -79,13 +79,7 @@ class AutofillProfileValidatorTest : public testing::Test {
 
   ~AutofillProfileValidatorTest() override {}
 
-  void OnValidated(AutofillProfile::ValidityState profile_valid) {
-    EXPECT_EQ(expected_validity_state_, profile_valid);
-  }
-
-  void set_expected_status(AutofillProfile::ValidityState profile_valid) {
-    expected_validity_state_ = profile_valid;
-  }
+  void OnValidated() {}
 
   bool AreRulesLoadedForRegion(std::string region_code) {
     return validator_->AreRulesLoadedForRegion(region_code);
@@ -98,24 +92,16 @@ class AutofillProfileValidatorTest : public testing::Test {
   AutofillProfileValidatorCallback onvalidated_cb_;
 
  private:
-  AutofillProfile::ValidityState expected_validity_state_;
-
   base::test::ScopedTaskEnvironment scoped_task_scheduler;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillProfileValidatorTest);
 };
 
-// Validate a Null profile.
-TEST_F(AutofillProfileValidatorTest, ValidateNullProfile) {
-  set_expected_status(AutofillProfile::UNVALIDATED);
-  validator_->ValidateProfile(nullptr, std::move(onvalidated_cb_));
-}
 // Validate a valid profile, for which the rules are not loaded, yet.
 TEST_F(AutofillProfileValidatorTest, ValidateFullValidProfile_RulesNotLoaded) {
   // This is a valid profile, and the rules are loaded in the constructors
   // Province: "QC", Country: "CA"
   AutofillProfile profile(autofill::test::GetFullValidProfile());
-  set_expected_status(AutofillProfile::VALID);
 
   std::string country_code =
       base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
@@ -142,7 +128,6 @@ TEST_F(AutofillProfileValidatorTest, ValidateProfile_CountryCodeNotExists) {
   const std::string country_code = "PP";
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
-  set_expected_status(AutofillProfile::INVALID);
 
   EXPECT_EQ(false, AreRulesLoadedForRegion(country_code));
 
@@ -155,7 +140,6 @@ TEST_F(AutofillProfileValidatorTest, ValidateAddress_RuleNotExists) {
   const std::string country_code = "US";
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
-  set_expected_status(AutofillProfile::UNVALIDATED);
 
   EXPECT_EQ(false, AreRulesLoadedForRegion(country_code));
 

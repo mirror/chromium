@@ -110,12 +110,11 @@ void SetEmptyValidityIfEmpty(AutofillProfile* profile) {
 
 namespace address_validation_util {
 
-AutofillProfile::ValidityState ValidateAddress(
-    AutofillProfile* profile,
-    AddressValidator* address_validator) {
+void ValidateAddress(AutofillProfile* profile,
+                     AddressValidator* address_validator) {
   DCHECK(address_validator);
   if (!profile)
-    return AutofillProfile::UNVALIDATED;
+    return;
 
   if (!base::ContainsValue(
           CountryDataMap::GetInstance()->country_codes(),
@@ -126,13 +125,12 @@ AutofillProfile::ValidityState ValidateAddress(
     SetAllValidityStates(profile, AutofillProfile::UNVALIDATED);
     SetValidityStateForAddressField(profile, COUNTRY, AutofillProfile::INVALID);
     SetEmptyValidityIfEmpty(profile);
-    return AutofillProfile::INVALID;
+    return;
   }
 
   AddressData address;
   InitializeAddressFromProfile(*profile, &address);
 
-  AutofillProfile::ValidityState profile_validity;
   FieldProblemMap problems;
   // status denotes if the rule was successfully loaded before validation.
   AddressValidator::Status status =
@@ -141,27 +139,21 @@ AutofillProfile::ValidityState ValidateAddress(
   if (status == AddressValidator::SUCCESS) {
     // The rules were found and applied. Initialize all fields to VALID here and
     // update the fields with problems below.
-    profile_validity = AutofillProfile::VALID;
     SetAllValidityStates(profile, AutofillProfile::VALID);
   } else {
     // If the rules are not yet available, ValidateAddress can still check for
     // MISSING_REQUIRED_FIELD. In this case, the address fields will be either
     // UNVALIDATED or INVALID.
-    profile_validity = AutofillProfile::UNVALIDATED;
     SetAllValidityStates(profile, AutofillProfile::UNVALIDATED);
     SetValidityStateForAddressField(profile, COUNTRY, AutofillProfile::VALID);
   }
 
   for (auto problem : problems) {
-    if (SetValidityStateForAddressField(profile, problem.first,
-                                        AutofillProfile::INVALID)) {
-      profile_validity = AutofillProfile::INVALID;
-    }
+    SetValidityStateForAddressField(profile, problem.first,
+                                    AutofillProfile::INVALID);
   }
 
   SetEmptyValidityIfEmpty(profile);
-
-  return profile_validity;
 }
 
 }  // namespace address_validation_util

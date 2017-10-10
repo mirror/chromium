@@ -13,9 +13,8 @@ namespace address_validation_util {
 
 // Validates the address fields of the |profile|.
 // Returns the ValidityState of the |profile| according to its address fields.
-AutofillProfile::ValidityState ValidateAddress(
-    AutofillProfile* profile,
-    AddressValidator* address_validator);
+void ValidateAddress(AutofillProfile* profile,
+                     AddressValidator* address_validator);
 
 }  // namespace address_validation_util
 }  // namespace autofill

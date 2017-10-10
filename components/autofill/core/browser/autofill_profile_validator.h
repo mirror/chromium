@@ -29,8 +29,7 @@ using ::i18n::addressinput::PreloadSupplier;
 using ::i18n::addressinput::Source;
 using ::i18n::addressinput::Storage;
 
-using AutofillProfileValidatorCallback =
-    base::OnceCallback<void(AutofillProfile::ValidityState)>;
+using AutofillProfileValidatorCallback = base::OnceCallback<void()>;
 
 // AutofillProfileValidator Loads Rules from the server and validates an
 // autofill profile. For a given autofill profile, it will set the ValidityState

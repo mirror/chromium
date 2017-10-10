@@ -61,22 +61,11 @@ void AutofillProfileValidator::ValidationRequest::OnRulesLoaded() {
   if (has_responded_)
     return;
   has_responded_ = true;
-  AutofillProfile::ValidityState profile_validity =
-      AutofillProfile::UNVALIDATED;
-  AutofillProfile::ValidityState address_validity =
-      address_validation_util::ValidateAddress(profile_, validator_);
-  AutofillProfile::ValidityState phone_email_validity =
-      phone_email_validation_util::ValidatePhoneAndEmail(profile_);
 
-  if (address_validity == AutofillProfile::INVALID ||
-      phone_email_validity == AutofillProfile::INVALID) {
-    profile_validity = AutofillProfile::INVALID;
-  } else if (address_validity == AutofillProfile::VALID &&
-             phone_email_validity == AutofillProfile::VALID) {
-    profile_validity = AutofillProfile::VALID;
-  }
+  address_validation_util::ValidateAddress(profile_, validator_);
+  phone_email_validation_util::ValidatePhoneAndEmail(profile_);
 
-  std::move(on_validated_).Run(profile_validity);
+  std::move(on_validated_).Run();
 }
 
 AutofillProfileValidator::AutofillProfileValidator(
@@ -89,9 +78,9 @@ AutofillProfileValidator::~AutofillProfileValidator() {}
 void AutofillProfileValidator::ValidateProfile(
     AutofillProfile* profile,
     AutofillProfileValidatorCallback cb) {
+  DCHECK(profile);
   if (!profile) {
-    // An null profile is an unvalidated profile.
-    std::move(cb).Run(AutofillProfile::UNVALIDATED);
+    std::move(cb).Run();
     return;
   }
   std::unique_ptr<ValidationRequest> request(

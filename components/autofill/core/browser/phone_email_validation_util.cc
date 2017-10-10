@@ -48,23 +48,16 @@ AutofillProfile::ValidityState ValidatePhoneNumber(
              : AutofillProfile::INVALID;
 }
 
-AutofillProfile::ValidityState ValidatePhoneAndEmail(AutofillProfile* profile) {
+void ValidatePhoneAndEmail(AutofillProfile* profile) {
   DCHECK(profile);
 
-  AutofillProfile::ValidityState phone_validity = ValidatePhoneNumber(
-      base::UTF16ToUTF8(profile->GetRawInfo(PHONE_HOME_WHOLE_NUMBER)),
-      base::UTF16ToUTF8(profile->GetRawInfo(ADDRESS_HOME_COUNTRY)));
-  profile->SetValidityState(PHONE_HOME_WHOLE_NUMBER, phone_validity);
-
-  AutofillProfile::ValidityState email_validity =
-      ValidateEmailAddress(profile->GetRawInfo(EMAIL_ADDRESS));
-  profile->SetValidityState(EMAIL_ADDRESS, email_validity);
-
-  if (phone_validity == AutofillProfile::VALID &&
-      email_validity == AutofillProfile::VALID) {
-    return AutofillProfile::VALID;
-  }
-  return AutofillProfile::INVALID;
+  profile->SetValidityState(
+      PHONE_HOME_WHOLE_NUMBER,
+      ValidatePhoneNumber(
+          base::UTF16ToUTF8(profile->GetRawInfo(PHONE_HOME_WHOLE_NUMBER)),
+          base::UTF16ToUTF8(profile->GetRawInfo(ADDRESS_HOME_COUNTRY))));
+  profile->SetValidityState(
+      EMAIL_ADDRESS, ValidateEmailAddress(profile->GetRawInfo(EMAIL_ADDRESS)));
 }
 
 }  // namespace phone_email_validation_util

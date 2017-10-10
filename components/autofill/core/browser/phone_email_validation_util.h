@@ -11,8 +11,7 @@ namespace autofill {
 namespace phone_email_validation_util {
 
 // Validates the phone number and email field of the |profile|.
-// Returns the ValidityState of the |profile| according to its phone fields.
-AutofillProfile::ValidityState ValidatePhoneAndEmail(AutofillProfile* profile);
+void ValidatePhoneAndEmail(AutofillProfile* profile);
 
 }  // namespace phone_email_validation_util
 }  // namespace autofill
