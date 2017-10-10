@@ -50,13 +50,10 @@ gin::Handle<InterfaceProviderJsWrapper> InterfaceProviderJsWrapper::Create(
 gin::ObjectTemplateBuilder
 InterfaceProviderJsWrapper::GetObjectTemplateBuilder(v8::Isolate* isolate) {
   return Wrappable<InterfaceProviderJsWrapper>::GetObjectTemplateBuilder(
-      isolate)
-      .SetMethod("getInterface",
-                 &InterfaceProviderJsWrapper::GetInterface)
+             isolate)
+      .SetMethod("getInterface", &InterfaceProviderJsWrapper::GetInterface)
       .SetMethod("addInterfaceOverrideForTesting",
-                 &InterfaceProviderJsWrapper::AddOverrideForTesting)
-      .SetMethod("clearInterfaceOverridesForTesting",
-                 &InterfaceProviderJsWrapper::ClearOverridesForTesting);
+                 &InterfaceProviderJsWrapper::AddOverrideForTesting);
 }
 
 mojo::Handle InterfaceProviderJsWrapper::GetInterface(
@@ -88,17 +85,6 @@ void InterfaceProviderJsWrapper::AddOverrideForTesting(
     service_manager::Connector::TestApi test_api(connector_.get());
     test_api.OverrideBinderForTesting(mojom::kBrowserServiceName,
                                       interface_name, callback);
-  }
-}
-
-void InterfaceProviderJsWrapper::ClearOverridesForTesting() {
-  if (remote_interfaces_) {
-    service_manager::InterfaceProvider::TestApi test_api(
-        remote_interfaces_.get());
-    test_api.ClearBinders();
-  } else if (connector_) {
-    service_manager::Connector::TestApi test_api(connector_.get());
-    test_api.ClearBinderOverrides();
   }
 }
 
