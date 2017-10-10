@@ -732,6 +732,8 @@ group("gn_all") {
   if (is_fuchsia) {
     deps += [ "//headless" ]
   }
+
+  deps += [ "//pure_virtual" ]
 }
 
 # TODO(GYP_GONE): This target exists for compatibility with GYP, specifically
