@@ -3,8 +3,10 @@
 // found in the LICENSE file.
 
 #import "ios/chrome/browser/ui/ntp/ntp_tile_saver.h"
+#include "base/run_loop.h"
 #import "base/strings/sys_string_conversions.h"
 #import "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
 #import "components/ntp_tiles/ntp_tile.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_data_source.h"
 #import "ios/chrome/browser/ui/ntp/ntp_tile.h"
@@ -100,6 +102,9 @@ class NTPTileSaverControllerTest : public BlockCleanupTest {
     EXPECT_NSEQ(tile.fallbackBackgroundColor, UIColor.blueColor);
     EXPECT_EQ(tile.fallbackIsDefaultColor, NO);
   }
+
+ protected:
+  base::test::ScopedTaskEnvironment scoped_task_evironment_;
 };
 
 TEST_F(NTPTileSaverControllerTest, SaveMostVisitedToDisk) {
@@ -121,6 +126,8 @@ TEST_F(NTPTileSaverControllerTest, SaveMostVisitedToDisk) {
 
   ntp_tile_saver::SaveMostVisitedToDisk(tiles, mockFaviconFetcher,
                                         testFaviconDirectory());
+  // Wait for all asynchronous tasks to complete.
+  scoped_task_evironment_.RunUntilIdle();
 
   // Read most visited from disk.
   NSDictionary<NSURL*, NTPTile*>* savedTiles =
@@ -161,6 +168,8 @@ TEST_F(NTPTileSaverControllerTest, UpdateSingleFaviconFallback) {
 
   ntp_tile_saver::SaveMostVisitedToDisk(tiles, mockFaviconFetcher,
                                         testFaviconDirectory());
+  // Wait for all asynchronous tasks to complete.
+  scoped_task_evironment_.RunUntilIdle();
 
   // Read most visited from disk.
   NSDictionary<NSURL*, NTPTile*>* savedTiles =
@@ -189,6 +198,8 @@ TEST_F(NTPTileSaverControllerTest, UpdateSingleFaviconFallback) {
                     {imageTile1.url, fallbackTile.url});
   ntp_tile_saver::UpdateSingleFavicon(imageTile1.url, mockFaviconFetcher2,
                                       testFaviconDirectory());
+  // Wait for all asynchronous tasks to complete.
+  scoped_task_evironment_.RunUntilIdle();
 
   // Read most visited from disk.
   NSDictionary<NSURL*, NTPTile*>* savedTilesAfterUpdate =
