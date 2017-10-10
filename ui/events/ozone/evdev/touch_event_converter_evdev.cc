@@ -198,8 +198,9 @@ void TouchEventConverterEvdev::Initialize(const EventDeviceInfo& info) {
           info.GetAbsMtSlotValueWithDefault(ABS_MT_PRESSURE, i, 0));
       int tool_type = info.GetAbsMtSlotValueWithDefault(ABS_MT_TOOL_TYPE, i,
                                                         MT_TOOL_FINGER);
-      events_[i].cancelled = (tool_type == MT_TOOL_PALM) ||
-                             (major_max_ > 0 && touch_major == major_max_);
+      events_[i].tool_type_is_palm = (tool_type == MT_TOOL_PALM);
+      events_[i].touch_major_is_max =
+          (major_max_ > 0 && touch_major == major_max_);
       if (events_[i].cancelled)
         cancelled_state = true;
     }
@@ -394,11 +395,8 @@ void TouchEventConverterEvdev::ProcessAbs(const input_event& input) {
       // neither minor nor orientation, so this is all we can do.
       events_[current_slot_].radius_x = input.value / 2.0f;
 
-      // The MT protocol communicates that there is palm on the surface
-      // by either sending ABS_MT_TOOL_TYPE/MT_TOOL_PALM, or by setting
-      // touch major to max.
-      if (major_max_ > 0 && input.value == major_max_)
-        events_[current_slot_].cancelled = true;
+      events_[current_slot_].touch_major_is_max =
+          (major_max_ > 0 && input.value == major_max_);
       break;
     case ABS_MT_TOUCH_MINOR:
       events_[current_slot_].radius_y = input.value / 2.0f;
@@ -410,8 +408,7 @@ void TouchEventConverterEvdev::ProcessAbs(const input_event& input) {
       events_[current_slot_].y = input.value;
       break;
     case ABS_MT_TOOL_TYPE:
-      if (input.value == MT_TOOL_PALM)
-        events_[current_slot_].cancelled = true;
+      events_[current_slot_].tool_type_is_palm = (input.value == MT_TOOL_PALM);
       break;
     case ABS_MT_TRACKING_ID:
       UpdateTrackingId(current_slot_, input.value);
@@ -527,6 +524,9 @@ void TouchEventConverterEvdev::ReportEvents(base::TimeTicks timestamp) {
 
   for (size_t i = 0; i < events_.size(); i++) {
     InProgressTouchEvdev* event = &events_[i];
+    if (event->tool_type_is_palm || event->touch_major_is_max) {
+      event->cancelled = true;
+    }
     if (event->altered && (event->cancelled ||
                            (false_touch_finder_ &&
                             false_touch_finder_->SlotHasNoise(event->slot)))) {

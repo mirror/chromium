@@ -22,6 +22,12 @@ struct EVENTS_OZONE_EVDEV_EXPORT InProgressTouchEvdev {
   InProgressTouchEvdev(const InProgressTouchEvdev& other);
   ~InProgressTouchEvdev();
 
+  // Whether the touch major of this slot is max.
+  bool touch_major_is_max = false;
+
+  // Whether tool type is palm for this slot.
+  bool tool_type_is_palm = false;
+
   // Whether there is new information for the touch.
   bool altered = false;
 
