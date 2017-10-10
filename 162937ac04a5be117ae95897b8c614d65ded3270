@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6029c02e_12f7ef2d",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-10T19:32:59Z",
+      "side": 1,
+      "message": "I\u0027d just put a break here and fall through to the final return, since the style of this method is to check a bunch of things in series.",
+      "range": {
+        "startLine": 716,
+        "startChar": 17,
+        "endLine": 716,
+        "endChar": 18
+      },
+      "revId": "162937ac04a5be117ae95897b8c614d65ded3270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
