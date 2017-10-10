@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fd88022f_cde58db1",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T19:00:38Z",
+      "side": 1,
+      "message": "Hm if you can\u0027t think of a way for that to work maybe do something like EXPECT_TRUE(verify_messages_expected[i]) \u003c\u003c messages_expected[i];",
+      "parentUuid": "78e2d104_fad492e6",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3327f8c1_24bd6e97",
         "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
         "patchSetId": 7
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Abusive preset uses ABUSIVE as the list but we are using ConfigureAsSubresourceFilterOnlyURLWithWarning which uses SUBRESOURCE_FILTER as the list. I guess we could enhance the harness to incorporate ABUSIVE list but I think that can be done as a separate Cl since all other tests in this file are also still using SUBRESOURCE_FILTER list. wdyt?",
       "parentUuid": "f58f21f6_f09cd269",
+      "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8563add4_542ca320",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T19:00:38Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "5fc82359_bac7fb82",
       "revId": "a2ff983e3c804645e429a29633d013a39e90a902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
