@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d9adf7_ba554e84",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-10T21:10:25Z",
+      "side": 1,
+      "message": "This is doing something very tricky, can you explain what\u0027s happening in detail in a comment here?",
+      "revId": "3891922d6cf1afb15b79c2c1274f7ec781933cd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
