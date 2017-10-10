@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4081f7ab_3be4631d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T13:42:41Z",
+      "side": 1,
+      "message": "I suppose we\u0027ll never have this histogram on other platforms? If so, then this is probably okay, otherwise it\u0027d be better to record on the C++ side.",
+      "range": {
+        "startLine": 316,
+        "startChar": 75,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
