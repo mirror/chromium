@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98947719_57f20325",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-10T21:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd90f914_0a9c01cc",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f8da12_d7b2253b",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5d356409_37fb8c50",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-10T21:17:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50f8da12_d7b2253b",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 24
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5075179b_fbf83668",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-10T20:09:21Z",
       "side": 1,
       "message": "What about tasks which don\u0027t include script?",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 39
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8246184d_e359a1ab",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-10T21:17:31Z",
+      "side": 1,
+      "message": "Moving the check until after the ReportLongLayout stuff which I\u0027m unfamiliar with. WillExecuteScript is just a bad name, it is called in Will(ExecuteScript) and Will(CallFunction).",
+      "parentUuid": "5075179b_fbf83668",
       "range": {
         "startLine": 298,
         "startChar": 20,
