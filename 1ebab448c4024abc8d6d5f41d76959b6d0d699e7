@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d303f576_f3287a95",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-10T09:30:11Z",
+      "side": 1,
+      "message": "This function appears to not be used?",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "1ebab448c4024abc8d6d5f41d76959b6d0d699e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9cd6c61_2db6f887",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-10T09:30:11Z",
+      "side": 1,
+      "message": "Probably we should update these cyglog scripts at some point so the internal vs public functions match reality :/",
+      "range": {
+        "startLine": 57,
+        "startChar": 41,
+        "endLine": 57,
+        "endChar": 60
+      },
+      "revId": "1ebab448c4024abc8d6d5f41d76959b6d0d699e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0418e12e_f819121b",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-10T09:30:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you increment the page before updating result[], it seems like everything is going to be offset by one page.",
+      "range": {
+        "startLine": 100,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "1ebab448c4024abc8d6d5f41d76959b6d0d699e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137395de_fb7fbe06",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-10T09:30:11Z",
+      "side": 1,
+      "message": "byu -\u003e by",
+      "range": {
+        "startLine": 142,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "1ebab448c4024abc8d6d5f41d76959b6d0d699e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cac163a_cde818a0",
+        "filename": "tools/android/native_lib_memory/extract_symbols.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-10T09:30:11Z",
+      "side": 1,
+      "message": "Add --port flag.",
+      "range": {
+        "startLine": 200,
+        "startChar": 17,
+        "endLine": 200,
+        "endChar": 18
+      },
+      "revId": "1ebab448c4024abc8d6d5f41d76959b6d0d699e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
