@@ -34,6 +34,24 @@
       "revId": "6d7bc07311d388f676f3869090779a45b379d495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02b6c86_c3d0410b",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-10T00:28:24Z",
+      "side": 1,
+      "message": "OK, so there are a couple bugs here (thanks for the careful review), but it\u0027s also complcated, so roughly in order:\n\n1. For configured networks:\n* Security can\u0027t be changed.\n* Shared can\u0027t actually be changed, although there is a logic bug where that is no longer correctly reflected in the UI, so I fixed that, thanks.\n* There is also an edge case where a shared EAP network could be changed from non-TLS to TLS, so I fixed that also. (That\u0027s actually an existing bug, in the Views UI, so thanks again!).\n\n2. Correct in that we need to use createNetwork for new networks (guid is empty). That is currently handled:\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/cr_components/chromeos/network/network_config.js?q\u003dnetworkingprivate.createnetwork\u0026sq\u003dpackage:chromium\u0026l\u003d349",
+      "parentUuid": "2fedde5e_7431497a",
+      "revId": "6d7bc07311d388f676f3869090779a45b379d495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
