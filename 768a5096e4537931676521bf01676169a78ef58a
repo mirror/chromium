@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1d348f0_2dc77281",
+        "filename": "chrome/browser/extensions/api/easy_unlock_private/easy_unlock_private_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-10T16:13:40Z",
+      "side": 1,
+      "message": "nit: maybe g_easy_unlock_private_connection_factory?",
+      "revId": "768a5096e4537931676521bf01676169a78ef58a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
