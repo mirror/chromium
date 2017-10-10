@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b14a2c_b3ecba3c",
+        "filename": "components/feature_engagement/internal/chrome_variations_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-10T00:00:30Z",
+      "side": 1,
+      "message": "Probably don\u0027t need?  But ok to have.",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 17
+      },
+      "revId": "b733fa16f99ca89fb1dedf1e2ece45a4aa7f1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
