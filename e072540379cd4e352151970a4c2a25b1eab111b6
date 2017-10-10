@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f185fd2_cf1663cb",
+        "filename": "remoting/ios/app/help_and_feedback.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-10T21:55:05Z",
+      "side": 1,
+      "message": "From the wording of the comment, it sounds like this should be a NOTREACHED.",
+      "range": {
+        "startLine": 21,
+        "startChar": 30,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb705ba5_d824bb59",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-10T21:55:05Z",
+      "side": 1,
+      "message": "Not for this CL, but this file seems like it could benefit from ScopedCFTypeRef for things like this to avoid calling CFRelease in multiple places.",
+      "range": {
+        "startLine": 56,
+        "startChar": 47,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "069f3de5_b97bc230",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-10-10T21:55:05Z",
+      "side": 1,
+      "message": "Is it reasonable to continue at this point? If not, consider LOG(FATAL) instead. There are a few similar places below.",
+      "range": {
+        "startLine": 71,
+        "startChar": 53,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "e072540379cd4e352151970a4c2a25b1eab111b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
