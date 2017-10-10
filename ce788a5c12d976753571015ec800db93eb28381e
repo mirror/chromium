@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c869e722_d815dfda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:39:23Z",
+      "side": 1,
+      "message": "M56",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5195a36a_8e6940f4",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:39:23Z",
+      "side": 1,
+      "message": "Why?  Is this due to error pages?",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb7cfc6_3ae3b576",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:39:23Z",
+      "side": 1,
+      "message": "Is this something we intend to keep long term?  Or can we make blocked navigations not commit the destination URL and remove this?  (Alex and I were just chatting about this on https://crbug.com/771848, I think.)",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf43cecb_43113098",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:39:23Z",
+      "side": 1,
+      "message": "I suppose this raises the same question. I\u0027m glad to see we\u0027re using browser process state to tell if it was blocked, at least, since a renderer couldn\u0027t just lie and say it was blocked to get past the CanCommitURL check.  Still, this feels like a hole if the renderer knows of a victim URL that will be legitimately blocked.  That gives them a foot in the door against features that check the last committed URL.",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -659,6 +659,30 @@
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f726d6c_baf787cf",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-10T21:39:23Z",
+      "side": 1,
+      "message": "Yes, I think we\u0027re ok in the webview case, since that can\u0027t get a privileged process for the CWS.",
+      "parentUuid": "32874124_e0e47d10",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
