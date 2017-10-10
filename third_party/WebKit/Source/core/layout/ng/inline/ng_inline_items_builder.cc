@@ -472,9 +472,12 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterBlock(
       // block elements.
       // Direction is handled as the paragraph level by
       // NGBidiParagraph::SetParagraph().
-      if (style->Direction() == TextDirection::kRtl)
-        has_bidi_controls_ = true;
-      break;
+      if (style->RtlOrdering() == EOrder::kLogical) {
+        if (style->Direction() == TextDirection::kRtl)
+          has_bidi_controls_ = true;
+        break;
+      }
+      // Fall through.
     case UnicodeBidi::kBidiOverride:
     case UnicodeBidi::kIsolateOverride:
       AppendBidiControl(style, kLeftToRightOverrideCharacter,
@@ -496,15 +499,17 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterInline(
   const ComputedStyle* style = node->Style();
   switch (style->GetUnicodeBidi()) {
     case UnicodeBidi::kNormal:
+      if (style->RtlOrdering() == EOrder::kLogical)
+        break;
+      // Fall through.
+    case UnicodeBidi::kBidiOverride:
+      AppendBidiControl(style, kLeftToRightOverrideCharacter,
+                        kRightToLeftOverrideCharacter);
+      Enter(node, kPopDirectionalFormattingCharacter);
       break;
     case UnicodeBidi::kEmbed:
       AppendBidiControl(style, kLeftToRightEmbedCharacter,
                         kRightToLeftEmbedCharacter);
-      Enter(node, kPopDirectionalFormattingCharacter);
-      break;
-    case UnicodeBidi::kBidiOverride:
-      AppendBidiControl(style, kLeftToRightOverrideCharacter,
-                        kRightToLeftOverrideCharacter);
       Enter(node, kPopDirectionalFormattingCharacter);
       break;
     case UnicodeBidi::kIsolate:
