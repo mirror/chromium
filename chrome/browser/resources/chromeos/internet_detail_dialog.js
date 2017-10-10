@@ -233,6 +233,23 @@ Polymer({
    * @return {boolean}
    * @private
    */
+  showConfigure_: function(networkProperties) {
+    var type = networkProperties.Type;
+    if (type == CrOnc.Type.CELLULAR || type == CrOnc.Type.TETHER)
+      return false;
+    if ((type == CrOnc.Type.WI_FI || type == CrOnc.Type.WI_MAX) &&
+        networkProperties.ConnectionState !=
+            CrOnc.ConnectionState.NOT_CONNECTED) {
+      return false;
+    }
+    return true;
+  },
+
+  /**
+   * @param {!CrOnc.NetworkProperties} networkProperties
+   * @return {boolean}
+   * @private
+   */
   showConnect_: function(networkProperties) {
     return networkProperties.Type != CrOnc.Type.ETHERNET &&
         networkProperties.ConnectionState ==
