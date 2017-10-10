@@ -142,7 +142,7 @@ RenderViewHostTestEnabler::RenderViewHostTestEnabler()
   if (!base::MessageLoop::current())
     message_loop_ = base::MakeUnique<base::MessageLoop>();
 #if !defined(OS_ANDROID)
-  ImageTransportFactory::InitializeForUnitTests(
+  ImageTransportFactory::SetFactoryForTests(
       base::MakeUnique<NoTransportImageTransportFactory>());
 #else
   if (!screen_)
