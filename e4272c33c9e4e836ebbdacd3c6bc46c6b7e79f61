@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47efb7c_4bc97aed",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T13:27:41Z",
+      "side": 1,
+      "message": "constexpr(s)",
+      "revId": "e4272c33c9e4e836ebbdacd3c6bc46c6b7e79f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473b5562_b00e4ff7",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T13:27:41Z",
+      "side": 1,
+      "message": "// views::Views:",
+      "revId": "e4272c33c9e4e836ebbdacd3c6bc46c6b7e79f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995f06e3_a021d62d",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T13:27:41Z",
+      "side": 1,
+      "message": "how about \"no_notifications_view_\"?",
+      "revId": "e4272c33c9e4e836ebbdacd3c6bc46c6b7e79f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
