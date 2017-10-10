@@ -1598,6 +1598,9 @@ TEST_F(ResourceDispatcherHostTest, SyncLoadCancel) {
 // If the filter has disappeared then detachable resources should continue to
 // load.
 TEST_F(ResourceDispatcherHostTest, DeletedFilterDetached) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      features::kKeepAliveRendererForKeepaliveRequests);
   // test_url_1's data is available synchronously, so use 2 and 3.
   ResourceRequest request_prefetch = CreateResourceRequest(
       "GET", RESOURCE_TYPE_PREFETCH, net::URLRequestTestJob::test_url_2());
@@ -1866,6 +1869,9 @@ TEST_F(ResourceDispatcherHostTest, CancelInDelegate) {
 }
 
 TEST_F(ResourceDispatcherHostTest, CancelRequestsForRoute) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      features::kKeepAliveRendererForKeepaliveRequests);
   job_factory_->SetDelayedStartJobGeneration(true);
   MakeTestRequestWithRenderFrame(0, 11, 1, net::URLRequestTestJob::test_url_1(),
                                  RESOURCE_TYPE_XHR);
