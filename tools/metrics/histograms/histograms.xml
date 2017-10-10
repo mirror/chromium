@@ -7811,6 +7811,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="CaptivePortal.DetectedOfflineSincePortalNetwork"
+    enum="BooleanHit">
+  <owner>warx@chromium.org</owner>
+  <summary>
+    Records the offline captive portal detection attempts within one minute
+    since last time default network shill reports captive portal.
+  </summary>
+</histogram>
+
 <histogram name="CaptivePortal.DetectResult" enum="CaptivePortalDetectResult">
   <owner>meacer@chromium.org</owner>
   <summary>Records the result of a captive portal probe.</summary>
