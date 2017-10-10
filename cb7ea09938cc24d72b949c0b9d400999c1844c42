@@ -476,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "bc411415_96ff0a7d",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-10T18:59:01Z",
+      "side": 1,
+      "message": "To pass the closure compiler, the !! is needed to cast the string literal into a boolean. Without the !!, the closure compiler interprets |blacklistText| as string literal and fails.",
+      "parentUuid": "cd2feb54_34ecbc12",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9223dc2_7323e693",
         "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
         "patchSetId": 2

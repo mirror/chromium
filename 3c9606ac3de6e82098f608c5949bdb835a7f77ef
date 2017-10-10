@@ -16,6 +16,24 @@
       "revId": "3c9606ac3de6e82098f608c5949bdb835a7f77ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eebfcd2_7c3e1308",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-10T18:59:01Z",
+      "side": 1,
+      "message": "Per our discussion: Keeping the format as is. This was auto formatted by running \u0027git cl format\u0027, and the format is new lined because the ID is too long and won\u0027t fit in the 80 char limit.\n\nThere are other lines in extensions_ui.cc that follow this new lined format when the strings are too long (e.g. https://chromium.googlesource.com/chromium/src/+/ddcdc39dadb3fb9ef16cf0d5254dd9eb9312bdc3/chrome/browser/ui/webui/extensions/extensions_ui.cc#280).",
+      "parentUuid": "67e664a0_3bc3ad7d",
+      "revId": "3c9606ac3de6e82098f608c5949bdb835a7f77ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
