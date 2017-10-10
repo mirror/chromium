@@ -104,7 +104,6 @@ def Download(arguments):
       output=None,
       ignore_errors=False,
       sha1_file=None,
-      verbose=arguments.verbose,
       auto_platform=False,
       extract=False)
 
