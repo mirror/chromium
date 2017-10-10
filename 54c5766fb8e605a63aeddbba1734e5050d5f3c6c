@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccdc9bb6_349901c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Please add more details. What is being refined? Why is this needed? What\u0027s the difference between this CL and the previous CL?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcb45d8_9c88e940",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "This is a different error - the Bluetooth device is not available. Let\u0027s add a new enum value for this situation.\n\nWe do not destroy the connection if setting latency fails, so you should eliminate that enum value.",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 72
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d348282a_31a4ae5f",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Same thing - this is not an error creating the GATT connection. You can use the same enum value you create for the above case.",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 70
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2104d24e_67faa5a5",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "This should not be possible. Please eliminate this enum value and use NOTREACHED() here.",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 41
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32621493_8605f042",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you eliminate the \"!\" here? It should read look like:\n\nif (rx_characteristic.id.empty())",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 9
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f28aeb_3bb2bec1",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 877,
+        "startChar": 0,
+        "endLine": 877,
+        "endChar": 39
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdc410f_d8901673",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Let\u0027s call this BLE_WEAVE_CONNECTION_RESULT_ERROR_GATT_CHARACTERISTIC_NOT_AVAILABLE (instead of \"no longer available\").\n\nAlso remember to update histograms.xml.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fac772_cbd6db9d",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Let\u0027s call this BLE_WEAVE_CONNECTION_RESULT_ERROR_WRITE_QUEUE_OUT_OF_SYNC.\n\nAlso remember to update histograms.xml.",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 62
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95ea4e1_f4958c60",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-10T23:36:36Z",
+      "side": 1,
+      "message": "Your test looks good as written, but it does not put anything in place to force developers adding new tests to this file to test that the correct connection result was set.\n\nCan you add a new bool has_verified_connection_result, initialize it to false in SetUp(), then EXPECT_TRUE(has_verified_connection_result) in TearDown()?",
+      "range": {
+        "startLine": 322,
+        "startChar": 6,
+        "endLine": 322,
+        "endChar": 58
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
