@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef6c7b7d_69ac9e33",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-10T12:56:53Z",
+      "side": 0,
+      "message": "I don\u0027t think you meant to delete this?",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 36
+      },
+      "revId": "9c0ec54e33e5d02650eb00fb9469452da63dcfd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
