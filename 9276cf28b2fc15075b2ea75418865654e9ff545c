@@ -117,6 +117,30 @@
       "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0706d75b_a9cfd912",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-10T13:02:31Z",
+      "side": 1,
+      "message": "Sure. I\u0027ve rejiggered things so that at most one snapshot is taken for each enumeration.",
+      "parentUuid": "31c87c65_f23da5c5",
+      "range": {
+        "startLine": 54,
+        "startChar": 62,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "9276cf28b2fc15075b2ea75418865654e9ff545c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
