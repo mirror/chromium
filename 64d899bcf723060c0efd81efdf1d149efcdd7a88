@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b3f99b0_e78612af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-10T12:29:32Z",
+      "side": 1,
+      "message": "Don\u0027t align subsequent lines with the parameters, just indent them 8 spaces. With more than one parameter, it looks pretty ugly otherwise 8-)",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 24
+      },
+      "revId": "64d899bcf723060c0efd81efdf1d149efcdd7a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
