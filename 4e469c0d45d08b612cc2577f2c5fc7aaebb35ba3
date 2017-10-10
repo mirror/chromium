@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ff50b24_0f16c76a",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T00:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81ac725c_31d2be8e",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1b2fb5_641461d7",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8488e73_2acf9686",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T00:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1b2fb5_641461d7",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 3
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ae038adf_037eb720",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T00:30:11Z",
+      "side": 1,
+      "message": "DCHECK will fail if Interrupt() is called when autohiding is in-progress with kSlideOutDurationMs. I just added a SetSlideDuration() instead...",
+      "parentUuid": "2cbfbe9e_e0118e44",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 162,
+        "endChar": 34
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8276cfbe_8d5e8a0f",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311a7317_5e602aba",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-10T00:30:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8276cfbe_8d5e8a0f",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "4e469c0d45d08b612cc2577f2c5fc7aaebb35ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
