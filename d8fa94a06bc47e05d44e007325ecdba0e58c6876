@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963232b7_c982f9e2",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "Meaning unclear.  Suggestion: kMaxUnreclaimedPlaceholderFrames",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c2aca3_2570dda0",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "Find a clearer name for this.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddde4f78_19aa1f8a",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "IfPossible -\u003e IfNeeded.",
+      "range": {
+        "startLine": 92,
+        "startChar": 41,
+        "endLine": 92,
+        "endChar": 73
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecfd234_8c8d930b",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "I don think this needs to be a separate method.  I see only on call site. you could just inline the code there.",
+      "range": {
+        "startLine": 116,
+        "startChar": 5,
+        "endLine": 116,
+        "endChar": 39
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8cad83_0e507634",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "Just \"latest_unposted_image_\" is a sufficient condition IMHO.",
+      "range": {
+        "startLine": 410,
+        "startChar": 6,
+        "endLine": 410,
+        "endChar": 34
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd118d9_c5cf48f5",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "To avoid any confusion in debugging or in future work, you should set latest_unposted_resource_id_ to 0 here IMHO.",
+      "range": {
+        "startLine": 412,
+        "startChar": 37,
+        "endLine": 412,
+        "endChar": 65
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da9befd_cda642a8",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-10T18:54:44Z",
+      "side": 1,
+      "message": "Why is this virtual?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "d8fa94a06bc47e05d44e007325ecdba0e58c6876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
