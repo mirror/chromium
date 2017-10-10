@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b28bbce3_ac3182ef",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T16:08:47Z",
+      "side": 1,
+      "message": "I just seems a bit weird to me to *not* use the built-in type for a timestamp. If the only argument against is having to use ValueOf at the other end, then that\u0027s IMO not sufficient justification. (BTW, I have a pending CL to convert this stuff to a Gin class at crrev.com/c/700443, which should make the converting stuff a bit less ugly.)\n\nThe null time case is indeed a bit subtle, not sure how best to handle that. I guess just passing a null Date could work, and would be more \"honest\" than the magic zero value?",
+      "parentUuid": "a88b53eb_9027c334",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 21
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "630acfd5_a82a3636",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 4
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "c833e6bb_1817e029",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T16:08:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c75002f_eb0972e9",
+      "range": {
+        "startLine": 119,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 19
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921c9522_c54da0e4",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 4
@@ -472,6 +520,30 @@
     },
     {
       "key": {
+        "uuid": "9abe4dde_e44d399b",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T16:08:47Z",
+      "side": 1,
+      "message": "IMO the names are close enough, but fair enough.",
+      "parentUuid": "1aab4760_ea871d06",
+      "range": {
+        "startLine": 431,
+        "startChar": 12,
+        "endLine": 431,
+        "endChar": 25
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2546665c_24ebfb05",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 4
@@ -507,6 +579,30 @@
       "side": 1,
       "message": "I see what you mean. We do have separate histograms. Do you propose:\na) That we get rid of the aggregate histogram altogether.\nb) Ignore PopularSites specifically (since you can argue the same for TopSites, although not implemented here).",
       "parentUuid": "2546665c_24ebfb05",
+      "range": {
+        "startLine": 230,
+        "startChar": 24,
+        "endLine": 230,
+        "endChar": 42
+      },
+      "revId": "f326a4ed146b0c9b1654c82cb79e143602ba41ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faa42ef_8f4d334e",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-10T16:08:47Z",
+      "side": 1,
+      "message": "We do have the split histograms, but they still have the same name (up to the suffix) but record different data. And \"time since generation\" would actually make sense for PopularSites, we just don\u0027t have it readily available. (Shouldn\u0027t be too hard to add though!)\n\nDo we actually have a need for the download age for PopularSites? If not, then I\u0027d just not record it for now. Better no data (for now) than misleading data. If we do need the \"time since download\", then IMO we should have separate histograms for that (SuggestionsImpressionDownloadAge?), which we could also record for MostLikely.",
+      "parentUuid": "d608afd2_3d659fc7",
       "range": {
         "startLine": 230,
         "startChar": 24,
