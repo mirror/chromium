@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19d1255_c4213985",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "I found this comment confusing, since it\u0027s talking about the message pipes and not the state of the interface objects.  Also, one interface is bound while one is not.\n\nMaybe:\n\"Returns a pair.  The first item is an unbound mojom::MediaControllerRequest. The second item is a bound mojom::MediaStatusObserverPtr whose binding is owned by |this|.\"",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eebc171_62cf6741",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "InitializeMojoInterfaces()?",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f284d6c_f49a1ae9",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "Typo in commands",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a1572c_12ec515b",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "Is this simpler than having HangoutsMediaRouteController override InitMojoConnections?",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a00619_94c1b802",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "It seems odd to pass a raw pointer here.",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dde5955_9593a89e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "Would it be simpler to pass |route_id| from GetRouteController?",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1edcab_0a58a4ac",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "For readability, I would prefer an explicit type here.",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bc7532_ee7224d6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-10T18:05:28Z",
+      "side": 1,
+      "message": "Perhaps CreateMediaRouteController should pass back route_id with its response to simplify the bookkeeping here.",
+      "revId": "d2a35fd105f4b395844be686a157aa78eddca347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
