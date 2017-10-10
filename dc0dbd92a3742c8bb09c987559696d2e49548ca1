@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ad7267_83f692a8",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T21:13:47Z",
+      "side": 1,
+      "message": "And remove from here",
+      "revId": "dc0dbd92a3742c8bb09c987559696d2e49548ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9508b172_70ae6e09",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T21:13:47Z",
+      "side": 1,
+      "message": "nit: needs components/safe_browsing/db/util.h",
+      "revId": "dc0dbd92a3742c8bb09c987559696d2e49548ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf531d9c_964625f3",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T21:13:47Z",
+      "side": 1,
+      "message": "I think making the preset and then changing it is much less clear than just creating it outright, like in the test harness setup.\n\nAlso, couldn\u0027t one of these tests just use the preset or do they all need blocking rules / notifications?",
+      "revId": "dc0dbd92a3742c8bb09c987559696d2e49548ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9bc9ae_8ef60b4f",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-10T21:13:47Z",
+      "side": 1,
+      "message": "Standard syntax for TODOs are \"TODO(username):\" e.g. no @ sign or comma.",
+      "revId": "dc0dbd92a3742c8bb09c987559696d2e49548ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
