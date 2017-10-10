@@ -377,6 +377,23 @@ float ScreenWin::GetSystemScaleFactor() {
   return GetUnforcedDeviceScaleFactor();
 }
 
+// static
+void ScreenWin::SetRequestHDRStatusCallback(
+    base::Closure request_hdr_status_callback) {
+  DCHECK(g_screen_win_instance);
+  g_screen_win_instance->request_hdr_status_callback_ =
+      std::move(request_hdr_status_callback);
+}
+
+// static
+void ScreenWin::SetHDREnabled(bool hdr_enabled) {
+  if (!g_screen_win_instance)
+    return;
+  if (g_screen_win_instance->hdr_enabled_ == hdr_enabled)
+    return;
+  __debugbreak();
+}
+
 HWND ScreenWin::GetHWNDFromNativeView(gfx::NativeView window) const {
   NOTREACHED();
   return nullptr;
@@ -518,6 +535,9 @@ void ScreenWin::OnWndProc(HWND hwnd,
     return;
 
   color_profile_reader_->UpdateIfNeeded();
+  if (request_hdr_status_callback_)
+    request_hdr_status_callback_.Run();
+
   std::vector<Display> old_displays = std::move(displays_);
   UpdateFromDisplayInfos(GetDisplayInfosFromSystem());
   change_notifier_.NotifyDisplaysChanged(old_displays, displays_);

@@ -519,6 +519,43 @@ class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
 }  // namespace internal
 #endif
 
+namespace {
+
+// Provides a bridge whereby display::win::ScreenWin can ask the GPU process
+// about the HDR status of the system.
+class HDRStatusProxy {
+ public:
+  static void Initialize() { DoRequest(); }
+
+ private:
+  static void DoRequest() {
+    DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+    auto do_request_on_io_thread = []() {
+      auto* gpu_process_host = GpuProcessHost::Get(
+          GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
+      if (gpu_process_host) {
+        gpu_process_host->RequestHDRStatus(
+            base::Bind(&HDRStatusProxy::GotResult));
+      } else {
+        GotResult(false);
+      }
+    };
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::BindOnce(do_request_on_io_thread));
+  }
+  static void GotResult(bool hdr_enabled) {
+    DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+    auto got_result_on_ui_thread = [](bool hdr_enabled) {
+      __debugbreak();
+    };
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(got_result_on_ui_thread, hdr_enabled));
+  }
+};
+
+}  // namespace
+
 // The currently-running BrowserMainLoop.  There can be one or zero.
 BrowserMainLoop* g_current_browser_main_loop = NULL;
 
@@ -1513,6 +1550,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   }
 #endif  // defined(USE_AURA)
 #endif  // defined(OS_ANDROID)
+
+  HDRStatusProxy::Initialize();
 
 #if defined(OS_ANDROID)
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

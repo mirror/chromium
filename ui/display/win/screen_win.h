@@ -111,6 +111,11 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // you are targeting.
   static float GetSystemScaleFactor();
 
+  static void SetRequestHDRStatusCallback(
+      base::Closure request_hdr_status_callback);
+
+  static void SetHDREnabled(bool hdr_enabled);
+
   // Returns the HWND associated with the NativeView.
   virtual HWND GetHWNDFromNativeView(gfx::NativeView view) const;
 
@@ -207,6 +212,10 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // TODO(ccameron): Set this via the GPU process when the system "HDR and
   // advanced color" setting is enabled.
   bool hdr_enabled_ = false;
+
+  // Callback to make when the HDR status may have changed. This will ultimately
+  // make the query in the GPU process.
+  base::Closure request_hdr_status_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
 };
