@@ -88,16 +88,16 @@ bool AddEntryToZip(zipFile zip_file,
   return success;
 }
 
-bool IsHiddenFile(const base::FilePath& file_path) {
-  return file_path.BaseName().value()[0] == '.';
-}
-
 bool ExcludeNoFilesFilter(const base::FilePath& file_path) {
   return true;
 }
 
 bool ExcludeHiddenFilesFilter(const base::FilePath& file_path) {
-  return !IsHiddenFile(file_path);
+  return file_path.BaseName().value()[0] != '.';
+}
+
+bool IsHiddenFile(const base::FilePath& file_path) {
+  return file_path.BaseName().value()[0] == '.';
 }
 
 class FileAccessorImpl : public FileAccessor {

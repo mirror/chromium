@@ -155,6 +155,28 @@ class ZipTest : public PlatformTest {
     return true;
   }
 
+  // Makes |path| relative by removing |parent_path| it. |path| must be a child
+  // of |parent_path|.
+  base::FilePath MakePathRelative(const base::FilePath& path,
+                                  const base::FilePath& parent_path) {
+    DCHECK(parent_path.IsParent(path));
+
+    // Note we are not using FilePath::GetComponents as we'd have to deal with
+    // direv/root dir (and they differ between Windows and other platforms).
+    std::vector<base::FilePath::StringType> components;
+    base::FilePath tmp_path(path);
+    while (tmp_path != parent_path) {
+      components.insert(components.begin(), tmp_path.BaseName().value());
+      tmp_path = tmp_path.DirName();
+    }
+
+    base::FilePath result;
+    for (auto component : components) {
+      result = result.Append(component);
+    }
+    return result;
+  }
+
   void TestUnzipFile(const base::FilePath::StringType& filename,
                      bool expect_hidden_files) {
     base::FilePath test_dir;
@@ -181,9 +203,8 @@ class ZipTest : public PlatformTest {
 
       if (base::PathExists(next_path) && !base::DirectoryExists(next_path)) {
         // It's a file, check its contents is what we zipped.
-        base::FilePath relative_path;
-        DCHECK(test_dir_.AppendRelativePath(next_path, &relative_path));
-        base::FilePath original_path = original_dir.Append(relative_path);
+        base::FilePath original_path =
+            original_dir.Append(MakePathRelative(next_path, test_dir_));
         EXPECT_TRUE(base::ContentsEqual(original_path, next_path));
       }
       next_path = files.Next();
