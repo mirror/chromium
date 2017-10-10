@@ -16,6 +16,24 @@
       "revId": "7f3d7e89f67d5a5dbf6d07f5b7bd126d3b894cea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe303170_df7c418f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-10-10T18:52:18Z",
+      "side": 1,
+      "message": "Right, so this will only be the filename as long as we don\u0027t explicitly set the title of the download. That\u0027s kind of ugly :/\nI don\u0027t think there\u0027s much else we can do here though (but I don\u0027t know this code very well..).\nRenamed the method.",
+      "parentUuid": "f0bd5843_1c7c34c5",
+      "revId": "7f3d7e89f67d5a5dbf6d07f5b7bd126d3b894cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
