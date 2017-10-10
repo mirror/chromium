@@ -80,7 +80,8 @@ class ScreenlockPrivateApiTest : public ExtensionApiTest,
       proximity_auth::ScreenlockBridge::Get()->lock_handler()->SetAuthType(
           test_account_id_, proximity_auth::mojom::AuthType::USER_CLICK,
           base::string16());
-      EasyUnlockService::Get(profile())->AttemptAuth(test_account_id_);
+      EasyUnlockService::Get(profile())->AttemptAuth(
+          test_account_id_, EasyUnlockService::AttemptAuthCallback());
     }
   }
 
