@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab6b9a2_21edf098",
+        "filename": "build/android/binary_size/apk_downloader.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-10T02:12:38Z",
+      "side": 1,
+      "message": "Actually, given the error messages reported by chromium_presubmit, these might need to not use find_depot_tools and instead use the pinned copy of depot_tools.",
+      "revId": "f6430dbfa2dd740d59deae2f80ef8c430e08177a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
