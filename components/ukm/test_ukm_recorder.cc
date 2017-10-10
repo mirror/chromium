@@ -9,6 +9,8 @@
 
 #include "base/logging.h"
 #include "base/metrics/metrics_hashes.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/ukm/ukm_source.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -51,7 +53,8 @@ std::vector<int64_t> GetValuesForMetric(const mojom::UkmEntry* entry,
 
 }  // namespace
 
-TestUkmRecorder::TestUkmRecorder() {
+TestUkmRecorder::TestUkmRecorder()
+    : UkmRecorderImpl(base::SequencedTaskRunnerHandle::Get()) {
   EnableRecording();
 }
 
