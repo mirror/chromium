@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e54498_9b5e09d1",
+        "filename": "ash/display/display_color_manager_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-10T14:13:13Z",
+      "side": 1,
+      "message": "This will record every time display mode has changed (plug/unplug, enter/exit docked mode and so forth) for each displays. Is that what you want or record once per display per session?",
+      "revId": "f68a7041ff75b9a6a4f962b7fa271abe2b996671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
