@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09212df5_3cda03ba",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-10T01:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96662869_ca46127d",
+      "revId": "1ff17d14b9cb99ed38b194d622f916187cef10de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21eac1b4_a5d537fb",
         "filename": "net/cert/internal/path_builder.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T00:35:03Z",
       "side": 1,
       "message": "Since we use absence of errors to indicate valid results, it does make me slightly nervous that this function returns apparently-valid path objects. Though in practice I guess it\u0027s not really much different than the old code which immediately sticks the resulting CertPath into a clean ResultPath.\nSo I guess its fine, you have any thoughts about that?",
+      "revId": "1ff17d14b9cb99ed38b194d622f916187cef10de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07fdf3f_5d8b6c5b",
+        "filename": "net/cert/internal/path_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-10T01:12:17Z",
+      "side": 1,
+      "message": "Given there is only 1 caller of this method, and it is internal to this file, I think the coupling of that detail probably isn\u0027t too likely to be inadvertently broken.\n\nThat said I have made a change to try and address your concern; WDYT?",
+      "parentUuid": "21eac1b4_a5d537fb",
       "revId": "1ff17d14b9cb99ed38b194d622f916187cef10de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "1ff17d14b9cb99ed38b194d622f916187cef10de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8966f1_1531d152",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-10T01:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec37b2e0_936db87e",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "1ff17d14b9cb99ed38b194d622f916187cef10de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
