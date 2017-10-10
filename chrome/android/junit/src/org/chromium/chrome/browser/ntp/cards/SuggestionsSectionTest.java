@@ -485,7 +485,7 @@ public class SuggestionsSectionTest {
 
         // Tap the button -- we handle this case explicitly here to avoid complexity in
         // verifyAction().
-        section.getActionItemForTesting().performAction(mUiDelegate, null);
+        section.getActionItemForTesting().performAction(mUiDelegate, null, null);
         verify(mUiDelegate.getSuggestionsSource(), times(1)).fetchRemoteSuggestions();
 
         // Simulate the arrival of new data.
@@ -516,7 +516,8 @@ public class SuggestionsSectionTest {
 
         // Tap the button, providing a Runnable for when it fails.
         Runnable sectionOnFailureRunnable = mock(Runnable.class);
-        section.getActionItemForTesting().performAction(mUiDelegate, sectionOnFailureRunnable);
+        section.getActionItemForTesting()
+                .performAction(mUiDelegate, sectionOnFailureRunnable, null);
 
         // Ensure the tap leads to a fetch request on the source with a (potentially different)
         // failure Runnable.
@@ -942,7 +943,7 @@ public class SuggestionsSectionTest {
     private void verifyAction(
             SuggestionsSection section, @ContentSuggestionsAdditionalAction int action) {
         if (action != ContentSuggestionsAdditionalAction.NONE) {
-            section.getActionItemForTesting().performAction(mUiDelegate, null);
+            section.getActionItemForTesting().performAction(mUiDelegate, null, null);
         }
 
         verify(section.getCategoryInfo(),
