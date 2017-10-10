@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c498e77c_fa12fbf0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T22:52:42Z",
+      "side": 1,
+      "message": "We shouldn\u0027t mix test code with production code. We should either use a function pointer to replace the random number generator from test code, or perhaps just set paints_before_switching_global_scope_ manually.",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8bae45_366ca7d0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T22:52:42Z",
+      "side": 1,
+      "message": "This duplicates line 82. We could have:\nbool frame_changed \u003d current_paint_frame_count !\u003d previous_paint_frame_cnt_;\nif (frame_changed || paints_before_switching_global_scope_ \u003d\u003d 0)\n  // select new global scope\nif (frame_changed)\n  // pick new time before switching.",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc5ad5a_df6e02df",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T22:52:42Z",
+      "side": 1,
+      "message": "It\u0027s strange to let this number keep going negative, maybe when it first becomes 0 we switch and after that we keep it at 0.",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613d5850_3af256a8",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T22:52:42Z",
+      "side": 1,
+      "message": "s/cnt/count",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6222d6f6_6f01e2fa",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-10T22:52:42Z",
+      "side": 1,
+      "message": "On naming, I don\u0027t think either of these need to include the term previously. For the most part they can just be considered the active_frame_count_ and active_global_scope_. You should document what these mean since it\u0027s non-obvious.",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
