@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3619f66f_aa123028",
+        "filename": "base/containers/small_map.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T20:40:45Z",
+      "side": 1,
+      "message": "This is the best way I could find to emulate the existing logic.\n\nIt would, of course, be simpler to just create the statically sized array, but then we have to destroy more elements than we would need to the other way.",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 597,
+        "endChar": 11
+      },
+      "revId": "cc925c84de466330e3b756c340ec69de15a00786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
