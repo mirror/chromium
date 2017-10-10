@@ -9,7 +9,9 @@
 #include <set>
 #include <vector>
 
-#include "base/threading/thread_checker.h"
+#include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
+#include "base/sequenced_task_runner.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
@@ -28,7 +30,8 @@ class DebugPage;
 
 class UkmRecorderImpl : public UkmRecorder {
  public:
-  UkmRecorderImpl();
+  explicit UkmRecorderImpl(
+      scoped_refptr<base::SequencedTaskRunner> task_runner);
   ~UkmRecorderImpl() override;
 
   // Enables/disables recording control if data is allowed to be collected.
@@ -59,6 +62,11 @@ class UkmRecorderImpl : public UkmRecorder {
   void UpdateSourceURL(SourceId source_id, const GURL& url) override;
   void AddEntry(mojom::UkmEntryPtr entry) override;
 
+  // Stores data in the UkmSource, if recording enabled.
+  void UpdateSourceURLInternal(SourceId source_id, const GURL& url);
+  // Stores an entry in entries_, if recording enabled.
+  void AddEntryInternal(mojom::UkmEntryPtr entry);
+
   // Whether recording new data is currently allowed.
   bool recording_enabled_;
 
@@ -70,7 +78,10 @@ class UkmRecorderImpl : public UkmRecorder {
   // Whitelisted Entry hashes, only the ones in this set will be recorded.
   std::set<uint64_t> whitelisted_entry_hashes_;
 
-  THREAD_CHECKER(thread_checker_);
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  base::WeakPtrFactory<UkmRecorderImpl> weak_factory_;
 };
 
 }  // namespace ukm
