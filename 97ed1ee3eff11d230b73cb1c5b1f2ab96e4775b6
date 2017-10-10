@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "10b493db_1485533c",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T01:18:36Z",
+      "side": 1,
+      "message": "If it can\u0027t be null (https://cs.chromium.org/chromium/src/content/browser/storage_partition_impl.cc?rcl\u003db9af439c6acb4bc23e99968f0b43269c47f48c54\u0026l\u003d493), then please remove the associated null handling code in CdmStorageImpl::Open as well.",
+      "parentUuid": "3dffa1bc_e2a37d28",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "458ea145_87d8c0bd",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 10
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Since we\u0027re using the PluginPrivate file system, |file_system_id_| is really the plugin name. But in mojo we\u0027re not running as a plugin, but the name needs to match so that the same storage is used.",
       "parentUuid": "458ea145_87d8c0bd",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 18
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05998b8b_bed34b01",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T01:18:36Z",
+      "side": 1,
+      "message": "I don\u0027t have any real suggestions here (since I\u0027m not an expert in this code), but I would suggest that we try to figure out clearer names in a followup--it\u0027s really quite easy to mix up fsid and file_system_id_, and the difference won\u0027t be very obvious to someone who doesn\u0027t know the history of the code...",
+      "parentUuid": "4a60fbe1_e321b985",
       "range": {
         "startLine": 217,
         "startChar": 14,
@@ -265,6 +307,24 @@
       "side": 1,
       "message": "ChromeOS registers their own set of CDMs, so they may not.",
       "parentUuid": "0b302336_507cf8ea",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06171be9_482f63cf",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-10T01:18:36Z",
+      "side": 1,
+      "message": "Presumably it\u0027s a known set though? Anyway I guess this is OK, it\u0027s just I would assume that we follow these rules in the code we\u0027re shipping with CrOS.",
+      "parentUuid": "bcd00291_499dce2a",
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
