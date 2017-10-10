@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "29683d9b_739b5a81",
+        "filename": "dbus/mock_object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T03:52:21Z",
+      "side": 1,
+      "message": "Please use the correct method names.",
+      "range": {
+        "startLine": 45,
+        "startChar": 17,
+        "endLine": 45,
+        "endChar": 71
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e5d3703_0367fa11",
         "filename": "dbus/object_proxy.cc",
         "patchSetId": 1
@@ -53,6 +76,24 @@
       "writtenOn": "2017-10-06T13:45:31Z",
       "side": 1,
       "message": "part of me wonders if we could just abort in cases where we\u0027ve failed but the error would be null:\n\n- we already abort for OOM errors in \u0027new\u0027, iirc\n- is |bus_| being disconnected always a programming error?\n\nare there other cases we need to worry about?",
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6fcc8b_a01b3236",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-10T03:52:21Z",
+      "side": 1,
+      "message": "I think it\u0027s better to avoid aborting on bus connection errors as code in src/dbus is not only for Chrome OS, but also for Linux.\nOn Chrome OS, bus connection errors shouldn\u0027t happen with normal usage, but the situation might be different on Linux.",
+      "parentUuid": "8466840e_cae2fca0",
       "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
