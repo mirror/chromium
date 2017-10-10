@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b47483fe_6321e769",
+        "filename": "media/mojo/services/video_decode_stats.proto",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44179804_442d69ec",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0bc137d_e65775f7",
         "filename": "media/mojo/services/video_decode_stats_db.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d9e906_6e21ce1d",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0bc137d_e65775f7",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 34
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "39191533_5d4f197b",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb358b3_76a895c7",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc94fd15_441b5fd2",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed887968_87730ebc",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc94fd15_441b5fd2",
+      "range": {
+        "startLine": 40,
+        "startChar": 61,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "3bf23cb1_8a2eb9e2",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "I tried a few different things and settled on just renaming this to prev_stats_proto and still making a new one when I need to. It reads easily to me and happens to avoid an extra allocation",
+      "parentUuid": "d5434882_bb72f8f0",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 49
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f671f2b6_0ca4546d",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
@@ -181,6 +301,24 @@
       "writtenOn": "2017-10-09T23:43:19Z",
       "side": 1,
       "message": "When can this fail? If |this| is going away, wouldn\u0027t the WeakPtr be invalidated before WriteUpdatedEntry would be invoked?\nSo yeah, a DCHECK sounds reasonable here maybe?",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cef023_dc356b40",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "In the first PS I inherited from Mounir, he was nuking |db_| whenever any failure (read/write with success \u003d false) was encountered. Many patches ago I changed that to only be the case if Init fails and forgot to DCHECK this. \n\nI\u0027ve now added the DCHECK, but should ask - what is best practice for handling a read/write failure? Assume its transient? Tear down |db_| and rebuild? \n\nMy plan was to just let these silently slide (with logging) at first, and later add some UMAs to see how often it occurs.",
+      "parentUuid": "f671f2b6_0ca4546d",
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -204,6 +342,24 @@
     },
     {
       "key": {
+        "uuid": "9edbcfbd_238ac352",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b5b5fdf_bc4e9c28",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5fef5ca_d67bbd91",
         "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
         "patchSetId": 8
@@ -221,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "c481d949_3f108690",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Added DCHECK(success) when ptr is not null. I think this helps document the API contract without making folks scratch heads.",
+      "parentUuid": "d5fef5ca_d67bbd91",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5869e48a_c0881eee",
         "filename": "media/mojo/services/video_decode_stats_db_impl.h",
         "patchSetId": 8
@@ -235,6 +409,24 @@
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5224dffe_0f7bd03c",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5869e48a_c0881eee",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "70f00ea2_89cf0015",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "I\u0027m trying to point at the docs in the header for the parent class type. Made this more clear.",
+      "parentUuid": "2aa98535_74d24b89",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7168b836_94363596",
         "filename": "media/mojo/services/video_decode_stats_db_impl.h",
         "patchSetId": 8
@@ -284,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "bbc58d46_1687e634",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7168b836_94363596",
+      "range": {
+        "startLine": 82,
+        "startChar": 36,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce3a52e4_70eba9c1",
         "filename": "media/mojo/services/video_decode_stats_db_unittest.cc",
         "patchSetId": 8
@@ -304,6 +544,30 @@
       "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f013821b_52f8aeb3",
+        "filename": "media/mojo/services/video_decode_stats_db_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-10T00:53:18Z",
+      "side": 1,
+      "message": "Whoops! Done",
+      "parentUuid": "ce3a52e4_70eba9c1",
+      "range": {
+        "startLine": 53,
+        "startChar": 62,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
