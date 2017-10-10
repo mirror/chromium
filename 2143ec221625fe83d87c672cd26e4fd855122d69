@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "d59c263d_42bd6f23",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-10T20:07:05Z",
+      "side": 1,
+      "message": "That\u0027s fine, inline methods just have to be simple one line operations, don\u0027t have to be getters per se. It\u0027s a \"getter\" in the same of \"returning a piece of information in a single line\".",
+      "parentUuid": "30cfd01f_11409c6f",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "258fca89_48e6f5c0",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 2
@@ -648,6 +666,30 @@
     },
     {
       "key": {
+        "uuid": "3c25f44f_dc59fcf7",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-10T20:07:05Z",
+      "side": 1,
+      "message": "I agree that we shouldn\u0027t inline every method that\u0027s called only once [1]. But ~MessageLoop() is an obvious place to do cleanup and splitting out the cleanup of the 3 queues into a separate method just decreases readability IMO as the reader has to fork to another callsite without much added benefit of this isolating a complicated algorithm (it used to but it\u0027s now simple with you CL).\n\n[1] TaskTracker::ManageBackgroundSequencesAfterRunningTask() [1] is a good example of a method that\u0027s called only once but better off separate because it does a whole algorithm of its own.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/615903/29/base/task_scheduler/task_tracker.cc#608",
+      "parentUuid": "b491a69b_27e285b5",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a9e6c9c_5e514994",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -680,6 +722,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5fdd8cf_216d91ef",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-10T20:07:05Z",
+      "side": 1,
+      "message": "I disagree, this comment refers to the \"above loops\" which existed prior to this CL and no longer do so this CL makes this comment even less readable. Drive-by cleanups are often necessary to keep things readable even when not directly at fault.",
+      "parentUuid": "7c1ed523_a16ec2cb",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -718,6 +778,30 @@
       "side": 1,
       "message": "This is a behavior change. We attempt to run at least one task. If the first task is delayed, we simply put it in the separate queue and look at the next one.\n\nReturning false at this point would result in no further tasks being checked.",
       "parentUuid": "0474f735_c54c682c",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 7
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8723504b_86262140",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-10T20:07:05Z",
+      "side": 1,
+      "message": "Oops my bad, somehow forgot this was inside scope of a loop..!\n\nUse \"else if\" below then? (that was my initial comment but I then incorrectly convinced myself we can do even cleaner..)",
+      "parentUuid": "66bdfeb4_f790bad6",
       "range": {
         "startLine": 451,
         "startChar": 6,
