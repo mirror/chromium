@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35860cb5_f9bd0ab2",
+        "filename": "content/browser/gpu/gpu_internals_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-10T18:55:44Z",
+      "side": 1,
+      "message": "naming/style nit: GetDisplayInfo() ?",
+      "revId": "a7e6a3d51870bf625716420f82087e466b4e586e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
