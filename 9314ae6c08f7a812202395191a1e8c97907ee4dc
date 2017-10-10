@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd5d3c6b_9e1231b8",
+        "filename": "content/renderer/media/mojo_audio_output_ipc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-10T23:53:24Z",
+      "side": 1,
+      "message": "\"connection\" spelling",
+      "revId": "9314ae6c08f7a812202395191a1e8c97907ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582ec27e_d848c246",
+        "filename": "content/renderer/media/mojo_audio_output_ipc.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-10T23:53:24Z",
+      "side": 1,
+      "message": "Should this just be AudioStreamErrorHandler? Presumably you might want the same thing for input.",
+      "revId": "9314ae6c08f7a812202395191a1e8c97907ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
