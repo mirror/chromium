@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1846d18d_ee9d721c",
+        "filename": "content/browser/broadcast_channel/broadcast_channel_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-10T20:53:26Z",
+      "side": 1,
+      "message": "Ah yes, adding a ShallowClone method to CloneableMessage is much nicer. Done.",
+      "parentUuid": "7e9d2c98_4dc36583",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04fa0088_c7582356",
         "filename": "third_party/WebKit/Source/platform/mojo/blink_typemaps.gni",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T20:12:27Z",
       "side": 1,
       "message": "Hrrm. dcheng probably knows better than me, but does this work alright even though not everything that uses these typemaps is in core?",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1514ccb_ecdbaf84",
+        "filename": "third_party/WebKit/Source/platform/mojo/blink_typemaps.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-10T20:53:26Z",
+      "side": 1,
+      "message": "Ultimately every typemap is applied to every mojom file, so there isn\u0027t any functional difference between where typemaps are listed... Maybe it still would be cleaner to have something like a Source/core/blink_typemaps.gni file? I\u0027m not sure why we have the double indirection (with a centrally defined list of typemaps.gni files, and then each typemaps.gni file itself is merely a list of .typemap files. Ultimately all the .typemap files get combined anyway...)",
+      "parentUuid": "04fa0088_c7582356",
       "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e67cae19_2507ef4b",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-10T20:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a3b603_c4338374",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e32a0b7_e696f5be",
         "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e64178_61fe48be",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-10T20:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e32a0b7_e696f5be",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
