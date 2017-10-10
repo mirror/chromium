@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d92d72c_56fa8742",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for teaching me!",
+      "parentUuid": "082048ea_98668ec1",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f38ff2_d2e8a08b",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 38
@@ -33,6 +51,24 @@
       "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f09b510_dd59507b",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f38ff2_d2e8a08b",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ff4901a_9d87e2b1",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 38
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Done.\n\nThis will get more fleshed out as I implement the API :D",
+      "parentUuid": "93be38ab_feb48b3e",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8b81d5_4972b160",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_getAll_set.html",
         "patchSetId": 38
@@ -67,6 +121,24 @@
       "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1ef566_26fdd980",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_getAll_set.html",
+        "patchSetId": 38
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Oh my, that\u0027s embarrassing. Thanks for catching the copy-paste typo!",
+      "parentUuid": "8d8b81d5_4972b160",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b26195ba_2bc9c474",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Done.\n\nI added a TODO for the service workers branch.",
+      "parentUuid": "f13a7ba3_323ac34d",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46dfbdd3_40897756",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 38
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "20962681_473d1c00",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for catching this!\n\nFWIW, a colleague of mine is writing thorough WPT tests... they\u0027ll land in https://crrev.com/c/594890. If there are more bugs like this, we\u0027ll catch them before we ship :D",
+      "parentUuid": "46dfbdd3_40897756",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22f7d9d7_c2a0db37",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
         "patchSetId": 38
@@ -118,6 +226,24 @@
       "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0891e07_1dc887a8",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-10T10:36:14Z",
+      "side": 1,
+      "message": "Yes, that is correct. I added a TODO to make it clearer that we\u0027ll have a ServiceWorkerGlobalScope overload too.",
+      "parentUuid": "22f7d9d7_c2a0db37",
+      "revId": "9c1f89362b76f9295b7394cb09c96261bf9ebc4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
