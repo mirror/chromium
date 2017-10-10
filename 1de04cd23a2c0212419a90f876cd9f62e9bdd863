@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9d2c98_4dc36583",
+        "filename": "content/browser/broadcast_channel/broadcast_channel_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T20:12:27Z",
+      "side": 1,
+      "message": "nit: It\u0027s not immediately obvious to me why this is copying a single member. Maybe a comment that this is a shallow clone, or even a ShallowClone() member function on CloneableMessage?",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fa0088_c7582356",
+        "filename": "third_party/WebKit/Source/platform/mojo/blink_typemaps.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T20:12:27Z",
+      "side": 1,
+      "message": "Hrrm. dcheng probably knows better than me, but does this work alright even though not everything that uses these typemaps is in core?",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a3b603_c4338374",
+        "filename": "third_party/WebKit/common/message_port/message_port.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T20:12:27Z",
+      "side": 1,
+      "message": "nit: update comment?",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e32a0b7_e696f5be",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-10T20:12:27Z",
+      "side": 1,
+      "message": "super-duper-nit: I\u0027d have expected fields to be read in the order they are declared, unless there\u0027s a reason not to.",
+      "revId": "1de04cd23a2c0212419a90f876cd9f62e9bdd863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
