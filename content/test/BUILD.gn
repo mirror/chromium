@@ -648,7 +648,6 @@ test("content_browsertests") {
   }
 
   sources = [
-    "../app/mojo/mojo_browsertest.cc",
     "../browser/accessibility/accessibility_action_browsertest.cc",
     "../browser/accessibility/accessibility_ipc_error_browsertest.cc",
     "../browser/accessibility/accessibility_mode_browsertest.cc",

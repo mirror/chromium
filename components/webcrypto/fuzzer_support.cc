@@ -11,7 +11,7 @@
 #include "components/webcrypto/algorithm_dispatch.h"
 #include "components/webcrypto/crypto_data.h"
 #include "components/webcrypto/status.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithmParams.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -25,7 +25,7 @@ class InitOnce : public blink::Platform {
  public:
   InitOnce() {
     base::CommandLine::Init(0, nullptr);
-    mojo::edk::Init();
+    service_manager::InitializeMojo();
     blink::Platform::Initialize(this);
   }
   ~InitOnce() override {}
