@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3586caed_1cbd64a8",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "Those checks are now gone.",
+      "parentUuid": "3627d6b3_a722c01b",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a231adc_8785a8fb",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "13680ffc_e32b0214",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a231adc_8785a8fb",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c7d0dfd_6017aa34",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1108ae1_e391557b",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7d0dfd_6017aa34",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,48 @@
     },
     {
       "key": {
+        "uuid": "ba2fd760_0d491017",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387ab599_ee8a3228",
+      "range": {
+        "startLine": 268,
+        "startChar": 41,
+        "endLine": 268,
+        "endChar": 68
+      },
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e60de41_56645dce",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "I had done that but while addressing isherman@\u0027s suggestion below it became better to keep them separate as the calls were greatly simplified.",
+      "parentUuid": "117bc987_69897ff2",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a464a0b1_3a470214",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8405ad_18b67bc3",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a464a0b1_3a470214",
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -130,6 +244,30 @@
       "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d0b7f9_4a0e8c5f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 51702,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-10T22:52:43Z",
+      "side": 1,
+      "message": "As OfflinePages.PageSize.* is already overloaded with namespace suffixes (the same suffixes these ones use) I changed them to OfflinePages.PageSizeOnAccess.(Online|Offline) which does indeed look better and still locates close together with existing PageSize metrics in alphabetical order.",
+      "parentUuid": "98b48d4c_2f865e72",
+      "range": {
+        "startLine": 51702,
+        "startChar": 30,
+        "endLine": 51702,
+        "endChar": 38
+      },
+      "revId": "472438278e9ceb6be2272bf82f0daa5d77d71e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
