@@ -2275,6 +2275,11 @@ const char kMacViewsTaskManagerName[] = "Toolkit-Views Task Manager.";
 const char kMacViewsTaskManagerDescription[] =
     "Controls whether to use the Toolkit-Views based Task Manager.";
 
+#endif
+const char kSerializeCoreAudioPauseResumeName[] = "Kenneth";
+const char kSerializeCoreAudioPauseResumeDescription[] = "Bodil";
+#if defined(OS_MACOSX)
+
 const char kTabDetachingInFullscreenName[] =
     "Allow tab detaching in fullscreen";
 const char kTabDetachingInFullscreenDescription[] =
