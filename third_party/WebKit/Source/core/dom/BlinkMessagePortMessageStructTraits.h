@@ -17,10 +17,7 @@ struct StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
                     blink::BlinkMessagePortMessage> {
   static base::span<const uint8_t> encoded_message(
       blink::BlinkMessagePortMessage& input) {
-    StringView wire_data = input.message->GetWireData();
-    return base::make_span(
-        reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
-        wire_data.length());
+    return input.message->GetWireData();
   }
 
   static std::vector<mojo::ScopedMessagePipeHandle> ports(
