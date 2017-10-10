@@ -43,30 +43,50 @@ std::string EntryToString(const VideoDecodeStatsDB::DecodeStatsEntry& entry) {
 
 };  // namespace
 
-VideoDecodeStatsDBImpl::VideoDecodeStatsDBImpl() : weak_ptr_factory_(this) {}
+VideoDecodeStatsDBImplFactory::VideoDecodeStatsDBImplFactory(
+    base::FilePath db_dir)
+    : db_dir_(db_dir) {}
+
+VideoDecodeStatsDBImplFactory::~VideoDecodeStatsDBImplFactory() = default;
+
+std::unique_ptr<VideoDecodeStatsDB> VideoDecodeStatsDBImplFactory::CreateDB() {
+  std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db_;
+
+  auto inner_db =
+      std::make_unique<leveldb_proto::ProtoDatabaseImpl<DecodeStatsProto>>(
+          base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::BACKGROUND,
+               base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN}));
+
+  return std::make_unique<VideoDecodeStatsDBImpl>(std::move(inner_db), db_dir_);
+}
+
+VideoDecodeStatsDBImpl::VideoDecodeStatsDBImpl(
+    std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db,
+    const base::FilePath& db_dir)
+    : db_(std::move(db)), db_dir_(db_dir), weak_ptr_factory_(this) {
+  DCHECK(db_.get());
+  DCHECK(!db_dir_.empty());
+}
 
 VideoDecodeStatsDBImpl::~VideoDecodeStatsDBImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 void VideoDecodeStatsDBImpl::Initialize(
-    std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db,
-    const base::FilePath& dir) {
-  DCHECK(db.get());
+    base::OnceCallback<void(bool)> init_cb) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  db_ = std::move(db);
-
   // "Simple options" will use the default global cache of 8MB. In the worst
   // case our whole DB will be less than 35K, so we aren't worried about
   // spamming the cache.
   // TODO(chcunningham): Keep an eye on the size as the table evolves.
-  db_->Init(kDatabaseClientName, dir, leveldb_proto::CreateSimpleOptions(),
+  db_->Init(kDatabaseClientName, db_dir_, leveldb_proto::CreateSimpleOptions(),
             base::BindOnce(&VideoDecodeStatsDBImpl::OnInit,
-                           weak_ptr_factory_.GetWeakPtr()));
+                           weak_ptr_factory_.GetWeakPtr(), std::move(init_cb)));
 }
 
-void VideoDecodeStatsDBImpl::OnInit(bool success) {
+void VideoDecodeStatsDBImpl::OnInit(base::OnceCallback<void(bool)> init_cb,
+                                    bool success) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DVLOG(2) << __func__ << (success ? " succeeded" : " FAILED!");
 
@@ -76,6 +96,9 @@ void VideoDecodeStatsDBImpl::OnInit(bool success) {
   // TODO(chcunningham): Record UMA.
   if (!success)
     db_.reset();
+
+  if (init_cb)
+    std::move(init_cb).Run(success);
 }
 
 bool VideoDecodeStatsDBImpl::IsDatabaseReady(const std::string& operation) {

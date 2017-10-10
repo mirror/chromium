@@ -109,6 +109,8 @@
 #include "media/media_features.h"
 #include "media/midi/midi_service.h"
 #include "media/mojo/features.h"
+#include "media/mojo/services/video_decode_perf_history.h"
+#include "media/mojo/services/video_decode_stats_db_impl.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "net/base/network_change_notifier.h"
@@ -1625,6 +1627,11 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #if defined(OS_ANDROID)
   media::SetMediaDrmBridgeClient(GetContentClient()->GetMediaDrmBridgeClient());
 #endif
+
+  // FIXME - PULL PATH FROM CONTENT_CLIENT
+  base::FilePath db_path(FILE_PATH_LITERAL("/tmp/media-caps/"));
+  media::VideoDecodePerfHistory::SetDatabaseFactory(
+      new media::VideoDecodeStatsDBImplFactory(db_path));
 
   return result_code_;
 }

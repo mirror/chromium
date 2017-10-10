@@ -19,6 +19,11 @@ class FakeVideoDecodeStatsDB : public VideoDecodeStatsDB {
   FakeVideoDecodeStatsDB() = default;
   ~FakeVideoDecodeStatsDB() override {}
 
+  // FIXME do more here - test failure
+  void Initialize(base::OnceCallback<void(bool)> init_cb) override {
+    std::move(init_cb).Run(true);
+  }
+
   void AppendDecodeStats(const VideoDescKey& key,
                          const DecodeStatsEntry& entry) override {
     std::string key_str = MakeKeyString(key);
@@ -56,12 +61,29 @@ class FakeVideoDecodeStatsDB : public VideoDecodeStatsDB {
   std::map<std::string, DecodeStatsEntry> entries_;
 };
 
+// Simple factory that always returns the pointer its given. The lifetime of
+// |db| is managed by the CreateDB() caller.
+class FakeVideoDecodeStatsDBFactory : public VideoDecodeStatsDBFactory {
+ public:
+  FakeVideoDecodeStatsDBFactory(FakeVideoDecodeStatsDB* db) : db_(db) {}
+  ~FakeVideoDecodeStatsDBFactory() = default;
+
+  std::unique_ptr<VideoDecodeStatsDB> CreateDB() override {
+    return std::unique_ptr<VideoDecodeStatsDB>(db_);
+  }
+
+ private:
+  FakeVideoDecodeStatsDB* db_;
+};
+
 class VideoDecodePerfHistoryTest : public ::testing::Test {
  public:
   void SetUp() override {
-    // Sniff the database pointer so tests can inject entries.
-    database_ = base::MakeUnique<FakeVideoDecodeStatsDB>();
-    VideoDecodePerfHistory::Initialize(database_.get());
+    // Sniff the database pointer so tests can inject entries. The factory will
+    // return this pointer when requested by VideoDecodePerfHistory.
+    database_ = new FakeVideoDecodeStatsDB();
+    VideoDecodePerfHistory::SetDatabaseFactory(
+        new FakeVideoDecodeStatsDBFactory(database_));
 
     // Make tests hermetic by creating a new instance. Cannot use unique_ptr
     // here because the constructor/destructor are private and only accessible
@@ -73,6 +95,9 @@ class VideoDecodePerfHistoryTest : public ::testing::Test {
     // Avoid leaking between tests.
     delete perf_history_;
     perf_history_ = nullptr;
+
+    // |perf_history_| owns the |database_| and will delete it.
+    database_ = nullptr;
   }
 
   // Tests may set this as the callback for VideoDecodePerfHistory::GetPerfInfo
@@ -91,7 +116,7 @@ class VideoDecodePerfHistoryTest : public ::testing::Test {
   VideoDecodePerfHistory* perf_history_;
 
   // The database |perf_history_| uses to store/query performance stats.
-  std::unique_ptr<FakeVideoDecodeStatsDB> database_;
+  FakeVideoDecodeStatsDB* database_;
 };
 
 TEST_F(VideoDecodePerfHistoryTest, GetPerfInfo_Smooth) {

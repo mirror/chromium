@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/files/file_path.h"
 #include "base/memory/weak_ptr.h"
 #include "components/leveldb_proto/proto_database.h"
 #include "media/base/video_codecs.h"
@@ -22,23 +23,39 @@ namespace media {
 
 class DecodeStatsProto;
 
+// Factory interface to create a DB instance.
+class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImplFactory
+    : public VideoDecodeStatsDBFactory {
+ public:
+  explicit VideoDecodeStatsDBImplFactory(base::FilePath db_dir);
+  virtual ~VideoDecodeStatsDBImplFactory();
+  std::unique_ptr<VideoDecodeStatsDB> CreateDB() override;
+
+ private:
+  base::FilePath db_dir_;
+};
+
 // LevelDB implementation of VideoDecodeStatsDB. This class is not
 // thread safe. All API calls should happen on the same sequence used for
 // construction. API callbacks will also occur on this sequence.
 class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
  public:
-  VideoDecodeStatsDBImpl();
-  ~VideoDecodeStatsDBImpl() override;
-
+  // Constructs the database. NOTE: must call Initialize() before using.
   // |db| injects the level_db database instance for storing capabilities info.
   // |dir| specifies where to store LevelDB files to disk. LevelDB generates a
   // handful of files, so its recommended to provide a dedicated directory to
   // keep them isolated.
-  void Initialize(
+  VideoDecodeStatsDBImpl(
       std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db,
       const base::FilePath& dir);
+  ~VideoDecodeStatsDBImpl() override;
 
-  // See header for VideoDecodeStatsDB.
+  // Run asynchronous initialization of underlying levelDB objects. Callback
+  // bool indicates success and that the DB is ready for further API calls.
+  void Initialize(base::OnceCallback<void(bool)> init_cb) override;
+
+  // Must receive successful Initialize() callback before using. See
+  // documentation/ in header for VideoDecodeStatsDB.
   void AppendDecodeStats(const VideoDescKey& key,
                          const DecodeStatsEntry& entry) override;
   void GetDecodeStats(const VideoDescKey& key,
@@ -47,8 +64,9 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
  private:
   friend class VideoDecodeStatsDBTest;
 
-  // Called when the database has been initialized.
-  void OnInit(bool success);
+  // Called when the database has been initialized. Will immediately call
+  // |init_cb| to forward |success|.
+  void OnInit(base::OnceCallback<void(bool)> init_cb, bool success);
 
   // Returns true if the DB is initialized and ready for use. The optional
   // |operation| is used to issue log warnings when the DB is not ready.
@@ -80,6 +98,9 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
   // ProtoDatabase instance. Set to nullptr if fatal database error is
   // encountered.
   std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db_;
+
+  // Directory where levelDB should store database files.
+  base::FilePath db_dir_;
 
   // Ensures all access to class members come on the same sequence. API calls
   // and callbacks should occur on the same sequence used during construction.

@@ -4,6 +4,7 @@
 
 #include "media/mojo/services/video_decode_stats_recorder.h"
 #include "base/memory/ptr_util.h"
+#include "media/mojo/services/video_decode_perf_history.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 #include "base/logging.h"
@@ -64,7 +65,9 @@ void VideoDecodeStatsRecorder::FinalizeRecord() {
            << " size:" << natural_size_.ToString() << " fps:" << frames_per_sec_
            << " decoded:" << frames_decoded_ << " dropped:" << frames_dropped_;
 
-  // TODO(chcunningham): Save everything to DB.
+  VideoDecodePerfHistory::GetSingletonInstance()->SavePerfRecord(
+      profile_, natural_size_, frames_per_sec_, frames_decoded_,
+      frames_dropped_);
 }
 
 }  // namespace media
