@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd271f1_f8f84474",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "I am thinking more making this function has the basic structure following the different cases we handle so it\u0027s simpler to tell at a glance.\n\nSomething like:\n- If there is active surface, copy compositor frame to pass, returns;\n- If there is no fallback surface, construct background color quad, return;\n- If the fallback surface does not fill rect, generate gutter\n- If there is fallback surface, copy compositor frame to pass",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ecc50_95fa6118",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "Might make sense to make this loop into a helper function too.",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f953671e_dee68b00",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "For fallback draw quad would we want to try get a smaller clip_rect from visible_rect as well?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5f2d40_b9c9f70c",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "Both the default background color and the gutter are emitted even when we ignore_undamaged, which reminds me, we should make sure damage is calculated correctly in these cases. I assume if we gutter we should count those in as damage?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713c106e_b13a4ef9",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "If primary and fallback surface has different DSF, would it affect this calculation?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df507748_307b73d1",
+        "filename": "components/viz/service/display/surface_aggregator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "More descriptive function name. Right now it\u0027s hard to tell what\u0027s the relationship between this function and HandleSurfaceQuad function.\n\nIs it possible to make this helper function take in less parameters? Could some parameters be calculated instead of passed in? Or split out function differently?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2d8828_39cf21cd",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-10T19:23:46Z",
+      "side": 1,
+      "message": "Is there a test for checking the fallback render pass would have the fallback size instead of primary size?",
+      "revId": "37d7597a2f9552e46cdfa9b458d30a2e00a59dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
