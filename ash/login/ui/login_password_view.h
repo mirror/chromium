@@ -8,6 +8,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/login_user_info.mojom.h"
 #include "base/strings/string16.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
 #include "ui/views/view.h"
@@ -16,10 +17,12 @@ namespace views {
 class Button;
 class ButtonListener;
 class ImageButton;
+class ImageView;
 class Separator;
 }  // namespace views
 
 namespace ash {
+class NonAccessibleView;
 
 // Contains a textfield instance with a submit button. The user can type a
 // password into the textfield and hit enter to submit.
@@ -30,9 +33,11 @@ namespace ash {
 //
 //   * * * * * *   =>
 //  ------------------
-class ASH_EXPORT LoginPasswordView : public views::View,
-                                     public views::ButtonListener,
-                                     public views::TextfieldController {
+class ASH_EXPORT LoginPasswordView
+    : public views::View,
+      public views::ButtonListener,
+      public views::TextfieldController,
+      public chromeos::input_method::ImeKeyboard::Observer {
  public:
   // TestApi is used for tests to get internal implementation details.
   class ASH_EXPORT TestApi {
@@ -97,6 +102,10 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   void ContentsChanged(views::Textfield* sender,
                        const base::string16& new_contents) override;
 
+  // chromeos::input_method::ImeKeyboard::Observer:
+  void OnCapsLockChanged(bool enabled) override;
+  void OnLayoutChanging(const std::string& layout_name) override {}
+
  private:
   friend class TestApi;
 
@@ -107,7 +116,9 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   OnPasswordSubmit on_submit_;
   OnPasswordTextChanged on_password_text_changed_;
   views::Textfield* textfield_ = nullptr;
+  NonAccessibleView* textfield_sizer_ = nullptr;
   views::ImageButton* submit_button_ = nullptr;
+  views::ImageView* capslock_icon_ = nullptr;
   views::Separator* separator_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(LoginPasswordView);
