@@ -12,6 +12,7 @@
 #include "base/threading/thread.h"
 #include "media/capture/capture_export.h"
 #include "media/capture/video/chromeos/mojo/arc_camera3_service.mojom.h"
+#include "media/capture/video/video_capture_device_factory.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
@@ -49,12 +50,16 @@ class CAPTURE_EXPORT CameraHalDispatcherImpl final
   bool Start();
 
   void AddClientObserver(std::unique_ptr<CameraClientObserver> observer);
+  void SetGpuJpegDecoderFactory(
+      GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory);
 
   bool IsStarted();
 
   // CameraHalDispatcher implementations.
   void RegisterServer(arc::mojom::CameraHalServerPtr server) final;
   void RegisterClient(arc::mojom::CameraHalClientPtr client) final;
+  void GetGpuJpegDecodeAccelerator(
+      media::mojom::GpuJpegDecodeAcceleratorRequest accerlator_request);
 
  private:
   friend struct base::DefaultSingletonTraits<CameraHalDispatcherImpl>;
@@ -102,6 +107,8 @@ class CAPTURE_EXPORT CameraHalDispatcherImpl final
   arc::mojom::CameraHalServerPtr camera_hal_server_;
 
   std::set<std::unique_ptr<CameraClientObserver>> client_observers_;
+
+  GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CameraHalDispatcherImpl);
 };

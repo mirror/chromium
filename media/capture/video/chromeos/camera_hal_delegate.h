@@ -36,7 +36,8 @@ class CAPTURE_EXPORT CameraHalDelegate final
  public:
   // All the Mojo IPC operations happen on |ipc_task_runner|.
   explicit CameraHalDelegate(
-      scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner,
+      GpuJpegDecoderMojoFactoryCB jpeg_decoder_factory);
 
   // Registers the camera client observer to the CameraHalDispatcher instance.
   void RegisterCameraClient();
