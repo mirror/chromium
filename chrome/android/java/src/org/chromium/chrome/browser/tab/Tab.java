@@ -1445,6 +1445,8 @@ public class Tab
 
         reparentingParams.finalizeTabReparenting();
 
+        if (!ColorUtils.isValidThemeColor(mThemeColor)) mThemeColor = getDefaultThemeColor();
+
         for (TabObserver observer : mObservers) {
             observer.onReparentingFinished(this);
         }
