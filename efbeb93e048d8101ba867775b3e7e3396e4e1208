@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9e5c476c_062382b8",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-10T09:40:28Z",
+      "side": 1,
+      "message": "\u003e I removed RB label from the issue. Since, the scenario in the issue isn\u0027t\n\u003e popular.\n\nI don\u0027t have the usage stats for \"link drag within \u0027user-select: text\u0027\" but I hope it is not too common then.\n\n\u003e Rather than adding more ad-hoc, we would like to have cleaner and spec\n\u003e complaint code.\n\n6.7.5 Processing model says that\n\n\u003e \u003ca\u003e elements with an href attribute have their draggable attribute set to true by default\n\nBut the spec doesn\u0027t say that draggability is more important than editability...? In Firefox 56.0, Chrome 61.0.3163.100, Safari 11.0 (12604.1.38.1.7) and Edge 15 this link is *not* draggable:\n\n\u003ca href\u003d\"www\" contenteditable\u003d\"true\"\u003eeditable link text\u003c/a\u003e\n\nSo current \"defacto\" behavior is that the \u0027contenteditable\u0027 attribute trumps the \u0027draggable\u0027 attribute. Maybe we just need mention this defacto behavior in HTML spec if it is not already mentioned?",
+      "parentUuid": "ab78066d_de1b8288",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0598e782_616e6e48",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
