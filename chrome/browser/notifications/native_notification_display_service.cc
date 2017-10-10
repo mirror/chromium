@@ -76,7 +76,8 @@ void NativeNotificationDisplayService::Display(
     notification_bridge_->Display(
         notification_type, notification_id, GetProfileId(profile_),
         profile_->IsOffTheRecord(), notification, std::move(metadata));
-    NotificationHandler* handler = GetNotificationHandler(notification_type);
+    NotificationHandler* handler =
+        GetNotificationHandler(notification_type, notification_id);
     handler->OnShow(profile_, notification_id);
   } else if (message_center_display_service_) {
     message_center_display_service_->Display(notification_type, notification_id,
@@ -88,11 +89,12 @@ void NativeNotificationDisplayService::Display(
   }
 }
 
-void NativeNotificationDisplayService::Close(
+void NativeNotificationDisplayService::DoClose(
     NotificationCommon::Type notification_type,
     const std::string& notification_id) {
   if (notification_bridge_ready_) {
-    NotificationHandler* handler = GetNotificationHandler(notification_type);
+    NotificationHandler* handler =
+        GetNotificationHandler(notification_type, notification_id);
     notification_bridge_->Close(GetProfileId(profile_), notification_id);
 
     // TODO(miguelg): Figure out something better here, passing an empty

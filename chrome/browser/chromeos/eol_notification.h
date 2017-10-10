@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
 #include "third_party/cros_system_api/dbus/update_engine/dbus-constants.h"
 
@@ -16,13 +17,20 @@ namespace chromeos {
 // EolNotification is created when user logs in. It is
 // used to check current EndOfLife Status of the device,
 // and show notification accordingly.
-class EolNotification final {
+class EolNotification : public NotificationHandler {
  public:
   explicit EolNotification(Profile* profile);
-  ~EolNotification();
+  ~EolNotification() override;
 
   // Check Eol status from update engine.
   void CheckEolStatus();
+
+  // NotificationHandler:
+  void OnClick(Profile* profile,
+               const std::string& origin,
+               const std::string& notification_id,
+               const base::Optional<int>& action_index,
+               const base::Optional<base::string16>& reply) override;
 
  private:
   // Callback invoked when |GetEolStatus()| has finished.

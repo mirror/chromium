@@ -92,7 +92,8 @@ void MessageCenterDisplayService::Display(
   if (!ui_manager)
     return;
 
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
+  NotificationHandler* handler =
+      GetNotificationHandler(notification_type, notification_id);
   handler->OnShow(profile_, notification_id);
 
   if (notification.delegate()) {
@@ -112,7 +113,7 @@ void MessageCenterDisplayService::Display(
   ui_manager->Add(notification_with_delegate, profile_);
 }
 
-void MessageCenterDisplayService::Close(
+void MessageCenterDisplayService::DoClose(
     NotificationCommon::Type notification_type,
     const std::string& notification_id) {
   // This can be called when the browser is shutting down and the

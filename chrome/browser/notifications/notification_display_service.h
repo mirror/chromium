@@ -35,6 +35,9 @@ class NotificationDisplayService : public KeyedService {
   explicit NotificationDisplayService(Profile* profile);
   ~NotificationDisplayService() override;
 
+  // KeyedService:
+  void Shutdown() override;
+
   // Displays the |notification| identified by |notification_id|.
   virtual void Display(
       NotificationCommon::Type notification_type,
@@ -42,9 +45,12 @@ class NotificationDisplayService : public KeyedService {
       const Notification& notification,
       std::unique_ptr<NotificationCommon::Metadata> metadata = nullptr) = 0;
 
+  void DisplaySimpleNotification(const Notification& notification,
+                                 NotificationHandler* handler);
+
   // Closes the notification identified by |notification_id|.
-  virtual void Close(NotificationCommon::Type notification_type,
-                     const std::string& notification_id) = 0;
+  void Close(NotificationCommon::Type notification_type,
+             const std::string& notification_id);
 
   // Writes the ids of all currently displaying notifications and
   // invokes |callback| with the result once known.
@@ -65,12 +71,14 @@ class NotificationDisplayService : public KeyedService {
   // Return whether a notification of |notification_type| should be displayed
   // for |origin| when the browser is in full screen mode.
   bool ShouldDisplayOverFullscreen(const GURL& origin,
-                                   NotificationCommon::Type notification_type);
+                                   NotificationCommon::Type notification_type,
+                                   const std::string& id);
 
   // Returns the notification handler that was registered for the given type.
   // May return null.
   NotificationHandler* GetNotificationHandler(
-      NotificationCommon::Type notification_type);
+      NotificationCommon::Type notification_type,
+      const std::string& id);
 
   // Registers an implementation object to handle notification operations
   // for |notification_type|.
@@ -80,10 +88,17 @@ class NotificationDisplayService : public KeyedService {
   // Removes an implementation object added via AddNotificationHandler.
   void RemoveNotificationHandler(NotificationCommon::Type notification_type);
 
+ protected:
+  virtual void DoClose(NotificationCommon::Type notification_type,
+                       const std::string& notification_id) = 0;
+
  private:
   std::map<NotificationCommon::Type, std::unique_ptr<NotificationHandler>>
       notification_handlers_;
   Profile* profile_;
+
+  // FIXME
+  std::map<std::string, NotificationHandler*> simple_handlers_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationDisplayService);
 };

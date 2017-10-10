@@ -37,10 +37,12 @@ class NotificationCommon {
   // Possible kinds of notifications
   // TODO(peter): Prefix these options with TYPE_.
   enum Type {
-    PERSISTENT = 0,
-    NON_PERSISTENT = 1,
-    EXTENSION = 2,
-    PRODUCT_EOL = 3,
+    SIMPLE = 0,  // Any generic toast created by Chrome that doesn't fit into
+                 // one of the other categories. The notification's ID will be
+                 // used to route events.
+    PERSISTENT = 1,
+    NON_PERSISTENT = 2,
+    EXTENSION = 3,
     DOWNLOAD = 4,
     TYPE_MAX = DOWNLOAD,
   };

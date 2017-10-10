@@ -59,8 +59,8 @@ class StubNotificationDisplayService : public NotificationDisplayService {
                const std::string& notification_id,
                const Notification& notification,
                std::unique_ptr<NotificationCommon::Metadata> metadata) override;
-  void Close(NotificationCommon::Type notification_type,
-             const std::string& notification_id) override;
+  void DoClose(NotificationCommon::Type notification_type,
+               const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
 
  private:
