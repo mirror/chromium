@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc1a4a3b_81a2c317",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-10T20:22:12Z",
+      "side": 1,
+      "message": "I\u0027m a little skeptical of this.  Can you use shared_quad_state-\u003evisible_layer_rect that uses ScaleToEnclosingRect?  Why do you need to round?",
+      "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
