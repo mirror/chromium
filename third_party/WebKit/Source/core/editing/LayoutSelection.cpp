@@ -371,6 +371,7 @@ static LayoutTextFragment* FirstLetterPartFor(LayoutObject* layout_object) {
 static void MarkSelected(SelectedLayoutObjects* invalidation_set,
                          LayoutObject* layout_object,
                          SelectionState state) {
+  DCHECK(!layout_object->SlowFirstChild());
   layout_object->SetSelectionStateIfNeeded(state);
   InsertLayoutObjectAndAncestorBlocks(invalidation_set, layout_object);
 }
@@ -587,7 +588,9 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
   SelectedLayoutObjects selected_objects;
   for (const Node& node : selection.Nodes()) {
     LayoutObject* const layout_object = node.GetLayoutObject();
-    if (!layout_object || !layout_object->CanBeSelectionLeaf() ||
+    if (!layout_object ||
+        !(layout_object->IsText() || layout_object->IsLayoutImage() ||
+          layout_object->IsLayoutEmbeddedContent()) ||
         layout_object->Style()->Visibility() != EVisibility::kVisible)
       continue;
 
