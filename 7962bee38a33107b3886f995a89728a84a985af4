@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd08cde0_12b6f1e4",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T12:05:40Z",
+      "side": 1,
+      "message": "Would you mind updating that one too? (See below)",
+      "range": {
+        "startLine": 1303,
+        "startChar": 11,
+        "endLine": 1303,
+        "endChar": 12
+      },
+      "revId": "7962bee38a33107b3886f995a89728a84a985af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dd8c5b_b5bbdfd8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 2425,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T12:05:40Z",
+      "side": 1,
+      "message": "Please use a Right Single Quotation Mark (http://www.fileformat.info/info/unicode/char/2019/index.htm, ’) instead of an ASCII apostrophe (http://www.fileformat.info/info/unicode/char/0027/index.htm).",
+      "range": {
+        "startLine": 2425,
+        "startChar": 11,
+        "endLine": 2425,
+        "endChar": 12
+      },
+      "revId": "7962bee38a33107b3886f995a89728a84a985af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
