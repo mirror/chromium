@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7375ff7d_c5b1a9cd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T19:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234f9c42_b8139c16",
+      "revId": "0abaef6d13f909d5b39c3472b95a435893bfc165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac49d8a_3adfde3d",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "0abaef6d13f909d5b39c3472b95a435893bfc165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9eb9b2f_fb65159a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T19:54:06Z",
+      "side": 1,
+      "message": "Explicit numbering is not required. I just want to make it more explicit. If we add more modes in the future, the existing numbers should not change.\n\nAdded comment on recording this in tracing.",
+      "parentUuid": "7ac49d8a_3adfde3d",
+      "range": {
+        "startLine": 189,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 11
+      },
+      "revId": "0abaef6d13f909d5b39c3472b95a435893bfc165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
