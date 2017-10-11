@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcd1649_9936bedb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-11T15:28:49Z",
+      "side": 1,
+      "message": "You need a bug.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 5
+      },
+      "revId": "0d7f7e105f47fa6cff78043e9edac0c88e74af3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
