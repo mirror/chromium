@@ -16,6 +16,24 @@
       "revId": "e4bce5ea645b30307b6cdd8ead3fa13a6b5be175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c1b7ce_b9be40b1",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-11T22:32:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3909ba4_eb218fc7",
+      "revId": "e4bce5ea645b30307b6cdd8ead3fa13a6b5be175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
