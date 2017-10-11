@@ -507,6 +507,37 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, ChildFrameWithSrcdoc) {
   }
 }
 
+// Ensure that sandbox flags are correctly set in the main frame when set by
+// Content-Security-Policy header.
+IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, SandboxFlagsSetForMainFrame) {
+  GURL main_url(embedded_test_server()->GetURL("/sandboxed_main_frame.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Verify that sandbox flags are set properly for the root FrameTreeNode.
+  // Root frame is sandboxed with "allow-popups".
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups,
+            root->active_sandbox_flags());
+
+  // Verify that child frames inherit sandbox flags from the root. First frame
+  // has no explicitly set flags of its own, and should inherit those from the
+  // root. Second frame is completely sandboxed.
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups,
+            root->child_at(0)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups,
+            root->child_at(0)->active_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
+            root->child_at(1)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll,
+            root->child_at(1)->active_sandbox_flags());
+}
+
 // Ensure that sandbox flags are correctly set when child frames are created.
 IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, SandboxFlagsSetForChildFrames) {
   GURL main_url(embedded_test_server()->GetURL("/sandboxed_frames.html"));
@@ -545,6 +576,63 @@ IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest, SandboxFlagsSetForChildFrames) {
   NavigateFrameToURL(root->child_at(0), frame_url);
   EXPECT_EQ(blink::WebSandboxFlags::kAll,
             root->child_at(0)->effective_frame_policy().sandbox_flags);
+}
+
+// Ensure that sandbox flags are correctly set in the child frames when set by
+// Content-Security-Policy header, and in combination with the sandbox iframe
+// attribute.
+IN_PROC_BROWSER_TEST_F(FrameTreeBrowserTest,
+                       SandboxFlagsSetByCSPForChildFrames) {
+  GURL main_url(embedded_test_server()->GetURL("/sandboxed_frames_csp.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Verify that sandbox flags are set properly for all FrameTreeNodes.
+  // First frame has no iframe sandbox flags, but the framed document is served
+  // with a CSP header which sets "allow-popups" and "allow-pointer-lock".
+  // Second frame is sandboxed with "allow-pointer-lock" and
+  // "allow-orientation-lock", and the framed document is also served with a CSP
+  // header which uses "allow-popups" and "allow-pointer-lock". The resulting
+  // sandbox for the frame should only have "allow-pointer-lock".
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kNone, root->active_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->child_at(0)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPopups &
+                ~blink::WebSandboxFlags::kPointerLock,
+            root->child_at(0)->active_sandbox_flags());
+  EXPECT_EQ(blink::WebSandboxFlags::kAll &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kOrientationLock,
+            root->child_at(1)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(
+      blink::WebSandboxFlags::kAll & ~blink::WebSandboxFlags::kPointerLock,
+      root->child_at(1)->active_sandbox_flags());
+
+  // Navigating to a different URL *should* clear CSP-set sandbox flags, but
+  // should retain those flags set by the frame owner.
+  GURL frame_url(embedded_test_server()->GetURL("/title1.html"));
+
+  NavigateFrameToURL(root->child_at(0), frame_url);
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->child_at(0)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kNone,
+            root->child_at(0)->active_sandbox_flags());
+
+  NavigateFrameToURL(root->child_at(1), frame_url);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kOrientationLock,
+            root->child_at(1)->effective_frame_policy().sandbox_flags);
+  EXPECT_EQ(blink::WebSandboxFlags::kAll &
+                ~blink::WebSandboxFlags::kPointerLock &
+                ~blink::WebSandboxFlags::kOrientationLock,
+            root->child_at(1)->active_sandbox_flags());
 }
 
 // Ensure that a popup opened from a subframe sets its opener to the subframe's

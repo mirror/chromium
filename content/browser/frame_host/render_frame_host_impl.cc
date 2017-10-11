@@ -888,8 +888,8 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAccessInitialDocument)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeOpener, OnDidChangeOpener)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeName, OnDidChangeName)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFeaturePolicyHeader,
-                        OnDidSetFeaturePolicyHeader)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSetFramePolicyHeaders,
+                        OnDidSetFramePolicyHeaders)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidAddContentSecurityPolicies,
                         OnDidAddContentSecurityPolicies)
     IPC_MESSAGE_HANDLER(FrameHostMsg_EnforceInsecureRequestPolicy,
@@ -2171,11 +2171,13 @@ void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
   delegate_->DidChangeName(this, name);
 }
 
-void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
+void RenderFrameHostImpl::OnDidSetFramePolicyHeaders(
+    blink::WebSandboxFlags sandbox_flags,
     const ParsedFeaturePolicyHeader& parsed_header) {
   frame_tree_node()->SetFeaturePolicyHeader(parsed_header);
   ResetFeaturePolicy();
   feature_policy_->SetHeaderPolicy(parsed_header);
+  frame_tree_node()->UpdateActiveSandboxFlags(sandbox_flags);
 }
 
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicies(
