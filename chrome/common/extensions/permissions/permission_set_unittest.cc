@@ -851,6 +851,7 @@ TEST(PermissionsTest, PermissionMessages) {
   skip.insert(APIPermission::kWebrtcAudioPrivate);
   skip.insert(APIPermission::kWebrtcDesktopCapturePrivate);
   skip.insert(APIPermission::kWebrtcLoggingPrivate);
+  skip.insert(APIPermission::kWebrtcLoggingPrivateAudioDiagnostics);
   skip.insert(APIPermission::kWebstorePrivate);
   skip.insert(APIPermission::kWebstoreWidgetPrivate);
 

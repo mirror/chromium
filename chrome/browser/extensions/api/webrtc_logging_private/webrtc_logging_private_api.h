@@ -37,6 +37,11 @@ class WebrtcLoggingPrivateFunction : public ChromeAsyncExtensionFunction {
       const api::webrtc_logging_private::RequestInfo& request,
       const std::string& security_origin);
 
+  content::RenderProcessHost* GetRph();  // const GURL& url
+
+  static bool GetRphHelper(content::WebContents** result,
+                           content::WebContents* guest_web_contents);
+
   scoped_refptr<WebRtcLoggingHandlerHost> LoggingHandlerFromRequest(
       const api::webrtc_logging_private::RequestInfo& request,
       const std::string& security_origin);

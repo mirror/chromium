@@ -171,13 +171,13 @@ chrome.runtime.onMessageExternal.addListener(function(
           requestInfo, origin, incoming, outgoing, doSendResponse);
       return true;
     } else if (method == 'logging.startAudioDebugRecordings') {
-      var seconds = message['seconds'] || 0;
-      chrome.webrtcLoggingPrivate.startAudioDebugRecordings(
-          requestInfo, origin, seconds, doSendResponse);
+      // var seconds = message['seconds'] || 0;
+      // chrome.webrtcLoggingPrivate.startAudioDebugRecordings(
+      //     requestInfo, origin, seconds, doSendResponse);
       return true;
     } else if (method == 'logging.stopAudioDebugRecordings') {
-      chrome.webrtcLoggingPrivate.stopAudioDebugRecordings(
-          requestInfo, origin, doSendResponse);
+      // chrome.webrtcLoggingPrivate.stopAudioDebugRecordings(
+      //     requestInfo, origin, doSendResponse);
       return true;
     } else if (method == 'logging.startWebRtcEventLogging') {
       var seconds = message['seconds'] || 0;
@@ -193,6 +193,9 @@ chrome.runtime.onMessageExternal.addListener(function(
       chrome.webrtcAudioPrivate.setAudioExperiments(
           requestInfo, origin, experiments);
       doSendResponse();
+      return false;
+    } else if (method == 'test.getRequestInfo') {
+      doSendResponse(requestInfo);
       return false;
     }
 

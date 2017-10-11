@@ -809,8 +809,15 @@
   },
   "webrtcLoggingPrivate": {
     "channel": "stable",
-    "extension_types": ["extension"],
+    "extension_types": ["extension", "legacy_packaged_app", "hosted_app",
+                        "platform_app"],
     "whitelist": [
+      // TEST APP DO NOT SUBMIT
+      // echo -n "ogifhhcgpbbddkfafhopfgimmhgkkhbb" | sha1sum | tr '[:lower:]' '[:upper:]'
+      "A803919C90D8C7B3C56F57D782CECBCB40403313",
+      "0E0C1845C0657180537A49537ABFEE08AC6A57BB",
+      "E703483CEF33DEC18B4B6DD84B5C776FB9182BDB", // external stable (gvc)
+      "81986D4F846CEDDDB962643FA501D1780DD441BB", // internal dev
       // Hangouts test extension
       "80B9DC58E5210749F052F5B4DB239C50CF72AEB6",
       // Hangout Services component extension.
@@ -819,6 +826,22 @@
       "63ED55E43214C211F82122ED56407FF1A807F2A3",
       // Media Router release extension
       "226CF815E39A363090A1E547D53063472B8279FA"
+    ]
+  },
+  "webrtcLoggingPrivate.audioDiagnostics": {
+    "channel": "stable",
+    "extension_types": ["extension", "platform_app"],
+    "whitelist": [
+      // TEST APP DO NOT SUBMIT
+      // echo -n "ogifhhcgpbbddkfafhopfgimmhgkkhbb" | sha1sum | tr '[:lower:]' '[:upper:]'
+      "A803919C90D8C7B3C56F57D782CECBCB40403313",
+      "0E0C1845C0657180537A49537ABFEE08AC6A57BB",
+      "E703483CEF33DEC18B4B6DD84B5C776FB9182BDB", // external stable (gvc)
+      "81986D4F846CEDDDB962643FA501D1780DD441BB", // internal dev
+      // Hangouts test extension
+      "80B9DC58E5210749F052F5B4DB239C50CF72AEB6",
+      // Hangout Services component extension.
+      "DF84F03F9B960409CCDE0D895B9650EBE81C0A8E"
     ]
   },
   "webstorePrivate": {

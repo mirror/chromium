@@ -13,6 +13,7 @@
 #include "base/supports_user_data.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
+#include "chrome/browser/media/webrtc/webrtc_log_list.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
 #include "content/public/browser/browser_thread.h"
@@ -20,9 +21,13 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/api/file_handlers/app_file_handler_util.h"
+#include "extensions/browser/extension_function.h"
+#include "extensions/browser/granted_file_entry.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/common/error_utils.h"
+#include "extensions/common/permissions/permissions_data.h"
 
 namespace extensions {
 
@@ -96,6 +101,50 @@ content::RenderProcessHost* WebrtcLoggingPrivateFunction::RphFromRequest(
   return contents->GetMainFrame()->GetProcess();
 }
 
+content::RenderProcessHost* WebrtcLoggingPrivateFunction::GetRph() {
+  content::WebContents* web_contents = GetSenderWebContents();
+
+  if (!web_contents) {
+    error_ = "Sender web contents for not found.";
+    return nullptr;
+  }
+
+  guest_view::GuestViewManager* manager =
+      guest_view::GuestViewManager::FromBrowserContext(
+          web_contents->GetBrowserContext());
+
+  if (!manager) {
+    error_ = "GuestViewManager for Web contents not found.";
+    return nullptr;
+  }
+  content::WebContents* guest_web_contents = nullptr;
+  manager->ForEachGuest(web_contents,
+                        base::Bind(&WebrtcLoggingPrivateFunction::GetRphHelper,
+                                   &guest_web_contents));
+
+  if (!guest_web_contents) {
+    error_ = "Web contents for webview not found.";
+    return nullptr;
+  }
+
+  // std::string rph_id =
+  // std::to_string(guest_web_contents->GetRenderProcessHost()->GetID()); error_
+  // = "FOO: " + guest_web_contents->GetLastCommittedURL().spec() + rph_id;
+  // return nullptr;
+
+  return guest_web_contents->GetRenderProcessHost();
+}
+
+bool WebrtcLoggingPrivateFunction::GetRphHelper(
+    content::WebContents** result,
+    content::WebContents* guest_web_contents) {
+  if (guest_web_contents->GetLastCommittedURL().DomainIs("google.com")) {
+    *result = guest_web_contents;
+    return true;
+  }
+  return false;
+}
+
 scoped_refptr<WebRtcLoggingHandlerHost>
 WebrtcLoggingPrivateFunction::LoggingHandlerFromRequest(
     const api::webrtc_logging_private::RequestInfo& request,
@@ -152,9 +201,31 @@ void WebrtcLoggingPrivateFunctionWithRecordingDoneCallback::FireCallback(
     bool did_manual_stop) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   api::webrtc_logging_private::RecordingInfo result;
+
+  base::FilePath txt_file_name(FILE_PATH_LITERAL("test.txt"));
+  base::FilePath path =
+      WebRtcLogList::GetWebRtcLogDirectoryForProfile(GetProfile()->GetPath())
+          .Append(txt_file_name);
+  bool is_directory = false;
+
+  GrantedFileEntry granted_file_entry = app_file_handler_util::CreateFileEntry(
+      browser_context(), extension(),
+      render_frame_host()->GetProcess()->GetID(), path, is_directory);
+
+  std::unique_ptr<base::DictionaryValue> entry(new base::DictionaryValue());
+  entry->SetString("fileSystemId", granted_file_entry.filesystem_id);
+  entry->SetString("baseName", granted_file_entry.registered_name);
+  entry->SetString("id", granted_file_entry.id);
+  entry->SetBoolean("isDirectory", is_directory);
+
+  api::webrtc_logging_private::RecordingInfo::FileEntriesType file_entry;
+  api::webrtc_logging_private::RecordingInfo::FileEntriesType::Populate(
+      *entry, &file_entry);
+
   result.prefix_path = prefix_path;
   result.did_stop = did_stop;
   result.did_manual_stop = did_manual_stop;
+  result.file_entries.push_back(std::move(file_entry));
   SetResult(result.ToValue());
   SendResponse(true);
 }
@@ -402,7 +473,9 @@ bool WebrtcLoggingPrivateStopRtpDumpFunction::RunAsync() {
 
 bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDiagnostics)) {
     return false;
   }
 
@@ -415,8 +488,8 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
     return true;
   }
 
-  content::RenderProcessHost* host =
-      RphFromRequest(params->request, params->security_origin);
+  content::RenderProcessHost* host = GetRph();
+  //      RphFromRequest(params->request, params->security_origin);
   if (!host)
     return false;
 
@@ -437,7 +510,9 @@ bool WebrtcLoggingPrivateStartAudioDebugRecordingsFunction::RunAsync() {
 
 bool WebrtcLoggingPrivateStopAudioDebugRecordingsFunction::RunAsync() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableAudioDebugRecordingsFromExtension)) {
+          switches::kEnableAudioDebugRecordingsFromExtension) &&
+      !extension()->permissions_data()->active_permissions().HasAPIPermission(
+          APIPermission::kWebrtcLoggingPrivateAudioDiagnostics)) {
     return false;
   }
 

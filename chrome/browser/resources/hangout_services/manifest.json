@@ -21,10 +21,13 @@
   "incognito": "split",
   "permissions": [
     "desktopCapture",
+    {"fileSystem": ["write", "retainEntries", "directory"]},
     "processes",
     "system.cpu",
     "webrtcAudioPrivate",
     "webrtcDesktopCapturePrivate",
-    "webrtcLoggingPrivate"
+    "webrtcLoggingPrivate",
+    "webrtcLoggingPrivate.audioDiagnostics"
+
   ]
 }
