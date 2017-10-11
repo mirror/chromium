@@ -2,7 +2,6 @@ crbug.com/417782 compositing/contents-opaque/body-background-painted.html [ Fail
 crbug.com/417782 compositing/contents-opaque/hidden-with-visible-text.html [ Failure ]
 crbug.com/417782 compositing/contents-opaque/layer-transform.html [ Failure ]
 crbug.com/417782 compositing/contents-opaque/visibility-hidden.html [ Failure ]
-crbug.com/417782 compositing/direct-image-compositing.html [ Failure ]
 crbug.com/417782 compositing/filters/sw-layer-overlaps-hw-shadow.html [ Failure ]
 crbug.com/417782 compositing/filters/sw-nested-shadow-overlaps-hw-nested-shadow.html [ Failure ]
 crbug.com/417782 compositing/filters/sw-shadow-overlaps-hw-layer.html [ Failure ]
