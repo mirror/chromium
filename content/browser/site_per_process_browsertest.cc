@@ -10574,7 +10574,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   EXPECT_TRUE(ExecuteScript(
       root, "document.getElementById('child-2').setAttribute('allow','')"));
   EXPECT_EQ(2UL, root->child_at(2)->effective_container_policy().size());
-  EXPECT_EQ(0UL, root->child_at(2)->pending_container_policy_.size());
+  EXPECT_EQ(0UL, root->child_at(2)->pending_container_policy().size());
 
   // Navigate the frame; pending policy should be committed.
   NavigateFrameToURL(root->child_at(2), nav_url);
@@ -10658,7 +10658,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   const ParsedFeaturePolicyHeader updated_effective_policy =
       root->child_at(2)->effective_container_policy();
   const ParsedFeaturePolicyHeader updated_pending_policy =
-      root->child_at(2)->pending_container_policy_;
+      root->child_at(2)->pending_container_policy();
   EXPECT_EQ(1UL, updated_effective_policy[0].origins.size());
   EXPECT_FALSE(updated_effective_policy[0].origins[0].unique());
   EXPECT_EQ(1UL, updated_pending_policy[0].origins.size());

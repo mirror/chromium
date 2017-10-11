@@ -153,11 +153,9 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           scope,
           name,
           unique_name,
-          blink::WebSandboxFlags::kNone,
           false /* should enforce strict mixed content checking */,
           false /* is a potentially trustworthy unique origin */,
           false /* has received a user gesture */),
-      pending_sandbox_flags_(blink::WebSandboxFlags::kNone),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
       blame_context_(frame_tree_node_id_, parent) {
@@ -370,11 +368,11 @@ void FrameTreeNode::SetInsecureRequestPolicy(
 
 void FrameTreeNode::SetPendingSandboxFlags(
     blink::WebSandboxFlags sandbox_flags) {
-  pending_sandbox_flags_ = sandbox_flags;
+  pending_frame_policy_.sandbox_flags = sandbox_flags;
 
   // Subframes should always inherit their parent's sandbox flags.
   if (parent())
-    pending_sandbox_flags_ |= parent()->effective_sandbox_flags();
+    pending_frame_policy_.sandbox_flags |= parent()->effective_sandbox_flags();
 }
 
 void FrameTreeNode::SetPendingContainerPolicy(
@@ -382,7 +380,7 @@ void FrameTreeNode::SetPendingContainerPolicy(
   // This should only be called on subframes; container policy is not mutable on
   // main frame.
   DCHECK(!IsMainFrame());
-  pending_container_policy_ = container_policy;
+  pending_frame_policy_.container_policy = container_policy;
 }
 
 bool FrameTreeNode::IsDescendantOf(FrameTreeNode* other) const {
@@ -429,14 +427,17 @@ bool FrameTreeNode::IsLoading() const {
 }
 
 bool FrameTreeNode::CommitPendingFramePolicy() {
-  bool did_change_flags =
-      pending_sandbox_flags_ != replication_state_.sandbox_flags;
+  bool did_change_flags = pending_frame_policy_.sandbox_flags !=
+                          replication_state_.frame_policy.sandbox_flags;
   bool did_change_container_policy =
-      pending_container_policy_ != replication_state_.container_policy;
+      pending_frame_policy_.container_policy !=
+      replication_state_.frame_policy.container_policy;
   if (did_change_flags)
-    replication_state_.sandbox_flags = pending_sandbox_flags_;
+    replication_state_.frame_policy.sandbox_flags =
+        pending_frame_policy_.sandbox_flags;
   if (did_change_container_policy)
-    replication_state_.container_policy = pending_container_policy_;
+    replication_state_.frame_policy.container_policy =
+        pending_frame_policy_.container_policy;
   return did_change_flags || did_change_container_policy;
 }
 

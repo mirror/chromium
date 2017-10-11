@@ -19,6 +19,7 @@
 #include "content/browser/frame_host/render_frame_host_manager.h"
 #include "content/common/content_export.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/frame_policy.h"
 #include "content/common/frame_replication_state.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "url/gurl.h"
@@ -202,7 +203,7 @@ class CONTENT_EXPORT FrameTreeNode {
   // have been updated in an <iframe> element but have not taken effect yet;
   // use pending_sandbox_flags() for those.
   blink::WebSandboxFlags effective_sandbox_flags() const {
-    return replication_state_.sandbox_flags;
+    return replication_state_.frame_policy.sandbox_flags;
   }
 
   // Returns the latest sandbox flags for this frame.  This includes flags
@@ -212,11 +213,11 @@ class CONTENT_EXPORT FrameTreeNode {
   // next navigation.  To retrieve the currently active sandbox flags for this
   // frame, use effective_sandbox_flags().
   blink::WebSandboxFlags pending_sandbox_flags() const {
-    return pending_sandbox_flags_;
+    return pending_frame_policy_.sandbox_flags;
   }
 
   const ParsedFeaturePolicyHeader& pending_container_policy() const {
-    return pending_container_policy_;
+    return pending_frame_policy_.container_policy;
   }
 
   // Update this frame's sandbox flags.  This is used when a parent frame
@@ -232,7 +233,7 @@ class CONTENT_EXPORT FrameTreeNode {
   // not include policy changes that have been made by updating the containing
   // iframe element attributes since the frame was last navigated.
   const ParsedFeaturePolicyHeader& effective_container_policy() const {
-    return replication_state_.container_policy;
+    return replication_state_.frame_policy.container_policy;
   }
 
   // Update this frame's container policy. This is used when a parent frame
@@ -419,18 +420,12 @@ class CONTENT_EXPORT FrameTreeNode {
   // proxies for this frame.
   FrameReplicationState replication_state_;
 
-  // Track the pending sandbox flags for this frame.  When a parent frame
-  // dynamically updates sandbox flags in the <iframe> element for a child
-  // frame, these updated flags are stored here and are transferred into
-  // replication_state_.sandbox_flags when they take effect on the next frame
-  // navigation.
-  blink::WebSandboxFlags pending_sandbox_flags_;
-
-  // Tracks the computed container policy for this frame. When the iframe
-  // allowfullscreen, allowpaymentrequest, allow or src attributes are changed,
-  // the updated policy for the frame is stored here, and transferred into
-  // replication_state_.container_policy on the next frame navigation.
-  ParsedFeaturePolicyHeader pending_container_policy_;
+  // Track the pending sandbox flags and container policy for this frame. When a
+  // parent frame dynamically updates 'sandbox', 'allow', 'allowfullscreen',
+  // 'allowpaymentrequest' or 'src' attributes, the updated policy for the frame
+  // is stored here, and transferred into replication_state_.frame_policy when
+  // they take effect on the next frame navigation.
+  FramePolicy pending_frame_policy_;
 
   // Tracks the scrolling and margin properties for this frame.  These
   // properties affect the child renderer but are stored on its parent's
