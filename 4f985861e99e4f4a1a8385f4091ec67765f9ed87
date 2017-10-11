@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ea6740d_d668568f",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T03:11:16Z",
+      "side": 1,
+      "message": "Can you briefly comment (just here, no need to do so in code) on why you chose this value?",
+      "range": {
+        "startLine": 29,
+        "startChar": 48,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "4f985861e99e4f4a1a8385f4091ec67765f9ed87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8455fee4_a1d43e19",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T03:11:16Z",
+      "side": 1,
+      "message": "nit: place this at the bottom of the method declarations since it\u0027s not specific to testing",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "4f985861e99e4f4a1a8385f4091ec67765f9ed87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
