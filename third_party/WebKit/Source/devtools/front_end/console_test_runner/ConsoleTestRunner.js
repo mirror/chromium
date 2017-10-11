@@ -197,6 +197,7 @@ ConsoleTestRunner.addConsoleViewSniffer = function(override, opt_sticky) {
  * @param {boolean=} dontForceMainContext
  */
 ConsoleTestRunner.evaluateInConsoleAndDump = function(code, callback, dontForceMainContext) {
+  callback = TestRunner.safeWrap(callback);
   /**
    * @param {string} text
    */
