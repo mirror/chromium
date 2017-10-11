@@ -642,6 +642,11 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
                                &line_info)) {
     CreateLine(&line_info, line_breaker.ExclusionSpace(),
                line_breaker.CreateBreakToken());
+    // TODO(xiaochengh): Store a dedicated struct instead of NGLineInfo;
+    // Also need to store the offset of first/last rendered character.
+    if (Node().Data().line_info_.size())
+      DCHECK_EQ(Node().Data().line_info_.back().EndOffset(), line_info.StartOffset());
+    Node().MutableData()->line_info_.push_back(line_info);
     exclusion_space =
         WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
   }

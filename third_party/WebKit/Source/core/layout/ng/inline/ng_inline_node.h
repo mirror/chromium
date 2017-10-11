@@ -102,6 +102,7 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   }
 
   friend class NGLineBreakerTest;
+  friend class NGInlineLayoutAlgorithm;
 };
 
 inline void NGInlineNode::AssertOffset(unsigned index, unsigned offset) const {
