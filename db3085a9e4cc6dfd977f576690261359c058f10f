@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90de8ad8_16dedbd3",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T15:24:44Z",
+      "side": 1,
+      "message": "Sure, done. (For the thing we send to the DOM automation controller below, which I assume is what you meant? This one is the actual non-test message from the iframe.)",
+      "parentUuid": "49a9a11a_aecf225d",
+      "range": {
+        "startLine": 135,
+        "startChar": 31,
+        "endLine": 135,
+        "endChar": 37
+      },
+      "revId": "db3085a9e4cc6dfd977f576690261359c058f10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8301203f_0a20fa53",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "db3085a9e4cc6dfd977f576690261359c058f10f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87dc31e5_c2b1d1be",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T15:24:44Z",
+      "side": 1,
+      "message": "That still produces a message that we\u0027d have to get rid of. (The message would be \"true\", rather than some arbitrary thing that it is now, but that doesn\u0027t really help.)",
+      "parentUuid": "8301203f_0a20fa53",
+      "revId": "db3085a9e4cc6dfd977f576690261359c058f10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
