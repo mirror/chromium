@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c594863c_00d98996",
+        "filename": "content/browser/indexed_db/fake_indexed_db_metadata_coding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "Class comment:\n\n// A Fake implementation of IndexedDBMetadataCoding, for testing.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8357f52b_41233739",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "output-\u003ereserve(names.size()) ?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec83f0d_f585f66e",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "|name| has been moved away from here, so this is unspecified behavior. Should you inline the !found case into ReadDatabase?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2c0417_d54a82ed",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "This looks like less work than getting the full metadata? Neat -- though it also means that it\u0027s possible that the old operation would fail in scenarios that the new operation succeeds in, right? Does that carry risk?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fa88cc_9d1930a0",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2000,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this call IndexedDBMetadataCoding::DeleteIndex?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd564fc_763672f7",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "Should this be a CHECK, since otherwise it might trample the heap? (the old erase was memory-safe in release mode)",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b169ac27_816a21ad",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "Same question here about CHECK vs DCHECK.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab756296_499d635a",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "If this fails, it seems like metadata_.name might be left in an unspecified state (In practice, there\u0027s a chance that it\u0027ll still be there if |name| is small enough to fit into string\u0027s internal storage). I think this risk occurs in a few other places here where you std::move the parameter.\n\nI might considerthe following pattern instead:\n  - make the name parameter a const ref\n  - In production code, always pass |metadata_.name| as the ref.\n  - Rely on the fact that assigning a string to itself is a cheap no-op, so inside the function, the assignment \"metadata-\u003ename \u003d name;\" is cheap. (I spent some time recently digging into the guts of MSVC\u0027s STL, and can confirm that it has to check for this condition anyway, as a natural consequence of deciding between memcpy and memmove.)\n\nOf course, it introduces aliasing -- which introduces a separate class of potential bugs inside of CreateDatabase; maybe that\u0027s what you were trying to defend against in the first case.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bead7e76_00876e38",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "It looks like the old code failed to update the entry in metadata_.object_stores? Was that a bug of any consequence, or was it intentional behavior?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bb50f3_7bf7ea49",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "You\u0027ve lost an IDB_TRACE here; is that consequential?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55c418b_e1ff4872",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "The arguments to the error macros here seem to refer to the original names (GET_DATABASE_NAMES vs. READ_DATABASE_NAMES, etc). Is that intentional to leave them unmodified, or should they be renamed as well?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a54c7a9_daf9e7ac",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "As a newcomer to this code, just looking at the signature of this function, I might have considered calling it ReadMetadata, or GetMetadataForName, rather than ReadDatabase.\n\nTo me, ReadDatabase suggests an operation that reads everything out of |db|.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf37f89_fa492267",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "This IDB_TRACE seems like new code. That\u0027s OK if you intend it.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7be6ad0_acc90f5c",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "The old code read directly into metadata-\u003eversion. Does using this temporary fix a bug?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7785f1_912dc605",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "Also an IDB_TRACE change here -- assuming it\u0027s intentional.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7785dc_3154def0",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T20:29:24Z",
+      "side": 1,
+      "message": "nit: I\u0027d either include a blank line here between the paragraphs, or reflow the text so that it\u0027s one paragraph.",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
