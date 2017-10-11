@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41695880_f30354bd",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "nitty nit: no \";\"",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab24cef_73d5fdb5",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "nit: /*from_cache\u003d*/ (with an \"\u003d\" in there), since that\u0027s the format that clang-tidy recognizes",
+      "range": {
+        "startLine": 56,
+        "startChar": 34,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7a08df_aa5409c1",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "I\u0027d split this method into (say) \"ReturnSuggestions\" and \"CacheFetchedSuggestions\". Then DidFetchContextualSuggestions would just call these two, and in FetchContextualSuggestions you can call ReturnSuggestions directly, so the \"from_cache\" param won\u0027t be needed anymore.",
+      "range": {
+        "startLine": 101,
+        "startChar": 22,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daed7dbe_bf58e12b",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "Instead of copying the suggestions themselves, could you just move over the pointers?",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1183eafa_ab028cb5",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "nit: persistEnt",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69f9409_674173b6",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "See other comment; I don\u0027t think this is required (or desirable).",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15370df4_49db0b02",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "I think you want time.h, not clock.h. (Though it\u0027d probably be good for testing to inject a clock, in which case you\u0027d want both :) )",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d17a23_ace8012a",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "persistEnt",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24b48a9_42793310",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "This is only ever instantiated with KeyType\u003dGURL and PayloadType\u003dvector\u003cContextualSuggestion\u003e, right? And we have no expectation of reusing it with other types any time soon? Then I\u0027d just specialize for those types.",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319e2e9a_ae453223",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "nit: \"std::\" not required",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622fe26b_238c825e",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T10:04:53Z",
+      "side": 1,
+      "message": "Both const",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
