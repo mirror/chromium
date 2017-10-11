@@ -1587,6 +1587,7 @@ public class Tab
     }
 
     private void maybeShowDataSaverInProductHelp(final Tracker tracker) {
+        if (getActivity().getAppMenuHandler().isAppMenuShowing()) return;
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
@@ -3153,6 +3154,8 @@ public class Tab
 
     @CalledByNative
     private void showMediaDownloadInProductHelp(int x, int y, int width, int height) {
+        if (getActivity().getAppMenuHandler().isAppMenuShowing()) return;
+
         // If we are not currently showing the widget, ask the tracker if we can show it.
         if (mDownloadIPHBubble == null) {
             Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());

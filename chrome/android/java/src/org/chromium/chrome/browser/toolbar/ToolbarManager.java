@@ -594,7 +594,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         // TODO(shaktisahu): Find out if the download menu button is enabled (crbug/712438).
         ChromeActivity activity = tab.getActivity();
         if (!(activity instanceof ChromeTabbedActivity) || DeviceFormFactor.isTablet()
-                || activity.isInOverviewMode() || !DownloadUtils.isAllowedToDownloadPage(tab)) {
+                || activity.getAppMenuHandler().isAppMenuShowing() || activity.isInOverviewMode()
+                || !DownloadUtils.isAllowedToDownloadPage(tab)) {
             return;
         }
 

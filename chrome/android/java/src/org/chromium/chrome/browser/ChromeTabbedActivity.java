@@ -796,6 +796,8 @@ public class ChromeTabbedActivity
     }
 
     private void maybeShowDownloadHomeTextBubble(final Tracker tracker) {
+        if (getAppMenuHandler().isAppMenuShowing()) return;
+
         // Don't show the IPH, if bottom sheet is already open.
         if (FeatureUtilities.isChromeHomeEnabled()
                 && (getBottomSheet() == null
