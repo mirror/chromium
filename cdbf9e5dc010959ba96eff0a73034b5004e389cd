@@ -50,6 +50,24 @@
       "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986c6452_7a15c8e1",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-11T07:11:40Z",
+      "side": 1,
+      "message": "What about custom elements? See my question: https://chromium-review.googlesource.com/c/chromium/src/+/705234/3/third_party/WebKit/Source/core/page/DragController.cpp#791",
+      "parentUuid": "bca2363a_6f9f45af",
+      "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
