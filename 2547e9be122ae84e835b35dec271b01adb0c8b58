@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "180bf33d_982179d1",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-11T19:37:09Z",
+      "side": 1,
+      "message": "H264 works for both Linux and Windows (and maybe other platforms later). So using a define can help to reduce the duplication of the combinations of build flags. (This define is used in several source files.) It can also help to ensure the consistency between BUILD.gn file and the source files.",
+      "parentUuid": "98562f64_a9df4812",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "2547e9be122ae84e835b35dec271b01adb0c8b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8b0770_3a3adf0d",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 19
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T18:11:57Z",
       "side": 1,
       "message": "This is exactly your own ParseNALUs()?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "2547e9be122ae84e835b35dec271b01adb0c8b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7434c20e_a03102b1",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-11T19:37:09Z",
+      "side": 1,
+      "message": "Yes, this change was prepared before ParseNALUs() is submitted. I will prepare another CL to change both here and //content/render/media/gpu/rtc_video_encoder.cc.",
+      "parentUuid": "8e8b0770_3a3adf0d",
       "range": {
         "startLine": 41,
         "startChar": 2,
