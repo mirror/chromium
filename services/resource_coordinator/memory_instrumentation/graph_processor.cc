@@ -81,6 +81,13 @@ std::unique_ptr<GlobalDumpGraph> GraphProcessor::ComputeMemoryGraph(
     }
   }
 
+  // Fifth pass: remove all nodes which are weak (including their descendants)
+  // and clean owned by edges to match.
+  RemoveWeakNodesRecursively(global_root);
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    RemoveWeakNodesRecursively(pid_to_process.second->root());
+  }
+
   return global_graph;
 }
 
@@ -208,6 +215,32 @@ void GraphProcessor::MarkWeakOwnersAndChildrenRecursively(
   // weak.
   for (const auto& path_to_child : *node->children()) {
     MarkWeakOwnersAndChildrenRecursively(path_to_child.second, visited);
+  }
+}
+
+void GraphProcessor::RemoveWeakNodesRecursively(Node* parent) {
+  for (auto path_to_node_it = parent->children()->begin();
+       path_to_node_it != parent->children()->end();) {
+    Node* node = path_to_node_it->second;
+    if (node->is_weak()) {
+      path_to_node_it = parent->children()->erase(path_to_node_it);
+    } else {
+      // Ensure that we aren't in a situation where we're about to
+      // keep a node which owns a weak node (which will be/has been
+      // removed.
+      DCHECK(!node->owns_edge() || !node->owns_edge()->is_weak());
+
+      RemoveWeakNodesRecursively(node);
+      {
+        auto* owned_by_edges = node->owned_by_edges();
+        auto new_end = std::remove_if(
+            owned_by_edges->begin(), owned_by_edges->end(),
+            [](Edge* edge) { return edge->source()->is_weak(); });
+        owned_by_edges->erase(new_end, owned_by_edges->end());
+      }
+
+      ++path_to_node_it;
+    }
   }
 }
 
