@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "706d92c7_b85d0000",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-11T22:54:44Z",
+      "side": 1,
+      "message": "hmm so if I\u0027m going to call MediaPlayerRendererWebContentsObserver::FromWebContents in the MediaPlayerRenderer ctor, how would I get the WebContents if not by passing it here?",
+      "parentUuid": "bd7cdea6_9e7ec4e7",
+      "revId": "364e1ac85fa12f75e2910d1d41c0632ab58afd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62aea9d5_dbb2bd99",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 2
