@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/browser/ignore_errors_cert_verifier.h"
-
+#include "net/cert/ignore_errors_cert_verifier.h"
 #include "base/base64.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "content/public/browser/ignore_errors_cert_verifier_utils.h"
 #include "content/public/common/content_switches.h"
 #include "crypto/sha2.h"
 #include "net/base/net_errors.h"
@@ -28,6 +28,7 @@ using net::CertVerifier;
 using net::MockCertVerifier;
 using net::CompletionCallback;
 using net::HashValue;
+using net::IgnoreErrorsCertVerifier;
 using net::SHA256HashValue;
 using net::SHA256HashValueLessThan;
 using net::X509Certificate;
@@ -74,7 +75,7 @@ class IgnoreErrorsCertVerifierTest : public ::testing::Test {
 
  protected:
   void SetUp() override {
-    verifier_.set_whitelist(
+    verifier_.SetWhitelistForTesting(
         IgnoreErrorsCertVerifier::MakeWhitelist(MakeWhitelist()));
   };
 
@@ -167,7 +168,7 @@ class IgnoreCertificateErrorsSPKIListFlagTest
 
     auto mock_verifier = base::MakeUnique<MockCertVerifier>();
     mock_verifier->set_default_result(ERR_CERT_INVALID);
-    verifier_ = IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+    verifier_ = content::MaybeWrapCertVerifier(
         command_line, kTestUserDataDirSwitch, std::move(mock_verifier));
   }
   ~IgnoreCertificateErrorsSPKIListFlagTest() override {}

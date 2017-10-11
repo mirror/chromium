@@ -563,6 +563,8 @@ component("net") {
       "cert/ct_signed_certificate_timestamp_log_param.h",
       "cert/ev_root_ca_metadata.cc",
       "cert/ev_root_ca_metadata.h",
+      "cert/ignore_errors_cert_verifier.cc",
+      "cert/ignore_errors_cert_verifier.h",
       "cert/internal/system_trust_store.cc",
       "cert/internal/system_trust_store.h",
       "cert/internal/trust_store_mac.cc",

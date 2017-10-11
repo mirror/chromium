@@ -77,7 +77,7 @@
 #include "components/url_formatter/url_fixer.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_network_transaction_factory.h"
-#include "content/public/browser/ignore_errors_cert_verifier.h"
+#include "content/public/browser/ignore_errors_cert_verifier_utils.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_switches.h"
@@ -1105,7 +1105,7 @@ void ProfileIOData::Init(
     }
     const base::CommandLine& command_line =
         *base::CommandLine::ForCurrentProcess();
-    cert_verifier_ = content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+    cert_verifier_ = content::MaybeWrapCertVerifier(
         command_line, switches::kUserDataDir, std::move(cert_verifier_));
     builder->set_shared_cert_verifier(cert_verifier_.get());
 #else
