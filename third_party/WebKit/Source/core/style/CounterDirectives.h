@@ -26,6 +26,7 @@
 #define CounterDirectives_h
 
 #include <memory>
+#include "core/style/CounterValue.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/MathExtras.h"
@@ -83,14 +84,13 @@ class CounterDirectives {
   int CombinedValue() const {
     DCHECK(is_reset_set_ || !reset_value_);
     DCHECK(is_increment_set_ || !increment_value_);
-    // FIXME: Shouldn't allow overflow here.
     return reset_value_ + increment_value_;
   }
 
  private:
   bool is_reset_set_;
   bool is_increment_set_;
-  int reset_value_;
+  CounterValue reset_value_;
   int increment_value_;
 };
 
