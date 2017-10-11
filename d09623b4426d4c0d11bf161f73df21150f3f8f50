@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b93659f4_4493b4cb",
+        "filename": "components/translate/core/browser/translate_accept_languages.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-10-11T00:17:29Z",
+      "side": 1,
+      "message": "Thanks for the concerns. \n\nActually my plan is to create an A/B testing group and compare the metrics on Android client for both group. And I created the experiment flag and measurement just to figure out the real performance on end users\u0027s clients. It will be just a temporary experiment (sorry, can\u0027t find other easy way than an feature experiment). \n\nSo we can have the baseline and help us improve the language list fetching further https://docs.google.com/document/d/15zgtr7btrLcf0Ng9GGCNn6AqZgVPFA7Yom6BziBxWsg (more following optimizations).",
+      "parentUuid": "26912e3b_00e25124",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f4fcb6a_69b153a6",
         "filename": "components/translate/core/browser/translate_accept_languages_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T16:38:04Z",
       "side": 1,
       "message": "Is |CanBeAcceptLanguage| expected to handle zh-Hans, es-419, zh-Hant, etc or not?\n\nGiven that it calls ToChromeLanguageSynonym, I guess it\u0027s expected to handle them. If so, would you test it here?",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 70
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfea77b_16b58f4a",
+        "filename": "components/translate/core/browser/translate_accept_languages_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-10-11T00:17:29Z",
+      "side": 1,
+      "message": "Thanks for the questions, that\u0027s also 1 question I cared about. Currently it\u0027s only used in translate_prefs https://cs.chromium.org/search/?q\u003dCanBeAcceptLanguage\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI asked some people who work on \"accept language\" about the possibilities of language code format. One answer is we does not support \"en-us\". And based its original logic, \"zh-Hant\" is not supported either. So I just kept the same logic. \n\nIf you think there are some cases missing, I\u0027d like to fix them.",
+      "parentUuid": "2f4fcb6a_69b153a6",
       "range": {
         "startLine": 78,
         "startChar": 2,
