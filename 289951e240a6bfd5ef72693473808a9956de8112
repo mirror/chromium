@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cee18f7_bf3c1a63",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb8f8cd_a6185ae0",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fb0086d_6b4d068c",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a8dd92ad_5f50e2e6",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb0086d_6b4d068c",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68cd2784_32de0707",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "aeaa1936_ece0199c",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68cd2784_32de0707",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27d9168d_86e36fda",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7af90e1_d86bdb57",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done (sort of). Now there is only a single PostTask for Read() and Write().",
+      "parentUuid": "27d9168d_86e36fda",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "0be65bf3_bd1f3df1",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05786b02_e41dbe15",
+      "range": {
+        "startLine": 152,
+        "startChar": 37,
+        "endLine": 152,
+        "endChar": 48
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e85284_7fd82873",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -119,6 +221,30 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c164609_0b77d989",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e85284_7fd82873",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 18
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "d228a064_d68d6101",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8fa088_9d6b9fa5",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 24
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb3060a_5042f02c",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -159,6 +309,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77329b80_c95c0bdd",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "It\u0027s a bug. The second simultaneous call to Read() will call this to report the error, which will reset the state. Not good. Fixed.",
+      "parentUuid": "bfb3060a_5042f02c",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,48 @@
     },
     {
       "key": {
+        "uuid": "05bc6d84_1844df58",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Added TODO in the .h file.",
+      "parentUuid": "cf42003e_a57c2fdf",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31aa5c81_911e0634",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8684d21f_118b78fa",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d0aa05c_248f2e49",
         "filename": "media/mojo/services/mojo_cdm_file_io.cc",
         "patchSetId": 1
@@ -216,6 +426,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798971d6_114f55dd",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Now only 1 PostTask() call for Open/Read/Write.",
+      "parentUuid": "7d0aa05c_248f2e49",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "2eb70685_a13ce270",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd997bc_74c40f57",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cafbb2a2_09a69a84",
         "filename": "media/mojo/services/mojo_cdm_file_io.h",
         "patchSetId": 1
@@ -250,6 +496,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba7d6b4_dbc1769d",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "I think that if Read() fails the CDM could call Write() to replace the contents. However, it would be up to the CDM to decide.",
+      "parentUuid": "cafbb2a2_09a69a84",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "76fb107a_fc9a2de2",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Actually, |file_name_| is mostly used for debugging purposes. Done.",
+      "parentUuid": "194d6e74_0858f196",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 25
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d21bfc9c_01fa72fb",
         "filename": "media/mojo/services/mojo_cdm_helper.cc",
         "patchSetId": 1
@@ -290,6 +578,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbc5641_8d6ccd11",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done. Makes testing harder as now a CdmStorage object is required, but can be faked easily.",
+      "parentUuid": "d21bfc9c_01fa72fb",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "685fa4b6_f54eec3c",
+        "filename": "media/mojo/services/mojo_cdm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "mojo::InterfacePtr::operator bool() returns is_bound(), so switched to checking encountered_error().\n\nAdded comment in the header.\n\nOpened http://crbug.com/773860 for the additional unit tests.",
+      "parentUuid": "7035eacc_710f7d2e",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 33
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336800ac_07c02f13",
         "filename": "media/mojo/services/mojo_cdm_helper.h",
         "patchSetId": 1
@@ -330,6 +660,24 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247c4493_c0422a27",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "336800ac_07c02f13",
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -353,6 +701,30 @@
       "revId": "289951e240a6bfd5ef72693473808a9956de8112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2137593_02490e27",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T22:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e248803_41f5a4e6",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 35
+      },
+      "revId": "289951e240a6bfd5ef72693473808a9956de8112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
