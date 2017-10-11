@@ -158,7 +158,8 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
-  if (suspended_)
+  // We don't want to continue if we are not in the background at the moment.
+  if (suspended_ || !background_task_)
     return;
 
   service_->GetLogger()->RecordActivity("Dispatcher: Adding action tasks.");
