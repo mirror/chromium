@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cae46f6a_2dc8c43f",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "It\u0027s the existing behavior. We don\u0027t expect anyone to be launching with multiple apps anyway.",
+      "parentUuid": "06e95357_9b8b987c",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 73
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1696ad9e_47273dc8",
         "filename": "extensions/shell/app/shell_help.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T01:18:19Z",
       "side": 1,
       "message": "Nit: constexpr this and above.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008e643a_786624fd",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "constexpr is not necessary here to make this a compile-time constant. And there\u0027s very little usage of\n  \"constexpr char kFoo[] \u003d\"\nor the more redundant\n  \"constexpr const char kFoo[] \u003d\"\nin the code base.",
+      "parentUuid": "1696ad9e_47273dc8",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f71b67dc_03e5b70e",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409a19bd_f9eaec19",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bcb8019_bf72f0f5",
         "filename": "extensions/shell/app/shell_help.cc",
         "patchSetId": 2
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e84dce36_5062cfd0",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bcb8019_bf72f0f5",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063d0bd6_d0af3804",
         "filename": "extensions/shell/app/shell_main_delegate.cc",
         "patchSetId": 2
@@ -161,6 +257,30 @@
       "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9795e7_37976718",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063d0bd6_d0af3804",
+      "range": {
+        "startLine": 128,
+        "startChar": 49,
+        "endLine": 128,
+        "endChar": 50
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +327,30 @@
       "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68fcad7_2295fbe6",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T20:38:01Z",
+      "side": 1,
+      "message": "Ack. I\u0027m following the example in chrome_main_delegate.cc, and will also do so for HandleVersionSwitch().",
+      "parentUuid": "4d1d144b_931aa063",
+      "range": {
+        "startLine": 151,
+        "startChar": 6,
+        "endLine": 151,
+        "endChar": 36
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
