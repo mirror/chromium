@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
@@ -34,11 +35,16 @@ class WebServiceWorkerImpl;
 // corresponding ServiceWorkerRegistrationHandle doesn't go away in the browser
 // process while the ServiceWorkerRegistration object is alive.
 class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
-    : public blink::WebServiceWorkerRegistration,
+    : public blink::mojom::ServiceWorkerRegistrationObject,
+      public blink::WebServiceWorkerRegistration,
       public base::RefCounted<WebServiceWorkerRegistrationImpl> {
  public:
   explicit WebServiceWorkerRegistrationImpl(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info);
+
+  // Rebind |binding_| for the sake of the Mojo connection refreshment.
+  void RefreshBinding(
+      blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest request);
 
   void SetInstalling(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
   void SetWaiting(const scoped_refptr<WebServiceWorkerImpl>& service_worker);
@@ -103,6 +109,16 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
 
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info_;
   blink::WebServiceWorkerRegistrationProxy* proxy_;
+
+  // This keeps the Mojo binding to serve its other Mojo endpoint(i.e. the
+  // caller end) held by the content::ServiceWorkerRegistrationHandle in the
+  // browser process. Initially |binding_| is bound with |info->request| by the
+  // constructor, later if another Mojo bind request to the same registration
+  // object is passed from the browser (e.g.
+  // WebServiceWorkerProviderImpl::OnDidGetRegistration()), |binding_| is
+  // refreshed with the new connection by RefreshBinding().
+  mojo::AssociatedBinding<blink::mojom::ServiceWorkerRegistrationObject>
+      binding_;
 
   std::vector<QueuedTask> queued_tasks_;
 

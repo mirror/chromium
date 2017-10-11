@@ -52,14 +52,22 @@ WebServiceWorkerRegistrationImpl::QueuedTask::~QueuedTask() {}
 
 WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info)
-    : info_(std::move(info)), proxy_(nullptr) {
+    : info_(std::move(info)), proxy_(nullptr), binding_(this) {
   DCHECK(info_);
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
             info_->handle_id);
+  binding_.Bind(std::move(info_->request));
+
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
   dispatcher->AddServiceWorkerRegistration(info_->handle_id, this);
+}
+
+void WebServiceWorkerRegistrationImpl::RefreshBinding(
+    blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest request) {
+  binding_.Close();
+  binding_.Bind(std::move(request));
 }
 
 void WebServiceWorkerRegistrationImpl::SetInstalling(

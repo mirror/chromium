@@ -242,9 +242,12 @@ scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerDispatcher::GetOrCreateRegistration(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
     const ServiceWorkerVersionAttributes& attrs) {
+  DCHECK(info->request.is_pending());
   RegistrationObjectMap::iterator found = registrations_.find(info->handle_id);
-  if (found != registrations_.end())
+  if (found != registrations_.end()) {
+    found->second->RefreshBinding(std::move(info->request));
     return found->second;
+  }
 
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration to add itself into |registrations_|.
@@ -267,6 +270,7 @@ scoped_refptr<WebServiceWorkerRegistrationImpl>
 ServiceWorkerDispatcher::GetOrAdoptRegistration(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
     const ServiceWorkerVersionAttributes& attrs) {
+  DCHECK(info->request.is_pending());
   int32_t registration_handle_id = info->handle_id;
 
   std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
@@ -278,8 +282,10 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
 
   RegistrationObjectMap::iterator found =
       registrations_.find(registration_handle_id);
-  if (found != registrations_.end())
+  if (found != registrations_.end()) {
+    found->second->RefreshBinding(std::move(info->request));
     return found->second;
+  }
 
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration to add itself into |registrations_|.
