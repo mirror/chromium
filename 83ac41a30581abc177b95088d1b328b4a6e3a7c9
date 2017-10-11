@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f8c0f4_b2f5f84c",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-11T14:13:42Z",
+      "side": 1,
+      "message": "nit: progress (since fetches is plural)",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "83ac41a30581abc177b95088d1b328b4a6e3a7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
