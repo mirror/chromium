@@ -37,7 +37,8 @@ interface EmbeddedWorkerInstanceClient {
               ServiceWorkerInstalledScriptsInfo? installed_scripts_info,
               associated EmbeddedWorkerInstanceHost instance_host,
               ServiceWorkerProviderInfoForStartWorker provider_info,
-              blink.mojom.WorkerContentSettingsProxy content_settings_proxy);
+              blink.mojom.WorkerContentSettingsProxy content_settings_proxy,
+              service_manager.mojom.InterfaceProvider interface_provider);
   // The response is sent back via EmbeddedWorkerInstanceHost.OnStopped().
   StopWorker();
   ResumeAfterDownload();
