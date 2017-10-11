@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6493a6bd_ef7ec14e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T19:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10bcc461_261abd12",
+      "revId": "2863644c97ac3000c9c01f33be7ee43f6d84b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d639114e_440bc849",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 3
