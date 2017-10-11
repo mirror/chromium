@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "24d67a7c_c6526c6c",
+        "filename": "content/network/network_context.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3500d02b_c7770cce",
+      "range": {
+        "startLine": 145,
+        "startChar": 18,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12edc057_52698ae8",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -106,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "dffd8f05_e4648dd9",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "I switched to the model that we discussed on VC.",
+      "parentUuid": "542d2918_53af21c6",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b480b9_801fb16d",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -126,6 +174,30 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c39c5c_3cf06313",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "I intend this to be a combination of IsCanonical() and security checks. I\u0027d rather do this in a focused follow-up, with solid test coverage.",
+      "parentUuid": "03b480b9_801fb16d",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "17c55b9a_80835e9e",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "I couldn\u0027t think of a good reason to give the renderer access to other priorities.",
+      "parentUuid": "48929bb1_f0624074",
+      "range": {
+        "startLine": 137,
+        "startChar": 22,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48df680_de1bd7a0",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -175,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "bde980aa_3bda5a8b",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "I think this is needed to set __Secure- cookies. I added a TODO to compute the right value for this. I\u0027d rather do it in a follow-up, when we\u0027ll have solid coverage via WPT tests.",
+      "parentUuid": "c48df680_de1bd7a0",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4469779_d095d3b5",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -195,6 +315,30 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96dc09_7db7f64e",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T20:30:08Z",
+      "side": 1,
+      "message": "Agreed. We can add the ability to change the cookie later.",
+      "parentUuid": "e4469779_d095d3b5",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
