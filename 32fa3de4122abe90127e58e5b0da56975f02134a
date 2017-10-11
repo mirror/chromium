@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3feb9fa_ed5f5032",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-11T15:32:10Z",
+      "side": 1,
+      "message": "This constant seems like it is no longer used. Remove it?",
+      "revId": "32fa3de4122abe90127e58e5b0da56975f02134a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b103d9_915568a9",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-11T15:32:10Z",
+      "side": 1,
+      "message": "Won\u0027t this cause developer builds to crash? For developer builds, the version name is \"Developer Build\"",
+      "revId": "32fa3de4122abe90127e58e5b0da56975f02134a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
