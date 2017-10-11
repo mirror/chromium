@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf6ab12_2d567c16",
+        "filename": "chrome/browser/extensions/chrome_app_api_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-11T18:12:07Z",
+      "side": 1,
+      "message": "Here, we have a non-app URL embedding an app URL in a subframe.  With --site-per-process, that subframe will go into the app\u0027s process (whether or not that\u0027s desired is a separate grey-area question :) ).  The subframe wasn’t activated before, but will be now, causing the difference here.",
+      "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0c3d8d_434032b1",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-11T18:12:07Z",
+      "side": 1,
+      "message": "It\u0027s possible now that an extension background page would activate the extension, then an extension OOPIF would also try to activate the same extension.  ExtensionApiTest.ActiveTab ran into trouble because of this.  Proceeding with the second activation here resulted in trouble later on - there was a duplicate WebSecurityPolicy::AddOriginAccessWhitelistEntry call, which added an extra entry, but then if we send ExtensionMsg_ClearTabSpecificPermissions, that only clears one of the entries, leaving the other one around.  My fix is to just ensure that we\u0027d only ever attempt to activate an extension once.",
+      "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
