@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e812aa1_6c5a3a00",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Tried that, but there are 4 of them and it starts getting verbose and confusing. I rather moved this to header, so it\u0027s immediately evident this is just a short-cut to SetRenderer()",
+      "parentUuid": "87a5c3a5_3aae2797",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbef3459_cba2cfdf",
         "filename": "content/browser/devtools/devtools_session.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T17:08:05Z",
       "side": 1,
       "message": "Looks like GetProcess() never changes, so it\u0027s safe to update it only when frame host changes, right?",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3f2f59_71ca2a63",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "fbef3459_cba2cfdf",
       "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e9883e24_c3f2fb23",
+        "filename": "content/browser/devtools/devtools_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0847fa4_9b861ba3",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28ae57a6_1a9ec9f6",
         "filename": "content/browser/devtools/devtools_session.h",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d5db7a40_cd9764f6",
+        "filename": "content/browser/devtools/devtools_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ae57a6_1a9ec9f6",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d927636e_a29a14cd",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a7ee5a_85a040ed",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d927636e_a29a14cd",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4f8a9d57_ed385c26",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab1065e_fd1989ca",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "010f2d1d_8c79b67a",
         "filename": "content/browser/devtools/protocol/network_handler.h",
         "patchSetId": 2
@@ -142,6 +268,30 @@
       "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3455369_c3cda86b",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010f2d1d_8c79b67a",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "44adea2d_ad4cbd31",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48945792_1eabb220",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db80d40c_ab6ebb45",
         "filename": "content/browser/devtools/protocol/storage_handler.h",
         "patchSetId": 2
@@ -188,6 +362,30 @@
       "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417a270c_58542e8e",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-11T21:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db80d40c_ab6ebb45",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
