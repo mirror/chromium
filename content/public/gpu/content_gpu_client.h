@@ -13,6 +13,7 @@ namespace gpu {
 struct GpuFeatureInfo;
 struct GPUInfo;
 struct GpuPreferences;
+class ProtectedGpuMemoryBufferManager;
 class SyncPointManager;
 }
 
@@ -38,6 +39,10 @@ class CONTENT_EXPORT ContentGpuClient {
   // Allows client to supply a SyncPointManager instance instead of having
   // content internally create one.
   virtual gpu::SyncPointManager* GetSyncPointManager();
+
+  // Allows client to supply a ProtectedGpuMemoryBufferManager instance.
+  virtual gpu::ProtectedGpuMemoryBufferManager*
+  GetProtectedGpuMemoryBufferManager();
 
   // Allows client to re-use GPUInfo and GpuFeatureInfo if already computed.
   virtual const gpu::GPUInfo* GetGPUInfo();

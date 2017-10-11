@@ -16,8 +16,8 @@
 #include "ui/gfx/gpu_memory_buffer.h"
 
 namespace gpu {
-
 class ImageFactory;
+class ProtectedGpuMemoryBufferManager;
 
 class GPU_EXPORT GpuMemoryBufferFactory {
  public:
@@ -25,7 +25,8 @@ class GPU_EXPORT GpuMemoryBufferFactory {
 
   // Creates a new factory instance for native GPU memory buffers. Returns null
   // if native buffers are not supported.
-  static std::unique_ptr<GpuMemoryBufferFactory> CreateNativeType();
+  static std::unique_ptr<GpuMemoryBufferFactory> CreateNativeType(
+      ProtectedGpuMemoryBufferManager* protected_buffer_manager);
 
   // Creates a new GPU memory buffer instance. A valid handle is returned on
   // success. It can be called on any thread.
