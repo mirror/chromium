@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091a271c_fcca7c46",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-11T04:41:16Z",
+      "side": 1,
+      "message": "This is unsatisfying because at the top of this method is:\n  DCHECK(!surface_)\n\nOr, in other words, Initialize() isn\u0027t supposed to be called twice -- unless maybe it\u0027s destroyed in between? Please investigate further why this was happening.",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264558cc_407dfc1f",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-11T04:41:16Z",
+      "side": 1,
+      "message": "DCHECK(condition) followed by if(condition) -- or in this case the std::min() call -- is an anti-pattern. Either we should rely on the DCHECK and not add the min() call or we should upgrade the DCHECK to a CHECK.",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
