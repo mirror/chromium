@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1ac152c7_0df17976",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-11T21:36:31Z",
+      "side": 1,
+      "message": "I think there is a misunderstanding here. A buildflag is just a more robust way to specify defines, such that they fail to compile if you have incorrect deps.\n\nSee build/buildflag_header.gni for documentation, media/BUILD.gn for an example.",
+      "parentUuid": "180bf33d_982179d1",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "2547e9be122ae84e835b35dec271b01adb0c8b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8b0770_3a3adf0d",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 19
