@@ -16,6 +16,24 @@
       "revId": "3efc3a9a23496fc280fa335002e42a62cd28e7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24da6ce1_76f6e9b9",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-11T19:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f990bd97_99033e58",
+      "revId": "3efc3a9a23496fc280fa335002e42a62cd28e7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
