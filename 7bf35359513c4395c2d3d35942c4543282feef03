@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "f7bb9dfe_4910f181",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T00:59:22Z",
+      "side": 1,
+      "message": "I would assume so since it doesn\u0027t do a lookup again? The call in RemoveProviderClient() could be removed and just call erase() directly. The other ones look like they are in DCHECK() and are fine.",
+      "parentUuid": "db47a7ff_57396573",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ac4805_00d450f3",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 12
