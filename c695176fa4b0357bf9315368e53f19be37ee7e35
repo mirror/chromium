@@ -46,6 +46,30 @@
       "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a205b1e_903df3c6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-11T01:17:22Z",
+      "side": 1,
+      "message": "dpapad@ pointed me at calamity@ who said we should probably use a large z-index maybe 100 in case another item has a z-index. Also, as long as there\u0027s no weird interaction w/ dialogs it should be good. AFAICT, no matter how big your z-index is, you\u0027ll always be underneath a dialog which should be alright. Someone who needs to have a toast and a dialog at the same time will need to put the toast inside the dialog.\n\nUnless there\u0027s a reason to not want a toast above everything else, we should put it in the cr-toast and z-index: 100; seems reasonable. WDYT?",
+      "parentUuid": "7326558b_100fd4a1",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
