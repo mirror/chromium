@@ -16,6 +16,41 @@
       "revId": "58922e4abacab58cebcb3eaf2cb3d3a8253d32eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfab0ab9_4dd4f1d4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T06:23:38Z",
+      "side": 1,
+      "message": "Sorry for confusion. \n\nSince |StartingSelection()| holds selection for redo, it may be changed when\nthis function is called.\n\nSo, we should not check |StartingSelection().IsValidFor(GetDocument())|.",
+      "parentUuid": "5ee4899a_a123c9c2",
+      "revId": "58922e4abacab58cebcb3eaf2cb3d3a8253d32eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89f7480_9e829899",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T06:23:38Z",
+      "side": 1,
+      "message": "Could you add a comment about |bool| return value?",
+      "revId": "58922e4abacab58cebcb3eaf2cb3d3a8253d32eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
