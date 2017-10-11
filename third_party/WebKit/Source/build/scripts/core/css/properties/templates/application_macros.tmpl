@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
 {% macro set_value(property) %}
   {% if property.svg %}
 state.Style()->AccessSVGStyle().{{property.setter}}
@@ -11,6 +12,7 @@ state.GetFontBuilder().{{property.setter}}
 state.Style()->{{property.setter}}
   {%- endif %}
 {% endmacro %}
+
 
 {% macro convert_and_set_value(property) %}
   {% if property.converter %}
@@ -25,4 +27,124 @@ state.Style()->{{property.setter}}
 
 {% macro set_is_inherited(property) %}
 state.Style()->{{property.is_inherited_setter}}
+{% endmacro %}
+
+
+{% macro animation_or_transition_apply_initial_body(type, attribute) %}
+  {% set vector = attribute + "List()" %}
+    CSS{{type}}Data& data = state.Style()->Access{{type}}s();
+    data.{{vector}}.clear();
+    data.{{vector}}.push_back(CSS{{type}}Data::Initial{{attribute}}());
+{% endmacro %}
+
+
+{% macro animation_or_transition_apply_inherit_body(type, attribute) %}
+  {% set vector = attribute + "List()" %}
+    const CSS{{type}}Data* parentData = state.ParentStyle()->{{type}}s();
+    if (!parentData)
+      applyInitial(state);
+    else
+      state.Style()->Access{{type}}s().{{vector}} = parentData->{{vector}};
+{% endmacro %}
+
+
+{% macro animation_or_transition_apply_value_body(type, attribute) %}
+  {% set vector = attribute + "List()" %}
+    CSS{{type}}Data& data = state.Style()->Access{{type}}s();
+    data.{{vector}}.clear();
+    for (auto& listValue : ToCSSValueList(value))
+      data.{{vector}}.push_back(CSSToStyleMap::MapAnimation{{attribute}}(*listValue));
+{% endmacro %}
+
+
+{#  #}
+{% macro apply_initial_body(property) %}
+{% if property.api_apply_functions_template == "animation" %}
+{{ animation_or_transition_apply_initial_body("Animation",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "transition" %}
+{{ animation_or_transition_apply_initial_body("Transition",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "auto" %}
+auto
+{% elif property.api_apply_functions_template == "border-image" %}
+border-image
+{% elif property.api_apply_functions_template == "color" %}
+color
+{% elif property.api_apply_functions_template == "counter" %}
+counter
+{% elif property.api_apply_functions_template == "fill-layer" %}
+fill-layer
+{% elif property.api_apply_functions_template == "grid" %}
+grid
+{% elif property.api_apply_functions_template == "svg-paint" %}
+svg-paint
+{% else %}
+  {% if property.svg %}
+{{set_value(property)}}(SVGComputedStyle::{{property.initial}}());
+  {% elif property.font %}
+{{set_value(property)}}(FontBuilder::{{property.initial}}());
+  {% else %}
+{{set_value(property)}}(ComputedStyle::{{property.initial}}());
+  {% endif %}
+  {% if property.independent %}
+state.Style()->{{property.is_inherited_setter}}(false);
+  {% endif %}
+{% endif %}
+{% endmacro %}
+
+
+{#  #}
+{% macro apply_inherit_body(property) %}
+{% if property.api_apply_functions_template == "animation" %}
+{{ animation_or_transition_apply_inherit_body("Animation",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "transition" %}
+{{ animation_or_transition_apply_inherit_body("Transition",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "auto" %}
+
+{% elif property.api_apply_functions_template == "border-image" %}
+{% elif property.api_apply_functions_template == "color" %}
+{% elif property.api_apply_functions_template == "counter" %}
+{% elif property.api_apply_functions_template == "fill-layer" %}
+{% elif property.api_apply_functions_template == "grid" %}
+{% elif property.api_apply_functions_template == "svg-paint" %}
+{% else %}
+  {% if property.svg %}
+{{set_value(property)}}(state.ParentStyle()->SvgStyle().{{property.getter}}());
+  {% elif property.font %}
+{{set_value(property)}}(state.ParentFontDescription().{{property.getter}}());
+  {% else %}
+{{set_value(property)}}(state.ParentStyle()->{{property.getter}}());
+  {% endif %}
+  {% if property.independent %}
+state.Style()->{{property.is_inherited_setter}}(true);
+  {% endif %}
+{% endif %}
+{% endmacro %}
+
+
+{#  #}
+{% macro apply_value_body(property) %}
+{% if property.api_apply_functions_template == "animation" %}
+{{ animation_or_transition_apply_value_body("Animation",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "transition" %}
+{{ animation_or_transition_apply_value_body("Transition",
+      property.name_for_methods.replace("Animation", "")) }}
+{% elif property.api_apply_functions_template == "auto" %}
+
+{% elif property.api_apply_functions_template == "border-image" %}
+{% elif property.api_apply_functions_template == "color" %}
+{% elif property.api_apply_functions_template == "counter" %}
+{% elif property.api_apply_functions_template == "fill-layer" %}
+{% elif property.api_apply_functions_template == "grid" %}
+{% elif property.api_apply_functions_template == "svg-paint" %}
+{% else %}
+{{convert_and_set_value(property)}}
+  {% if property.independent %}
+state.Style()->{{property.is_inherited_setter}}(false);
+  {% endif %}
+{% endif %}
 {% endmacro %}
