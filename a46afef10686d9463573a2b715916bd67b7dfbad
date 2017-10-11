@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "635996a8_ce216f52",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/double_click_after_last_cell.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T18:30:19Z",
+      "side": 1,
+      "message": "Off topic:\n\nWe can\u0027t distinguish DIV@0 and \"bar\"@0\n\nShould we introduce syntax for it?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "a46afef10686d9463573a2b715916bd67b7dfbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
