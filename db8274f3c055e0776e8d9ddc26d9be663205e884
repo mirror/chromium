@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "df3d1963_f52954f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T03:24:49Z",
+      "side": 1,
+      "message": "Maybe also having a link to your larger WIP somewhere might be useful for additional reviewers",
+      "parentUuid": "3660f4b6_9136991c",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc372a27_278a0bd0",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T03:24:49Z",
+      "side": 1,
+      "message": "This is also an implementation of URLLoaderThrottle, this should take the new param too, right?",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374afb7e_7070a325",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
         "patchSetId": 1
@@ -30,6 +65,24 @@
       "writtenOn": "2017-10-10T16:38:05Z",
       "side": 1,
       "message": "Hrm. Where does this get called? It seems unfortunate that we\u0027d ever potentially handle a response without having header information.\n\n---\n\nSkimming through a little bit, I\u0027m not sure that changing `content::ResourceThrottle::WillProcessResponse()`\u0027s signature is reasonable for this patch (though I\u0027m also surprised that they\u0027ve gotten away without passing in data to the handler?). Still, I\u0027d prefer that we not make this a pointer-based API. Instead, how about just constructing an empty `ResourceResponseHead` here and passing it in as a `const ResourceResponseHead\u0026`?",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f437b5_be756e51",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T03:24:49Z",
+      "side": 1,
+      "message": "I slightly prefer the cost ref approach too.",
+      "parentUuid": "374afb7e_7070a325",
       "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
