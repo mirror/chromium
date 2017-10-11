@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adefdf2_9af1266c",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T00:18:28Z",
+      "side": 1,
+      "message": "can we initialize ANGLE for these tests instead? If not, then can we just remove this and handle this in ::AllocateForTesting instead?",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03bfe5b_cc1418dc",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T00:18:28Z",
+      "side": 1,
+      "message": "when can this happen? can we DCHECK instead?",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0008e76f_111b163f",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T00:18:28Z",
+      "side": 1,
+      "message": "please use \"TODO(username):\" and end sentence with period. maybe move above function to make formatting less weird.",
+      "range": {
+        "startLine": 385,
+        "startChar": 14,
+        "endLine": 386,
+        "endChar": 52
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61b0dbe_d26896aa",
+        "filename": "ui/gl/gl_image_dxgi.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T00:18:28Z",
+      "side": 1,
+      "message": "DCHECK or when can this fail?",
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4798f235_7027a507",
+        "filename": "ui/gl/gl_image_dxgi.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T00:18:28Z",
+      "side": 1,
+      "message": "can this take ownership instead to be consistent with other GMB impls like the shared memory version?",
+      "range": {
+        "startLine": 119,
+        "startChar": 35,
+        "endLine": 119,
+        "endChar": 72
+      },
+      "revId": "304a578a49cf3a8d415223c7e89bdc38d0ab106f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
