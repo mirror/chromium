@@ -163,6 +163,11 @@ CrxInstaller::CrxInstaller(base::WeakPtr<ExtensionService> service_weak,
 }
 
 CrxInstaller::~CrxInstaller() {
+  if (VLOG_IS_ON(0) && !installer_callback_.is_null()) {
+    VLOG(0) << "CrxInstaller::installer_callback_ must be executed before the "
+               "destructor is invoked. In some rare cases, this could happen "
+               "if the browser is shutdown when the installer is being queued.";
+  }
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // Ensure |client_| and |install_checker_| data members are destroyed on the
   // UI thread. The |client_| dialog has a weak reference as |this| is its
@@ -176,20 +181,47 @@ void CrxInstaller::InstallCrx(const base::FilePath& source_file) {
 
 void CrxInstaller::InstallCrxFile(const CRXFileInfo& source_file) {
   ExtensionService* service = service_weak_.get();
-  if (!service || service->browser_terminating())
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   NotifyCrxInstallBegin();
 
   source_file_ = source_file.path;
 
-  scoped_refptr<SandboxedUnpacker> unpacker(new SandboxedUnpacker(
+  auto unpacker = base::MakeRefCounted<SandboxedUnpacker>(
       install_source_, creation_flags_, install_directory_,
-      installer_task_runner_.get(), this));
+      installer_task_runner_.get(), this);
 
   if (!installer_task_runner_->PostTask(
           FROM_HERE, base::BindOnce(&SandboxedUnpacker::StartWithCrx, unpacker,
                                     source_file))) {
+    NOTREACHED();
+  }
+}
+
+void CrxInstaller::InstallUnpackedCrx(const std::string& extension_id,
+                                      const std::string& public_key,
+                                      const base::FilePath& unpacked_dir) {
+  ExtensionService* service = service_weak_.get();
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
+    return;
+  }
+
+  NotifyCrxInstallBegin();
+
+  source_file_ = unpacked_dir;
+
+  auto unpacker = base::MakeRefCounted<SandboxedUnpacker>(
+      install_source_, creation_flags_, install_directory_,
+      installer_task_runner_.get(), this);
+
+  if (!installer_task_runner_->PostTask(
+          FROM_HERE,
+          base::BindOnce(&SandboxedUnpacker::StartWithDirectory, unpacker,
+                         extension_id, public_key, unpacked_dir))) {
     NOTREACHED();
   }
 }
@@ -437,11 +469,11 @@ void CrxInstaller::OnUnpackSuccess(
   extension_ = extension;
   temp_dir_ = temp_dir;
   if (!install_icon.empty())
-    install_icon_.reset(new SkBitmap(install_icon));
+    install_icon_ = std::make_unique<SkBitmap>(install_icon);
 
   if (original_manifest) {
-    original_manifest_.reset(
-        new Manifest(Manifest::INVALID_LOCATION, std::move(original_manifest)));
+    original_manifest_ = std::make_unique<Manifest>(
+        Manifest::INVALID_LOCATION, std::move(original_manifest));
   }
 
   // We don't have to delete the unpack dir explicity since it is a child of
@@ -463,8 +495,10 @@ void CrxInstaller::OnUnpackSuccess(
 void CrxInstaller::CheckInstall() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ExtensionService* service = service_weak_.get();
-  if (!service || service->browser_terminating())
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   // TODO(crbug.com/420147): Move this code to a utility class to avoid
   // duplication of SharedModuleService::CheckImports code.
@@ -595,8 +629,10 @@ void CrxInstaller::OnInstallChecksComplete(PreloadCheck::Errors errors) {
 void CrxInstaller::ConfirmInstall() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ExtensionService* service = service_weak_.get();
-  if (!service || service->browser_terminating())
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   if (KioskModeInfo::IsKioskOnly(extension())) {
     bool in_kiosk_mode = false;
@@ -653,8 +689,10 @@ void CrxInstaller::OnInstallPromptDone(ExtensionInstallPrompt::Result result) {
   // ExtensionInstallPrompt::ShowDialog().
   if (result == ExtensionInstallPrompt::Result::ACCEPTED) {
     ExtensionService* service = service_weak_.get();
-    if (!service || service->browser_terminating())
+    if (!service || service->browser_terminating()) {
+      installer_callback_.Reset();
       return;
+    }
 
     if (update_from_settings_page_) {
       service->GrantPermissionsAndEnableExtension(extension());
@@ -763,8 +801,10 @@ void CrxInstaller::ReportFailureFromFileThread(const CrxInstallError& error) {
 void CrxInstaller::ReportFailureFromUIThread(const CrxInstallError& error) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!service_weak_.get() || service_weak_->browser_terminating())
+  if (!service_weak_.get() || service_weak_->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   content::NotificationService* service =
       content::NotificationService::current();
@@ -809,8 +849,10 @@ void CrxInstaller::ReportSuccessFromFileThread() {
 void CrxInstaller::ReportSuccessFromUIThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!service_weak_.get() || service_weak_->browser_terminating())
+  if (!service_weak_.get() || service_weak_->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   extension()->permissions_data()->BindToCurrentThread();
 
@@ -857,6 +899,13 @@ void CrxInstaller::NotifyCrxInstallComplete(bool success) {
 
   if (success)
     ConfirmReEnable();
+
+  if (!installer_callback_.is_null() &&
+      !BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)
+           ->PostTask(FROM_HERE, base::BindOnce(std::move(installer_callback_),
+                                                success))) {
+    NOTREACHED();
+  }
 }
 
 void CrxInstaller::CleanupTempFiles() {
@@ -884,8 +933,10 @@ void CrxInstaller::CheckUpdateFromSettingsPage() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ExtensionService* service = service_weak_.get();
-  if (!service || service->browser_terminating())
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   if (off_store_install_allow_reason_ != OffStoreInstallAllowedFromSettingsPage)
     return;
@@ -905,8 +956,10 @@ void CrxInstaller::ConfirmReEnable() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   ExtensionService* service = service_weak_.get();
-  if (!service || service->browser_terminating())
+  if (!service || service->browser_terminating()) {
+    installer_callback_.Reset();
     return;
+  }
 
   if (!update_from_settings_page_)
     return;
