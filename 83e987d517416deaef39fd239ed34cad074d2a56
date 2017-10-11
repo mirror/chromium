@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "99a4182c_49c3ec5f",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4532ac68_15f02f76",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83afa2c8_3bd2e718",
         "filename": "ash/message_center/message_list_view.cc",
         "patchSetId": 4
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "d64121ef_0103a9d9",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83afa2c8_3bd2e718",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452221a7_195406d3",
         "filename": "ash/message_center/message_list_view.cc",
         "patchSetId": 4
@@ -73,6 +109,24 @@
       "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506f637f_699cab89",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:42:26Z",
+      "side": 1,
+      "message": "Good catch. As I investigated, during clearing-all, the code path shouldn\u0027t reach here. So I update the DoUpdateIfPossible() and make this method not being called.",
+      "parentUuid": "452221a7_195406d3",
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +150,30 @@
       "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcef618_84db2449",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cfdaeab_e5188db9",
+      "range": {
+        "startLine": 523,
+        "startChar": 7,
+        "endLine": 523,
+        "endChar": 17
+      },
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
