@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c031993_7d12e8b4",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views_mac_browser.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T23:00:21Z",
+      "side": 1,
+      "message": "Do we need this file at all?\n\nIt seems once the functions in chrome/browser/ui/views/browser_dialogs_views.cc are guarded with !mac, we can just use the implementations already provided by task_manager_mac.mm\n\nExcept we just need to move the two methods,\n\n task_manager::TaskManagerTableModel* ShowTaskManagerViews(Browser* browser) {\n   return task_manager::TaskManagerView::Show(browser);\n }\n\n void HideTaskManagerViews() {\n   task_manager::TaskManagerView::Hide();\n }\n\n\ncurrently in browser_dialogs_views_mac.cc into chrome/browser/ui/views/task_manager_view.cc",
+      "revId": "7575c06e7d93ac45cb14c63f9b72531ba5894701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
