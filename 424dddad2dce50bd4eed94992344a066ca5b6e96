@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "df4890cd_04758adf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:50:29Z",
+      "side": 1,
+      "message": "ARC",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db0ae09_23ebb79d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:50:29Z",
+      "side": 1,
+      "message": "We shouldn\u0027t expose internal URLs. Replace this with a short description of what this change does.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 111
+      },
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cd29dd3_936a9857",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 6
@@ -30,6 +76,30 @@
       "writtenOn": "2017-10-11T10:54:11Z",
       "side": 1,
       "message": "nit: s/++// We use ARC in chrome code. Ditto for below.",
+      "range": {
+        "startLine": 458,
+        "startChar": 5,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63906265_1c584414",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:50:29Z",
+      "side": 1,
+      "message": "Also, s/ARC container/ARC/g",
+      "parentUuid": "20bcc59f_36d0674b",
       "range": {
         "startLine": 458,
         "startChar": 5,
