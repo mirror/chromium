@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c682da6_5f83dce2",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-11T14:38:33Z",
+      "side": 1,
+      "message": "\u003e Should this also have \u0027role\u003d\"link\"\u0027? (What does that do?)\n\nWell, it\u0027s supposed to make it possible to tab to an element like a link:\nhttps://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_link_role\n\nBut it was possible to tab to the notifier element without it, and it doesn\u0027t make sense that it would really be necessary for buttons, so I\u0027ve removed it.",
+      "parentUuid": "6c1aba19_8dde7e0b",
+      "range": {
+        "startLine": 39,
+        "startChar": 44,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "f4937c0006b5db3e741a1e4e92f5b29d26828e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32c011fc_8dfd52ae",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
