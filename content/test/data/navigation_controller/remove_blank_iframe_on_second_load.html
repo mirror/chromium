@@ -2,6 +2,10 @@
 <head>
 <script>
 function removeFrame() {
+  if (!localStorage.getItem('flag')) {
+    localStorage.setItem('flag', true);
+    return;
+  }
   var f = document.getElementById("frame1");
   document.body.removeChild(f);
 }
