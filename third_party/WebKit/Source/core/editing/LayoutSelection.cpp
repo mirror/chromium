@@ -37,9 +37,9 @@
 namespace blink {
 
 SelectionPaintRange::SelectionPaintRange(LayoutObject* start_layout_object,
-                                         int start_offset,
+                                         base::Optional<int> start_offset,
                                          LayoutObject* end_layout_object,
-                                         int end_offset)
+                                         base::Optional<int> end_offset)
     : start_layout_object_(start_layout_object),
       start_offset_(start_offset),
       end_layout_object_(end_layout_object),
@@ -57,7 +57,7 @@ LayoutObject* SelectionPaintRange::StartLayoutObject() const {
   return start_layout_object_;
 }
 
-int SelectionPaintRange::StartOffset() const {
+base::Optional<int> SelectionPaintRange::StartOffset() const {
   DCHECK(!IsNull());
   return start_offset_;
 }
@@ -67,7 +67,7 @@ LayoutObject* SelectionPaintRange::EndLayoutObject() const {
   return end_layout_object_;
 }
 
-int SelectionPaintRange::EndOffset() const {
+base::Optional<int> SelectionPaintRange::EndOffset() const {
   DCHECK(!IsNull());
   return end_offset_;
 }
@@ -337,22 +337,24 @@ void LayoutSelection::ClearSelection() {
   paint_range_ = SelectionPaintRange();
 }
 
-static int ComputeStartOffset(const LayoutObject& layout_object,
-                              const PositionInFlatTree& position) {
+static base::Optional<int> ComputeStartOffset(
+    const LayoutObject& layout_object,
+    const PositionInFlatTree& position) {
   Node* const layout_node = layout_object.GetNode();
   if (!layout_node || !layout_node->IsTextNode())
-    return 0;
+    return {};
 
   if (layout_node == position.AnchorNode())
     return position.OffsetInContainerNode();
   return 0;
 }
 
-static int ComputeEndOffset(const LayoutObject& layout_object,
-                            const PositionInFlatTree& position) {
+static base::Optional<int> ComputeEndOffset(
+    const LayoutObject& layout_object,
+    const PositionInFlatTree& position) {
   Node* const layout_node = layout_object.GetNode();
   if (!layout_node || !layout_node->IsTextNode())
-    return 0;
+    return {};
 
   if (layout_node == position.AnchorNode())
     return position.OffsetInContainerNode();
@@ -388,17 +390,22 @@ static void MarkSelectedInside(SelectedLayoutObjects* invalidation_set,
 static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
     SelectedLayoutObjects invalidation_set,
     LayoutObject* layout_object,
-    int start_offset,
-    int end_offset) {
+    base::Optional<int> start_offset,
+    base::Optional<int> end_offset) {
   if (!layout_object->IsText()) {
+    DCHECK(!start_offset.has_value());
+    DCHECK(!end_offset.has_value());
     MarkSelected(&invalidation_set, layout_object,
                  SelectionState::kStartAndEnd);
-    return {{layout_object, 0, layout_object, 0}, std::move(invalidation_set)};
+    return {{layout_object, {}, layout_object, {}},
+            std::move(invalidation_set)};
   }
 
-  DCHECK_GE(start_offset, 0);
-  DCHECK_GE(end_offset, start_offset);
-  if (start_offset == end_offset)
+  DCHECK(start_offset.has_value());
+  DCHECK(end_offset.has_value());
+  DCHECK_GE(start_offset.value(), 0);
+  DCHECK_GE(end_offset.value(), start_offset.value());
+  if (start_offset.value() == end_offset.value())
     return {};
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
@@ -408,8 +415,8 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
     return {{layout_object, start_offset, layout_object, end_offset},
             std::move(invalidation_set)};
   }
-  const unsigned unsigned_start = static_cast<unsigned>(start_offset);
-  const unsigned unsigned_end = static_cast<unsigned>(end_offset);
+  const unsigned unsigned_start = static_cast<unsigned>(start_offset.value());
+  const unsigned unsigned_end = static_cast<unsigned>(end_offset.value());
   LayoutTextFragment* const remaining_part =
       ToLayoutTextFragment(layout_object);
   if (unsigned_start >= remaining_part->Start()) {
@@ -460,15 +467,16 @@ struct LayoutObjectAndOffset {
 
 LayoutObjectAndOffset MarkStart(SelectedLayoutObjects* invalidation_set,
                                 LayoutObject* start_layout_object,
-                                int start_offset) {
+                                base::Optional<int> start_offset) {
   if (!start_layout_object->IsText()) {
-    DCHECK_EQ(start_offset, 0);
+    DCHECK(!start_offset.has_value());
     MarkSelected(invalidation_set, start_layout_object, SelectionState::kStart);
     return LayoutObjectAndOffset(start_layout_object);
   }
 
-  DCHECK_GE(start_offset, 0);
-  const unsigned unsigned_offset = static_cast<unsigned>(start_offset);
+  DCHECK(start_offset.has_value());
+  DCHECK_GE(start_offset.value(), 0);
+  const unsigned unsigned_offset = static_cast<unsigned>(start_offset.value());
   LayoutText* const start_layout_text = ToLayoutText(start_layout_object);
   if (unsigned_offset >= start_layout_text->TextStartOffset()) {
     // |start_offset| is within |start_layout_object| whether it has first
@@ -486,20 +494,21 @@ LayoutObjectAndOffset MarkStart(SelectedLayoutObjects* invalidation_set,
   DCHECK(first_letter_part);
   MarkSelected(invalidation_set, first_letter_part, SelectionState::kStart);
   MarkSelected(invalidation_set, start_layout_text, SelectionState::kInside);
-  return {first_letter_part, start_offset};
+  return {first_letter_part, start_offset.value()};
 }
 
 LayoutObjectAndOffset MarkEnd(SelectedLayoutObjects* invalidation_set,
                               LayoutObject* end_layout_object,
-                              int end_offset) {
+                              base::Optional<int> end_offset) {
   if (!end_layout_object->IsText()) {
-    DCHECK_EQ(end_offset, 0);
+    DCHECK(!end_offset.has_value());
     MarkSelected(invalidation_set, end_layout_object, SelectionState::kEnd);
     return LayoutObjectAndOffset(end_layout_object);
   }
 
-  DCHECK_GE(end_offset, 0);
-  const unsigned unsigned_offset = static_cast<unsigned>(end_offset);
+  DCHECK(end_offset.has_value());
+  DCHECK_GE(end_offset.value(), 0);
+  const unsigned unsigned_offset = static_cast<unsigned>(end_offset.value());
   LayoutText* const end_layout_text = ToLayoutText(end_layout_object);
   if (unsigned_offset >= end_layout_text->TextStartOffset()) {
     // |end_offset| is within |end_layout_object| whether it has first
@@ -521,15 +530,15 @@ LayoutObjectAndOffset MarkEnd(SelectedLayoutObjects* invalidation_set,
       FirstLetterPartFor(end_layout_object);
   DCHECK(first_letter_part);
   MarkSelected(invalidation_set, first_letter_part, SelectionState::kEnd);
-  return {first_letter_part, end_offset};
+  return {first_letter_part, end_offset.value()};
 }
 
 static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInTwoNodes(
     SelectedLayoutObjects invalidation_set,
     LayoutObject* start_layout_object,
-    int start_offset,
+    base::Optional<int> start_offset,
     LayoutObject* end_layout_object,
-    int end_offset) {
+    base::Optional<int> end_offset) {
   const LayoutObjectAndOffset& start =
       MarkStart(&invalidation_set, start_layout_object, start_offset);
   const LayoutObjectAndOffset& end =
@@ -581,11 +590,10 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
     return {};
   }
 
-  // Compute offset if start/end is text.
-  // TODO(yoichio): Use Option<int> and return it in SelectionState()/End().
-  const int start_offset = ComputeStartOffset(
+  // Compute offset. It has value iff start/end is text.
+  const base::Optional<int> start_offset = ComputeStartOffset(
       *start_layout_object, selection.StartPosition().ToOffsetInAnchor());
-  const int end_offset = ComputeEndOffset(
+  const base::Optional<int> end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
 
   if (start_layout_object == end_layout_object) {
