@@ -84,7 +84,7 @@ bool IsItemRegistered(ValueStore* store, const std::string& item_id) {
   ValueStore::ReadResult read = store->Get(kStoreKeyRegisteredItems);
 
   const base::DictionaryValue* registered_items = nullptr;
-  return read->status().ok() &&
+  return read.status().ok() &&
          read->settings().GetDictionary(kStoreKeyRegisteredItems,
                                         &registered_items) &&
          registered_items->HasKey(item_id);
@@ -103,7 +103,7 @@ void GetRegisteredItems(OperationResult* result,
   values->Clear();
 
   std::unique_ptr<base::Value> registered_items;
-  if (!read->status().ok()) {
+  if (!read.status().ok()) {
     *result = OperationResult::kFailed;
     return;
   }
@@ -134,7 +134,7 @@ void RegisterItem(OperationResult* result,
   ValueStore::ReadResult read = store->Get(kStoreKeyRegisteredItems);
 
   std::unique_ptr<base::Value> registered_items;
-  if (!read->status().ok()) {
+  if (!read.status().ok()) {
     *result = OperationResult::kFailed;
     return;
   }
@@ -157,7 +157,7 @@ void RegisterItem(OperationResult* result,
 
   ValueStore::WriteResult write =
       store->Set(ValueStore::DEFAULTS, kStoreKeyRegisteredItems, *dict);
-  *result = write->status().ok() ? OperationResult::kSuccess
+  *result = write.status().ok() ? OperationResult::kSuccess
                                  : OperationResult::kFailed;
 }
 
@@ -190,7 +190,7 @@ void WriteImpl(OperationResult* result,
   ValueStore::WriteResult write = store->Set(ValueStore::DEFAULTS, item_id,
                                              base::Value(std::move(encrypted)));
 
-  *result = write->status().ok() ? OperationResult::kSuccess
+  *result = write.status().ok() ? OperationResult::kSuccess
                                  : OperationResult::kFailed;
 }
 
@@ -209,7 +209,7 @@ void ReadImpl(OperationResult* result,
   }
 
   ValueStore::ReadResult read = store->Get(item_id);
-  if (!read->status().ok()) {
+  if (!read.status().ok()) {
     *result = OperationResult::kNotFound;
     return;
   }
@@ -237,13 +237,13 @@ void DeleteImpl(OperationResult* result,
                 ValueStore* store) {
   ValueStore::WriteResult remove =
       store->Remove(std::vector<std::string>({item_id}));
-  if (!remove->status().ok()) {
+  if (!remove.status().ok()) {
     *result = OperationResult::kFailed;
     return;
   }
 
   ValueStore::ReadResult read = store->Get(kStoreKeyRegisteredItems);
-  if (!read->status().ok()) {
+  if (!read.status().ok()) {
     *result = OperationResult::kFailed;
     return;
   }
@@ -258,7 +258,7 @@ void DeleteImpl(OperationResult* result,
 
   ValueStore::WriteResult write = store->Set(
       ValueStore::DEFAULTS, kStoreKeyRegisteredItems, *registered_items);
-  *result = write->status().ok() ? OperationResult::kSuccess
+  *result = write.status().ok() ? OperationResult::kSuccess
                                  : OperationResult::kFailed;
 }
 
