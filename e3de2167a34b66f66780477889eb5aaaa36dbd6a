@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13800770_4ea5923e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-11T16:38:18Z",
+      "side": 1,
+      "message": "Also note that this adds Fake implementation functionality and refactors the unittest to use it.",
+      "revId": "e3de2167a34b66f66780477889eb5aaaa36dbd6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
