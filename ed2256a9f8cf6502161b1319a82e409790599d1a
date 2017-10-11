@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "02055ac3_536fcf37",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T06:16:35Z",
+      "side": 1,
+      "message": "Sounds reasonable. We need to explain that in ResourceResponseInfo, and may want to add some prefix to clarify that.",
+      "parentUuid": "880bfe22_93f74919",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec8dc80d_945e9380",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-10T16:41:18Z",
       "side": 1,
       "message": "I don\u0027t think the `request-\u003eurl()` is updated across redirects, is it?\n\nCan you add some tests to lock things in one way or the other, and verify that we\u0027re passing the right data around in this struct?",
+      "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c110e1a_33b15451",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T06:16:35Z",
+      "side": 1,
+      "message": "URLRequest::url() returns the last element in its url_chain_ member. Once URLRequest is instructed to follow a redirect, the new URL is pushed to url_chain_, but right before calling URLRequest::Start() for the new URL. So, url() returns the URL of the current request in a redirect chain (not yet updated to the new destination).",
+      "parentUuid": "ec8dc80d_945e9380",
       "revId": "ed2256a9f8cf6502161b1319a82e409790599d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
