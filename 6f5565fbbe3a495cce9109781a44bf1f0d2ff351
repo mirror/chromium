@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3442b004_da82919e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-11T07:36:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "039ec528_16d69d58",
+      "range": {
+        "startLine": 222,
+        "startChar": 22,
+        "endLine": 222,
+        "endChar": 38
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9e61b5_8455b8eb",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 1
@@ -306,6 +330,30 @@
       "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191a0fcf_54720d8e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-11T07:36:10Z",
+      "side": 1,
+      "message": "I think the positive statement is clearer. Thanks. Done.",
+      "parentUuid": "c3a68ea7_3f604aef",
+      "range": {
+        "startLine": 451,
+        "startChar": 49,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "6f5565fbbe3a495cce9109781a44bf1f0d2ff351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
