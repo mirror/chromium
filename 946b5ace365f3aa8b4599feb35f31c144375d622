@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4297db5b_9f0e7f43",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversion.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-11T21:09:47Z",
+      "side": 1,
+      "message": "Chrome users still care about plugins so we shouldn\u0027t expose the coordinate change in plugins here.\n\nBtw, looks like all conversions we have in WebInputEventConversion are from Blink events to WebInputEvents, which are used only for plugins IIUC.  Didn\u0027t notice when the forward conversions were removed a while ago.\n\n(1) Please revert the changes in this file which will remove the layout test diff introduced here.  So this CL will become no-op even for plugins.  \n\n(2) Move the WebInputEventConversion changes plus the layout test into the last CL exposing MouseEvent coordinates, under a flag.\n\n(3) Just discovered that the .h file description here is too old: \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/events/WebInputEventConversion.h?type\u003dcs\u0026l\u003d53\nPlease change the comment into the following, as a separate CL or even inside the CL for (2) above.\n\"These classes are used for conversion from Blink events to WebInputEvents (for plugins).\"",
+      "revId": "946b5ace365f3aa8b4599feb35f31c144375d622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
