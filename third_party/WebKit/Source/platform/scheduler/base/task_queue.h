@@ -222,6 +222,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // expired, and non-delayed tasks get their enqueue order set when posted.
   void InsertFence(InsertFencePosition position);
 
+  // Insert a delayed fence, which will block all tasks posted after |time|.
+  void InsertFenceAt(base::TimeTicks time);
+
   // Removes any previously added fence and unblocks execution of any tasks
   // blocked by it.
   void RemoveFence();
