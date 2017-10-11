@@ -35,6 +35,9 @@ Settings* GetSettings(ExecutionContext* execution_context) {
   return document->GetSettings();
 }
 
+constexpr char kLegacyCastPresentationUrlPrefix[] =
+    "https://google.com/cast#__castAppId__=";
+
 }  // anonymous namespace
 
 // static
@@ -82,6 +85,18 @@ PresentationRequest* PresentationRequest::Create(
       return nullptr;
     }
 
+    // TODO(crbug.com/757358): Direct use of dial: and legacy Cast URLs in
+    // Presentation APIs were never officially supported. We can drop support
+    // for them once we have determined that they have negligable usage, or
+    // otherwise figure out a migration path for top users.
+    if (parsed_url.ProtocolIs("dial")) {
+      UseCounter::Count(execution_context,
+                        WebFeature::kPresentationRequestDialUrl);
+    } else if (parsed_url.GetString().StartsWith(
+                   kLegacyCastPresentationUrlPrefix)) {
+      UseCounter::Count(execution_context,
+                        WebFeature::kPresentationRequestLegacyCastUrl);
+    }
     parsed_urls[i] = parsed_url;
   }
   return new PresentationRequest(execution_context, parsed_urls);
