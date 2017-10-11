@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac20b8b_a18de0c0",
+        "filename": "net/socket/client_socket_pool_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-11T19:55:35Z",
+      "side": 0,
+      "message": "Wow, this CHECK was landed in 2009! Is the crash new? Looks like it\u0027s more than 10x higher in 61 than earlier versions:\n\ncrash/browse?q\u003dcustom_data.ChromeCrashProto.ptype%3D%27browser%27%20AND%20custom_data.ChromeCrashProto.magic_signature_1.name%3D%27net%3A%3Ainternal%3A%3AClientSocketPoolBaseHelper%3A%3AReleaseSocket%27%20AND%20custom_data.ChromeCrashProto.channel%3D%27stable%27\u0026sql_dialect\u003ddremelsql\u0026ignore_case\u003dfalse\u0026enable_rewrite\u003dtrue\u0026omit_field_name\u003d\u0026omit_field_value\u003d\u0026omit_field_opt\u003d%3D#-property-selector,+productversion\n\nI\u0027m slightly apprehensive about this change, but it\u0027s probably fine. Since it just started firing, I wonder if this means than something changed elsewhere in the stack with led to this error now. It\u0027s curious that it\u0027s only on Android. Wonder if it\u0027s the data reduction proxy somehow?\n\nThe reason I\u0027m slightly apprehensive is that I wonder what state the sockets pool will be in with this change. In other words, assuming this socked was actually issued by a socket pool (which seems reasonably since ReleaseSocket() is being called) that suggests there is some socket pool which is actually waiting for a socket to be released. If we just drop the socket on the floor, might be end up with stalled socket pools that never un-stall? In other words, will we transform this crash into a hang?",
+      "range": {
+        "startLine": 869,
+        "startChar": 31,
+        "endLine": 869,
+        "endChar": 0
+      },
+      "revId": "92c52cac628a9ac111a2aa7e5b59996610f38e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
