@@ -647,7 +647,8 @@ void ResourcePrefetchPredictor::LearnNavigation(
       static_cast<int>(config_.max_resources_per_entry)) {
     data.mutable_resources()->DeleteSubrange(
         config_.max_resources_per_entry,
-        data.resources_size() - config_.max_resources_per_entry);
+        data.resources_size() -
+            static_cast<int>(config_.max_resources_per_entry));
   }
 
   if (data.resources_size() == 0)
@@ -781,10 +782,10 @@ void ResourcePrefetchPredictor::LearnOrigins(
   ResourcePrefetchPredictorTables::TrimOrigins(&data,
                                                config_.max_consecutive_misses);
   ResourcePrefetchPredictorTables::SortOrigins(&data);
-  if (data.origins_size() > static_cast<int>(config_.max_resources_per_entry)) {
+  if (data.origins_size() > static_cast<int>(config_.max_origins_per_entry)) {
     data.mutable_origins()->DeleteSubrange(
         config_.max_origins_per_entry,
-        data.origins_size() - config_.max_origins_per_entry);
+        data.origins_size() - static_cast<int>(config_.max_origins_per_entry));
   }
 
   // Update the database.
