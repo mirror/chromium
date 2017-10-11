@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69d7b0cc_d97b2608",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "Please add a title.  Something like \"Reimplement reverse lookup of printer manufacturer and model\".",
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacd2cea_bf38cadb",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "Did you mean to complete your thought? :P",
+      "range": {
+        "startLine": 790,
+        "startChar": 11,
+        "endLine": 790,
+        "endChar": 53
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd588d53_948b867b",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "We\u0027re parsing the reverse index.  We can also get this error if the request failed.",
+      "range": {
+        "startLine": 800,
+        "startChar": 21,
+        "endLine": 800,
+        "endChar": 48
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c11a70_643e64bc",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "Add a DCHECK(contents).  It\u0027s a programming error for this to be null.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 41,
+        "endLine": 1067,
+        "endChar": 49
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d9d02b_a73bfe8b",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "This should have a more descriptive name.  Maybe status or result.",
+      "range": {
+        "startLine": 1071,
+        "startChar": 9,
+        "endLine": 1071,
+        "endChar": 12
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28e4db3_a1151e24",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "This should be a warning.",
+      "range": {
+        "startLine": 1085,
+        "startChar": 12,
+        "endLine": 1085,
+        "endChar": 17
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ed4b32_a85aea77",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T01:59:47Z",
+      "side": 1,
+      "message": "nit: Make this a different error than on 1085 so it\u0027s more meaningful in the logs.",
+      "range": {
+        "startLine": 1093,
+        "startChar": 23,
+        "endLine": 1093,
+        "endChar": 59
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
