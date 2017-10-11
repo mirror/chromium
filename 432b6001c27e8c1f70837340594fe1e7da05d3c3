@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ccebeb6_4f243b63",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "Should we have a TODO for support on Windows?",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e60e59_db839fdd",
+        "filename": "net/cert/internal/path_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "optional: DCHECK that cert.size() is 1 when TRUSTED_LEAF?",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047f85c5_40837d3f",
+        "filename": "net/cert/internal/path_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "This is kind of tricky. So the idea is if the certificate is self-signed we can build a path of length 2, rather than failing here with a path of length 1?\n\nDoes this mean that one of the errors you added is not reachable (at least from path building).\\",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b3cc15_c1196e04",
+        "filename": "net/cert/internal/path_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "optional: fix typo",
+      "range": {
+        "startLine": 451,
+        "startChar": 57,
+        "endLine": 451,
+        "endChar": 64
+      },
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ad4115_d8283102",
+        "filename": "net/cert/internal/trust_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "Is there a normative reference that can be provided on what this means? Perhaps add detail on what it means to interpret as TRUSTED_LEAF (what checks are done on the certificate).",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6541a9_b14f9dec",
+        "filename": "net/cert/internal/trust_store_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "Is this meaning documented, or inferred based on behavior?",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c539b17_eb26601b",
+        "filename": "net/cert/internal/verify_certificate_chain.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "So the intended behavior is to not do any checks on trusted leafs? With the consequence that:\n\n * Expired is OK\n * Unrecognized critical extensions is OK\n * No matching EKU is OK",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdb828b_03202739",
+        "filename": "net/cert/internal/verify_certificate_chain_typed_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "optional: I suggest combining these into 1 to reduce the number of parameters\n\n(I ran into problems with limitations on how many parameters REGISTER_TYPED_TEST_CASE_P, causing consolidation in the past)",
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04a79db_e7a103bc",
+        "filename": "net/data/verify_certificate_chain_unittest/target-only/trusted-as-leaf.test",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T00:12:35Z",
+      "side": 1,
+      "message": "Add a test with different key_purpose?",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "432b6001c27e8c1f70837340594fe1e7da05d3c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
