@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e3a30ea_d4ed0970",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T09:00:38Z",
+      "side": 1,
+      "message": "Can this be passed by const ref?",
+      "range": {
+        "startLine": 212,
+        "startChar": 34,
+        "endLine": 212,
+        "endChar": 50
+      },
+      "revId": "75a2990b70f13683d32c6e0f35066cb7a652ae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38acf533_651013d8",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T09:00:38Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d find this clearer as\n!(args[4]-\u003eIsDate() || args[4]-\u003eIsNull())",
+      "range": {
+        "startLine": 886,
+        "startChar": 6,
+        "endLine": 886,
+        "endChar": 48
+      },
+      "revId": "75a2990b70f13683d32c6e0f35066cb7a652ae74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
