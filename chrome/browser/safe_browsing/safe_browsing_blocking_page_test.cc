@@ -94,7 +94,6 @@ const char kPageWithCrossOriginMaliciousIframe[] =
 const char kCrossOriginMaliciousIframeHost[] = "malware.test";
 const char kMaliciousIframe[] = "safe_browsing/malware_iframe.html";
 const char kUnrelatedUrl[] = "https://www.google.com";
-const char kGetDocumentUrlPrefix[] = "document.URL=";
 
 // A SafeBrowsingDatabaseManager class that allows us to inject the malicious
 // URLs.
@@ -297,12 +296,6 @@ class TestSafeBrowsingBlockingPage : public SafeBrowsingBlockingPage {
 
   // InterstitialPageDelegate methods:
   void CommandReceived(const std::string& command) override {
-    // Ignore the result of
-    // SafeBrowsingBlockingPageBrowserTest::ExecuteScriptGetDocumentUrl().
-    // The position is 1 because |command| is in quotes.
-    if (command.find(kGetDocumentUrlPrefix) == 1)
-      return;
-
     SafeBrowsingBlockingPage::CommandReceived(command);
   }
   void OnProceed() override { SafeBrowsingBlockingPage::OnProceed(); }
@@ -595,45 +588,11 @@ class SafeBrowsingBlockingPageBrowserTest
     return interstitial->GetMainFrame();
   }
 
-  bool ExecuteScriptGetDocumentUrl(content::RenderFrameHost* render_frame_host,
-                                   GURL* url) {
-    std::string returned_string;
-    bool result = content::ExecuteScriptAndExtractString(
-        render_frame_host,
-        "(function() {"
-        "  window.domAutomationController.send('document.URL='+document.URL);"
-        "})();",
-        &returned_string);
-
-    if (!result)
-      return false;
-
-    *url = GURL(returned_string.substr(strlen(kGetDocumentUrlPrefix)));
-    return true;
-  }
-
   bool WaitForReady(Browser* browser) {
     InterstitialPage* interstitial = InterstitialPage::GetInterstitialPage(
         browser->tab_strip_model()->GetActiveWebContents());
     if (!interstitial)
       return false;
-
-    // Although the interstial page have been instructed to navigate, it is
-    // possible that the navigation hasn't taken place and it is still
-    // about:blank at the momment. If we directly call
-    // content::WaitForRenderFrameReady(), it may run in the about:blank page.
-    // Therefore, we query document.url until it is not about:blank.
-    //
-    // Spinning should be fine because the renderer should be already in the
-    // process of navigating.
-    GURL document_url;
-    do {
-      if (!ExecuteScriptGetDocumentUrl(interstitial->GetMainFrame(),
-                                       &document_url)) {
-        return false;
-      }
-    } while (document_url.IsAboutBlank());
-
     return content::WaitForRenderFrameReady(interstitial->GetMainFrame());
   }
 
