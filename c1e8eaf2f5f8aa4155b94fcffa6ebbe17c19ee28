@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6051dbc_d37921e2",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T21:16:43Z",
+      "side": 1,
+      "message": "D\u0027oh! Merge conflict issue when splitting this off my main change :(\nThanks for pointing out this problem.\nFixed, PTAL.",
+      "parentUuid": "61822b04_927aea21",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "c1e8eaf2f5f8aa4155b94fcffa6ebbe17c19ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09d01cce_e698750d",
         "filename": "net/cert/internal/revocation_checker.cc",
         "patchSetId": 1
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "(nitpicking, but it does actually have some changes beyond the move :p)",
       "parentUuid": "09d01cce_e698750d",
+      "revId": "c1e8eaf2f5f8aa4155b94fcffa6ebbe17c19ee28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cfedc8_89f4b1f8",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-11T21:16:43Z",
+      "side": 1,
+      "message": "Oh right I forgot, did change the interface slightly.",
+      "parentUuid": "b8d52fcc_eae390bb",
       "revId": "c1e8eaf2f5f8aa4155b94fcffa6ebbe17c19ee28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
