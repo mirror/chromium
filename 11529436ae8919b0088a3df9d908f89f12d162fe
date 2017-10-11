@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3512df0_b921e11e",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContents.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-11T06:52:15Z",
+      "side": 1,
+      "message": "Please ignore, used for debugging.",
+      "revId": "11529436ae8919b0088a3df9d908f89f12d162fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5937282f_325ead1d",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-11T06:52:15Z",
+      "side": 1,
+      "message": "I\u0027m just using the default Copy() on StyleSheetContents. There are a lot of logic in there so I don\u0027t know if it\u0027ll be correct in all cases.",
+      "revId": "11529436ae8919b0088a3df9d908f89f12d162fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d09b9d1_c840da60",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-11T06:52:15Z",
+      "side": 1,
+      "message": "Is a flag overkill?",
+      "revId": "11529436ae8919b0088a3df9d908f89f12d162fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
