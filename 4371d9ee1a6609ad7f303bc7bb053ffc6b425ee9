@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ed392e7d_546b00fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-11T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e484fd_ea0e5b60",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d30b16c1_2f3939fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818e357e_24f616aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-11T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30b16c1_2f3939fb",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +235,30 @@
       "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d7e1e4_2cd3c52d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1446,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-11T16:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95231a08_c977d877",
+      "range": {
+        "startLine": 1446,
+        "startChar": 32,
+        "endLine": 1446,
+        "endChar": 0
+      },
+      "revId": "4371d9ee1a6609ad7f303bc7bb053ffc6b425ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
