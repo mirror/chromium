@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "credential": {
+        "_class": "RoleAccountCredentials",
+        "_module": "google3.privacy.pwg.lib.gaia_mint",
+        "access_token": null,
+        "client_id": null,
+        "client_secret": null,
+        "email": "vkuzkokov@google.com",
+        "id_token": null,
+        "invalid": false,
+        "refresh_token": null,
+        "revoke_uri": "https://accounts.google.com/o/oauth2/revoke",
+        "scopes": [
+          "https://www.googleapis.com/auth/androidbuild.internal"
+        ],
+        "token_expiry": null,
+        "token_response": null,
+        "token_uri": null,
+        "user_agent": null
+      },
+      "key": {
+        "key": "fetch_artifact/162269015"
+      }
+    }
+  ],
+  "file_version": 1
+}
