@@ -187,6 +187,7 @@ class ArcSessionManagerTestBase : public testing::Test {
     chromeos::WallpaperManager::Shutdown();
     arc_session_manager_.reset();
     arc_service_manager_.reset();
+    profile_.reset();
     chromeos::DBusThreadManager::Shutdown();
   }
 
