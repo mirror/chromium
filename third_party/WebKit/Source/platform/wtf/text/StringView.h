@@ -138,8 +138,13 @@ class WTF_EXPORT StringView {
     // If this StringView is backed by a StringImpl, and was constructed
     // with a zero offset and the same length we can just access the impl
     // directly since this == StringView(m_impl).
-    if (impl_->Bytes() == Bytes() && length_ == impl_->length())
-      return GetPtr(impl_);
+    if (impl_->Bytes() == Bytes() && length_ == impl_->length()) {
+#if DCHECK_IS_ON()
+      return impl_.get();
+#else
+      return impl_;
+#endif
+    }
     return nullptr;
   }
 
