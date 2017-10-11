@@ -9,6 +9,7 @@ cr.define('extension_detail_view_tests', function() {
     Layout: 'layout',
     ClickableElements: 'clickable elements',
     Indicator: 'indicator',
+    Warnings: 'warnings',
   };
 
   suite('ExtensionItemTest', function() {
@@ -148,6 +149,53 @@ cr.define('extension_detail_view_tests', function() {
       item.set('data.controlledInfo', {type: 'POLICY', text: 'policy'});
       Polymer.dom.flush();
       expectFalse(indicator.hidden);
+    });
+
+    test(assert(TestNames.Warnings), function() {
+      var hasCorruptedWarning = function() {
+        return extension_test_util.isVisible(item, '#corrupted-warning');
+      };
+      var hasSuspiciousWarning = function() {
+        return extension_test_util.isVisible(item, '#suspicious-warning');
+      };
+      var hasBlacklistedWarning = function() {
+        return extension_test_util.isVisible(item, '#blacklisted-warning');
+      };
+
+      expectFalse(hasCorruptedWarning());
+      expectFalse(hasSuspiciousWarning());
+      expectFalse(hasBlacklistedWarning());
+
+      item.set('data.disableReasons.corruptInstall', true);
+      Polymer.dom.flush();
+      expectTrue(hasCorruptedWarning());
+      expectFalse(hasSuspiciousWarning());
+      expectFalse(hasBlacklistedWarning());
+
+      item.set('data.disableReasons.suspiciousInstall', true);
+      Polymer.dom.flush();
+      expectTrue(hasCorruptedWarning());
+      expectTrue(hasSuspiciousWarning());
+      expectFalse(hasBlacklistedWarning());
+
+      item.set('data.blacklistText', 'This item is blacklisted');
+      Polymer.dom.flush();
+      expectTrue(hasCorruptedWarning());
+      expectTrue(hasSuspiciousWarning());
+      expectTrue(hasBlacklistedWarning());
+
+      item.set('data.blacklistText', undefined);
+      Polymer.dom.flush();
+      expectTrue(hasCorruptedWarning());
+      expectTrue(hasSuspiciousWarning());
+      expectFalse(hasBlacklistedWarning());
+
+      item.set('data.disableReasons.corruptInstall', false);
+      item.set('data.disableReasons.suspiciousInstall', false);
+      Polymer.dom.flush();
+      expectFalse(hasCorruptedWarning());
+      expectFalse(hasSuspiciousWarning());
+      expectFalse(hasBlacklistedWarning());
     });
   });
 
