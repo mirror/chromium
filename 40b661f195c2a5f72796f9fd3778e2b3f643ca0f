@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "06e95357_9b8b987c",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Is that difference in behavior between apps and extensions intentional (i.e. first app is launched)?",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 73
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1696ad9e_47273dc8",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Nit: constexpr this and above.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "146028f7_b8f0d247",
         "filename": "extensions/shell/app/shell_help.cc",
         "patchSetId": 2
@@ -18,6 +64,145 @@
         "startChar": 58,
         "endLine": 51,
         "endChar": 61
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df50b0e_522fed81",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "146028f7_b8f0d247",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "409a19bd_f9eaec19",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bcb8019_bf72f0f5",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063d0bd6_d0af3804",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Nit: or when there are no switches?",
+      "range": {
+        "startLine": 128,
+        "startChar": 49,
+        "endLine": 128,
+        "endChar": 50
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82646ff_f7d0e483",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "This is a condition and a result at the same time, see my comment below.",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 16
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1d144b_931aa063",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T01:18:19Z",
+      "side": 1,
+      "message": "Nit (optional): We could split the condition from what should happen based on it, so:\n\nif (ShouldHandleHelpSwitch(command_line)) {\n  printf(...);\n  *exit_code \u003d ...;\n  return true;\n}",
+      "range": {
+        "startLine": 151,
+        "startChar": 6,
+        "endLine": 151,
+        "endChar": 36
       },
       "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
