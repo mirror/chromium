@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6bbf50_99b6494d",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "I guess I\u0027ll remove this line once I start using observers for refcounting of registration data. But it does no harm in the meantime.",
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed357d1a_27e44158",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "I guess this is supposed to be safe because it\u0027ll stop delivering connection errors once this and hence |observers_| is destroyed? It\u0027d be nice to have a comment explaining that.",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c982022_27c03a05",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "Does the pointer returned by observer.get() remain valid after |observer| is moved?\nAnd does set_connection_error_handler continue to work after moving |observer|?\n(i.e. does a mojo Ptr behave the same as unique_ptr?)\n(in case it helps, with std::multimap, the values would no longer get moved after being put in the map)",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f0ba7d_3aa13a54",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t understand what this means?",
+      "range": {
+        "startLine": 25,
+        "startChar": 45,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbf938e_41c72f7c",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "Nit: observers (this is 1 to many)",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cdd37c_1bea29e2",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "I\u0027m a little uncomfortable using a flat_map here, since there\u0027s no upper bound on the expected size of this map, and building it is O(n^2).\n\nIt seems cleaner to use a std::multimap. You\u0027ll be able to add new entries with observers_.emplace(unique_id, std::move(observer)), remove all entries for an id using observers_.erase(unique_id), and get the range from which to remove specific values using observers_.equal_range(unique_id) [so your logic in OnConnectionError can remain very similar, except you won\u0027t need the erase call at the end].",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a90a55_036cbd90",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-11T12:22:16Z",
+      "side": 1,
+      "message": "Nit: Use ValidateUniqueId instead",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 3
+      },
+      "revId": "7b008510824bb842dce2110bd67cb149dde50c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
