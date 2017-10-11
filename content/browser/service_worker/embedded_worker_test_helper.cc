@@ -92,8 +92,8 @@ void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
 
   helper_->OnStartWorkerStub(params, std::move(dispatcher_request),
-                             std::move(instance_host),
-                             std::move(provider_info));
+                             std::move(instance_host), std::move(provider_info),
+                             std::move(installed_scripts_info));
 }
 
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StopWorker() {
@@ -501,7 +501,8 @@ void EmbeddedWorkerTestHelper::OnStartWorker(
     bool pause_after_download,
     mojom::ServiceWorkerEventDispatcherRequest request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
+    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info) {
   EmbeddedWorkerInstance* worker = registry()->GetWorker(embedded_worker_id);
   ASSERT_TRUE(worker);
   MockServiceWorkerEventDispatcher::Create(AsWeakPtr(), worker->thread_id(),
@@ -511,6 +512,8 @@ void EmbeddedWorkerTestHelper::OnStartWorker(
       service_worker_version_id;
   embedded_worker_id_instance_host_ptr_map_[embedded_worker_id].Bind(
       std::move(instance_host));
+  embedded_worker_id_installed_scripts_info_map_[embedded_worker_id] =
+      std::move(installed_scripts_info);
   ServiceWorkerRemoteProviderEndpoint* provider_endpoint =
       &embedded_worker_id_remote_provider_map_[embedded_worker_id];
   provider_endpoint->BindWithProviderInfo(std::move(provider_info));
@@ -689,10 +692,11 @@ void EmbeddedWorkerTestHelper::SimulateWorkerScriptCached(
   if (!version->script_cache_map()->size()) {
     std::vector<ServiceWorkerDatabase::ResourceRecord> records;
     // Add a dummy ResourceRecord for the main script to the script cache map of
-    // the ServiceWorkerVersion. We use embedded_worker_id for resource_id to
-    // avoid ID collision.
-    records.push_back(ServiceWorkerDatabase::ResourceRecord(
-        embedded_worker_id, version->script_url(), 100));
+    // the ServiceWorkerVersion.
+    records.push_back(
+        WriteToDiskCache(context()->storage(), version->script_url(),
+                         context()->storage()->NewResourceId(),
+                         {} /* headers */, "I'm a body", "I'm a meta data"));
     version->script_cache_map()->SetResources(records);
   }
   if (!version->GetMainScriptHttpResponseInfo())
@@ -759,19 +763,20 @@ void EmbeddedWorkerTestHelper::OnStartWorkerStub(
     const EmbeddedWorkerStartParams& params,
     mojom::ServiceWorkerEventDispatcherRequest request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
-    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
+    mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
+    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info) {
   EmbeddedWorkerInstance* worker =
       registry()->GetWorker(params.embedded_worker_id);
   ASSERT_TRUE(worker);
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&EmbeddedWorkerTestHelper::OnStartWorker, AsWeakPtr(),
-                     params.embedded_worker_id,
-                     params.service_worker_version_id, params.scope,
-                     params.script_url, params.pause_after_download,
-                     base::Passed(&request), base::Passed(&instance_host),
-                     base::Passed(&provider_info)));
+      FROM_HERE, base::BindOnce(&EmbeddedWorkerTestHelper::OnStartWorker,
+                                AsWeakPtr(), params.embedded_worker_id,
+                                params.service_worker_version_id, params.scope,
+                                params.script_url, params.pause_after_download,
+                                std::move(request), std::move(instance_host),
+                                std::move(provider_info),
+                                std::move(installed_scripts_info)));
 }
 
 void EmbeddedWorkerTestHelper::OnResumeAfterDownloadStub(
