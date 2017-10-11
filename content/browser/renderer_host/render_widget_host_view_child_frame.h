@@ -213,7 +213,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   bool GetSelectionRange(gfx::Range* range) const;
   // This returns the origin of this views's bounding rect in the coordinates
   // of the root RenderWidgetHostView.
-  gfx::Point GetViewOriginInRoot() const;
+  gfx::Point GetViewOriginInRoot() const override;
 
  protected:
   friend class RenderWidgetHostView;

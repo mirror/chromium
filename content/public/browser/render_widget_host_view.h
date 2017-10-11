@@ -236,6 +236,8 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // when the value has changed.  Views must initially default to false.
   virtual void SetNeedsBeginFrames(bool needs_begin_frames) = 0;
 
+  virtual gfx::Point GetViewOriginInRoot() const = 0;
+
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the
   // content of the view in GetNativeView. This may be null.
