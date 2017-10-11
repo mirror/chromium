@@ -13,6 +13,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
+#include "base/test/simple_test_clock.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "content/browser/indexed_db/indexed_db_connection.h"
@@ -169,6 +171,103 @@ TEST_F(IndexedDBFactoryTest, BackingStoreLazyClose) {
             store = store_ptr;
             factory->TestCloseBackingStore(store_ptr);
             EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
+          },
+          base::Unretained(context())));
+
+  RunAllTasksUntilIdle();
+}
+
+TEST_F(IndexedDBFactoryTest, BackingStoreRunPreCloseTasks) {
+  context()->TaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          [](IndexedDBContextImpl* context) {
+            base::test::ScopedFeatureList feature_list;
+            feature_list.InitWithFeatures({kIDBTombstoneStatistics},
+                                          {kIDBTombstoneDeletion});
+
+            scoped_refptr<MockIDBFactory> factory =
+                base::MakeRefCounted<MockIDBFactory>(context);
+
+            base::SimpleTestClock* clock_ptr = new base::SimpleTestClock();
+            factory->SetClockForTesting(base::WrapUnique(clock_ptr));
+            clock_ptr->SetNow(base::Time::Now());
+
+            scoped_refptr<base::TestSimpleTaskRunner> timer_runner(
+                new base::TestSimpleTaskRunner());
+
+            const Origin origin(GURL("http://localhost:81"));
+
+            scoped_refptr<IndexedDBBackingStore> store =
+                factory->TestOpenBackingStore(origin, context->data_path());
+
+            // Give up the local refptr so that the factory has the only
+            // outstanding reference.
+            IndexedDBBackingStore* store_ptr = store.get();
+            store = nullptr;
+            EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
+            factory->TestReleaseBackingStore(store_ptr, false);
+            EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
+            EXPECT_EQ(nullptr, store_ptr->pre_close_task_queue());
+
+            // Reset the timer & stop the closing.
+            factory->TestOpenBackingStore(origin, context->data_path());
+            EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
+            factory->TestReleaseBackingStore(store_ptr, false);
+            EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
+            store_ptr->close_timer()->user_task().Run();
+
+            // Backing store should be totally closed.
+            EXPECT_FALSE(factory->IsBackingStoreOpen(origin));
+
+            store = factory->TestOpenBackingStore(origin, context->data_path());
+            store_ptr = store.get();
+            store = nullptr;
+            EXPECT_FALSE(store_ptr->close_timer()->IsRunning());
+
+            // Move the clock to start the next sweep.
+            clock_ptr->Advance(
+                IndexedDBFactoryImpl::kMaxEarliestGlobalSweepFromNow);
+            factory->TestReleaseBackingStore(store_ptr, false);
+
+            // Sweep should be occuring.
+            EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
+            store_ptr->close_timer()->user_task().Run();
+            store_ptr->close_timer()->AbandonAndStop();
+            ASSERT_NE(nullptr, store_ptr->pre_close_task_queue());
+            EXPECT_TRUE(store_ptr->pre_close_task_queue()->started());
+
+            // Stop sweep by opening a connection.
+            factory->TestOpenBackingStore(origin, context->data_path());
+            EXPECT_EQ(nullptr, store_ptr->pre_close_task_queue());
+
+            // Move clock forward to trigger next sweep, but origin has longer
+            // sweep minimum, so nothing happens.
+            clock_ptr->Advance(
+                IndexedDBFactoryImpl::kMaxEarliestGlobalSweepFromNow);
+
+            factory->TestReleaseBackingStore(store_ptr, false);
+            EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
+            EXPECT_EQ(nullptr, store_ptr->pre_close_task_queue());
+
+            // Reset, and move clock forward so the origin should allow a sweep.
+            factory->TestOpenBackingStore(origin, context->data_path());
+            EXPECT_EQ(nullptr, store_ptr->pre_close_task_queue());
+            clock_ptr->Advance(
+                IndexedDBFactoryImpl::kMaxEarliestOriginSweepFromNow);
+            factory->TestReleaseBackingStore(store_ptr, false);
+
+            // Sweep should be occuring.
+            EXPECT_TRUE(store_ptr->close_timer()->IsRunning());
+            store_ptr->close_timer()->user_task().Run();
+            store_ptr->close_timer()->AbandonAndStop();
+            ASSERT_NE(nullptr, store_ptr->pre_close_task_queue());
+            EXPECT_TRUE(store_ptr->pre_close_task_queue()->started());
+
+            // Take back a ref ptr and ensure that the actual close
+            // stops a running timer.
+            store = store_ptr;
+            factory->TestCloseBackingStore(store_ptr);
           },
           base::Unretained(context())));
 
