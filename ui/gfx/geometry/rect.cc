@@ -163,6 +163,8 @@ bool Rect::Contains(int point_x, int point_y) const {
 }
 
 bool Rect::Contains(const Rect& rect) const {
+  //  LOG(ERROR) << "the rect is: " << ToString();
+  //  LOG(ERROR) << "the other rect is: " << rect.ToString();
   return (rect.x() >= x() && rect.right() <= right() && rect.y() >= y() &&
           rect.bottom() <= bottom());
 }

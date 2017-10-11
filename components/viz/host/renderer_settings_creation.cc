@@ -59,6 +59,8 @@ RendererSettings CreateRendererSettings(
           switches::kGlCompositedOverlayCandidateQuadBorder);
   renderer_settings.show_overdraw_feedback =
       command_line->HasSwitch(switches::kShowOverdrawFeedback);
+  renderer_settings.enable_draw_occlusion =
+      command_line->HasSwitch(switches::kEnableDrawOcclusion);
   renderer_settings.enable_color_correct_rendering =
       base::FeatureList::IsEnabled(features::kColorCorrectRendering);
   renderer_settings.resource_settings = CreateResourceSettings(image_targets);
