@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "89b17ec1_88fe1d0c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T00:07:30Z",
+      "side": 1,
+      "message": "I prefer using the same type name if possible, i.e. RendererPauseHandle \u003d scheduler::RendererScheduler::RendererPauseHandle. Would doing so have a problem?",
+      "revId": "4ebcd9d8535d0ead63bee2a73251123da42e0a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efbd9a77_1f15247c",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 3
