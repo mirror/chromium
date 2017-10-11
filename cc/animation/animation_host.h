@@ -174,8 +174,7 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   const PlayersList& ticking_players_for_testing() const;
   const ElementToAnimationsMap& element_animations_for_testing() const;
 
-  // LayerTreeMutatorClient.
-  void SetNeedsMutate() override;
+  void NotifyMutationUpdate() override;
 
  private:
   explicit AnimationHost(ThreadInstance thread_instance);
@@ -206,7 +205,6 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
 
   bool supports_scroll_animations_;
   bool needs_push_properties_;
-  bool mutator_needs_mutate_;
 
   std::unique_ptr<LayerTreeMutator> mutator_;
 
