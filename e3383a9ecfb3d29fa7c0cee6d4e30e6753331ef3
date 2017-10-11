@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2853645f_0cf47ce9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T01:58:17Z",
+      "side": 1,
+      "message": "Could you change this to align with ServiceWorkerURLLoaderJobTest instead?\n\nI.e., create a std::unique_ptr\u003cResourceRequest\u003e CreateRequest() method so tests that want to customize the ResourceRequest can, and have just one TestRequest() method.",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d768a2bb_268f2d8b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T01:58:17Z",
+      "side": 1,
+      "message": "can you add an EXPECT about was_fetched_via_service_worker?",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9949a6fc_d2d4997b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T01:58:17Z",
+      "side": 1,
+      "message": "Why resettign url_loader_client_ needed? And could it just be url_loader_client_.reset()?",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
