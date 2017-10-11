@@ -34,6 +34,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0de3f4_db614e4c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T00:23:27Z",
+      "side": 1,
+      "message": "Thanks. This class will eventually move into Blink but it will be a while longer. I could possibly implement this blob creation stuff as a helper function in WebKit/common perhaps, as a temporary measure if that makes things easier.\n\nFor more context (if it helps), this class gets a ResourceRequest which it has to convert to a ServiceWorkerFetchRequest in order to dispatch the FetchEvent to the service worker. SWFetchRequest has a storage::mojom::Blob while ResourceRequest has a ResourceRequestBody (which has a vector of storage::DataElement). So that\u0027s why duplication happens.\n\nThe analogous browser-side version of this class, ServiceWorkerURLLoaderJob used storage::BlobBuilder() with storage::BlobStorageContext::AddFinishedBlob(). But AFAICT I can\u0027t use storage::BlobStorageContext from the renderer process:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/672103",
+      "parentUuid": "4680f8ce_bc385e3a",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
