@@ -943,30 +943,36 @@ void GpuCommandBufferStub::OnWaitForGetOffsetInRange(
 }
 
 void GpuCommandBufferStub::CheckCompleteWaits() {
+  CommandBuffer::State state = command_buffer_->GetState();
+  if (wait_for_token_ &&
+      (CommandBuffer::InRange(wait_for_token_->start, wait_for_token_->end,
+                              state.token) ||
+       state.error != error::kNoError)) {
+    ReportState();
+    GpuCommandBufferMsg_WaitForTokenInRange::WriteReplyParams(
+        wait_for_token_->reply.get(), state);
+    Send(wait_for_token_->reply.release());
+    wait_for_token_.reset();
+  }
+  if (wait_for_get_offset_ &&
+      (((wait_set_get_buffer_count_ == state.set_get_buffer_count) &&
+        CommandBuffer::InRange(wait_for_get_offset_->start,
+                               wait_for_get_offset_->end, state.get_offset)) ||
+       state.error != error::kNoError)) {
+    ReportState();
+    GpuCommandBufferMsg_WaitForGetOffsetInRange::WriteReplyParams(
+        wait_for_get_offset_->reply.get(), state);
+    Send(wait_for_get_offset_->reply.release());
+    wait_for_get_offset_.reset();
+  }
+  if (!channel_->scheduler())
+    return;
   if (wait_for_token_ || wait_for_get_offset_) {
-    CommandBuffer::State state = command_buffer_->GetState();
-    if (wait_for_token_ &&
-        (CommandBuffer::InRange(wait_for_token_->start, wait_for_token_->end,
-                                state.token) ||
-         state.error != error::kNoError)) {
-      ReportState();
-      GpuCommandBufferMsg_WaitForTokenInRange::WriteReplyParams(
-          wait_for_token_->reply.get(), state);
-      Send(wait_for_token_->reply.release());
-      wait_for_token_.reset();
-    }
-    if (wait_for_get_offset_ &&
-        (((wait_set_get_buffer_count_ == state.set_get_buffer_count) &&
-          CommandBuffer::InRange(wait_for_get_offset_->start,
-                                 wait_for_get_offset_->end,
-                                 state.get_offset)) ||
-         state.error != error::kNoError)) {
-      ReportState();
-      GpuCommandBufferMsg_WaitForGetOffsetInRange::WriteReplyParams(
-          wait_for_get_offset_->reply.get(), state);
-      Send(wait_for_get_offset_->reply.release());
-      wait_for_get_offset_.reset();
-    }
+    channel_->scheduler()->RaisePriorityForClientWait(sequence_id_,
+                                                      command_buffer_id_);
+  } else {
+    channel_->scheduler()->ResetPriorityForClientWait(sequence_id_,
+                                                      command_buffer_id_);
   }
 }
 
