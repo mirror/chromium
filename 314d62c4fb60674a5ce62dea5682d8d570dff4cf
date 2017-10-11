@@ -141,6 +141,24 @@
       "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f99d636_fd306a11",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-11T18:54:52Z",
+      "side": 1,
+      "message": "I don\u0027t know much about this, but this seems not too controversial. Ideally Telemetry shouldn\u0027t be the one that do the merge operation but that seems like another discussion somewhere else.",
+      "parentUuid": "6145dd84_706c9806",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
