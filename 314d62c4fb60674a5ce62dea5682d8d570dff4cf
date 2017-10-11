@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0cbfcb3_9bd75e96",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-11T11:58:15Z",
+      "side": 1,
+      "message": "Actually why not use 20000 instead of 20e3. I took me a moment to look up what this means.",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
