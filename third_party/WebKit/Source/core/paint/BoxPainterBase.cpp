@@ -465,7 +465,8 @@ inline bool PaintFastBottomLayer(const DisplayItemClient& image_client,
                "data",
                InspectorPaintImageEvent::Data(node, *info.image, image->Rect(),
                                               FloatRect(rect)));
-  context.DrawImageRRect(image, border, src_rect, composite_op);
+  context.DrawImageRRect(image, Image::kSyncDecode, border, src_rect,
+                         composite_op);
 
   return true;
 }
