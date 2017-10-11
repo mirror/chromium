@@ -58,6 +58,12 @@ class PDFEngine {
     PERMISSION_PRINT_HIGH_QUALITY,
   };
 
+  struct DocumentFeatures {
+    DocumentFeatures(unsigned int num_pages) { this.num_pages = num_pages; }
+
+    unsigned int num_pages_;
+  };
+
   // The interface that's provided to the rendering engine.
   class Client {
    public:
@@ -167,7 +173,8 @@ class PDFEngine {
     virtual void DocumentPaintOccurred() = 0;
 
     // Notifies the client that the document has finished loading.
-    virtual void DocumentLoadComplete(int page_count) = 0;
+    virtual void DocumentLoadComplete(
+        const DocumentFeatures& document_features) = 0;
 
     // Notifies the client that the document has failed to load.
     virtual void DocumentLoadFailed() = 0;

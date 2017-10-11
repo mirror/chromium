@@ -64,7 +64,7 @@ class PreviewModeClient : public PDFEngine::Client {
                     bool case_sensitive,
                     std::vector<SearchStringResult>* results) override;
   void DocumentPaintOccurred() override;
-  void DocumentLoadComplete(int page_count) override;
+  void DocumentLoadComplete(const DocumentFeatures& document_features) override;
   void DocumentLoadFailed() override;
   void FontSubstituted() override;
   pp::Instance* GetPluginInstance() override;
