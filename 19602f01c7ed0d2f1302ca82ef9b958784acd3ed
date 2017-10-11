@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "14c02f46_ef09e6a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T03:00:57Z",
+      "side": 1,
+      "message": "I disagree that the difference in behaviour is that strong. There are plenty of cases where GetData() could be waiting a lengthy period of time on the network and I think these are not uncommon:\n\n - slow/flaky connection\n - network congestion (parallel downloads / concurrent local usage / streaming / computer downloading updates)\n - site is down / under heavy load / CDN is down\n\nOn Android, we show the dialog immediately with a spinner for the icon while we GetData() in the background. I\u0027d argue that something like this should be eventually implemented on desktop so that the UI responds immediately to the user, and they get a visual indication that we\u0027re doing work in the background.\n\nThe params are documented as the work to be done by InstallableManager so I think it\u0027s natural to have the waiting behaviour specified in there.",
+      "parentUuid": "29010b33_3f9abac9",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1142338_fcf3e8f1",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ddc8e21b_ac0e3157",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T03:00:57Z",
+      "side": 1,
+      "message": "Was this done?",
+      "parentUuid": "cbd25f06_625a4ba2",
+      "range": {
+        "startLine": 239,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "694fc5b3_35a999e3",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Done.\n\nDo you think it\u0027s worth DCHECKing for !params.has_worker || params.valid_manifest in GetData? I think it never makes sense to have has_worker without valid_manifest, right?",
       "parentUuid": "694fc5b3_35a999e3",
+      "range": {
+        "startLine": 307,
+        "startChar": 34,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5918af3_da2aa8bb",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T03:00:57Z",
+      "side": 1,
+      "message": "Given they\u0027re separate params now, I don\u0027t think we should add the DCHECK. We could have a future client that only cares about the presence of a service worker, and it chooses to query InstallableManager because of the waiting behaviour that\u0027s already implemented.",
+      "parentUuid": "8786bc39_11f1949b",
       "range": {
         "startLine": 307,
         "startChar": 34,
