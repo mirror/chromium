@@ -5475,19 +5475,27 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   // it, because it will only be used once as the frame is created.)
   if (info.is_history_navigation_in_new_child_frame && is_content_initiated &&
       frame_->Parent()) {
+    RenderFrameImpl* parent = RenderFrameImpl::FromWebFrame(frame_->Parent());
+
     // Check whether the browser has a history item for this frame that isn't
     // just staying at the initial about:blank document.
-    bool should_ask_browser = false;
-    RenderFrameImpl* parent = RenderFrameImpl::FromWebFrame(frame_->Parent());
+    bool browser_has_a_history_item_that_isnt_just_about_blank = false;
     auto iter = parent->history_subframe_unique_names_.find(
         unique_name_helper_.value());
     if (iter != parent->history_subframe_unique_names_.end()) {
       bool history_item_is_about_blank = iter->second;
-      should_ask_browser =
+      browser_has_a_history_item_that_isnt_just_about_blank =
           !history_item_is_about_blank || url != url::kAboutBlankURL;
       parent->history_subframe_unique_names_.erase(iter);
     }
 
+    // Only ask the browser for a history load if the new frame is not
+    // dynamically created.  See also https://crbug.com/500260.
+    bool is_new_child_dynamically_created = parent->GetWebFrame()->IsLoading();
+
+    bool should_ask_browser =
+        browser_has_a_history_item_that_isnt_just_about_blank &&
+        !is_new_child_dynamically_created;
     if (should_ask_browser) {
       // Don't do this if |info| also says it is a client redirect, in which
       // case JavaScript on the page is trying to interrupt the history
