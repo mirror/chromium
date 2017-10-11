@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b9b8c51_7fb960ef",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T21:08:31Z",
+      "side": 0,
+      "message": "this was redundant.",
+      "revId": "a726bfa56c224c00f7e31ab5a61c849f99f92b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
