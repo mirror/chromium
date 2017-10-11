@@ -105,6 +105,24 @@
       "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c33f1ed_0a6e41d4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-11T05:47:37Z",
+      "side": 1,
+      "message": "Added default arguments to PostedTask. altimin@, PTAL just in case.\n\n\u003e SetNestable\n\nI don\u0027t have a strong opinion on method-chain way. I feel like SetNestable would be called only with kNonNestable, so the argument might be redundant. This should be done in another CL anyway.",
+      "parentUuid": "7d38c990_18b43eb3",
+      "revId": "8e41bbb5a1e5976620a419e3afebf0c468810750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
