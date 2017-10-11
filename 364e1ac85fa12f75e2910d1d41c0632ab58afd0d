@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7cdea6_9e7ec4e7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T22:44:09Z",
+      "side": 1,
+      "message": "Usually we avoid using the WebContents type inside of RenderFrameHostImpl, as a general layering thing: RenderFrameHostImpl is supposed to talk to WebContentsImpl via RenderFrameHostDelegate (which is the WebContents)",
+      "revId": "364e1ac85fa12f75e2910d1d41c0632ab58afd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62aea9d5_dbb2bd99",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-11T22:44:09Z",
+      "side": 1,
+      "message": "If you use the TabHelper pattern here ( https://chromium.googlesource.com/chromium/src/+/9db4b1582e7bac38d95f0b22e6904d4fa0cf07eb/docs/tab_helpers.md ) you can get this same ownership without having to touch web_contents_impl.cc at all.\n\nThis would mean that in addition to implementing, WebContentsObserver, MediaPlayerRendererWebContentsObserver implements content::WebContentsUserData\u003cMediaPlayerRendererWebContentsObserver\u003e. You\u0027ll need a friend declaration and a constructor too, as shown in the .md doc above.\n\nThen you can just call MediaPlayerRendererWebContentsObserver::CreateForWebContents to create it (maybe just before you need it), and MediaPlayerRendererWebContentsObserver::FromWebContents(contents) to get it.",
+      "revId": "364e1ac85fa12f75e2910d1d41c0632ab58afd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
