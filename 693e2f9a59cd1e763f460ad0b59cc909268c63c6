@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56884912_23dbedb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T18:49:59Z",
+      "side": 1,
+      "message": "nit: Remove \"show\" from the middle of this method name",
+      "range": {
+        "startLine": 460,
+        "startChar": 32,
+        "endLine": 460,
+        "endChar": 36
+      },
+      "revId": "693e2f9a59cd1e763f460ad0b59cc909268c63c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26bb2c6_4438e2fe",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T18:49:59Z",
+      "side": 1,
+      "message": "nit: This (which is a placeholder name..) isn\u0027t really needed",
+      "range": {
+        "startLine": 3247,
+        "startChar": 176,
+        "endLine": 3247,
+        "endChar": 278
+      },
+      "revId": "693e2f9a59cd1e763f460ad0b59cc909268c63c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
