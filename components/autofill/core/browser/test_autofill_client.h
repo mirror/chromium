@@ -68,6 +68,10 @@ class TestAutofillClient : public AutofillClient {
       const std::vector<autofill::FormStructure*>& forms) override;
   void DidFillOrPreviewField(const base::string16& autofilled_value,
                              const base::string16& profile_full_name) override;
+  // Inform the client that the user interacted with a non-secure credit card
+  // field.
+  void DidInteractWithNonsecureCreditCardInput(
+      content::RenderFrameHost* rfh) override;
   // By default, TestAutofillClient will report that the context is
   // secure. This can be adjusted by calling set_form_origin() with an
   // http:// URL.

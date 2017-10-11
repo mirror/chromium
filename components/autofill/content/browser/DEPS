@@ -1,4 +1,5 @@
 include_rules = [
+  "+components/security_state/content/ssl_status_input_event_data.h",
   "+content/public/browser",
   "+crypto/random.h",
   "+device/geolocation",
