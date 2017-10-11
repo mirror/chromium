@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0c0440_e1e1b5dd",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-11T03:39:55Z",
+      "side": 1,
+      "message": "So IndexAndPersistRulesIfNeeded also returns true if there is no ruleset to index. In that case, we were creating an optional with an uninitialized value.",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 15
+      },
+      "revId": "aa5fa8467fd0305544adf12ee06ab56b20392edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
