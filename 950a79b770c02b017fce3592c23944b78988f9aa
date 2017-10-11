@@ -105,6 +105,29 @@
     },
     {
       "key": {
+        "uuid": "a5906fae_6af88efa",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T14:06:35Z",
+      "side": 1,
+      "message": "nit: IsGuestUserAllowed() as there could be only one guest user.",
+      "range": {
+        "startLine": 385,
+        "startChar": 34,
+        "endLine": 385,
+        "endChar": 54
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80f7f778_bf221ac8",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 7
@@ -116,6 +139,29 @@
       "writtenOn": "2017-10-11T01:14:01Z",
       "side": 1,
       "message": "That\u0027s another place where the direct pref access should be now replaced with a method call. Please also check other files with the code search and change them where possible.",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d61c58_ddaba7dc",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T14:06:35Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 948,
+        "startChar": 2,
+        "endLine": 948,
+        "endChar": 27
+      },
       "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -311,6 +357,29 @@
     },
     {
       "key": {
+        "uuid": "27d2338b_06898577",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T14:06:35Z",
+      "side": 1,
+      "message": "nit: also worth mentioning what is behavior for users without GAIA account",
+      "range": {
+        "startLine": 347,
+        "startChar": 5,
+        "endLine": 347,
+        "endChar": 35
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c0bab25_f28d25ab",
         "filename": "components/user_manager/user_manager.h",
         "patchSetId": 7
@@ -350,6 +419,52 @@
         "startChar": 38,
         "endLine": 351,
         "endChar": 45
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f17f19_cdbdb992",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T14:06:35Z",
+      "side": 1,
+      "message": "What happens for others?",
+      "range": {
+        "startLine": 352,
+        "startChar": 5,
+        "endLine": 352,
+        "endChar": 24
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34246189_646fb50d",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T14:06:35Z",
+      "side": 1,
+      "message": "You\u0027ll need to stub implementation for all new methods in FakeUserManager as well",
+      "range": {
+        "startLine": 356,
+        "startChar": 1,
+        "endLine": 356,
+        "endChar": 2
       },
       "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
