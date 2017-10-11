@@ -16,6 +16,24 @@
       "revId": "8ce1778b9f6dd152392d31ab0d23b901aa7fadc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11973330_13597091",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-11T22:05:38Z",
+      "side": 1,
+      "message": "Done\n\nSimply checking when wait_for_token || wait_for_get_offset changes is not sufficient because those are set outside CheckCompleteWaits and only reset here.",
+      "parentUuid": "dc669354_62de01d7",
+      "revId": "8ce1778b9f6dd152392d31ab0d23b901aa7fadc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
