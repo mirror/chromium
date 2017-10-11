@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b3f187_cff37391",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-11T04:38:31Z",
+      "side": 1,
+      "message": "Consider changing this to kDefaultDevToolsHttpServerAddress[] and use to check for the localhost cases below",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 40
+      },
+      "revId": "bb32870aebae9414f13283ff86cbbcf641310405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156195c_fb1f1f59",
+        "filename": "headless/lib/browser/headless_devtools.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-11T04:38:31Z",
+      "side": 1,
+      "message": "could you just do:\nif (endpoint.host() !\u003d \"localhost\") {\n\n}",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "bb32870aebae9414f13283ff86cbbcf641310405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
