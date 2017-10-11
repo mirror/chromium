@@ -388,6 +388,7 @@ void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
     const GURL& main_frame_url,
     const GURL& password_form_action,
     const GURL& password_form_frame_url) {
+  ShowModalWarning(web_contents, "");
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (CanSendPing(kPasswordFieldOnFocusPinging, main_frame_url, false)) {
     StartRequest(web_contents, main_frame_url, password_form_action,
@@ -417,6 +418,7 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
 bool PasswordProtectionService::CanSendPing(const base::Feature& feature,
                                             const GURL& main_frame_url,
                                             bool matches_sync_password) {
+  return true;
   RequestOutcome request_outcome = URL_NOT_VALID_FOR_REPUTATION_COMPUTING;
   if (IsPingingEnabled(feature, &request_outcome) &&
       CanGetReputationOfURL(main_frame_url)) {
