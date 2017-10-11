@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a650d68e_7f5c75bd",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:40:19Z",
+      "side": 1,
+      "message": "IIUC, they need to revalidate because we\u0027ve messed with the cache entry.",
+      "parentUuid": "1110b305_80659665",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9052693a_77231b60",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 10
@@ -113,6 +137,98 @@
         "startChar": 0,
         "endLine": 900,
         "endChar": 23
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530b1126_4ec2fc56",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:40:19Z",
+      "side": 1,
+      "message": "I\u0027ve taken 4-5 reads through this conditional, and it still confuses me :-}--I\u0027d like to find a way to simplify it.\n\nWhat is clearest in a conditional depends a lot on the reader, but what do you think of:\n\nif (IsWritingInProgress(entry)) {\n  if (!can_do_shared_writing || transaction-\u003emode() \u003d\u003d Transaction::READ)\n    return;\n  AddTransactionToWriters(entry, transaction, can_do_shared_writing); // I think this is right?\n} else { \n  if (transaction-\u003emode() \u0026 Transaction::WRITE)\n    AddTransactionToWriters(entry, transaction, can_do_shared_writing);\n  if (transaction-\u003emode() \u003d\u003d Transaction::READ)\n    entry-\u003ereaders.insert(transaction);   // + DCHECK\n}\n\nWhich I *think* is equivalent to what you\u0027ve got?",
+      "range": {
+        "startLine": 1076,
+        "startChar": 4,
+        "endLine": 1076,
+        "endChar": 27
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc18979_4341a800",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:40:19Z",
+      "side": 1,
+      "message": "This comment seems out of sync with the code now that the DCHECK is simpler.  Update the comment?",
+      "range": {
+        "startLine": 409,
+        "startChar": 25,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45b96a2_48e7911d",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:40:19Z",
+      "side": 1,
+      "message": "I wince a bit at never returning from an async read call.  I see that\u0027s documented in the Read() header comments, but I\u0027d still like to explore at least a few other alternatives before going along with it.  For the next F2F.",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ea77f7_4f2ca045",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:40:19Z",
+      "side": 1,
+      "message": "Why the new arg?  It doesn\u0027t seem to be used. Same below.",
+      "range": {
+        "startLine": 234,
+        "startChar": 50,
+        "endLine": 234,
+        "endChar": 53
       },
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
