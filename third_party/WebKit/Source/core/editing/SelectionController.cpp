@@ -477,9 +477,11 @@ void SelectionController::UpdateSelectionForMouseDrag(
       DispatchSelectStart(target) != DispatchEventResult::kNotCanceled)
     return;
 
-  // TODO(yosin) We should check |mousePressNode|, |targetPosition|, and
-  // |newSelection| are valid for |m_frame->document()|.
-  // |dispatchSelectStart()| can change them by "selectstart" event handler.
+  // |dispatchSelectStart()| can change |document| or invalidate target_position
+  // by "selectstart" event handler.
+  if (!Selection().IsAvailable() ||
+      !target_position.IsValidFor(*frame_->GetDocument()))
+    return;
 
   const bool should_extend_selection =
       selection_state_ == SelectionState::kExtendedSelection;
