@@ -49,8 +49,12 @@ syncer::ModelTypeSet SyncSetupService::GetDataTypes() const {
   return sync_service_->GetPreferredDataTypes();
 }
 
-bool SyncSetupService::IsDataTypeEnabled(syncer::ModelType datatype) const {
+bool SyncSetupService::IsDataTypeActive(syncer::ModelType datatype) const {
   return sync_service_->GetActiveDataTypes().Has(datatype);
+}
+
+bool SyncSetupService::IsDataTypeEnabled(syncer::ModelType datatype) const {
+  return GetDataTypes().Has(datatype);
 }
 
 void SyncSetupService::SetDataTypeEnabled(syncer::ModelType datatype,
