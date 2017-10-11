@@ -12,14 +12,53 @@ namespace previews {
 
 namespace {
 
+const char kPreviewDecisionMade[] = "Decision";
 const char kPreviewNavigationEventType[] = "Navigation";
 const size_t kMaximumMessageLogs = 10;
 
-std::string GetPreviewNavigationDescription(
-    const PreviewsLogger::PreviewNavigation& navigation) {
+std::string GetPreviewNavigationDescription(PreviewsType type, bool opt_out) {
   return base::StringPrintf("%s preview navigation - user opt_out: %s",
-                            GetStringNameForType(navigation.type).c_str(),
-                            navigation.opt_out ? "True" : "False");
+                            GetStringNameForType(type).c_str(),
+                            opt_out ? "True" : "False");
+}
+
+std::string GetDecisionMadeDescription(PreviewsEligibilityReason reason,
+                                       PreviewsType type) {
+  std::string reason_str;
+  switch (reason) {
+    case PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE:
+      reason_str = "Blacklist unavailable";
+      break;
+    case PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED:
+      reason_str = "Blacklist data not loaded";
+      break;
+    case PreviewsEligibilityReason::USER_RECENTLY_OPTED_OUT:
+      reason_str = "User recently opted out";
+      break;
+    case PreviewsEligibilityReason::USER_BLACKLISTED:
+      reason_str = "User blacklisted";
+      break;
+    case PreviewsEligibilityReason::HOST_BLACKLISTED:
+      reason_str = "Host blacklisted";
+      break;
+    case PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE:
+      reason_str = "Network quality unavailable";
+      break;
+    case PreviewsEligibilityReason::NETWORK_NOT_SLOW:
+      reason_str = "Network not slow";
+      break;
+    case PreviewsEligibilityReason::RELOAD_DISALLOWED:
+      reason_str = "Reload disallowed";
+      break;
+    case PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER:
+      reason_str = "Host blacklisted by server";
+      break;
+    default:
+      reason_str = "Allowed";
+  }
+  return base::StringPrintf("%s preview decision made - %s",
+                            GetStringNameForType(type).c_str(),
+                            reason_str.c_str());
 }
 
 }  // namespace
@@ -80,11 +119,22 @@ void PreviewsLogger::LogMessage(const std::string& event_type,
   log_messages_.push_back(message);
 }
 
-void PreviewsLogger::LogPreviewNavigation(const PreviewNavigation& navigation) {
+void PreviewsLogger::LogPreviewNavigation(const GURL& url,
+                                          PreviewsType type,
+                                          bool opt_out,
+                                          base::Time time) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   LogMessage(kPreviewNavigationEventType,
-             GetPreviewNavigationDescription(navigation), navigation.url,
-             navigation.time);
+             GetPreviewNavigationDescription(type, opt_out), url, time);
+}
+
+void PreviewsLogger::LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                                             const GURL& url,
+                                             base::Time time,
+                                             PreviewsType type) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  LogMessage(kPreviewDecisionMade, GetDecisionMadeDescription(reason, type),
+             url, time);
 }
 
 }  // namespace previews

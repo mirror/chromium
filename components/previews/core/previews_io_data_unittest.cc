@@ -79,6 +79,9 @@ class TestPreviewsUIService : public PreviewsUIService {
                           std::move(logger)),
         type_(PreviewsType::NONE) {}
 
+  // Return the passed in PreviewsEligibilityReason.
+  PreviewsEligibilityReason reason() const { return reason_; }
+
   // Return the passed in url.
   GURL url() const { return url_; }
 
@@ -103,6 +106,17 @@ class TestPreviewsUIService : public PreviewsUIService {
     time_ = base::Time(time);
   }
 
+  void LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                               const GURL& url,
+                               base::Time time,
+                               PreviewsType type) override {
+    reason_ = reason;
+    url_ = GURL(url);
+    time_ = time;
+    type_ = type;
+  }
+
+  PreviewsEligibilityReason reason_;
   GURL url_;
   bool opt_out_;
   PreviewsType type_;
@@ -528,6 +542,23 @@ TEST_F(PreviewsIODataTest, LogPreviewNavigationPassInCorrectParams) {
   EXPECT_EQ(opt_out, ui_service()->opt_out());
   EXPECT_EQ(type, ui_service()->type());
   EXPECT_EQ(time, ui_service()->time());
+}
+
+TEST_F(PreviewsIODataTest, LogPreviewsDecisionMadePassInCorrectParams) {
+  InitializeUIService();
+  PreviewsEligibilityReason reason(
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE);
+  GURL url("http://www.url_a.com/url_a");
+  base::Time time = base::Time::Now();
+  PreviewsType type = PreviewsType::OFFLINE;
+
+  io_data()->LogPreviewsDecisionMade(reason, url, time, type);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(reason, ui_service()->reason());
+  EXPECT_EQ(url, ui_service()->url());
+  EXPECT_EQ(time, ui_service()->time());
+  EXPECT_EQ(type, ui_service()->type());
 }
 
 }  // namespace
