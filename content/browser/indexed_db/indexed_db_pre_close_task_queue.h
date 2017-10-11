@@ -22,7 +22,7 @@ namespace content {
 // Holds a queue of PreCloseTask's to be run after an IndexedDBBackingStore no
 // longer has any connections.
 //
-// There is a special IndexedDBMetadata fetcher task that runs beofre all the
+// There is a special IndexedDBMetadata fetcher task that runs before all the
 // other tasks, and whose output is passed to each task before they start.
 //
 // Owned by IndexedDBBackingStore.
@@ -72,8 +72,8 @@ class CONTENT_EXPORT IndexedDBPreCloseTaskQueue {
   // Tasks are all complete or they have been stopped.
   bool done() const { return done_; }
 
-  // Stops all tasks and destroys them. The |on_complete| callback will be
-  // immediately called.
+  // Stops all tasks and destroys them. The |on_complete| callback will not be
+  // called.
   void StopForNewConnection();
 
   // Starts running tasks. Can only be called once.
@@ -81,7 +81,7 @@ class CONTENT_EXPORT IndexedDBPreCloseTaskQueue {
                  std::vector<IndexedDBDatabaseMetadata>*)> metadata_fetcher);
 
  private:
-  void OnComplete();
+  void OnComplete(bool run_callback);
 
   void StopForTimout();
   void StopForMetadataError(const leveldb::Status& status);
