@@ -24,6 +24,7 @@
 #include "content/network/http_server_properties_pref_delegate.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory_impl.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
@@ -131,6 +132,15 @@ void NetworkContext::HandleViewCacheRequest(const GURL& url,
 void NetworkContext::GetCookieManager(
     network::mojom::CookieManagerRequest request) {
   cookie_manager_->AddRequest(std::move(request));
+}
+
+void NetworkContext::GetRestrictedCookieManager(
+    network::mojom::RestrictedCookieManagerRequest request,
+    uint32_t render_process_id,
+    uint32_t render_frame_id) {
+  RestrictedCookieManagerImpl::CreateMojoService(
+      url_request_context_->cookie_store(), render_process_id, render_frame_id,
+      std::move(request));
 }
 
 void NetworkContext::DisableQuic() {

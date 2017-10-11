@@ -1080,6 +1080,11 @@ interface ConvolverNode : AudioNode
     method constructor
     setter buffer
     setter normalize
+interface CookieStore
+    attribute @@toStringTag
+    method constructor
+    method getAll
+    method set
 interface CountQueuingStrategy
     method constructor
     method size
@@ -9124,6 +9129,7 @@ interface webkitURL
     getter audioWorklet
     getter caches
     getter clientInformation
+    getter cookieStore
     getter crypto
     getter customElements
     getter defaultStatus
@@ -9315,6 +9321,7 @@ interface webkitURL
     method webkitRequestFileSystem
     method webkitResolveLocalFileSystemURL
     setter clientInformation
+    setter cookieStore
     setter defaultStatus
     setter defaultstatus
     setter devicePixelRatio

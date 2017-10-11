@@ -14,6 +14,7 @@
 #include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/process/kill.h"
@@ -91,6 +92,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/widget.mojom.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_context.h"
@@ -112,6 +114,7 @@
 #include "content/public/common/file_chooser_file_info.h"
 #include "content/public/common/file_chooser_params.h"
 #include "content/public/common/isolated_world_ids.h"
+#include "content/public/common/network_service.mojom.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
@@ -3044,6 +3047,25 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   }
 
   registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
+
+  {
+    BrowserContext* browser_context = GetProcess()->GetBrowserContext();
+    StoragePartition* storage_partition =
+        BrowserContext::GetDefaultStoragePartition(browser_context);
+    mojom::NetworkContext* network_context =
+        storage_partition->GetNetworkContext();
+    registry_->AddInterface(
+        base::BindRepeating(
+            [](mojom::NetworkContext* network_context,
+               uint32_t render_process_id, uint32_t render_frame_id,
+               network::mojom::RestrictedCookieManagerRequest request) {
+              network_context->GetRestrictedCookieManager(
+                  std::move(request), render_process_id, render_frame_id);
+            },
+            base::Unretained(network_context), GetProcess()->GetID(),
+            GetRoutingID()),
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  }
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
