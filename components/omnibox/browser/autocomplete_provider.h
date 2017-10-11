@@ -140,6 +140,7 @@ class AutocompleteProvider
     TYPE_ZERO_SUGGEST     = 1 << 7,
     TYPE_CLIPBOARD_URL    = 1 << 8,
     TYPE_PHYSICAL_WEB     = 1 << 9,
+    TYPE_TAB_SEARCH       = 1 << 10,
   };
 
   explicit AutocompleteProvider(Type type);
