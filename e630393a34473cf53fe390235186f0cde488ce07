@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b11a8dd_28450f4c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-11T20:57:48Z",
+      "side": 1,
+      "message": "Thanks for adding the comment!",
+      "range": {
+        "startLine": 207,
+        "startChar": 18,
+        "endLine": 207,
+        "endChar": 0
+      },
+      "revId": "e630393a34473cf53fe390235186f0cde488ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb4fc1e_c8475349",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-11T20:57:48Z",
+      "side": 1,
+      "message": "single_strip_block_size.ToFloat() / static_cast\u003cfloat\u003e(column_count);",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 35
+      },
+      "revId": "e630393a34473cf53fe390235186f0cde488ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
