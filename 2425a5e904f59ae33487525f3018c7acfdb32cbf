@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b68584a1_21a96b7f",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-11T23:33:37Z",
+      "side": 1,
+      "message": "We probably should use TimeDelta for duration as much as we can. I noticed that this is returning double because WebMediaPlayer is doing so. But since third_party/WebKit can use base::TimeDelta as well now, probably we should just update WebMediaPlayer interface to use TimeDelta for duration.\n\nmiu (as base/time/OWNERS): Does this make sense? We can land this as is for now to make the branch cut, but it\u0027d be nice to have a plan for a better API.",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "2425a5e904f59ae33487525f3018c7acfdb32cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
