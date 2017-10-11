@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d4e4ca3_0216bb5a",
+        "filename": "content/browser/webauth/authenticator_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-11T18:01:53Z",
+      "side": 1,
+      "message": "How are these blobs produced? Is there a sequence of command line tool invocations that we could explain here?\n\nEssentially I wonder what the poor soul, who is tasked with changing this, could do in the future. :-)",
+      "revId": "26184cebd4ac4208f2abe6eb23092859e2fabe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
