@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f53ab2dd_094d5db0",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T23:50:24Z",
+      "side": 1,
+      "message": "Ah, I see. Maybe at least add that as comment. Somehow I was guessing \"unused\" meant that the area was loaded from the cache, but was currently unused (i.e. I interpreted \"used\" being about the area being used or not, not about the cache being useful or not). Your explanation indeed makes sense and matches your code, so that\u0027s good. Not sure what better names would be, so probably fine to keep like this.",
+      "parentUuid": "06aa8314_ff63c900",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8adbe92c_2500f024",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
         "patchSetId": 5
