@@ -83,6 +83,7 @@ void CenterVertically(NSView* view) {
       checkboxWithTitle:l10n_util::GetNSString(
                             IDS_FIRSTRUN_DLG_MAC_SET_DEFAULT_BROWSER_LABEL)];
   [defaultBrowserCheckbox_ setFrame:NSMakeRect(45, 107, 528, 18)];
+  [defaultBrowserCheckbox_ setNextState];
   if (!defaultBrowserCheckboxVisible_)
     [defaultBrowserCheckbox_ setHidden:YES];
 
