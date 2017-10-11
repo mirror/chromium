@@ -532,7 +532,7 @@ void QuicSpdySession::OnPromiseHeaderList(QuicStreamId stream_id,
 
 void QuicSpdySession::OnConfigNegotiated() {
   QuicSession::OnConfigNegotiated();
-  if (config()->HasClientSentConnectionOption(kDHDT, perspective())) {
+  if (config()->HasClientRequestedSharedOption(kDHDT, perspective())) {
     DisableHpackDynamicTable();
   }
 }

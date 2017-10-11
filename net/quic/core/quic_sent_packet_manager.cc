@@ -126,19 +126,19 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
 
   using_pacing_ = !FLAGS_quic_disable_pacing_for_perf_tests;
 
-  if (config.HasClientSentConnectionOption(k1CON, perspective_)) {
+  if (config.HasClientRequestedSharedOption(k1CON, perspective_)) {
     send_algorithm_->SetNumEmulatedConnections(1);
   }
-  if (config.HasClientSentConnectionOption(kNCON, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kNCON, perspective_)) {
     n_connection_simulation_ = true;
   }
-  if (config.HasClientSentConnectionOption(kNTLP, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kNTLP, perspective_)) {
     max_tail_loss_probes_ = 0;
   }
-  if (config.HasClientSentConnectionOption(kTLPR, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kTLPR, perspective_)) {
     enable_half_rtt_tail_loss_probe_ = true;
   }
-  if (config.HasClientSentConnectionOption(kNRTO, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kNRTO, perspective_)) {
     use_new_rto_ = true;
   }
   // Configure loss detection.
@@ -151,7 +151,7 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
   if (config.HasClientRequestedIndependentOption(kLFAK, perspective_)) {
     general_loss_algorithm_.SetLossDetectionType(kLazyFack);
   }
-  if (config.HasClientSentConnectionOption(kCONH, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kCONH, perspective_)) {
     conservative_handshake_retransmits_ = true;
   }
   send_algorithm_->SetFromConfig(config, perspective_);

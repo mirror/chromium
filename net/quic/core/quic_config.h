@@ -274,9 +274,8 @@ class QUIC_EXPORT_PRIVATE QuicConfig {
 
   // Returns true if the client is sending or the server has received a
   // connection option.
-  // TODO(ianswett): Rename to HasClientRequestedSharedOption
-  bool HasClientSentConnectionOption(QuicTag tag,
-                                     Perspective perspective) const;
+  bool HasClientRequestedSharedOption(QuicTag tag,
+                                      Perspective perspective) const;
 
   void SetClientConnectionOptions(
       const QuicTagVector& client_connection_options);

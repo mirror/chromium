@@ -330,45 +330,45 @@ void QuicConnection::SetFromConfig(const QuicConfig& config) {
   }
   max_undecryptable_packets_ = config.max_undecryptable_packets();
 
-  if (config.HasClientSentConnectionOption(kMTUH, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kMTUH, perspective_)) {
     SetMtuDiscoveryTarget(kMtuDiscoveryTargetPacketSizeHigh);
   }
-  if (config.HasClientSentConnectionOption(kMTUL, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kMTUL, perspective_)) {
     SetMtuDiscoveryTarget(kMtuDiscoveryTargetPacketSizeLow);
   }
   if (debug_visitor_ != nullptr) {
     debug_visitor_->OnSetFromConfig(config);
   }
-  if (config.HasClientSentConnectionOption(kACKD, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kACKD, perspective_)) {
     ack_mode_ = ACK_DECIMATION;
   }
-  if (config.HasClientSentConnectionOption(kAKD2, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kAKD2, perspective_)) {
     ack_mode_ = ACK_DECIMATION_WITH_REORDERING;
   }
-  if (config.HasClientSentConnectionOption(kAKD3, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kAKD3, perspective_)) {
     ack_mode_ = ACK_DECIMATION;
     ack_decimation_delay_ = kShortAckDecimationDelay;
   }
-  if (config.HasClientSentConnectionOption(kAKD4, perspective_)) {
+  if (config.HasClientRequestedSharedOption(kAKD4, perspective_)) {
     ack_mode_ = ACK_DECIMATION_WITH_REORDERING;
     ack_decimation_delay_ = kShortAckDecimationDelay;
   }
   if (FLAGS_quic_reloadable_flag_quic_ack_decimation) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_ack_decimation);
-    if (config.HasClientSentConnectionOption(kAKDU, perspective_)) {
+    if (config.HasClientRequestedSharedOption(kAKDU, perspective_)) {
       unlimited_ack_decimation_ = true;
     }
   }
-  if (config.HasClientSentConnectionOption(k5RTO, perspective_)) {
+  if (config.HasClientRequestedSharedOption(k5RTO, perspective_)) {
     close_connection_after_five_rtos_ = true;
   }
   if (FLAGS_quic_reloadable_flag_quic_enable_3rtos &&
-      config.HasClientSentConnectionOption(k3RTO, perspective_)) {
+      config.HasClientRequestedSharedOption(k3RTO, perspective_)) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_3rtos);
     close_connection_after_three_rtos_ = true;
   }
   if (transport_version() > QUIC_VERSION_37 &&
-      config.HasClientSentConnectionOption(kNSTP, perspective_)) {
+      config.HasClientRequestedSharedOption(kNSTP, perspective_)) {
     no_stop_waiting_frames_ = true;
   }
 }

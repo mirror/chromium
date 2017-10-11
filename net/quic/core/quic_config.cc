@@ -443,8 +443,8 @@ QuicTagVector QuicConfig::SendConnectionOptions() const {
   return connection_options_.GetSendValues();
 }
 
-bool QuicConfig::HasClientSentConnectionOption(QuicTag tag,
-                                               Perspective perspective) const {
+bool QuicConfig::HasClientRequestedSharedOption(QuicTag tag,
+                                                Perspective perspective) const {
   if (perspective == Perspective::IS_SERVER) {
     if (HasReceivedConnectionOptions() &&
         ContainsQuicTag(ReceivedConnectionOptions(), tag)) {
