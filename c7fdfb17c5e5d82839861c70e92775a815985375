@@ -1,0 +1,596 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc80db_d2689a69",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d omit this newline.",
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8321f21d_adbd7270",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Could this param be passed by const-ref?  Applies to the other helper functions as well.",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23535d23_9f163491",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Mebbe \"DirectFileAccessor\"?",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb88d82_06cf5700",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Add curlies, since the body spans two lines.",
+      "range": {
+        "startLine": 129,
+        "startChar": 45,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09218a2_486c1589",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Could you DCHECK that the |dest_file| is not set in this case?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a260fa6f_decba83a",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "It looks like you\u0027re replacing the base::FileEnumerator with manual iteration/enumeration – is that correct?  What\u0027s the advantage of doing it manually?",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 80
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb84963_de475c49",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Could you share this loop across the if/else, and just use the if-else to build up the list of files?",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 5
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dc9d61_bcf3ac68",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Could this be a simple struct, rather than a raw std::pair?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7696a0fc_3ccf762e",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: dest_fd?",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c67655_0b4a9d4f",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: extra whitespace",
+      "range": {
+        "startLine": 52,
+        "startChar": 60,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1068c5bc_a97b0828",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: using?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deea285f_2e2ace28",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: running",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 33
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805d18af_99e87afe",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Add a comma after IPC",
+      "range": {
+        "startLine": 75,
+        "startChar": 13,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a2406c_3cee5ec8",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: I think this phrase is missing some words. At least, I\u0027m having trouble parsing it as a complete phrase.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da75e783_dc6c3fd3",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Please document this param, including that it doesn\u0027t apply if src_files_ is specified.  Ditto for the other params.",
+      "range": {
+        "startLine": 93,
+        "startChar": 34,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e90c0e_5389ebcb",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Please add documentation.",
+      "range": {
+        "startLine": 100,
+        "startChar": 34,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a6a75b_b9de6127",
+        "filename": "third_party/zlib/google/zip_internal.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here... do you happen to know whether this \"zipfi\" comment makes sense as-is?  It kind of looks truncated...",
+      "range": {
+        "startLine": 356,
+        "startChar": 59,
+        "endLine": 356,
+        "endChar": 64
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d52e09c_4907520c",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Mebbe factor out a helper function for creating/writing the file contents?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 80
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7da58d_0df214ef",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Is this case reachable?  If so, mebbe document why.",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 72
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97a72e6_671f8a32",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 65
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f82140_ae58157b",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d7ce85_940f5893",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: constexpr char[]",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508996a4_89ba0544",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "Optional: I really like \"This is bar too\" for the contents of a file named bar2, but maybe that\u0027s just me \u003dP",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838801e5_cc29aa3e",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, mind renaming this to something like \"zip_path\"?  I think it\u0027ll make the rest of the test code clearer.",
+      "range": {
+        "startLine": 175,
+        "startChar": 19,
+        "endLine": 175,
+        "endChar": 23
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ef7c6a_dafaf354",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: s/is/are",
+      "range": {
+        "startLine": 183,
+        "startChar": 43,
+        "endLine": 183,
+        "endChar": 45
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a4b35c_48ad13a8",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T19:52:45Z",
+      "side": 1,
+      "message": "nit: Please add some sort of log stmt to make it clear which file\u0027s contents mismatched if this fails.",
+      "range": {
+        "startLine": 187,
+        "startChar": 67,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
