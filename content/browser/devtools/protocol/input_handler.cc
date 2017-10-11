@@ -62,7 +62,10 @@ bool StringToGestureSourceType(Maybe<std::string> in,
   return false;
 }
 
-int GetEventModifiers(int modifiers, bool auto_repeat, bool is_keypad) {
+int GetEventModifiers(int modifiers,
+                      bool auto_repeat,
+                      bool is_keypad,
+                      int location) {
   int result = 0;
   if (auto_repeat)
     result |= blink::WebInputEvent::kIsAutoRepeat;
@@ -77,6 +80,11 @@ int GetEventModifiers(int modifiers, bool auto_repeat, bool is_keypad) {
     result |= blink::WebInputEvent::kMetaKey;
   if (modifiers & 8)
     result |= blink::WebInputEvent::kShiftKey;
+
+  if (location & 1)
+    result |= blink::WebInputEvent::kIsLeft;
+  if (location & 2)
+    result |= blink::WebInputEvent::kIsRight;
   return result;
 }
 
@@ -333,6 +341,7 @@ void InputHandler::DispatchKeyEvent(
     Maybe<bool> auto_repeat,
     Maybe<bool> is_keypad,
     Maybe<bool> is_system_key,
+    Maybe<int> location,
     std::unique_ptr<DispatchKeyEventCallback> callback) {
   blink::WebInputEvent::Type web_event_type;
 
@@ -354,7 +363,7 @@ void InputHandler::DispatchKeyEvent(
       web_event_type,
       GetEventModifiers(modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers),
                         auto_repeat.fromMaybe(false),
-                        is_keypad.fromMaybe(false)),
+                        is_keypad.fromMaybe(false), location.fromMaybe(0)),
       GetEventTimeTicks(std::move(timestamp)));
 
   if (!SetKeyboardEventText(event.text, std::move(text))) {
@@ -436,7 +445,7 @@ void InputHandler::DispatchMouseEvent(
 
   int modifiers = GetEventModifiers(
       maybe_modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers), false,
-      false);
+      false, 0);
   modifiers |= button_modifiers;
   double timestamp = GetEventTimestamp(std::move(maybe_timestamp));
 
@@ -511,7 +520,7 @@ void InputHandler::DispatchTouchEvent(
 
   int modifiers = GetEventModifiers(
       maybe_modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers), false,
-      false);
+      false, 0);
   double timestamp = GetEventTimestamp(std::move(maybe_timestamp));
 
   if ((type == blink::WebInputEvent::kTouchStart ||
@@ -669,7 +678,7 @@ Response InputHandler::EmulateTouchFromMouseEvent(const std::string& type,
         event_type,
         GetEventModifiers(
             modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers), false,
-            false) |
+            false, 0) |
             button_modifiers,
         GetEventTimestamp(timestamp));
     mouse_event = wheel_event;
@@ -681,7 +690,7 @@ Response InputHandler::EmulateTouchFromMouseEvent(const std::string& type,
         event_type,
         GetEventModifiers(
             modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers), false,
-            false) |
+            false, 0) |
             button_modifiers,
         GetEventTimestamp(timestamp));
     event.reset(mouse_event);
