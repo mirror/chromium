@@ -63,6 +63,8 @@
 #include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/config/gpu_driver_bug_workaround_type.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/common/gpu_surface_tracker.h"
@@ -806,6 +808,10 @@ void CompositorImpl::InitializeDisplay(
 
   if (context_provider) {
     gpu_capabilities_ = context_provider->ContextCapabilities();
+    texture_format_etc1_npot_ =
+        gpu_capabilities_.texture_format_etc1 &&
+        !context_provider->GetGpuFeatureInfo().IsWorkaroundEnabled(
+            gpu::ETC1_POWER_OF_TWO_ONLY);
   } else {
     // TODO(danakj): Populate gpu_capabilities_ for VulkanContextProvider.
   }
@@ -864,7 +870,7 @@ void CompositorImpl::DeleteUIResource(cc::UIResourceId resource_id) {
 }
 
 bool CompositorImpl::SupportsETC1NonPowerOfTwo() const {
-  return gpu_capabilities_.texture_format_etc1_npot;
+  return texture_format_etc1_npot_;
 }
 
 void CompositorImpl::DidSubmitCompositorFrame() {

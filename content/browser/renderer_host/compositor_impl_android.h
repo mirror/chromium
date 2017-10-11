@@ -189,6 +189,7 @@ class CONTENT_EXPORT CompositorImpl
   bool layer_tree_frame_sink_request_pending_;
 
   gpu::Capabilities gpu_capabilities_;
+  bool texture_format_etc1_npot_ = false;
   bool has_layer_tree_frame_sink_ = false;
   std::unordered_set<viz::FrameSinkId, viz::FrameSinkIdHash>
       pending_child_frame_sink_ids_;
