@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "df21f97c_7f31a807",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-10-11T18:47:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4c24445d_5d7b22fd",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1d0efc_64a89c68",
         "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
         "patchSetId": 8
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Interesting, I thought we keep separate histograms for separate story run?",
       "parentUuid": "794ff770_6584c94d",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6145dd84_706c9806",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-10-11T18:47:30Z",
+      "side": 1,
+      "message": "It depends on the pipeline stage.\nThe results.html produced by telemetry keeps separate histograms for separate repetitions. It would be possible to use results2json -\u003e merge_histograms -\u003e histograms2html to build a results.html that did not keep separate histograms for separate repetitions, but this doesn\u0027t seem to really happen.\nHowever, this bug is about the chromeperf dashboard.\nThe dashboard\u0027s add_point stores a single Row entity per Value, and add_histograms stores a single Row per Histogram. If there were multiple Values or Histograms with the same name, master, bot, benchmark, story tags / grouping keys / tir label, story name, and revisions, then (IIUC) add_point or add_histograms would race so that only the last Value/Histogram was stored. The dashboard does not care about repetitions.\nTelemetry summarizes across repetitions before producing chartjson.\nThe Histogram Pipeline needs to merge across repetitions before uploading. I have a CL out right now to do just that: https://chromium-review.googlesource.com/c/catapult/+/713658\nThe bug behind this CL is about /add_point timing out because there are too many Values. IIUC, add_point\u0027s performance is more closely related to the number of Values than the number of samples. pageset_repeat affects the number of samples, but it doesn\u0027t affect the number of Values because telemetry summarizes across pageset_repeat, and the Histogram Pipeline will summarize across repetitions as well.\nDoes that sound right?",
+      "parentUuid": "5524b335_62a1bbdc",
       "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
