@@ -22,6 +22,30 @@
       "revId": "1ac866601bbe6dace397d56085c33d8beafb5f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a9e895_8be63711",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64502,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-11T17:20:00Z",
+      "side": 0,
+      "message": "IMO, we can just delete this. It was literally added a couple days ago and has no logs yet. Is that okay by you?",
+      "parentUuid": "369ea83b_20e67b75",
+      "range": {
+        "startLine": 64502,
+        "startChar": 77,
+        "endLine": 64502,
+        "endChar": 0
+      },
+      "revId": "1ac866601bbe6dace397d56085c33d8beafb5f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
