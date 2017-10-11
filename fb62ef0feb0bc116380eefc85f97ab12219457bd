@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd732c94_5ee0f58d",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-11T01:44:46Z",
+      "side": 1,
+      "message": "The CrWinGoma* ones aren\u0027t Clang related and are still on the fyi waterfall.",
+      "revId": "fb62ef0feb0bc116380eefc85f97ab12219457bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
