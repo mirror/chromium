@@ -89,7 +89,7 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
   }
 
   // Returns data received via mojo interface method
-  // mojom::AutofillAent::FieldTypePredictionsAvailable().
+  // mojom::AutofillAgent::FieldTypePredictionsAvailable().
   bool GetFieldTypePredictionsAvailable(
       std::vector<FormDataPredictions>* predictions) {
     if (!predictions_)
@@ -98,6 +98,7 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
       *predictions = *predictions_;
     return true;
   }
+  bool GetShouldAttachToField() { return should_attach_to_field_; }
 
   // Returns whether mojo interface method mojom::AutofillAgent::ClearForm() got
   // called.
@@ -162,8 +163,10 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
   }
 
   void FieldTypePredictionsAvailable(
-      const std::vector<FormDataPredictions>& forms) override {
+      const std::vector<FormDataPredictions>& forms,
+      bool should_attach_to_field) override {
     predictions_ = forms;
+    should_attach_to_field_ = should_attach_to_field;
     CallDone();
   }
 
@@ -218,6 +221,7 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
   base::Optional<FormData> preview_form_form_;
   // Records data received from FieldTypePredictionsAvailable() call.
   base::Optional<std::vector<FormDataPredictions>> predictions_;
+  bool should_attach_to_field_;
   // Records whether ClearForm() got called.
   bool called_clear_form_;
   // Records whether ClearPreviewedForm() got called.
@@ -371,21 +375,32 @@ TEST_F(ContentAutofillDriverTest, FormDataSentToRenderer_PreviewForm) {
 }
 
 TEST_F(ContentAutofillDriverTest,
-       TypePredictionsNotSentToRendererWhenDisabled) {
+       TypePredictionsSentToRenderer_AttachDisabled) {
+  // The --show-autofill-type-predictions flag is not enabled, which will
+  // result in |should_attach_to_field_| being false, below.
+
   FormData form;
   test::CreateTestAddressFormData(&form);
   FormStructure form_structure(form);
   std::vector<FormStructure*> forms(1, &form_structure);
+  std::vector<FormDataPredictions> expected_type_predictions =
+      FormStructure::GetFieldTypePredictions(forms);
 
   base::RunLoop run_loop;
   fake_agent_.SetQuitLoopClosure(run_loop.QuitClosure());
   driver_->SendAutofillTypePredictionsToRenderer(forms);
   run_loop.RunUntilIdle();
 
-  EXPECT_FALSE(fake_agent_.GetFieldTypePredictionsAvailable(NULL));
+  std::vector<FormDataPredictions> output_type_predictions;
+  EXPECT_TRUE(
+      fake_agent_.GetFieldTypePredictionsAvailable(&output_type_predictions));
+  EXPECT_FALSE(fake_agent_.GetShouldAttachToField());
+  EXPECT_EQ(expected_type_predictions, output_type_predictions);
 }
 
-TEST_F(ContentAutofillDriverTest, TypePredictionsSentToRendererWhenEnabled) {
+TEST_F(ContentAutofillDriverTest, TypePredictionsSentToRenderer_AttachEnabled) {
+  // The --show-autofill-type-predictions flag is enabled, which will result in
+  // |should_attach_to_field_| being true, below.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kShowAutofillTypePredictions);
 
@@ -404,6 +419,7 @@ TEST_F(ContentAutofillDriverTest, TypePredictionsSentToRendererWhenEnabled) {
   std::vector<FormDataPredictions> output_type_predictions;
   EXPECT_TRUE(
       fake_agent_.GetFieldTypePredictionsAvailable(&output_type_predictions));
+  EXPECT_TRUE(fake_agent_.GetShouldAttachToField());
   EXPECT_EQ(expected_type_predictions, output_type_predictions);
 }
 
