@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5f906d5_0121d75d",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 0,
+      "message": "Artifact from previous code improvement where we added range support to the transaction.",
+      "parentUuid": "11708129_89400204",
+      "revId": "39b665ba7d8ad30cfecd91fe32a3f1521d4bc6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "821c4157_573aee62",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9c626ab4_c2665a2a",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 0,
+      "message": "We don\u0027t need it - it was always called right after GetIDBDatabaseMetaData, and we now special case the one time it wasn\u0027t used, where we just wanted the database id for a name (and not all the other stuff).",
+      "parentUuid": "821c4157_573aee62",
+      "range": {
+        "startLine": 453,
+        "startChar": 18,
+        "endLine": 453,
+        "endChar": 33
+      },
+      "revId": "39b665ba7d8ad30cfecd91fe32a3f1521d4bc6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a092b0_b2f9a2bb",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "39b665ba7d8ad30cfecd91fe32a3f1521d4bc6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13379112_b0dcad90",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 0,
+      "message": "Lol yeah - this is pretty old code.",
+      "parentUuid": "41a092b0_b2f9a2bb",
+      "revId": "39b665ba7d8ad30cfecd91fe32a3f1521d4bc6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

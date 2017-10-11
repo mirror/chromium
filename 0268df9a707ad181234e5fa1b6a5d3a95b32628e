@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e63d3060_581c8559",
+        "filename": "content/browser/indexed_db/fake_indexed_db_metadata_coding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c594863c_00d98996",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8357f52b_41233739",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e31213f_63659919",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8357f52b_41233739",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d28260c4_deb45112",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Nice catch!\n\nNo, at least not right now, I don\u0027t want behavior changes around status and found. Our current pattern is to have |found| be a boolean, and status to return OK(), as this is not necessarily an error. But in this case it\u0027s an error, so we return a non-ok status.",
+      "parentUuid": "0ec83f0d_f585f66e",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc2c0417_d54a82ed",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349fe24b_ea311b19",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "If the database is corrupted yes, but since this is doing deleting, it\u0027s less of an issue (and we will probably find more errors soon if it is corrupt).",
+      "parentUuid": "fc2c0417_d54a82ed",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8f709ce1_e536f8b5",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2000,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "So this is to clear the data from the index, which doesn\u0027t have to do with the metadata. We are separating the metadata handling from the regular data handling in this refactor.\n\nWhen we delete an index, we first delete the metadata, then we delete the data.",
+      "parentUuid": "b0fa88cc_9d1930a0",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd564fc_763672f7",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2323b7_235fac83",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd564fc_763672f7",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9662eea3_d2a490e6",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b169ac27_816a21ad",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab756296_499d635a",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6b21e3_95577851",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done - yeah that sounds fine. Thanks for catching this.",
+      "parentUuid": "ab756296_499d635a",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "26bc4263_5cbc3b7e",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "It did, just at the bottom (using SetObjectStoreName, which I removed). Whoever wrote this class was really into copying.",
+      "parentUuid": "bead7e76_00876e38",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71bb50f3_7bf7ea49",
         "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
         "patchSetId": 8
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a0753401_3883f38e",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Yeah removing it on purpose.",
+      "parentUuid": "71bb50f3_7bf7ea49",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55c418b_e1ff4872",
         "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
         "patchSetId": 8
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-11T20:29:24Z",
       "side": 1,
       "message": "The arguments to the error macros here seem to refer to the original names (GET_DATABASE_NAMES vs. READ_DATABASE_NAMES, etc). Is that intentional to leave them unmodified, or should they be renamed as well?",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498f2d90_d80393c2",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "This will involve UMA renaming - I\u0027ll add a todo, we have other UMA stuff to add / rename here.",
+      "parentUuid": "e55c418b_e1ff4872",
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "4db9860c_59c04e3d",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "How about ReadMetadataForDatabaseName?",
+      "parentUuid": "8a54c7a9_daf9e7ac",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf37f89_fa492267",
         "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
         "patchSetId": 8
@@ -220,6 +436,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51d5d70_e65c856d",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eaf37f89_fa492267",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "888053ec_36fe887e",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "This may have been a result of me trying to fix another bug, changing back.",
+      "parentUuid": "f7be6ad0_acc90f5c",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7785f1_912dc605",
         "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
         "patchSetId": 8
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "1b1a814b_b11413da",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da7785f1_912dc605",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff7785dc_3154def0",
         "filename": "content/browser/indexed_db/indexed_db_metadata_coding.h",
         "patchSetId": 8
@@ -271,6 +541,24 @@
       "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157de332_26933321",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_coding.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T21:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff7785dc_3154def0",
+      "revId": "0268df9a707ad181234e5fa1b6a5d3a95b32628e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
