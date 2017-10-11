@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66e70328_27f5c540",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T01:29:08Z",
+      "side": 1,
+      "message": "Per CL description, this is intentionally hardcoded because we don\u0027t want to do any imports in the \u003chead\u003e section, or trigger any kind of CSS variable evaluation, to achieve pushing pixels to the screen as fast as possible. This was a trick suggested to us during the MD Settings development by @esprehn (Blink expert).\n\nSee original CL reviewed by @esprehn, https://codereview.chromium.org/2802583003.",
+      "parentUuid": "13327b27_88d92875",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60584bef_e1a18acb",
         "filename": "chrome/browser/resources/md_extensions/extensions.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T01:07:07Z",
       "side": 1,
       "message": "Can use use --google-blue-700 here directly",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8550b681_a073ebfc",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T01:29:08Z",
+      "side": 1,
+      "message": "Same here.",
+      "parentUuid": "60584bef_e1a18acb",
       "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
