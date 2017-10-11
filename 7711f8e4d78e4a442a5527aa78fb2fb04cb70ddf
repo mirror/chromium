@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41af25a7_20203512",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T22:05:42Z",
+      "side": 1,
+      "message": "nit: it would be good to release the lock before the syscall (which could block, though unlikely).",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcdda0b_aebc2ccc",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T22:05:42Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09dd482_659e8d60",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T22:05:42Z",
+      "side": 1,
+      "message": "nit: no need for this since you can\u0027t instantiate this class and it has no member variable.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
