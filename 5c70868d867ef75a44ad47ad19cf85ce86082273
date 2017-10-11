@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "da60dc3a_61045a11",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-11T03:17:31Z",
+      "side": 1,
+      "message": "I don\u0027t want to crash here. There is no harm in passing an empty value to IsValueBlacklisted().\nIt\u0027s a no-op (if you follow the function calls), so I\u0027m putting the check here only to avoid unnecessary computation.",
+      "parentUuid": "558fe973_d993dfac",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c68c8f0_c4188a8b",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 13
@@ -119,6 +137,24 @@
       "writtenOn": "2017-10-10T07:54:19Z",
       "side": 1,
       "message": "ditto",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0229063b_1f552ed5",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-11T03:17:31Z",
+      "side": 1,
+      "message": "Explained above.",
+      "parentUuid": "1c68c8f0_c4188a8b",
       "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
