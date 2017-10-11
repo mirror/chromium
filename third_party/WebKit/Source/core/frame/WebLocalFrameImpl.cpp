@@ -1761,6 +1761,7 @@ LocalFrame* WebLocalFrameImpl::CreateChildFrame(
   webframe_child->InitializeCoreFrame(*GetFrame()->GetPage(), owner_element,
                                       name);
   DCHECK(webframe_child->Parent());
+
   return webframe_child->GetFrame();
 }
 
