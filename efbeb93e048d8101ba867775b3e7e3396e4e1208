@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b30d5ca8_83665c72",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T05:46:01Z",
+      "side": 1,
+      "message": "Agree, the spec should say contentEditable is should disable \"draggable\".\nCould you file this into whatwg/html issue tracker[1]?\n\n[1] https://github.com/whatwg/html/issues",
+      "parentUuid": "9e5c476c_062382b8",
+      "revId": "efbeb93e048d8101ba867775b3e7e3396e4e1208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0598e782_616e6e48",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 3
