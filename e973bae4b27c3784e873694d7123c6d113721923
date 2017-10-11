@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ffee24e2_d2c62d31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T22:23:53Z",
+      "side": 1,
+      "message": "Thanks for the additional context here, that\u0027s helpful. Let\u0027s leave it this way then.",
+      "parentUuid": "39b5c727_14262ac1",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58afe83_627f494e",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Yes, it is possible. As a matter of principle, I would prefer not to test UMA metric recording (though I know that there are many tests which test UMA metric recording).\n\nTo me testing UMA metric recording sounds too much like testing \"the implementation\" instead of \"desired behavior\".",
       "parentUuid": "c58afe83_627f494e",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b157018_c7e28c2e",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T22:23:53Z",
+      "side": 1,
+      "message": "It\u0027s important to me because there have been several cases where buggy UMA metrics have been introduced and then non-useful data has been recorded. Since it takes 6-12 weeks to get metrics from a representative channel, I like having tests if it\u0027s possible.",
+      "parentUuid": "103b0991_56552831",
       "range": {
         "startLine": 66,
         "startChar": 8,
