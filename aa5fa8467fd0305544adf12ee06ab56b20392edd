@@ -22,6 +22,30 @@
       "revId": "aa5fa8467fd0305544adf12ee06ab56b20392edd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e610ef_b3cef170",
+        "filename": "extensions/browser/sandboxed_unpacker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-11T17:24:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f0c0440_e1e1b5dd",
+      "range": {
+        "startLine": 515,
+        "startChar": 2,
+        "endLine": 515,
+        "endChar": 15
+      },
+      "revId": "aa5fa8467fd0305544adf12ee06ab56b20392edd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
