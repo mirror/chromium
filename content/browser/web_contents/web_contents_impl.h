@@ -105,6 +105,7 @@ class CreateNewWindowParams;
 
 #if defined(OS_ANDROID)
 class WebContentsAndroid;
+class MediaPlayerRendererWebContentsObserver;
 #else  // !defined(OS_ANDROID)
 class HostZoomMapObserver;
 #endif  // defined(OS_ANDROID)
@@ -859,6 +860,13 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   MediaWebContentsObserver* media_web_contents_observer() {
     return media_web_contents_observer_.get();
   }
+
+#if defined(OS_ANDROID)
+  MediaPlayerRendererWebContentsObserver*
+  media_player_renderer_web_contents_observer() {
+    return media_player_renderer_web_contents_observer_.get();
+  }
+#endif  // defined(OS_ANDROID)
 
   // Update the web contents visibility.
   void UpdateWebContentsVisibility(bool visible);
@@ -1633,6 +1641,11 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 
   // Manages media players, CDMs, and power save blockers for media.
   std::unique_ptr<MediaWebContentsObserver> media_web_contents_observer_;
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<MediaPlayerRendererWebContentsObserver>
+      media_player_renderer_web_contents_observer_;
+#endif  // defined(OS_ANDROID)
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Observes pepper playback changes, and notifies MediaSession.
