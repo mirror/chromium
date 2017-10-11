@@ -7,6 +7,7 @@
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorCSSAgent.h"
@@ -37,10 +38,17 @@ class InspectorResourceContentLoader::ResourceClient final
       : loader_(loader) {}
 
   void WaitForResource(Resource* resource) {
-    if (resource->GetType() == Resource::kRaw)
-      resource->AddClient(static_cast<RawResourceClient*>(this));
-    else
-      resource->AddClient(static_cast<StyleSheetResourceClient*>(this));
+    if (resource->GetType() == Resource::kRaw) {
+      resource->AddClient(static_cast<RawResourceClient*>(this),
+                          TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                loader_->inspected_frame_.Get())
+                              .get());
+    } else {
+      resource->AddClient(static_cast<StyleSheetResourceClient*>(this),
+                          TaskRunnerHelper::Get(TaskType::kNetworking,
+                                                loader_->inspected_frame_.Get())
+                              .get());
+    }
   }
 
   DEFINE_INLINE_TRACE() {

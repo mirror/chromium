@@ -877,7 +877,8 @@ void DocumentLoader::StartLoading() {
   // make some modification to the request, e.g. adding the referer header.
   request_ = main_resource_->IsLoading() ? main_resource_->GetResourceRequest()
                                          : fetch_params.GetResourceRequest();
-  main_resource_->AddClient(this);
+  main_resource_->AddClient(
+      this, TaskRunnerHelper::Get(TaskType::kNetworking, frame_.Get()).get());
 }
 
 void DocumentLoader::DidInstallNewDocument(Document* document) {

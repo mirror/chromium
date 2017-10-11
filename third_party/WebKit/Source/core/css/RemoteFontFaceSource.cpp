@@ -8,6 +8,7 @@
 #include "core/css/CSSFontFace.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/dom/Document.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "platform/Histogram.h"
@@ -78,7 +79,9 @@ RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
   }
 
   // Note: this may call notifyFinished() and clear font_.
-  font_->AddClient(this);
+  font_->AddClient(this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                               font_selector_->GetDocument())
+                             .get());
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() {}
