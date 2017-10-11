@@ -128,6 +128,30 @@
       "revId": "e23a408df41f775d425c7545876058755aedff9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70875783_8ea90e71",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T16:01:03Z",
+      "side": 1,
+      "message": "Is there a reason the code can\u0027t connect to the gpu process? I would rather the code connect to content_browser/chrome than UI.",
+      "parentUuid": "16d2ff5e_79eacbee",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "e23a408df41f775d425c7545876058755aedff9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
