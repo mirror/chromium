@@ -84715,6 +84715,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ThirdPartyModules.InputMethodEditorsCount" units="counts">
+  <owner>pmonette@chromium.org</owner>
+  <summary>
+    The number of registered input method editors found on the user's machine.
+  </summary>
+</histogram>
+
 <histogram name="ThirdPartyModules.InstalledPrograms.DataSize" units="KB">
   <owner>pmonette@chromium.org</owner>
   <summary>
