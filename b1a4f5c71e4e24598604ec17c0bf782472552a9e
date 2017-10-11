@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3b5317a_40017557",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "WDYT about ash/lock_screen_action?\n\n(the same dir can be reused for ash/tray_action contents when I rename tray_action mojo interface to lock_screen_action, which is IMHO more appropriate name)",
+      "parentUuid": "9fb7b015_a112b953",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "459fc536_76d1b648",
         "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c81833_7860f632",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459fc536_76d1b648",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99014b32_3f31d6c1",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23870892_9d5d835f",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab327c83_38ca9629",
         "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.h",
         "patchSetId": 19
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "285e3652_4a680c7e",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab327c83_38ca9629",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4de71826_1d13fd10",
         "filename": "ash/system/lock_screen_action/lock_screen_action_background_state.h",
         "patchSetId": 19
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-11T01:08:59Z",
       "side": 1,
       "message": "How does this relate to mojom::TrayActionState, specifically the kLaunching state? I\u0027m curious why we\u0027re maintaining two separate state machines here. Should they be combined? If not, document how the two states relate to each other.",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae7e7c8_b075c896",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_state.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "I plan to investigate possibility of combining TrayActionState and LockScreenActionBackgroundState little more in future, but for now, I added comments to better describe interactions between the two.\n\nThe main difference is who drives the state machines\n*  TrayActionStates are controlled by Chrome (and describe the lock screen app state). State\n   changes are one directional (i.e. they go from Chrome to ash)\n*  LockScreenActionBackgroundStates are controlled by ash (and describe the state of the \n   background window). Note that the background state is ash specific - it\u0027s currently not \n   exposed to Chrome in any way.",
+      "parentUuid": "4de71826_1d13fd10",
       "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "67112be3_3fa4d8d2",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3242b505_c6cd3e87",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "379c1a8b_f7e4a2e3",
         "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
         "patchSetId": 19
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "22cebcd8_3d2c7e56",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379c1a8b_f7e4a2e3",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b32aac6_1667f569",
         "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
         "patchSetId": 19
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-11T01:08:59Z",
       "side": 1,
       "message": "optional: Do we care if the returned aura::Window is const?",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd6c7ca_3cbaf863",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "not really",
+      "parentUuid": "0b32aac6_1667f569",
       "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "657a01c1_0738557e",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7589e61f_696c84d8",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7e4eea_edf9a4dd",
         "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
         "patchSetId": 19
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "7e27a4b6_19b11533",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7e4eea_edf9a4dd",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9414fca_22c3d11d",
         "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
         "patchSetId": 19
@@ -186,6 +366,24 @@
       "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150879f9_5abfe1f9",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9414fca_22c3d11d",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
