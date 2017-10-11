@@ -37,6 +37,8 @@ struct ranctx {
   uint32_t d;
 };
 
+static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
+
 #define rot(x, k) (((x) << (k)) | ((x) >> (32 - (k))))
 
 uint32_t ranvalInternal(ranctx* x) {
@@ -81,12 +83,20 @@ uint32_t ranval(ranctx* x) {
   return ret;
 }
 
-static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
-
 }  // namespace
 
-// Calculates a random preferred mapping address. In calculating an address, we
-// balance good ASLR against not fragmenting the address space too badly.
+void SetRandomPageBaseSeed(int64_t initial_seed) {
+// Predictable addresses must never be generated in official Chrome builds.
+#if !defined(OFFICIAL_BUILD)
+  ranctx* x = s_ranctx.Pointer();
+  subtle::SpinLock::Guard guard(x->lock);
+  // Set RNG to initial state.
+  x->initialized = true;
+  x->a = x->b = static_cast<uint32_t>(initial_seed);
+  x->c = x->d = static_cast<uint32_t>(initial_seed >> 32);
+#endif  // !defined(OFFICIAL_BUILD)
+}
+
 void* GetRandomPageBase() {
   uintptr_t random = static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
 
