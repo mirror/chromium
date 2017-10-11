@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad0629f_cc05a467",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T16:51:18Z",
+      "side": 1,
+      "message": "We should try to avoid manual layout. Do something similar to easy unlock, ie, https://paste.googleplex.com/6528266412228608.",
+      "revId": "c1a3c45198f6589cc382905ee143a69ace5cc01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53630194_57c08573",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T16:51:18Z",
+      "side": 1,
+      "message": "LockScreen should observe chromeos::input_method::ImeKeyboard::Observer and push the event to the password via via LoginDataDispatcher. Then, add a button to the debug view to toggle caps lock state.",
+      "revId": "c1a3c45198f6589cc382905ee143a69ace5cc01a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
