@@ -126,32 +126,6 @@ void HistogramBase::WriteJSON(std::string* output) const {
   serializer.Serialize(root);
 }
 
-// static
-void HistogramBase::EnableActivityReportHistogram(
-    const std::string& process_type) {
-  if (report_histogram_)
-    return;
-
-  size_t existing = StatisticsRecorder::GetHistogramCount();
-  if (existing != 0) {
-    DVLOG(1) << existing
-             << " histograms were created before reporting was enabled.";
-  }
-
-  std::string name =
-      "UMA.Histograms.Activity" +
-      (process_type.empty() ? process_type : "." + process_type);
-
-  // Calling FactoryGet() here rather than using a histogram-macro works
-  // around some problems with tests that could end up seeing the results
-  // histogram when not expected due to a bad interaction between
-  // HistogramTester and StatisticsRecorder.
-  report_histogram_ = LinearHistogram::FactoryGet(
-      name, 1, HISTOGRAM_REPORT_MAX, HISTOGRAM_REPORT_MAX + 1,
-      kUmaTargetedHistogramFlag);
-  report_histogram_->Add(HISTOGRAM_REPORT_CREATED);
-}
-
 void HistogramBase::FindAndRunCallback(HistogramBase::Sample sample) const {
   if ((flags() & kCallbackExists) == 0)
     return;
