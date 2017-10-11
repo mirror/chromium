@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f10e963_bd519753",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:21:28Z",
+      "side": 1,
+      "message": "Put this above overrides",
+      "revId": "eea3a3b402f2e13f0d1eed525ba14b9f4a65d2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64b1968_ccdcfa40",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:21:28Z",
+      "side": 1,
+      "message": "Drop protected:",
+      "revId": "eea3a3b402f2e13f0d1eed525ba14b9f4a65d2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e794e2_62ada1cd",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:21:28Z",
+      "side": 1,
+      "message": "Return an optional?",
+      "revId": "eea3a3b402f2e13f0d1eed525ba14b9f4a65d2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b666fdc5_c7bab1d9",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:21:28Z",
+      "side": 1,
+      "message": "Overrides go below \"public\" section but above \"ForTest\" section (line 52)",
+      "revId": "eea3a3b402f2e13f0d1eed525ba14b9f4a65d2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b011128_37e178cb",
+        "filename": "ash/system/palette/palette_welcome_bubble.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:21:28Z",
+      "side": 1,
+      "message": "Comment",
+      "revId": "eea3a3b402f2e13f0d1eed525ba14b9f4a65d2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
