@@ -16,6 +16,24 @@
       "revId": "45c50099b530572dce3fd3e7a5ef0388c5a9b54e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be833c34_51e781bc",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-11T16:07:23Z",
+      "side": 1,
+      "message": "Good catch Navid.\n- We need to update the CL description to clarify exactly which part is web exposed (pens in platforms that plumb them as mouse).\n- I don\u0027t think we need an intent here because we are already exposing fractions for pens plumbed through touch.\n- Update the TODO here, refer to a new bug \"PointerEvents of type mouse should have fractional coords\" to match Edge.",
+      "parentUuid": "7976a043_8d1dc233",
+      "revId": "45c50099b530572dce3fd3e7a5ef0388c5a9b54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
