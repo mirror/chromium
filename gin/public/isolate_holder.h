@@ -84,6 +84,8 @@ class GIN_EXPORT IsolateHolder {
 
   v8::Isolate* isolate() { return isolate_; }
 
+  void WillBeDestroyed();
+
   // The implementations of Object.observe() and Promise enqueue v8 Microtasks
   // that should be executed just before control is returned to the message
   // loop. This method adds a MessageLoop TaskObserver which runs any pending

@@ -35,7 +35,7 @@ PerIsolateData::PerIsolateData(
 }
 
 PerIsolateData::~PerIsolateData() {
-  isolate_->SetData(kEmbedderNativeGin, NULL);
+  CHECK(!isolate_);
 }
 
 PerIsolateData* PerIsolateData::From(Isolate* isolate) {
@@ -123,4 +123,12 @@ void PerIsolateData::EnableIdleTasks(
   idle_task_runner_ = std::move(idle_task_runner);
 }
 
+PerIsolateData::PerIsolateDataScope::PerIsolateDataScope(PerIsolateData* data)
+    : data_(data) {
+  if (data) {
+    lock_ = std::make_unique<base::AutoLock>(data->lock_);
+  }
+}
+
+PerIsolateData::PerIsolateDataScope::~PerIsolateDataScope() {}
 }  // namespace gin

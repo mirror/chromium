@@ -149,6 +149,7 @@ void V8PerIsolateData::EnableIdleTasks(
 // ThreadState::detach() gets called.
 void V8PerIsolateData::WillBeDestroyed(v8::Isolate* isolate) {
   V8PerIsolateData* data = From(isolate);
+  data->isolate_holder_.WillBeDestroyed();
 
   data->thread_debugger_.reset();
   // Clear any data that may have handles into the heap,
