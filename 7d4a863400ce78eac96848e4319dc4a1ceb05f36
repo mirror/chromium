@@ -16,6 +16,24 @@
       "revId": "7d4a863400ce78eac96848e4319dc4a1ceb05f36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963c521b_d012d2fa",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T21:54:28Z",
+      "side": 0,
+      "message": "yes, they\u0027re used elsewhere (as icon and a11y label for the lock screen UI that replaced this button)",
+      "parentUuid": "5597dad3_f67a0c6b",
+      "revId": "7d4a863400ce78eac96848e4319dc4a1ceb05f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
