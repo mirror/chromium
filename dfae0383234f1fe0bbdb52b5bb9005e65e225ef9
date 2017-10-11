@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29f9231_eef46e42",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T19:08:24Z",
+      "side": 1,
+      "message": "If we just change active_global_scope_ but not selected_global_scope we will still honor the meaning of paints_before_switching_global_scope (i.e. it won\u0027t actually switch until the next call).",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb28e11_e7d10794",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T19:08:24Z",
+      "side": 1,
+      "message": "It\u0027s not great to have a second set of constructors and need to make sure to initialize the parameter lists in both of them. We should only need to set the function pointer in tests (i.e. a private setter, a virtual method for selection?)",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67faafa8_30eeb0f6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T19:08:24Z",
+      "side": 1,
+      "message": "I believe this should be member style, i.e. set_paints_before_switching_, but also why is this not just a random number generator which we use internally to set the number of paints before switching? If you want to keep this having its semantic meaning, I think it would be cleaner having a virtual method for a test class to override.",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fe6c70_6d92c84b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T19:08:24Z",
+      "side": 1,
+      "message": "I\u0027d suggest just hardcoding a list or having a setter for the next return value so we can make strong assertions that it flips during the middle of frames without flakiness.",
+      "revId": "dfae0383234f1fe0bbdb52b5bb9005e65e225ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
