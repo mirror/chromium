@@ -16,6 +16,24 @@
       "revId": "2c0ab28be08c7441d9ddb57d9247d753be63d6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232317e3_ce1b0128",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T18:00:39Z",
+      "side": 0,
+      "message": "These two tests covered the no-elision-available workaround, which is being removed.  I think keep the test would be more confusing than helpful.",
+      "parentUuid": "9dee9223_238b78fd",
+      "revId": "2c0ab28be08c7441d9ddb57d9247d753be63d6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

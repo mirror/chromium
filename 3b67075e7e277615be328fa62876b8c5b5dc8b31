@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6928579_b4111fed",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T18:00:39Z",
+      "side": 1,
+      "message": "File URLs don\u0027t produce a host, and they\u0027re fine here.  The elision algorithm itself has a simplified return path for non-host URLs, but that shouldn\u0027t matter here.",
+      "parentUuid": "9b4c01b2_eb2af743",
+      "revId": "3b67075e7e277615be328fa62876b8c5b5dc8b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd9a51aa_9a4af46e",
         "filename": "components/url_formatter/elide_url.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3b67075e7e277615be328fa62876b8c5b5dc8b31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5026413f_ef28a051",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T18:00:39Z",
+      "side": 1,
+      "message": "Done (I stuck with ElideUrlSimple). I\u0027m passing the string rather than formatter args because (1) it\u0027s completely flexible in formatting and (2) we have to format the URL ahead of elision in order to generate a font list.\n\nOn a side-note, if that font list comment sounds odd, let me know.  I\u0027m not super familiar with font lists, but what we\u0027re doing is scanning the URL string to make sure we have characters to represent the entire URL (ie. no missing code points).",
+      "parentUuid": "cd9a51aa_9a4af46e",
+      "revId": "3b67075e7e277615be328fa62876b8c5b5dc8b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
