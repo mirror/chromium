@@ -68,6 +68,32 @@ cr.define('characteristic_list', function() {
     __proto__: ExpandableListItem.prototype,
 
     /**
+     * Helper function to create the ShowAll button Id.
+     */
+    createShowAllButtonId: function() {
+      return 'show-all-properties-' + this.info.id;
+    },
+
+    /**
+     * Sets up the showall button for hiding and showing the properties.
+     */
+    setupShowAllButton: function() {
+      this.showAllBtn_ = $(this.createShowAllButtonId());
+
+      this.showAllBtn_.addEventListener('click', function() {
+        if (this.propertiesFieldSet_.isShowAll()) {
+          this.propertiesFieldSet_.setShowAll(false);
+          this.showAllBtn_.textContent = 'Show All';
+          this.propertiesFieldSet_.redraw();
+        } else {
+          this.propertiesFieldSet_.setShowAll(true);
+          this.showAllBtn_.textContent = 'Hide';
+          this.propertiesFieldSet_.redraw();
+        }
+      }.bind(this));
+    },
+
+    /**
      * Decorates the element as a characteristic list item. Creates and caches
      * two fieldsets for displaying property values.
      * @override
@@ -88,6 +114,7 @@ cr.define('characteristic_list', function() {
       this.propertiesFieldSet_.setPropertyDisplayNames(
           PROPERTIES_PROPERTY_NAMES);
       var Property = interfaces.BluetoothDevice.Property;
+      this.propertiesFieldSet_.setShowAll(false);
       this.propertiesFieldSet_.setObject({
         broadcast: (this.info.properties & Property.BROADCAST) > 0,
         read: (this.info.properties & Property.READ) > 0,
@@ -148,6 +175,12 @@ cr.define('characteristic_list', function() {
       var propertiesHeader = document.createElement('h4');
       propertiesHeader.textContent = 'Properties';
 
+      var propertiesBtn = document.createElement('button');
+      propertiesBtn.textContent = 'Show All';
+      propertiesBtn.id = this.createShowAllButtonId();
+      propertiesBtn.classList.add('show-all-properties');
+      propertiesHeader.appendChild(propertiesBtn);
+
       var propertiesDiv = document.createElement('div');
       propertiesDiv.classList.add('flex');
       propertiesDiv.appendChild(this.propertiesFieldSet_);
@@ -171,6 +204,11 @@ cr.define('characteristic_list', function() {
       infoDiv.appendChild(this.descriptorList_);
 
       this.expandedContent_.appendChild(infoDiv);
+
+      // Setup the ShowAllButton asynchronously, after the DOM gets updated.
+      setTimeout(function() {
+        this.setupShowAllButton();
+      }.bind(this), 0);
     },
 
     /** @override */
