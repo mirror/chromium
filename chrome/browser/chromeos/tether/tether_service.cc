@@ -283,6 +283,8 @@ void TetherService::DeviceListChanged() {
   if (is_enabled != was_pref_enabled) {
     profile_->GetPrefs()->SetBoolean(prefs::kInstantTetheringEnabled,
                                      is_enabled);
+    UMA_HISTOGRAM_BOOLEAN("InstantTethering.UserPreferenceValue", is_enabled);
+    PA_LOG(INFO) << "Tether user preference changed. New value: " << is_enabled;
   }
   UpdateTetherTechnologyState();
 }
