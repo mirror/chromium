@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <string>
+
 #include "content/common/content_export.h"
 #include "sandbox/win/src/sandbox_types.h"
 #include "sandbox/win/src/security_level.h"
@@ -21,10 +23,22 @@ class TargetPolicy;
 class TargetServices;
 }
 
+extern sandbox::BrokerServices* g_broker_services;
+
 namespace content {
 
-// Wrapper around sandbox::TargetPolicy::SetJobLevel that checks if the sandbox
-// should be let to run without a job object assigned.
+sandbox::ResultCode StartSandboxedProcessInternal(
+    SandboxedProcessLauncherDelegate* delegate,
+    base::CommandLine* cmd_line,
+    const std::string& process_type,
+    const base::HandlesToInheritVector& handles_to_inherit,
+    base::Process* process);
+
+sandbox::ResultCode AddPolicyForSandboxedProcess(sandbox::TargetPolicy* policy);
+sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy);
+
+// Wrapper around sandbox::TargetPolicy::SetJobLevel that checks if the
+// sandbox should be let to run without a job object assigned.
 sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
                                 sandbox::JobLevel job_level,
                                 uint32_t ui_exceptions,
@@ -42,8 +56,8 @@ sandbox::ResultCode AddWin32kLockdownPolicy(sandbox::TargetPolicy* policy,
                                             bool enable_opm);
 
 bool InitBrokerServices(sandbox::BrokerServices* broker_services);
-
 bool InitTargetServices(sandbox::TargetServices* target_services);
+void LogLaunchWarning(sandbox::ResultCode last_warning, DWORD last_error);
 
 }  // namespace content
 
