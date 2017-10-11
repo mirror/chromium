@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae0adc0_e1a0260c",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-11T04:31:38Z",
+      "side": 1,
+      "message": "Is this going to prevent using SwiftShader to test the entire GPU stack? Or will we not report software_rendering in that scenario?",
+      "range": {
+        "startLine": 1955,
+        "startChar": 6,
+        "endLine": 1955,
+        "endChar": 27
+      },
+      "revId": "03f58c23d8eb75006595b3590e16eb6b4f5a2dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
