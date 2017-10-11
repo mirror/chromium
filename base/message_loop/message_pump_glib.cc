@@ -279,10 +279,11 @@ void MessagePumpGlib::HandleDispatch() {
 }
 
 void MessagePumpGlib::Run(Delegate* delegate) {
+  LOG(ERROR) << "@@@ " << __func__ << " , 1";
 #ifndef NDEBUG
   CheckThread(this);
 #endif
-
+  LOG(ERROR) << "@@@ " << __func__ << " , 2";
   RunState state;
   state.delegate = delegate;
   state.should_quit = false;

@@ -2,12 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/download/content/factory/navigation_monitor_factory.h"
+#include "chrome/browser/download/navigation_monitor_factory.h"
 
-#include "components/download/internal/navigation_monitor_impl.h"
+#include "components/download/content/factory/download_service_factory.h"
+#include "components/download/public/navigation_monitor.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
-
-namespace download {
 
 // static
 NavigationMonitorFactory* NavigationMonitorFactory::GetInstance() {
@@ -29,12 +28,10 @@ NavigationMonitorFactory::~NavigationMonitorFactory() = default;
 
 KeyedService* NavigationMonitorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new NavigationMonitorImpl();
+  return download::CreateNavigationMonitor();
 }
 
 content::BrowserContext* NavigationMonitorFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {
   return context;
 }
-
-}  // namespace download

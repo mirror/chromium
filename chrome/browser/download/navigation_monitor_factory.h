@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_DOWNLOAD_CONTENT_FACTORY_NAVIGATION_MONITOR_FACTORY_H_
-#define COMPONENTS_DOWNLOAD_CONTENT_FACTORY_NAVIGATION_MONITOR_FACTORY_H_
+#ifndef CHROME_BROWSER_DOWNLOAD_NAVIGATION_MONITOR_FACTORY_H_
+#define CHROME_BROWSER_DOWNLOAD_NAVIGATION_MONITOR_FACTORY_H_
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
 namespace download {
-
 class NavigationMonitor;
+}  // namespace download
 
 // Creates the DownloadNavigationMonitor instance.
 class NavigationMonitorFactory : public BrowserContextKeyedServiceFactory {
@@ -39,6 +39,4 @@ class NavigationMonitorFactory : public BrowserContextKeyedServiceFactory {
   DISALLOW_COPY_AND_ASSIGN(NavigationMonitorFactory);
 };
 
-}  // namespace download
-
-#endif  // COMPONENTS_DOWNLOAD_CONTENT_FACTORY_NAVIGATION_MONITOR_FACTORY_H_
+#endif  // CHROME_BROWSER_DOWNLOAD_NAVIGATION_MONITOR_FACTORY_H_
