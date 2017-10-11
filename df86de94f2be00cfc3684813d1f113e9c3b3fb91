@@ -105,6 +105,24 @@
       "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff7a360_ba495a19",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-11T23:57:39Z",
+      "side": 1,
+      "message": "I think you need to fix line 44, then. Update() is also called from main(), where it does the right thing.",
+      "parentUuid": "9edbf932_697808ce",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
