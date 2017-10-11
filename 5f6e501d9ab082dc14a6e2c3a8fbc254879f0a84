@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab6104e4_0627d688",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T00:36:12Z",
+      "side": 1,
+      "message": "Nope. The compiler will complain about it.",
+      "parentUuid": "88d8de57_9ce6f72d",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eee9915_1e30b4ad",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T00:24:28Z",
       "side": 1,
       "message": "It seems to me that we should maybe just record the transition core type directly, instead of doing this and losing some information in the translation.",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c3a5f0_2950879a",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T00:36:12Z",
+      "side": 1,
+      "message": "The transition type contains other cases where we never hit, like subframe. It also contains the qualifier which makes the enum value complicated.\n\nAlso we rely on headers to figure out the Downloads case.",
+      "parentUuid": "5eee9915_1e30b4ad",
       "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "821f4707_e3ba84c1",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T00:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e040017_0ad50ebc",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cefec36_3765e91f",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T00:24:28Z",
       "side": 1,
       "message": "This file only tests LINK and DOWNLOAD, is it feasible to add more?",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60df340_47c59327",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T00:36:12Z",
+      "side": 1,
+      "message": "Unfortunately there is not an easy way to update transition type in the test code.",
+      "parentUuid": "6cefec36_3765e91f",
       "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
