@@ -117,6 +117,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   void set_is_exiting(bool exiting) { is_exiting_ = exiting; }
 
+  void OnSwapContents(int new_content_id);
+
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
@@ -245,6 +247,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   std::unique_ptr<VrController> controller_;
 
+  int content_id_ = 0;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   base::TimeTicks pending_time_;

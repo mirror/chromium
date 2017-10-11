@@ -368,6 +368,10 @@ void VrShellGl::ConnectPresentingService(
   ScheduleWebVrFrameTimeout();
 }
 
+void VrShellGl::OnSwapContents(int new_content_id) {
+  content_id_ = new_content_id;
+}
+
 void VrShellGl::OnContentFrameAvailable() {
   content_surface_texture_->UpdateTexImage();
 }
@@ -737,7 +741,7 @@ void VrShellGl::HandleControllerAppButtonActivity(
 
 void VrShellGl::SendGestureToContent(
     std::unique_ptr<blink::WebInputEvent> event) {
-  browser_->ProcessContentGesture(std::move(event));
+  browser_->ProcessContentGesture(std::move(event), content_id_);
 }
 
 bool VrShellGl::ResizeForWebVR(int16_t frame_index) {
