@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ef39273_841f3f04",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f84115c_ff803761",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "098f3f3b_fbfe197e",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7571aec_ecf81efe",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "Thanks! done",
+      "parentUuid": "098f3f3b_fbfe197e",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "06aa8314_ff63c900",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "kUnused means the cache was not really used, but the area was held in memory by some reference.\nkHit means the cache was used and the area was kept in anticipation of being loaded again.\ndo you think I should rename them?",
+      "parentUuid": "83c9cb2d_6c965c1c",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8adbe92c_2500f024",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a99defd_f89dcf79",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adbe92c_2500f024",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "247cb33f_5d0bfd93",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "fixed..",
+      "parentUuid": "7739d279_3a23b59c",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63bdd24b_642d7305",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
         "patchSetId": 5
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "de8993a7_1d35576b",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63bdd24b_642d7305",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e6529a_2a1bf4ce",
         "filename": "content/renderer/dom_storage/mock_leveldb_wrapper.h",
         "patchSetId": 5
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "5208003c_3fbc7b66",
+        "filename": "content/renderer/dom_storage/mock_leveldb_wrapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e6529a_2a1bf4ce",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5dcfd8a_e9b0c437",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -147,6 +285,24 @@
       "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d5faa3_19ce41f5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 23181,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-11T23:36:33Z",
+      "side": 1,
+      "message": "ouch fixed.",
+      "parentUuid": "e5dcfd8a_e9b0c437",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
