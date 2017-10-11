@@ -1,0 +1,359 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea8e78a5_bc91eac3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Two important points are missing from the commit description:\n1. That this is crucial for the OffHours policy implementation, as we need to sign out disallowed users when the OffHours mode switches off.\n2. That this change has a side effect of forcing sign-out when the session availability (for instance, the Guest mode being allowed via policy) changes to false during that same session.",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fead60f1_5cd399f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Please provide a stable link that points to the specific revision, by clicking \"Link \u003e Link with line and CL\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 138
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb51da96_5c862e84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Please provide a reference to a bug (I guess, the OffHours tracking bug?).",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f746753_d070237e",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: const?",
+      "range": {
+        "startLine": 357,
+        "startChar": 28,
+        "endLine": 357,
+        "endChar": 29
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510fd429_f6a3c86a",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "I\u0027d suggest swapping the \"||\" operation operands, so that IsGaiaUserAllowed() isn\u0027t called for the users that don\u0027t have a GAIA account.",
+      "range": {
+        "startLine": 371,
+        "startChar": 8,
+        "endLine": 371,
+        "endChar": 73
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f7f778_bf221ac8",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "That\u0027s another place where the direct pref access should be now replaced with a method call. Please also check other files with the code search and change them where possible.",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfafd0ba_3a53eac4",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "I\u0027m afraid this is not enough in case of multi-profile sign-in: you\u0027ll only check the currently active user (that is, the foreground one), while there may also be disallowed user sessions running simultaneously (in the background).\n\nI think GetLoggedInUsers() should give all entries that need checking, but this idea needs to be verified.",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e4d5bf_7c1fe811",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Maybe\n\n  \"The current user is not allowed, terminating the session.\"\n\n?",
+      "range": {
+        "startLine": 951,
+        "startChar": 47,
+        "endLine": 951,
+        "endChar": 65
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de18c6ef_4363fefc",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Please add an empty line before, as this new block of code has nothing to do with the task posting code above.",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dcabfb_a4a3ef3c",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Add a DCHECK on HasGaiaAccount()?",
+      "range": {
+        "startLine": 1183,
+        "startChar": 0,
+        "endLine": 1183,
+        "endChar": 1
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed66c9c_f129dfd8",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1193,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: In my opinion, it\u0027ll be simpler to read this if written a dumb OR of 4 sub-equations that compare user.GetType() against each of those USER_TYPE.",
+      "range": {
+        "startLine": 1189,
+        "startChar": 0,
+        "endLine": 1193,
+        "endChar": 64
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbe8bf4_6f6cc2c4",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: Add \" any of the \".",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d5c1b0_c58c6a32",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "I think this requires a better name (and explanation). There are lots of things that are related to the sign-in process, while here obviously only a small subset of those is meant.\nI can\u0027t suggest a perfectly good name, but what maybe about \"OnUsersSignInConstraintsChanged()\"?",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc4d8c8_b233186e",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: I believe the more correct term here is \"Guest session\" (and only in singular form). So suggesting a name like \"IsGuestSessionAllowed\", with an appropriate change of the comment.",
+      "range": {
+        "startLine": 344,
+        "startChar": 2,
+        "endLine": 345,
+        "endChar": 37
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03815052_5b4b0ef4",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: The word \"regular\" isn\u0027t precise here, as both \"REGULAR\" and \"CHILD\" accounts have a GAIA account. I think it\u0027s better to replace it with something like \"the |user|, which has a GAIA account,\".",
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0bab25_f28d25ab",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: This detailed explanation seems excessive - it\u0027s exposing the implementation details. I think it\u0027s enough to say \"... allowed, according to device settings and policies.\".",
+      "range": {
+        "startLine": 347,
+        "startChar": 47,
+        "endLine": 348,
+        "endChar": 12
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a174b6_866f5947",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T01:14:01Z",
+      "side": 1,
+      "message": "nit: \"depending\".",
+      "range": {
+        "startLine": 351,
+        "startChar": 38,
+        "endLine": 351,
+        "endChar": 45
+      },
+      "revId": "950a79b770c02b017fce3592c23944b78988f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
