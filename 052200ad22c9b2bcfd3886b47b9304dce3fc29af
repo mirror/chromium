@@ -1,0 +1,353 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e56282_1a682598",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "0u",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103bc8a2_a23f6d65",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(std::get\u003c2\u003e(response).empty());",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33c5073_57125073",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "0u",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad894225_f300b0f7",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(std::get\u003c2\u003e(response).empty());",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 59
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1c2e12_754ae43b",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "0u",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 146,
+        "endChar": 34
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3e9a25_1e90427a",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(std::get\u003c2\u003e(response).empty());",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 59
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a5d39c_ae3718f0",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Won\u0027t this be a problem when dereferencing |it| above on success?",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f39c4b1_e54be898",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "0u\n\nThough, looking at this line now I think that this would be better since it expresses exactly what we need about the vector for the next line:\n\nASSERT_GE(1u, std::get\u003c1\u003e(response).size());",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52943a1e_17ac96ac",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(std::get\u003c2\u003e(response).empty());",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6de4fa_de21f94c",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96c1b9b_48ad1cfc",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "The size check is unnecessary because you compare the whole vector below. Or you could compare the size to key.size().",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 66
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6514f85_6c0c0b05",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da235e49_6e1f8b9b",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af8c90_82a86002",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcbd90c_44afaac9",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c39d18_f7f9436d",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bb4dca_61776ced",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:56:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
