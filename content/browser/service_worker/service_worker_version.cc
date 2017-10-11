@@ -1719,6 +1719,15 @@ void ServiceWorkerVersion::OnPingTimeout() {
 }
 
 void ServiceWorkerVersion::StopWorkerIfIdle() {
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    // We don't stop the service worker for idle-timeout in the browser
+    // process when Servicification is enabled, as events might be
+    // dispatched directory without going through the browser-process.
+    // TODO(kinuko): Re-enable or re-implement the browser-side timer
+    // for S13n code path, maybe by always (asyncly) propagate the event
+    // dispatching status to the browser process too.
+    return;
+  }
   if (HasWork() && !ping_controller_->IsTimedOut())
     return;
   if (running_status() == EmbeddedWorkerStatus::STOPPED ||
