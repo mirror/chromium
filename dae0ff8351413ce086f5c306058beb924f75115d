@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b3ea0e1b_e3ebd46e",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-11T10:03:06Z",
+      "side": 1,
+      "message": "This header uses StringPiece only which is included below.",
+      "parentUuid": "a7c0601f_e14477b6",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b792dca7_8c6b969d",
         "filename": "device/u2f/u2f_discovery.h",
         "patchSetId": 7
@@ -53,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "1dc4cc37_215d2b29",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-11T10:03:06Z",
+      "side": 1,
+      "message": "What do you think about naming it a Delegate? I am not 100% sure, but Observer sounds to me like there might be multiple of those, while Delegate sounds like an exclusive object which corresponds to our case.\n\nReilly, do you have an opinion on this?",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab442e18_1e7e3836",
         "filename": "device/u2f/u2f_discovery.h",
         "patchSetId": 7
@@ -64,6 +99,30 @@
       "writtenOn": "2017-10-10T11:31:39Z",
       "side": 1,
       "message": "This is a bit clunky, maybe it makes sense to just merge it with OnDeviceAdded. What do you think, Pavel?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d7e87a_f9bf017f",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-11T10:03:06Z",
+      "side": 1,
+      "message": "Yeah, I support that. You could either add an is_known/is_discovered flag as parameter, or maybe even drop it.",
+      "parentUuid": "ab442e18_1e7e3836",
       "range": {
         "startLine": 25,
         "startChar": 17,
@@ -128,6 +187,30 @@
       "side": 1,
       "message": "A static U2fHidDevice::GetIdForDevice(const device::mojom::HidDeviceInfo\u0026 device_info) method would be good.",
       "parentUuid": "cc55b928_5c9e77b1",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 57
+      },
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b59b397_df9320e3",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-11T10:03:06Z",
+      "side": 1,
+      "message": "Yes, a static method should be sufficient.",
+      "parentUuid": "f0d5d08d_16f8d513",
       "range": {
         "startLine": 55,
         "startChar": 31,
