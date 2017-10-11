@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06505bf_bee5c16e",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T16:15:12Z",
+      "side": 1,
+      "message": "can you add comment when this can be nullptr?",
+      "revId": "c8ea8f794b01df5e7de814030a541729ac81b553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1831d583_ae0a2ae4",
+        "filename": "chrome/browser/chromeos/accessibility/magnification_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T16:15:12Z",
+      "side": 1,
+      "message": "nit: nuke {}",
+      "revId": "c8ea8f794b01df5e7de814030a541729ac81b553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
