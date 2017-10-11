@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4372dc6d_440de3a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-11T03:46:29Z",
+      "side": 1,
+      "message": "I mean the entire subject line should max out around ~74 characters. git treats everything above the blank line as part of the subject line:\n\nhttps://chris.beams.io/posts/git-commit/",
+      "parentUuid": "d077b589_575f7b8b",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7890c0b4_1514849b",
         "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
         "patchSetId": 10
