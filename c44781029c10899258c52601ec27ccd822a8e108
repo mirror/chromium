@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b09d9e7f_2a2ff9ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58a5ba2_a5cacdc0",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f40cb730_7778e7b9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c44781029c10899258c52601ec27ccd822a8e108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78773e7_a5e69ecc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f40cb730_7778e7b9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "53d7bdef_32099d07",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4c9ae1_a88cc85d",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "585757a6_08402a0d",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a6d9c267_0013c7ce",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585757a6_08402a0d",
+      "range": {
+        "startLine": 112,
+        "startChar": 74,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "062e4247_a8cf5b36",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-10T08:05:11Z",
       "side": 1,
       "message": "So we just accept empty policy without checking it? Doesn\u0027t that mean someone could just wipe policy? What happens if someone creates a bad policy blob, would that end up being empty or would it error out somewhere?",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 61
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c633a1_7281b887",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Good question. An empty policy blob is treated as a signal that the user is not managed, see also UserCloudPolicyStoreChromeOS::OnPolicyRetrieved.\nWe trust session_manager in this regard.\nNote that session_manager does not store the user policy in a chronos-accessible area (it\u0027s actually stored in the \"root\"-part of the user home.\nAlso note that this class still checks |retrieve_policy_response|, it just does it in OnUnmountTemporaryUserHome for easier control flow. So if session_manager was to report an error on policy fetch, we would forward that error to the caller.",
+      "parentUuid": "062e4247_a8cf5b36",
       "range": {
         "startLine": 114,
         "startChar": 4,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "377d6845_4ff9c905",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done by piping in a bool is_active_directory_managed which is set according to InstallAttributes outside. Still kept a DCHECK for the accounttype, but this is now in the ctor. wDYT?",
+      "parentUuid": "546afddc_9cb8c5be",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 1
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf21030a_6d9dcaab",
         "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-10T08:05:11Z",
       "side": 1,
       "message": "FWIW, instead of making a base class with two specializations for AD and non-AD, did you consider test parametrization?\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_session_manager_unittest.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d616\nThat way, you\u0027d fairly easily be able to run all tests. I didn\u0027t check whether that actually makes sense, but please consider it if you haven\u0027t.\n\nA couple of things would simplify, e.g. you could keep using account_id_ and cryptohome_id_.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff89cbe9_074e58f9",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "The issue is that many test cases don\u0027t apply to AD policy (e.g. testing fresh policy fetch -- this is not implemented here for AD). Also, the AD-specific test case has a different expected outcome for the same condition (no policy verification key), so I\u0027d have to add control flow to the test case which I\u0027d like to avoid.",
+      "parentUuid": "bf21030a_6d9dcaab",
       "range": {
         "startLine": 50,
         "startChar": 6,
@@ -183,6 +351,30 @@
       "revId": "c44781029c10899258c52601ec27ccd822a8e108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bded7e92_a73e380e",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-11T16:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251a5002_0cfb3ac7",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 95,
+        "endChar": 19
+      },
+      "revId": "c44781029c10899258c52601ec27ccd822a8e108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
