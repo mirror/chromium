@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9a42b6c_7b832c81",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-11T05:31:25Z",
+      "side": 1,
+      "message": "\u003e I want to make sure that when the input is something like \u0027www.blah.foo\u0027, it checks \n\u003e \u0027http://www.blah.foo\u0027 before \u0027\u0027http://www.www.blah.foo\u0027. Note that given the current state I could easily iterate from .end() to .begin(), but I don\u0027t want this code to depend on this ad-hoc condition.\n\nThe order of the list in url_prefixes is intentional (most prefixes to fewest).  I suggest you exploit that (possibly adding a comment in url_prefix.cc by the declaration to make the intentionally clear), rather than sorting in this code, which can get called multiple times each keystroke.",
+      "parentUuid": "c31a7cf9_5d2064f3",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "215e0f92_9ab44a49",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Interesting. What if instead of changing this code, I will do this check for all prefixes at the time when the canonical url is computed? That is, we should not canonicalize \"a.com\" to \"http://a.com/\" if there is clear evindence from history that it should be canonicalized to \"https://www.a.com/\". I am leaning towards this solution, but I think you have a better idea whether such an approach problematic or not.",
       "parentUuid": "215e0f92_9ab44a49",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac8b9aa_9657339a",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-11T05:31:25Z",
+      "side": 1,
+      "message": "\u003e Interesting. What if instead of changing this code, I will do this check for all prefixes at the time when the canonical url is computed? That is, we should not canonicalize \"a.com\" to \"http://a.com/\" if there is clear evindence from history that it should be canonicalized to \"https://www.a.com/\". I am leaning towards this solution, but I think you have a better idea whether such an approach problematic or not.\n\nInstinctively, I think that\u0027s problematic.  We need to Classify (guess) at input type immediately.  To do this via URL-db lookup, we\u0027d have to use only the in-memory history db.  When doing the lookup here, we sometimes do it on the in-memory history db (during the synchronous pass) and sometimes in the on-disk db (during the asynchronous pass).  I\u0027m concerned about the correctness implications of doing this only using the in-memory db during Classify().\n\nYour suggested approach might work.  Given my worries, can you think it through more?\n\nAlso, what happens if there are multiple possible \"canonical\" interpretations to the input?  What happens if some of the multiple ones have the same number of prefixes?  Compare those ideas with how the solution works in this place.  Does it matter here which URL has more visits?",
+      "parentUuid": "1437e6fc_48b26026",
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "Good point. Just to confirm, are you proposing to change `schemes` (here  https://cs.chromium.org/chromium/src/components/history/core/browser/url_database.cc?type\u003dcs\u0026q\u003dschemes\u0026l\u003d298) to GetURLPrefixes()?",
       "parentUuid": "357aba3d_4d288c2e",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006f6262_88eebe8f",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-11T05:31:25Z",
+      "side": 1,
+      "message": "\u003e Good point. Just to confirm, are you proposing to change `schemes` (here  https://cs.chromium.org/chromium/src/components/history/core/browser/url_database.cc?type\u003dcs\u0026q\u003dschemes\u0026l\u003d298) to GetURLPrefixes()?\n\nNo, I\u0027m looking at the CanFindInstranetURL code.\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/history_url_provider.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d969-975\n\nIt looks up the hostname of the canonical URL to see if it\u0027s typed.\n\nYet, if we\u0027re making decisions above using a URL that possibility has a different prefix (in particular it may have a \"www.\" prefix on the hostname), perhaps we should try those other hostname prefixes in this function too, not just the hostname of the canonical URL.",
+      "parentUuid": "51d6b92f_f91aff01",
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
