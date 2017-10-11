@@ -43,6 +43,7 @@
 #include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
+#include "content/browser/android/synthetic_gesture_target_connector.h"
 #include "content/browser/android/text_suggestion_host_android.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
@@ -1170,10 +1171,56 @@ void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
   popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
 }
 
-std::unique_ptr<SyntheticGestureTarget>
-RenderWidgetHostViewAndroid::CreateSyntheticGestureTarget() {
-  return std::unique_ptr<SyntheticGestureTarget>(
-      new SyntheticGestureTargetAndroid(host_, &view_));
+void RenderWidgetHostViewAndroid::InjectSyntheticTouchEvent(
+    const WebTouchEvent& web_touch,
+    const ui::LatencyInfo&) {
+  MotionEventAction action = MOTION_EVENT_ACTION_INVALID;
+  switch (web_touch.GetType()) {
+    case WebInputEvent::kTouchStart:
+      action = MOTION_EVENT_ACTION_START;
+      break;
+    case WebInputEvent::kTouchMove:
+      action = MOTION_EVENT_ACTION_MOVE;
+      break;
+    case WebInputEvent::kTouchCancel:
+      action = MOTION_EVENT_ACTION_CANCEL;
+      break;
+    case WebInputEvent::kTouchEnd:
+      action = MOTION_EVENT_ACTION_END;
+      break;
+    default:
+      NOTREACHED();
+  }
+  const unsigned num_touches = web_touch.touches_length;
+  SyntheticGestureTargetConnector* connector =
+      GetSyntheticGestureTargetConnector();
+  for (unsigned i = 0; i < num_touches; ++i) {
+    const blink::WebTouchPoint* point = &web_touch.touches[i];
+    connector->TouchSetPointer(i, point->PositionInWidget().x,
+                               point->PositionInWidget().y, point->id);
+  }
+  connector->TouchInject(
+      action, num_touches,
+      static_cast<int64_t>(web_touch.TimeStampSeconds() * 1000.0));
+}
+
+void RenderWidgetHostViewAndroid::InjectSyntheticMouseWheelEvent(
+    const WebMouseWheelEvent& web_wheel,
+    const ui::LatencyInfo&) {
+  SyntheticGestureTargetConnector* connector =
+      GetSyntheticGestureTargetConnector();
+  connector->TouchSetScrollDeltas(web_wheel.PositionInWidget().x,
+                                  web_wheel.PositionInWidget().y,
+                                  web_wheel.delta_x, web_wheel.delta_y);
+  connector->TouchInject(
+      MOTION_EVENT_ACTION_SCROLL, 1,
+      static_cast<int64_t>(web_wheel.TimeStampSeconds() * 1000.0));
+}
+
+void RenderWidgetHostViewAndroid::InjectSyntheticMouseEvent(
+    const WebMouseEvent& web_mouse,
+    const ui::LatencyInfo&) {
+  CHECK(false);
 }
 
 void RenderWidgetHostViewAndroid::SendReclaimCompositorResources(
@@ -1609,6 +1656,23 @@ void RenderWidgetHostViewAndroid::HideInternal() {
   // Inform the renderer that we are being hidden so it can reduce its resource
   // utilization.
   host_->WasHidden();
+}
+
+SyntheticGestureParams::GestureSourceType
+RenderWidgetHostViewAndroid::GetDefaultSyntheticGestureSourceType() const {
+  return SyntheticGestureParams::TOUCH_INPUT;
+}
+
+float RenderWidgetHostViewAndroid::GetTouchSlopInDips() const {
+  // TODO(jdduke): Have all synthetic events use the same
+  // ui::GestureConfiguration codepath.
+  return gfx::ViewConfiguration::GetTouchSlopInDips();
+}
+
+float RenderWidgetHostViewAndroid::GetMinScalingSpanInDips() const {
+  // TODO(jdduke): Have all synthetic events use the same
+  // ui::GestureConfiguration codepath.
+  return gfx::ViewConfiguration::GetMinScalingSpanInDips();
 }
 
 void RenderWidgetHostViewAndroid::SetBeginFrameSource(
@@ -2413,6 +2477,15 @@ void RenderWidgetHostViewAndroid::SetOverscrollControllerForTesting(
   overscroll_controller_ = base::MakeUnique<OverscrollControllerAndroid>(
       overscroll_refresh_handler, view_.GetWindowAndroid()->GetCompositor(),
       view_.GetDipScale());
+}
+
+SyntheticGestureTargetConnector*
+RenderWidgetHostViewAndroid::GetSyntheticGestureTargetConnector() {
+  if (!synthetic_gesture_target_connector_) {
+    synthetic_gesture_target_connector_.reset(
+        new SyntheticGestureTargetConnector(view_));
+  }
+  return synthetic_gesture_target_connector_.get();
 }
 
 }  // namespace content

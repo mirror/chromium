@@ -348,8 +348,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
 
-  std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
-      override;
+  void InjectSyntheticInputEvent(const blink::WebInputEvent& event) override;
 
   viz::FrameSinkId GetFrameSinkId() override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,

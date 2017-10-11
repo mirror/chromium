@@ -24,8 +24,7 @@ class CONTENT_EXPORT SyntheticGestureTarget {
   // Allows synthetic gestures to insert input events in the highest level of
   // input processing on the target platform (e.g. Java on Android), so that
   // the event traverses the entire input processing stack.
-  virtual void DispatchInputEventToPlatform(
-      const blink::WebInputEvent& event) = 0;
+  virtual void InjectSyntheticInputEvent(const blink::WebInputEvent& event) = 0;
 
   // Returns the default gesture source type for the target.
   virtual SyntheticGestureParams::GestureSourceType
