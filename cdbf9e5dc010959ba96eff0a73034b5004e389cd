@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23455ed_d9e4e591",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T06:29:37Z",
+      "side": 1,
+      "message": "I think it is better to name this function is CanBeDraggable() or\nanother better name and check |node-\u003eIsTextNode()| and\n|node-\u003eCanStartSelection()| to simplify conditional expression\nin |DraggableNode()|",
+      "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cb673b_1f01dd2a",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T06:29:37Z",
+      "side": 1,
+      "message": "We should check \"draggrable\" attribute instead of A element.",
+      "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca2363a_6f9f45af",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T06:29:37Z",
+      "side": 1,
+      "message": "This check should be done in DOM tree traversal. So, we can use\nNodeTraversall::InclusiveAncestorsOf().",
+      "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
