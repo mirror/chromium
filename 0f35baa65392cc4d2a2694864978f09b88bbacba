@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c32ba765_52e076c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-11T03:51:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ef161fa_c9ddc531",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdfe0c5c_85f14af1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T19:32:49Z",
       "side": 1,
       "message": "Any chance we could get rid of DisplaySnapshot_Params completely in this CL and send DisplaySnapshot directly over IPC even with legacy struct traits (I\u0027m not sure if security ppl would like that though, maybe DisplaySnapshot_Params was initially introduce exactly to avoid that.)",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f0320_999bcb42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-11T03:51:59Z",
+      "side": 1,
+      "message": "Yeah - but I\u0027d rather do it in a follow-up CL: \nDisplaySnapshot_Params uses inside DisplayMode_Params,\nwhich also suffers from the same duplication. Moving\nall of them at once would make this CL illegible.",
+      "parentUuid": "cdfe0c5c_85f14af1",
       "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "66b3e6ba_41b23523",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-11T03:51:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4e34eb_0885d64b",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e2a3db1_1e21f895",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e6a106_562993f2",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-11T03:51:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2a3db1_1e21f895",
+      "revId": "0f35baa65392cc4d2a2694864978f09b88bbacba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
