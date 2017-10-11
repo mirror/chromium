@@ -9,6 +9,7 @@
 #include "base/callback_helpers.h"
 #include "content/browser/android/scoped_surface_request_manager.h"
 #include "content/browser/media/android/media_resource_getter_impl.h"
+#include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
@@ -30,11 +31,18 @@ media::MediaUrlInterceptor* g_media_url_interceptor = nullptr;
 
 }  // namespace
 
-MediaPlayerRenderer::MediaPlayerRenderer(int process_id, int routing_id)
-    : render_process_id_(process_id),
+MediaPlayerRenderer::MediaPlayerRenderer(int process_id,
+                                         int routing_id,
+                                         WebContents* contents)
+    : WebContentsObserver(contents),
+      render_process_id_(process_id),
       routing_id_(routing_id),
       has_error_(false),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  WebContentsImpl* web_contents_impl =
+      static_cast<WebContentsImpl*>(web_contents());
+  web_contents_muted_ = web_contents_impl && web_contents_impl->IsAudioMuted();
+}
 
 MediaPlayerRenderer::~MediaPlayerRenderer() {
   CancelScopedSurfaceRequest();
@@ -169,7 +177,12 @@ base::UnguessableToken MediaPlayerRenderer::InitiateScopedSurfaceRequest() {
 }
 
 void MediaPlayerRenderer::SetVolume(float volume) {
-  media_player_->SetVolume(volume);
+  volume_ = volume;
+  float calculated_volume = volume_;
+  if (web_contents_muted_) {
+    calculated_volume = 0;
+  }
+  media_player_->SetVolume(calculated_volume);
 }
 
 base::TimeDelta MediaPlayerRenderer::GetMediaTime() {
@@ -275,6 +288,11 @@ bool MediaPlayerRenderer::RequestPlay(int player_id,
                                       base::TimeDelta duration,
                                       bool has_audio) {
   return true;
+}
+
+void MediaPlayerRenderer::DidUpdateAudioMutingState(bool muted) {
+  web_contents_muted_ = muted;
+  SetVolume(volume_);
 }
 
 void MediaPlayerRenderer::OnDecoderResourcesReleased(int player_id) {
