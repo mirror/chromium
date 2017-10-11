@@ -19,6 +19,7 @@
 BackgroundFetchDelegateImpl::BackgroundFetchDelegateImpl(Profile* profile)
     : download_service_(
           DownloadServiceFactory::GetInstance()->GetForBrowserContext(profile)),
+      offline_content_provider_(profile),
       weak_ptr_factory_(this) {}
 
 BackgroundFetchDelegateImpl::~BackgroundFetchDelegateImpl() {}
@@ -31,13 +32,48 @@ void BackgroundFetchDelegateImpl::Shutdown() {
   }
 }
 
+BackgroundFetchDelegateImpl::JobDetails::JobDetails(const url::Origin& origin,
+                                                    int completed_parts,
+                                                    int total_parts)
+    : origin(origin),
+      completed_parts(completed_parts),
+      total_parts(total_parts) {}
+
+BackgroundFetchDelegateImpl::JobDetails::~JobDetails() {}
+
+void BackgroundFetchDelegateImpl::CreateDownloadJob(
+    const std::string& jobId,
+    const std::string& title,
+    const url::Origin& origin,
+    int completed_parts,
+    int total_parts,
+    const std::vector<std::string>& current_guids) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  DCHECK(job_details_map_.find(jobId) == job_details_map_.end());
+
+  job_details_map_.emplace(jobId,
+                           JobDetails(origin, completed_parts, total_parts));
+
+  for (auto guid : current_guids) {
+    DCHECK(file_download_job_map_.find(guid) == file_download_job_map_.end());
+    file_download_job_map_.emplace(guid, jobId);
+  }
+}
+
 void BackgroundFetchDelegateImpl::DownloadUrl(
+    const std::string& jobId,
     const std::string& guid,
     const std::string& method,
     const GURL& url,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     const net::HttpRequestHeaders& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  DCHECK(job_details_map_.find(jobId) != job_details_map_.end());
+  DCHECK(file_download_job_map_.find(guid) == file_download_job_map_.end());
+
+  file_download_job_map_.emplace(guid, jobId);
 
   download::DownloadParams params;
   params.guid = guid;
@@ -107,6 +143,16 @@ void BackgroundFetchDelegateImpl::OnDownloadSucceeded(
     const base::FilePath& path,
     uint64_t size) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  std::string jobId = file_download_job_map_[guid];
+  JobDetails& jobDetails = job_details_map_.find(jobId)->second;
+  file_download_job_map_.erase(guid);
+  if (++jobDetails.completed_parts == jobDetails.total_parts) {
+    job_details_map_.erase(jobId);
+    // TODO(delphick): Close the notification
+  } else {
+    // TODO(delphick): Update the notification
+  }
 
   if (client()) {
     client()->OnDownloadComplete(

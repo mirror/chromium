@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -46,10 +47,18 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
 
   ~BackgroundFetchDelegateProxy();
 
+  void CreateJob(const std::string& jobId,
+                 const std::string& title,
+                 const url::Origin& origin,
+                 int completed_parts,
+                 int total_parts,
+                 const std::vector<std::string>& current_guids);
+
   // Requests that the download manager start fetching |request|.
   // Should only be called from the Controller (on the IO
   // thread).
-  void StartRequest(base::WeakPtr<Controller> job_controller,
+  void StartRequest(const std::string& jobId,
+                    base::WeakPtr<Controller> job_controller,
                     const url::Origin& origin,
                     scoped_refptr<BackgroundFetchRequestInfo> request);
 
