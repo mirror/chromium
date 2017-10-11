@@ -111,7 +111,10 @@ void DefaultGpuHost::OnBadMessageFromGpu() {
 }
 
 void DefaultGpuHost::InitializeGpuMain(mojom::GpuMainRequest request) {
-  gpu_main_impl_ = std::make_unique<GpuMain>(std::move(request));
+  const bool create_display_compositor = true;
+  gpu_main_impl_ =
+      std::make_unique<GpuMain>(nullptr, create_display_compositor);
+  gpu_main_impl_->Bind(std::move(request));
   gpu_main_wait_.Signal();
 }
 
