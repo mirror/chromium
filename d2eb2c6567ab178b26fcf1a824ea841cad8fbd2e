@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a41e89f_6653d5aa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-11T18:37:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have these marked as explicit for now to avoid implicit conversion.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "d2eb2c6567ab178b26fcf1a824ea841cad8fbd2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95de8ed0_970285f3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset_rect.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-11T18:37:12Z",
+      "side": 1,
+      "message": "Remove extra semicolon.",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "d2eb2c6567ab178b26fcf1a824ea841cad8fbd2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
