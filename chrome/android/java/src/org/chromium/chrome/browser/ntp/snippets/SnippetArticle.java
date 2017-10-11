@@ -283,4 +283,8 @@ public class SnippetArticle implements OfflinableSuggestion {
     public int getPerSectionRank() {
         return mPerSectionRank;
     }
+
+    public @CategoryInt int getCategory() {
+        return mCategory;
+    }
 }
