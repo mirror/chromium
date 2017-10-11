@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3258f608_431e9a45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-11T21:38:25Z",
+      "side": 1,
+      "message": "You\u0027re right.\nSo that call to Decode() will only be for the index frame.RequiredPreviousFrameIndex().\n\nGetViableReferenceFrameIndex() operates on the open interval rather than the half-open interval [index, prior_index). This is so the code can be reused in ClearCacheExceptFrame(). As a result, inside Decode() if GetViableReferenceFrameIndex() returns kNotFound we handle the half-open interval by calling Decode(frame.RequiredPreviousFrameIndex()).\n\nI\u0027ll correct the commit message.",
+      "parentUuid": "147f7bf8_6125b310",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa152806_ea97faf5",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T19:01:28Z",
       "side": 1,
       "message": "I don\u0027t think this will ever be the case. (What happens if you change it to a DCHECK_NE?) Note that we only recurse if previous_frame_index is kNotFound. And DecodeFrameBufferAtIndex only calls this method if the status is not kFrameComplete.",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 54
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dd98a2_34261fb1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-11T21:38:25Z",
+      "side": 1,
+      "message": "Imagine we are in the fast-forward case and are decoding frame 6 and it is kFrameEmpty. And suppose frame 6\u0027s .RequiredPreviousFrameIndex() returns 4, which we have already decoded.\n\nInside the call to Decode(6) we will call Decode(4), even though we don\u0027t need to decode frame 4 any further.\n\n(As noted in the other comment, previous_frame_index is the open interval and we still call Decode() to complete the half-open interval.)",
+      "parentUuid": "fa152806_ea97faf5",
       "range": {
         "startLine": 222,
         "startChar": 2,
