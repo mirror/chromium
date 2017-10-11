@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
-#define CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
+#ifndef NET_CERT_IGNORE_ERRORS_CERT_VERIFIER_H_
+#define NET_CERT_IGNORE_ERRORS_CERT_VERIFIER_H_
 
 #include <memory>
 #include <string>
@@ -11,36 +11,22 @@
 
 #include "base/command_line.h"
 #include "base/containers/flat_set.h"
-#include "content/common/content_export.h"
+#include "net/base/net_export.h"
 #include "net/cert/cert_verifier.h"
 
 namespace net {
+
 struct SHA256HashValue;
 class SHA256HashValueLessThan;
-}  // namespace net
-
-namespace content {
 
 // IgnoreErrorsCertVerifier wraps another CertVerifier in order to ignore
 // verification errors from certificate chains that match a whitelist of SPKI
 // fingerprints.
-class CONTENT_EXPORT IgnoreErrorsCertVerifier : public net::CertVerifier {
+class NET_EXPORT IgnoreErrorsCertVerifier : public net::CertVerifier {
  public:
   // SPKIHashSet is a set of SHA-256 SPKI fingerprints (RFC 7469, Section 2.4).
   using SPKIHashSet =
       base::flat_set<net::SHA256HashValue, net::SHA256HashValueLessThan>;
-
-  // MaybeWrapCertVerifier returns an IgnoreErrorsCertVerifier wrapping the
-  // supplied verifier using the whitelist from the
-  // --ignore-certificate-errors-spki-list flag of the command line if the
-  // --user-data-dir flag is also present. If either of these flags are missing,
-  // it returns the supplied verifier.
-  // As the --user-data-dir flag is embedder defined, the flag to check for
-  // needs to be passed in.
-  static std::unique_ptr<net::CertVerifier> MaybeWrapCertVerifier(
-      const base::CommandLine& command_line,
-      const char* user_data_dir_switch,
-      std::unique_ptr<net::CertVerifier> verifier);
 
   // MakeWhitelist converts a vector of Base64-encoded SHA-256 SPKI fingerprints
   // into an SPKIHashSet. Invalid fingerprints are logged and skipped.
@@ -63,16 +49,15 @@ class CONTENT_EXPORT IgnoreErrorsCertVerifier : public net::CertVerifier {
              std::unique_ptr<Request>* out_req,
              const net::NetLogWithSource& net_log) override;
 
- private:
-  friend class IgnoreErrorsCertVerifierTest;
-  void set_whitelist(const SPKIHashSet& whitelist);  // Testing only.
+  void SetWhitelistForTesting(const SPKIHashSet& whitelist);  // Testing only.
 
+ private:
   std::unique_ptr<net::CertVerifier> verifier_;
   SPKIHashSet whitelist_;
 
   DISALLOW_COPY_AND_ASSIGN(IgnoreErrorsCertVerifier);
 };
 
-}  // namespace content
+}  // namespace net
 
-#endif  // CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
+#endif  // NET_CERT_IGNORE_ERRORS_CERT_VERIFIER_H_
