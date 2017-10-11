@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "631111f3_8868917a",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T01:08:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e006239_cabbafae",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d798b1_48533edc",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6a4e5039_d393d8d9",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T01:08:44Z",
+      "side": 1,
+      "message": "In fact we don\u0027t need any of this: HistogramTester will cause a test failure in case invalid histogram names are used.\n\nI removed these methods in favor of directly concatenating the full name.",
+      "parentUuid": "9e333255_7bd59923",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58af7015_4bcfbb04",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4
@@ -68,6 +104,24 @@
       "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d269b70_050dfd31",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T01:08:44Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "58af7015_4bcfbb04",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "34477487_c793a7bd",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T01:08:44Z",
+      "side": 1,
+      "message": "This wouldn\u0027t conform to all usages in tests below. I switched to an equality comparison of the total sample count under a prefix using that same function you suggested.",
+      "parentUuid": "2edda19c_cb944cb1",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae40457_3ac6d3e8",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4
@@ -102,6 +174,24 @@
       "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a41686e_4dab4656",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T01:08:44Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "fae40457_3ac6d3e8",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
