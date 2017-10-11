@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
-<p>The three items below should be stitched together into one ordered list when you click the button.</div>
-<div id="sample" contenteditable="true">
-<div id="item1">foo</div>
-<div id="item2">bar</div>
-<div id="item3">baz</div>
-</div>
-<div id="log"></div>
+<script src="../assert_selection.js"></script>
 <script>
-test(function() {
-    var selection = window.getSelection();
+selection_test(
+  [
+      '<div id="sample" contenteditable="true">',
+        '<div id="item1">foo</div>',
+        '<div id="item2">bar</div>',
+        '<div id="item3">baz</div>',
+      '</div>'
+  ],
+  selection => {
+    const document =  selection.document;
     selection.collapse(document.getElementById('item1'), 0);
     document.execCommand('InsertOrderedList');
     selection.collapse(document.getElementById('item2'), 0);
     document.execCommand('InsertOrderedList');
     selection.collapse(document.getElementById('item3'), 0);
     document.execCommand('InsertOrderedList');
-
-    var sample = document.getElementById('sample');
-    assert_equals(sample.innerHTML, '\n<div id="item1"><ol><li>foo<br></li><li>bar<br></li><li>baz<br></li></ol></div>\n\n\n');
-});
+  },
+  [
+      '<div contenteditable="true" id="sample">',
+        '<div id="item1"><ol><li>foo</li>',
+        '<li>bar</li><li>|baz</li></ol>',
+        '</div>',
+      '</div>'
+  ],
+  'InsertOrderedList commands insert list and stiches items together'
+);
 </script>
