@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9080d671_e810033c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T04:48:17Z",
+      "side": 1,
+      "message": "I don\u0027t think ARC should work without ArcSupportHost extension\nbecause it has ToS which users need to accept?\nInstead, could you include the extension into your environment?",
+      "range": {
+        "startLine": 414,
+        "startChar": 27,
+        "endLine": 414,
+        "endChar": 67
+      },
+      "revId": "ac0b39e25312d835165485b13529b133e2929416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
