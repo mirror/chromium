@@ -56,6 +56,7 @@ class InputHandler : public DevToolsDomainHandler,
       Maybe<bool> auto_repeat,
       Maybe<bool> is_keypad,
       Maybe<bool> is_system_key,
+      Maybe<int> location,
       std::unique_ptr<DispatchKeyEventCallback> callback) override;
 
   void DispatchMouseEvent(
