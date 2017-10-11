@@ -11,9 +11,12 @@
 namespace blink {
 namespace scheduler {
 
-TaskQueue::TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl)
+TaskQueue::TaskQueue(
+    std::unique_ptr<internal::TaskQueueImpl> impl,
+    scoped_refptr<base::SingleThreadTaskRunner> shutdown_task_runner)
     : impl_(std::move(impl)),
       thread_id_(base::PlatformThread::CurrentId()),
+      shutdown_task_runner_(std::move(shutdown_task_runner)),
       task_queue_manager_(impl_ ? impl_->GetTaskQueueManagerWeakPtr()
                                 : nullptr) {}
 
@@ -23,7 +26,11 @@ TaskQueue::~TaskQueue() {
     return;
   if (impl_->IsUnregistered())
     return;
-  DCHECK(false) << "task queue must be unregistered before deletion";
+  DCHECK(shutdown_task_runner_);
+  shutdown_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&TaskQueueManager::GracefullyShutdownTaskQueue,
+                 task_queue_manager_, base::Passed(std::move(impl_))));
 }
 
 TaskQueue::Task::Task(TaskQueue::PostedTask task,

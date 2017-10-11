@@ -257,7 +257,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   bool PostTaskWithMetadata(PostedTask task);
 
  protected:
-  explicit TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl);
+  explicit TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl,
+                     scoped_refptr<base::SingleThreadTaskRunner>
+                         shutdown_task_runner = nullptr);
   ~TaskQueue() override;
 
   internal::TaskQueueImpl* GetTaskQueueImpl() const { return impl_.get(); }
@@ -281,6 +283,11 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   std::unique_ptr<internal::TaskQueueImpl> impl_;
 
   const base::PlatformThreadId thread_id_;
+
+  // A task runner to post a task to schedule TaskQueueImpl for graceful
+  // shutdown.
+  // Present if this task queue supports graceful shutdown.
+  scoped_refptr<base::SingleThreadTaskRunner> shutdown_task_runner_;
 
   base::WeakPtr<TaskQueueManager> task_queue_manager_;
 

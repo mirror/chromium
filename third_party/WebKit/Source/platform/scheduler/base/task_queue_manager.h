@@ -160,6 +160,12 @@ class PLATFORM_EXPORT TaskQueueManager
   void UnregisterTaskQueueImpl(
       std::unique_ptr<internal::TaskQueueImpl> task_queue);
 
+  // Notify task queue manager that owning TaskQueue has been deleted.
+  // Task queue manager will continue running tasks and will delete queue when
+  // all tasks are completed.
+  void GracefullyShutdownTaskQueue(
+      std::unique_ptr<internal::TaskQueueImpl> task_queue);
+
   base::WeakPtr<TaskQueueManager> GetWeakPtr();
 
  protected:
@@ -202,6 +208,21 @@ class PLATFORM_EXPORT TaskQueueManager
     base::TimeDelta delay_;
     TimeDomain* time_domain_;
   };
+
+ protected:
+  // List of task queues managed by this TaskQueueManager.
+  // - active_queues contains queues owned by relevant TaskQueues.
+  // - queues_to_gracefully_shutdown contains queues which should be deleted
+  //   when they become empty.
+  // - queues_to_delete contains soon-to-be-deleted queues, because some
+  //   internal scheduling code does not expect queues to be pulled
+  //   from underneath.
+
+  std::set<internal::TaskQueueImpl*> active_queues_;
+  std::map<internal::TaskQueueImpl*, std::unique_ptr<internal::TaskQueueImpl>>
+      queues_to_gracefully_shutdown_;
+  std::map<internal::TaskQueueImpl*, std::unique_ptr<internal::TaskQueueImpl>>
+      queues_to_delete_;
 
  private:
   // Represents a scheduled delayed DoWork (if any). Only public for testing.
@@ -321,16 +342,6 @@ class PLATFORM_EXPORT TaskQueueManager
 
   std::set<TimeDomain*> time_domains_;
   std::unique_ptr<RealTimeDomain> real_time_domain_;
-
-  // List of task queues managed by this TaskQueueManager.
-  // - active_queues contains queues owned by relevant TaskQueues.
-  // - queues_to_delete contains soon-to-be-deleted queues, because some
-  // internal
-  //   scheduling code does not expect queues to be pulled from underneath.
-
-  std::set<internal::TaskQueueImpl*> active_queues_;
-  std::map<internal::TaskQueueImpl*, std::unique_ptr<internal::TaskQueueImpl>>
-      queues_to_delete_;
 
   internal::EnqueueOrderGenerator enqueue_order_generator_;
   base::debug::TaskAnnotator task_annotator_;
