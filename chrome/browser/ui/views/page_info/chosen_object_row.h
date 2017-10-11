@@ -22,7 +22,8 @@ class ChosenObjectRowObserver;
 // access to.
 class ChosenObjectRow : public views::View, public views::ButtonListener {
  public:
-  explicit ChosenObjectRow(std::unique_ptr<PageInfoUI::ChosenObjectInfo> info);
+  ChosenObjectRow(std::unique_ptr<PageInfoUI::ChosenObjectInfo> info,
+                  const int icon_width);
 
   void AddObserver(ChosenObjectRowObserver* observer);
 

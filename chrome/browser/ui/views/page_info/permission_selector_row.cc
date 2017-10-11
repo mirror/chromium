@@ -226,20 +226,19 @@ PermissionSelectorRow::PermissionSelectorRow(
     Profile* profile,
     const GURL& url,
     const PageInfoUI::PermissionInfo& permission,
-    views::GridLayout* layout)
+    views::GridLayout* layout,
+    const int column_id)
     : profile_(profile), icon_(NULL), menu_button_(NULL), combobox_(NULL) {
   // Create the permission icon.
   icon_ = new NonAccessibleImageView();
   const gfx::Image& image = PageInfoUI::GetPermissionIcon(permission);
   icon_->SetImage(image.ToImageSkia());
-  layout->AddView(icon_, 1, 1, views::GridLayout::CENTER,
-                  views::GridLayout::CENTER);
+  layout->AddView(icon_);
   // Create the label that displays the permission type.
   label_ =
       new views::Label(PageInfoUI::PermissionTypeToUIString(permission.type),
                        CONTEXT_BODY_TEXT_LARGE);
-  layout->AddView(label_, 1, 1, views::GridLayout::LEADING,
-                  views::GridLayout::CENTER);
+  layout->AddView(label_);
   // Create the menu model.
   menu_model_.reset(new PermissionMenuModel(
       profile, url, permission,
@@ -263,16 +262,20 @@ PermissionSelectorRow::PermissionSelectorRow(
   base::string16 reason =
       PageInfoUI::PermissionDecisionReasonToUIString(profile, permission, url);
   if (!reason.empty()) {
-    layout->StartRow(1, 1);
+    layout->StartRow(1, column_id);
     layout->SkipColumns(1);
     views::Label* permission_decision_reason = new views::Label(reason);
     permission_decision_reason->SetEnabledColor(
         PageInfoUI::GetPermissionDecisionTextColor());
-    // Long labels should span the remaining width of the row.
-    views::ColumnSet* column_set = layout->GetColumnSet(1);
+
+    views::ColumnSet* column_set = layout->GetColumnSet(column_id);
     DCHECK(column_set);
-    layout->AddView(permission_decision_reason, column_set->num_columns() - 2,
-                    1, views::GridLayout::LEADING, views::GridLayout::CENTER);
+    // Long labels should span the remaining width of the row (minus the end
+    // margin). This includes the permission label, combobox, and space between
+    // them (3 columns total).
+    const int kColumnSpan = 3;
+    layout->AddView(permission_decision_reason, kColumnSpan, 1,
+                    views::GridLayout::LEADING, views::GridLayout::CENTER);
   }
 }
 

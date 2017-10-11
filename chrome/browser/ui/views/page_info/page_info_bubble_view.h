@@ -48,13 +48,6 @@ class Link;
 class Widget;
 }
 
-enum : int {
-  // Left icon margin.
-  kPermissionIconMarginLeft = 6,
-  // The width of the column that contains the permissions icons.
-  kPermissionIconColumnWidth = 16,
-};
-
 // The views implementation of the page info UI.
 class PageInfoBubbleView : public content::WebContentsObserver,
                            public PermissionSelectorRowObserver,
