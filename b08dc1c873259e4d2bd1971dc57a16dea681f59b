@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752f25d5_f7429666",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-11T05:04:04Z",
+      "side": 1,
+      "message": "Is this correct?  It looks like this class has an invariant that exactly one of native_app_data_ or shortcut_info_ is set.  In the case where native_app_data is not null (which implies that shortcut_info_ is null), you are using shortcut_info_-\u003edisplay.",
+      "range": {
+        "startLine": 271,
+        "startChar": 27,
+        "endLine": 273,
+        "endChar": 58
+      },
+      "revId": "b08dc1c873259e4d2bd1971dc57a16dea681f59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
