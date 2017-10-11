@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a692eb21_c9c92a5c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T15:13:17Z",
+      "side": 1,
+      "message": "I wonder if we should be using #isUsageAndCrashReportingPermittedByUser() -- I think that this method will return the same value as isMetricsReportingEnabled() based on a code search, but it\u0027d be good to check with Martin (he could review the CL).",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "684b497e_c1857ae6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-10T22:52:47Z",
       "side": 1,
       "message": "The survey cache technically won\u0027t be cleared until the user restarts the browser. This is probably OK, but let\u0027s confirm with privacy on the email thread.\n\nIf it needs to be cleared as soon as  metrics reporting is disabled, we can hook into the Java settings page.",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3c300e_fe3e1227",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T15:13:17Z",
+      "side": 1,
+      "message": "We could pretty easily hook into PrivacyPreferencesManager#setUsageAndCrashReporting() and clear all cache.\n\nDownstream, I wonder if we should be posting the clearCache() call in an AsyncTask to avoid disk read on the UI thread. It\u0027d be interesting to ask Trung for a snippet of the clearCache() code or an explanation of what the survey code is doing to determine if that\u0027s necessary or not.",
+      "parentUuid": "684b497e_c1857ae6",
       "range": {
         "startLine": 134,
         "startChar": 12,
