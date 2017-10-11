@@ -231,6 +231,15 @@ gfx::Rect RenderWidgetHostViewGuest::GetBoundsInRootWindow() {
   return GetViewBounds();
 }
 
+gfx::Point RenderWidgetHostViewGuest::GetViewOriginInRoot() const {
+  RenderWidgetHostViewBase* rwhv = GetOwnerRenderWidgetHostView();
+  if (rwhv) {
+    auto origin = GetViewBounds().origin() - rwhv->GetViewBounds().origin();
+    return gfx::Point(origin.x(), origin.y());
+  }
+  return gfx::Point();
+}
+
 void RenderWidgetHostViewGuest::RenderProcessGone(
     base::TerminationStatus status,
     int error_code) {

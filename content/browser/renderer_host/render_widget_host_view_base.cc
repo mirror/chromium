@@ -436,6 +436,10 @@ bool RenderWidgetHostViewBase::TransformPointToCoordSpaceForView(
   return true;
 }
 
+gfx::Point RenderWidgetHostViewBase::GetViewOriginInRoot() const {
+  return gfx::Point();
+}
+
 bool RenderWidgetHostViewBase::IsRenderWidgetHostViewGuest() {
   return false;
 }

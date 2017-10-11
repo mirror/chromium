@@ -137,6 +137,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   gfx::PointF TransformPointToRootCoordSpaceF(
       const gfx::PointF& point) override;
 
+  gfx::Point GetViewOriginInRoot() const override;
+
   // IPC::Listener implementation:
   bool OnMessageReceived(const IPC::Message& msg) override;
 
