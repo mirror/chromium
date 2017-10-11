@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "725f37c4_970a32fa",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-11T07:29:56Z",
+      "side": 1,
+      "message": "Please make it also work in Release mode as fuzzers often are release mode only and debug mode is too slow.",
+      "parentUuid": "68110983_ef420e32",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c0a517a_7b8deb47",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 2
