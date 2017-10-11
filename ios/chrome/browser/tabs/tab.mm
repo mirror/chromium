@@ -658,9 +658,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     }
   }
 
-  if ([_parentTabModel tabUsageRecorder])
-    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
-
   web::NavigationItem* navigationItem =
       [self navigationManager]->GetPendingItem();
 
@@ -991,21 +988,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 // confusion in that event (e.g. progress bar starting unexpectedly).
 - (void)webWillAddPendingURL:(const GURL&)url
                   transition:(ui::PageTransition)transition {
-  DCHECK(self.webController.loadPhase == web::LOAD_REQUESTED);
-  DCHECK([self navigationManager]);
-
-  BOOL isUserNavigationEvent =
-      (transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK) == 0;
-  // Record start of page load when a user taps a link. A user initiated link
-  // tap is indicated when the page transition is not a redirect, there is no
-  // pending entry (since that means the change wasn't caused by this class),
-  // and when the URL changes (to avoid counting page resurrection).
-  if (isUserNavigationEvent && !_isPrerenderTab &&
-      ![self navigationManager]->GetPendingItem() &&
-      url != self.lastCommittedURL) {
-    if ([_parentTabModel tabUsageRecorder])
-      [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
-  }
+  // TODO(crbug.com/674991): Remove this method.
 }
 
 - (void)webState:(web::WebState*)webState
@@ -1013,6 +996,25 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (!navigation->IsSameDocument()) {
     // Reset |isVoiceSearchResultsTab| since a new page is being navigated to.
     self.isVoiceSearchResultsTab = NO;
+  }
+
+  // Record page load start if necessary.
+  ui::PageTransition transition = navigation->GetPageTransition();
+  bool isLinkClick =
+      ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_LINK);
+  bool isRedirect =
+      (ui::PageTransition::PAGE_TRANSITION_IS_REDIRECT_MASK & transition) == 0;
+  bool isTyped =
+      ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED);
+  bool isBookmark = ui::PageTransitionCoreTypeIs(
+      transition, ui::PAGE_TRANSITION_AUTO_BOOKMARK);
+  // TODO(crbug.com/773160): RecordPageLoadStart should be called if the
+  // navigation was caused by "Open In New Tab" context menu item.
+  bool recordPageLoadStart = (isLinkClick || isTyped || isBookmark) &&
+                             [self navigationManager]->GetLastCommittedItem() &&
+                             !isRedirect;
+  if (recordPageLoadStart && [_parentTabModel tabUsageRecorder]) {
+    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(webState);
   }
 
   // Move the toolbar to visible during page load.
