@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f2460691_a6dedcd2",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T06:00:51Z",
+      "side": 1,
+      "message": "\u003e Done!\n\u003e \n\u003e There are a few places where the toView: arg is like the security section (the text at the top) and the internal Page Info bubble (the one that says \"you are viewing a internal page\" or something), so it\u0027s sometimes useful :O\n\u003e \n\u003e Probably some of them specifically are always one argument though, I didn\u0027t check very thoroughly.\n\nYah - sorry I didn\u0027t realise how generic the addImage/Label ones are. discussed offline.",
+      "parentUuid": "53267a84_764b2d3d",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39d0a4b2_be27bf63",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -294,6 +312,30 @@
       "side": 1,
       "message": "I don\u0027t think so :( there are some for strings used for extensions/site settings web ui, but I don\u0027t think any between ContentSettingsTypes and ints. Is static_casting OK?",
       "parentUuid": "5b1de9d4_654e8987",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ef58e6_a1cdec31",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T06:00:51Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think so :( there are some for strings used for extensions/site settings web ui, but I don\u0027t think any between ContentSettingsTypes and ints. Is static_casting OK?\n\nif static_cast is done elsewhere, it should be ok..",
+      "parentUuid": "5d310830_00f873b1",
       "range": {
         "startLine": 1344,
         "startChar": 28,

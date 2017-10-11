@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26922bdc_5e27a501",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T06:00:51Z",
+      "side": 1,
+      "message": "no cast needed here",
+      "range": {
+        "startLine": 1368,
+        "startChar": 9,
+        "endLine": 1368,
+        "endChar": 36
+      },
+      "revId": "c2903227b41333d23c7494dbd240f32f064893dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
