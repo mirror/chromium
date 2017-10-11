@@ -50,9 +50,9 @@ ValueStore::ReadResult TestingValueStore::Get(
     const std::vector<std::string>& keys) {
   read_count_++;
   if (!status_.ok())
-    return MakeReadResult(status_);
+    return ReadResult(status_);
 
-  base::DictionaryValue* settings = new base::DictionaryValue();
+  std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue());
   for (std::vector<std::string>::const_iterator it = keys.begin();
       it != keys.end(); ++it) {
     base::Value* value = NULL;
@@ -60,14 +60,14 @@ ValueStore::ReadResult TestingValueStore::Get(
       settings->SetWithoutPathExpansion(*it, value->CreateDeepCopy());
     }
   }
-  return MakeReadResult(base::WrapUnique(settings), status_);
+  return ReadResult(std::move(settings), status_);
 }
 
 ValueStore::ReadResult TestingValueStore::Get() {
   read_count_++;
   if (!status_.ok())
-    return MakeReadResult(status_);
-  return MakeReadResult(storage_.CreateDeepCopy(), status_);
+    return ReadResult(status_);
+  return ReadResult(storage_.CreateDeepCopy(), status_);
 }
 
 ValueStore::WriteResult TestingValueStore::Set(
@@ -81,7 +81,7 @@ ValueStore::WriteResult TestingValueStore::Set(
     WriteOptions options, const base::DictionaryValue& settings) {
   write_count_++;
   if (!status_.ok())
-    return MakeWriteResult(status_);
+    return WriteResult(status_);
 
   std::unique_ptr<ValueStoreChangeList> changes(new ValueStoreChangeList());
   for (base::DictionaryValue::Iterator it(settings);
@@ -95,7 +95,7 @@ ValueStore::WriteResult TestingValueStore::Set(
       storage_.SetWithoutPathExpansion(it.key(), it.value().CreateDeepCopy());
     }
   }
-  return MakeWriteResult(std::move(changes), status_);
+  return WriteResult(std::move(changes), status_);
 }
 
 ValueStore::WriteResult TestingValueStore::Remove(const std::string& key) {
@@ -106,7 +106,7 @@ ValueStore::WriteResult TestingValueStore::Remove(
     const std::vector<std::string>& keys) {
   write_count_++;
   if (!status_.ok())
-    return MakeWriteResult(status_);
+    return WriteResult(status_);
 
   std::unique_ptr<ValueStoreChangeList> changes(new ValueStoreChangeList());
   for (std::vector<std::string>::const_iterator it = keys.begin();
@@ -116,7 +116,7 @@ ValueStore::WriteResult TestingValueStore::Remove(
       changes->push_back(ValueStoreChange(*it, std::move(old_value), nullptr));
     }
   }
-  return MakeWriteResult(std::move(changes), status_);
+  return WriteResult(std::move(changes), status_);
 }
 
 ValueStore::WriteResult TestingValueStore::Clear() {
