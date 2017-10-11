@@ -28,6 +28,7 @@
 #include "content/public/browser/notification_source.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+#include "ui/base/ui_features.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 
@@ -37,9 +38,13 @@ NSString* ColumnIdentifier(int id) {
   return [NSString stringWithFormat:@"%d", id];
 }
 
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
+
 bool ShouldUseViewsTaskManager() {
   return base::FeatureList::IsEnabled(features::kViewsTaskManager);
 }
+
+#endif  // !MAC_VIEWS_BROWSER
 
 }  // namespace
 
@@ -649,7 +654,10 @@ void TaskManagerMac::Hide() {
 
 namespace chrome {
 
-// Declared in browser_dialogs.h.
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
+
+// Declared in browser_dialogs.h. These functions aren't used in
+// MAC_VIEWS_BROWSER builds.
 task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
   if (ShouldUseViewsTaskManager())
     return chrome::ShowTaskManagerViews(browser);
@@ -661,5 +669,7 @@ void HideTaskManager() {
     return chrome::HideTaskManagerViews();
   task_manager::TaskManagerMac::Hide();
 }
+
+#endif  // !MAC_VIEWS_BROWSER
 
 }  // namespace chrome

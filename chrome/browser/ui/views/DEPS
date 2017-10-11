@@ -9,3 +9,11 @@ include_rules = [
  "+components/user_manager",
  "+third_party/libaddressinput",
 ]
+
+specific_include_rules = {
+  # Allow Mac bridging classes to use cocoa support code. These need to be .mm
+  # files.
+  ".*.mm$": [
+    "+chrome/browser/ui/cocoa",
+  ],
+}

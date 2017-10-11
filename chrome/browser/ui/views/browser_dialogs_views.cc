@@ -59,6 +59,9 @@ void ChromeExtensionChooserDialog::ShowDialog(
 
 namespace chrome {
 
+// On Mac, these have special implementations to support using the Cocoa task
+// maanger even in a Views browser build.
+#if !defined(OS_MACOSX)
 task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
   return task_manager::TaskManagerView::Show(browser);
 }
@@ -66,6 +69,7 @@ task_manager::TaskManagerTableModel* ShowTaskManager(Browser* browser) {
 void HideTaskManager() {
   task_manager::TaskManagerView::Hide();
 }
+#endif
 
 void ShowFirstRunBubble(Browser* browser) {
 #if !defined(OS_CHROMEOS)
