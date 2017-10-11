@@ -11,15 +11,15 @@ layer at (0,0) size 480x360
           LayoutSVGRect {rect} at (240,0) size 100x100 [fill={[type=SOLID] [color=#000000]}] [x=240.00] [y=0.00] [width=100.00] [height=100.00]
         LayoutSVGContainer {g} at (240,150) size 100x100
           LayoutSVGRect {rect} at (240,150) size 100x100 [fill={[type=SOLID] [color=#000000]}] [x=240.00] [y=150.00] [width=100.00] [height=100.00]
-        LayoutSVGContainer {g} at (16.36,43.19) size 289.98x90.45
-          LayoutSVGText {text} at (16.36,118.19) size 67.27x15.45 contains 1 chunk(s)
-            LayoutSVGInlineText {#text} at (16.36,118.19) size 67.27x15.45
+        LayoutSVGContainer {g} at (16.36,43.17) size 289.98x90.45
+          LayoutSVGText {text} at (16.36,118.17) size 67.27x15.45 contains 1 chunk(s)
+            LayoutSVGInlineText {#text} at (16.36,118.17) size 67.27x15.45
               chunk 1 (middle anchor) text run 1 at (16.36,130.00) startOffset 0 endOffset 12 width 67.27: "currentColor"
-          LayoutSVGText {text} at (155,43.19) size 30x15.45 contains 1 chunk(s)
-            LayoutSVGInlineText {#text} at (155,43.19) size 30x15.45
+          LayoutSVGText {text} at (155,43.17) size 30x15.45 contains 1 chunk(s)
+            LayoutSVGInlineText {#text} at (155,43.17) size 30x15.45
               chunk 1 (middle anchor) text run 1 at (155.00,55.00) startOffset 0 endOffset 5 width 30.00: "green"
-          LayoutSVGText {text} at (273.63,118.19) size 32.72x15.45 contains 1 chunk(s)
-            LayoutSVGInlineText {#text} at (273.63,118.19) size 32.72x15.45
+          LayoutSVGText {text} at (273.63,118.17) size 32.72x15.45 contains 1 chunk(s)
+            LayoutSVGInlineText {#text} at (273.63,118.17) size 32.72x15.45
               chunk 1 (middle anchor) text run 1 at (273.64,130.00) startOffset 0 endOffset 7 width 32.73: "inherit"
     LayoutSVGText {text} at (10,304) size 261x46 contains 1 chunk(s)
       LayoutSVGInlineText {#text} at (10,304) size 261x46

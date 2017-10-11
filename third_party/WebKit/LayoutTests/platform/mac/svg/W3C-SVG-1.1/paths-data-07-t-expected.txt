@@ -2,16 +2,16 @@ layer at (0,0) size 480x360
   LayoutView at (0,0) size 480x360
 layer at (0,0) size 480x360
   LayoutSVGRoot {svg} at (0,0) size 480x360
-    LayoutSVGContainer {g} at (68.40,34) size 367.20x203.60
-      LayoutSVGContainer {g} at (238,168.89) size 204x113.11 [transform={m=((1.80,0.00)(0.00,1.80)) t=(-360.00,-270.00)}]
-        LayoutSVGText {text} at (288,168.89) size 48.42x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (288,168.89) size 48.42x13.88
+    LayoutSVGContainer {g} at (68.40,33.97) size 367.20x203.63
+      LayoutSVGContainer {g} at (238,168.88) size 204x113.13 [transform={m=((1.80,0.00)(0.00,1.80)) t=(-360.00,-270.00)}]
+        LayoutSVGText {text} at (288,168.88) size 48.42x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (288,168.88) size 48.42x13.88
             chunk 1 text run 1 at (288.00,180.00) startOffset 0 endOffset 10 width 48.43: "m, h, v, h"
-        LayoutSVGText {text} at (288,182.89) size 43.55x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (288,182.89) size 43.55x13.88
+        LayoutSVGText {text} at (288,182.88) size 43.55x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (288,182.88) size 43.55x13.88
             chunk 1 text run 1 at (288.00,194.00) startOffset 0 endOffset 10 width 43.55: "v, h, v, h"
-        LayoutSVGText {text} at (304,196.89) size 17.77x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (304,196.89) size 17.77x13.88
+        LayoutSVGText {text} at (304,196.88) size 17.77x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (304,196.88) size 17.77x13.88
             chunk 1 text run 1 at (304.00,208.00) startOffset 0 endOffset 4 width 17.77: "v, z"
         LayoutSVGPath {path} at (240,190) size 90x90 [stroke={[type=SOLID] [color=#000000]}] [data="m 240 190 h 30 v 30 h 30 v 30 h 30 v 30 h -90 v -90 Z"]
         LayoutSVGRect {rect} at (238,188) size 4x4 [fill={[type=SOLID] [color=#0000FF]}] [x=238.00] [y=188.00] [width=4.00] [height=4.00]

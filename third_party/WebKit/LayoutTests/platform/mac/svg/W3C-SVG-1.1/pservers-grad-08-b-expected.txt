@@ -3,15 +3,15 @@ layer at (0,0) size 480x360
 layer at (0,0) size 480x360
   LayoutSVGRoot {svg} at (0,0) size 480x360
     LayoutSVGHiddenContainer {defs} at (0,0) size 0x0
-    LayoutSVGContainer {g} at (20,8.81) size 415.48x165.30 [transform={m=((1.00,0.00)(0.00,1.50)) t=(0.00,0.00)}]
+    LayoutSVGContainer {g} at (20,8.80) size 415.48x165.30 [transform={m=((1.00,0.00)(0.00,1.50)) t=(0.00,0.00)}]
       LayoutSVGResourceLinearGradient {linearGradient} [id="Gradient"] [gradientUnits=userSpaceOnUse] [start=(10,10)] [end=(440,10)]
         LayoutSVGGradientStop {stop} [offset=0.00] [color=#0000FF]
         LayoutSVGGradientStop {stop} [offset=1.00] [color=#FF0000]
-      LayoutSVGText {text} at (20,8.81) size 415.48x78.44 contains 1 chunk(s)
-        LayoutSVGInlineText {#text} at (20,8.81) size 415.48x78.44
+      LayoutSVGText {text} at (20,8.80) size 415.48x78.44 contains 1 chunk(s)
+        LayoutSVGInlineText {#text} at (20,8.80) size 415.48x78.44
           chunk 1 text run 1 at (20.00,70.00) startOffset 0 endOffset 16 width 415.49: "Gradient on fill"
-      LayoutSVGText {text} at (20,109.80) size 409.31x64.31 contains 1 chunk(s)
-        LayoutSVGInlineText {#text} at (20,109.80) size 409.31x64.31
+      LayoutSVGText {text} at (20,109.78) size 409.31x64.31 contains 1 chunk(s)
+        LayoutSVGInlineText {#text} at (20,109.78) size 409.31x64.31
           chunk 1 text run 1 at (20.00,160.00) startOffset 0 endOffset 18 width 409.32: "Gradient on stroke"
     LayoutSVGText {text} at (40,117) size 343.25x36 contains 1 chunk(s)
       LayoutSVGInlineText {#text} at (40,117) size 343.25x36
