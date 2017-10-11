@@ -2,16 +2,16 @@ layer at (0,0) size 480x360
   LayoutView at (0,0) size 480x360
 layer at (0,0) size 480x360
   LayoutSVGRoot {svg} at (0,0) size 480x360
-    LayoutSVGContainer {g} at (14.47,34) size 401.26x203.60
-      LayoutSVGContainer {g} at (8.04,168.89) size 222.92x113.11 [transform={m=((1.80,0.00)(0.00,1.80)) t=(0.00,-270.00)}]
-        LayoutSVGText {text} at (96,168.89) size 53.97x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (96,168.89) size 53.97x13.88
+    LayoutSVGContainer {g} at (14.47,33.97) size 401.26x203.63
+      LayoutSVGContainer {g} at (8.04,168.88) size 222.92x113.13 [transform={m=((1.80,0.00)(0.00,1.80)) t=(0.00,-270.00)}]
+        LayoutSVGText {text} at (96,168.88) size 53.97x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (96,168.88) size 53.97x13.88
             chunk 1 text run 1 at (96.00,180.00) startOffset 0 endOffset 14 width 53.97: "m, l, l, l, z,"
-        LayoutSVGText {text} at (100,182.89) size 42.67x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (100,182.89) size 42.67x13.88
+        LayoutSVGText {text} at (100,182.88) size 42.67x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (100,182.88) size 42.67x13.88
             chunk 1 text run 1 at (100.00,194.00) startOffset 0 endOffset 7 width 42.68: "subpath"
-        LayoutSVGText {text} at (97,196.89) size 50.64x13.88 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (97,196.89) size 50.64x13.88
+        LayoutSVGText {text} at (97,196.88) size 50.64x13.88 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (97,196.88) size 50.64x13.88
             chunk 1 text run 1 at (97.00,208.00) startOffset 0 endOffset 13 width 50.64: "m, l, l, l, z"
         LayoutSVGPath {path} at (10.04,190) size 103.92x90 [stroke={[type=SOLID] [color=#000000]}] [data="m 62 190 l 51.9615 90 l -103.923 0 l 51.9615 -90 Z m 0 15 l 38.9711 67.5 l -77.9123 0 l 38.9711 -67.5 Z"]
         LayoutSVGRect {rect} at (60,188) size 4x4 [fill={[type=SOLID] [color=#FF0000]}] [x=60.00] [y=188.00] [width=4.00] [height=4.00]

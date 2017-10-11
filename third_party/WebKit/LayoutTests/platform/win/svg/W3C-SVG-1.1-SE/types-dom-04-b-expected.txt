@@ -57,8 +57,8 @@ layer at (0,0) size 480x360
           LayoutSVGInlineText {#text} at (70,392) size 137x16
             chunk 1 text run 1 at (70.00,405.00) startOffset 0 endOffset 17 width 137.00: "SVGAnimatedNumber"
       LayoutSVGHiddenContainer {g} at (-100,-100) size 200x200
-        LayoutSVGText {text} at (10,-17) size 34.25x24.17 contains 1 chunk(s)
-          LayoutSVGInlineText {#text} at (10,-17) size 34.25x24.17
+        LayoutSVGText {text} at (10,-17) size 34.27x24.17 contains 1 chunk(s)
+          LayoutSVGInlineText {#text} at (10,-17) size 34.27x24.17
             chunk 1 text run 1 at (10.00,0.00) startOffset 0 endOffset 1 width 10.00: "a"
             chunk 1 text run 2 at (20.00,0.00) startOffset 1 endOffset 2 width 10.00: "b"
             chunk 1 text run 3 at (30.00,0.00) startOffset 2 endOffset 3 width 9.00: "c"

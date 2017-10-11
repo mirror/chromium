@@ -13,8 +13,8 @@ layer at (0,0) size 480x360
           chunk 1 text run 1 at (340.00,160.00) startOffset 0 endOffset 1 width 8.75: " "
           chunk 1 text run 1 at (360.00,180.00) startOffset 0 endOffset 1 width 25.28: "X"
           chunk 1 text run 1 at (385.28,200.00) startOffset 0 endOffset 2 width 34.03: " Y"
-      LayoutSVGText {text} at (10,29) size 147.47x53.14 contains 1 chunk(s)
-        LayoutSVGInlineText {#text} at (10,29) size 147.47x53.14
+      LayoutSVGText {text} at (10,29) size 147.47x53.16 contains 1 chunk(s)
+        LayoutSVGInlineText {#text} at (10,29) size 147.47x53.16
           chunk 1 text run 1 at (10.00,60.00) startOffset 0 endOffset 1 width 23.34: "R"
           chunk 1 text run 2 at (33.34,60.00) startOffset 1 endOffset 2 width 25.28: "O"
           chunk 1 text run 3 at (58.62,60.00) startOffset 2 endOffset 3 width 21.38: "T"
