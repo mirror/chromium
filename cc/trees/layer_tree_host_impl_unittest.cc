@@ -440,7 +440,7 @@ class LayerTreeHostImplTest : public testing::Test,
       // In the it is a transparent layer but should still participate
       // in hit testing.
       squash1->test_properties()->opacity = 0.0f;
-      squash1->SetShouldHitTest(true);
+      squash1->SetShouldHitTestNonDrawable(true);
     } else {
       squash1->SetDrawsContent(true);
     }
