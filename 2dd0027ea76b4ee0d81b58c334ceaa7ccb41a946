@@ -52,6 +52,24 @@
       "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d026436_afc2c097",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-11T14:48:11Z",
+      "side": 1,
+      "message": "So I\u0027ll mark this as skip in test expectations, is that ok?",
+      "parentUuid": "c88d3c0c_81b0d0da",
+      "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
