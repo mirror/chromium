@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5475d0ad_f3256751",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-11T17:15:50Z",
+      "side": 1,
+      "message": "For the use of LayoutTextControlSingleLine::CreateInnerEditorStyle(), the issue is that we don\u0027t want to use the InnerEditor anymore. That\u0027s why we use the placeholder. It\u0027s a bit hacky but that\u0027s why we want to style it differently than a placeholder. At least it\u0027s secure that way. \n\nEventually we should find a better way to show suggested values that don\u0027t piggyback on the placeholder.\n\nFor the html.css, the issue comes from these lines:\n\n506 ::-webkit-input-placeholder {\n507     -webkit-text-security: none;\n508     color: #757575;\n509     pointer-events: none !important;\n510 }\n\nThis is the reason why I reverted the CL initially, passwords were shown in plain text :S",
+      "parentUuid": "ed3e39e1_57e50fd7",
+      "revId": "c59a0b098d40a3cf807e4e67ce81fc2e7c23400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09c988cb_fe3506ff",
         "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T01:54:42Z",
       "side": 1,
       "message": "Since text control can have black color background color, we should\nnot specify color balck here.\n\nWe may want to use color from pseudo element of ::placeholder[1]?\n\n\n[1] https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder",
+      "revId": "c59a0b098d40a3cf807e4e67ce81fc2e7c23400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f931c11_f99901e4",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-11T17:15:50Z",
+      "side": 1,
+      "message": "But that would be gray most of the time right? We would ideally like it to be the same color as the text that the user would type.",
+      "parentUuid": "09c988cb_fe3506ff",
       "revId": "c59a0b098d40a3cf807e4e67ce81fc2e7c23400f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
