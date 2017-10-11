@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fe6dc84_e5def343",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T03:26:21Z",
+      "side": 1,
+      "message": "Move the comment to line 189",
+      "revId": "4b4bfecc3833e138a8e8174f8ef5ec50327a1473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f44d9b7_f0adaed2",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T03:26:21Z",
+      "side": 1,
+      "message": "I don\u0027t think the \"associated registration\" part is true anymore.",
+      "revId": "4b4bfecc3833e138a8e8174f8ef5ec50327a1473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf482ea_28484d7e",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T03:26:21Z",
+      "side": 1,
+      "message": "if -\u003e If",
+      "revId": "4b4bfecc3833e138a8e8174f8ef5ec50327a1473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fc497c_0717d45c",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T03:26:21Z",
+      "side": 1,
+      "message": "\"instructs the renderer\" -\u003e to just \"dispatches a\"",
+      "revId": "4b4bfecc3833e138a8e8174f8ef5ec50327a1473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
