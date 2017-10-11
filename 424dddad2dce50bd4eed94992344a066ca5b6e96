@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20bcc59f_36d0674b",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T10:54:11Z",
+      "side": 1,
+      "message": "nit: s/++// We use ARC in chrome code. Ditto for below.",
+      "range": {
+        "startLine": 458,
+        "startChar": 5,
+        "endLine": 458,
+        "endChar": 10
+      },
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83f54c2_e3f9ebd2",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T10:54:11Z",
+      "side": 1,
+      "message": "nit: Maybe,\n\nIf an item does not have country code, it is derived in ARC. In such a case, it may be conflicting with another item in the list, then these will be dedupped (the first one is taken) in the container.",
+      "range": {
+        "startLine": 463,
+        "startChar": 78,
+        "endLine": 465,
+        "endChar": 15
+      },
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
