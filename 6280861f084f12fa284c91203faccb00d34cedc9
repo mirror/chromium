@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada32955_9212b9cf",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T07:02:02Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fccb9a_854b2429",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T07:02:02Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b894b3_0711cbde",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T07:02:02Z",
+      "side": 1,
+      "message": "nit: return nullptr is fine (and might be clearer), unless you intentionally did this, here and above",
+      "revId": "6280861f084f12fa284c91203faccb00d34cedc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
