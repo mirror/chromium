@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9301d2b8_ab5a4108",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T21:12:33Z",
+      "side": 1,
+      "message": "`pages.size()` returns size_t, so you should make `document_features.page_count` a size_t, too.",
+      "revId": "a62c7a8a7e4ee1223aa59af5912a57184eaab151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
