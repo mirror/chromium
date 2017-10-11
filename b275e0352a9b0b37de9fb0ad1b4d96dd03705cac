@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "db38ea31_5d580005",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "You still erase it from |open_handles_| but keep it in |num_readers_per_source_|\nI think for this code to be more robust, we need to remove the element if the values goes \u003c\u003d 0:\n\nauto iter \u003d num_readers_per_source_.find(source);\nif (iter !\u003d num_readers_per_source_.end() \u0026\u0026 --(iter-\u003esecond) \u003c\u003d 0) {\n  num_readers_per_source_.erase(iter);\n}\n\nOr however you want to implement it.",
+      "parentUuid": "908a19fa_a886b099",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 38
+      },
+      "revId": "b275e0352a9b0b37de9fb0ad1b4d96dd03705cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7350c1ef_0ebc8fc8",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 5

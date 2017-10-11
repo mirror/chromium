@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10aea836_f4e4b515",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "Nit: const.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbb3683_4633bbfc",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "Please mention that it\u0027s now owned by the ApiResourceManager.",
+      "range": {
+        "startLine": 177,
+        "startChar": 22,
+        "endLine": 177,
+        "endChar": 23
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ffa1ea_7feffb7a",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "Is LogSourceHandle synonymous with SourceAndExtension? If so, then maybe it would be better to name that type LogSourceHandle rather than SourceAndExtension as the latter is kind of weird; we shouldn\u0027t really care what the handle is comprised of.",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c0cf1a_9047d3ee",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "For the test to be more flexible, we should probably expose kMaxReadersPerSource and use it instead of 10. Otherwise, it\u0027s not clear from this test why 10.",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2439e4_c9e8a162",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:44:05Z",
+      "side": 1,
+      "message": "That\u0027s not very informative if this fails.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
