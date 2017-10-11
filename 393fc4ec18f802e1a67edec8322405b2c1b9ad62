@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f06a7a6_1cd2c226",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-11T22:22:49Z",
+      "side": 1,
+      "message": "I would have expected this to count back/forward navigation, reloads, and opening child window. Do you know what is done on other platforms?\n\nMight be out of scope of this CL if it is primarily trying to update to non-deprecated callbacks, but we should consider how this should actually be counted.",
+      "revId": "393fc4ec18f802e1a67edec8322405b2c1b9ad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8661d17c_1fb26c35",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-10-11T22:22:49Z",
+      "side": 1,
+      "message": "This may be more restrictive than what currently is counted. What about cases where user selected an omnibox suggestion, like PAGE_TRANSITION_GENERATED?",
+      "revId": "393fc4ec18f802e1a67edec8322405b2c1b9ad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
