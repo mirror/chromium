@@ -34,6 +34,24 @@
       "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08f807a_604dc23c",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-10-11T21:41:12Z",
+      "side": 1,
+      "message": "No, because:\na) IIUC, when the command times out, nothing before that code catches the timeout exception. So it never gets to that point.\nb) The dialog-dismissing happens after the test is ran and from what I\u0027ve seen, most of the time the test actually seems to pass. Something just goes wrong with the dismissing of the box and the results are never collected.",
+      "parentUuid": "af8a0324_fbea4eeb",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
