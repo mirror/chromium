@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21531869_5d011afb",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T05:06:00Z",
+      "side": 1,
+      "message": "nit: either remove braces in these loops or add them in the previous ones",
+      "revId": "1929424d48bc7876458157135a72c5fd8e3a212c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
