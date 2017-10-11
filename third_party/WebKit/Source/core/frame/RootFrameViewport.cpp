@@ -480,6 +480,10 @@ void RootFrameViewport::ClearScrollableArea() {
   VisualViewport().ClearScrollableArea();
 }
 
+ScrollbarTheme& RootFrameViewport::GetPageScrollbarTheme() const {
+  return LayoutViewport().GetPageScrollbarTheme();
+}
+
 DEFINE_TRACE(RootFrameViewport) {
   visitor->Trace(visual_viewport_);
   visitor->Trace(layout_viewport_);
