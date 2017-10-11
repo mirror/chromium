@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "81d1023c_47c4fa64",
+        "filename": "chrome/browser/extensions/extension_bindings_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:37:20Z",
+      "side": 1,
+      "message": "We should also mention somewhere that this specifically tests the case where the subframe is the only active portion of the extension (i.e., it does not have a background page or popup).",
+      "revId": "02efc9729df8c43beb50b9d63b5e722a8eb0ccfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19e52eb2_34b11fc8",
         "filename": "chrome/test/data/extensions/api_test/bindings/extension_subframe_gets_bindings/page.js",
         "patchSetId": 5
