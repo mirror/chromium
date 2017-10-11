@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd26bdd_bedbf9e5",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test_fixture.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:09:03Z",
+      "side": 1,
+      "message": "Should mention extensions, not settings.",
+      "revId": "fc4909d5a63536adf8258e60930d7e633ccf12cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635783a0_39234228",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test_fixture.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:09:03Z",
+      "side": 1,
+      "message": "Can we use ES6 class syntax? See example https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/cr_extensions_browsertest.js?type\u003dcs\u0026q\u003dclass+file:%5Esrc/chrome/test/data/webui/extensions/+package:%5Echromium$\u0026l\u003d21",
+      "revId": "fc4909d5a63536adf8258e60930d7e633ccf12cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
