@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "67e6646c_e99d1b7a",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-10-11T17:40:33Z",
+      "side": 1,
+      "message": "I have led you astray, dereferencing cend is undefined. Perhaps in the SUCCESS scenario we could check if |it| is cend, and if so create an empty vector to return.",
+      "parentUuid": "cdfc3ed8_7d5fecaa",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "052200ad22c9b2bcfd3886b47b9304dce3fc29af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f39c4b1_e54be898",
         "filename": "device/u2f/u2f_sign_unittest.cc",
         "patchSetId": 1

@@ -33,6 +33,29 @@
       "revId": "16e8dac25b479a4c2be5d10414cdef5e7a0d6fa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d6d447_5e794cc7",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1175054
+      },
+      "writtenOn": "2017-10-11T17:40:33Z",
+      "side": 1,
+      "message": "This existing code could have the same issue as below, now that I think about it. If |registered_keys_| is empty, and we get a successful response from the Register call.",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "16e8dac25b479a4c2be5d10414cdef5e7a0d6fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
