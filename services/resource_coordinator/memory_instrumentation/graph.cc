@@ -48,8 +48,6 @@ Node* GlobalDumpGraph::CreateNode(Process* process_graph, Node* parent) {
 Process::Process(GlobalDumpGraph* global_graph)
     : global_graph_(global_graph),
       root_(global_graph->CreateNode(this, nullptr)) {
-  // The root node should always exist as an explicit node in the graph.
-  root_->set_explicit(true);
 }
 Process::~Process() {}
 
