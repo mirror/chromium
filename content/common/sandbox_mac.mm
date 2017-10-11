@@ -36,6 +36,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
 #include "sandbox/mac/sandbox_compiler.h"
+#include "services/service_manager/sandbox/mac/cdm.sb.h"
 #include "services/service_manager/sandbox/mac/common.sb.h"
 #include "services/service_manager/sandbox/mac/gpu.sb.h"
 #include "services/service_manager/sandbox/mac/nacl_loader.sb.h"
@@ -71,7 +72,7 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
      service_manager::kSeatbeltPolicyString_ppapi},
     {service_manager::SANDBOX_TYPE_NETWORK, nullptr},
     {service_manager::SANDBOX_TYPE_CDM,
-     service_manager::kSeatbeltPolicyString_ppapi},
+     service_manager::kSeatbeltPolicyString_cdm},
     {service_manager::SANDBOX_TYPE_NACL_LOADER,
      service_manager::kSeatbeltPolicyString_nacl_loader},
     {service_manager::SANDBOX_TYPE_PDF_COMPOSITOR,
@@ -98,6 +99,8 @@ const char* Sandbox::kSandboxOSVersion = "OS_VERSION";
 const char* Sandbox::kSandboxPermittedDir = "PERMITTED_DIR";
 const char* Sandbox::kSandboxElCapOrLater = "ELCAP_OR_LATER";
 const char* Sandbox::kSandboxMacOS1013 = "MACOS_1013";
+const char* Sandbox::kSandboxFrameworkBundlePath = "FRAMEWORK_BUNDLE_PATH";
+const char* Sandbox::kSandboxWidevineResourcesPath = "WIDEVINE_RESOURCES_PATH";
 
 // Warm up System APIs that empirically need to be accessed before the Sandbox
 // is turned on.
@@ -261,6 +264,23 @@ bool Sandbox::EnableSandbox(service_manager::SandboxType sandbox_type,
   bool macos_1013 = base::mac::IsOS10_13();
   if (!compiler.InsertBooleanParam(kSandboxMacOS1013, macos_1013))
     return false;
+
+  if (sandbox_type == service_manager::SANDBOX_TYPE_CDM) {
+    base::FilePath framework_bundle_path =
+        Sandbox::GetCanonicalSandboxPath(base::mac::FrameworkBundlePath());
+    if (!compiler.InsertStringParam(kSandboxFrameworkBundlePath,
+                                    framework_bundle_path.value()))
+      return false;
+
+    static const base::FilePath::CharType kWidevineResourcesPath[] =
+        FILE_PATH_LITERAL("Widevine Resources.bundle/Contents/Resources");
+    base::FilePath widevine_resources_path = Sandbox::GetCanonicalSandboxPath(
+        base::mac::FrameworkBundlePath().DirName().Append(
+            kWidevineResourcesPath));
+    if (!compiler.InsertStringParam(kSandboxWidevineResourcesPath,
+                                    widevine_resources_path.value()))
+      return false;
+  }
 
   // Initialize sandbox.
   std::string error_str;
