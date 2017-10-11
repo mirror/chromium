@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5597dad3_f67a0c6b",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T21:01:48Z",
+      "side": 0,
+      "message": "Just double-checking: This string is used elsewhere, so we don\u0027t need to remove it from grd file?\n\n(ditto for the icon?)",
+      "revId": "7d4a863400ce78eac96848e4319dc4a1ceb05f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
