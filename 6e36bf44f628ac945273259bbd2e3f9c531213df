@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d0ec873_8efef5ad",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T22:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "040cc75d_bb850ff7",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a82add_3eb166b1",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ce6cdb5a_0d6221fe",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T22:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a82add_3eb166b1",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b427558c_abd2b3bf",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-11T18:13:53Z",
       "side": 1,
       "message": "Can this delegate change? If not, then please add:\nDCHECK(delegate);\nDCHECK(!delegate_);",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71aac912_070dffae",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T22:19:29Z",
+      "side": 1,
+      "message": "Yes, this delegate can change, especially once the BVC is presented.",
+      "parentUuid": "b427558c_abd2b3bf",
       "range": {
         "startLine": 82,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4be7a35b_a18265a7",
+        "filename": "ios/chrome/browser/tabs/tab_helper_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T22:19:29Z",
+      "side": 1,
+      "message": "The browser_state can be incognito here, so the if statement is necessary.",
+      "parentUuid": "88c3dd52_63849cc6",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e57e6064_96f50162",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-11T18:13:53Z",
       "side": 1,
       "message": "Same question concerning the browser state: can it be incognito? If not, then I think this if is not-needed.",
+      "range": {
+        "startLine": 2420,
+        "startChar": 6,
+        "endLine": 2420,
+        "endChar": 31
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d644541_60080f4e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T22:19:29Z",
+      "side": 1,
+      "message": "The browser_state can be incognito here, so the if statement is necessary.",
+      "parentUuid": "e57e6064_96f50162",
       "range": {
         "startLine": 2420,
         "startChar": 6,
