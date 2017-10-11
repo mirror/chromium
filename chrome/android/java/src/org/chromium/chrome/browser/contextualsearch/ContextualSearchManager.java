@@ -1517,6 +1517,18 @@ public class ContextualSearchManager
                 };
 
                 boolean isTap = mSelectionController.getSelectionType() == SelectionType.TAP;
+                if (!isTap && mDoSuppressContextualSearchForSmartSelection
+                        && !ContextualSearchFieldTrial.isSuppressForSmartSelectionDisabled()) {
+                    // If Smart Selection is active we need to work around a race
+                    // condition gathering surrounding text.  See issue 773330.
+                    // TODO(donnd): remove when issue 769949 is addressed.
+                    mInternalStateController.notifyStartingWorkOn(
+                            InternalState.GATHERING_SURROUNDINGS);
+                    mInternalStateController.notifyFinishedWorkOn(
+                            InternalState.GATHERING_SURROUNDINGS);
+                    return;
+                }
+
                 if (isTap && mPolicy.shouldPreviousTapResolve()) {
                     mContext.setResolveProperties(
                             mPolicy.getHomeCountry(mActivity), mPolicy.maySendBasePageUrl());
@@ -1642,8 +1654,7 @@ public class ContextualSearchManager
                     // and the selection-pins show: The original tap processing may still be in
                     // progress or may have completed and the Bar is being shown.
                     hideContextualSearch(StateChangeReason.UNKNOWN);
-                    // TODO(donnd): add user action:
-                    // RecordUserAction.record("ContextualSearch.SmartSelectSuppressed");
+                    // TODO(donnd): add a user action.
                 } else {
                     showContextualSearch(StateChangeReason.TEXT_SELECT_LONG_PRESS);
                 }
