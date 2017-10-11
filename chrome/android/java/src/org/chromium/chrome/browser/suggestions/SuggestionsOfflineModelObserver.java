@@ -112,13 +112,17 @@ public abstract class SuggestionsOfflineModelObserver<T extends OfflinableSugges
                     @Override
                     public void onResult(OfflinePageItem item) {
                         if (prefetchedReporter != null) {
-                            prefetchedReporter.requestCompleted(/* prefetched = */ item != null
-                                    && TextUtils.equals(item.getClientId().getNamespace(),
-                                               OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE));
+                            prefetchedReporter.requestCompleted(isPrefetchedOfflinePage(item));
                         }
                         onSuggestionOfflineIdChanged(suggestion, item);
                     }
                 });
+    }
+
+    public static boolean isPrefetchedOfflinePage(OfflinePageItem item) {
+        return item != null
+                && TextUtils.equals(item.getClientId().getNamespace(),
+                           OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE);
     }
 
     /**
