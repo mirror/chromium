@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc5e5c8_e209b241",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-11T15:08:43Z",
+      "side": 1,
+      "message": "nit no brackets",
+      "range": {
+        "startLine": 125,
+        "startChar": 77,
+        "endLine": 125,
+        "endChar": 78
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a625b268_c2defc0e",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-11T15:08:43Z",
+      "side": 1,
+      "message": "2? comment or define somewhere?",
+      "range": {
+        "startLine": 137,
+        "startChar": 29,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ad76e5_b25e06c8",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-11T15:08:43Z",
+      "side": 1,
+      "message": "very localized use of LocalFreeDeleter! :)",
+      "range": {
+        "startLine": 154,
+        "startChar": 24,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
