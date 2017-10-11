@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1d612e_65c4c436",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "nit: no need for \u0027class\u0027.",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06536b5_e951b322",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6329e7c3_ef7e4994",
+        "filename": "components/viz/service/display/output_surface.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "nit: add comment",
+      "revId": "8b9ef5aa8f8de02243d543af54ed3569ad68b0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

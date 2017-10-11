@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b144b175_ffa6012c",
+        "filename": "DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "it\u0027s ok for components/viz/service to depend on gpu/vulkan. You can add to DEPS if needed.",
+      "parentUuid": "ec3c7333_2e46a703",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7afda11_7751f173",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "bd40539c_cb86ff59",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "Still need to be renamed as \u0027feature_flags\u0027 per style guide.",
+      "parentUuid": "281973d8_d298e24c",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5056ead_ec189af4",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
         "patchSetId": 17
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f5056ead_ec189af4",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a8f6ca8_93671e32",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "nit: and \u0027extension_flags\u0027 here.",
+      "parentUuid": "32f1938a_9e619407",
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -807,6 +861,24 @@
       "side": 1,
       "message": "There is a conflict issue with definition of Time variable when X11 is included.\n\nthird_party/WebKit/Source/platform/platform/SkiaTextureHolder.o\nIn file included from ../../third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp:13:\nIn file included from ../../third_party/skia/include/gpu/GrBackendSurface.h:16:\nIn file included from ../../third_party/skia/include/gpu/vk/GrVkTypes.h:13:\nIn file included from ../../third_party/skia/include/gpu/vk/GrVkDefines.h:36:\nIn file included from ../../third_party/vulkan/include/vulkan/vulkan.h:3468:\nIn file included from /usr/include/X11/Xlib.h:44:\n/usr/include/X11/X.h:77:23: error: type alias redefinition with different types (\u0027unsigned long\u0027 vs \u0027base::Time\u0027)\ntypedef unsigned long Time;\n                      ^\n../../third_party/WebKit/Source/platform/wtf/Time.h:24:7: note: previous definition is here\nusing Time \u003d base::Time;\n      ^\n1 error generated.\n[10106/14427] CXX obj/third_party/WebKit/Source/platform/platform/PaintArtifactCompositor.o\nninja: build stopped: subcommand failed.",
       "parentUuid": "212f4b1c_a3777877",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3553f36f_953ebb24",
+        "filename": "gpu/vulkan/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:38:48Z",
+      "side": 1,
+      "message": "All this line does is add something in the include path. It doesn\u0027t add/remove individual includes, so I\u0027m not sure how that can solve your problem in any way.\n\nYes, X11 headers are annoying, we should try to minimize where they are exposed (i.e. include only in .cc files as much as possible). Some other things we do is #undef macros that X.h / Xlib.h define (see e.g. ui/gl/gl_bindings.h)",
+      "parentUuid": "6cbfd07a_cae89149",
       "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
