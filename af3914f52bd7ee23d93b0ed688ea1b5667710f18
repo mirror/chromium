@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e24c1b20_cd6f19a8",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T18:54:03Z",
+      "side": 1,
+      "message": "Done. (Moved whole the LOG(ERROR) to IsRequestAllowed).",
+      "parentUuid": "e512d563_9102855a",
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "682abf9f_99d1fa8e",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff17629d_6a9f6bde",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T18:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "682abf9f_99d1fa8e",
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40da317a_e7b9c02a",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T18:54:03Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the plan. Anyway changed to switch, as it\u0027s a simple work.",
+      "parentUuid": "0035622b_131ef4c4",
+      "range": {
+        "startLine": 208,
+        "startChar": 18,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
