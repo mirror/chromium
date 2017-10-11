@@ -123,11 +123,13 @@ if (current_os == "") {
 #   even if the value is overridden, which is wasteful. See first bullet.
 
 declare_args() {
-  # Set to enable the official build level of optimization. This has nothing
-  # to do with branding, but enables an additional level of optimization above
-  # release (!is_debug). This might be better expressed as a tri-state
-  # (debug, release, official) but for historical reasons there are two
-  # separate flags.
+  # Set to true for an official build. This has nothing to do with branding. It
+  # signals that the build product will be shipped to users. This flag enables
+  # an additional level of optimization above release, and disables any
+  # developer-friendly features like predictable execution and symbols in stack
+  # traces that compromise security.
+  # IMPORTANT: Any build product shipped to end users should be built with this
+  # flag set to true.
   is_official_build = false
 
   # Whether we're a traditional desktop unix.
