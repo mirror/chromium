@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fbb82dd_1a665db6",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c00581bf_a7fc1209",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5829cb4d_a2aa4e89",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3e99f6_3864a2f2",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5829cb4d_a2aa4e89",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "79317b25_67a021cf",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "I was trying to avoid attachment to downloading or import, and rather make it mean general \"a page was fetched from the server\", omitting impl details...",
+      "parentUuid": "84214469_9ee4b75f",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81309ba2_61b47ae0",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b29d33_ddd7e7c0",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81309ba2_61b47ae0",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "ce272f33_64fbce8b",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "It is normally 0 or 1, but can be a little higher on rare occasion (when prefetch happens in background and Chrome is not launched in foreground, when we actually report the UMA).\n\nIs there a better way to directly specify the value to increment for the given bucket? I see that to use histogram-\u003eAddCount(..), I\u0027d need to use a  STATIC_HISTOGRAM_POINTER_BLOCK or getting a histogram from factory, which seems even less clear...",
+      "parentUuid": "5e2af4e9_7307a5a7",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47fb84c3_60e0adbf",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2017-10-11T00:11:43Z",
       "side": 1,
       "message": "This is a really long statement.  It is more confusing than a bunch of \u003d 0 statements.",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a866c83_05c44e8d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47fb84c3_60e0adbf",
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "effa9b68_44899700",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab6142ac_e8222613",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b24ad21_1396abdb",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 1
@@ -141,6 +273,24 @@
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ce7f5b_d1ee424f",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done.\n\nOfflineMetricsCollectorTest.RestoreFromPrefsPrefetch actually failed on the dry run :) For some reason my local build is broken.",
+      "parentUuid": "9b24ad21_1396abdb",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "27d5c170_46d4554a",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b967bbf_d1afde6a",
+      "range": {
+        "startLine": 66,
+        "startChar": 70,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43809b6f_6e0358bf",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -187,6 +361,30 @@
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c367b8_9d98099a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28534,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Yes, but they are not overlapping. The buckets 1 and 2 are only emitted if the user only opened or only fetched. Those are different days for us and we want to orthogonal histogram to be able to easily see the separate numbers of users doing a, b or a+b. I\u0027ve updated descriptions to hopefully be more clear.",
+      "parentUuid": "43809b6f_6e0358bf",
+      "range": {
+        "startLine": 28534,
+        "startChar": 61,
+        "endLine": 28534,
+        "endChar": 0
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "2fb53776_7d0c0ea2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51691,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33024b36_6ac47ff9",
+      "range": {
+        "startLine": 51691,
+        "startChar": 53,
+        "endLine": 51691,
+        "endChar": 60
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17fc184_980bfe44",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -233,6 +455,30 @@
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b820833_5951174e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51804,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T01:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17fc184_980bfe44",
+      "range": {
+        "startLine": 51801,
+        "startChar": 0,
+        "endLine": 51804,
+        "endChar": 49
+      },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
