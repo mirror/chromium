@@ -475,18 +475,31 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
       "task_queue_id",
       base::StringPrintf("%" PRIx64, static_cast<uint64_t>(
                                          reinterpret_cast<uintptr_t>(this))));
-  state->SetBoolean("enabled", IsQueueEnabled());
-  state->SetString("time_domain_name",
-                   main_thread_only().time_domain->GetName());
+  if (main_thread_only().time_domain) {
+    state->SetBoolean("enabled", IsQueueEnabled());
+    state->SetString("time_domain_name",
+                     main_thread_only().time_domain->GetName());
+  } else {
+    state->SetString("time_domain_name", "<null>");
+  }
   state->SetInteger("immediate_incoming_queue_size",
                     immediate_incoming_queue().size());
   state->SetInteger("delayed_incoming_queue_size",
                     main_thread_only().delayed_incoming_queue.size());
-  state->SetInteger("immediate_work_queue_size",
-                    main_thread_only().immediate_work_queue->Size());
-  state->SetInteger("delayed_work_queue_size",
-                    main_thread_only().delayed_work_queue->Size());
+  if (main_thread_only().immediate_work_queue) {
+    state->SetInteger("immediate_work_queue_size",
+                      main_thread_only().immediate_work_queue->Size());
+  } else {
+    state->SetInteger("immediate_work_queue_size", 0);
+  }
+  if (main_thread_only().delayed_work_queue) {
+    state->SetInteger("delayed_work_queue_size",
+                      main_thread_only().delayed_work_queue->Size());
+  } else {
+    state->SetInteger("delayed_work_queue_size", 0);
+  }
   if (!main_thread_only().delayed_incoming_queue.empty()) {
+    CHECK(main_thread_only().time_domain);
     base::TimeDelta delay_to_next_task =
         (main_thread_only().delayed_incoming_queue.top().delayed_run_time -
          main_thread_only().time_domain->CreateLazyNow().Now());
@@ -504,17 +517,25 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
     state->BeginArray("immediate_incoming_queue");
     QueueAsValueInto(immediate_incoming_queue(), now, state);
     state->EndArray();
-    state->BeginArray("delayed_work_queue");
-    main_thread_only().delayed_work_queue->AsValueInto(now, state);
-    state->EndArray();
-    state->BeginArray("immediate_work_queue");
-    main_thread_only().immediate_work_queue->AsValueInto(now, state);
-    state->EndArray();
+    if (main_thread_only().delayed_work_queue) {
+      state->BeginArray("delayed_work_queue");
+      main_thread_only().delayed_work_queue->AsValueInto(now, state);
+      state->EndArray();
+    }
+    if (main_thread_only().immediate_work_queue) {
+      state->BeginArray("immediate_work_queue");
+      main_thread_only().immediate_work_queue->AsValueInto(now, state);
+      state->EndArray();
+    }
     state->BeginArray("delayed_incoming_queue");
     QueueAsValueInto(main_thread_only().delayed_incoming_queue, now, state);
     state->EndArray();
   }
-  state->SetString("priority", TaskQueue::PriorityToString(GetQueuePriority()));
+  if (main_thread_only().immediate_work_queue &&
+      main_thread_only().delayed_work_queue) {
+    state->SetString("priority",
+                     TaskQueue::PriorityToString(GetQueuePriority()));
+  }
   state->EndDictionary();
 }
 
