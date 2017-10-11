@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44062ac5_63bb7fdd",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T05:41:00Z",
+      "side": 1,
+      "message": "nit: please have a light-weight class-level comment (e.g. created one per dedicated worker, its lifetime is tied to the mojo connection that is held by the dedicated worker\u0027s global scope in Blink etc)",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790ace32_e50d9f67",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T05:41:00Z",
+      "side": 1,
+      "message": "ditto for class-level comment",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ead4d0d_1e0fad4a",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T05:41:00Z",
+      "side": 1,
+      "message": "origin_ -\u003e parent_context_origin_ to clarify which is what",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23378713_767f519b",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T05:41:00Z",
+      "side": 1,
+      "message": "(I think you\u0027ve dropped the changes in WorkerGlobalScope and GlobalScopeCreationParams during the rebase)",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b62f3fe_180228d1",
+        "filename": "third_party/WebKit/public/platform/dedicated_worker_factory.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T05:41:00Z",
+      "side": 1,
+      "message": "nit: the comment looks stale.",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
