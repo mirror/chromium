@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1542027e_bfec4ad5",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-11T12:27:15Z",
+      "side": 1,
+      "message": "Simple sources produce sounds, and if some verification of how callbacks are called is required - it\u0027s a different problem to be handled in a different class, for the sake of separation of concerns.",
+      "parentUuid": "6d85138c_b93eaf7a",
+      "revId": "39b2208b8628848d7c3445c5d8ed18a3daf967ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58be7876_ddac18b7",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 3
