@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd90bdc_744b8483",
+        "filename": "headless/lib/browser/headless_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T12:19:10Z",
+      "side": 1,
+      "message": "Can you please add a comment explaining why we conditionally remove headers.",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "ee6de8ab4bebac3a718f53a02f1ce0195f512e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
