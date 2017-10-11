@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce9dd55_13803a25",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-11T19:21:07Z",
+      "side": 1,
+      "message": "I think you wanted to add a learn-more link here?",
+      "revId": "90c9f5d823b1e22c471a136047d5a27ee1050d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50d2a69_5f7a5137",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-11T19:21:07Z",
+      "side": 1,
+      "message": "You might\u0027ve accidentally removed the addition of suspiciousInstallHelpUrl string while rebasing.",
+      "revId": "90c9f5d823b1e22c471a136047d5a27ee1050d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
