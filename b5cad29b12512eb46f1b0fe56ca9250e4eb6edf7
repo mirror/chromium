@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b876896c_f1c1916b",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T06:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c65afb_720e1c82",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef525f11_86ded957",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "That what I assumed",
       "parentUuid": "ef525f11_86ded957",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61d134b_23fe2b4b",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T06:42:24Z",
+      "side": 1,
+      "message": "Actually I think it is None",
+      "parentUuid": "bf13e4a0_106895c5",
       "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
