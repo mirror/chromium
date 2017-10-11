@@ -31,6 +31,8 @@
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 
 #include <memory>
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/ExecutionContext.h"
@@ -41,6 +43,7 @@
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerClients.h"
 #include "platform/bindings/ScriptState.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -60,6 +63,8 @@ DedicatedWorkerGlobalScope* DedicatedWorkerGlobalScope::Create(
   context->SetAddressSpace(creation_params->address_space);
   OriginTrialContext::AddTokens(context,
                                 creation_params->origin_trial_tokens.get());
+  context->BindInterfaceProvider(
+      std::move(creation_params->interface_provider));
   return context;
 }
 
