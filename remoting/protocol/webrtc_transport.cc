@@ -61,9 +61,9 @@ bool IsValidSessionDescriptionType(const std::string& type) {
 }
 
 void UpdateCodecParameters(SdpMessage* sdp_message, bool incoming) {
-  // Set bitrate range to 1-100 Mbps.
+  // Set bitrate range to 1-20 Mbps.
   //  - Setting min bitrate here enables padding.
-  //  - The default max bitrate is 600 kbps. Setting it to 100 Mbps allows to
+  //  - The default max bitrate is 600 kbps. Increasing it allows to
   //    use higher bandwidth when it's available.
   //
   // TODO(sergeyu): Padding needs to be enabled to workaround BW estimator not
@@ -72,11 +72,13 @@ void UpdateCodecParameters(SdpMessage* sdp_message, bool incoming) {
   // TODO(isheriff): The need for this should go away once we have a proper
   // API to provide max bitrate for the case of handing over encoded
   // frames to webrtc.
+  // TODO(crbug.com/773549): Increase the max bitrate to 100Mbps when the
+  // underlying bug is fixed to handle high load at high bitrate.
   if (sdp_message->has_video()) {
     bool param_added = sdp_message->AddCodecParameter(
-        "VP8", "x-google-min-bitrate=1000; x-google-max-bitrate=100000");
+        "VP8", "x-google-min-bitrate=1000; x-google-max-bitrate=20000");
     param_added |= sdp_message->AddCodecParameter(
-        "VP9", "x-google-min-bitrate=1000; x-google-max-bitrate=100000");
+        "VP9", "x-google-min-bitrate=1000; x-google-max-bitrate=20000");
     if (!param_added) {
       if (incoming) {
         LOG(WARNING) << "Neither of VP8/VP9 is found in an incoming SDP.";
