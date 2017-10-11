@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f84115c_ff803761",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "nit: get rid of the empty block",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098f3f3b_fbfe197e",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "please mention that this is used for histograms and add a warnings as documented at https://chromium.googlesource.com/chromium/src/+/master/tools/metrics/histograms/README.md#Enum-Histograms (and also add explicit values, again as documented there)\n\nAlso maybe make this an enum class and just call them kMiss, kHit, kUnused et?",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c9cb2d_6c965c1c",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "I think this branch is supposed to be kCacheUnused, and the other branch kCacheHit? (assuming I understand what the enum values are supposed to mean)",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adbe92c_2500f024",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "does this test need a full TestBrowserThreadBundle, or is a base::test::ScopedTaskEnvironment enough?",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7739d279_3a23b59c",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "Any reason these two are defined here rather than above with kOrigin? (and completely unimportant, why dom_storage, dom_storage1 and dom_storage3?)",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 59
+      },
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bdd24b_642d7305",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "nit: maybe define a constant for this value, so it\u0027s clear that the value here, and the size of long_value below are related",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e6529a_2a1bf4ce",
+        "filename": "content/renderer/dom_storage/mock_leveldb_wrapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "nit: maybe call this mutable_get_all_return_values()? It now reads like it is a getter for \"all_return_values\", which isn\u0027t really what it is.",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dcfd8a_e9b0c437",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 23181,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T21:28:22Z",
+      "side": 1,
+      "message": "these descriptions don\u0027t seem to match the enum?",
+      "revId": "29b8344894279be802b7ce55c5a35e4a0ee60e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
