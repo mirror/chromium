@@ -62,6 +62,7 @@ IDBValueWrapper::IDBValueWrapper(
     ExceptionState& exception_state) {
   SerializedScriptValue::SerializeOptions options;
   options.blob_info = &blob_info_;
+  options.bundles = &bundles_;
   options.for_storage = SerializedScriptValue::kForStorage;
   options.wasm_policy = wasm_policy;
 
@@ -99,6 +100,14 @@ void IDBValueWrapper::WriteVarint(unsigned value, Vector<char>& output) {
     value >>= 7;
   } while (value);
   output.back() &= 0x7F;
+}
+
+void IDBValueWrapper::Write8BitString(const String& value,
+                                      Vector<char>& output) {
+  DCHECK(value.Is8Bit());
+
+  IDBValueWrapper::WriteVarint(value.length(), output);
+  output.Append(value.Characters8(), value.length());
 }
 
 bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
@@ -255,6 +264,21 @@ bool IDBValueUnwrapper::ReadVarint(unsigned& value) {
 
     has_another_byte = byte & 0x80;
   } while (has_another_byte);
+  return true;
+}
+
+bool IDBValueUnwrapper::Read8BitString(String& value) {
+  unsigned length;
+  if (!ReadVarint(length))
+    return false;
+
+  DCHECK_LE(current_, end_);
+  if (end_ - current_ < static_cast<ptrdiff_t>(length))
+    return false;
+  String result(current_, length);
+  DCHECK(result.Is8Bit());
+  value.swap(result);
+  current_ += length;
   return true;
 }
 
