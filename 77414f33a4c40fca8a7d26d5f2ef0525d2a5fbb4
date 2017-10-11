@@ -22,6 +22,30 @@
       "revId": "77414f33a4c40fca8a7d26d5f2ef0525d2a5fbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6832b79_07a1c745",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-11T13:50:45Z",
+      "side": 1,
+      "message": "For Android instrumentation tests (those in src/chrome/android/javatests/...) which are run on an Android device, the tests are by default run in their own thread (not the UI thread). Quite a few things (most stuff to do with updating the UI) need to be run on the UI thread, so most instrumentation tests are littered with ThreadUtils.runOnUiThreadBlocking(...).\n\nHowever, you are writing a junit test (in src/chrome/android/junit), which is run locally on your computer and (I believe) is run single threaded. Therefore you shouldn\u0027t need to worry about using ThreadUtils.runOnUiThreadBlocking since everything will be executed in the same thread.",
+      "parentUuid": "e3b60092_27329035",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 59
+      },
+      "revId": "77414f33a4c40fca8a7d26d5f2ef0525d2a5fbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
