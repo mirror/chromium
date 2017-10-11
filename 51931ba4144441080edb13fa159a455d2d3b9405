@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57b1e96_f919ce27",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T02:04:07Z",
+      "side": 1,
+      "message": "DCHECK(ToWorkerGlobalScope(\u0026context)-\u003eEnsureResourceFetcher());",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
