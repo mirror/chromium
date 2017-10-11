@@ -243,7 +243,8 @@ std::unique_ptr<ResourceResponseHead> CreateResponseInfoFromServiceWorker() {
 class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
  protected:
   ServiceWorkerSubresourceLoaderTest()
-      : fake_container_host_(&fake_controller_) {}
+      : fake_container_host_(&fake_controller_),
+        url_loader_client_(base::MakeUnique<TestURLLoaderClient>()) {}
   ~ServiceWorkerSubresourceLoaderTest() override = default;
 
   void SetUp() override {
@@ -264,11 +265,7 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     controller_connector_->OnContainerHostConnectionClosed();
   }
 
-  void TestRequest(const GURL& url, const std::string& method) {
-    ResourceRequest request;
-    request.url = url;
-    request.method = method;
-
+  void TestRequest(const ResourceRequest& request) {
     mojom::URLLoaderPtr url_loader;
 
     ServiceWorkerSubresourceLoaderFactory loader_factory(
@@ -277,12 +274,19 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
             base::RefCountedData<storage::mojom::BlobRegistryPtr>>());
     loader_factory.CreateLoaderAndStart(
         mojo::MakeRequest(&url_loader), 0, 0, mojom::kURLLoadOptionNone,
-        request, url_loader_client_.CreateInterfacePtr(),
+        request, url_loader_client_->CreateInterfacePtr(),
         net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
     base::RunLoop().RunUntilIdle();
 
     EXPECT_EQ(request.url, fake_controller_.fetch_event_request().url);
     EXPECT_EQ(request.method, fake_controller_.fetch_event_request().method);
+  }
+
+  void TestRequest(const GURL& url, const std::string& method) {
+    ResourceRequest request;
+    request.url = url;
+    request.method = method;
+    TestRequest(request);
   }
 
   void ExpectResponseInfo(const ResourceResponseHead& info,
@@ -314,7 +318,7 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
   scoped_refptr<ControllerServiceWorkerConnector> controller_connector_;
   base::test::ScopedFeatureList feature_list_;
 
-  TestURLLoaderClient url_loader_client_;
+  std::unique_ptr<TestURLLoaderClient> url_loader_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerSubresourceLoaderTest);
 };
@@ -327,11 +331,11 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, Basic) {
 
 TEST_F(ServiceWorkerSubresourceLoaderTest, DropController) {
   TestRequest(GURL("https://www.example.com/foo.html"), "GET");
-  url_loader_client_.Unbind();
+  url_loader_client_->Unbind();
   EXPECT_EQ(1, fake_controller_.fetch_event_count());
   EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
   TestRequest(GURL("https://www.example.com/foo2.html"), "GET");
-  url_loader_client_.Unbind();
+  url_loader_client_->Unbind();
   EXPECT_EQ(2, fake_controller_.fetch_event_count());
   EXPECT_EQ(1, fake_container_host_.get_controller_service_worker_count());
 
@@ -356,7 +360,7 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
   // Perform the request.
   TestRequest(GURL("https://www.example.com/foo.html"), "GET");
 
-  const ResourceResponseHead& info = url_loader_client_.response_head();
+  const ResourceResponseHead& info = url_loader_client_->response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());
 
@@ -369,14 +373,14 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, StreamResponse) {
   stream_callback->OnCompleted();
   data_pipe.producer_handle.reset();
 
-  url_loader_client_.RunUntilComplete();
-  EXPECT_EQ(net::OK, url_loader_client_.completion_status().error_code);
+  url_loader_client_->RunUntilComplete();
+  EXPECT_EQ(net::OK, url_loader_client_->completion_status().error_code);
 
   // Test the body.
   std::string response;
-  EXPECT_TRUE(url_loader_client_.response_body().is_valid());
+  EXPECT_TRUE(url_loader_client_->response_body().is_valid());
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
-      url_loader_client_.response_body_release(), &response));
+      url_loader_client_->response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
 }
 
@@ -397,7 +401,68 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, ErrorResponse) {
   // Perform the request.
   TestRequest(GURL("https://www.example.com/foo.html"), "GET");
 
-  EXPECT_EQ(net::ERR_FAILED, url_loader_client_.completion_status().error_code);
+  EXPECT_EQ(net::ERR_FAILED,
+            url_loader_client_->completion_status().error_code);
+}
+
+// Test when the service worker responds with network fallback to CORS request.
+TEST_F(ServiceWorkerSubresourceLoaderTest, CORSFallbackResponse) {
+  fake_controller_.RespondWithFallback();
+
+  struct TestCase {
+    FetchRequestMode fetch_request_mode;
+    base::Optional<url::Origin> request_initiator;
+    bool expected_was_fallback_required_by_service_worker;
+  };
+  const TestCase kTests[] = {
+      {FETCH_REQUEST_MODE_SAME_ORIGIN, base::Optional<url::Origin>(), false},
+      {FETCH_REQUEST_MODE_NO_CORS, base::Optional<url::Origin>(), false},
+      {FETCH_REQUEST_MODE_CORS, base::Optional<url::Origin>(), true},
+      {FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT,
+       base::Optional<url::Origin>(), true},
+      {FETCH_REQUEST_MODE_NAVIGATE, base::Optional<url::Origin>(), false},
+      {FETCH_REQUEST_MODE_SAME_ORIGIN,
+       url::Origin(GURL("https://www.example.com/")), false},
+      {FETCH_REQUEST_MODE_NO_CORS,
+       url::Origin(GURL("https://www.example.com/")), false},
+      {FETCH_REQUEST_MODE_CORS, url::Origin(GURL("https://www.example.com/")),
+       false},
+      {FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT,
+       url::Origin(GURL("https://www.example.com/")), false},
+      {FETCH_REQUEST_MODE_NAVIGATE,
+       url::Origin(GURL("https://other.example.com/")), false},
+      {FETCH_REQUEST_MODE_SAME_ORIGIN,
+       url::Origin(GURL("https://other.example.com/")), false},
+      {FETCH_REQUEST_MODE_NO_CORS,
+       url::Origin(GURL("https://other.example.com/")), false},
+      {FETCH_REQUEST_MODE_CORS, url::Origin(GURL("https://other.example.com/")),
+       true},
+      {FETCH_REQUEST_MODE_CORS_WITH_FORCED_PREFLIGHT,
+       url::Origin(GURL("https://other.example.com/")), true},
+      {FETCH_REQUEST_MODE_NAVIGATE,
+       url::Origin(GURL("https://other.example.com/")), false}};
+
+  for (const auto& test : kTests) {
+    SCOPED_TRACE(
+        ::testing::Message()
+        << "fetch_request_mode: " << static_cast<int>(test.fetch_request_mode)
+        << " request_initiator: "
+        << (test.request_initiator ? test.request_initiator->Serialize()
+                                   : std::string("null")));
+    ResourceRequest request;
+    request.url = GURL("https://www.example.com/foo.html");
+    request.method = "GET";
+    request.fetch_request_mode = test.fetch_request_mode;
+    request.request_initiator = test.request_initiator;
+
+    // Perform the request.
+    TestRequest(request);
+
+    const ResourceResponseHead& info = url_loader_client_->response_head();
+    EXPECT_EQ(test.expected_was_fallback_required_by_service_worker,
+              info.was_fallback_required_by_service_worker);
+    url_loader_client_ = base::MakeUnique<TestURLLoaderClient>();
+  }
 }
 
 // TODO(kinuko): Add more tests.
