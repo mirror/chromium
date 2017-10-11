@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8da051a8_b814c71c",
+        "filename": "net/spdy/platform/api/spdy_mem_slice.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-11T17:43:45Z",
+      "side": 1,
+      "message": "Please remove \"(c)\" according to https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers.  You can also use tools/boilerplate.py to create new files, it adds copyright notice and autogenerates header guards, super useful!",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fb46142f46f0f2aba867c4c624af84696ec4c5bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
