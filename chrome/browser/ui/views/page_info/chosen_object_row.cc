@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/views/page_info/chosen_object_row.h"
 
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/page_info/chosen_object_row_observer.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -15,33 +17,34 @@
 #include "ui/views/layout/grid_layout.h"
 
 ChosenObjectRow::ChosenObjectRow(
-    std::unique_ptr<PageInfoUI::ChosenObjectInfo> info)
+    std::unique_ptr<PageInfoUI::ChosenObjectInfo> info,
+    const int icon_width)
     : info_(std::move(info)) {
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   const int column_set_id = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(column_set_id);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::FIXED, kPermissionIconColumnWidth,
-                        0);
-  column_set->AddPaddingColumn(0, kPermissionIconMarginLeft);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::USE_PREF, 0, 0);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                        views::GridLayout::USE_PREF, 0, 0);
+  column_set->AddColumn(views::GridLayout::CENTER, views::GridLayout::CENTER, 0,
+                        views::GridLayout::FIXED, icon_width, 0);
+  column_set->AddPaddingColumn(0,
+                               ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                   views::DISTANCE_RELATED_LABEL_HORIZONTAL));
+  column_set->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+                        1, views::GridLayout::USE_PREF, 0, 0);
+  column_set->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
+                        0, views::GridLayout::USE_PREF, icon_width, 0);
 
   layout->StartRow(1, column_set_id);
-  // Create the permission icon.
+  // Create the chosen object icon.
   icon_ = new views::ImageView();
   const gfx::Image& image = PageInfoUI::GetChosenObjectIcon(*info_, false);
   icon_->SetImage(image.ToImageSkia());
-  layout->AddView(icon_, 1, 1, views::GridLayout::CENTER,
-                  views::GridLayout::CENTER);
-  // Create the label that displays the permission type.
+  layout->AddView(icon_);
+  // Create the label that displays the chosen object name.
   views::Label* label = new views::Label(
       l10n_util::GetStringFUTF16(info_->ui_info.label_string_id,
-                                 PageInfoUI::ChosenObjectToUIString(*info_)));
-  layout->AddView(label, 1, 1, views::GridLayout::LEADING,
-                  views::GridLayout::CENTER);
+                                 PageInfoUI::ChosenObjectToUIString(*info_)),
+      CONTEXT_BODY_TEXT_LARGE);
+  layout->AddView(label);
   // Create the delete button.
   delete_button_ = new views::ImageButton(this);
   delete_button_->SetFocusForPlatform();
@@ -55,8 +58,7 @@ ChosenObjectRow::ChosenObjectRow(
                            rb.GetImageSkiaNamed(IDR_CLOSE_2_H));
   delete_button_->SetImage(views::ImageButton::STATE_PRESSED,
                            rb.GetImageSkiaNamed(IDR_CLOSE_2_P));
-  layout->AddView(delete_button_, 1, 1, views::GridLayout::LEADING,
-                  views::GridLayout::CENTER);
+  layout->AddView(delete_button_);
 }
 
 void ChosenObjectRow::AddObserver(ChosenObjectRowObserver* observer) {
