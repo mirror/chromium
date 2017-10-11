@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc212ee_e249ac6a",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T15:15:52Z",
+      "side": 1,
+      "message": "Prefer to just get rid of this method and always pass the VC.",
+      "range": {
+        "startLine": 1438,
+        "startChar": 8,
+        "endLine": 1438,
+        "endChar": 25
+      },
+      "revId": "58a318acef63f558a2f6a33d2b0ba4ffc5d211d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39086ab2_58726870",
+        "filename": "ios/chrome/browser/ui/sad_tab/sad_tab_legacy_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T15:15:52Z",
+      "side": 1,
+      "message": "\u0027baseViewController\u0027 is the naming used in other coordinators.",
+      "range": {
+        "startLine": 22,
+        "startChar": 45,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "58a318acef63f558a2f6a33d2b0ba4ffc5d211d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
