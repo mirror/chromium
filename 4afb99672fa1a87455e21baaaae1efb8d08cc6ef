@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c2187010_bb0779ad",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T15:27:47Z",
+      "side": 1,
+      "message": "It\u0027s still always called because (a) there may be some histograms that aren\u0027t in shared memory and (b) it\u0027s better to be safe than sorry.  Also, if shared memory gets full, then the system will fall back to heap allocation since the shared memory segment cannot be expanded.\n\nHowever, there will be little or no data returned when persistence is enabled.",
+      "parentUuid": "e8dc6d7e_7804931f",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ff8597_8dc52ad1",
         "filename": "content/browser/histogram_controller.cc",
         "patchSetId": 19
