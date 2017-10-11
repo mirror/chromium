@@ -281,12 +281,6 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // operation was successful or not.
   using ArcCallback = base::Callback<void(bool success)>;
 
-  // Used for GetArcStartTime. Takes a boolean indicating whether the
-  // operation was successful or not and the ticks of ARC start time if it
-  // is successful.
-  using GetArcStartTimeCallback =
-      base::Callback<void(bool success, base::TimeTicks ticks)>;
-
   // Asynchronously checks if starting the ARC instance is available.
   // The result of the operation is reported through |callback|.
   // If the operation fails, it is reported as unavailable.
@@ -347,9 +341,10 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   virtual void EmitArcBooted(const cryptohome::Identification& cryptohome_id,
                              const ArcCallback& callback) = 0;
 
-  // Asynchronously retrieves the timestamp which ARC instance is invoked or
-  // returns false if there is no ARC instance or ARC is not available.
-  virtual void GetArcStartTime(const GetArcStartTimeCallback& callback) = 0;
+  // Asynchronously retrieves the timestamp which ARC instance is invoked.
+  // Returns nullopt if there is no ARC instance or ARC is not available.
+  virtual void GetArcStartTime(
+      DBusMethodCallback<base::TimeTicks> callback) = 0;
 
   // Asynchronously removes all ARC user data for the user whose cryptohome is
   // located by |cryptohome_id|. Upon completion, invokes |callback| with the
