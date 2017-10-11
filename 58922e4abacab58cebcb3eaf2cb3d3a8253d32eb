@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee4899a_a123c9c2",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-10-11T06:16:11Z",
+      "side": 1,
+      "message": "As per the bug you wanted to have a state abort for StartingSelection validity on document.\nOn adding StartingSelection validity for GetDocument(), around 230 failures were observed. \nSo I have added currently only endingSelection validity.",
+      "revId": "58922e4abacab58cebcb3eaf2cb3d3a8253d32eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
