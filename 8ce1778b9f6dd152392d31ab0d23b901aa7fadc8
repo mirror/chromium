@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc669354_62de01d7",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T21:20:33Z",
+      "side": 1,
+      "message": "We call this on every message, seems somewhat overkill (lock, map/set lookups)? Could we call these only when (wait_for_token_ || wait_for_get_offset_) changes?",
+      "revId": "8ce1778b9f6dd152392d31ab0d23b901aa7fadc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
