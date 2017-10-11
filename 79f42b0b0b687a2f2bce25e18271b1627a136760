@@ -34,6 +34,24 @@
       "revId": "79f42b0b0b687a2f2bce25e18271b1627a136760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70063a14_7a332edb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-11T16:31:26Z",
+      "side": 1,
+      "message": "We don\u0027t need new ones, we need to stop sending \u0027other\u0027. Apparently this is fixed: https://chromium-review.googlesource.com/c/chromium/src/+/667504",
+      "parentUuid": "44e14984_4375ebf5",
+      "revId": "79f42b0b0b687a2f2bce25e18271b1627a136760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
