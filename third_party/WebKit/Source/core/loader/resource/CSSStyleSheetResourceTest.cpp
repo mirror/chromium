@@ -98,5 +98,56 @@ TEST_F(CSSStyleSheetResourceTest, DuplicateResourceNotCached) {
   EXPECT_FALSE(css_resource->RestoreParsedStyleSheet(parser_context));
 }
 
+TEST_F(CSSStyleSheetResourceTest, RestoreAndCopyDoesNotAffectCachedSheet) {
+  const char kUrl[] = "https://localhost/style.css";
+  KURL css_url(NullURL(), kUrl);
+
+  CSSStyleSheetResource* css_resource =
+      CSSStyleSheetResource::CreateForTest(css_url, UTF8Encoding());
+  css_resource->ResponseReceived(
+      ResourceResponse(css_url, "style/css", 0, g_null_atom), nullptr);
+  css_resource->Finish();
+  GetMemoryCache()->Add(css_resource);
+
+  CSSParserContext* parser_context =
+      CSSParserContext::Create(kHTMLStandardMode);
+  StyleSheetContents* contents = StyleSheetContents::Create(parser_context);
+  CSSStyleSheet* sheet = CSSStyleSheet::Create(contents, GetDocument());
+  ASSERT_TRUE(sheet);
+
+  contents->ParseString("div { color: red; }");
+  contents->NotifyLoadedSheet(css_resource);
+  contents->CheckLoaded();
+  EXPECT_TRUE(contents->IsCacheableForResource());
+
+  contents->EnsureRuleSet(MediaQueryEvaluator(), kRuleHasNoSpecialState);
+  EXPECT_TRUE(contents->HasRuleSet());
+
+  css_resource->SaveParsedStyleSheet(contents);
+  EXPECT_TRUE(GetMemoryCache()->Contains(css_resource));
+  EXPECT_TRUE(contents->IsReferencedFromResource());
+
+  StyleSheetContents* restored_stylesheet =
+      css_resource->RestoreParsedStyleSheet(parser_context);
+  ASSERT_TRUE(restored_stylesheet);
+
+  restored_stylesheet = restored_stylesheet->Copy();
+  ASSERT_TRUE(restored_stylesheet);
+
+  sheet->ClearOwnerNode();
+  sheet = CSSStyleSheet::Create(restored_stylesheet, GetDocument());
+  ASSERT_TRUE(sheet);
+
+  EXPECT_TRUE(contents->HasSingleOwnerDocument());
+  EXPECT_EQ(0U, contents->ClientSize());
+  EXPECT_TRUE(contents->IsReferencedFromResource());
+  EXPECT_TRUE(contents->HasRuleSet());
+
+  EXPECT_TRUE(restored_stylesheet->HasSingleOwnerDocument());
+  EXPECT_TRUE(restored_stylesheet->HasOneClient());
+  EXPECT_FALSE(restored_stylesheet->IsReferencedFromResource());
+  EXPECT_FALSE(restored_stylesheet->HasRuleSet());
+}
+
 }  // namespace
 }  // namespace blink
