@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cdc84db_b1f7d633",
+        "filename": "tools/clang/value_cleanup/ValueCleanup.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T00:05:16Z",
+      "side": 1,
+      "message": "Strictly speaking, this isn\u0027t necessary right? I\u0027m curious if you were hitting some other problem by not doing this.",
+      "revId": "a1134e74dc2ba9107e3128f19dd3bd8fbff569df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249ef4ee_14e58cfc",
+        "filename": "tools/clang/value_cleanup/tests/value-get-type-original.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T00:05:16Z",
+      "side": 1,
+      "message": "Nit: usually it\u0027s helpful to annotate individual test cases with a brief sentence about the expected behavior and why (or at least the overall test case)",
+      "revId": "a1134e74dc2ba9107e3128f19dd3bd8fbff569df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
