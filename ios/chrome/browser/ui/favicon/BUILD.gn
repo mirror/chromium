@@ -27,6 +27,7 @@ source_set("favicon_ui") {
   ]
   deps = [
     "//base",
+    "//components/ntp_tiles",
     "//ios/chrome/browser/ui/util:constraints_ui",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
