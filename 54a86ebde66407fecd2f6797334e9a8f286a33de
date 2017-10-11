@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc56d11e_ebbe3b84",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T18:22:23Z",
+      "side": 1,
+      "message": "nit: maybe chrome.\u003capi\u003e.onFoo?",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "54a86ebde66407fecd2f6797334e9a8f286a33de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb78b12_5f36e6ca",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T18:22:23Z",
+      "side": 1,
+      "message": "Why \"more or less\"?  Is this to account for lazy listeners?  Elaborate.",
+      "range": {
+        "startLine": 54,
+        "startChar": 53,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "54a86ebde66407fecd2f6797334e9a8f286a33de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac3618b_043a8d42",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T18:22:23Z",
+      "side": 1,
+      "message": "nit: listeners",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 58,
+        "endChar": 40
+      },
+      "revId": "54a86ebde66407fecd2f6797334e9a8f286a33de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6e7404_7e53db26",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T18:22:23Z",
+      "side": 1,
+      "message": "Maybe briefly describe what \"wake up\" means?",
+      "revId": "54a86ebde66407fecd2f6797334e9a8f286a33de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5a3e72_d122ae08",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T18:22:23Z",
+      "side": 1,
+      "message": "Maybe mention that L2, since it already exists, is not re-added/persisted.",
+      "revId": "54a86ebde66407fecd2f6797334e9a8f286a33de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
