@@ -22,6 +22,30 @@
       "revId": "28ed7d708be5f29821f397fdfa1ff6affde4e244",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362778f9_f4ffa847",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-11T20:07:24Z",
+      "side": 1,
+      "message": "Ack, thanks!",
+      "parentUuid": "b87632b1_dd34bb1e",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "28ed7d708be5f29821f397fdfa1ff6affde4e244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
