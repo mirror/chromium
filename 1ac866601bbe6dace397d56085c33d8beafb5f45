@@ -46,6 +46,30 @@
       "revId": "1ac866601bbe6dace397d56085c33d8beafb5f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daaf675_c5e5b1f4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64502,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T17:37:16Z",
+      "side": 0,
+      "message": "Echoing what Kyle said, but I understand if this is frowned upon. I\u0027ll block submitting this CL on your response, Steven.",
+      "parentUuid": "b3a9e895_8be63711",
+      "range": {
+        "startLine": 64502,
+        "startChar": 77,
+        "endLine": 64502,
+        "endChar": 0
+      },
+      "revId": "1ac866601bbe6dace397d56085c33d8beafb5f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
