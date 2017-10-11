@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f57b0f4_6a0abfdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/OmniboxSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T23:27:07Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO to only write the suggestions when they change.  I think for zero suggest they often don\u0027t change for the course of a session, so we might want to see if that can give us wins to avoid the disk writes.\n\nZero suggest might also echo the current URL if you\u0027re not on the NTP, so we might consider skipping that entry if we can detect it.",
+      "range": {
+        "startLine": 223,
+        "startChar": 15,
+        "endLine": 223,
+        "endChar": 21
+      },
+      "revId": "fa81af06d380f71538c7363aecb6e7617d638b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
