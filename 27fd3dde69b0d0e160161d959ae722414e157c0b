@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91f1d378_b6bd6c48",
+        "filename": "third_party/leveldatabase/leveldb_chrome.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-11T23:55:47Z",
+      "side": 1,
+      "message": "nit: Else return false -\u003e Else returns false?\n\nAlternatively, if you write \"Returns true if the filename was successfully parsed\", I think it\u0027s implied that the function will return false otherwise.",
+      "revId": "27fd3dde69b0d0e160161d959ae722414e157c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
