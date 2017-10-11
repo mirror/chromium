@@ -16,6 +16,24 @@
       "revId": "10f38ea70dd8f93acd8b69ad3033f8b74685ac36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23c3b7c_2a8ea24f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-11T05:50:57Z",
+      "side": 1,
+      "message": "I\u0027m calling SetShouldInvalidateSelection directly.",
+      "parentUuid": "caedba8e_368fb64d",
+      "revId": "10f38ea70dd8f93acd8b69ad3033f8b74685ac36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
