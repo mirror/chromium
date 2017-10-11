@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d239fe5_744049be",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T21:08:37Z",
+      "side": 1,
+      "message": "Updated the comment.\n\n\u003e Also (IIUC, which I\u0027m not sure I do), it\u0027s not that the throttle is calling into this object so much as a call from this object into the throttle has resulted in the destruction of this object.  If that\u0027s accurate, could you rephrase the comment?\n\nThe \"throttle\" (I use it to mean BrowserURLLoaderThrottle owned by |url_loader_throttle_holder_|) could run some asynchronous callback, which calls into its delegate, i.e., |url_loader_throttle_holder_|, and lead to the destruction of this object. In that case, this object doesn\u0027t call into the \"throttle\".\n\nThe whole point is to reduce the complexity for \"throttle\" -- it shouldn\u0027t need to worry about it being destroyed synchronously by any delegate calls.",
+      "parentUuid": "b1a904de_e46f03b2",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 23
+      },
+      "revId": "88cb4708f2e034e6f754d31142ff5ff2641db8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a06ceec4_fcffee64",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a9bc17df_749166c9",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T21:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06ceec4_fcffee64",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "88cb4708f2e034e6f754d31142ff5ff2641db8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d92b814f_f1f69824",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-11T18:43:53Z",
       "side": 1,
       "message": "Is it reasonable to mention the interstitial issue here as well?  Honest question; I don\u0027t have an opinion.  It just sounded from your earlier comments like this aspect of the problem could be worked around.",
+      "range": {
+        "startLine": 144,
+        "startChar": 13,
+        "endLine": 144,
+        "endChar": 15
+      },
+      "revId": "88cb4708f2e034e6f754d31142ff5ff2641db8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a5f022_1c31424b",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T21:08:37Z",
+      "side": 1,
+      "message": "I feel that it would be quite a long story to tell, and probably just add confusion. :)\n\nWe will have to mention a lot of things such as \n\"Setting this to false would require us to have a different way of minimizing the chance of writing unsafe contents to cache. Also, we will need to change MIME sniffing resource handler to avoid signaling response started before SafeBrowsing confirms the resource is safe, otherwise it will create navigation entry and break back-to-safety, blah blah...\"",
+      "parentUuid": "d92b814f_f1f69824",
       "range": {
         "startLine": 144,
         "startChar": 13,
