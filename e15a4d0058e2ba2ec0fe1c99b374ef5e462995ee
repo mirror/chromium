@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9bc5fb2_032d1954",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T20:42:50Z",
+      "side": 1,
+      "message": "prefer either (!value) or (value \u003d\u003d\u003d undefined). i.e. if it\u0027s a broad compare make it simpler; if it\u0027s a specific compare make it specific.",
+      "revId": "e15a4d0058e2ba2ec0fe1c99b374ef5e462995ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ea937b_4648a18a",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T20:42:50Z",
+      "side": 1,
+      "message": "I think the style guide suggests not doing an else for return blocks. i.e. do\n\nif (foo) {\n  return thing;\n}\nreturn other;\n\n(I can look up the reference if ya like (to be sure if I\u0027m correct on that)).",
+      "revId": "e15a4d0058e2ba2ec0fe1c99b374ef5e462995ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cbf9cd_9a632299",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T20:42:50Z",
+      "side": 1,
+      "message": "suggest removing \"instead\" (optional).",
+      "revId": "e15a4d0058e2ba2ec0fe1c99b374ef5e462995ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d03c4c_697ba07b",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T20:42:50Z",
+      "side": 1,
+      "message": "nit: maybe \"Explain that the value type doesn\u0027t match the actual policy type.\"\n(just thinking that \"a message\" and \"shown to user\" are unnecessary since they are implied by being in this list of strings).",
+      "revId": "e15a4d0058e2ba2ec0fe1c99b374ef5e462995ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
