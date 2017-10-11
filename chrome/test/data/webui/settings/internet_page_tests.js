@@ -40,7 +40,7 @@ suite('Internet', function() {
       vpnNameTemplate: 'vpnNameTemplate',
     };
 
-    api_ = new settings.FakeNetworkingPrivate();
+    api_ = new chrome.FakeNetworkingPrivate();
 
     // Disable animations so sub-pages open within one event loop.
     testing.Test.disableAnimationsAndTransitions();
