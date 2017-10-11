@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb30031_6f5a4c8f",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T22:59:54Z",
+      "side": 1,
+      "message": "Comment this similar to line 228",
+      "revId": "65f3e9fc7ed285c284f274fd702a6c3602ac3008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e3b4bf_52683009",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T22:59:54Z",
+      "side": 1,
+      "message": "Can you use a ScopedObserver?",
+      "revId": "65f3e9fc7ed285c284f274fd702a6c3602ac3008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
