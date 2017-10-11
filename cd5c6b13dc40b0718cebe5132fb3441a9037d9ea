@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cb89a0ed_d8497706",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/utf-8-invalid-chars-at-chunk-boundary.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-11T11:43:53Z",
+      "side": 1,
+      "message": "Oops, this was just copy-paste from some other test.",
+      "parentUuid": "b85a7045_09810e4a",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4496f030_6f10f733",
         "filename": "third_party/WebKit/LayoutTests/fast/encoding/utf-8-invalid-chars-at-chunk-boundary.html",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "563022c8_f88b400d",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/utf-8-invalid-chars-at-chunk-boundary.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-11T11:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4496f030_6f10f733",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25f60afe_3830c4d9",
         "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUTF8.cpp",
         "patchSetId": 1
@@ -82,6 +130,24 @@
       "writtenOn": "2017-10-11T09:51:52Z",
       "side": 1,
       "message": "Sorry if I misunderstand the standard behavior \u0026 what this code is doing, but this code seems to emit less kReplacementCharacters than the original code when we see kNonCharacter[23], since we now skip 2 or 3 bytes at once while we generate just one replacement character. Am I wrong?",
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf1753a_544d9871",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUTF8.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-11T11:43:53Z",
+      "side": 1,
+      "message": "Indeed it now emits less replacement characters than before in the cases which are affected.\n\nThat unifies the behavior with the case where the offending chars are *not* at a chunk boundary.\n\nI.e., when this byte sequence e0 a5 3f was occuring split between two chunks, we used to emit 2 kReplacementCharacters, and when it was inside a chunk, we used to emit one (for the maximal subpart).\n\nNow we emit 1 in both cases. That\u0027s also what the spec wants; 1 invalid char per each maximal subpart.\n\nI added a test to demonstrate that the behavior is now unified across the 2 cases. (If you run the test without the patch, you see that we emit a different amount of kReplacementCharacters for the two strings, even if their content is the same.)",
+      "parentUuid": "25f60afe_3830c4d9",
       "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -108,6 +174,30 @@
       "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20200a9_9cdf85e1",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUTF8.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-11T11:43:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c267c1b_40028bea",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
