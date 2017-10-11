@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91c04ea1_36f78202",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-10-11T16:44:36Z",
+      "side": 1,
+      "message": "Once you know how to read _e_ngineering notation, it\u0027s much easier to read than counting zeros.\nQuick: is 2000000000 greater or less than 10000000000? What about 2e9 versus 10e9?\nIt\u0027s the same reason we use UnitScale in tracing and results.html to format scalars.\nPython doesn\u0027t allow literals to use commas like \"20,000\", but we could use 20 * 1000 instead if you prefer.",
+      "parentUuid": "f0cbfcb3_9bd75e96",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1d0efc_64a89c68",
         "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T11:59:49Z",
       "side": 1,
       "message": "I forgot to mention that you didn\u0027t take \u0027pageset_repeat\u0027 into account",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794ff770_6584c94d",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-10-11T16:44:36Z",
+      "side": 1,
+      "message": "The comment on line 83 explains:\npageset_repeat doesn\u0027t matter because values are summarized across repetitions before uploading.",
+      "parentUuid": "4d1d0efc_64a89c68",
       "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
