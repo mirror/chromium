@@ -140,6 +140,30 @@
       "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "78125b17_96bb645c",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T18:14:55Z",
+      "side": 1,
+      "message": "SG. Just make it const then.",
+      "parentUuid": "22d83215_69a49d80",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 13
+      },
+      "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

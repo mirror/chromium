@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f91ac58_6b196935",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T18:14:55Z",
+      "side": 1,
+      "message": "nit: move the comment up or wrap all blocks in {}s. No brackets with more than one line below the if clause is harder to read.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 46
+      },
+      "revId": "9721772af4e2ac89e6069fbdda41a4f8be746ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
