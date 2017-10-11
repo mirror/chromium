@@ -78,7 +78,7 @@ void AttachTabHelpers(web::WebState* web_state) {
   if (AccountConsistencyService* account_consistency_service =
           ios::AccountConsistencyServiceFactory::GetForBrowserState(
               browser_state)) {
-    account_consistency_service->SetWebStateHandler(web_state, tab);
+    account_consistency_service->SetWebStateHandler(web_state);
   }
   ChromeIOSTranslateClient::CreateForWebState(web_state);
 
