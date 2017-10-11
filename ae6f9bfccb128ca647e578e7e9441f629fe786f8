@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6cc0d2b9_da54fb51",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T22:48:57Z",
+      "side": 1,
+      "message": "What about lifetime issues around the network context pointer?  It might be fine, but I\u0027d like some sort of comment as to why it\u0027s fine.",
+      "range": {
+        "startLine": 3060,
+        "startChar": 10,
+        "endLine": 3060,
+        "endChar": 25
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38faedc9_16dbdf9d",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T22:48:57Z",
+      "side": 1,
+      "message": "We can switch over to using the constructor instead of a static method now.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8cd504_e24238a2",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 41
@@ -36,6 +82,29 @@
       "writtenOn": "2017-10-11T20:57:38Z",
       "side": 1,
       "message": "nit: this now implements the RestrictedCookieManager interface, right? CookieStore was from an earlier version of this CL. Of course it is used by the web-exposed CookieStore interface, which might be helpful to mention, but it certainly doesn\u0027t implement that interface directly.",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea6deea_49e8fa7b",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 41
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T22:48:57Z",
+      "side": 1,
+      "message": "Suggestion: I\u0027d throw in a TODO about switching this to security principles or something like it in the future.",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 30
+      },
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

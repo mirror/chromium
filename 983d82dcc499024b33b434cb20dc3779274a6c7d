@@ -542,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "d17b7d89_05f871d8",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T22:48:57Z",
+      "side": 1,
+      "message": "You said you addressed all comments except for ownership and tests, but I didn\u0027t see a response here?",
+      "parentUuid": "71913691_b7e79bed",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57583c2a_caa1c4da",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 33
