@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "3561679b_5e96c1db",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T22:56:37Z",
+      "side": 1,
+      "message": "As I\u0027m mentioned multiple times offline. I think GMB is the wrong level to do this. Dummy GMB \u003c-\u003e protected GMB mapping only works on one chrome platform, Ozone. And only with one Ozone implementation Ozone-DRM. To avoid unnecessary maintenance burden and keep it simple to understand it should ideally be done at the Ozone-DRM level. By introducing it at the GMB level we\u0027re making two abstraction levels above what is needed aware of it. I\u0027d like this to at least be moved back to the NativePixmap abstraction level as ProtectedNativePixmapManager. I thought that was what we agreed on? and not clear why the plan changed.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09dd482_659e8d60",
         "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
         "patchSetId": 6
@@ -47,6 +64,46 @@
       "writtenOn": "2017-10-11T22:05:42Z",
       "side": 1,
       "message": "nit: no need for this since you can\u0027t instantiate this class and it has no member variable.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3b78f3_5059e4b2",
+        "filename": "ui/gfx/gpu_memory_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T22:56:37Z",
+      "side": 1,
+      "message": "Do we need this? if it\u0027s really needed then I\u0027d like it done as a dtor to be consistent with SharedMemoryHandle and in a separate patch.",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acf1fa0_825c2582",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-11T22:56:37Z",
+      "side": 1,
+      "message": "these lines look good. can we start by landing this as a separate CL first? I think we need this in canary for a few days before it\u0027s safe to merge it to 62.",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 73
+      },
       "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
