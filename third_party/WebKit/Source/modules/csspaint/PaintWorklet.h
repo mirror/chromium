@@ -30,6 +30,11 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
   static const size_t kNumGlobalScopes;
   static PaintWorklet* From(LocalDOMWindow&);
   static PaintWorklet* Create(LocalFrame*);
+
+  // The following two functions are used in unit testing, which overrides the
+  // |SetPaintsBeforeSwitching_|.
+  static PaintWorklet* From(LocalDOMWindow&, int (*func)());
+  static PaintWorklet* Create(LocalFrame*, int (*func)());
   ~PaintWorklet() override;
 
   void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
@@ -52,6 +57,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
   friend class PaintWorkletTest;
 
   explicit PaintWorklet(LocalFrame*);
+  explicit PaintWorklet(LocalFrame*, int (*func)());
 
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
@@ -59,9 +65,16 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
 
   // Since paint worklet has more than one global scope, we MUST override this
   // function and provide our own selection logic.
-  size_t SelectGlobalScope() const final;
+  size_t SelectGlobalScope() final;
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
   DocumentDefinitionMap document_definition_map_;
+
+  size_t active_frame_count_ = 0u;
+  size_t active_global_scope_ = 0u;
+  // This var is set through a function pointer, so that we can have it randomly
+  // generated one way in production and another way in unit testing.
+  int paints_before_switching_global_scope_;
+  int (*SetPaintsBeforeSwitching_)();
 
   static const char* SupplementName();
 };

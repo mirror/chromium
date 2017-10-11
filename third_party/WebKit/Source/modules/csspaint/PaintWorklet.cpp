@@ -11,13 +11,19 @@
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
 #include "platform/graphics/Image.h"
+#include "platform/wtf/CryptographicallyRandomNumber.h"
 
 namespace blink {
 
 const size_t PaintWorklet::kNumGlobalScopes = 2u;
+const size_t kMaxPaintCountToSwitch = 30u;
 DocumentPaintDefinition* const kInvalidDocumentDefinition = nullptr;
-// We use each global scope for many frames to try to maximize cache hits.
-const size_t kFrameCountToSwitch = 120u;
+
+namespace {
+int DefaultPaintBeforeSwitchingSetter() {
+  return CryptographicallyRandomNumber() % kMaxPaintCountToSwitch;
+}
+}  // namespace
 
 // static
 PaintWorklet* PaintWorklet::From(LocalDOMWindow& window) {
@@ -35,10 +41,33 @@ PaintWorklet* PaintWorklet::Create(LocalFrame* frame) {
   return new PaintWorklet(frame);
 }
 
+// static
+PaintWorklet* PaintWorklet::From(LocalDOMWindow& window, int (*func)()) {
+  PaintWorklet* supplement = static_cast<PaintWorklet*>(
+      Supplement<LocalDOMWindow>::From(window, SupplementName()));
+  if (!supplement && window.GetFrame()) {
+    supplement = Create(window.GetFrame(), func);
+    ProvideTo(window, SupplementName(), supplement);
+  }
+  return supplement;
+}
+
+// static
+PaintWorklet* PaintWorklet::Create(LocalFrame* frame, int (*func)()) {
+  return new PaintWorklet(frame, func);
+}
+
 PaintWorklet::PaintWorklet(LocalFrame* frame)
     : Worklet(frame),
       Supplement<LocalDOMWindow>(*frame->DomWindow()),
-      pending_generator_registry_(new PaintWorkletPendingGeneratorRegistry) {}
+      pending_generator_registry_(new PaintWorkletPendingGeneratorRegistry),
+      SetPaintsBeforeSwitching_(&DefaultPaintBeforeSwitchingSetter) {}
+
+PaintWorklet::PaintWorklet(LocalFrame* frame, int (*func)())
+    : Worklet(frame),
+      Supplement<LocalDOMWindow>(*frame->DomWindow()),
+      pending_generator_registry_(new PaintWorkletPendingGeneratorRegistry),
+      SetPaintsBeforeSwitching_(func) {}
 
 PaintWorklet::~PaintWorklet() = default;
 
@@ -47,13 +76,32 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
-// For this document, we try to check how many times there is a repaint, which
-// represents how many frames have executed this paint function. Then for every
-// 120 frames, we switch to another global scope, to enforce the constraint that
-// we can't rely on the state of the paint worklet global scope.
-size_t PaintWorklet::SelectGlobalScope() const {
+// We start with a random global scope when a new frame starts. Then within this
+// frame, we switch to the other global scope after certain amount of paint
+// calls (rand(kMaxPaintCountToSwitch)).
+// This approach ensures non-deterministic of global scope selecting, and that
+// there is a max of one switching within one frame.
+size_t PaintWorklet::SelectGlobalScope() {
   size_t current_paint_frame_count = GetFrame()->View()->PaintFrameCount();
-  return (current_paint_frame_count / kFrameCountToSwitch) % kNumGlobalScopes;
+  size_t selected_global_scope = active_global_scope_;
+  // Whether a new frame starts or not.
+  bool frame_changed = current_paint_frame_count != active_frame_count_;
+  if (frame_changed) {
+    // TODO(xidachen): Try to make this variable re-usable for the next frame.
+    // If one frame typically has ~5 paint, then we can switch after a few
+    // frames.
+    paints_before_switching_global_scope_ = (*SetPaintsBeforeSwitching_)();
+    active_frame_count_ = current_paint_frame_count;
+  }
+  // We switch when |paints_before_switching_global_scope_| is 1 instead of 0
+  // because the var keeps decrementing and stays at 0.
+  if (frame_changed || paints_before_switching_global_scope_ == 1) {
+    selected_global_scope = CryptographicallyRandomNumber() % kNumGlobalScopes;
+    active_global_scope_ = selected_global_scope;
+  }
+  if (paints_before_switching_global_scope_ > 0)
+    paints_before_switching_global_scope_--;
+  return selected_global_scope;
 }
 
 RefPtr<Image> PaintWorklet::Paint(const String& name,
