@@ -88,6 +88,10 @@ class CONTENT_EXPORT StoragePartitionImpl
   ZoomLevelDelegate* GetZoomLevelDelegate() override;
 #endif  // !defined(OS_ANDROID)
   PlatformNotificationContextImpl* GetPlatformNotificationContext() override;
+  void OpenSessionStorage(
+      int64_t namespace_id,
+      const url::Origin& origin,
+      mojo::InterfaceRequest<mojom::LevelDBWrapper> request) override;
   void ClearDataForOrigin(uint32_t remove_mask,
                           uint32_t quota_storage_remove_mask,
                           const GURL& storage_origin,

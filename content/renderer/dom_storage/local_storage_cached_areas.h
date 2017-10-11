@@ -33,6 +33,9 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
   scoped_refptr<LocalStorageCachedArea>
       GetCachedArea(const url::Origin& origin);
 
+  scoped_refptr<LocalStorageCachedArea>
+      GetSessionStorageArea(int64_t namespace_id, const url::Origin& origin);
+
   // Called by LocalStorageCachedArea on destruction.
   void CacheAreaClosed(LocalStorageCachedArea* cached_area);
 
@@ -41,7 +44,8 @@ class CONTENT_EXPORT LocalStorageCachedAreas {
 
   // Maps from an origin to its LocalStorageCachedArea object. The object owns
   // itself.
-  std::map<url::Origin, LocalStorageCachedArea*> cached_areas_;
+  using AreaKey = std::pair<int64_t, url::Origin>;
+  std::map<AreaKey, LocalStorageCachedArea*> cached_areas_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageCachedAreas);
 };

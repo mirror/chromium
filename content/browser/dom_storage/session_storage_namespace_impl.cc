@@ -11,18 +11,18 @@ namespace content {
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
     DOMStorageContextWrapper* context)
-    : session_(new DOMStorageSession(context->context())) {
+    : session_(new DOMStorageSession(context->context(), context->mojo_session_state_.get())) {
 }
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
     DOMStorageContextWrapper* context,
     int64_t namepace_id_to_clone)
-    : session_(DOMStorageSession::CloneFrom(context->context(),
+    : session_(DOMStorageSession::CloneFrom(context->context(), context->mojo_session_state_.get(),
                                             namepace_id_to_clone)) {}
 
 SessionStorageNamespaceImpl::SessionStorageNamespaceImpl(
     DOMStorageContextWrapper* context, const std::string& persistent_id)
-    : session_(new DOMStorageSession(context->context(), persistent_id)) {
+    : session_(new DOMStorageSession(context->context(), context->mojo_session_state_.get(), persistent_id)) {
 }
 
 int64_t SessionStorageNamespaceImpl::id() const {
