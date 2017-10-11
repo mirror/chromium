@@ -70,6 +70,13 @@ struct PaintPropertyTreeBuilderFragmentContext {
     // reference a scroll offset transform, scroll nodes should be updated if
     // the transform tree changes.
     const ScrollPaintPropertyNode* scroll = nullptr;
+
+    // True if this context is fixed to the viewport, i.e. it
+    // is a transform space within a fixed-position element
+    // that is outside the root scroll. This complication is necessary
+    // because there is no LayoutObject that represents the property tree state
+    // outside frame scroll.
+    bool paint_offset_root_use_unscrolled_box = false;
   };
 
   ContainingBlockContext current;
