@@ -126,8 +126,15 @@ bool InvalidationSet::InvalidatesTagName(Element& element) const {
 void InvalidationSet::Combine(const InvalidationSet& other) {
   CHECK(is_alive_);
   CHECK(other.is_alive_);
-  CHECK_NE(&other, this);
   CHECK_EQ(GetType(), other.GetType());
+
+  if (IsSelfInvalidationSet()) {
+    DCHECK(other.IsSelfInvalidationSet());
+    return;
+  }
+
+  CHECK_NE(&other, this);
+
   if (GetType() == kInvalidateSiblings) {
     SiblingInvalidationSet& siblings = ToSiblingInvalidationSet(*this);
     const SiblingInvalidationSet& other_siblings =
@@ -142,8 +149,11 @@ void InvalidationSet::Combine(const InvalidationSet& other) {
       siblings.EnsureDescendants().Combine(*other_siblings.Descendants());
   }
 
-  if (other.InvalidatesSelf())
+  if (other.InvalidatesSelf()) {
     SetInvalidatesSelf();
+    if (other.IsSelfInvalidationSet())
+      return;
+  }
 
   // No longer bother combining data structures, since the whole subtree is
   // deemed invalid.
