@@ -35,6 +35,7 @@
 #include "components/viz/common/resources/resource_settings.h"
 #include "components/viz/common/resources/single_release_callback.h"
 #include "components/viz/common/resources/transferable_resource.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -46,9 +47,6 @@
 
 namespace gpu {
 class GpuMemoryBufferManager;
-namespace gles {
-class GLES2Interface;
-}
 }
 
 namespace viz {
@@ -171,7 +169,6 @@ class CC_EXPORT ResourceProvider
   void CopyToResource(viz::ResourceId id,
                       const uint8_t* image,
                       const gfx::Size& image_size);
-
 
   // The following lock classes are part of the ResourceProvider API and are
   // needed to read and write the resource contents. The user must ensure
@@ -372,6 +369,27 @@ class CC_EXPORT ResourceProvider
   int tracing_id() const { return tracing_id_; }
 
  protected:
+  class CC_EXPORT ScopedSetActiveTexture {
+   public:
+    ScopedSetActiveTexture(gpu::gles2::GLES2Interface* gl, GLenum unit)
+        : gl_(gl), unit_(unit) {
+      DCHECK_EQ(GL_TEXTURE0, ResourceProvider::GetActiveTextureUnit(gl_));
+
+      if (unit_ != GL_TEXTURE0)
+        gl_->ActiveTexture(unit_);
+    }
+
+    ~ScopedSetActiveTexture() {
+      // Active unit being GL_TEXTURE0 is effectively the ground state.
+      if (unit_ != GL_TEXTURE0)
+        gl_->ActiveTexture(GL_TEXTURE0);
+    }
+
+   private:
+    gpu::gles2::GLES2Interface* gl_;
+    GLenum unit_;
+  };
+
   struct Resource {
     enum Origin { INTERNAL, EXTERNAL, DELEGATED };
     enum SynchronizationState {
@@ -535,6 +553,7 @@ class CC_EXPORT ResourceProvider
   };
   void DeleteResourceInternal(ResourceMap::iterator it, DeleteStyle style);
 
+  void CreateTexture(Resource* resource);
   void CreateMailbox(Resource* resource);
 
   bool ReadLockFenceHasPassed(const Resource* resource) {
@@ -597,8 +616,6 @@ class CC_EXPORT ResourceProvider
                                     const gfx::ColorSpace& color_space);
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
                                        const gfx::ColorSpace& color_space);
-
-  void CreateTexture(Resource* resource);
 
   bool IsGLContextLost() const;
 

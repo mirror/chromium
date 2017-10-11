@@ -206,4 +206,50 @@ bool DoesResourceFormatSupportAlpha(ResourceFormat format) {
   return false;
 }
 
+GLenum TextureToStorageFormat(ResourceFormat format) {
+  GLenum storage_format = GL_RGBA8_OES;
+  switch (format) {
+    case RGBA_8888:
+      break;
+    case BGRA_8888:
+      storage_format = GL_BGRA8_EXT;
+      break;
+    case RGBA_F16:
+      storage_format = GL_RGBA16F_EXT;
+      break;
+    case RGBA_4444:
+    case ALPHA_8:
+    case LUMINANCE_8:
+    case RGB_565:
+    case ETC1:
+    case RED_8:
+    case LUMINANCE_F16:
+    case R16_EXT:
+      NOTREACHED();
+      break;
+  }
+
+  return storage_format;
+}
+
+bool IsFormatSupportedForStorage(ResourceFormat format, bool use_bgra) {
+  switch (format) {
+    case RGBA_8888:
+    case RGBA_F16:
+      return true;
+    case BGRA_8888:
+      return use_bgra;
+    case RGBA_4444:
+    case ALPHA_8:
+    case LUMINANCE_8:
+    case RGB_565:
+    case ETC1:
+    case RED_8:
+    case LUMINANCE_F16:
+    case R16_EXT:
+      return false;
+  }
+  return false;
+}
+
 }  // namespace viz
