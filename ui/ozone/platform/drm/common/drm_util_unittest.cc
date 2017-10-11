@@ -55,6 +55,7 @@ void DetailedCompare(const ui::DisplaySnapshot_Params& a,
   EXPECT_EQ(a.is_aspect_preserving_scaling, b.is_aspect_preserving_scaling);
   EXPECT_EQ(a.has_overscan, b.has_overscan);
   EXPECT_EQ(a.has_color_correction_matrix, b.has_color_correction_matrix);
+  EXPECT_EQ(a.color_space, b.color_space);
   EXPECT_EQ(a.display_name, b.display_name);
   EXPECT_EQ(a.sys_path, b.sys_path);
   EXPECT_EQ(a.modes, b.modes);
@@ -71,7 +72,7 @@ void DetailedCompare(const ui::DisplaySnapshot_Params& a,
 
 class DrmUtilTest : public testing::Test {};
 
-TEST_F(DrmUtilTest, RoundTripEquivalence) {
+TEST_F(DrmUtilTest, RoundTripDisplayMode) {
   DisplayMode_Params orig_params = MakeDisplay(3.14);
 
   auto udm = CreateDisplayModeFromParams(orig_params);
@@ -94,6 +95,7 @@ TEST_F(DrmUtilTest, RoundTripDisplaySnapshot) {
   fp.is_aspect_preserving_scaling = true;
   fp.has_overscan = true;
   fp.has_color_correction_matrix = true;
+  fp.color_space = gfx::ColorSpace::CreateREC709();
   fp.display_name = "bending glass";
   fp.sys_path = base::FilePath("/bending");
   fp.modes =
@@ -113,6 +115,7 @@ TEST_F(DrmUtilTest, RoundTripDisplaySnapshot) {
   sp.is_aspect_preserving_scaling = true;
   sp.has_overscan = true;
   sp.has_color_correction_matrix = true;
+  sp.color_space = gfx::ColorSpace::CreateExtendedSRGB();
   sp.display_name = "rigid glass";
   sp.sys_path = base::FilePath("/bending");
   sp.modes =
@@ -131,6 +134,7 @@ TEST_F(DrmUtilTest, RoundTripDisplaySnapshot) {
   ep.is_aspect_preserving_scaling = false;
   ep.has_overscan = false;
   ep.has_color_correction_matrix = false;
+  ep.color_space = gfx::ColorSpace::CreateDisplayP3D65();
   ep.display_name = "fluted glass";
   ep.sys_path = base::FilePath("/bending");
   ep.modes = std::vector<DisplayMode_Params>(
@@ -146,11 +150,12 @@ TEST_F(DrmUtilTest, RoundTripDisplaySnapshot) {
   orig_params.push_back(sp);
   orig_params.push_back(ep);
 
-  auto intermediate_snapshots =
-      CreateMovableDisplaySnapshotsFromParams(orig_params);
+  MovableDisplaySnapshots intermediate_snapshots;
+  for (const auto& snapshot_params : orig_params)
+    intermediate_snapshots.push_back(CreateDisplaySnapshot(snapshot_params));
 
   std::vector<DisplaySnapshot_Params> roundtrip_params =
-      CreateParamsFromSnapshot(intermediate_snapshots);
+      CreateDisplaySnapshotParams(intermediate_snapshots);
 
   DetailedCompare(fp, roundtrip_params[0]);
 
