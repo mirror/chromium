@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b62b9c18_bc374c23",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T17:30:45Z",
+      "side": 1,
+      "message": "Good catch!  Fixed, and added a unittest.",
+      "parentUuid": "949b0b7f_a4333f51",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3959c479_a1f02f36",
         "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1540eb22_d7c9f967",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T17:30:45Z",
+      "side": 1,
+      "message": "Yeah, merge conflict with crrev.com/909d1059f65fd64f51d60d926be7762a76f07491.  The file exists locally! :P",
+      "parentUuid": "3959c479_a1f02f36",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e5bbdb82_ac3d5a1f",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T17:30:45Z",
+      "side": 1,
+      "message": "not that it really matters, but I only quote below for strings, whereas this is trying to show the arguments that were passed in.  How about these go in ``?",
+      "parentUuid": "ccff4896_f4e16639",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd895452_60419618",
         "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d1e6ab_86aabca6",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T17:30:45Z",
+      "side": 1,
+      "message": "Good idea.  I\u0027ll see about doing it in a followup.",
+      "parentUuid": "dd895452_60419618",
+      "revId": "bd5ebfb6a5bc80387634512f9847776f80a81e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
