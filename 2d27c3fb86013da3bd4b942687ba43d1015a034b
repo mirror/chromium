@@ -22,6 +22,30 @@
       "revId": "2d27c3fb86013da3bd4b942687ba43d1015a034b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef5367c_9896c9e4",
+        "filename": "services/ui/public/interfaces/ime/ime_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-11T13:07:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d2c797_de1b917a",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 41
+      },
+      "revId": "2d27c3fb86013da3bd4b942687ba43d1015a034b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
