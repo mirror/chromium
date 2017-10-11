@@ -22,6 +22,30 @@
       "revId": "ffa9dd09db67faf8829064bfc476a5fac082cfd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9700dcb9_3e6f6cdd",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-10-11T22:32:19Z",
+      "side": 1,
+      "message": "I saw some tests in transformfeedback/* which I didn\u0027t see in bot reported failures.\nI didn\u0027t dig into the logs to see if they passed, though.",
+      "parentUuid": "2cbb45cd_201dac20",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 75
+      },
+      "revId": "ffa9dd09db67faf8829064bfc476a5fac082cfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
