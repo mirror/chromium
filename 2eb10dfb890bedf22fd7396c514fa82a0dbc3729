@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "078a6530_bf066994",
+        "filename": "device/hid/hid_connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "You can just use base::ContainsValue instead of expanding this out completely.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 61
+      },
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6c85a2_96e8be9c",
+        "filename": "device/hid/hid_connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "This is a perfect instance for using auto.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 66
+      },
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a183f6_20ff3a48",
+        "filename": "device/hid/hid_connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "Since this function is only used in this file you could avoid the clone and change the return type to const device::mojom::HidCollectionInfo*, with the understanding that if it doesn\u0027t return null the pointer has the same lifetime as the vector passed in.",
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad02a430_2b780742",
+        "filename": "device/hid/hid_device_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "These casts could be avoided if instead of using an enum in hid.mojom we just defined them as uint16_t constant values. I don\u0027t think there\u0027s any benefit to defining this as an enum type.",
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7452bc_453e63a8",
+        "filename": "device/hid/hid_report_descriptor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "I would use the actual type here and auto above for the iterators.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c251cd2c_da288a2a",
+        "filename": "device/hid/hid_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "Chromium style discourages passing non-const references. Why not device::mojom::HidCollectionInfo*?",
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fcd0c8_50e8e7f8",
+        "filename": "device/hid/hid_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "I think these are both defined as USHORT so these casts are unnecessary.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 53
+      },
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e8b1f2_ae02ea12",
+        "filename": "device/hid/public/cpp/hid_usage_and_page.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T00:25:29Z",
+      "side": 1,
+      "message": "const device::mojom::HidUsageAndPage\u0026",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "2eb10dfb890bedf22fd7396c514fa82a0dbc3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
