@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d8de57_9ce6f72d",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:24:28Z",
+      "side": 1,
+      "message": "nit: this can just be AccessEntryPoint, correct?",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eee9915_1e30b4ad",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:24:28Z",
+      "side": 1,
+      "message": "It seems to me that we should maybe just record the transition core type directly, instead of doing this and losing some information in the translation.",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e040017_0ad50ebc",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:24:28Z",
+      "side": 1,
+      "message": "enums.xml, right?",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cefec36_3765e91f",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:24:28Z",
+      "side": 1,
+      "message": "This file only tests LINK and DOWNLOAD, is it feasible to add more?",
+      "revId": "5f6e501d9ab082dc14a6e2c3a8fbc254879f0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
