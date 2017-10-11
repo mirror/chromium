@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab85d596_e6796122",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T02:21:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2853645f_0cf47ce9",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d768a2bb_268f2d8b",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5cb045b5_5448c1c7",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T02:21:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d768a2bb_268f2d8b",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9949a6fc_d2d4997b",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-11T01:58:17Z",
       "side": 1,
       "message": "Why resettign url_loader_client_ needed? And could it just be url_loader_client_.reset()?",
+      "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297e974f_5598dbb9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T02:21:24Z",
+      "side": 1,
+      "message": "Because url_loader_client_ will be used in TestRequest() again.",
+      "parentUuid": "9949a6fc_d2d4997b",
       "revId": "e3383a9ecfb3d29fa7c0cee6d4e30e6753331ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
