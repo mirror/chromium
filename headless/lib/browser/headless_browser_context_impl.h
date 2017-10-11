@@ -92,6 +92,9 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   HeadlessBrowserImpl* browser() const;
   const HeadlessBrowserContextOptions* options() const;
 
+  void SetRemoveHeaders(bool should_remove_headers);
+  bool ShouldRemoveHeaders() const;
+
   // Returns the FrameTreeNode id for the corresponding RenderFrameHost or -1
   // if it can't be found. Can be called on any thread.
   int GetFrameTreeNodeId(int render_process_id, int render_frame_id) const;
@@ -124,6 +127,7 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   base::FilePath path_;
   base::Lock observers_lock_;
   base::ObserverList<Observer> observers_;
+  bool should_remove_headers_;
 
   std::unordered_map<std::string, std::unique_ptr<HeadlessWebContents>>
       web_contents_map_;
