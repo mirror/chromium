@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa23068a_c0e78653",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T01:59:44Z",
+      "side": 1,
+      "message": "This seems racy. Can you investigate whether the worklet registers its animator, and if so why that doesn\u0027t get picked up by the mutator impls animator list?",
+      "revId": "f7e021374180a2f9b2946c4d8b9fdd2cd0068a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
