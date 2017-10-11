@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c50e0e32_2a530862",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user_mock.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-11T00:42:36Z",
+      "side": 1,
+      "message": "Yeah, the global variable is pretty hacky. IIRC, class methods have no way of accessing instance attributes.\n\nI converted it into instance methods - I thought maybe there was a reason they were class methods, but AFAICT it\u0027s OK and all the tests still pass.",
+      "parentUuid": "6740181f_9ef665c3",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bacc6e15_2bbf12db",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5cf8ef74_94da3199",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-11T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bacc6e15_2bbf12db",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7ba0ed_2b66e719",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-10T20:54:10Z",
       "side": 1,
       "message": "Nit: This can be written as:\n\n     self.assertEqual(output_string.count(\u0027...substring...\u0027), 3)",
+      "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1578ef_31fb31cb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-11T00:42:36Z",
+      "side": 1,
+      "message": "Nice, it\u0027s been a while since I wrote Python :)",
+      "parentUuid": "0b7ba0ed_2b66e719",
       "revId": "0abd76be005451477cb34d8f3b7e5acb0ebf8bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
