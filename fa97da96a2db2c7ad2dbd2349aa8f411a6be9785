@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcc99bf7_cf347400",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8fa322d_37187e23",
+      "range": {
+        "startLine": 189,
+        "startChar": 32,
+        "endLine": 189,
+        "endChar": 53
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5d4c50_dcc6f8e2",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 1
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "b3b34177_8678e758",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Made it a member variable instead as DewittJ suggested, so the name changed.",
+      "parentUuid": "8e81b63a_9852945c",
+      "range": {
+        "startLine": 194,
+        "startChar": 14,
+        "endLine": 194,
+        "endChar": 17
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43deeab6_90b7d054",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5d4c50_dcc6f8e2",
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edd348f2_4c8c2920",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f517ce_c89ef858",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "edd348f2_4c8c2920",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 9
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,48 @@
     },
     {
       "key": {
+        "uuid": "8fea581f_ce779efe",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b34df0d_14d6777b",
+      "range": {
+        "startLine": 217,
+        "startChar": 9,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ca3232a_f464d340",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870df9c5_873c38f7",
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e27bc22e_b4b6f937",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "d61868d2_a4f1efe8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51993,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27bc22e_b4b6f937",
+      "range": {
+        "startLine": 51993,
+        "startChar": 67,
+        "endLine": 51993,
+        "endChar": 69
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff82baa5_06b27120",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -171,6 +327,30 @@
       "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6bdaeb6_f9e1a4db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51995,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T01:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff82baa5_06b27120",
+      "range": {
+        "startLine": 51995,
+        "startChar": 11,
+        "endLine": 51995,
+        "endChar": 69
+      },
+      "revId": "fa97da96a2db2c7ad2dbd2349aa8f411a6be9785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
