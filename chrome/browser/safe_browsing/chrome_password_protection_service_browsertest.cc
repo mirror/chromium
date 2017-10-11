@@ -28,6 +28,7 @@ namespace {
 
 const char kGaiaPasswordChangeHistogramName[] =
     "PasswordProtection.GaiaPasswordReusesBeforeGaiaPasswordChanged";
+const char kLoginPageUrl[] = "/safe_browsing/login_page.html";
 
 }  // namespace
 
@@ -99,7 +100,8 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
   security_state::SecurityInfo security_info;
 
   // Initialize and verify initial state.
-  ui_test_utils::NavigateToURL(browser(), embedded_test_server()->GetURL("/"));
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kLoginPageUrl));
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
   ASSERT_FALSE(
       ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
@@ -169,7 +171,8 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
   security_state::SecurityInfo security_info;
 
   // Initialize and verify initial state.
-  ui_test_utils::NavigateToURL(browser(), embedded_test_server()->GetURL("/"));
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kLoginPageUrl));
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
   ASSERT_FALSE(
       ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
@@ -226,7 +229,8 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   security_state::SecurityInfo security_info;
-  ui_test_utils::NavigateToURL(browser(), embedded_test_server()->GetURL("/"));
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kLoginPageUrl));
 
   // Shows modal dialog on current web_contents.
   service->ShowModalWarning(web_contents, "unused_token");
@@ -266,7 +270,8 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
   ChromePasswordProtectionService* service = GetService(/*is_incognito=*/false);
   ASSERT_TRUE(service);
   Profile* profile = browser()->profile();
-  ui_test_utils::NavigateToURL(browser(), embedded_test_server()->GetURL("/"));
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL(kLoginPageUrl));
   ASSERT_TRUE(service->unhandled_password_reuses().empty());
   ASSERT_FALSE(
       ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
