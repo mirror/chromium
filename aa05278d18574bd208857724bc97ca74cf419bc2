@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ddbf5bcb_a3cc858e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-11T19:34:52Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean that we never look at the metric when multiple things are loading at the same time, or pending load? Which is coincidentally the interesting part?\n\nWhy subsample based on |total_count|, and why not simply subsample based on a random dice toss?",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f594b45e_d5f2f209",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-11T19:34:52Z",
+      "side": 1,
+      "message": "kSamplingInterval is poorly named, as there\u0027s no interval here. This is kSamplingOdds, more accurately. (ie, there is 1 chance in kSamplingOdds that the sample will be sent)",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57347979_eb32c7c2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-10-11T19:34:52Z",
+      "side": 1,
+      "message": "This should be BackgroundTabOpeningSessionAndSequence, and the member variables should also be named appropriately. This is specifically related to BTO, and not general TM activity.",
+      "range": {
+        "startLine": 369,
+        "startChar": 31,
+        "endLine": 369,
+        "endChar": 55
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e153ddc_a539d4e7",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
