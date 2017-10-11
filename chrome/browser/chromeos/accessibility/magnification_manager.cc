@@ -173,10 +173,8 @@ class MagnificationManagerImpl
 
     if (AccessibilityManager::Get()) {
       AccessibilityManager::Get()->NotifyAccessibilityStatusChanged(details);
-      if (ash::Shell::Get()) {
-        ash::Shell::Get()->SetCursorCompositingEnabled(
-            ash::AccessibilityController::RequiresCursorCompositing(prefs));
-      }
+      if (ash::Shell::Get())
+        ash::Shell::Get()->UpdateCursorCompositingEnabled();
     }
   }
 
