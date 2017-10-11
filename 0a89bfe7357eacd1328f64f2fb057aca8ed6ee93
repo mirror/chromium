@@ -22,6 +22,30 @@
       "revId": "0a89bfe7357eacd1328f64f2fb057aca8ed6ee93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75926f0f_3e809753",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-11T18:19:50Z",
+      "side": 1,
+      "message": "Done.\n\nI have also moved the whole launch browser related code to a separate function. So that ProcessCmdLineImpl() is focusing on Command line switch.",
+      "parentUuid": "61599eab_b7d20922",
+      "range": {
+        "startLine": 739,
+        "startChar": 3,
+        "endLine": 820,
+        "endChar": 5
+      },
+      "revId": "0a89bfe7357eacd1328f64f2fb057aca8ed6ee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
