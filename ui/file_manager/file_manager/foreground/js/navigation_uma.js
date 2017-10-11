@@ -51,7 +51,8 @@ NavigationUma.RootType = [
 NavigationUma.prototype.exportRootType_ = function(entry, name) {
   var locationInfo = this.volumeManager_.getLocationInfo(entry);
   if (locationInfo)
-    metrics.recordEnum(name, locationInfo.rootType, NavigationUma.RootType);
+    metrics.recordEnum(
+        name, locationInfo.rootType, VolumeManagerCommon.RootTypesForUMA);
 };
 
 /**
