@@ -263,6 +263,9 @@ void ArcSettingsServiceImpl::OnPrefChanged(const std::string& pref_name) const {
   } else if (pref_name == prefs::kArcLocationServiceEnabled) {
     if (ShouldSyncLocationServiceEnabled())
       SyncLocationServiceEnabled();
+  } else if (pref_name == ::prefs::kApplicationLocale ||
+             pref_name == ::prefs::kLanguagePreferredLanguages) {
+    SyncLocale();
   } else if (pref_name == ::prefs::kUse24HourClock) {
     SyncUse24HourClock();
   } else if (pref_name == ::prefs::kResolveTimezoneByGeolocation) {
@@ -316,6 +319,8 @@ void ArcSettingsServiceImpl::StartObservingSettingsChanges() {
   AddPrefToObserve(prefs::kArcBackupRestoreEnabled);
   AddPrefToObserve(prefs::kArcLocationServiceEnabled);
   AddPrefToObserve(prefs::kSmsConnectEnabled);
+  AddPrefToObserve(::prefs::kApplicationLocale);
+  AddPrefToObserve(::prefs::kLanguagePreferredLanguages);
   AddPrefToObserve(::prefs::kResolveTimezoneByGeolocation);
   AddPrefToObserve(::prefs::kUse24HourClock);
   AddPrefToObserve(::prefs::kWebKitDefaultFixedFontSize);
@@ -449,6 +454,17 @@ void ArcSettingsServiceImpl::SyncLocale() const {
   DCHECK(value_exists);
   base::DictionaryValue extras;
   extras.SetString("locale", locale);
+
+  std::vector<std::string> preferred_languages = base::SplitString(
+      registrar_.prefs()->GetString(::prefs::kLanguagePreferredLanguages),
+      ",",
+      base::TRIM_WHITESPACE,
+      base::SPLIT_WANT_NONEMPTY);
+  if (preferred_languages.size() > 0) {
+    std::string languages = base::JoinString(preferred_languages, ",");
+    extras.SetString("preferredLanguages", languages);
+  }
+
   SendSettingsBroadcast("org.chromium.arc.intent_helper.SET_LOCALE", extras);
 }
 
