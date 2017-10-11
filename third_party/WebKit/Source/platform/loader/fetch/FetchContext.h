@@ -216,7 +216,7 @@ class PLATFORM_EXPORT FetchContext
   }
 
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
-                                                        WebTaskRunner*) {
+                                                        RefPtr<WebTaskRunner>) {
     NOTREACHED();
     return nullptr;
   }
