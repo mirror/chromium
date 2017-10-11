@@ -234,6 +234,30 @@
       "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2323e3_01ff3353",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T17:50:28Z",
+      "side": 1,
+      "message": "Oh that\u0027s even nicer!",
+      "parentUuid": "814402a4_f6b58191",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
