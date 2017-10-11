@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca2ea50_5cd3080d",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T21:29:42Z",
+      "side": 1,
+      "message": "drive by - would it make sense to call this OfflinePrefetchUsageType to distinguish prefetching offline pages from the deprecated prefetch feature?",
+      "range": {
+        "startLine": 75,
+        "startChar": 13,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "a07e03a6d947da59839dc74e6c2e3df87f2ea20b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
