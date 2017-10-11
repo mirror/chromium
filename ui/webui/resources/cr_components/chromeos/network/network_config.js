@@ -49,16 +49,19 @@ Polymer({
      */
     type: String,
 
+    /** Set by embedder if saveOrConnect should always connect. */
+    connectOnSave: Boolean,
+
     /** @private */
     enableConnect: {
-      type: String,
+      type: Boolean,
       notify: true,
       computed: 'computeEnableConnect_(isConfigured_, propertiesSent_)',
     },
 
     /** @private */
     enableSave: {
-      type: String,
+      type: Boolean,
       notify: true,
       computed: 'computeEnableSave_(isConfigured_, propertiesReceived_)',
     },
@@ -68,7 +71,10 @@ Polymer({
      * This will be undefined when configuring a new network.
      * @private {!chrome.networkingPrivate.NetworkProperties|undefined}
      */
-    networkProperties: Object,
+    networkProperties: {
+      type: Object,
+      notify: true,
+    },
 
     /** Set if |guid| is not empty once networkProperties are received. */
     propertiesReceived_: Boolean,
@@ -202,6 +208,9 @@ Polymer({
       type: Object,
       value: null,
     },
+
+    /** @private */
+    error_: String,
 
     /**
      * Object providing network type values for data binding. Note: Currently
@@ -341,7 +350,9 @@ Polymer({
     if (this.propertiesSent_)
       return;
     this.propertiesSent_ = true;
-    if (!this.guid) {
+    this.error_ = '';
+    var source = this.networkProperties.Source;
+    if (!this.guid || !source || source == CrOnc.Source.NONE) {
       // Create the configuration, then connect to it in the callback.
       this.networkingPrivate.createNetwork(
           this.shareNetwork_, this.configProperties_,
@@ -382,6 +393,13 @@ Polymer({
             this.i18n('networkCertificateNoneInstalled'), '')];
       }
       this.set('userCerts_', userCerts);
+      if (!userCerts.length) {
+        if (!this.error_)
+          this.error_ = 'networkErrorNoUserCertificate';
+      } else {
+        if (this.error_ == 'networkErrorNoUserCertificate')
+          this.error_ = '';
+      }
     }.bind(this));
   },
 
@@ -409,6 +427,7 @@ Polymer({
     }
     this.propertiesReceived_ = true;
     this.networkProperties = properties;
+    this.error_ = properties.ErrorState || '';
 
     // Set the current shareNetwork_ value when porperties are received.
     var source = properties.Source;
@@ -1002,12 +1021,27 @@ Polymer({
     vpn.L2TP.SaveCredentials = this.vpnSaveCredentials_;
   },
 
+  /**
+   * @return {string}
+   * @private
+   */
+  getRuntimeError_: function() {
+    return (chrome.runtime.lastError && chrome.runtime.lastError.message) || '';
+  },
+
   /** @private */
   setPropertiesCallback_: function() {
-    var error = chrome.runtime.lastError && chrome.runtime.lastError.message;
-    if (error) {
-      console.error(
-          'Error setting network properties: ' + this.guid + ': ' + error);
+    this.error_ = this.getRuntimeError_();
+    if (this.error_) {
+      console.error('setProperties error: ' + this.guid + ': ' + this.error_);
+      return;
+    }
+    if (this.connectOnSave && this.networkProperties &&
+        (!this.networkProperties.ConnectionState ||
+         this.networkProperties.ConnectionState ==
+             CrOnc.ConnectionState.NOT_CONNECTED)) {
+      this.startConnect_(this.guid);
+      return;
     }
     this.close_();
   },
@@ -1017,23 +1051,31 @@ Polymer({
    * @private
    */
   createNetworkCallback_: function(guid) {
-    var error = chrome.runtime.lastError && chrome.runtime.lastError.message;
-    if (error) {
-      // TODO(stevenjb): Display error message.
+    this.error_ = this.getRuntimeError_();
+    if (this.error_) {
       console.error(
-          'Error creating network type: ' + this.networkProperties.Type + ': ' +
-          error);
+          'createNetworkError, type: ' + this.networkProperties.Type + ': ' +
+          'error: ' + this.error_);
       return;
     }
+    this.startConnect_(guid);
+  },
+
+  /**
+   * @param {string} guid
+   * @private
+   */
+  startConnect_: function(guid) {
     this.networkingPrivate.startConnect(guid, () => {
-      error = chrome.runtime.lastError && chrome.runtime.lastError.message;
+      var error = this.getRuntimeError_();
       if (error) {
         if (error == 'connecting' || error == 'connected' ||
             error == 'connect-canceled') {
           return;
         }
-        // TODO(stevenjb): Display error message.
+        this.error_ = error;
         console.error('Error connecting to network: ' + error);
+        return;
       }
       this.close_();
     });
@@ -1063,5 +1105,15 @@ Polymer({
       return this.eapInnerItemsTtls_;
     return [];
   },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getError_: function() {
+    if (this.i18nExists(this.error_))
+      return this.i18n(this.error_);
+    return this.i18n('networkErrorUnknown');
+  }
 });
 })();
