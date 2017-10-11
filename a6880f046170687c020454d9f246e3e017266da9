@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c502c791_2b25d04f",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T19:18:41Z",
+      "side": 1,
+      "message": "nit: DCHECK(registration)",
+      "revId": "a6880f046170687c020454d9f246e3e017266da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c56c8b_692be79e",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T19:18:41Z",
+      "side": 1,
+      "message": "If you could move |registration_notifier_| to be *before* |active_fetches_| in the header file, then we can use base::Unretained() instead of the WeakPtr and strictly define lifetime between the objects.",
+      "revId": "a6880f046170687c020454d9f246e3e017266da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9e085d_d8e7dbe2",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T19:18:41Z",
+      "side": 1,
+      "message": "nit: GetDownloaded",
+      "revId": "a6880f046170687c020454d9f246e3e017266da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9bdd93_e8102985",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T19:18:41Z",
+      "side": 1,
+      "message": "nit: delete in favor of a TODO? We don\u0027t support uploads and this puts us in a weird intermediary state. I\u0027d rather draw a hard line.",
+      "revId": "a6880f046170687c020454d9f246e3e017266da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87993634_6585ab78",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T19:18:41Z",
+      "side": 1,
+      "message": "active_request_download_progress_?",
+      "revId": "a6880f046170687c020454d9f246e3e017266da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
