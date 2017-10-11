@@ -121,6 +121,8 @@ function ListContainer(element, table, grid) {
   this.element.addEventListener('keydown', this.onKeyDown_.bind(this));
   this.element.addEventListener('keypress', this.onKeyPress_.bind(this));
   this.element.addEventListener('mousemove', this.onMouseMove_.bind(this));
+  this.element.addEventListener(
+      'contextmenu', this.onContextmenu_.bind(this), /* useCapture */ true);
 
   util.isTouchModeEnabled().then(function(enabled) {
     if (!enabled)
@@ -305,6 +307,15 @@ ListContainer.prototype.focus = function() {
       assertNotReached();
       break;
   }
+};
+
+/**
+ * Contextmenu event handler to prevent change of focus on long-tapping the
+ * header of the file list.
+ * @private
+ */
+ListContainer.prototype.onContextmenu_ = function() {
+  this.focus();
 };
 
 /**
