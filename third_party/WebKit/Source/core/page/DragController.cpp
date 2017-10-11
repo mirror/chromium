@@ -781,6 +781,23 @@ bool DragController::TryDHTMLDrag(DragData* drag_data,
   return true;
 }
 
+bool IsDraggableText(const Node* node) {
+  if (!node->IsTextNode())
+    return false;
+
+  // Editable elements loose their draggability,
+  // see https://github.com/whatwg/html/issues/3114.
+  if (HasEditableStyle(*node))
+    return false;
+
+  while (node) {
+    if (node->IsHTMLElement() && ToHTMLElement(node)->draggable())
+      return true;
+    node = FlatTreeTraversal::ParentElement(*node);
+  }
+  return false;
+}
+
 Node* DragController::DraggableNode(const LocalFrame* src,
                                     Node* start_node,
                                     const IntPoint& drag_origin,
@@ -804,11 +821,11 @@ Node* DragController::DraggableNode(const LocalFrame* src,
       // skip over them for the purposes of finding a draggable node.
       continue;
     }
-    if (drag_type != kDragSourceActionSelection && node->IsTextNode() &&
+    if (drag_type != kDragSourceActionSelection && !IsDraggableText(node) &&
         node->CanStartSelection()) {
-      // In this case we have a click in the unselected portion of text. If this
-      // text is selectable, we want to start the selection process instead of
-      // looking for a parent to try to drag.
+      // We have a click in an unselected but selectable text that is not
+      // draggable... so we want to start the selection process instead
+      // of looking for a parent to try to drag.
       return nullptr;
     }
     if (node->IsElementNode()) {
