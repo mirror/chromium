@@ -398,7 +398,6 @@ void ServiceWorkerRegisterJob::UpdateAndContinue() {
 void ServiceWorkerRegisterJob::OnStartWorkerFinished(
     ServiceWorkerStatusCode status) {
   BumpLastUpdateCheckTimeIfNeeded();
-
   if (status == SERVICE_WORKER_OK) {
     InstallAndContinue();
     return;
