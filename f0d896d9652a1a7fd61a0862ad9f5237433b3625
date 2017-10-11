@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b74a873_b433937a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "nit: quota_bytes_as_string",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97683318_1f4851a1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "nit: if (value_as_string.empty()) return kDefaultMaxDailyQuotaBytes)\n\nthis could simplify the rest of the logic.",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7a03f8_ff0257ba",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "nit: quota_bytes\n\nsince it\u0027s the right type",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabdf89a_02d0a76c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "This code treats 0 as a valid quota, so let\u0027s allow it to be set that way by the server.",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa39db40_e4e0da7b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "nit: just \"return kDefaultMaxDailyQuotaBytes\"",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ca7e9b_f686f5cb",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T18:41:32Z",
+      "side": 1,
+      "message": "instead of calling GetMaxDailyQuotaBytes() in all the subsequent tests, could you have a constant so that the expectation isn\u0027t circularly depending on the definition of GetMaxDailyQuotaBytes?",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
