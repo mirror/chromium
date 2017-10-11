@@ -22,6 +22,30 @@
       "revId": "0545388a569e928e17ea16a34eb3427fce3506fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3160b69b_72a163dc",
+        "filename": "base/values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T21:09:29Z",
+      "side": 1,
+      "message": "Let me do this in a followup.",
+      "parentUuid": "893a0cda_afbe23f1",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 46
+      },
+      "revId": "0545388a569e928e17ea16a34eb3427fce3506fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
