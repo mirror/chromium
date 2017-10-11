@@ -194,11 +194,12 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                           kShortIdlePeriodDurationSampleCount,
                           kShortIdlePeriodDurationPercentile),
       current_use_case(UseCase::NONE),
-      renderer_pause_count(0),
+      timer_queue_pause_count(0),
       navigation_task_expected_count(0),
       expensive_task_policy(ExpensiveTaskPolicy::RUN),
       renderer_hidden(false),
       renderer_backgrounded(false),
+      renderer_paused(false),
       stopping_when_backgrounded_enabled(false),
       stopped_when_backgrounded(false),
       was_shutdown(false),
@@ -255,16 +256,6 @@ RendererSchedulerImpl::CompositorThreadOnly::CompositorThreadOnly()
       main_thread_seems_unresponsive(false) {}
 
 RendererSchedulerImpl::CompositorThreadOnly::~CompositorThreadOnly() {}
-
-RendererSchedulerImpl::RendererPauseHandleImpl::RendererPauseHandleImpl(
-    RendererSchedulerImpl* scheduler)
-    : scheduler_(scheduler) {
-  scheduler_->PauseRendererImpl();
-}
-
-RendererSchedulerImpl::RendererPauseHandleImpl::~RendererPauseHandleImpl() {
-  scheduler_->ResumeRendererImpl();
-}
 
 void RendererSchedulerImpl::Shutdown() {
   base::TimeTicks now = tick_clock()->NowTicks();
@@ -584,6 +575,8 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
       BackgroundStateToString(backgrounded));
 
   main_thread_only().renderer_backgrounded = backgrounded;
+  if (!backgrounded)
+    main_thread_only().renderer_paused = false;
 
   main_thread_only().background_status_changed_at = tick_clock()->NowTicks();
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
@@ -620,26 +613,29 @@ void RendererSchedulerImpl::OnAudioStateChanged() {
   UpdatePolicy();
 }
 
-std::unique_ptr<RendererSchedulerImpl::RendererPauseHandle>
-RendererSchedulerImpl::PauseRenderer() {
-  return std::make_unique<RendererPauseHandleImpl>(this);
-}
-
-void RendererSchedulerImpl::PauseRendererImpl() {
+void RendererSchedulerImpl::PauseRenderer() {
   helper_.CheckOnValidThread();
   if (helper_.IsShutdown())
     return;
+  if (!main_thread_only().renderer_backgrounded)
+    return;
 
-  ++main_thread_only().renderer_pause_count;
+  UMA_HISTOGRAM_COUNTS("PurgeAndSuspend.PendingTaskCount",
+                       helper_.GetNumberOfPendingTasks());
+
+  // TODO(hajimehoshi): We might need to suspend not only timer queue but also
+  // e.g. loading tasks or postMessage.
+  main_thread_only().renderer_paused = true;
   UpdatePolicy();
 }
 
-void RendererSchedulerImpl::ResumeRendererImpl() {
+void RendererSchedulerImpl::ResumeRenderer() {
   helper_.CheckOnValidThread();
   if (helper_.IsShutdown())
     return;
-  --main_thread_only().renderer_pause_count;
-  DCHECK_GE(main_thread_only().renderer_pause_count, 0);
+  if (!main_thread_only().renderer_backgrounded)
+    return;
+  main_thread_only().renderer_paused = false;
   UpdatePolicy();
 }
 
@@ -1190,12 +1186,16 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   }
   main_thread_only().expensive_task_policy = expensive_task_policy;
 
+  if (main_thread_only().timer_queue_pause_count != 0)
+    new_policy.timer_queue_policy().is_paused = true;
+
   if (main_thread_only().stopped_when_backgrounded) {
     new_policy.timer_queue_policy().is_stopped = true;
     if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
       new_policy.loading_queue_policy().is_stopped = true;
   }
-  if (main_thread_only().renderer_pause_count) {
+
+  if (main_thread_only().renderer_paused) {
     new_policy.loading_queue_policy().is_paused = true;
     new_policy.timer_queue_policy().is_paused = true;
   }
@@ -1433,6 +1433,26 @@ WakeUpBudgetPool* RendererSchedulerImpl::GetWakeUpBudgetPoolForTesting() {
   return main_thread_only().wake_up_budget_pool;
 }
 
+void RendererSchedulerImpl::PauseTimerQueue() {
+  main_thread_only().timer_queue_pause_count++;
+  ForceUpdatePolicy();
+#ifndef NDEBUG
+  DCHECK(!default_timer_task_queue_->IsQueueEnabled());
+  for (const auto& pair : task_runners_) {
+    if (pair.first->queue_class() == MainThreadTaskQueue::QueueClass::TIMER &&
+        pair.first->CanBePaused()) {
+      DCHECK(!pair.first->IsQueueEnabled());
+    }
+  }
+#endif
+}
+
+void RendererSchedulerImpl::ResumeTimerQueue() {
+  main_thread_only().timer_queue_pause_count--;
+  DCHECK_GE(main_thread_only().timer_queue_pause_count, 0);
+  ForceUpdatePolicy();
+}
+
 void RendererSchedulerImpl::VirtualTimePaused() {
   DCHECK(!main_thread_only().virtual_time_stopped);
   main_thread_only().virtual_time_stopped = true;
@@ -1543,6 +1563,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
                     main_thread_only().renderer_backgrounded);
   state->SetBoolean("stopped_when_backgrounded",
                     main_thread_only().stopped_when_backgrounded);
+  state->SetInteger("timer_queue_pause_count",
+                    main_thread_only().timer_queue_pause_count);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());
   state->SetDouble(
       "fling_compositor_escalation_deadline",
@@ -1898,7 +1920,7 @@ void RendererSchedulerImpl::OnTriedToExecuteBlockedTask() {
   if (main_thread_only().current_use_case == UseCase::TOUCHSTART ||
       main_thread_only().longest_jank_free_task_duration <
           base::TimeDelta::FromMilliseconds(kRailsResponseTimeMillis) ||
-      main_thread_only().renderer_pause_count ||
+      main_thread_only().timer_queue_pause_count ||
       main_thread_only().stopped_when_backgrounded) {
     return;
   }
