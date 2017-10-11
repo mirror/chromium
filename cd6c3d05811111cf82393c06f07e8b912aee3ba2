@@ -70,6 +70,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472e94b1_fa0ad9f9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-11T17:47:22Z",
+      "side": 1,
+      "message": "Can we change this to just have a mojo BlobPtr?\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/WebHTTPBody.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d48",
+      "parentUuid": "79d12103_d690efd4",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
