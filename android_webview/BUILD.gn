@@ -673,6 +673,7 @@ source_set("common") {
     ":generate_aw_resources",
     ":generate_aw_strings",
     ":generate_components_strings",
+    ":interfaces",
     ":native_jni",
     "//android_webview:generate_components_strings",
     "//android_webview/common:version",
