@@ -11,6 +11,7 @@
 
 namespace gfx {
 class Rect;
+class Transform;
 }  // namespace gfx
 
 namespace aura {
@@ -90,8 +91,14 @@ class AURA_EXPORT WindowObserver {
                                       float old_opacity,
                                       float new_opacity) {}
 
-  // Invoked when SetTransform() is invoked on |window|.
-  virtual void OnWindowTransforming(Window* window) {}
+  // Invoked before the target transform of |window| changes.
+  virtual void OnWindowTargetTransformChanging(
+      Window* window,
+      const gfx::Transform& new_transform) {}
+
+  // Invoked when the transform of |window| changes. Unlike
+  // OnWindowTargetTransformChaging(), this can be called multiple times during
+  // animation.
   virtual void OnWindowTransformed(Window* window) {}
 
   // Invoked when |window|'s position among its siblings in the stacking order
