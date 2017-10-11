@@ -26,6 +26,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
+#import "ios/chrome/browser/ui/favicon/favicon_attributes.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -73,6 +74,18 @@ const char kRateThisAppCommand[] = "ratethisapp";
 @synthesize suggestionsMediator = _suggestionsMediator;
 @synthesize alertCoordinator = _alertCoordinator;
 @synthesize metricsRecorder = _metricsRecorder;
+
++ ntp_tiles::TileVisualType)tileVisualTypeFromAttributes:
+    (nullable FaviconAttributes*)attributes {
+  if (!attributes) {
+    return ntp_tiles::TileVisualType::NONE;
+  } else if (attributes.faviconImage) {
+    return ntp_tiles::TileVisualType::ICON_REAL;
+  }
+  return attributes.defaultBackgroundColor
+             ? ntp_tiles::TileVisualType::ICON_DEFAULT
+             : ntp_tiles::TileVisualType::ICON_COLOR;
+}
 
 - (void)setUp {
   DCHECK(self.suggestionsService);
@@ -349,9 +362,10 @@ const char kRateThisAppCommand[] = "ratethisapp";
       recordAction:new_tab_page_uma::ACTION_OPENED_MOST_VISITED_ENTRY];
   base::RecordAction(base::UserMetricsAction("MobileNTPMostVisited"));
 
-  ntp_tiles::metrics::RecordTileClick(
-      ntp_tiles::NTPTileImpression(mostVisitedIndex, item.source,
-                                   item.titleSource, [item tileType], GURL()));
+  ntp_tiles::metrics::RecordTileClick(ntp_tiles::NTPTileImpression(
+      mostVisitedIndex, item.source, item.titleSource,
+      [FaviconAttributes tileVisualTypeFromAttributes:item.attributes],
+      GURL()));
 }
 
 // Shows a snackbar with an action to undo the removal of the most visited item
