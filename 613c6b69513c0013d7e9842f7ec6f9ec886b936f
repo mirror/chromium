@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ec642e_42a01342",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-11T15:26:44Z",
+      "side": 1,
+      "message": "hiroshige: Is it safe to decrement the load count here? Or should we delay the decrement until ImageLoader::UpdateFromElement finishes?",
+      "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
