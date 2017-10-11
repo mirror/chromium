@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de5a3cc2_dec6da01",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-11T18:05:21Z",
+      "side": 1,
+      "message": "would also slightly prefer you store the status as a variable and do a single call to LogCallsiteLookupEvent. Just to decrease the risk (refactoring, etc.) of making multiple emits to the histogram.",
+      "revId": "15d38ab0efbf97ae1d79b8c6b0d87c7f09b3b948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997a8521_01762534",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30692,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-11T18:05:21Z",
+      "side": 1,
+      "message": "I would mention exactly when this is triggered - it feels a bit understated currently.",
+      "revId": "15d38ab0efbf97ae1d79b8c6b0d87c7f09b3b948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
