@@ -158,9 +158,6 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
-  if (suspended_)
-    return;
-
   service_->GetLogger()->RecordActivity("Dispatcher: Adding action tasks.");
 
   // Don't schedule any downloads if the download service can't be used at all.
@@ -205,6 +202,10 @@ void PrefetchDispatcherImpl::StopBackgroundTask() {
 }
 
 void PrefetchDispatcherImpl::OnTaskQueueIsIdle() {
+  // We don't want to continue if we are not in the background at the moment.
+  if (!background_task_)
+    return;
+
   if (!suspended_ && needs_pipeline_processing_) {
     needs_pipeline_processing_ = false;
     QueueActionTasks();
