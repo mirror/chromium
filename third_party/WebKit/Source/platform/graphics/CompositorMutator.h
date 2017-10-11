@@ -6,6 +6,7 @@
 #define CompositorMutator_h
 
 #include "platform/PlatformExport.h"
+#include "platform/graphics/CompositorAnimatorsState.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -21,7 +22,8 @@ class PLATFORM_EXPORT CompositorMutator
   // connected AnimationWorklets.
   // Returns true if any animation callbacks requested an animation frame
   // (i.e. should be reinvoked next frame).
-  virtual bool Mutate(double monotonic_time_now) = 0;
+  virtual void Mutate(double monotonic_time_now,
+                      std::unique_ptr<CompositorMutatorInputState>) = 0;
 };
 
 }  // namespace blink
