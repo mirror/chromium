@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "404037c5_44338a0e",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-11T19:37:34Z",
+      "side": 0,
+      "message": "this was a funny typo that didn\u0027t actually break things :P",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 42
+      },
+      "revId": "b18308a00753cb21298825400957f31943478fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
