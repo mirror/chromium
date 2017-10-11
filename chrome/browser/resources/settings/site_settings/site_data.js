@@ -8,6 +8,24 @@
  */
 
 /**
+ * @typedef {{
+ *   site: string,
+ *   id: string,
+ *   localData: string,
+ * }}
+ */
+var CookieDataSummaryItem;
+
+/**
+ * @typedef {{
+ *   id: string,
+ *   start: number,
+ *   count: number,
+ * }}
+ */
+var CookieRemovePacket;
+
+/**
  * TODO(dbeam): upstream to polymer externs?
  * @constructor
  * @extends {Event}
@@ -21,9 +39,9 @@ Polymer({
   is: 'site-data',
 
   behaviors: [
-    CookieTreeBehavior,
     I18nBehavior,
     settings.RouteObserverBehavior,
+    WebUIListenerBehavior,
   ],
 
   properties: {
@@ -31,10 +49,9 @@ Polymer({
      * The current filter applied to the cookie data list.
      */
     filter: {
-      observer: 'onSearchChanged_',
+      observer: 'updateSiteList_',
       notify: true,
       type: String,
-      value: '',
     },
 
     /** @type {!Map<string, string>} */
@@ -42,6 +59,13 @@ Polymer({
       type: Object,
       observer: 'focusConfigChanged_',
     },
+  },
+
+  /** @override */
+  ready: function() {
+    this.browserProxy_ = settings.LocalDataBrowserProxyImpl.getInstance();
+    this.addWebUIListener(
+        'on-tree-item-removed', this.updateSiteList_.bind(this));
   },
 
   /**
@@ -53,8 +77,21 @@ Polymer({
    */
   currentRouteChanged: function(currentRoute) {
     if (currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
-      this.loadCookies();
+      this.browserProxy_.reloadCookies().then(this.updateSiteList_.bind(this));
     }
+  },
+
+  /**
+   * Clear the sites list and stop gathering list data.
+   * @private
+   */
+  clearExtendSiteList_: function() {
+    window.cancelIdleCallback(this.extendSiteListHandle_);
+    window.cancelAnimationFrame(this.extendSiteListAnimationHandle_);
+    // Queue the |sites| reset.
+    window.requestAnimationFrame(() => {
+      this.sites = [];
+    });
   },
 
   /**
@@ -88,33 +125,45 @@ Polymer({
   },
 
   /**
-   * A filter function for the list.
-   * @param {!CookieDataSummaryItem} item The item to possibly filter out.
-   * @return {boolean} Whether to show the item.
+   * Recursively add elements to the site list until all the sites are listed.
    * @private
    */
-  showItem_: function(item) {
-    if (this.filter.length == 0)
-      return true;
-    return item.site.indexOf(this.filter) > -1;
-  },
-
-  /** @private */
-  onSearchChanged_: function() {
-    this.$.list.render();
+  extendSiteList_: function() {
+    // A small |count| will have too much IPC overhead. A large |count| may
+    // cause UI stutter on low-end machines. Suggested values: 50 to 200.
+    let count = 100;  // Arbitrary.
+    this.browserProxy_.getDisplayList(this.filter, this.sites.length, count)
+        .then((listInfo) => {
+          // The last chunk (terminator) will have no items in the list.
+          if (!listInfo.items.length) {
+            this.fire('site-data-list-complete');
+            return;
+          }
+          // Don't modify the DOM during idle, do it in next animation frame.
+          this.extendSiteListAnimationHandle_ =
+              window.requestAnimationFrame(function(listInfo) {
+                this.sites = this.sites.concat(listInfo.items);
+              }.bind(this, listInfo));
+          // Get the next chunk.
+          this.extendSiteListHandle_ =
+              window.requestIdleCallback(this.extendSiteList_.bind(this));
+        });
   },
 
   /**
-   * @return {boolean} Whether to show the multiple site remove button.
+   * Kick off a chain of |extendSiteList_| calls to gather all the site data.
    * @private
    */
-  isRemoveButtonVisible_: function(sites, renderedItemCount) {
-    return renderedItemCount != 0;
+  updateSiteList_: function() {
+    this.clearExtendSiteList_();
+    this.extendSiteListHandle_ =
+        window.requestIdleCallback(this.extendSiteList_.bind(this));
   },
 
   /**
    * Returns the string to use for the Remove label.
-   * @return {string} filter The current filter string.
+   * @param {string} filter The current filter string.
+   * @return {string}
    * @private
    */
   computeRemoveLabel_: function(filter) {
@@ -149,15 +198,10 @@ Polymer({
    */
   onConfirmDelete_: function() {
     this.$.confirmDeleteDialog.close();
-
     if (this.filter.length == 0) {
-      this.removeAllCookies();
+      this.browserProxy_.removeAll().then(this.clearExtendSiteList_.bind(this));
     } else {
-      var items = this.$.list.items;
-      for (var i = 0; i < items.length; ++i) {
-        if (this.showItem_(items[i]))
-          this.browserProxy_.removeCookie(items[i].id);
-      }
+      this.browserProxy_.removeByFilter(this.filter);
       // We just deleted all items found by the filter, let's reset the filter.
       this.fire('clear-subpage-search');
     }
@@ -170,7 +214,7 @@ Polymer({
    */
   onRemoveSiteTap_: function(e) {
     e.stopPropagation();
-    this.browserProxy_.removeCookie(e.model.item.id);
+    this.browserProxy_.removeItem(e.model.item.site);
   },
 
   /**
