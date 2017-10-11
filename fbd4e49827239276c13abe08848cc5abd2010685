@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a331a5fb_7da20464",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T08:45:27Z",
+      "side": 1,
+      "message": "Resolving. The ctors were changed to be overloaded, with a third, private version that contains the code.",
+      "parentUuid": "83e14bb2_5880067b",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bb911b_d3a8d715",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 11
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "6c67431b_188a5532",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T08:45:27Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "40f5102f_d0d754a4",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caa1803b_7f7c4143",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -384,6 +420,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e9d27_051a36b2",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T08:45:27Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "4d1270ab_0edce8c3",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

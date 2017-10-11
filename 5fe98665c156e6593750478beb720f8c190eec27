@@ -16,6 +16,24 @@
       "revId": "5fe98665c156e6593750478beb720f8c190eec27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da7b09_ef04fa6a",
+        "filename": "media/audio/power_observer_helper_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T08:45:27Z",
+      "side": 1,
+      "message": "Huh, of course. Done.",
+      "parentUuid": "3e6008dc_99656f9d",
+      "revId": "5fe98665c156e6593750478beb720f8c190eec27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
