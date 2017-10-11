@@ -6,9 +6,9 @@
 #define CONTENT_COMMON_SANDBOX_LINUX_BPF_CROS_ARM_GPU_POLICY_LINUX_H_
 
 #include "base/macros.h"
-#include "content/common/sandbox_linux/bpf_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_gpu_policy.h"
 
-namespace content {
+namespace service_manager {
 
 // This policy is for Chrome OS ARM.
 class CrosArmGpuProcessPolicy : public GpuProcessPolicy {
@@ -27,6 +27,6 @@ class CrosArmGpuProcessPolicy : public GpuProcessPolicy {
   DISALLOW_COPY_AND_ASSIGN(CrosArmGpuProcessPolicy);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_BPF_CROS_ARM_GPU_POLICY_LINUX_H_

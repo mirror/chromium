@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_cros_arm_gpu_policy.h"
 
 #include <dlfcn.h>
 #include <errno.h>
@@ -21,12 +21,12 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "build/build_config.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
-#include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h"
 #include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy.h"
+#include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf.h"
 
 using sandbox::bpf_dsl::Allow;
 using sandbox::bpf_dsl::Arg;
@@ -36,7 +36,7 @@ using sandbox::bpf_dsl::ResultExpr;
 using sandbox::syscall_broker::BrokerFilePermission;
 using sandbox::SyscallSets;
 
-namespace content {
+namespace service_manager {
 
 namespace {
 
@@ -179,4 +179,4 @@ bool CrosArmGpuProcessPolicy::PreSandboxHook() {
   return true;
 }
 
-}  // namespace content
+}  // namespace service_manager

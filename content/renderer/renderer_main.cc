@@ -42,7 +42,7 @@
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
 #include "content/common/font_config_ipc_linux.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
 
@@ -121,7 +121,8 @@ int RendererMain(const MainFunctionParams& parameters) {
   // This call could already have been made from zygote_main_linux.cc. However
   // we need to do it here if Zygote is disabled.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kNoZygote)) {
-    SkFontConfigInterface::SetGlobal(new FontConfigIPC(GetSandboxFD()))
+    SkFontConfigInterface::SetGlobal(
+        new FontConfigIPC(service_manager::GetSandboxFD()))
         ->unref();
   }
 #endif

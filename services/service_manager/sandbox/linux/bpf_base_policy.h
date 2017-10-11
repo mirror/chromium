@@ -12,16 +12,16 @@
 #include "sandbox/linux/bpf_dsl/policy.h"
 #include "sandbox/linux/seccomp-bpf-helpers/baseline_policy.h"
 
-namespace content {
+namespace service_manager {
 
 // The "baseline" BPF policy for content/. Any content/ seccomp-bpf policy
 // should inherit from it.
 // It implements the main Policy interface. Due to its nature
 // as a "kernel attack surface reduction" layer, it's implementation-defined.
-class SandboxBPFBasePolicy : public sandbox::bpf_dsl::Policy {
+class BPFBasePolicy : public sandbox::bpf_dsl::Policy {
  public:
-  SandboxBPFBasePolicy();
-  ~SandboxBPFBasePolicy() override;
+  BPFBasePolicy();
+  ~BPFBasePolicy() override;
 
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
@@ -43,9 +43,9 @@ class SandboxBPFBasePolicy : public sandbox::bpf_dsl::Policy {
  private:
   // Compose the BaselinePolicy from sandbox/.
   std::unique_ptr<sandbox::BaselinePolicy> baseline_policy_;
-  DISALLOW_COPY_AND_ASSIGN(SandboxBPFBasePolicy);
+  DISALLOW_COPY_AND_ASSIGN(BPFBasePolicy);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_BPF_BASE_POLICY_LINUX_H_

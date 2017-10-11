@@ -75,8 +75,8 @@
 
 #if defined(OS_LINUX)
 #include "content/common/font_config_ipc_linux.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/public/common/sandbox_init.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "third_party/skia/include/ports/SkFontConfigInterface.h"
 #endif
 
@@ -305,7 +305,8 @@ int GpuMain(const MainFunctionParams& parameters) {
     SkGraphics::Init();
 #if defined(OS_LINUX)
     // Set up the font IPC so that the GPU process can create typefaces.
-    SkFontConfigInterface::SetGlobal(new FontConfigIPC(GetSandboxFD()))
+    SkFontConfigInterface::SetGlobal(
+        new FontConfigIPC(service_manager::GetSandboxFD()))
         ->unref();
 #endif
   }
@@ -332,12 +333,12 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
   if (watchdog_thread) {
     // LinuxSandbox needs to be able to ensure that the thread
     // has really been stopped.
-    LinuxSandbox::StopThread(watchdog_thread);
+    service_manager::LinuxSandbox::StopThread(watchdog_thread);
   }
 
   // LinuxSandbox::InitializeSandbox() must always be called
   // with only one thread.
-  res = LinuxSandbox::InitializeSandbox(gpu_info);
+  res = service_manager::LinuxSandbox::InitializeSandbox(gpu_info);
   if (watchdog_thread) {
     base::Thread::Options options;
     options.timer_slack = base::TIMER_SLACK_MAXIMUM;

@@ -20,6 +20,35 @@ component("sandbox") {
   deps = [
     "//base",
   ]
+  if (is_linux) {
+    sources += [
+      "linux/bpf_base_policy.cc",
+      "linux/bpf_base_policy.h",
+      "linux/bpf_cdm_policy.cc",
+      "linux/bpf_cdm_policy.h",
+      "linux/bpf_cros_amd_gpu_policy.cc",
+      "linux/bpf_cros_amd_gpu_policy.h",
+      "linux/bpf_cros_arm_gpu_policy.cc",
+      "linux/bpf_cros_arm_gpu_policy.h",
+      "linux/bpf_gpu_policy.cc",
+      "linux/bpf_gpu_policy.h",
+      "linux/bpf_pdf_compositor_policy.cc",
+      "linux/bpf_pdf_compositor_policy.h",
+      "linux/bpf_ppapi_policy.cc",
+      "linux/bpf_ppapi_policy.h",
+      "linux/bpf_renderer_policy.cc",
+      "linux/bpf_renderer_policy.h",
+      "linux/bpf_utility_policy.cc",
+      "linux/bpf_utility_policy.h",
+      "linux/sandbox_debug_handling.cc",
+      "linux/sandbox_debug_handling.h",
+      "linux/sandbox_linux.cc",
+      "linux/sandbox_linux.h",
+      "linux/sandbox_seccomp_bpf.cc",
+      "linux/sandbox_seccomp_bpf.h",
+    ]
+    deps += [ "//sandbox/linux:sandbox" ]
+  }
   if (is_mac) {
     public_deps += [ "mac:packaged_sb_files" ]
   }

@@ -91,7 +91,7 @@ class SandboxPolicy : public sandbox::BaselinePolicy {
 #if defined(__i386__) || defined(__x86_64__) || defined(__mips__) || \
     defined(__aarch64__)
       // Per #ifdefs in
-      // content/common/sandbox_linux/bpf_renderer_policy_linux.cc
+      // services/service_manager/sandbox/linux/bpf_renderer_policy_linux.cc
       case __NR_getrlimit:
 #endif
 #if defined(__i386__) || defined(__arm__)

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_linux/sandbox_linux.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -33,10 +33,8 @@
 #include "base/sys_info.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_linux.h"
 #include "gpu/config/gpu_info.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
@@ -45,6 +43,7 @@
 #include "sandbox/linux/services/thread_helpers.h"
 #include "sandbox/linux/services/yama.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_client.h"
+#include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "third_party/angle/src/gpu_info_util/SystemInfo.h"
 
@@ -70,8 +69,8 @@ void LogSandboxStarted(const std::string& sandbox_name) {
   const std::string process_type =
       command_line.GetSwitchValueASCII(switches::kProcessType);
   const std::string activated_sandbox =
-      "Activated " + sandbox_name + " sandbox for process type: " +
-      process_type + ".";
+      "Activated " + sandbox_name +
+      " sandbox for process type: " + process_type + ".";
   VLOG(1) << activated_sandbox;
 }
 
@@ -104,7 +103,7 @@ base::ScopedFD OpenProc(int proc_fd) {
 
 }  // namespace
 
-namespace content {
+namespace service_manager {
 
 LinuxSandbox::LinuxSandbox()
     : proc_fd_(-1),
@@ -270,8 +269,7 @@ bool LinuxSandbox::seccomp_bpf_started() const {
   return seccomp_bpf_started_;
 }
 
-sandbox::SetuidSandboxClient*
-    LinuxSandbox::setuid_sandbox_client() const {
+sandbox::SetuidSandboxClient* LinuxSandbox::setuid_sandbox_client() const {
   return setuid_sandbox_client_.get();
 }
 
@@ -356,9 +354,9 @@ bool LinuxSandbox::InitializeSandboxImpl(const gpu::GPUInfo* gpu_info) {
   if (!pre_initialized_)
     PreinitializeSandbox();
 
-  DCHECK(!HasOpenDirectories()) <<
-      "InitializeSandbox() called after unexpected directories have been " <<
-      "opened. This breaks the security of the setuid sandbox.";
+  DCHECK(!HasOpenDirectories())
+      << "InitializeSandbox() called after unexpected directories have been "
+      << "opened. This breaks the security of the setuid sandbox.";
 
   // Attempt to limit the future size of the address space of the process.
   LimitAddressSpace(process_type);
@@ -385,7 +383,7 @@ bool LinuxSandbox::seccomp_bpf_with_tsync_supported() const {
 }
 
 bool LinuxSandbox::LimitAddressSpace(const std::string& process_type) {
-  (void) process_type;
+  (void)process_type;
 #if !defined(ANY_OF_AMTLU_SANITIZER)
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (service_manager::SandboxTypeFromCommandLine(*command_line) ==
@@ -487,4 +485,4 @@ void LinuxSandbox::StopThreadAndEnsureNotCounted(base::Thread* thread) const {
       sandbox::ThreadHelpers::StopThreadAndWatchProcFS(proc_fd.get(), thread));
 }
 
-}  // namespace content
+}  // namespace service_manager

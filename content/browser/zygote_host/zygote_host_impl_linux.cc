@@ -15,13 +15,13 @@
 #include "base/process/memory.h"
 #include "base/strings/string_number_conversions.h"
 #include "content/browser/sandbox_host_linux.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/content_switches.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_host.h"
 #include "sandbox/linux/suid/common/sandbox.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 
 namespace content {
 
@@ -161,7 +161,8 @@ pid_t ZygoteHostImpl::LaunchZygote(base::CommandLine* cmd_line,
   // Start up the sandbox host process and get the file descriptor for the
   // sandboxed processes to talk to it.
   const int sfd = SandboxHostLinux::GetInstance()->GetChildSocket();
-  options.fds_to_remap.push_back(std::make_pair(sfd, GetSandboxFD()));
+  options.fds_to_remap.push_back(
+      std::make_pair(sfd, service_manager::GetSandboxFD()));
 
   base::ScopedFD dummy_fd;
   if (use_suid_sandbox_) {

@@ -32,12 +32,9 @@
 #include "base/sys_info.h"
 #include "build/build_config.h"
 #include "content/common/font_config_ipc_linux.h"
-#include "content/common/sandbox_linux/sandbox_debug_handling_linux.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
-#include "content/public/common/sandbox_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
 #include "content/zygote/zygote_linux.h"
 #include "media/media_features.h"
@@ -47,6 +44,8 @@
 #include "sandbox/linux/services/namespace_sandbox.h"
 #include "sandbox/linux/services/thread_helpers.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_client.h"
+#include "services/service_manager/sandbox/linux/sandbox_debug_handling.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #include "third_party/WebKit/public/web/linux/WebFontRendering.h"
 #include "third_party/boringssl/src/include/openssl/crypto.h"
 #include "third_party/boringssl/src/include/openssl/rand.h"
@@ -148,7 +147,7 @@ static void ProxyLocaltimeCallToBrowser(time_t input, struct tm* output,
                                         char* timezone_out,
                                         size_t timezone_out_len) {
   base::Pickle request;
-  request.WriteInt(LinuxSandbox::METHOD_LOCALTIME);
+  request.WriteInt(service_manager::LinuxSandbox::METHOD_LOCALTIME);
   request.WriteString(
       std::string(reinterpret_cast<char*>(&input), sizeof(input)));
 
@@ -156,7 +155,8 @@ static void ProxyLocaltimeCallToBrowser(time_t input, struct tm* output,
 
   uint8_t reply_buf[512];
   const ssize_t r = base::UnixDomainSocket::SendRecvMsg(
-      GetSandboxFD(), reply_buf, sizeof(reply_buf), NULL, request);
+      service_manager::GetSandboxFD(), reply_buf, sizeof(reply_buf), NULL,
+      request);
   if (r == -1) {
     return;
   }
@@ -397,7 +397,8 @@ static void ZygotePreSandboxInit() {
 #endif
 
   SkFontConfigInterface::SetGlobal(
-      new FontConfigIPC(GetSandboxFD()))->unref();
+      new FontConfigIPC(service_manager::GetSandboxFD()))
+      ->unref();
 
   // Set the android SkFontMgr for blink. We need to ensure this is done
   // before the sandbox is initialized to allow the font manager to access
@@ -479,7 +480,7 @@ static bool EnterSuidSandbox(sandbox::SetuidSandboxClient* setuid_sandbox,
     CHECK(CreateInitProcessReaper(post_fork_parent_callback));
   }
 
-  CHECK(SandboxDebugHandling::SetDumpableStatusAndHandlers());
+  CHECK(service_manager::SandboxDebugHandling::SetDumpableStatusAndHandlers());
   return true;
 }
 
@@ -487,7 +488,7 @@ static void DropAllCapabilities(int proc_fd) {
   CHECK(sandbox::Credentials::DropAllCapabilities(proc_fd));
 }
 
-static void EnterNamespaceSandbox(LinuxSandbox* linux_sandbox,
+static void EnterNamespaceSandbox(service_manager::LinuxSandbox* linux_sandbox,
                                   base::Closure* post_fork_parent_callback) {
   linux_sandbox->EngageNamespaceSandbox();
 
@@ -500,7 +501,7 @@ static void EnterNamespaceSandbox(LinuxSandbox* linux_sandbox,
   }
 }
 
-static void EnterLayerOneSandbox(LinuxSandbox* linux_sandbox,
+static void EnterLayerOneSandbox(service_manager::LinuxSandbox* linux_sandbox,
                                  const bool using_layer1_sandbox,
                                  base::Closure* post_fork_parent_callback) {
   DCHECK(linux_sandbox);
@@ -532,8 +533,7 @@ bool ZygoteMain(
   g_am_zygote_or_renderer = true;
 
   std::vector<int> fds_to_close_post_fork;
-
-  LinuxSandbox* linux_sandbox = LinuxSandbox::GetInstance();
+  auto* linux_sandbox = service_manager::LinuxSandbox::GetInstance();
 
   // Skip pre-initializing sandbox under --no-sandbox for crbug.com/444900.
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -569,7 +569,7 @@ bool ZygoteMain(
   VLOG(1) << "ZygoteMain: initializing " << fork_delegates.size()
           << " fork delegates";
   for (const auto& fork_delegate : fork_delegates) {
-    fork_delegate->Init(GetSandboxFD(), using_layer1_sandbox);
+    fork_delegate->Init(service_manager::GetSandboxFD(), using_layer1_sandbox);
   }
 
   const std::vector<int> sandbox_fds_to_close_post_fork =
@@ -592,10 +592,12 @@ bool ZygoteMain(
 
   const int sandbox_flags = linux_sandbox->GetStatus();
 
-  const bool setuid_sandbox_engaged = sandbox_flags & kSandboxLinuxSUID;
+  const bool setuid_sandbox_engaged =
+      sandbox_flags & service_manager::kSandboxLinuxSUID;
   CHECK_EQ(using_setuid_sandbox, setuid_sandbox_engaged);
 
-  const bool namespace_sandbox_engaged = sandbox_flags & kSandboxLinuxUserNS;
+  const bool namespace_sandbox_engaged =
+      sandbox_flags & service_manager::kSandboxLinuxUserNS;
   CHECK_EQ(using_namespace_sandbox, namespace_sandbox_engaged);
 
   Zygote zygote(sandbox_flags, std::move(fork_delegates), extra_children,

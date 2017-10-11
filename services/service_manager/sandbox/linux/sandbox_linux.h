@@ -13,12 +13,11 @@
 #include "base/macros.h"
 #include "base/posix/global_descriptors.h"
 #include "content/public/common/content_descriptors.h"
-#include "content/public/common/sandbox_linux.h"
 #include "gpu/config/gpu_info.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
 #if defined(ADDRESS_SANITIZER) || defined(MEMORY_SANITIZER) || \
-    defined(THREAD_SANITIZER) || defined(LEAK_SANITIZER) || \
+    defined(THREAD_SANITIZER) || defined(LEAK_SANITIZER) ||    \
     defined(UNDEFINED_SANITIZER) || defined(SANITIZER_COVERAGE)
 #include <sanitizer/common_interface_defs.h>
 #define ANY_OF_AMTLU_SANITIZER 1
@@ -28,10 +27,41 @@ namespace base {
 template <typename T>
 struct DefaultSingletonTraits;
 class Thread;
+}  // namespace base
+namespace sandbox {
+class SetuidSandboxClient;
 }
-namespace sandbox { class SetuidSandboxClient; }
 
-namespace content {
+namespace service_manager {
+
+// These form a bitmask which describes the conditions of the Linux sandbox.
+// Note: this doesn't strictly give you the current status, it states
+// what will be enabled when the relevant processes are initialized.
+enum LinuxSandboxStatus {
+  // SUID sandbox active.
+  kSandboxLinuxSUID = 1 << 0,
+
+  // Sandbox is using a new PID namespace.
+  kSandboxLinuxPIDNS = 1 << 1,
+
+  // Sandbox is using a new network namespace.
+  kSandboxLinuxNetNS = 1 << 2,
+
+  // seccomp-bpf sandbox active.
+  kSandboxLinuxSeccompBPF = 1 << 3,
+
+  // The Yama LSM module is present and enforcing.
+  kSandboxLinuxYama = 1 << 4,
+
+  // seccomp-bpf sandbox is active and the kernel supports TSYNC.
+  kSandboxLinuxSeccompTSYNC = 1 << 5,
+
+  // User namespace sandbox active.
+  kSandboxLinuxUserNS = 1 << 6,
+
+  // A flag that denotes an invalid sandbox status.
+  kSandboxLinuxInvalid = 1 << 31,
+};
 
 inline int GetSandboxFD() {
   return kSandboxIPCChannel + base::GlobalDescriptors::kBaseDescriptor;
@@ -50,7 +80,8 @@ inline int GetSandboxFD() {
 class LinuxSandbox {
  public:
   // This is a list of sandbox IPC methods which the renderer may send to the
-  // sandbox host. See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandbox_ipc.md
+  // sandbox host. See
+  // https://chromium.googlesource.com/chromium/src/+/master/docs/linux_sandbox_ipc.md
   // This isn't the full list, values < 32 are reserved for methods called from
   // Skia.
   enum LinuxSandboxIPCMethods {
@@ -178,10 +209,10 @@ class LinuxSandbox {
   int sandbox_status_flags_;
   // Did PreinitializeSandbox() run?
   bool pre_initialized_;
-  bool seccomp_bpf_supported_;  // Accurate if pre_initialized_.
+  bool seccomp_bpf_supported_;             // Accurate if pre_initialized_.
   bool seccomp_bpf_with_tsync_supported_;  // Accurate if pre_initialized_.
-  bool yama_is_enforcing_;  // Accurate if pre_initialized_.
-  bool initialize_sandbox_ran_;  // InitializeSandbox() was called.
+  bool yama_is_enforcing_;                 // Accurate if pre_initialized_.
+  bool initialize_sandbox_ran_;            // InitializeSandbox() was called.
   std::unique_ptr<sandbox::SetuidSandboxClient> setuid_sandbox_client_;
 #if defined(ANY_OF_AMTLU_SANITIZER)
   std::unique_ptr<__sanitizer_sandbox_arguments> sanitizer_args_;
@@ -190,6 +221,6 @@ class LinuxSandbox {
   DISALLOW_COPY_AND_ASSIGN(LinuxSandbox);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_LINUX_H_

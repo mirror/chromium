@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 
-namespace content {
+namespace service_manager {
 
 class SandboxDebugHandling {
  public:
@@ -20,6 +20,6 @@ class SandboxDebugHandling {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SandboxDebugHandling);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_DEBUG_HANDLING_LINUX_H_

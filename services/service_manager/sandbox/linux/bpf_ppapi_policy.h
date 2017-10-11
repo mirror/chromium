@@ -6,12 +6,12 @@
 #define CONTENT_COMMON_SANDBOX_LINUX_BPF_PPAPI_POLICY_LINUX_H_
 
 #include "base/macros.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy.h"
 
-namespace content {
+namespace service_manager {
 
 // Policy for Pepper plugins such as Flash.
-class PpapiProcessPolicy : public SandboxBPFBasePolicy {
+class PpapiProcessPolicy : public BPFBasePolicy {
  public:
   PpapiProcessPolicy();
   ~PpapiProcessPolicy() override;
@@ -23,6 +23,6 @@ class PpapiProcessPolicy : public SandboxBPFBasePolicy {
   DISALLOW_COPY_AND_ASSIGN(PpapiProcessPolicy);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_BPF_PPAPI_POLICY_LINUX_H_

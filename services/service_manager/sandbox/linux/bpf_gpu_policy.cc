@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_linux/bpf_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_gpu_policy.h"
 
 #include <dlfcn.h>
 #include <errno.h>
@@ -25,8 +25,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
-#include "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.h"
 #include "content/public/common/content_switches.h"
 #include "media/gpu/features.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
@@ -36,6 +34,8 @@
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 #include "services/service_manager/embedder/set_process_title.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy.h"
+#include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf.h"
 
 using sandbox::arch_seccomp_data;
 using sandbox::bpf_dsl::Allow;
@@ -45,7 +45,7 @@ using sandbox::syscall_broker::BrokerFilePermission;
 using sandbox::syscall_broker::BrokerProcess;
 using sandbox::SyscallSets;
 
-namespace content {
+namespace service_manager {
 
 namespace {
 
@@ -278,7 +278,7 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
         return Allow();
 
       // Default on the baseline policy.
-      return SandboxBPFBasePolicy::EvaluateSyscall(sysno);
+      return BPFBasePolicy::EvaluateSyscall(sysno);
   }
 }
 
@@ -381,4 +381,4 @@ void GpuProcessPolicy::InitGpuBrokerProcess(
                                          broker_sandboxer_allocator)));
 }
 
-}  // namespace content
+}  // namespace service_manager

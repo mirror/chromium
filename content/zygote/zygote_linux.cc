@@ -32,18 +32,17 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "content/common/sandbox_linux/sandbox_linux.h"
 #include "content/common/zygote_commands_linux.h"
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/mojo_channel_switches.h"
 #include "content/public/common/result_codes.h"
-#include "content/public/common/sandbox_linux.h"
 #include "content/public/common/send_zygote_child_ping_linux.h"
 #include "content/public/common/zygote_fork_delegate_linux.h"
 #include "ipc/ipc_channel.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
 #include "services/service_manager/embedder/set_process_title.h"
+#include "services/service_manager/sandbox/linux/sandbox_linux.h"
 
 // See https://chromium.googlesource.com/chromium/src/+/master/docs/linux_zygote.md
 
@@ -222,11 +221,11 @@ bool Zygote::GetProcessInfo(base::ProcessHandle pid,
 }
 
 bool Zygote::UsingSUIDSandbox() const {
-  return sandbox_flags_ & kSandboxLinuxSUID;
+  return sandbox_flags_ & service_manager::kSandboxLinuxSUID;
 }
 
 bool Zygote::UsingNSSandbox() const {
-  return sandbox_flags_ & kSandboxLinuxUserNS;
+  return sandbox_flags_ & service_manager::kSandboxLinuxUserNS;
 }
 
 bool Zygote::HandleRequestFromBrowser(int fd) {
@@ -442,8 +441,8 @@ int Zygote::ForkWithRealPid(const std::string& process_type,
     CHECK_NE(pid, 0);
   } else {
     CreatePipe(&read_pipe, &write_pipe);
-    if (sandbox_flags_ & kSandboxLinuxPIDNS &&
-        sandbox_flags_ & kSandboxLinuxUserNS) {
+    if (sandbox_flags_ & service_manager::kSandboxLinuxPIDNS &&
+        sandbox_flags_ & service_manager::kSandboxLinuxUserNS) {
       pid = sandbox::NamespaceSandbox::ForkInNewPidNamespace(
           /*drop_capabilities_in_child=*/true);
     } else {
@@ -597,7 +596,8 @@ base::ProcessId Zygote::ReadArgsAndFork(base::PickleIterator iter,
   }
 
   mapping.push_back(base::GlobalDescriptors::Descriptor(
-      static_cast<uint32_t>(kSandboxIPCChannel), GetSandboxFD()));
+      static_cast<uint32_t>(kSandboxIPCChannel),
+      service_manager::GetSandboxFD()));
 
   // Returns twice, once per process.
   base::ProcessId child_pid =

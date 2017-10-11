@@ -10,18 +10,18 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy.h"
 
 namespace sandbox {
 namespace syscall_broker {
 class BrokerFilePermission;
 class BrokerProcess;
-}
-}
+}  // namespace syscall_broker
+}  // namespace sandbox
 
-namespace content {
+namespace service_manager {
 
-class GpuProcessPolicy : public SandboxBPFBasePolicy {
+class GpuProcessPolicy : public BPFBasePolicy {
  public:
   GpuProcessPolicy();
   ~GpuProcessPolicy() override;
@@ -60,6 +60,6 @@ class GpuProcessPolicy : public SandboxBPFBasePolicy {
   DISALLOW_COPY_AND_ASSIGN(GpuProcessPolicy);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_

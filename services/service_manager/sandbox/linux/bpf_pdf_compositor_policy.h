@@ -6,12 +6,12 @@
 #define CONTENT_COMMON_SANDBOX_LINUX_BPF_PDF_COMPOSITOR_POLICY_LINUX_H_
 
 #include "base/macros.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_base_policy.h"
 
-namespace content {
+namespace service_manager {
 
 // This policy can be used by pdf compositor utility processes.
-class PdfCompositorProcessPolicy : public SandboxBPFBasePolicy {
+class PdfCompositorProcessPolicy : public BPFBasePolicy {
  public:
   PdfCompositorProcessPolicy();
   ~PdfCompositorProcessPolicy() override;
@@ -23,6 +23,6 @@ class PdfCompositorProcessPolicy : public SandboxBPFBasePolicy {
   DISALLOW_COPY_AND_ASSIGN(PdfCompositorProcessPolicy);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_BPF_PDF_COMPOSITOR_POLICY_LINUX_H_

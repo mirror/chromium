@@ -14,7 +14,7 @@
 #include "sandbox/linux/bpf_dsl/policy.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 
-namespace content {
+namespace service_manager {
 
 // This class has two main sets of APIs. One can be used to start the sandbox
 // for internal content process types, the other is indirectly exposed as
@@ -56,6 +56,6 @@ class SandboxSeccompBPF {
   DISALLOW_IMPLICIT_CONSTRUCTORS(SandboxSeccompBPF);
 };
 
-}  // namespace content
+}  // namespace service_manager
 
 #endif  // CONTENT_COMMON_SANDBOX_LINUX_SANDBOX_SECCOMP_BPF_LINUX_H_
