@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0ba0152_809f33fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:20:39Z",
+      "side": 1,
+      "message": "Please, mention which functions are splitted out of the main file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "53e6e5558bfe69f09ff9db6753b6654176e71e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c15b6dc_27d514da",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:20:39Z",
+      "side": 1,
+      "message": "Do you need to expose these functions out of C++ file? If they are not used by other files, better remove from here, even though it\u0027s in a namespace.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "53e6e5558bfe69f09ff9db6753b6654176e71e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bf6ea9_074bf36a",
+        "filename": "chrome/browser/chromeos/policy/off_hours/utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:20:39Z",
+      "side": 1,
+      "message": "nit: utils.h is too general name here. either off_hours_time_utils.h or just time_utils.h",
+      "revId": "53e6e5558bfe69f09ff9db6753b6654176e71e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
