@@ -16,6 +16,24 @@
       "revId": "70b601070582278f44cbf71068240360a863618f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713aabc9_78b5a9cc",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T00:11:40Z",
+      "side": 1,
+      "message": "\u003e Maybe hold off creating this function for now and leave the impl in SetSelection?\n\nDone.",
+      "parentUuid": "3e5f8576_310d729e",
+      "revId": "70b601070582278f44cbf71068240360a863618f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
