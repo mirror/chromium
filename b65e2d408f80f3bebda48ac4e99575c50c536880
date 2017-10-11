@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ffb9e355_c5fdd346",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-11T21:38:05Z",
+      "side": 1,
+      "message": "This is what I have arrived to after consulting with jamescook@ and dcheng@ (for https://chromium-review.googlesource.com/c/chromium/src/+/693346). The client disconnect situation needs to be handled anyway, so why have an extra boolean?",
+      "parentUuid": "d60ccdb5_4b9971fa",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab025fd5_d7140deb",
         "filename": "ash/note_taking_controller.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T21:13:03Z",
       "side": 1,
       "message": "!!client_?",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfc46db_8d7906dc",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-11T21:38:05Z",
+      "side": 1,
+      "message": "As a matter of fact lhchavez@ steered me away from !! in https://chromium-review.googlesource.com/c/chromium/src/+/693346/7/chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc#49",
+      "parentUuid": "ab025fd5_d7140deb",
       "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
