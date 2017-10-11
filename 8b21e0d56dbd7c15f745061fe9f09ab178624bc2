@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68923d40_ca379303",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T22:12:59Z",
+      "side": 1,
+      "message": "Briefly mention why it\u0027s OK to drop?",
+      "revId": "8b21e0d56dbd7c15f745061fe9f09ab178624bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0581189c_ebc29b95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T22:12:59Z",
+      "side": 1,
+      "message": "Presumably because this is a standardized header now? And we\u0027re sure no one is depending on the older header?",
+      "revId": "8b21e0d56dbd7c15f745061fe9f09ab178624bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
