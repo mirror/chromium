@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30c29d69_c1748c77",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T02:44:37Z",
+      "side": 1,
+      "message": "Note: Finally the empty check is still good to have as HistogramTester will not scream about reports to valid histogram name appended of \".\"",
+      "range": {
+        "startLine": 249,
+        "startChar": 41,
+        "endLine": 249,
+        "endChar": 46
+      },
+      "revId": "83e6c4943f483d191336ad5d17c8aee1f6fe7514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
