@@ -1,8 +1,8 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/ui/main/main_view_controller.h"
+#import "ios/chrome/browser/ui/main/main_containing_view_controller.h"
 
 #import <UIKit/UIKit.h>
 
@@ -56,10 +56,10 @@
 
 namespace {
 
-class MainViewControllerTest : public BlockCleanupTest {
+class MainContainingViewControllerTest : public BlockCleanupTest {
  public:
-  MainViewControllerTest() = default;
-  ~MainViewControllerTest() override = default;
+  MainContainingViewControllerTest() = default;
+  ~MainContainingViewControllerTest() override = default;
 
   void TearDown() override {
     if (original_root_view_controller_) {
@@ -83,14 +83,12 @@ class MainViewControllerTest : public BlockCleanupTest {
   // the end of the test.
   UIViewController* original_root_view_controller_;
 
-  DISALLOW_COPY_AND_ASSIGN(MainViewControllerTest);
+  DISALLOW_COPY_AND_ASSIGN(MainContainingViewControllerTest);
 };
 
-TEST_F(MainViewControllerTest, ActiveVC) {
-  base::test::ScopedFeatureList disable_feature;
-  disable_feature.InitAndDisableFeature(kTabSwitcherPresentsBVC);
-
-  MainViewController* main_view_controller = [[MainViewController alloc] init];
+TEST_F(MainContainingViewControllerTest, ActiveVC) {
+  MainContainingViewController* main_view_controller =
+      [[MainContainingViewController alloc] init];
   UIViewController* child_view_controller_1 = [[UIViewController alloc] init];
   UIViewController* child_view_controller_2 = [[UIViewController alloc] init];
 
@@ -108,11 +106,9 @@ TEST_F(MainViewControllerTest, ActiveVC) {
             [main_view_controller activeViewController]);
 }
 
-TEST_F(MainViewControllerTest, SetActiveVCWithContainment) {
-  base::test::ScopedFeatureList disable_feature;
-  disable_feature.InitAndDisableFeature(kTabSwitcherPresentsBVC);
-
-  MainViewController* main_view_controller = [[MainViewController alloc] init];
+TEST_F(MainContainingViewControllerTest, Setters) {
+  MainContainingViewController* main_view_controller =
+      [[MainContainingViewController alloc] init];
   CGRect windowRect = CGRectMake(0, 0, 200, 200);
   [main_view_controller view].frame = windowRect;
 
@@ -120,8 +116,7 @@ TEST_F(MainViewControllerTest, SetActiveVCWithContainment) {
       [[MockViewController alloc] init];
   [child_view_controller_1 view].frame = CGRectMake(0, 0, 10, 10);
 
-  [main_view_controller setActiveViewController:child_view_controller_1
-                                     completion:nil];
+  [main_view_controller showTabSwitcher:child_view_controller_1 completion:nil];
   EXPECT_EQ(child_view_controller_1,
             [[main_view_controller childViewControllers] firstObject]);
   EXPECT_EQ([child_view_controller_1 view],
@@ -138,8 +133,8 @@ TEST_F(MainViewControllerTest, SetActiveVCWithContainment) {
             [child_view_controller_1 willMoveToParentViewControllerArgument]);
 
   UIViewController* child_view_controller_2 = [[UIViewController alloc] init];
-  [main_view_controller setActiveViewController:child_view_controller_2
-                                     completion:nil];
+  [main_view_controller showBrowserViewController:child_view_controller_2
+                                       completion:nil];
   EXPECT_EQ(child_view_controller_2,
             [[main_view_controller childViewControllers] firstObject]);
   EXPECT_EQ(1U, [[main_view_controller childViewControllers] count]);
@@ -154,27 +149,23 @@ TEST_F(MainViewControllerTest, SetActiveVCWithContainment) {
             [child_view_controller_1 didMoveToParentViewControllerArgument]);
 }
 
-TEST_F(MainViewControllerTest, StatusBar) {
-  base::test::ScopedFeatureList disable_feature;
-  disable_feature.InitAndDisableFeature(kTabSwitcherPresentsBVC);
-
-  MainViewController* main_view_controller = [[MainViewController alloc] init];
+TEST_F(MainContainingViewControllerTest, StatusBar) {
+  MainContainingViewController* main_view_controller =
+      [[MainContainingViewController alloc] init];
   SetRootViewController(main_view_controller);
 
   UIViewController* status_bar_visible_view_controller =
       [[UIViewController alloc] init];
-  [main_view_controller
-      setActiveViewController:status_bar_visible_view_controller
-                   completion:nil];
+  [main_view_controller showTabSwitcher:status_bar_visible_view_controller
+                             completion:nil];
   // Check if the status bar is hidden by testing if the status bar rect is
   // CGRectZero.
   EXPECT_FALSE(CGRectEqualToRect(
       [UIApplication sharedApplication].statusBarFrame, CGRectZero));
   HiddenStatusBarViewController* status_bar_hidden_view_controller =
       [[HiddenStatusBarViewController alloc] init];
-  [main_view_controller
-      setActiveViewController:status_bar_hidden_view_controller
-                   completion:nil];
+  [main_view_controller showTabSwitcher:status_bar_hidden_view_controller
+                             completion:nil];
   EXPECT_EQ([main_view_controller childViewControllerForStatusBarHidden],
             status_bar_hidden_view_controller);
   EXPECT_TRUE(CGRectEqualToRect(
@@ -182,12 +173,10 @@ TEST_F(MainViewControllerTest, StatusBar) {
 }
 
 // Tests that completion handlers are called properly after the new view
-// controller is made active, when using containment
-TEST_F(MainViewControllerTest, CompletionHandlersWithContainment) {
-  base::test::ScopedFeatureList disable_feature;
-  disable_feature.InitAndDisableFeature(kTabSwitcherPresentsBVC);
-
-  MainViewController* main_view_controller = [[MainViewController alloc] init];
+// controller is made active
+TEST_F(MainContainingViewControllerTest, CompletionHandlers) {
+  MainContainingViewController* main_view_controller =
+      [[MainContainingViewController alloc] init];
   CGRect windowRect = CGRectMake(0, 0, 200, 200);
   [main_view_controller view].frame = windowRect;
 
@@ -200,10 +189,10 @@ TEST_F(MainViewControllerTest, CompletionHandlersWithContainment) {
   // Tests that the completion handler is called when there is no preexisting
   // active view controller.
   __block BOOL completion_handler_was_called = false;
-  [main_view_controller setActiveViewController:child_view_controller_1
-                                     completion:^{
-                                       completion_handler_was_called = YES;
-                                     }];
+  [main_view_controller showTabSwitcher:child_view_controller_1
+                             completion:^{
+                               completion_handler_was_called = YES;
+                             }];
   base::test::ios::WaitUntilCondition(^bool() {
     return completion_handler_was_called;
   });
@@ -212,62 +201,14 @@ TEST_F(MainViewControllerTest, CompletionHandlersWithContainment) {
   // Tests that the completion handler is called when replacing an existing
   // active view controller.
   completion_handler_was_called = NO;
-  [main_view_controller setActiveViewController:child_view_controller_2
-                                     completion:^{
-                                       completion_handler_was_called = YES;
-                                     }];
+  [main_view_controller showTabSwitcher:child_view_controller_2
+                             completion:^{
+                               completion_handler_was_called = YES;
+                             }];
   base::test::ios::WaitUntilCondition(^bool() {
     return completion_handler_was_called;
   });
   ASSERT_TRUE(completion_handler_was_called);
-}
-
-// Tests that setting the active view controller work and that completion
-// handlers are called properly after the new view controller is made active,
-// when using presentation.
-TEST_F(MainViewControllerTest,
-       SetActiveVCAndCompletionHandlersWithPresentation) {
-  base::test::ScopedFeatureList enable_feature;
-  enable_feature.InitAndEnableFeature(kTabSwitcherPresentsBVC);
-
-  MainViewController* main_view_controller = [[MainViewController alloc] init];
-  SetRootViewController(main_view_controller);
-  CGRect windowRect = CGRectMake(0, 0, 200, 200);
-  [main_view_controller view].frame = windowRect;
-
-  UIViewController* child_view_controller_1 = [[UIViewController alloc] init];
-  [child_view_controller_1 view].frame = CGRectMake(0, 0, 10, 10);
-
-  UIViewController* child_view_controller_2 = [[UIViewController alloc] init];
-  [child_view_controller_2 view].frame = CGRectMake(20, 20, 10, 10);
-
-  // Tests that the completion handler is called when there is no preexisting
-  // active view controller.
-  __block BOOL completion_handler_was_called = false;
-  [main_view_controller setActiveViewController:child_view_controller_1
-                                     completion:^{
-                                       completion_handler_was_called = YES;
-                                     }];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return completion_handler_was_called;
-  });
-  ASSERT_TRUE(completion_handler_was_called);
-  EXPECT_EQ(main_view_controller.presentedViewController,
-            child_view_controller_1);
-
-  // Tests that the completion handler is called when replacing an existing
-  // active view controller.
-  completion_handler_was_called = NO;
-  [main_view_controller setActiveViewController:child_view_controller_2
-                                     completion:^{
-                                       completion_handler_was_called = YES;
-                                     }];
-  base::test::ios::WaitUntilCondition(^bool() {
-    return completion_handler_was_called;
-  });
-  ASSERT_TRUE(completion_handler_was_called);
-  EXPECT_EQ(main_view_controller.presentedViewController,
-            child_view_controller_2);
 }
 
 }  // namespace

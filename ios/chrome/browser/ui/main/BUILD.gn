@@ -8,10 +8,12 @@ source_set("main") {
     "browser_view_information.h",
     "browser_view_wrangler.h",
     "browser_view_wrangler.mm",
+    "main_containing_view_controller.h",
+    "main_containing_view_controller.mm",
     "main_coordinator.h",
     "main_coordinator.mm",
-    "main_view_controller.h",
-    "main_view_controller.mm",
+    "main_presenting_view_controller.h",
+    "main_presenting_view_controller.mm",
   ]
   deps = [
     ":feature_flags",
@@ -51,11 +53,11 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "browser_view_wrangler_unittest.mm",
+    "main_containing_view_controller_unittest.mm",
     "main_coordinator_unittest.mm",
-    "main_view_controller_unittest.mm",
+    "main_presenting_view_controller_unittest.mm",
   ]
   deps = [
-    ":feature_flags",
     ":main",
     "//base",
     "//base/test:test_support",
