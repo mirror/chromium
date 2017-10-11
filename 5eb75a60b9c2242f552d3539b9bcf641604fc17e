@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4eb92b_b6c4ba2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-11T15:42:34Z",
+      "side": 1,
+      "message": "This does not do the same checks as above (empty package name), any specific reason?\nAlso, could we use the same code in both places?",
+      "revId": "5eb75a60b9c2242f552d3539b9bcf641604fc17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e466293_a1e99dfa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-11T15:42:34Z",
+      "side": 1,
+      "message": "nit: one line?",
+      "revId": "5eb75a60b9c2242f552d3539b9bcf641604fc17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
