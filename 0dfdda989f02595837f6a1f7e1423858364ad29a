@@ -16,6 +16,24 @@
       "revId": "0dfdda989f02595837f6a1f7e1423858364ad29a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fe53ca_06529014",
+        "filename": "chrome/test/data/instant_extended.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T09:21:35Z",
+      "side": 1,
+      "message": "Because window.navigator doesn\u0027t work, before or after this CL. These APIs are exported at window.chrome.\nBefore, there was a fallback to window.chrome as well, and that\u0027s the path that was always taken.\n\nNote that there\u0027s a second change here, namely switching from \"chrome.searchBox\" to \"chrome.embeddedSearch.searchBox\". \"chrome.searchBox\" was an old alias to the embeddedSearch version, and there\u0027s been a TODO to remove it in searchbox_api.js since at least 2013. As far as I can tell, the alias hasn\u0027t been used in a long time, so I figured there was no point reimplementing it in Gin.",
+      "parentUuid": "4b964121_b8d557db",
+      "revId": "0dfdda989f02595837f6a1f7e1423858364ad29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
