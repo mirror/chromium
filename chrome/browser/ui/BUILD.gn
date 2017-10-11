@@ -1781,6 +1781,15 @@ split_static_library("ui") {
       "Quartz.framework",
     ]
 
+    sources += [
+      "cocoa/browser_dialogs_views_mac.cc",
+      "cocoa/browser_dialogs_views_mac.h",
+      "cocoa/task_manager_mac.h",
+      "cocoa/task_manager_mac.mm",
+      "cocoa/window_size_autosaver.h",
+      "cocoa/window_size_autosaver.mm",
+    ]
+
     if (mac_views_browser) {
       # MacViews sources that we still want to keep behind a compile-time flag.
       # TODO(jackhou): Move items to general views sources out of here.
@@ -1904,8 +1913,6 @@ split_static_library("ui") {
         "cocoa/browser/exclusive_access_controller_views.mm",
         "cocoa/browser/zoom_bubble_controller.h",
         "cocoa/browser/zoom_bubble_controller.mm",
-        "cocoa/browser_dialogs_views_mac.cc",
-        "cocoa/browser_dialogs_views_mac.h",
         "cocoa/browser_window_cocoa.h",
         "cocoa/browser_window_cocoa.mm",
         "cocoa/browser_window_controller.h",
@@ -2339,8 +2346,6 @@ split_static_library("ui") {
         "cocoa/tabs/tab_view.mm",
         "cocoa/tabs/tab_window_controller.h",
         "cocoa/tabs/tab_window_controller.mm",
-        "cocoa/task_manager_mac.h",
-        "cocoa/task_manager_mac.mm",
         "cocoa/themed_window.h",
         "cocoa/themed_window.mm",
         "cocoa/toolbar/app_toolbar_button.h",
@@ -2377,8 +2382,6 @@ split_static_library("ui") {
         "cocoa/web_contents_modal_dialog_manager_views_mac.mm",
         "cocoa/web_textfield_touch_bar_controller.h",
         "cocoa/web_textfield_touch_bar_controller.mm",
-        "cocoa/window_size_autosaver.h",
-        "cocoa/window_size_autosaver.mm",
 
         # TODO(estade): this class should be deleted in favor of a combobox model.
         # See crbug.com/590850
