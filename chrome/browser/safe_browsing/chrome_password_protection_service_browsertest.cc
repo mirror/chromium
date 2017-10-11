@@ -260,7 +260,7 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
-                       VeriryUnhandledPasswordReuse) {
+                       VerifyUnhandledPasswordReuse) {
   histograms_.ExpectTotalCount(kGaiaPasswordChangeHistogramName, 0);
   ChromePasswordProtectionService* service = GetService(/*is_incognito=*/false);
   ASSERT_TRUE(service);
