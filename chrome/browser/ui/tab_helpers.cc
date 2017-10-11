@@ -19,6 +19,7 @@
 #include "chrome/browser/content_settings/sound_content_setting_observer.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
+#include "chrome/browser/download/navigation_monitor_factory.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/external_protocol/external_protocol_observer.h"
@@ -73,7 +74,6 @@
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/dom_distiller/content/browser/web_contents_main_frame_observer.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
-#include "components/download/content/factory/navigation_monitor_factory.h"
 #include "components/download/content/public/download_navigation_observer.h"
 #include "components/history/content/browser/web_contents_top_sites_observer.h"
 #include "components/history/core/browser/top_sites.h"
@@ -208,8 +208,7 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   download::DownloadNavigationObserver::CreateForWebContents(
-      web_contents,
-      download::NavigationMonitorFactory::GetForBrowserContext(profile));
+      web_contents, NavigationMonitorFactory::GetForBrowserContext(profile));
   history::WebContentsTopSitesObserver::CreateForWebContents(
       web_contents, TopSitesFactory::GetForProfile(profile).get());
   HistoryTabHelper::CreateForWebContents(web_contents);

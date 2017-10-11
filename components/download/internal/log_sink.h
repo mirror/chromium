@@ -5,9 +5,6 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_LOG_SINK_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_LOG_SINK_H_
 
-#include "components/download/internal/controller.h"
-#include "components/download/internal/startup_status.h"
-
 namespace download {
 
 // A destination for all interesting events from internal components.
