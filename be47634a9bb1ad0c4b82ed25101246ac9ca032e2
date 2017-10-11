@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "02ca9481_ac705766",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-11T14:50:39Z",
+      "side": 1,
+      "message": "I think that\u0027s true for bots, but if you build a release build locally - it won\u0027t have dchecks enabled unless you explicitly enable them - and you can certainly run unit tests under that mode.",
+      "parentUuid": "2e7d9cd7_716009d5",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "708f1c22_4a3bea61",
         "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
         "patchSetId": 3
