@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc329389_e35fc824",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29379,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-11T14:45:37Z",
+      "side": 1,
+      "message": "I left this unobsoleted because...",
+      "range": {
+        "startLine": 29379,
+        "startChar": 4,
+        "endLine": 29379,
+        "endChar": 72
+      },
+      "revId": "67f3482c146c225823064fe52ca40639a9023fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b20f7763_481056bd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97793,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-11T14:45:37Z",
+      "side": 1,
+      "message": "... it\u0027s used in this suffix set ...",
+      "range": {
+        "startLine": 97789,
+        "startChar": 0,
+        "endLine": 97793,
+        "endChar": 21
+      },
+      "revId": "67f3482c146c225823064fe52ca40639a9023fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62a7cd3f_42077868",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97808,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-11T14:45:37Z",
+      "side": 1,
+      "message": "... and this suffix set.",
+      "range": {
+        "startLine": 97804,
+        "startChar": 0,
+        "endLine": 97808,
+        "endChar": 21
+      },
+      "revId": "67f3482c146c225823064fe52ca40639a9023fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
