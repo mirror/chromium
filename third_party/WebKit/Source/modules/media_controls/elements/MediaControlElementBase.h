@@ -15,6 +15,7 @@
 namespace blink {
 
 class Element;
+class HTMLDivElement;
 class HTMLElement;
 class HTMLMediaElement;
 class MediaControlsImpl;
@@ -67,6 +68,9 @@ class MODULES_EXPORT MediaControlElementBase : public GarbageCollectedMixin {
   HTMLMediaElement& MediaElement() const;
 
   void SetDisplayType(MediaControlElementType);
+
+  // Utility function for quickly creating div elements.
+  HTMLDivElement* CreateDiv(const AtomicString& id, ContainerNode* parent);
 
  private:
   Member<MediaControlsImpl> media_controls_;
