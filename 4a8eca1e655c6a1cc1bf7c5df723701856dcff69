@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "60f6a548_bd464ee6",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-11T15:12:39Z",
+      "side": 1,
+      "message": "Do you want me to change it to use \"create a new hashmap and swap\" approach in this patch?",
+      "parentUuid": "3dd716f6_97d65376",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e3c4da5_ce0b2b16",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 20
