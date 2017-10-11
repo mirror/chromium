@@ -334,6 +334,13 @@ const base::Feature kMediaFoundationH264Encoding{
     "MediaFoundationH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN)
 
+#if defined(OS_MACOSX)
+// Enables a workaround for a CoreAudio issue. The workaround ensures that
+// CoreAudio's pause and resume operations are serialized.
+const base::Feature kSerializeCoreAudioPauseResume{
+    "SerializeCoreAudioPauseResume", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_MACOSX)
+
 std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
   // |kIgnoreAutoplayRestrictionsForTests| overrides all other settings.
   if (command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
