@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60e6c82a_b78d2b61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8377a34_d01ec9c1",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 9
+      },
+      "revId": "f24d0fde031efc2f8fc20d0e3e607768d35f49be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d67ebf4e_0dfd3ae5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "f24d0fde031efc2f8fc20d0e3e607768d35f49be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1338f6f3_a129790c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T08:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d67ebf4e_0dfd3ae5",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 13
+      },
+      "revId": "f24d0fde031efc2f8fc20d0e3e607768d35f49be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
