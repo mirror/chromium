@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c333f27c_da115fc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T22:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68923d40_ca379303",
+      "revId": "8b21e0d56dbd7c15f745061fe9f09ab178624bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0581189c_ebc29b95",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T22:12:59Z",
       "side": 1,
       "message": "Presumably because this is a standardized header now? And we\u0027re sure no one is depending on the older header?",
+      "revId": "8b21e0d56dbd7c15f745061fe9f09ab178624bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829d8353_96377353",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T22:41:44Z",
+      "side": 1,
+      "message": "We publish a doc to describe what we introduce for Chrome since there is not any MHTML standardization effort. The reason for dropping X- prefix is that the prefix is discouraged per https://tools.ietf.org/html/rfc6648.",
+      "parentUuid": "0581189c_ebc29b95",
       "revId": "8b21e0d56dbd7c15f745061fe9f09ab178624bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
