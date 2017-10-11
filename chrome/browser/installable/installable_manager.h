@@ -13,6 +13,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/installable/bucket.h"
 #include "chrome/browser/installable/installable_data.h"
 #include "chrome/browser/installable/installable_logging.h"
 #include "chrome/browser/installable/installable_metrics.h"
@@ -195,8 +196,17 @@ class InstallableManager
   const content::Manifest& manifest() const;
   bool is_installable() const;
 
+  // Initialize metrics to their initial state.
+  void InitMetrics();
+
   InstallableTaskQueue task_queue_;
-  std::unique_ptr<InstallableMetrics> metrics_;
+
+  // Contains a set of UMA histogram buckets which reflect the current state of
+  // the InstallableManager.
+  installable::BucketSet metrics_;
+
+  // Manages the lifetime of UMA histogram buckets.
+  installable::BucketManager buckets_;
 
   // Installable properties cached on this object.
   std::unique_ptr<ManifestProperty> manifest_;

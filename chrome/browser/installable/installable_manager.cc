@@ -4,6 +4,8 @@
 
 #include "chrome/browser/installable/installable_manager.h"
 
+#include <string>
+
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/stl_util.h"
@@ -117,7 +119,6 @@ InstallableManager::IconProperty& InstallableManager::IconProperty::operator=(
 
 InstallableManager::InstallableManager(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
-      metrics_(base::MakeUnique<InstallableMetrics>()),
       manifest_(base::MakeUnique<ManifestProperty>()),
       valid_manifest_(base::MakeUnique<ValidManifestProperty>()),
       worker_(base::MakeUnique<ServiceWorkerProperty>()),
@@ -135,6 +136,52 @@ InstallableManager::InstallableManager(content::WebContents* web_contents)
     service_worker_context_ = storage_partition->GetServiceWorkerContext();
     service_worker_context_->AddObserver(this);
   }
+
+  InitMetrics();
+}
+
+void InstallableManager::InitMetrics() {
+  std::unique_ptr<installable::Bucket> menu_open(
+      installable::MenuOpenBucket(InstallabilityCheckStatus::NOT_STARTED));
+
+  std::unique_ptr<installable::Bucket> menu_item_a2hs(
+      installable::MenuItemAddToHomescreenBucket(
+          InstallabilityCheckStatus::NOT_STARTED));
+
+  // If "no timeout" is recorded before we resolve whether or not this is a
+  // PWA, then we must have failed the installability check early.
+  std::unique_ptr<installable::Bucket> a2hs_no_timeout(
+      installable::AddToHomescreenTimeoutBucket(
+          AddToHomescreenTimeoutStatus::NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP));
+
+  std::unique_ptr<installable::ResolvableBucket> a2hs_manifest_and_icon_timeout(
+      installable::AddToHomescreenTimeoutBucket(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP,
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP,
+          AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN));
+
+  std::unique_ptr<installable::ResolvableBucket> a2hs_installability_timeout(
+      installable::AddToHomescreenTimeoutBucket(
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP,
+          AddToHomescreenTimeoutStatus::
+              TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP,
+          AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN));
+
+  metrics_.menu_open_ = menu_open.get();
+  metrics_.menu_item_a2hs_ = menu_item_a2hs.get();
+  metrics_.a2hs_no_timeout_ = a2hs_no_timeout.get();
+  metrics_.a2hs_manifest_and_icon_timeout_ =
+      a2hs_manifest_and_icon_timeout.get();
+  metrics_.a2hs_installability_timeout_ = a2hs_installability_timeout.get();
+
+  buckets_.Add(std::move(menu_open));
+  buckets_.Add(std::move(menu_item_a2hs));
+  buckets_.Add(std::move(a2hs_no_timeout));
+  buckets_.AddResolvable(std::move(a2hs_manifest_and_icon_timeout));
+  buckets_.AddResolvable(std::move(a2hs_installability_timeout));
 }
 
 InstallableManager::~InstallableManager() {
@@ -179,24 +226,44 @@ void InstallableManager::GetData(const InstallableParams& params,
   if (was_active)
     return;
 
-  metrics_->Start();
+  // Update the histogram buckets that will be incremented.
+  // The choice of buckets for menu_open and menu_item_a2hs are one of the
+  // "IN_PROGRESS", statuses, but which one depends on whether we ultimately
+  // decide that we are dealing with a PWA or not.
+  std::unique_ptr<installable::ResolvableBucket> menu_open(
+      installable::MenuOpenBucket(
+          InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP,
+          InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP,
+          InstallabilityCheckStatus::IN_PROGRESS_UNKNOWN));
+
+  std::unique_ptr<installable::ResolvableBucket> menu_item_a2hs(
+      installable::MenuItemAddToHomescreenBucket(
+          InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP,
+          InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP,
+          InstallabilityCheckStatus::IN_PROGRESS_UNKNOWN));
+
+  metrics_.menu_open_ = menu_open.get();
+  metrics_.menu_item_a2hs_ = menu_item_a2hs.get();
+  buckets_.AddResolvable(std::move(menu_open));
+  buckets_.AddResolvable(std::move(menu_item_a2hs));
+
   WorkOnTask();
 }
 
 void InstallableManager::RecordMenuOpenHistogram() {
-  metrics_->RecordMenuOpen();
+  metrics_.RecordMenuOpen();
 }
 
 void InstallableManager::RecordMenuItemAddToHomescreenHistogram() {
-  metrics_->RecordMenuItemAddToHomescreen();
+  metrics_.RecordMenuItemAddToHomescreen();
 }
 
 void InstallableManager::RecordAddToHomescreenNoTimeout() {
-  metrics_->RecordAddToHomescreenNoTimeout();
+  metrics_.RecordAddToHomescreenNoTimeout();
 }
 
 void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
-  metrics_->RecordAddToHomescreenManifestAndIconTimeout();
+  metrics_.RecordAddToHomescreenManifestAndIconTimeout();
 
   // If needed, explicitly trigger GetData() with a no-op callback to complete
   // the installability check. This is so we can accurately record whether or
@@ -210,7 +277,7 @@ void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
 }
 
 void InstallableManager::RecordAddToHomescreenInstallabilityTimeout() {
-  metrics_->RecordAddToHomescreenInstallabilityTimeout();
+  metrics_.RecordAddToHomescreenInstallabilityTimeout();
 }
 
 bool InstallableManager::IsIconFetched(const IconPurpose purpose) const {
@@ -311,7 +378,37 @@ void InstallableManager::ResolveMetrics(const InstallableParams& params,
   if (check_passed && !IsParamsForPwaCheck(params))
     return;
 
-  metrics_->Resolve(check_passed);
+  // Resolve pending metric counts now that we know whether we are dealing with
+  // a PWA or not.
+  buckets_.Resolve(check_passed ? installable::PWA : installable::NON_PWA);
+
+  // Update metrics to use different buckets, now that the PWA check is
+  // complete.
+  std::unique_ptr<installable::Bucket> menu_open(installable::MenuOpenBucket(
+      check_passed
+          ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
+          : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP));
+
+  std::unique_ptr<installable::Bucket> menu_item_a2hs(
+      installable::MenuItemAddToHomescreenBucket(
+          check_passed
+              ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
+              : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP));
+
+  std::unique_ptr<installable::Bucket> a2hs_no_timeout(
+      installable::AddToHomescreenTimeoutBucket(
+          check_passed
+              ? AddToHomescreenTimeoutStatus::NO_TIMEOUT_PROGRESSIVE_WEB_APP
+              : AddToHomescreenTimeoutStatus::
+                    NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP));
+
+  metrics_.menu_open_ = menu_open.get();
+  metrics_.menu_item_a2hs_ = menu_item_a2hs.get();
+  metrics_.a2hs_no_timeout_ = a2hs_no_timeout.get();
+
+  buckets_.Add(std::move(menu_open));
+  buckets_.Add(std::move(menu_item_a2hs));
+  buckets_.Add(std::move(a2hs_no_timeout));
 }
 
 void InstallableManager::Reset() {
@@ -319,12 +416,16 @@ void InstallableManager::Reset() {
   weak_factory_.InvalidateWeakPtrs();
   icons_.clear();
 
-  // If we have paused tasks, we are waiting for a service worker.
-  metrics_->Flush(task_queue_.HasPaused());
+  // If we have paused tasks, we are waiting for a service worker. We treat this
+  // case as a non-pwa.
+  buckets_.Resolve(task_queue_.HasPaused() ? installable::NON_PWA
+                                           : installable::UNKNOWN);
+  buckets_.Reset();
+
   task_queue_.Reset();
   has_pwa_check_ = false;
 
-  metrics_ = base::MakeUnique<InstallableMetrics>();
+  InitMetrics();
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
   worker_ = base::MakeUnique<ServiceWorkerProperty>();
