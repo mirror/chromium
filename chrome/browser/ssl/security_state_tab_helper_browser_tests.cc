@@ -93,6 +93,47 @@ void InjectScript(content::WebContents* contents) {
   }
 }
 
+// Get the Insecure Input Events from the entry's SSLStatus user data.
+security_state::InsecureInputEventData GetInputEvents(
+    content::NavigationEntry* entry) {
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          entry->GetSSL().user_data.get());
+  if (input_events)
+    return *input_events->input_events();
+
+  return security_state::InsecureInputEventData();
+}
+
+void SetInputEvents(content::NavigationEntry* entry,
+                    security_state::InsecureInputEventData events) {
+  security_state::SSLStatus& ssl = entry->GetSSL();
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          ssl.user_data.get());
+  if (!input_events)
+    ssl.user_data =
+        base::MakeUnique<security_state::SSLStatusInputEventData>(events);
+  else
+    *input_events->input_events() = events;
+}
+
+void SimulateCreditCardFieldEdit(content::WebContents* contents) {
+  content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  input_events.credit_card_field_edited = true;
+  SetInputEvents(entry, input_events);
+  contents->DidChangeVisibleSecurityState();
+}
+
+void SimulatePasswordFieldShown(content::WebContents* contents) {
+  content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  input_events.password_field_shown = true;
+  SetInputEvents(entry, input_events);
+  contents->DidChangeVisibleSecurityState();
+}
+
 // A WebContentsObserver useful for testing the DidChangeVisibleSecurityState()
 // method: it keeps track of the latest security style and explanation that was
 // fired.
@@ -385,15 +426,14 @@ class SecurityStateTabHelperTest : public CertVerifierBrowserTest {
         contents->GetController().GetVisibleEntry();
     ASSERT_TRUE(entry);
 
+    security_state::InsecureInputEventData input_events = GetInputEvents(entry);
     if (expect_warning) {
       EXPECT_EQ(security_state::HTTP_SHOW_WARNING,
                 security_info.security_level);
-      EXPECT_TRUE(entry->GetSSL().content_status &
-                  content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+      EXPECT_TRUE(input_events.password_field_shown);
     } else {
       EXPECT_EQ(security_state::NONE, security_info.security_level);
-      EXPECT_FALSE(entry->GetSSL().content_status &
-                   content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+      EXPECT_FALSE(input_events.password_field_shown);
     }
   }
 
@@ -1174,8 +1214,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(entry->GetSSL().content_status &
-              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_TRUE(input_events.password_field_shown);
 
   {
     // Ensure the warning is still present when HTTPBad Phase 2 flag is enabled.
@@ -1280,8 +1320,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_FALSE(entry->GetSSL().content_status &
-               content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_FALSE(input_events.password_field_shown);
 }
 
 // Tests that when a visible password field is detected inside an iframe on an
@@ -1307,8 +1347,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(entry->GetSSL().content_status &
-              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_TRUE(input_events.password_field_shown);
 }
 
 // Tests that when a visible password field is detected inside an iframe on an
@@ -1341,8 +1381,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_TRUE(entry->GetSSL().content_status &
-              content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_TRUE(input_events.password_field_shown);
 }
 
 // Tests that when a visible password field is detected on an HTTPS page load,
@@ -1372,8 +1412,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // which it was not in this case.
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  EXPECT_FALSE(entry->GetSSL().content_status &
-               content::SSLStatus::DISPLAYED_PASSWORD_FIELD_ON_HTTP);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_FALSE(input_events.password_field_shown);
 }
 
 // Tests that the security level of a HTTP page is downgraded to
@@ -1429,11 +1469,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
-  security_state::SSLStatusInputEventData* input_events =
-      static_cast<security_state::SSLStatusInputEventData*>(
-          entry->GetSSL().user_data.get());
-  ASSERT_TRUE(input_events);
-  EXPECT_TRUE(input_events->input_events()->insecure_field_edited);
+  security_state::InsecureInputEventData input_events = GetInputEvents(entry);
+  EXPECT_TRUE(input_events.insecure_field_edited);
 
   {
     // Ensure the warning is still present when in the
@@ -1565,7 +1602,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1583,7 +1620,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
   // Two subsequent triggers of VisibleSecurityStateChanged -- one on the
   // same navigation and one on another navigation -- should only result
   // in one additional console message.
-  contents->OnCreditCardInputShownOnHttp();
+  SimulateCreditCardFieldEdit(contents);
   GURL second_http_url =
       GetURLWithNonLocalHostname(embedded_test_server(), "/title2.html");
   ui_test_utils::NavigateToURL(delegate, second_http_url);
@@ -1593,7 +1630,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest, ConsoleMessage) {
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
@@ -1633,7 +1670,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1660,7 +1697,8 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   EXPECT_TRUE(content::ExecuteScript(
       contents, "document.getElementById('navFrame').src = '/title2.html';"));
   subframe_observer.Wait();
-  contents->OnCreditCardInputShownOnHttp();
+
+  SimulateCreditCardFieldEdit(contents);
   helper->GetSecurityInfo(&security_info);
   EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
 
@@ -1676,7 +1714,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
@@ -1715,7 +1753,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // Trigger the HTTP_SHOW_WARNING state.
   base::RunLoop first_message;
   delegate->set_console_message_callback(first_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   first_message.Run();
 
   // Check that the HTTP_SHOW_WARNING state was actually triggered.
@@ -1737,7 +1775,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
   // navigation.
   EXPECT_TRUE(content::ExecuteScript(
       contents, "history.pushState({ foo: 'bar' }, 'foo', 'bar');"));
-  contents->OnCreditCardInputShownOnHttp();
+  SimulateCreditCardFieldEdit(contents);
   helper->GetSecurityInfo(&security_info);
   EXPECT_EQ(security_state::HTTP_SHOW_WARNING, security_info.security_level);
 
@@ -1753,7 +1791,7 @@ IN_PROC_BROWSER_TEST_F(SecurityStateTabHelperTest,
 
   base::RunLoop second_message;
   delegate->set_console_message_callback(second_message.QuitClosure());
-  contents->OnPasswordInputShownOnHttp();
+  SimulatePasswordFieldShown(contents);
   second_message.Run();
 
   helper->GetSecurityInfo(&security_info);
