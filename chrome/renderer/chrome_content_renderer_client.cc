@@ -708,6 +708,37 @@ bool ChromeContentRendererClient::OverrideCreatePlugin(
   return true;
 }
 
+bool ChromeContentRendererClient::CreatePluginController(
+    const blink::WebElement& plugin_element,
+    const GURL& completed_url,
+    const std::string& mime_type) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetInstance()->CreatePluginController(
+      plugin_element, completed_url, mime_type);
+#else
+  return false;
+#endif
+}
+
+void ChromeContentRendererClient::DidReceiveDataInPluginDocument(
+    const blink::WebElement& plugin_element,
+    const char* data,
+    size_t length) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  ChromeExtensionsRendererClient::GetInstance()->DidReceiveDataInPluginDocument(
+      plugin_element, data, length);
+#endif
+}
+
+v8::Local<v8::Object> ChromeContentRendererClient::CreateV8ScriptableObject(
+    const blink::WebElement& plugin_element,
+    v8::Isolate* isolate) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetInstance()
+      ->CreateV8ScriptableObject(plugin_element, isolate);
+#endif
+}
+
 WebPlugin* ChromeContentRendererClient::CreatePluginReplacement(
     content::RenderFrame* render_frame,
     const base::FilePath& plugin_path) {

@@ -181,6 +181,7 @@ class CORE_EXPORT HTMLPlugInElement
 
   bool RequestObjectInternal(const Vector<String>& param_names,
                              const Vector<String>& param_values);
+  bool TryUsingExternalHandler();
 
   v8::Global<v8::Object> plugin_wrapper_;
   bool needs_plugin_update_;

@@ -1,0 +1,24 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module extensions.mime_handler_view;
+
+interface MimeHandlerViewManager {
+  // Notifies the embedder process the extension document had loaded.
+  // |original_render_frame_routing_id| is the routing ID of the original plugin
+  // frame which was then navigated to the extension.
+  DocumentLoaded(int32 original_render_frame_routing_id);
+
+  // Called when a RenderFrameHost associated with the MimeHandlerView is
+  // removed. The parent process should then clear any related state.
+  FrameRemoved(int32 original_render_frame_routing_id);
+
+  // Notifies the manager that the stream is ready and the frame can proceed
+  // with navigation.
+  OnStreamReleased(int32 original_render_frame_routing_id);
+};
+
+interface MimeHandlerViewManagerHost {
+  ReleaseStream(int32 original_render_frame_routing_id, string view_id);
+};
