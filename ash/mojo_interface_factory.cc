@@ -13,6 +13,7 @@
 #include "ash/login/lock_screen_controller.h"
 #include "ash/media_controller.h"
 #include "ash/new_window_controller.h"
+#include "ash/note_taking_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
@@ -79,6 +80,11 @@ void BindNewWindowControllerRequestOnMainThread(
 void BindNightLightControllerRequestOnMainThread(
     mojom::NightLightControllerRequest request) {
   Shell::Get()->night_light_controller()->BindRequest(std::move(request));
+}
+
+void BindNoteTakingControllerRequestOnMainThread(
+    mojom::NoteTakingControllerRequest request) {
+  Shell::Get()->note_taking_controller()->BindRequest(std::move(request));
 }
 
 void BindSessionControllerRequestOnMainThread(
@@ -151,6 +157,9 @@ void RegisterInterfaces(
         base::Bind(&BindNightLightControllerRequestOnMainThread),
         main_thread_task_runner);
   }
+  registry->AddInterface(
+      base::Bind(&BindNoteTakingControllerRequestOnMainThread),
+      main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindSessionControllerRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindShelfRequestOnMainThread),

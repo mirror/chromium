@@ -51,6 +51,7 @@
 #include "ash/media_controller.h"
 #include "ash/message_center/message_center_controller.h"
 #include "ash/new_window_controller.h"
+#include "ash/note_taking_controller.h"
 #include "ash/palette_delegate.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
@@ -613,6 +614,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>(
           shell_delegate->GetShellConnector())),
+      note_taking_controller_(base::MakeUnique<NoteTakingController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
