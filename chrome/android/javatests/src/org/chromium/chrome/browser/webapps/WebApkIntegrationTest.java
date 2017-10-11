@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 
@@ -24,6 +25,8 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.DeferredStartupHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
+import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
+import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
@@ -56,6 +59,7 @@ public class WebApkIntegrationTest {
                 new Intent(InstrumentationRegistry.getTargetContext(), WebApkActivity.class);
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName);
         intent.putExtra(ShortcutHelper.EXTRA_URL, startUrl);
+        intent.putExtra(ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         WebApkActivity webApkActivity =
@@ -127,6 +131,15 @@ public class WebApkIntegrationTest {
                         && customTab.getActivityTab().getUrl().startsWith("https://www.google.");
             }
         });
+
+        CustomTabActivity customTab =
+                (CustomTabActivity) ApplicationStatus.getLastTrackedFocusedActivity();
+        Assert.assertEquals("CCT Toolbar should use the theme color of a webapp", Color.CYAN,
+                customTab.getToolbarManager().getPrimaryColor());
+        Assert.assertTrue(
+                "Sending to external handlers needs to be enabled for redirect back (e.g. OAuth).",
+                IntentUtils.safeGetBooleanExtra(customTab.getIntent(),
+                        CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, false));
     }
 
     /**
