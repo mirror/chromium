@@ -840,7 +840,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     OffsetIterator(const PaintOpBuffer* buffer,
                    const std::vector<size_t>* offsets)
         : buffer_(buffer), ptr_(buffer_->data_.get()), offsets_(offsets) {
-      if (offsets->empty()) {
+      if (!offsets || offsets->empty()) {
         *this = end();
         return;
       }
@@ -965,7 +965,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       return *this;
     }
 
-    operator bool() const { return top_level_iter_; }
+    operator bool() const { return !nested_iter_.empty() || top_level_iter_; }
 
    private:
     void FlattenCurrentOpIfNeeded();

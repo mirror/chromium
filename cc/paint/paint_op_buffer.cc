@@ -43,69 +43,51 @@ bool QuickRejectDraw(const PaintOp* op, const SkCanvas* canvas) {
   return canvas->quickReject(rect);
 }
 
-void RasterWithAlpha(const PaintOp* op,
+void RasterWithAlpha(const PaintOpWithFlags* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params,
-                     const SkRect& bounds,
                      uint8_t alpha) {
   DCHECK(op->IsDrawOp());
+  DCHECK(op->IsPaintOpWithFlags());
   DCHECK_NE(op->GetType(), PaintOpType::DrawRecord);
+  DCHECK_NE(alpha, 255u);
 
-  // TODO(enne): partially specialize RasterWithAlpha for draw color?
-  if (op->IsPaintOpWithFlags()) {
-    auto* flags_op = static_cast<const PaintOpWithFlags*>(op);
+  // This is an optimization to replicate the behaviour in SkCanvas
+  // which rejects ops that draw outside the current clip. In the
+  // general case we defer this to the SkCanvas but if we will be
+  // using an ImageProvider for pre-decoding images, we can save
+  // performing an expensive decode that will never be rasterized.
+  const bool skip_op = params.image_provider &&
+                       PaintOp::OpHasDiscardableImages(op) &&
+                       QuickRejectDraw(op, canvas);
+  if (skip_op)
+    return;
 
-    // Replace the PaintFlags with a copy that holds the decoded image from the
-    // ImageProvider if it consists of an image shader.
-    base::Optional<ScopedImageFlags> scoped_flags;
-    const PaintFlags* decoded_flags = &flags_op->flags;
-    if (params.image_provider && flags_op->HasDiscardableImagesFromFlags()) {
-      scoped_flags.emplace(params.image_provider, flags_op->flags,
-                           canvas->getTotalMatrix());
-      decoded_flags = scoped_flags.value().decoded_flags();
+  // Replace the PaintFlags with a copy that holds the decoded image from the
+  // ImageProvider if it consists of an image shader.
+  base::Optional<ScopedImageFlags> scoped_flags;
+  const PaintFlags* decoded_flags = &op->flags;
+  if (params.image_provider && op->HasDiscardableImagesFromFlags()) {
+    scoped_flags.emplace(params.image_provider, op->flags,
+                         canvas->getTotalMatrix());
+    decoded_flags = scoped_flags.value().decoded_flags();
 
-      // If we failed to decode the flags, skip the op.
-      if (!decoded_flags)
-        return;
-    }
+    // If we failed to decode the flags, skip the op.
+    if (!decoded_flags)
+      return;
+  }
+  DCHECK(decoded_flags->SupportsFoldingAlpha());
 
-    if (!decoded_flags->SupportsFoldingAlpha()) {
-      canvas->saveLayerAlpha(PaintOp::IsUnsetRect(bounds) ? nullptr : &bounds,
-                             alpha);
-      flags_op->RasterWithFlags(canvas, decoded_flags, params);
-      canvas->restore();
-    } else if (alpha == 255) {
-      flags_op->RasterWithFlags(canvas, decoded_flags, params);
-    } else {
-      if (scoped_flags.has_value()) {
-        // If we already made a copy, just use that to override the alpha
-        // instead of making another copy.
-        PaintFlags* decoded_flags = scoped_flags.value().decoded_flags();
-        decoded_flags->setAlpha(
-            SkMulDiv255Round(decoded_flags->getAlpha(), alpha));
-        flags_op->RasterWithFlags(canvas, decoded_flags, params);
-      } else {
-        PaintFlags alpha_flags = flags_op->flags;
-        alpha_flags.setAlpha(SkMulDiv255Round(alpha_flags.getAlpha(), alpha));
-        flags_op->RasterWithFlags(canvas, &alpha_flags, params);
-      }
-    }
-  } else if (op->GetType() == PaintOpType::DrawColor &&
-             static_cast<const DrawColorOp*>(op)->mode ==
-                 SkBlendMode::kSrcOver) {
-    auto* draw_color_op = static_cast<const DrawColorOp*>(op);
-
-    SkColor color = draw_color_op->color;
-    canvas->drawColor(
-        SkColorSetARGB(SkMulDiv255Round(alpha, SkColorGetA(color)),
-                       SkColorGetR(color), SkColorGetG(color),
-                       SkColorGetB(color)),
-        draw_color_op->mode);
+  if (scoped_flags.has_value()) {
+    // If we already made a copy, just use that to override the alpha
+    // instead of making another copy.
+    PaintFlags* decoded_flags = scoped_flags.value().decoded_flags();
+    decoded_flags->setAlpha(SkMulDiv255Round(decoded_flags->getAlpha(), alpha));
+    op->RasterWithFlags(canvas, decoded_flags, params);
   } else {
-    canvas->saveLayerAlpha(PaintOp::IsUnsetRect(bounds) ? nullptr : &bounds,
-                           alpha);
-    op->Raster(canvas, params);
-    canvas->restore();
+    PaintFlags alpha_flags = op->flags;
+    alpha_flags.setAlpha(SkMulDiv255Round(alpha_flags.getAlpha(), alpha));
+    op->RasterWithFlags(canvas, &alpha_flags, params);
   }
 }
 
@@ -1601,37 +1583,107 @@ void PaintOpBuffer::Reset() {
   has_discardable_images_ = false;
 }
 
-// When |op| is a nested PaintOpBuffer, this returns the PaintOp inside
-// that buffer if the buffer contains a single drawing op, otherwise it
-// returns null. This searches recursively if the PaintOpBuffer contains only
-// another PaintOpBuffer.
-static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
-  if (!op->IsDrawOp())
-    return nullptr;
-
-  while (op->GetType() == PaintOpType::DrawRecord) {
-    auto* draw_record_op = static_cast<const DrawRecordOp*>(op);
-    if (draw_record_op->record->size() > 1) {
-      // If there's more than one op, then we need to keep the
-      // SaveLayer.
-      return nullptr;
-    }
-
-    // Recurse into the single-op DrawRecordOp and make sure it's a
-    // drawing op.
-    op = draw_record_op->record->GetFirstOp();
-    if (!op->IsDrawOp())
-      return nullptr;
-  }
-
-  return op;
-}
-
 void PaintOpBuffer::Playback(SkCanvas* canvas,
                              ImageProvider* image_provider,
                              SkPicture::AbortCallback* callback) const {
   Playback(canvas, image_provider, callback, nullptr);
 }
+
+class PlaybackFoldingIterator {
+ public:
+  PlaybackFoldingIterator(const PaintOpBuffer* buffer,
+                          const std::vector<size_t>* offsets)
+      : iter_(buffer, offsets),
+        folded_draw_color_(SK_ColorTRANSPARENT, SkBlendMode::kSrcOver) {
+    // PaintOps don't set their type in their ctor.
+    folded_draw_color_.type = static_cast<uint8_t>(PaintOpType::DrawColor);
+    FindNextOp();
+  }
+
+  const PaintOp* operator->() const { return current_op_; }
+  const PaintOp* operator*() const { return current_op_; }
+
+  PlaybackFoldingIterator& operator++() {
+    FindNextOp();
+    return *this;
+  }
+
+  operator bool() const { return !!current_op_; }
+
+  // Guaranteed to be 255 for all ops without flags.
+  uint8_t alpha() const { return current_alpha_; }
+
+ private:
+  // Optimize out save/restores or save/draw/restore that can be a single
+  // draw.  See also: similar code in SkRecordOpts.
+  void FindNextOp() {
+    current_alpha_ = 255u;
+    while ((current_op_ = NextUnfoldedOp())) {
+      if (current_op_->GetType() != PaintOpType::SaveLayerAlpha)
+        break;
+      const PaintOp* second = NextUnfoldedOp();
+      const PaintOp* third = nullptr;
+      if (second) {
+        if (second->GetType() == PaintOpType::Restore) {
+          // Drop a SaveLayerAlpha/Restore combo.
+          continue;
+        }
+
+        third = NextUnfoldedOp();
+        if (third && third->GetType() == PaintOpType::Restore) {
+          auto* save_op = static_cast<const SaveLayerAlphaOp*>(current_op_);
+          if (second->IsPaintOpWithFlags()) {
+            auto* flags_op = static_cast<const PaintOpWithFlags*>(second);
+            if (flags_op->flags.SupportsFoldingAlpha()) {
+              current_alpha_ = save_op->alpha;
+              current_op_ = second;
+              break;
+            }
+          } else if (second->GetType() == PaintOpType::DrawColor &&
+                     static_cast<const DrawColorOp*>(second)->mode ==
+                         SkBlendMode::kSrcOver) {
+            auto* draw_color_op = static_cast<const DrawColorOp*>(second);
+            SkColor color = draw_color_op->color;
+            folded_draw_color_.color = SkColorSetARGB(
+                SkMulDiv255Round(save_op->alpha, SkColorGetA(color)),
+                SkColorGetR(color), SkColorGetG(color), SkColorGetB(color));
+            current_op_ = &folded_draw_color_;
+            break;
+          }
+        }
+
+        // If we get here, then we could not find a foldable sequence after
+        // this SaveLayerAlpha, so store any peeked at ops.
+        stack_->push_back(second);
+        if (third)
+          stack_->push_back(third);
+        break;
+      }
+    }
+  }
+
+  const PaintOp* NextUnfoldedOp() {
+    if (stack_->size()) {
+      const PaintOp* op = stack_->front();
+      // Shift paintops forward.
+      stack_->erase(stack_->begin());
+      return op;
+    }
+    if (!iter_)
+      return nullptr;
+    const PaintOp* op = *iter_;
+    ++iter_;
+    return op;
+  }
+
+  PaintOpBuffer::FlatteningIterator iter_;
+
+  // FIFO queue of paint ops that have been peeked at.
+  base::StackVector<const PaintOp*, 3> stack_;
+  DrawColorOp folded_draw_color_;
+  const PaintOp* current_op_ = nullptr;
+  uint8_t current_alpha_ = 255;
+};
 
 void PaintOpBuffer::Playback(SkCanvas* canvas,
                              ImageProvider* image_provider,
@@ -1651,83 +1703,19 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
   // the translation should be preserved instead of clobbering the top level
   // transform.  This could probably be done more efficiently.
   PlaybackParams params(image_provider, canvas->getTotalMatrix());
-
-  // FIFO queue of paint ops that have been peeked at.
-  base::StackVector<const PaintOp*, 3> stack;
-  CompositeIterator iter(this, offsets);
-  auto next_op = [&stack, &iter]() -> const PaintOp* {
-    if (stack->size()) {
-      const PaintOp* op = stack->front();
-      // Shift paintops forward.
-      stack->erase(stack->begin());
-      return op;
-    }
-    if (!iter)
-      return nullptr;
-    const PaintOp* op = *iter;
-    ++iter;
-    return op;
-  };
-
-  while (const PaintOp* op = next_op()) {
+  for (PlaybackFoldingIterator iter(this, offsets); iter; ++iter) {
     // Check if we should abort. This should happen at the start of loop since
     // there are a couple of raster branches below, and we need to ensure that
     // we do this check after every one of them.
     if (callback && callback->abort())
       return;
 
-    // Optimize out save/restores or save/draw/restore that can be a single
-    // draw.  See also: similar code in SkRecordOpts.
-    // TODO(enne): consider making this recursive?
-    // TODO(enne): should we avoid this if the SaveLayerAlphaOp has bounds?
-    if (op->GetType() == PaintOpType::SaveLayerAlpha) {
-      const PaintOp* second = next_op();
-      const PaintOp* third = nullptr;
-      if (second) {
-        if (second->GetType() == PaintOpType::Restore) {
-          continue;
-        }
-
-        // Find a nested drawing PaintOp to replace |second| if possible, while
-        // holding onto the pointer to |second| in case we can't find a nested
-        // drawing op to replace it with.
-        const PaintOp* draw_op = GetNestedSingleDrawingOp(second);
-
-        if (draw_op) {
-          // This is an optimization to replicate the behaviour in SkCanvas
-          // which rejects ops that draw outside the current clip. In the
-          // general case we defer this to the SkCanvas but if we will be
-          // using an ImageProvider for pre-decoding images, we can save
-          // performing an expensive decode that will never be rasterized.
-          const bool skip_op = params.image_provider &&
-                               PaintOp::OpHasDiscardableImages(draw_op) &&
-                               QuickRejectDraw(draw_op, canvas);
-          if (skip_op) {
-            // Now that we know this op will be skipped, we can push the save
-            // layer op back to the stack and continue iterating .
-            // In the case with the following list of ops:
-            // [SaveLayer, DrawImage, DrawRect, Restore], where draw_op is the
-            // DrawImage op, this starts the iteration again from SaveLayer and
-            // eliminates the DrawImage op.
-            DCHECK(stack->empty());
-            stack->push_back(op);
-            continue;
-          }
-
-          third = next_op();
-          if (third && third->GetType() == PaintOpType::Restore) {
-            auto* save_op = static_cast<const SaveLayerAlphaOp*>(op);
-            RasterWithAlpha(draw_op, canvas, params, save_op->bounds,
-                            save_op->alpha);
-            continue;
-          }
-        }
-
-        // Store deferred ops for later.
-        stack->push_back(second);
-        if (third)
-          stack->push_back(third);
-      }
+    const PaintOp* op = *iter;
+    if (iter.alpha() != 255) {
+      DCHECK(op->IsPaintOpWithFlags());
+      RasterWithAlpha(static_cast<const PaintOpWithFlags*>(op), canvas, params,
+                      iter.alpha());
+      continue;
     }
 
     if (params.image_provider && PaintOp::OpHasDiscardableImages(op)) {
@@ -1804,6 +1792,12 @@ PaintOpBuffer::FlatteningIterator::FlatteningIterator(
     const PaintOpBuffer* buffer,
     const std::vector<size_t>* offsets)
     : top_level_iter_(buffer, offsets) {
+  // If offsets aren't passed, then top_level_iter is empty
+  // and we'll treat the "top level" one as a nested iterator.
+  if (!offsets) {
+    DCHECK(!top_level_iter_);
+    nested_iter_.push_back(Iterator(buffer));
+  }
   FlattenCurrentOpIfNeeded();
 }
 
@@ -1818,6 +1812,9 @@ void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
     if (nested_iter_.empty() && !top_level_iter_)
       return;
 
+    // TODO(enne): flattening iterator needs to add restores
+    // TODO(enne): uh setMatrix fails related to flattened records
+
     // If the nested iterator is not valid, then we've reached the end of
     // whatever current iterator we're looping through.
     if (!nested_iter_.empty() && !nested_iter_.back()) {
@@ -1825,10 +1822,15 @@ void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
       // pointing at whatever DrawRecordOp created the iterator that was
       // just popped, so increment it to go to the next op.
       nested_iter_.pop_back();
-      if (nested_iter_.empty())
+      if (nested_iter_.empty()) {
+        // It's possible that the top level iter is invalid because no
+        // offsets were passed (see the ctor).  If so, we're done.
+        if (!top_level_iter_)
+          return;
         ++top_level_iter_;
-      else
+      } else {
         ++nested_iter_.back();
+      }
       continue;
     }
 

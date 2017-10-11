@@ -960,6 +960,11 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorEmptyList) {
   EXPECT_FALSE(iter);
 }
 
+TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorEmptyListNoOffsets) {
+  PaintOpBuffer::FlatteningIterator iter(&buffer_, nullptr);
+  EXPECT_FALSE(iter);
+}
+
 TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorNoRecords) {
   push_op<DrawColorOp>(0u, SkBlendMode::kClear);
   push_op<DrawColorOp>(1u, SkBlendMode::kClear);
@@ -972,6 +977,20 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorNoRecords) {
     size_t op_count = 0;
     std::vector<size_t> offsets = Select({0, 1, 2, 3, 4});
     for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
+         ++iter) {
+      PaintOp* base_op = *iter;
+      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
+      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+      EXPECT_EQ(op_count, op->color);
+      ++op_count;
+    }
+    EXPECT_EQ(5u, op_count);
+  }
+
+  // all ops, no offsets
+  {
+    size_t op_count = 0;
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, nullptr); iter;
          ++iter) {
       PaintOp* base_op = *iter;
       ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
@@ -2852,10 +2871,6 @@ TEST(PaintOpBufferTest, SkipsOpsOutsideClip) {
   buffer.push<ClipRectOp>(SkRect::MakeXYWH(0, 0, 100, 100),
                           SkClipOp::kIntersect, false);
 
-  SkRect rect = SkRect::MakeXYWH(0, 0, 100, 100);
-  uint8_t alpha = 220;
-  buffer.push<SaveLayerAlphaOp>(&rect, alpha, false);
-
   PaintFlags flags;
   PaintImage paint_image = CreateDiscardablePaintImage(gfx::Size(10, 10));
   buffer.push<DrawImageOp>(paint_image, 105.0f, 105.0f, &flags);
@@ -2865,12 +2880,11 @@ TEST(PaintOpBufferTest, SkipsOpsOutsideClip) {
                              SkShader::TileMode::kRepeat_TileMode, nullptr));
   buffer.push<DrawRectOp>(SkRect::MakeXYWH(110, 110, 100, 100), image_flags);
 
+  SkRect rect = SkRect::MakeXYWH(0, 0, 100, 100);
   buffer.push<DrawRectOp>(rect, PaintFlags());
-  buffer.push<RestoreOp>();
 
-  // Using a strict mock to ensure that skipping image ops optimizes the
-  // save/restore sequences. The single save/restore call is from the
-  // PaintOpBuffer's use of SkAutoRestoreCanvas.
+  // The single save/restore call is from the PaintOpBuffer's use of
+  // SkAutoRestoreCanvas.
   testing::StrictMock<MockCanvas> canvas;
   testing::Sequence s;
   EXPECT_CALL(canvas, willSave()).InSequence(s);
