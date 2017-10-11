@@ -68,6 +68,8 @@ SharedWorkerGlobalScope* SharedWorkerGlobalScope::Create(
   context->SetAddressSpace(creation_params->address_space);
   OriginTrialContext::AddTokens(context,
                                 creation_params->origin_trial_tokens.get());
+  context->BindInterfaceProvider(
+      std::move(creation_params->interface_provider));
   return context;
 }
 
