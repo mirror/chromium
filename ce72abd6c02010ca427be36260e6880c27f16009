@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147f7bf8_6125b310",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-11T19:01:28Z",
+      "side": 1,
+      "message": "I don\u0027t think so. GetViableReferenceFrameIndex returns either the index of a frame that can be depended on, or kNotFound. We only call Decode(some_prior_frame) if the return was kNotFound.",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa152806_ea97faf5",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-11T19:01:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this will ever be the case. (What happens if you change it to a DCHECK_NE?) Note that we only recurse if previous_frame_index is kNotFound. And DecodeFrameBufferAtIndex only calls this method if the status is not kFrameComplete.",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 54
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
