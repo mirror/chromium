@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "054f77c4_8d6cab51",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T14:36:32Z",
+      "side": 1,
+      "message": "Needs a comment since its a public API.",
+      "revId": "8d7315ff09ec82fddd8daefcd84e2fce3067b601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6070b68_ca7455be",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T14:36:32Z",
+      "side": 1,
+      "message": "This will also restrict the logging of the warning message. See https://chromium-review.googlesource.com/c/chromium/src/+/702776/12/components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc\nline 216 (SetOnCommitWarningMessages)",
+      "revId": "8d7315ff09ec82fddd8daefcd84e2fce3067b601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
