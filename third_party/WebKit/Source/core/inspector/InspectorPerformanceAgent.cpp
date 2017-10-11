@@ -22,8 +22,14 @@ namespace {
 
 static const char kPerformanceAgentEnabled[] = "PerformanceAgentEnabled";
 
+constexpr bool isPlural(const char* str) {
+  if (*str == 0)
+    return false;
+  return str[1] == 0 ? str[0] == 's' : isPlural(str + 1);
+}
+
 static const char* kInstanceCounterNames[] = {
-#define INSTANCE_COUNTER_NAME(name) #name "Count",
+#define INSTANCE_COUNTER_NAME(name) (isPlural(#name) ? #name : #name "s"),
     INSTANCE_COUNTERS_LIST(INSTANCE_COUNTER_NAME)
 #undef INSTANCE_COUNTER_NAME
 };
