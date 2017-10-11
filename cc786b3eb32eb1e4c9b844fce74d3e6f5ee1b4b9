@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b3427214_7431be1c",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T22:20:40Z",
+      "side": 1,
+      "message": "But then the coverage would not work even if user explicitly tries to enable it. I don\u0027t really want to touch the existing toolchains, this approach doesn\u0027t scale... I wonder if we can add a warning when both use_clang_coverage and is_component_build are true, saying like \"Hey, you won\u0027t get code coverage for dynamic libraries as you are using is_component_build\u003dtrue\".",
+      "parentUuid": "a5c761e8_820d7638",
+      "revId": "cc786b3eb32eb1e4c9b844fce74d3e6f5ee1b4b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7626e62f_9283b559",
         "filename": "testing/libfuzzer/coverage.py",
         "patchSetId": 2
