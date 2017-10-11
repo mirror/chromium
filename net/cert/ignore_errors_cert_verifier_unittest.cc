@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/browser/ignore_errors_cert_verifier.h"
+#include "net/cert/ignore_errors_cert_verifier.h"
 
 #include "base/base64.h"
 #include "base/files/file_path.h"
@@ -10,7 +10,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
-#include "content/public/common/content_switches.h"
 #include "crypto/sha2.h"
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
@@ -42,9 +41,7 @@ using net::OK;
 using net::test::IsError;
 using net::test::IsOk;
 
-namespace content {
-
-static const char kTestUserDataDirSwitch[] = "test-user-data-dir";
+namespace net {
 
 static std::vector<std::string> MakeWhitelist() {
   base::FilePath certs_dir = net::GetTestCertsDirectory();
@@ -154,52 +151,4 @@ TEST_F(IgnoreErrorsCertVerifierTest, TestMatch) {
               IsOk());
 }
 
-class IgnoreCertificateErrorsSPKIListFlagTest
-    : public ::testing::TestWithParam<bool> {
- public:
-  IgnoreCertificateErrorsSPKIListFlagTest() {
-    base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-    if (GetParam()) {
-      command_line.AppendSwitchASCII(kTestUserDataDirSwitch, "/foo/bar/baz");
-    }
-    command_line.AppendSwitchASCII(switches::kIgnoreCertificateErrorsSPKIList,
-                                   base::JoinString(MakeWhitelist(), ","));
-
-    auto mock_verifier = base::MakeUnique<MockCertVerifier>();
-    mock_verifier->set_default_result(ERR_CERT_INVALID);
-    verifier_ = IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-        command_line, kTestUserDataDirSwitch, std::move(mock_verifier));
-  }
-  ~IgnoreCertificateErrorsSPKIListFlagTest() override {}
-
- protected:
-  std::unique_ptr<CertVerifier> verifier_;
-};
-
-// Only if both --user-data-dir and --ignore-certificate-errors-from-spki-list
-// are present, certificate verification is bypassed.
-TEST_P(IgnoreCertificateErrorsSPKIListFlagTest, TestUserDataDirSwitchRequired) {
-  scoped_refptr<X509Certificate> test_cert;
-  ASSERT_NO_FATAL_FAILURE(GetWhitelistedTestCert(&test_cert));
-  CertVerifyResult verify_result;
-  TestCompletionCallback callback;
-  std::unique_ptr<CertVerifier::Request> request;
-
-  if (GetParam()) {
-    EXPECT_THAT(callback.GetResult(verifier_->Verify(
-                    MakeRequestParams(test_cert), nullptr, &verify_result,
-                    callback.callback(), &request, NetLogWithSource())),
-                IsOk());
-  } else {
-    EXPECT_THAT(callback.GetResult(verifier_->Verify(
-                    MakeRequestParams(test_cert), nullptr, &verify_result,
-                    callback.callback(), &request, NetLogWithSource())),
-                IsError(ERR_CERT_INVALID));
-  }
-}
-
-INSTANTIATE_TEST_CASE_P(WithUserDataDirSwitchPresent,
-                        IgnoreCertificateErrorsSPKIListFlagTest,
-                        ::testing::Bool());
-
-}  // namespace content
+}  // namespace net
