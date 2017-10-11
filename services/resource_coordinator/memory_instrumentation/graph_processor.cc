@@ -71,6 +71,17 @@ std::unique_ptr<GlobalDumpGraph> GraphProcessor::ComputeMemoryGraph(
     MarkImplicitWeakParentsRecursively(pid_to_process.second->root());
   }
 
+  // Fourth pass: recursively mark nodes as weak if they own a node which is
+  // weak.
+  {
+    std::set<const Node*> visited;
+    MarkWeakOwnersAndChildrenRecursively(global_root, &visited);
+    for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+      MarkWeakOwnersAndChildrenRecursively(pid_to_process.second->root(),
+                                           &visited);
+    }
+  }
+
   return global_graph;
 }
 
@@ -155,6 +166,42 @@ void GraphProcessor::MarkImplicitWeakParentsRecursively(Node* node) {
   // If all the children are weak then we consider the parent as weak as well
   // and we will later remove it.
   node->set_weak(all_children_weak);
+}
+
+void GraphProcessor::MarkWeakOwnersAndChildrenRecursively(
+    Node* node,
+    std::set<const Node*>* visited) {
+  // If we've already visited this node then nothing to do.
+  if (visited->find(node) != visited->end())
+    return;
+
+  // If we haven't visited the node which this node owns then wait for that.
+  if (node->owns_edge() &&
+      visited->find(node->owns_edge()->target()) == visited->end())
+    return;
+
+  // If we haven't visited the node's parent then wait for that.
+  if (node->parent() && visited->find(node->parent()) == visited->end())
+    return;
+
+  // If either the node we own or our parent is weak, then mark this node
+  // as weak.
+  if ((node->owns_edge() && node->owns_edge()->target()->is_weak()) ||
+      (node->parent() && node->parent()->is_weak())) {
+    node->set_weak(true);
+  }
+  visited->insert(node);
+
+  // Recurse into each owner node to mark any other nodes.
+  for (auto* owned_by_edge : *node->owned_by_edges()) {
+    MarkWeakOwnersAndChildrenRecursively(owned_by_edge->source(), visited);
+  }
+
+  // Recurse into each child and find out if all the children of this node are
+  // weak.
+  for (const auto& path_to_child : *node->children()) {
+    MarkWeakOwnersAndChildrenRecursively(path_to_child.second, visited);
+  }
 }
 
 }  // namespace memory_instrumentation
