@@ -57,6 +57,7 @@ class ExportedTextureDeleter : public ui::CompositorObserver {
       delete this;
   }
   void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingChildResizing(ui::Compositor* compositor) override {}
   void OnCompositingShuttingDown(ui::Compositor* compositor) override {
     delete this;
   }

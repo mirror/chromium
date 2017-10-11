@@ -280,6 +280,9 @@ void DelegatedFrameHost::WasResized() {
         surface_info, manager->surface_manager()->reference_factory());
     has_primary_surface_ = true;
     frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
+    if (compositor_)
+      compositor_->OnChildResizing();
+    return;
   }
 
   // If |create_resize_lock_after_commit_| is true, we're waiting to recreate
@@ -793,6 +796,9 @@ void DelegatedFrameHost::OnCompositingLockStateChanged(
     allow_one_renderer_frame_during_resize_lock_ = true;
   }
 }
+
+void DelegatedFrameHost::OnCompositingChildResizing(
+    ui::Compositor* compositor) {}
 
 void DelegatedFrameHost::OnCompositingShuttingDown(ui::Compositor* compositor) {
   DCHECK_EQ(compositor, compositor_);
