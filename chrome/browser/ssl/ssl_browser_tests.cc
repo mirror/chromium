@@ -2760,17 +2760,16 @@ class SSLUIWorkerFetchTest
           std::pair<OffMainThreadFetchMode, SSLUIWorkerFetchTestType>>,
       public SSLUITest {
  public:
-  SSLUIWorkerFetchTest() { EXPECT_TRUE(tmp_dir_.CreateUniqueTempDir()); }
-  ~SSLUIWorkerFetchTest() override {}
-  void SetUpCommandLine(base::CommandLine* command_line) override {
+  SSLUIWorkerFetchTest() {
+    EXPECT_TRUE(tmp_dir_.CreateUniqueTempDir());
     if (GetParam().first == OffMainThreadFetchMode::kEnabled) {
-      command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                      features::kOffMainThreadFetch.name);
+      scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
     } else {
-      command_line->AppendSwitchASCII(switches::kDisableFeatures,
-                                      features::kOffMainThreadFetch.name);
+      scoped_feature_list_.InitAndDisableFeature(features::kOffMainThreadFetch);
     }
   }
+
+  ~SSLUIWorkerFetchTest() override {}
 
  protected:
   void WriteFile(const base::FilePath::StringType& filename,
@@ -2922,6 +2921,9 @@ class SSLUIWorkerFetchTest
     CheckSecurityState(tab, CertError::NONE, security_state::NONE,
                        AuthState::NONE);
   }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,

@@ -32,6 +32,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
@@ -4389,10 +4390,12 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
 
 class NetworkTimePolicyTest : public PolicyTest {
  public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    content::EnableFeatureWithParam(network_time::kNetworkTimeServiceQuerying,
-                                    "FetchBehavior", "on-demand-only",
-                                    command_line);
+  void SetUpOnMainThread() override {
+    std::map<std::string, std::string> parameters;
+    parameters["FetchBehavior"] = "on-demand-only";
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        network_time::kNetworkTimeServiceQuerying, parameters);
+    PolicyTest::SetUpOnMainThread();
   }
 
   // A request handler that returns a dummy response and counts the number of
@@ -4415,6 +4418,7 @@ class NetworkTimePolicyTest : public PolicyTest {
 
  private:
   uint32_t num_requests_ = 0;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(NetworkTimePolicyTest, NetworkTimeQueriesDisabled) {

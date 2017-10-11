@@ -8,6 +8,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/trace_event_analyzer.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_config_memory_test_util.h"
@@ -195,7 +196,10 @@ void CheckAllMemoryMetrics(const base::HistogramTester& histogram_tester,
 
 class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
  public:
-  ProcessMemoryMetricsEmitterTest() {}
+  ProcessMemoryMetricsEmitterTest() {
+    scoped_feature_list_.InitAndEnableFeature(ukm::kUkmFeature);
+  }
+
   ~ProcessMemoryMetricsEmitterTest() override {}
   void SetUpOnMainThread() override {
     ExtensionBrowserTest::SetUpOnMainThread();
@@ -211,12 +215,6 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
     // own TestUkmRecorder instance rather than the default UkmRecorder.
     ukm::UkmRecorder::Set(nullptr);
     test_ukm_recorder_ = base::MakeUnique<ukm::TestAutoSetUkmRecorder>();
-  }
-
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    InProcessBrowserTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    ukm::kUkmFeature.name);
   }
 
  protected:
@@ -338,6 +336,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
 #endif
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   std::vector<std::unique_ptr<TestExtensionDir>> temp_dirs_;
 #endif
