@@ -58,7 +58,9 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/compositor/gpu_process_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/compositor/viz_process_transport_factory.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
@@ -1388,6 +1390,8 @@ void BrowserMainLoop::InitializeMainThread() {
 int BrowserMainLoop::BrowserThreadsStarted() {
   TRACE_EVENT0("startup", "BrowserMainLoop::BrowserThreadsStarted");
 
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+
   // Bring up Mojo IPC and the embedded Service Manager as early as possible.
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
@@ -1396,10 +1400,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   const bool is_mus = IsUsingMus();
 #if defined(USE_AURA)
   if (is_mus) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kIsRunningInMash);
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kEnableSurfaceSynchronization);
+    command_line->AppendSwitch(switches::kIsRunningInMash);
+    command_line->AppendSwitch(switches::kEnableSurfaceSynchronization);
   }
 #endif
 
@@ -1410,10 +1412,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
 #if BUILDFLAG(ENABLE_VULKAN)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableVulkan)) {
+  if (command_line->HasSwitch(switches::kEnableVulkan))
     gpu::InitializeVulkan();
-  }
 #endif
 
   // Initialize the GPU shader cache. This needs to be initialized before
@@ -1436,39 +1436,72 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       is_mus) {
     established_gpu_channel = always_uses_gpu = false;
   }
-  gpu::GpuChannelEstablishFactory* factory =
-      GetContentClient()->browser()->GetGpuChannelEstablishFactory();
-  if (!factory) {
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    factory = BrowserGpuChannelHostFactory::instance();
-  }
-#if !defined(OS_ANDROID)
-  if (!is_mus) {
-    // TODO(kylechar): Remove flag along with surface sequences.
-    // See https://crbug.com/676384.
-    auto surface_lifetime_type =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableSurfaceReferences)
-            ? viz::SurfaceManager::LifetimeType::SEQUENCES
-            : viz::SurfaceManager::LifetimeType::REFERENCES;
-    frame_sink_manager_impl_ =
-        std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
 
+  const bool enable_viz = command_line->HasSwitch(switches::kEnableViz);
+
+  if (!is_mus) {
     host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
 
-    // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
-    // Gpu process, instead get the mojo pointer from the Gpu process.
-    surface_utils::ConnectWithLocalFrameSinkManager(
-        host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
-  }
-#endif
+    if (enable_viz) {
+      // This path totally doesn't work yet.
+      ImageTransportFactory::SetFactory(
+          std::make_unique<VizProcessTransportFactory>());
 
-  DCHECK(factory);
-  if (!is_mus) {
-    ImageTransportFactory::Initialize(GetResizeTaskRunner());
-    ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
-        factory);
+      viz::mojom::FrameSinkManagerPtr frame_sink_manager;
+      viz::mojom::FrameSinkManagerRequest frame_sink_manager_request =
+          mojo::MakeRequest(&frame_sink_manager);
+      viz::mojom::FrameSinkManagerClientPtr frame_sink_manager_client;
+      viz::mojom::FrameSinkManagerClientRequest
+          frame_sink_manager_client_request =
+              mojo::MakeRequest(&frame_sink_manager_client);
+
+      // Immediately set the FrameSinkManagerPtr and bind the
+      // FrameSinkManagerClientRequest in HostFrameSinkManager.
+      host_frame_sink_manager_->BindAndSetManager(
+          std::move(frame_sink_manager_client_request), GetResizeTaskRunner(),
+          std::move(frame_sink_manager));
+
+      // Hop to the IO thread, then send the FrameSinkManagerRequest and
+      // FrameSinkManagerClientPtr to the viz process.
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(
+              [](viz::mojom::FrameSinkManagerRequest request,
+                 viz::mojom::FrameSinkManagerClientPtr client) {
+                GpuProcessHost::Get()->ConnectFrameSinkManager(
+                    std::move(request), std::move(client));
+              },
+              std::move(frame_sink_manager_request),
+              std::move(frame_sink_manager_client)));
+
+    } else {
+      gpu::GpuChannelEstablishFactory* factory =
+          GetContentClient()->browser()->GetGpuChannelEstablishFactory();
+      if (!factory) {
+        BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
+        factory = BrowserGpuChannelHostFactory::instance();
+      }
+      DCHECK(factory);
+
+      ImageTransportFactory::SetFactory(
+          std::make_unique<GpuProcessTransportFactory>(GetResizeTaskRunner()));
+      ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
+          factory);
+
+      // TODO(kylechar): Remove flag along with surface sequences.
+      // See https://crbug.com/676384.
+      auto surface_lifetime_type =
+          command_line->HasSwitch(switches::kDisableSurfaceReferences)
+              ? viz::SurfaceManager::LifetimeType::SEQUENCES
+              : viz::SurfaceManager::LifetimeType::REFERENCES;
+      frame_sink_manager_impl_ =
+          std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+
+      surface_utils::ConnectWithLocalFrameSinkManager(
+          host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
+    }
   }
+
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
