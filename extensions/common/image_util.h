@@ -23,6 +23,12 @@ bool ParseHexColorString(const std::string& color_string, SkColor* result);
 // Creates a string like #FF9982 from a color.
 std::string GenerateHexColorString(SkColor color);
 
+// Parses rgb() or rgba() string to a color. Returns true for success.
+bool ParseRgbColorString(const std::string& color_string, SkColor* result);
+
+// Creates a string like rgba(255, 0, 100, 0.4) from a color.
+std::string GenerateRgbColorString(SkColor color);
+
 // Parses hsl() or hsla() string to a SkColor. Returns true for success.
 bool ParseHslColorString(const std::string& color_string, SkColor* result);
 
