@@ -22,6 +22,30 @@
       "revId": "3091fb6aa9a9d180b91619f8458a3e1eeccc01e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3933d34_a1ddb22d",
+        "filename": "components/safe_browsing/db/v4_local_database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-11T20:18:30Z",
+      "side": 1,
+      "message": "No, it is not. The pointer value is compared against another pointer value to send it to the right listener.\nSo, even if V4LDBM becomes null on Shutdown, the worst that\u0027ll happen is that the notification will not be received, which is fine since the browser is shutting down anyway.",
+      "parentUuid": "12e87591_98d352e9",
+      "range": {
+        "startLine": 584,
+        "startChar": 64,
+        "endLine": 584,
+        "endChar": 68
+      },
+      "revId": "3091fb6aa9a9d180b91619f8458a3e1eeccc01e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
