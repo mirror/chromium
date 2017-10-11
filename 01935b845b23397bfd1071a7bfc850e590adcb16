@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "956ac90e_5f06035e",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-11T00:03:21Z",
+      "side": 1,
+      "message": "After constructor, it synchronously arrives at CheckIsScreenRequired(), the OnGetDevicesList callback hasn\u0027t been triggerred and the enumerated_ is still false. So the GetInputDevicesList will be run twice.",
+      "parentUuid": "7240229f_ad600ea6",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7d10f2f_3c19633f",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 10
