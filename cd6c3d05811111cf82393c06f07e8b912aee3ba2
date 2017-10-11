@@ -88,6 +88,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2139d1ad_72718b65",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T23:56:07Z",
+      "side": 1,
+      "message": "Yeah, if it\u0027s only for content/child it could be in WebKit/public too of course. Although I thought we were trying to get rid of WebKit/public.\nI do think ideally blink itself could just create the BlobData/get the BlobPtr. Or maybe even one step further and pass a data-pipe as body (where that pipe could be derived from a BlobPtr of course). I\u0027m sure that has plenty of issues too, not sure what the easiest solution would be. I assume at some point the blob will have to be converted to a datapipe anyway, since (at least as far as I am aware) at least at some level the network service isn\u0027t supposed to know about blobs?",
+      "parentUuid": "472e94b1_fa0ad9f9",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
