@@ -80,7 +80,7 @@ LayoutScrollbar::~LayoutScrollbar() {
 
   // When a scrollbar is detached from its parent (causing all parts removal)
   // and ready to be destroyed, its destruction can be delayed because of
-  // RefPtr maintained in other classes such as EventHandler
+  // scoped_refptr maintained in other classes such as EventHandler
   // (m_lastScrollbarUnderMouse).
   // Meanwhile, we can have a call to updateScrollbarPart which recreates the
   // scrollbar part. So, we need to destroy these parts since we don't want them
@@ -140,7 +140,7 @@ void LayoutScrollbar::SetPressedPart(ScrollbarPart part) {
   UpdateScrollbarPart(kTrackBGPart);
 }
 
-RefPtr<ComputedStyle> LayoutScrollbar::GetScrollbarPseudoStyle(
+scoped_refptr<ComputedStyle> LayoutScrollbar::GetScrollbarPseudoStyle(
     ScrollbarPart part_type,
     PseudoId pseudo_id) {
   if (!StyleSource())
@@ -219,10 +219,10 @@ void LayoutScrollbar::UpdateScrollbarPart(ScrollbarPart part_type,
   if (part_type == kNoPart)
     return;
 
-  RefPtr<ComputedStyle> part_style =
+  scoped_refptr<ComputedStyle> part_style =
       !destroy ? GetScrollbarPseudoStyle(part_type,
                                          PseudoForScrollbarPart(part_type))
-               : RefPtr<ComputedStyle>(nullptr);
+               : scoped_refptr<ComputedStyle>(nullptr);
 
   bool need_layout_object =
       !destroy && part_style && part_style->Display() != EDisplay::kNone;

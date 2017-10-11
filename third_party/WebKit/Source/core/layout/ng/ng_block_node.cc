@@ -30,10 +30,11 @@ namespace blink {
 
 namespace {
 
-RefPtr<NGLayoutResult> LayoutWithAlgorithm(const ComputedStyle& style,
-                                           NGBlockNode node,
-                                           const NGConstraintSpace& space,
-                                           NGBreakToken* break_token) {
+scoped_refptr<NGLayoutResult> LayoutWithAlgorithm(
+    const ComputedStyle& style,
+    NGBlockNode node,
+    const NGConstraintSpace& space,
+    NGBreakToken* break_token) {
   if (style.SpecifiesColumns())
     return NGColumnLayoutAlgorithm(node, space,
                                    ToNGBlockBreakToken(break_token))
@@ -63,7 +64,7 @@ void UpdateLegacyMultiColumnFlowThread(
   bool has_processed_first_child = false;
 
   // Stitch the columns together.
-  for (const RefPtr<NGPhysicalFragment> child : fragment.Children()) {
+  for (const scoped_refptr<NGPhysicalFragment> child : fragment.Children()) {
     NGFragment child_fragment(writing_mode, *child);
     flow_end += child_fragment.BlockSize();
     // Non-uniform fragmentainer widths not supported by legacy layout.
@@ -108,14 +109,14 @@ void UpdateLegacyMultiColumnFlowThread(
 
 NGBlockNode::NGBlockNode(LayoutBox* box) : NGLayoutInputNode(box, kBlock) {}
 
-RefPtr<NGLayoutResult> NGBlockNode::Layout(
+scoped_refptr<NGLayoutResult> NGBlockNode::Layout(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) {
   // Use the old layout code and synthesize a fragment.
   if (!CanUseNewLayout()) {
     return RunOldLayout(constraint_space);
   }
-  RefPtr<NGLayoutResult> layout_result;
+  scoped_refptr<NGLayoutResult> layout_result;
   if (box_->IsLayoutNGBlockFlow()) {
     layout_result = ToLayoutNGBlockFlow(box_)->CachedLayoutResult(
         constraint_space, break_token);
@@ -155,7 +156,7 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
     return sizes;
   }
 
-  RefPtr<NGConstraintSpace> constraint_space =
+  scoped_refptr<NGConstraintSpace> constraint_space =
       NGConstraintSpaceBuilder(
           FromPlatformWritingMode(Style().GetWritingMode()),
           /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite})
@@ -169,7 +170,7 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
     return *maybe_sizes;
 
   // Have to synthesize this value.
-  RefPtr<NGLayoutResult> layout_result = Layout(*constraint_space);
+  scoped_refptr<NGLayoutResult> layout_result = Layout(*constraint_space);
   NGBoxFragment min_fragment(
       FromPlatformWritingMode(Style().GetWritingMode()),
       ToNGPhysicalBoxFragment(*layout_result->PhysicalFragment()));
@@ -435,7 +436,7 @@ void NGBlockNode::CopyChildFragmentPosition(
   }
 }
 
-RefPtr<NGLayoutResult> NGBlockNode::LayoutAtomicInline(
+scoped_refptr<NGLayoutResult> NGBlockNode::LayoutAtomicInline(
     const NGConstraintSpace& parent_constraint_space,
     bool use_first_line_style) {
   NGConstraintSpaceBuilder space_builder(parent_constraint_space);
@@ -452,7 +453,7 @@ RefPtr<NGLayoutResult> NGBlockNode::LayoutAtomicInline(
   }
 
   const ComputedStyle& style = Style();
-  RefPtr<NGConstraintSpace> constraint_space =
+  scoped_refptr<NGConstraintSpace> constraint_space =
       space_builder.SetIsNewFormattingContext(true)
           .SetIsShrinkToFit(true)
           .SetAvailableSize(parent_constraint_space.AvailableSize())
@@ -463,7 +464,7 @@ RefPtr<NGLayoutResult> NGBlockNode::LayoutAtomicInline(
   return Layout(*constraint_space);
 }
 
-RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
+scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
     const NGConstraintSpace& constraint_space) {
   NGLogicalSize available_size = constraint_space.PercentageResolutionSize();
   LayoutObject* containing_block = box_->ContainingBlock();

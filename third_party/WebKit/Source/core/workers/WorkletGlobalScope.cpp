@@ -21,12 +21,13 @@
 
 namespace blink {
 
-WorkletGlobalScope::WorkletGlobalScope(const KURL& url,
-                                       const String& user_agent,
-                                       RefPtr<SecurityOrigin> security_origin,
-                                       v8::Isolate* isolate,
-                                       WorkerClients* worker_clients,
-                                       WorkerReportingProxy& reporting_proxy)
+WorkletGlobalScope::WorkletGlobalScope(
+    const KURL& url,
+    const String& user_agent,
+    scoped_refptr<SecurityOrigin> security_origin,
+    v8::Isolate* isolate,
+    WorkerClients* worker_clients,
+    WorkerReportingProxy& reporting_proxy)
     : WorkerOrWorkletGlobalScope(isolate, worker_clients, reporting_proxy),
       url_(url),
       user_agent_(user_agent) {
@@ -91,7 +92,7 @@ void WorkletGlobalScope::FetchAndInvokeScript(
     const KURL& module_url_record,
     WorkletModuleResponsesMap* module_responses_map,
     WebURLRequest::FetchCredentialsMode credentials_mode,
-    RefPtr<WebTaskRunner> outside_settings_task_runner,
+    scoped_refptr<WebTaskRunner> outside_settings_task_runner,
     WorkletPendingTasks* pending_tasks) {
   DCHECK(IsContextThread());
   if (!module_responses_map_proxy_) {

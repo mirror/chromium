@@ -53,8 +53,8 @@ class CORE_EXPORT CSSFontFaceSource
 
   void SetFontFace(CSSFontFace* face) { face_ = face; }
 
-  RefPtr<SimpleFontData> GetFontData(const FontDescription&,
-                                     const FontSelectionCapabilities&);
+  scoped_refptr<SimpleFontData> GetFontData(const FontDescription&,
+                                            const FontSelectionCapabilities&);
 
   virtual bool IsLocalFontAvailable(const FontDescription&) { return false; }
   virtual void BeginLoadIfNeeded() {}
@@ -68,12 +68,12 @@ class CORE_EXPORT CSSFontFaceSource
 
  protected:
   CSSFontFaceSource();
-  virtual RefPtr<SimpleFontData> CreateFontData(
+  virtual scoped_refptr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) = 0;
 
   using FontDataTable = HashMap<FontCacheKey,
-                                RefPtr<SimpleFontData>,
+                                scoped_refptr<SimpleFontData>,
                                 FontCacheKeyHash,
                                 FontCacheKeyTraits>;
 

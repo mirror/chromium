@@ -10,10 +10,10 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     LayoutObject* layout_object,
     const ComputedStyle& style,
     NGPhysicalSize size,
-    Vector<RefPtr<NGPhysicalFragment>>& children,
+    Vector<scoped_refptr<NGPhysicalFragment>>& children,
     Vector<NGBaseline>& baselines,
     unsigned border_edges,  // NGBorderEdges::Physical
-    RefPtr<NGBreakToken> break_token)
+    scoped_refptr<NGBreakToken> break_token)
     : NGPhysicalContainerFragment(layout_object,
                                   style,
                                   size,
@@ -40,10 +40,11 @@ void NGPhysicalBoxFragment::UpdateVisualRect() const {
   // TODO(kojii): Add its own visual overflow (e.g., box-shadow)
 }
 
-RefPtr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset() const {
-  Vector<RefPtr<NGPhysicalFragment>> children_copy(children_);
+scoped_refptr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset()
+    const {
+  Vector<scoped_refptr<NGPhysicalFragment>> children_copy(children_);
   Vector<NGBaseline> baselines_copy(baselines_);
-  RefPtr<NGPhysicalFragment> physical_fragment = WTF::AdoptRef(
+  scoped_refptr<NGPhysicalFragment> physical_fragment = WTF::AdoptRef(
       new NGPhysicalBoxFragment(layout_object_, Style(), size_, children_copy,
                                 baselines_copy, border_edge_, break_token_));
   return physical_fragment;

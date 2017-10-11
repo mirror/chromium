@@ -143,7 +143,7 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
   std::unique_ptr<ImageBufferSurface> surface =
       WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
   EXPECT_TRUE(surface->IsValid());
-  RefPtr<StaticBitmapImage> image =
+  scoped_refptr<StaticBitmapImage> image =
       surface->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
@@ -179,7 +179,7 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
   std::unique_ptr<ImageBufferSurface> surface =
       WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
   EXPECT_TRUE(surface->IsValid());
-  RefPtr<StaticBitmapImage> image =
+  scoped_refptr<StaticBitmapImage> image =
       surface->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 

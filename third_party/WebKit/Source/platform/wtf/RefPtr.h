@@ -31,10 +31,7 @@
 namespace WTF {
 
 template <typename T>
-using RefPtr = scoped_refptr<T>;
-
-template <typename T>
-inline T* GetPtr(const RefPtr<T>& p) {
+inline T* GetPtr(const scoped_refptr<T>& p) {
   return p.get();
 }
 
@@ -45,7 +42,7 @@ class RefPtrValuePeeker {
  public:
   ALWAYS_INLINE RefPtrValuePeeker(T* p) : ptr_(p) {}
   template <typename U>
-  RefPtrValuePeeker(const RefPtr<U>& p) : ptr_(p.get()) {}
+  RefPtrValuePeeker(const scoped_refptr<U>& p) : ptr_(p.get()) {}
 
   ALWAYS_INLINE operator T*() const { return ptr_; }
 
@@ -54,17 +51,15 @@ class RefPtrValuePeeker {
 };
 
 template <typename T>
-RefPtr<T> AdoptRef(T* p) {
-  return RefPtr<T>(base::AdoptRef(p));
+scoped_refptr<T> AdoptRef(T* p) {
+  return scoped_refptr<T>(base::AdoptRef(p));
 }
 
 template <typename T>
-RefPtr<T> WrapRefPtr(T* ptr) {
-  return RefPtr<T>(ptr);
+scoped_refptr<T> WrapRefPtr(T* ptr) {
+  return scoped_refptr<T>(ptr);
 }
 
 }  // namespace WTF
 
-using WTF::RefPtr;
-
-#endif  // WTF_RefPtr_h
+#endif  // WTF_scoped_refptr_h

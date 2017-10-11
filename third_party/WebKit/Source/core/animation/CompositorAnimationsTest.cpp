@@ -61,11 +61,11 @@ namespace blink {
 
 class AnimationCompositorAnimationsTest : public ::testing::Test {
  protected:
-  RefPtr<TimingFunction> linear_timing_function_;
-  RefPtr<TimingFunction> cubic_ease_timing_function_;
-  RefPtr<TimingFunction> cubic_custom_timing_function_;
-  RefPtr<TimingFunction> step_timing_function_;
-  RefPtr<TimingFunction> frames_timing_function_;
+  scoped_refptr<TimingFunction> linear_timing_function_;
+  scoped_refptr<TimingFunction> cubic_ease_timing_function_;
+  scoped_refptr<TimingFunction> cubic_custom_timing_function_;
+  scoped_refptr<TimingFunction> step_timing_function_;
+  scoped_refptr<TimingFunction> frames_timing_function_;
 
   Timing timing_;
   CompositorAnimations::CompositorTiming compositor_timing_;
@@ -150,7 +150,7 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
       AnimatableValueKeyframe* frame) {
     EXPECT_EQ(frame->Offset(), 0);
     AnimatableValueKeyframeVector frames;
-    RefPtr<Keyframe> second = frame->CloneWithOffset(1);
+    scoped_refptr<Keyframe> second = frame->CloneWithOffset(1);
 
     frames.push_back(frame);
     frames.push_back(ToAnimatableValueKeyframe(second.get()));
@@ -173,11 +173,11 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
     return timing;
   }
 
-  RefPtr<AnimatableValueKeyframe> CreateReplaceOpKeyframe(
+  scoped_refptr<AnimatableValueKeyframe> CreateReplaceOpKeyframe(
       CSSPropertyID id,
       AnimatableValue* value,
       double offset = 0) {
-    RefPtr<AnimatableValueKeyframe> keyframe =
+    scoped_refptr<AnimatableValueKeyframe> keyframe =
         AnimatableValueKeyframe::Create();
     keyframe->SetPropertyValue(id, value);
     keyframe->SetComposite(EffectModel::kCompositeReplace);
@@ -186,17 +186,17 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
     return keyframe;
   }
 
-  RefPtr<AnimatableValueKeyframe> CreateDefaultKeyframe(
+  scoped_refptr<AnimatableValueKeyframe> CreateDefaultKeyframe(
       CSSPropertyID id,
       EffectModel::CompositeOperation op,
       double offset = 0) {
-    RefPtr<AnimatableValue> value = nullptr;
+    scoped_refptr<AnimatableValue> value = nullptr;
     if (id == CSSPropertyTransform)
       value = AnimatableTransform::Create(TransformOperations(), 1);
     else
       value = AnimatableDouble::Create(10.0);
 
-    RefPtr<AnimatableValueKeyframe> keyframe =
+    scoped_refptr<AnimatableValueKeyframe> keyframe =
         CreateReplaceOpKeyframe(id, value.get(), offset);
     keyframe->SetComposite(op);
     return keyframe;
@@ -217,7 +217,8 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
         WTF::WrapUnique(new AnimatableValueKeyframeVector);
     for (size_t i = 0; i < values.size(); i++) {
       double offset = 1.0 / (values.size() - 1) * i;
-      RefPtr<AnimatableDouble> value = AnimatableDouble::Create(values[i]);
+      scoped_refptr<AnimatableDouble> value =
+          AnimatableDouble::Create(values[i]);
       frames->push_back(
           CreateReplaceOpKeyframe(CSSPropertyOpacity, value.get(), offset)
               .get());
@@ -232,7 +233,7 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
         WTF::WrapUnique(new AnimatableValueKeyframeVector);
     for (size_t i = 0; i < values.size(); ++i) {
       double offset = 1.0f / (values.size() - 1) * i;
-      RefPtr<AnimatableTransform> value =
+      scoped_refptr<AnimatableTransform> value =
           AnimatableTransform::Create(values[i], 1);
       frames->push_back(
           CreateReplaceOpKeyframe(CSSPropertyTransform, value.get(), offset)
@@ -242,10 +243,10 @@ class AnimationCompositorAnimationsTest : public ::testing::Test {
   }
 
   AnimatableValueKeyframeEffectModel* CreateKeyframeEffectModel(
-      RefPtr<AnimatableValueKeyframe> from,
-      RefPtr<AnimatableValueKeyframe> to,
-      RefPtr<AnimatableValueKeyframe> c = nullptr,
-      RefPtr<AnimatableValueKeyframe> d = nullptr) {
+      scoped_refptr<AnimatableValueKeyframe> from,
+      scoped_refptr<AnimatableValueKeyframe> to,
+      scoped_refptr<AnimatableValueKeyframe> c = nullptr,
+      scoped_refptr<AnimatableValueKeyframe> d = nullptr) {
     EXPECT_EQ(from->Offset(), 0);
     AnimatableValueKeyframeVector frames;
     frames.push_back(from);
@@ -322,7 +323,7 @@ class LayoutObjectProxy : public LayoutObject {
 
 TEST_F(AnimationCompositorAnimationsTest,
        CanStartEffectOnCompositorKeyframeMultipleCSSProperties) {
-  RefPtr<AnimatableValueKeyframe> keyframe_good_multiple =
+  scoped_refptr<AnimatableValueKeyframe> keyframe_good_multiple =
       CreateDefaultKeyframe(CSSPropertyOpacity, EffectModel::kCompositeReplace);
   keyframe_good_multiple->SetPropertyValue(
       CSSPropertyTransform,
@@ -330,7 +331,7 @@ TEST_F(AnimationCompositorAnimationsTest,
   EXPECT_TRUE(DuplicateSingleKeyframeAndTestIsCandidateOnResult(
       keyframe_good_multiple.get()));
 
-  RefPtr<AnimatableValueKeyframe> keyframe_bad_multiple_id =
+  scoped_refptr<AnimatableValueKeyframe> keyframe_bad_multiple_id =
       CreateDefaultKeyframe(CSSPropertyColor, EffectModel::kCompositeReplace);
   keyframe_bad_multiple_id->SetPropertyValue(
       CSSPropertyOpacity, AnimatableDouble::Create(10.0).get());
@@ -343,15 +344,16 @@ TEST_F(AnimationCompositorAnimationsTest,
   TransformOperations ops;
   ops.Operations().push_back(TranslateTransformOperation::Create(
       Length(2, kFixed), Length(2, kFixed), TransformOperation::kTranslateX));
-  RefPtr<AnimatableValueKeyframe> good_keyframe = CreateReplaceOpKeyframe(
-      CSSPropertyTransform, AnimatableTransform::Create(ops, 1).get());
+  scoped_refptr<AnimatableValueKeyframe> good_keyframe =
+      CreateReplaceOpKeyframe(CSSPropertyTransform,
+                              AnimatableTransform::Create(ops, 1).get());
   EXPECT_TRUE(
       DuplicateSingleKeyframeAndTestIsCandidateOnResult(good_keyframe.get()));
 
   ops.Operations().push_back(TranslateTransformOperation::Create(
       Length(50, kPercent), Length(2, kFixed),
       TransformOperation::kTranslateX));
-  RefPtr<AnimatableValueKeyframe> bad_keyframe = CreateReplaceOpKeyframe(
+  scoped_refptr<AnimatableValueKeyframe> bad_keyframe = CreateReplaceOpKeyframe(
       CSSPropertyTransform, AnimatableTransform::Create(ops, 1).get());
   EXPECT_FALSE(
       DuplicateSingleKeyframeAndTestIsCandidateOnResult(bad_keyframe.get()));
@@ -361,8 +363,9 @@ TEST_F(AnimationCompositorAnimationsTest,
       Length(100, kPercent).Blend(Length(100, kFixed), 0.5, kValueRangeAll);
   ops2.Operations().push_back(TranslateTransformOperation::Create(
       calc_length, Length(0, kFixed), TransformOperation::kTranslateX));
-  RefPtr<AnimatableValueKeyframe> bad_keyframe2 = CreateReplaceOpKeyframe(
-      CSSPropertyTransform, AnimatableTransform::Create(ops2, 1).get());
+  scoped_refptr<AnimatableValueKeyframe> bad_keyframe2 =
+      CreateReplaceOpKeyframe(CSSPropertyTransform,
+                              AnimatableTransform::Create(ops2, 1).get());
   EXPECT_FALSE(
       DuplicateSingleKeyframeAndTestIsCandidateOnResult(bad_keyframe2.get()));
 }
@@ -382,7 +385,8 @@ TEST_F(AnimationCompositorAnimationsTest,
       timing_, *AnimatableValueKeyframeEffectModel::Create(frames_same)));
 
   AnimatableValueKeyframeVector frames_mixed_properties;
-  RefPtr<AnimatableValueKeyframe> keyframe = AnimatableValueKeyframe::Create();
+  scoped_refptr<AnimatableValueKeyframe> keyframe =
+      AnimatableValueKeyframe::Create();
   keyframe->SetOffset(0);
   keyframe->SetPropertyValue(CSSPropertyColor, AnimatableDouble::Create(0));
   keyframe->SetPropertyValue(CSSPropertyOpacity, AnimatableDouble::Create(0));
@@ -977,7 +981,7 @@ TEST_F(AnimationCompositorAnimationsTest,
 }
 
 TEST_F(AnimationCompositorAnimationsTest, createReversedOpacityAnimation) {
-  RefPtr<TimingFunction> cubic_easy_flip_timing_function =
+  scoped_refptr<TimingFunction> cubic_easy_flip_timing_function =
       CubicBezierTimingFunction::Create(0.0, 0.0, 0.0, 1.0);
 
   // KeyframeEffect to convert

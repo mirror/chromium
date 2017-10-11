@@ -101,7 +101,7 @@ class CORE_EXPORT NGPhysicalFragment
 
   bool IsPlaced() const { return is_placed_; }
 
-  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
+  scoped_refptr<NGPhysicalFragment> CloneWithoutOffset() const;
 
   String ToString() const;
 
@@ -128,16 +128,16 @@ class CORE_EXPORT NGPhysicalFragment
                      const ComputedStyle& style,
                      NGPhysicalSize size,
                      NGFragmentType type,
-                     RefPtr<NGBreakToken> break_token = nullptr);
+                     scoped_refptr<NGBreakToken> break_token = nullptr);
 
   // "const" because it only updates cached value that does not affect layout.
   void SetVisualRect(const LayoutRect& rect) const { visual_rect_ = rect; }
 
   LayoutObject* layout_object_;
-  RefPtr<const ComputedStyle> style_;
+  scoped_refptr<const ComputedStyle> style_;
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
-  RefPtr<NGBreakToken> break_token_;
+  scoped_refptr<NGBreakToken> break_token_;
   mutable LayoutRect visual_rect_;
 
   unsigned type_ : 2;  // NGFragmentType

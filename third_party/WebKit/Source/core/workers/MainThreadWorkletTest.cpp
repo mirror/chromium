@@ -54,7 +54,7 @@ class MainThreadWorkletTest : public ::testing::Test {
   void TearDown() override { global_scope_->Terminate(); }
 
  protected:
-  RefPtr<SecurityOrigin> security_origin_;
+  scoped_refptr<SecurityOrigin> security_origin_;
   std::unique_ptr<DummyPageHolder> page_;
   std::unique_ptr<MainThreadWorkletReportingProxyForTest> reporting_proxy_;
   Persistent<MainThreadWorkletGlobalScope> global_scope_;
@@ -91,7 +91,7 @@ TEST_F(MainThreadWorkletTest, UseCounter) {
 }
 
 TEST_F(MainThreadWorkletTest, TaskRunner) {
-  RefPtr<WebTaskRunner> task_runner =
+  scoped_refptr<WebTaskRunner> task_runner =
       TaskRunnerHelper::Get(TaskType::kUnthrottled, global_scope_);
   EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
 }

@@ -63,9 +63,9 @@ class WTF_EXPORT ArrayBufferBuilder final {
 
   // Returns the accumulated data as an ArrayBuffer instance. If needed,
   // creates a new ArrayBuffer instance and copies contents from the internal
-  // buffer to it. Otherwise, returns a RefPtr pointing to the internal
+  // buffer to it. Otherwise, returns a scoped_refptr pointing to the internal
   // buffer.
-  RefPtr<ArrayBuffer> ToArrayBuffer();
+  scoped_refptr<ArrayBuffer> ToArrayBuffer();
 
   // Converts the accumulated data into a String using the default encoding.
   String ToString();
@@ -92,7 +92,7 @@ class WTF_EXPORT ArrayBufferBuilder final {
 
   unsigned bytes_used_;
   bool variable_capacity_;
-  RefPtr<ArrayBuffer> buffer_;
+  scoped_refptr<ArrayBuffer> buffer_;
 };
 
 }  // namespace WTF

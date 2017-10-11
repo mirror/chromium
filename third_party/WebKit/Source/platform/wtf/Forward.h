@@ -24,13 +24,8 @@
 #include "platform/wtf/Compiler.h"
 #include <stddef.h>
 
-template <typename T>
-class scoped_refptr;
-
 namespace WTF {
 
-template <typename T>
-using RefPtr = scoped_refptr<T>;
 template <typename T>
 class StringBuffer;
 class PartitionAllocator;
@@ -61,7 +56,6 @@ class Uint32Array;
 
 }  // namespace WTF
 
-using WTF::RefPtr;
 using WTF::Vector;
 
 using WTF::ArrayBuffer;

@@ -65,7 +65,7 @@ namespace {
 
 class ExecuteSQLCallbackWrapper : public RefCounted<ExecuteSQLCallbackWrapper> {
  public:
-  static RefPtr<ExecuteSQLCallbackWrapper> Create(
+  static scoped_refptr<ExecuteSQLCallbackWrapper> Create(
       std::unique_ptr<ExecuteSQLCallback> callback) {
     return WTF::AdoptRef(new ExecuteSQLCallbackWrapper(std::move(callback)));
   }
@@ -93,7 +93,7 @@ class ExecuteSQLCallbackWrapper : public RefCounted<ExecuteSQLCallbackWrapper> {
 class StatementCallback final : public SQLStatementCallback {
  public:
   static StatementCallback* Create(
-      RefPtr<ExecuteSQLCallbackWrapper> request_callback) {
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback) {
     return new StatementCallback(std::move(request_callback));
   }
 
@@ -134,15 +134,15 @@ class StatementCallback final : public SQLStatementCallback {
   }
 
  private:
-  StatementCallback(RefPtr<ExecuteSQLCallbackWrapper> request_callback)
+  StatementCallback(scoped_refptr<ExecuteSQLCallbackWrapper> request_callback)
       : request_callback_(std::move(request_callback)) {}
-  RefPtr<ExecuteSQLCallbackWrapper> request_callback_;
+  scoped_refptr<ExecuteSQLCallbackWrapper> request_callback_;
 };
 
 class StatementErrorCallback final : public SQLStatementErrorCallback {
  public:
   static StatementErrorCallback* Create(
-      RefPtr<ExecuteSQLCallbackWrapper> request_callback) {
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback) {
     return new StatementErrorCallback(std::move(request_callback));
   }
 
@@ -156,16 +156,17 @@ class StatementErrorCallback final : public SQLStatementErrorCallback {
   }
 
  private:
-  StatementErrorCallback(RefPtr<ExecuteSQLCallbackWrapper> request_callback)
+  StatementErrorCallback(
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback)
       : request_callback_(std::move(request_callback)) {}
-  RefPtr<ExecuteSQLCallbackWrapper> request_callback_;
+  scoped_refptr<ExecuteSQLCallbackWrapper> request_callback_;
 };
 
 class TransactionCallback final : public SQLTransactionCallback {
  public:
   static TransactionCallback* Create(
       const String& sql_statement,
-      RefPtr<ExecuteSQLCallbackWrapper> request_callback) {
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback) {
     return new TransactionCallback(sql_statement, std::move(request_callback));
   }
 
@@ -186,17 +187,17 @@ class TransactionCallback final : public SQLTransactionCallback {
 
  private:
   TransactionCallback(const String& sql_statement,
-                      RefPtr<ExecuteSQLCallbackWrapper> request_callback)
+                      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback)
       : sql_statement_(sql_statement),
         request_callback_(std::move(request_callback)) {}
   String sql_statement_;
-  RefPtr<ExecuteSQLCallbackWrapper> request_callback_;
+  scoped_refptr<ExecuteSQLCallbackWrapper> request_callback_;
 };
 
 class TransactionErrorCallback final : public SQLTransactionErrorCallback {
  public:
   static TransactionErrorCallback* Create(
-      RefPtr<ExecuteSQLCallbackWrapper> request_callback) {
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback) {
     return new TransactionErrorCallback(std::move(request_callback));
   }
 
@@ -210,9 +211,10 @@ class TransactionErrorCallback final : public SQLTransactionErrorCallback {
   }
 
  private:
-  TransactionErrorCallback(RefPtr<ExecuteSQLCallbackWrapper> request_callback)
+  TransactionErrorCallback(
+      scoped_refptr<ExecuteSQLCallbackWrapper> request_callback)
       : request_callback_(std::move(request_callback)) {}
-  RefPtr<ExecuteSQLCallbackWrapper> request_callback_;
+  scoped_refptr<ExecuteSQLCallbackWrapper> request_callback_;
 };
 
 class TransactionSuccessCallback final : public VoidCallback {
@@ -337,7 +339,7 @@ void InspectorDatabaseAgent::executeSQL(
     return;
   }
 
-  RefPtr<ExecuteSQLCallbackWrapper> wrapper =
+  scoped_refptr<ExecuteSQLCallbackWrapper> wrapper =
       ExecuteSQLCallbackWrapper::Create(std::move(request_callback));
   SQLTransactionCallback* callback =
       TransactionCallback::Create(query, wrapper);

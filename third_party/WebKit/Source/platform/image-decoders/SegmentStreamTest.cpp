@@ -52,7 +52,7 @@ blink::SegmentStream CreatePopulatedSegmentStream();
 
 // This function creates a buffer of size |kBufferAllocationSize| to be used
 // when populating a SegmentStream.
-WTF::RefPtr<blink::SegmentReader> CreateSegmentReader();
+scoped_refptr<blink::SegmentReader> CreateSegmentReader();
 
 size_t ReadFromSegmentStream(blink::SegmentStream&,
                              size_t amount_to_read = kInsideBufferPosition);
@@ -214,7 +214,7 @@ TEST(SegmentStreamTest, MoveAssignmentOperatorShouldCopyRhsLength) {
 
 TEST(SegmentStreamTest, SetReaderShouldUnsetIsCleared) {
   SegmentStream segment_stream;
-  WTF::RefPtr<SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<SegmentReader> segment_reader = CreateSegmentReader();
   ASSERT_TRUE(IsCleared(segment_stream));
 
   segment_stream.SetReader(segment_reader);
@@ -224,7 +224,7 @@ TEST(SegmentStreamTest, SetReaderShouldUnsetIsCleared) {
 
 TEST(SegmentStreamTest, SetReaderShouldUnsetIsAtEnd) {
   SegmentStream segment_stream;
-  WTF::RefPtr<SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<SegmentReader> segment_reader = CreateSegmentReader();
   ASSERT_TRUE(IsAtEnd(segment_stream));
 
   segment_stream.SetReader(segment_reader);
@@ -234,7 +234,7 @@ TEST(SegmentStreamTest, SetReaderShouldUnsetIsAtEnd) {
 
 TEST(SegmentStreamTest, SetReaderShouldNotChangePosition) {
   SegmentStream segment_stream;
-  WTF::RefPtr<SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<SegmentReader> segment_reader = CreateSegmentReader();
   ASSERT_TRUE(PositionIsZero(segment_stream));
 
   segment_stream.SetReader(segment_reader);
@@ -244,7 +244,7 @@ TEST(SegmentStreamTest, SetReaderShouldNotChangePosition) {
 
 TEST(SegmentStreamTest, SetReaderShouldUpdateLength) {
   SegmentStream segment_stream;
-  WTF::RefPtr<SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<SegmentReader> segment_reader = CreateSegmentReader();
   ASSERT_FALSE(LengthIsAllocationSize(segment_stream));
 
   segment_stream.SetReader(segment_reader);
@@ -264,7 +264,7 @@ TEST(SegmentStreamTest, SetReaderShouldSetIsClearedWhenSetToNull) {
 TEST(SegmentStreamTest, SetReaderShouldSetIsClearedWhenReaderSizeNotBigEnough) {
   SegmentStream segment_stream;
   segment_stream.seek(kPastEndOfBufferPosition);
-  RefPtr<blink::SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<blink::SegmentReader> segment_reader = CreateSegmentReader();
 
   segment_stream.SetReader(segment_reader);
 
@@ -274,7 +274,7 @@ TEST(SegmentStreamTest, SetReaderShouldSetIsClearedWhenReaderSizeNotBigEnough) {
 TEST(SegmentStreamTest, SetReaderShouldSetIsAtEndWhenReaderSizeNotBigEnough) {
   SegmentStream segment_stream;
   segment_stream.seek(kPastEndOfBufferPosition);
-  RefPtr<blink::SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<blink::SegmentReader> segment_reader = CreateSegmentReader();
 
   segment_stream.SetReader(segment_reader);
 
@@ -285,7 +285,7 @@ TEST(SegmentStreamTest,
      SetReaderShouldNotChangePositionWhenReaderSizeNotBigEnough) {
   SegmentStream segment_stream;
   segment_stream.seek(kPastEndOfBufferPosition);
-  RefPtr<blink::SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<blink::SegmentReader> segment_reader = CreateSegmentReader();
 
   segment_stream.SetReader(segment_reader);
 
@@ -295,7 +295,7 @@ TEST(SegmentStreamTest,
 TEST(SegmentStreamTest, SetReaderShouldChangeLengthWhenReaderSizeNotBigEnough) {
   SegmentStream segment_stream;
   segment_stream.seek(kPastEndOfBufferPosition);
-  RefPtr<blink::SegmentReader> segment_reader = CreateSegmentReader();
+  scoped_refptr<blink::SegmentReader> segment_reader = CreateSegmentReader();
 
   segment_stream.SetReader(segment_reader);
 
@@ -675,13 +675,13 @@ blink::SegmentStream CreatePopulatedSegmentStream() {
   return segment_stream;
 }
 
-WTF::RefPtr<blink::SegmentReader> CreateSegmentReader() {
+scoped_refptr<blink::SegmentReader> CreateSegmentReader() {
   std::array<char, kBufferAllocationSize> raw_buffer;
 
-  WTF::RefPtr<blink::SharedBuffer> shared_buffer =
+  scoped_refptr<blink::SharedBuffer> shared_buffer =
       blink::SharedBuffer::Create(raw_buffer.data(), kBufferAllocationSize);
 
-  WTF::RefPtr<blink::SegmentReader> segment_reader =
+  scoped_refptr<blink::SegmentReader> segment_reader =
       blink::SegmentReader::CreateFromSharedBuffer(std::move(shared_buffer));
 
   return segment_reader;

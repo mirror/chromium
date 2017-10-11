@@ -74,7 +74,7 @@ void LayoutTextFragment::WillBeDestroyed() {
   LayoutText::WillBeDestroyed();
 }
 
-RefPtr<StringImpl> LayoutTextFragment::CompleteText() const {
+scoped_refptr<StringImpl> LayoutTextFragment::CompleteText() const {
   Text* text = AssociatedTextNode();
   return text ? text->DataImpl() : ContentString();
 }
@@ -84,14 +84,14 @@ void LayoutTextFragment::SetContentString(StringImpl* str) {
   SetText(str);
 }
 
-RefPtr<StringImpl> LayoutTextFragment::OriginalText() const {
-  RefPtr<StringImpl> result = CompleteText();
+scoped_refptr<StringImpl> LayoutTextFragment::OriginalText() const {
+  scoped_refptr<StringImpl> result = CompleteText();
   if (!result)
     return nullptr;
   return result->Substring(Start(), FragmentLength());
 }
 
-void LayoutTextFragment::SetText(RefPtr<StringImpl> text, bool force) {
+void LayoutTextFragment::SetText(scoped_refptr<StringImpl> text, bool force) {
   LayoutText::SetText(std::move(text), force);
 
   start_ = 0;
@@ -106,7 +106,7 @@ void LayoutTextFragment::SetText(RefPtr<StringImpl> text, bool force) {
   }
 }
 
-void LayoutTextFragment::SetTextFragment(RefPtr<StringImpl> text,
+void LayoutTextFragment::SetTextFragment(scoped_refptr<StringImpl> text,
                                          unsigned start,
                                          unsigned length) {
   LayoutText::SetText(std::move(text), false);
@@ -119,7 +119,7 @@ void LayoutTextFragment::TransformText() {
   // Note, we have to call LayoutText::setText here because, if we use our
   // version we will, potentially, screw up the first-letter settings where
   // we only use portions of the string.
-  if (RefPtr<StringImpl> text_to_transform = OriginalText())
+  if (scoped_refptr<StringImpl> text_to_transform = OriginalText())
     LayoutText::SetText(std::move(text_to_transform), true);
 }
 

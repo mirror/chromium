@@ -115,7 +115,7 @@ void StyleFetchedImageSet::RemoveClient(ImageResourceObserver* observer) {
   best_fit_image_->RemoveObserver(observer);
 }
 
-RefPtr<Image> StyleFetchedImageSet::GetImage(
+scoped_refptr<Image> StyleFetchedImageSet::GetImage(
     const ImageResourceObserver&,
     const Document&,
     const ComputedStyle& style,

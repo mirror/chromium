@@ -61,7 +61,7 @@ class ScheduledNavigation
   Member<Document> origin_document_;
   bool replaces_current_item_;
   bool is_location_change_;
-  RefPtr<UserGestureToken> user_gesture_token_;
+  scoped_refptr<UserGestureToken> user_gesture_token_;
 };
 
 }  // namespace blink
