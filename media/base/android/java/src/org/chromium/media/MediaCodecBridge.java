@@ -12,6 +12,7 @@ import android.media.MediaCrypto;
 import android.media.MediaFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Surface;
 
 import org.chromium.base.Log;
@@ -22,13 +23,12 @@ import org.chromium.media.MediaCodecUtil.BitrateAdjustmentTypes;
 import org.chromium.media.MediaCodecUtil.MimeTypes;
 
 import java.nio.ByteBuffer;
-
 /**
  * A MediaCodec wrapper for adapting the API and catching exceptions.
  */
 @JNINamespace("media")
 class MediaCodecBridge {
-    private static final String TAG = "cr.MediaCodecBridge";
+    private static final String TAG = "cr_MediaCodecBridge";
 
     // After a flush(), dequeueOutputBuffer() can often produce empty presentation timestamps
     // for several frames. As a result, the player may find that the time does not increase
@@ -54,14 +54,19 @@ class MediaCodecBridge {
 
     private ByteBuffer[] mInputBuffers;
     private ByteBuffer[] mOutputBuffers;
+    private SparseArray<ByteBuffer> mOutputFrameBuffers;
 
     private MediaCodec mMediaCodec;
     private boolean mFlushed;
     private long mLastPresentationTimeUs;
     private String mMime;
     private boolean mAdaptivePlaybackSupported;
+    private int mDirection;
 
     private BitrateAdjustmentTypes mBitrateAdjustmentType = BitrateAdjustmentTypes.NO_ADJUSTMENT;
+
+    // SPS and PPS NALs (Config frame) for H.264
+    private ByteBuffer mConfigData = null;
 
     @MainDex
     private static class DequeueInputResult {
@@ -182,7 +187,7 @@ class MediaCodecBridge {
     }
 
     private MediaCodecBridge(MediaCodec mediaCodec, String mime, boolean adaptivePlaybackSupported,
-            BitrateAdjustmentTypes bitrateAdjustmentType) {
+            BitrateAdjustmentTypes bitrateAdjustmentType, int direction) {
         assert mediaCodec != null;
         mMediaCodec = mediaCodec;
         mMime = mime;
@@ -190,6 +195,7 @@ class MediaCodecBridge {
         mFlushed = true;
         mAdaptivePlaybackSupported = adaptivePlaybackSupported;
         mBitrateAdjustmentType = bitrateAdjustmentType;
+        mDirection = direction;
     }
 
     @CalledByNative
@@ -209,8 +215,8 @@ class MediaCodecBridge {
 
         if (info.mediaCodec == null) return null;
 
-        return new MediaCodecBridge(
-                info.mediaCodec, mime, info.supportsAdaptivePlayback, info.bitrateAdjustmentType);
+        return new MediaCodecBridge(info.mediaCodec, mime, info.supportsAdaptivePlayback,
+                info.bitrateAdjustmentType, direction);
     }
 
     @CalledByNative
@@ -241,6 +247,7 @@ class MediaCodecBridge {
                 mInputBuffers = mMediaCodec.getInputBuffers();
                 mOutputBuffers = mMediaCodec.getOutputBuffers();
             }
+            mOutputFrameBuffers = new SparseArray<>();
         } catch (IllegalStateException e) {
             Log.e(TAG, "Cannot start the media codec", e);
             return false;
@@ -332,18 +339,9 @@ class MediaCodecBridge {
         return mInputBuffers[index];
     }
 
-    /** Returns null if MediaCodec throws IllegalStateException. */
     @CalledByNative
     private ByteBuffer getOutputBuffer(int index) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            try {
-                return mMediaCodec.getOutputBuffer(index);
-            } catch (IllegalStateException e) {
-                Log.e(TAG, "Failed to get output buffer", e);
-                return null;
-            }
-        }
-        return mOutputBuffers[index];
+        return mOutputFrameBuffers.get(index);
     }
 
     @CalledByNative
@@ -408,6 +406,20 @@ class MediaCodecBridge {
         }
     }
 
+    // Call this function with catching IllegalStateException.
+    @SuppressWarnings("deprecation")
+    private ByteBuffer getMediaCodecOutputBuffer(int index) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            return mOutputBuffers[index];
+        }
+
+        ByteBuffer outputBuffer = mMediaCodec.getOutputBuffer(index);
+        if (outputBuffer == null) {
+            throw new IllegalStateException("Got null output buffer");
+        }
+        return outputBuffer;
+    }
+
     @CalledByNative
     private int queueSecureInputBuffer(int index, int offset, byte[] iv, byte[] keyId,
             int[] numBytesOfClearData, int[] numBytesOfEncryptedData, int numSubSamples,
@@ -455,6 +467,7 @@ class MediaCodecBridge {
     private void releaseOutputBuffer(int index, boolean render) {
         try {
             mMediaCodec.releaseOutputBuffer(index, render);
+            mOutputFrameBuffers.remove(index);
         } catch (IllegalStateException e) {
             // TODO(qinmin): May need to report the error to the caller. crbug.com/356498.
             Log.e(TAG, "Failed to release output buffer", e);
@@ -466,9 +479,40 @@ class MediaCodecBridge {
     private DequeueOutputResult dequeueOutputBuffer(long timeoutUs) {
         MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
         int status = MediaCodecStatus.ERROR;
+        int outputBufferSize = 0;
+        int outputBufferOffset = 0;
         int index = -1;
+
         try {
             int indexOrStatus = mMediaCodec.dequeueOutputBuffer(info, timeoutUs);
+
+            ByteBuffer codecOutputBuffer = null;
+            if (indexOrStatus >= 0) {
+                boolean isConfigFrame = (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0;
+                if (isConfigFrame) {
+                    Log.i(TAG,
+                            "Config frame generated. Offset: " + info.offset
+                                    + ". Size: " + info.size);
+                    codecOutputBuffer = getMediaCodecOutputBuffer(indexOrStatus);
+                    codecOutputBuffer.position(info.offset);
+                    codecOutputBuffer.limit(info.offset + info.size);
+
+                    mConfigData = ByteBuffer.allocateDirect(info.size);
+                    mConfigData.put(codecOutputBuffer);
+                    // Log few SPS header bytes to check profile and level.
+                    StringBuilder spsData = new StringBuilder();
+                    for (int i = 0; i < (info.size < 8 ? info.size : 8); i++) {
+                        spsData.append(Integer.toHexString(mConfigData.get(i) & 0xff)).append(" ");
+                    }
+                    Log.i(TAG, spsData.toString());
+                    mConfigData.rewind();
+                    // Release buffer back.
+                    mMediaCodec.releaseOutputBuffer(indexOrStatus, false);
+                    // Query next output.
+                    indexOrStatus = mMediaCodec.dequeueOutputBuffer(info, timeoutUs);
+                }
+            }
+
             if (info.presentationTimeUs < mLastPresentationTimeUs) {
                 // TODO(qinmin): return a special code through DequeueOutputResult
                 // to notify the native code the the frame has a wrong presentation
@@ -480,6 +524,37 @@ class MediaCodecBridge {
             if (indexOrStatus >= 0) { // index!
                 status = MediaCodecStatus.OK;
                 index = indexOrStatus;
+
+                codecOutputBuffer = getMediaCodecOutputBuffer(index);
+                codecOutputBuffer.position(info.offset);
+                codecOutputBuffer.limit(info.offset + info.size);
+                outputBufferOffset = info.offset;
+                outputBufferSize = info.size;
+
+                // Check key frame flag.
+                boolean isKeyFrame = (info.flags & MediaCodec.BUFFER_FLAG_SYNC_FRAME) != 0;
+                if (isKeyFrame) {
+                    Log.d(TAG, "Key frame generated");
+                }
+                final ByteBuffer frameBuffer;
+                if (isKeyFrame && mDirection == MediaCodecDirection.ENCODER
+                        && mMime.equals(MimeTypes.VIDEO_H264)) {
+                    Log.d(TAG,
+                            "Appending config frame of size " + mConfigData.capacity()
+                                    + " to output buffer with offset " + info.offset + ", size "
+                                    + info.size);
+                    // For H.264 encoded key frame append SPS and PPS NALs at the start.
+                    frameBuffer = ByteBuffer.allocateDirect(mConfigData.capacity() + info.size);
+                    frameBuffer.put(mConfigData);
+                    outputBufferOffset = 0;
+                    outputBufferSize += mConfigData.capacity();
+                } else {
+                    frameBuffer = ByteBuffer.allocateDirect(outputBufferOffset + outputBufferSize);
+                    frameBuffer.position(outputBufferOffset);
+                }
+                frameBuffer.put(codecOutputBuffer);
+                frameBuffer.rewind();
+                mOutputFrameBuffers.put(index, frameBuffer.duplicate());
             } else if (indexOrStatus == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
                 mOutputBuffers = mMediaCodec.getOutputBuffers();
                 status = MediaCodecStatus.OUTPUT_BUFFERS_CHANGED;
@@ -497,8 +572,8 @@ class MediaCodecBridge {
             Log.e(TAG, "Failed to dequeue output buffer", e);
         }
 
-        return new DequeueOutputResult(
-                status, index, info.flags, info.offset, info.presentationTimeUs, info.size);
+        return new DequeueOutputResult(status, index, info.flags, outputBufferOffset,
+                info.presentationTimeUs, outputBufferSize);
     }
 
     @CalledByNative
