@@ -67,6 +67,114 @@
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a66f9a4_3e60abef",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "Why would plugin controller creation fail? It looks like it\u0027s doing some mime type checks, but shouldn\u0027t those have been handled already?\n\nAt the very least, it would be nice to just defer creation of the new frame until we know that CreatePluginController() is going to succeed--perhaps they should even be paired somehow.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce5b1e5_a9d79d93",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "This only handles swapping one way--is it guaranteed that it will never go the other way? Probably best to put it somewhere below (and just use old_frame and frame directly rather than referring to owner-\u003eContentFrame)",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9139d21_5c596faa",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "This should be guarded by plugin_wrapper_, as we don\u0027t want to do this work if we already fetched the wrapper.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3296f409_4335dac4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "We should probably just assume this will never be an empty object, as it\u0027s not really recoverable otherwise.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0a692f_8d32f44f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "When a HTMLPlugInElement switches from frame to plugin, how is the previous frame torn down?\n\nAs currently written, this is unsafe (since detach can result GetFrame() returning null). Rather than trying to make sure everything gets it correct, I\u0027d strongly prefer to minimize the number of calls to detach.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 60
+      },
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af39059a_efe24b5b",
+        "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T09:37:03Z",
+      "side": 1,
+      "message": "Hmm... is this because when the mime type is PDF, we currently always create a plugin document? Should we actually be doing that? It\u0027s not really a \u0027plugin\u0027 anymore, so maybe we can just use a more standard loading path rather than having to forward the bytes here?",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
