@@ -22,6 +22,30 @@
       "revId": "b376d0b023e841e5d5ffe73f0b45b2a51d08a80d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7fc61c_cd6f65b4",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-11T06:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f18c251_2758121d",
+      "range": {
+        "startLine": 810,
+        "startChar": 2,
+        "endLine": 810,
+        "endChar": 43
+      },
+      "revId": "b376d0b023e841e5d5ffe73f0b45b2a51d08a80d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
