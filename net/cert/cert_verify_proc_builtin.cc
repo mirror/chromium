@@ -23,6 +23,7 @@
 #include "net/cert/internal/common_cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
 #include "net/cert/internal/path_builder.h"
+#include "net/cert/internal/revocation_checker.h"
 #include "net/cert/internal/simple_path_builder_delegate.h"
 #include "net/cert/internal/system_trust_store.h"
 #include "net/cert/x509_certificate.h"
@@ -67,9 +68,7 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
     // First check for revocations using the CRLSet. This does not require
     // any network activity.
     if (crl_set_) {
-      CertRevocationStatus status = CheckRevocationUsingCRLSet(path);
-      if (status == CertRevocationStatus::kKnown)
-        return status;
+      CheckChainRevocationUsingCRLSet(crl_set_, path->certs, &path->errors);
     }
 
     // TODO(eroman): Next check revocation using OCSP and CRL.
@@ -224,7 +223,7 @@ void MapPathBuilderErrorsToCertStatus(const CertPathErrors& errors,
   if (!errors.ContainsHighSeverityErrors())
     return;
 
-  if (errors.ContainsError(kCertificateRevoked))
+  if (errors.ContainsError(cert_errors::kCertificateRevoked))
     *cert_status |= CERT_STATUS_REVOKED;
 
   if (errors.ContainsError(cert_errors::kUnacceptablePublicKey))
