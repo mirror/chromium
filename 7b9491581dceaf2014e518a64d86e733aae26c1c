@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5802080_8f89756c",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T23:59:27Z",
+      "side": 0,
+      "message": "Given the description of the workarounds entry (ETC1 causes crashes with NPOT ETC1), I think we should keep this one, and instead add logic to the decoder to validate usage when the workaround is active. Basically if the workaround is on, we should only expose a restricted version of ETC1, and not rely on the client to only give us POT.",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111abfe8_542cd902",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T23:59:27Z",
+      "side": 0,
+      "message": "Ideally this one would be handled by the service side. The client workaround is easier though, so maybe that makes sense for now? Either way it\u0027s fine to remove from Capabilities.",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94428d3_24436435",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T23:59:27Z",
+      "side": 0,
+      "message": "Ditto on these 2",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
