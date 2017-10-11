@@ -317,6 +317,12 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
                       TestParameter(NOT_IN_GUEST_MODE,
                                     "restoreGeometryMaximizedState")));
 
+WRAPPED_INSTANTIATE_TEST_CASE_P(
+    ResizeColumn,
+    FileManagerBrowserTest,
+    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE, "resizeColumnByTouch"),
+                      TestParameter(NOT_IN_GUEST_MODE, "resizeColumnByMouse")));
+
 #if defined(DISABLE_SLOW_FILESAPP_TESTS)
 #define MAYBE_Traverse DISABLED_Traverse
 #else
