@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa02753_f45ee82b",
+        "filename": "chrome/browser/chromeos/login/enrollment/enrollment_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-11T19:51:36Z",
+      "side": 1,
+      "message": "nit, s/retry/retries:/ wdyt?",
+      "revId": "a940d91e2bfdf3efe3bb88035b000ccbfdef5554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
