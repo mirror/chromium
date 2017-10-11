@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "4630b34a_be675043",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "Let\u0027s state explicitly that no onTreeItemRemoved events will be triggered as a result of this call.",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651f1cc8_eddc3aad",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "Can we rename this to \u0027tree-item-removed\u0027? The convention followed in most places is\n\nEvent name: event-name-like-this\nHandler name: onEventNameLikeThis\n\nSee examples https://cs.chromium.org/search/?q\u003dFireWebUIListener+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs",
+      "range": {
+        "startLine": 62,
+        "startChar": 56,
+        "endLine": 62,
+        "endChar": 73
+      },
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ddac23_e1914e14",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "Nit (optional): s/message/event.\nI think event is a more common terminology in such cases.",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "def716c9_b10f17b7",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 13
@@ -34,6 +91,40 @@
       "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf612ad4_746551f5",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "Let\u0027s make this more explicit as follows:\n\n\"Recursively add elements to .....\"",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af601d1_eba8388d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "I am a bit skeptical about the value of having this TODO in the code. Can we just remove? Perhaps such a potential improvement investigation is better tracked with a bug.",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -72,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "d0c113f7_0324ca9d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "I am following the reasoning, except for this part \"neither will become out of order with the other\", which although it sounds reasonable, I would feel more comfortable if it was more explicitly stated in the specs.\n\nEither way, I tried proving/disproving this myself, and it seems that the ordering holds as you describe it, see minimal example https://jsfiddle.net/s818bozt/1/.",
+      "parentUuid": "df93f149_1cb8b482",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87b61260_7176539f",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 13
@@ -83,6 +192,24 @@
       "writtenOn": "2017-10-10T23:33:24Z",
       "side": 1,
       "message": "The listener for onTreeItemRemoved is now added within ready() after this.browserProxy_ has been populated. Is this early return still necessary?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49db2934_1aa8d472",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "Ping",
+      "parentUuid": "87b61260_7176539f",
       "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "8b0a614d_999da9d8",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "From an API perspective, having to call filter() and then getDisplayList(), is less convenient than having a single getDisplayList(filter, offset, count) method.\n\nHappy to hear about the tradeoffs you are mentioning.",
+      "parentUuid": "6c1f4ab1_6cd0f3d3",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c41416b3_5c15e244",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 13
@@ -153,6 +298,24 @@
       "side": 1,
       "message": "\u003e Does removeAll() not trigger an onTreeItemRemoved?\nit doesn\u0027t (it could though).\n\nSending and waiting for the event would add another trip (from C++ to JS). Then we\u0027d call updateSiteList_ after C++ sent the event. It can be changed though, please let me know which you\u0027d like.",
       "parentUuid": "c41416b3_5c15e244",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c13178_a5442c36",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:03:48Z",
+      "side": 1,
+      "message": "How about the snippet posted above, that does not require an event, and also does not trigger an (I think) unnecessary filter()+getDisplayList() sequence?",
+      "parentUuid": "6e9da694_f90c3346",
       "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
