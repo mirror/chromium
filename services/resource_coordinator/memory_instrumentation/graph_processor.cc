@@ -72,17 +72,18 @@ void GraphProcessor::CollectAllocatorDumps(
     const MemoryAllocatorDump& dump = *path_to_dump.second;
 
     bool is_global = base::StartsWith(path, "global/", CompareCase::SENSITIVE);
-    Process* graph =
+    Process* process =
         is_global ? global_graph->shared_memory_graph() : process_graph;
 
     Node* node;
     auto node_iterator = global_graph->nodes_by_guid().find(dump.guid());
     if (node_iterator == global_graph->nodes_by_guid().end()) {
-      node = graph->CreateNode(dump.guid(), path);
+      bool is_weak = dump.flags() & MemoryAllocatorDump::Flags::WEAK;
+      node = process->CreateNode(dump.guid(), path, is_weak);
     } else {
       node = node_iterator->second;
 
-      DCHECK_EQ(node, graph->FindNode(path))
+      DCHECK_EQ(node, process->FindNode(path))
           << "Nodes have different paths but same GUIDs";
       DCHECK(is_global) << "Multiple nodes have same GUID without being global";
     }
