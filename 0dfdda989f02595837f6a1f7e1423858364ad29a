@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b964121_b8d557db",
+        "filename": "chrome/test/data/instant_extended.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-11T04:59:22Z",
+      "side": 1,
+      "message": "why are you not continuing to use navigator.searchBox?",
+      "revId": "0dfdda989f02595837f6a1f7e1423858364ad29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
