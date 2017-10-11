@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10cfa374_5a7db655",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22202361_8ee6680d",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8909a43_be4f084e",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dcbc099_5f9082e3",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8909a43_be4f084e",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "66fab72a_15bda1e1",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0a6f97_0eadc8bd",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 53
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36eff591_e59a711b",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
         "patchSetId": 11
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-06T23:44:10Z",
       "side": 1,
       "message": "I\u0027m surprised you\u0027re using a constrained window for this vs a top level. Is there a reason for that?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480b6919_60d14875",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "What alternative would you recommend?\n\nThis was mainly based on the implementation at chrome_cleaner_dialog_win.cc, which uses constrained windows.\n\nOther examples I found use either a constrained window or created the dialog view directly using views::DialogDelegate::CreateDialogWidget(). However, when I tried the latter, the dialog prompt was positioned at the center of the browser window, which is not what we\u0027d like to have.\n\nFor security reasons, we want the dialog to cover part of the browser controls, so it\u0027s harder to imitate it using a js alert.",
+      "parentUuid": "36eff591_e59a711b",
       "range": {
         "startLine": 74,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f339742b_a287f4ce",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cfe4ce1_20db0bea",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb23876f_53fb9e2f",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
         "patchSetId": 11
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5a28c4bd_9811d846",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb23876f_53fb9e2f",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6bafff_cf06b202",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92005294_5c4d0bbc",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-11T19:37:00Z",
+      "side": 1,
+      "message": "We don\u0027t have data to tell if the dialog needs to be modal or not. So, I\u0027d like to do an experiment with both controlled by a feature param (see srt_field_trial.cc on this CL). However, if I set the modal type as ui::MODAL_TYPE_NONE, we hit a DCHECK when the dialog is opened. What would you recommend instead?",
+      "parentUuid": "3d6bafff_cf06b202",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
