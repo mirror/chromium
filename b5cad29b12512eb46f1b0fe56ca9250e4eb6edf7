@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93c65afb_720e1c82",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T05:09:17Z",
+      "side": 1,
+      "message": "The ones that don\u0027t have a logical_side are the ones that use\n\nconst CSSPropertyAPI\u0026 CSSPropertyAPI::ResolveToPhysicalPropertyAPI(\n    WritingMode writing_mode,\n    LogicalExtent logical_side,\n    const CSSPropertyID* properties)\n\nTheir logical_side parameter is either width or height, rather than start/end/before/after. But yeah, I can put width/height in the list of accepted values for logical_side \u0026 get rid of direction_aware.\n\nThe width/height get their \"physical\" property from a list of properties instead of a StylePropertyShorthand. I\u0027m sure I can clean this up a bit or inline the logic \u0026 get rid  of \n\nResolveToPhysicalPropertyAPI(\n    WritingMode,\n    LogicalExtent,\n    const CSSPropertyID*)",
+      "parentUuid": "6e9a1064_339a702b",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef525f11_86ded957",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T00:32:20Z",
       "side": 1,
       "message": "I guess the default value is \"\" if not specified?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf13e4a0_106895c5",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T05:09:17Z",
+      "side": 1,
+      "message": "That what I assumed",
+      "parentUuid": "ef525f11_86ded957",
       "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5cab7f0_35a0abd9",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T05:09:17Z",
+      "side": 1,
+      "message": "I\u0027ll try it",
+      "parentUuid": "7f85d718_65f05c3e",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15524a64_5ecce12b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bc44f096_2cd07647",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T05:09:17Z",
+      "side": 1,
+      "message": "For the ones that represent a direction-aware width/height instead of before/after/start/end. These ones don\u0027t use a StylePropertyShorthand to get their physical resolution.\n\nI\u0027ll experiment with improving this method.",
+      "parentUuid": "15524a64_5ecce12b",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c400a76_4913a4fc",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-11T00:32:20Z",
       "side": 1,
       "message": "This refactoring has exposed that there\u0027s actually a lot of calls to Get, only to call api.GetPropertyID() immediately from the caller. Do you think it\u0027s worth changing it back to returning a property ID until we fix the caller?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc842f43_e8c67197",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T05:09:17Z",
+      "side": 1,
+      "message": "Yeah good idea",
+      "parentUuid": "2c400a76_4913a4fc",
       "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
