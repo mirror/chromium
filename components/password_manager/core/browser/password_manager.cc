@@ -485,12 +485,18 @@ void PasswordManager::ShowManualFallbackForSaving(
   }
   ProvisionallySaveManager(password_form, matched_manager, nullptr);
 
-  DCHECK(provisional_save_manager_);
-  bool is_update = IsPasswordUpdate(*provisional_save_manager_);
-  bool has_generated_password =
-      provisional_save_manager_->has_generated_password();
-  client_->ShowManualFallbackForSaving(std::move(provisional_save_manager_),
-                                       has_generated_password, is_update);
+  // Show the fallback if a promp or confirmation bubble should be available.
+  if (ShouldPromptUserToSavePassword() ||
+      provisional_save_manager_->has_generated_password()) {
+    DCHECK(provisional_save_manager_);
+    bool is_update = IsPasswordUpdate(*provisional_save_manager_);
+    bool has_generated_password =
+        provisional_save_manager_->has_generated_password();
+    client_->ShowManualFallbackForSaving(std::move(provisional_save_manager_),
+                                         has_generated_password, is_update);
+  } else {
+    provisional_save_manager_.reset();
+  }
 }
 
 void PasswordManager::HideManualFallbackForSaving() {
@@ -803,7 +809,7 @@ void PasswordManager::OnLoginSuccessful() {
 
   RecordWhetherTargetDomainDiffers(main_frame_url_, client_->GetMainFrameURL());
 
-  if (ShouldPromptUserToSavePassword()) {
+  if (ShouldPromptUserToSavePassword(*provisional_save_manager_)) {
     bool empty_password =
         provisional_save_manager_->pending_credentials().username_value.empty();
     UMA_HISTOGRAM_BOOLEAN("PasswordManager.EmptyUsernames.OfferedToSave",
