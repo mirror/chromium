@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "797bf379_f94c019e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-11T23:54:17Z",
+      "side": 1,
+      "message": "Can you actually explain what the fix does? It is one line fix, which means there is little context to understand what the intended change of behavior is. It is likely useful to include some of that in a comment in the actual source too.",
+      "revId": "3d099040e060ef1afd3001d61d5d15b8f7fa715e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
