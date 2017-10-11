@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5f43b9_10826ed1",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-11T20:40:07Z",
+      "side": 0,
+      "message": "I feel this comment was wrong/badly worded, maybe it was meant as \"!doc can only happen if loading |doc_| fails\".",
+      "range": {
+        "startLine": 1274,
+        "startChar": 12,
+        "endLine": 1274,
+        "endChar": 61
+      },
+      "revId": "dd17a1699b1cb628aaa1479f6bab4d61a73d8f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
