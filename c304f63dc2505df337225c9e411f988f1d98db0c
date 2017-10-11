@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b53fbf4_a207a103",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T23:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bed70ea_a5eb5226",
+      "range": {
+        "startLine": 273,
+        "startChar": 27,
+        "endLine": 273,
+        "endChar": 28
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7e01b93_bfc7f163",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33e5645_99c195ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T23:26:23Z",
+      "side": 1,
+      "message": "I created a variable to store the bitmap and set it back to null in onDestroy().",
+      "parentUuid": "f7e01b93_bfc7f163",
+      "range": {
+        "startLine": 512,
+        "startChar": 23,
+        "endLine": 512,
+        "endChar": 33
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "279478e1_1e5c1354",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T23:26:23Z",
+      "side": 1,
+      "message": "Per my offline demo, using 65% black looks odd since the device background shows through the bookmark widget background.",
+      "parentUuid": "dd9cf024_2de25d19",
+      "range": {
+        "startLine": 517,
+        "startChar": 33,
+        "endLine": 517,
+        "endChar": 38
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3f1cda6_2758434b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb96c71b_f8e4798d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T23:26:23Z",
+      "side": 1,
+      "message": "Done. We can create a ColorStateList from a single color :)",
+      "parentUuid": "f3f1cda6_2758434b",
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
