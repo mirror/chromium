@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f17c5b3d_16791650",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T01:24:11Z",
+      "side": 1,
+      "message": "I am not entirely clear how this would work. Either way we\u0027d have to set the |paints_before_switching_global_scope_| differently for testing vs production. This var is set when this is the beginning of a new frame only. So to set this var differently from testing, we\u0027d have to override the SelectGlobalScope() function in testing code, and set it when a new frame starts?",
+      "parentUuid": "c498e77c_fa12fbf0",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8bae45_366ca7d0",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 5
