@@ -23,4 +23,10 @@ component("sandbox") {
   if (is_mac) {
     public_deps += [ "mac:packaged_sb_files" ]
   }
+  if (is_win) {
+    sources += [
+      "features.cc",
+      "features.h",
+    ]
+  }
 }
