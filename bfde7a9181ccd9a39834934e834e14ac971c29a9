@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d53d5142_6c304eaf",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:00:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def716c9_b10f17b7",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "620f111d_cc2ffe5c",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T23:33:24Z",
       "side": 1,
       "message": "IIUC, lines 145-150 spawn two separate async operations.\n\n1) Updates this.sites when requestAnimationFrame() calls back\n2) Recursively calls extendSiteList_ when requestIdleCallback() calls back.\n\nIf 2 happens before 1, then this.sites.length at line 136 will have the same value it had during the previous invocation, fetching the same data again. Is there an assumption made here that 1 always calls back before 2? Can we eliminate this subtle timing? Do we need both rAf and rIc usage here?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df93f149_1cb8b482",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:00:53Z",
+      "side": 1,
+      "message": "JS isn\u0027t really threaded. Is there subtle timing happening here?\n\nSome POIs (afaiu from the specs -- lemme know if I\u0027m misreading):\n- a requestAnaimationFrame will never execute in the same frame (it will be the next frame)\n- requestAnaimationFrame are executed in the order they are queued\n- requestIdleCallback are executed in the order they are queued\n- a given javascrpt instance is not multi-threaded (so execution of callbacks will be serial)\n- it\u0027s poor form to update the DOM in the idle callback since it may cause UI stuttering\n\nThat leads to:\n- The two queues may run at their own pace, but neither will become out of order with the other.\n- An idle callback is better than an animation frame for requesting data.\n- An animation callback is better for dome changes.\n\nAll that said, I don\u0027t claim to be a JS expert - I\u0027m just going by what I\u0027ve read (which doesn\u0027t make it true :) ).",
+      "parentUuid": "620f111d_cc2ffe5c",
       "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "6c1f4ab1_6cd0f3d3",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:00:53Z",
+      "side": 1,
+      "message": "The filter is retained.\n\nThe expectation is that the chronology may look like this:\n\nfilter(filter), getDisplayList, getDisplayList, getDisplayList, getDisplayList, getDisplayList.\n\nIt could be changed to this by checking on each call that filter is not changing (on the C++ side):\n\ngetDisplayList(filter), getDisplayList(filter), getDisplayList(filter), getDisplayList(filter), getDisplayList(filter).\n\nEither choice has trade-offs. I\u0027m open to discussing the trade-offs or going with your choice if you have a firm preference.",
+      "parentUuid": "e79b1ec6_b03d93f5",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c41416b3_5c15e244",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 13
@@ -81,6 +135,24 @@
       "writtenOn": "2017-10-10T23:33:24Z",
       "side": 1,
       "message": "Do we need to call updateSiteList_ manually here? Does removeAll() not trigger an onTreeItemRemoved? If so, could we simply do\n\nthis.browserProxy_.removeAll().then(() \u003d\u003e {\n // Cancel pending calls to |extendSiteList_|.\n window.cancelIdleCallback(this.extendSiteListHandle_);\n window.cancelAnimationFrame(this.extendSiteListAnimationHandle_);\n this.sites \u003d [];\n});\n\ninstead of triggering another round trip with C++?",
+      "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9da694_f90c3346",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:00:53Z",
+      "side": 1,
+      "message": "\u003e Does removeAll() not trigger an onTreeItemRemoved?\nit doesn\u0027t (it could though).\n\nSending and waiting for the event would add another trip (from C++ to JS). Then we\u0027d call updateSiteList_ after C++ sent the event. It can be changed though, please let me know which you\u0027d like.",
+      "parentUuid": "c41416b3_5c15e244",
       "revId": "bfde7a9181ccd9a39834934e834e14ac971c29a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
