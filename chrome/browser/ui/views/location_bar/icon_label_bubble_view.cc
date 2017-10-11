@@ -214,6 +214,7 @@ void IconLabelBubbleView::Layout() {
   if (ShouldShowLabel()) {
     ink_drop_bounds.set_width(ink_drop_bounds.width() -
                               GetPostSeparatorPadding());
+    separator_view_->UpdateOpacity();
   }
 
   ink_drop_container_->SetBoundsRect(ink_drop_bounds);
