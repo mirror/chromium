@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1325bfea_943617eb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSliderElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-11T09:08:54Z",
+      "side": 1,
+      "message": "I had to add this to fix a crash. Sorry for not catching it before review.",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 13
+      },
+      "revId": "3adadf92e8943e6bb61781bb1512f76eb46cb349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
