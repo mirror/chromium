@@ -384,6 +384,7 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //     |  {if ModernMediaControlsEnabled}
 //     +-HTMLDivElement
 //     |  |  (-internal-media-controls-button-panel)
+//     |  |  <video> only, otherwise children are directly attached to parent
 //     |  +-MediaControlPlayButtonElement
 //     |  |   (-webkit-media-controls-play-button)
 //     |  +-MediaControlCurrentTimeDisplayElement
@@ -438,7 +439,7 @@ void MediaControlsImpl::InitializeControls() {
   // If using the modern media controls, the buttons should belong to a
   // seperate button panel. This is because they are displayed in two lines.
   Element* button_panel = panel_;
-  if (IsModern()) {
+  if (IsModern() && MediaElement().IsHTMLVideoElement()) {
     modern_play_button_ = new MediaControlModernPlayButtonElement(*this);
     panel_->AppendChild(modern_play_button_);
 
