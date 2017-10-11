@@ -519,6 +519,7 @@ TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
 
 TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
+  Navigate(GURL("https://www.example.com"));
   SimulateSignificantVideoPlayer(0);
   EXPECT_TRUE(IsTimerRunning());
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
@@ -529,14 +530,17 @@ TEST_F(MediaEngagementContentsObserverTest,
 
 TEST_F(MediaEngagementContentsObserverTest, InteractionsRecorded) {
   GURL url("https://www.example.com");
+  GURL url2("https://www.example.org");
   ExpectScores(url, 0.0, 0, 0);
 
   Navigate(url);
+  Navigate(url2);
   ExpectScores(url, 0.0, 1, 0);
 
+  Navigate(url);
   SimulateAudible();
   SimulateSignificantPlaybackTime();
-  ExpectScores(url, 0.0, 1, 1);
+  ExpectScores(url, 0.0, 2, 1);
 }
 
 TEST_F(MediaEngagementContentsObserverTest,
@@ -575,9 +579,9 @@ TEST_F(MediaEngagementContentsObserverTest, RecordScoreOnPlayback) {
   GURL url2("https://www.google.co.uk");
   GURL url3("https://www.example.com");
 
-  SetScores(url1, 5, 5);
-  SetScores(url2, 5, 3);
-  SetScores(url3, 1, 1);
+  SetScores(url1, 6, 5);
+  SetScores(url2, 6, 3);
+  SetScores(url3, 2, 1);
   base::HistogramTester tester;
   tester.ExpectTotalCount(
       MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
@@ -612,7 +616,7 @@ TEST_F(MediaEngagementContentsObserverTest, RecordScoreOnPlayback) {
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordScoreOnPlayback_Muted) {
   GURL url("https://www.google.com");
-  SetScores(url, 5, 5);
+  SetScores(url, 6, 5);
 
   base::HistogramTester tester;
   Navigate(url);
@@ -629,7 +633,7 @@ TEST_F(MediaEngagementContentsObserverTest, DoNotRecordScoreOnPlayback_Muted) {
 TEST_F(MediaEngagementContentsObserverTest,
        DoNotRecordScoreOnPlayback_NoAudioTrack) {
   GURL url("https://www.google.com");
-  SetScores(url, 5, 5);
+  SetScores(url, 6, 5);
 
   base::HistogramTester tester;
   Navigate(url);
@@ -642,7 +646,7 @@ TEST_F(MediaEngagementContentsObserverTest,
 TEST_F(MediaEngagementContentsObserverTest,
        DoNotRecordScoreOnPlayback_InternalUrl) {
   GURL url("chrome://about");
-  SetScores(url, 5, 5);
+  SetScores(url, 6, 5);
 
   base::HistogramTester tester;
   Navigate(url);
@@ -673,7 +677,7 @@ TEST_F(MediaEngagementContentsObserverTest,
   Navigate(url);
 
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 5.0 / 7.0, 7, 5);
+  ExpectScores(url, 5.0 / 6.0, 6, 5);
 
   SimulateDestroy();
   ExpectUkmEntry(url, 5, 7, 71, 0, true);
@@ -687,10 +691,10 @@ TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
   SimulateSignificantVideoPlayer(0);
   SimulateSignificantPlaybackTime();
-  ExpectScores(url, 6.0 / 7.0, 7, 6);
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
 
   Navigate(GURL("https://www.example.org"));
+  ExpectScores(url, 6.0 / 7.0, 7, 6);
   ExpectUkmEntry(url, 6, 7, 86, 1, true);
 }
 
@@ -701,9 +705,9 @@ TEST_F(MediaEngagementContentsObserverTest,
   Navigate(url);
 
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 2 / 10.0, 10, 2);
 
   Navigate(GURL("https://www.example.org"));
+  ExpectScores(url, 2 / 10.0, 10, 2);
   ExpectUkmEntry(url, 2, 10, 20, 0, false);
 }
 

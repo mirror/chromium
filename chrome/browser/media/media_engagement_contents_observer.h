@@ -167,6 +167,15 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // can identify whether the playback would have been blocked.
   void RecordEngagementScoreToHistogramAtPlayback(const MediaPlayerId& id);
 
+  // Stores pending media engagement data that needs to be committed either
+  // after a navigation to another domain, when the observer is destroyed or
+  // when we have had a media playback. A visit is automatically implied.
+  struct PendingData {
+    bool media_playback = false;
+  };
+  base::Optional<PendingData> pending_data_to_commit_;
+  void MaybeCommitPendingData();
+
   url::Origin committed_origin_;
 
   static const base::TimeDelta kSignificantMediaPlaybackTime;
