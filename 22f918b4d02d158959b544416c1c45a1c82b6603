@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d591c5_6fd39c9f",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:53:51Z",
+      "side": 1,
+      "message": "Alex: no reason a WebContents *wouldn\u0027t* have a main frame, right?",
+      "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

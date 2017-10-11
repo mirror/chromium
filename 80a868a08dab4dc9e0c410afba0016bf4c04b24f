@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03649204_d1fabfc8",
+        "filename": "extensions/renderer/api/automation/automation_api_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:53:51Z",
+      "side": 0,
+      "message": "Alex: all this simplification seems safe to me, since we *should* be able to restrict the message to only being sent to main frames.  Any risk here?",
+      "revId": "80a868a08dab4dc9e0c410afba0016bf4c04b24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
