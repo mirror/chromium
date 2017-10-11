@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040cc75d_bb850ff7",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-11T18:13:53Z",
+      "side": 1,
+      "message": "s/Google properties/Google web properties",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a82add_3eb166b1",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-11T18:13:53Z",
+      "side": 1,
+      "message": "s/Google properties/Google web properties",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b427558c_abd2b3bf",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-11T18:13:53Z",
+      "side": 1,
+      "message": "Can this delegate change? If not, then please add:\nDCHECK(delegate);\nDCHECK(!delegate_);",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c3dd52_63849cc6",
+        "filename": "ios/chrome/browser/tabs/tab_helper_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-11T18:13:53Z",
+      "side": 1,
+      "message": "Can the browser_state be an incognito one? If not, then there if is useless (ios::AccountConsistencyServiceFactory::GetForBrowserState should return a non-null object for regular browser states - see https://cs.chromium.org/chromium/src/ios/chrome/browser/signin/account_consistency_service_factory.mm?rcl\u003da14628013711891a600348b52153d9b36c2ba067\u0026l\u003d40 )",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57e6064_96f50162",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-11T18:13:53Z",
+      "side": 1,
+      "message": "Same question concerning the browser state: can it be incognito? If not, then I think this if is not-needed.",
+      "range": {
+        "startLine": 2420,
+        "startChar": 6,
+        "endLine": 2420,
+        "endChar": 31
+      },
+      "revId": "6e36bf44f628ac945273259bbd2e3f9c531213df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
