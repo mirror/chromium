@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc0d0bda_9c215978",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab89327d_416d23fd",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b734d31b_cd2d2061",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4315fbd2_444490b5",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b734d31b_cd2d2061",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3d3de233_fa6fe4dc",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e67fd1e_e2c4216e",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5276357_6be0d9c2",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053b6b75_ca7b88c5",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5276357_6be0d9c2",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38c3462f_58fad114",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76dcccf7_6b57aad9",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04ba5df3_1985753c",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 10
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "211e4f7a_7dd63a55",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04ba5df3_1985753c",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a676e75_1ce5fee5",
         "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
         "patchSetId": 10
@@ -118,6 +226,24 @@
       "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fff0dc8_36dc73cf",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-11T07:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a676e75_1ce5fee5",
+      "revId": "ead19ba6f1389e750e6d657602ce5c52a8b8049f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
