@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "921fbda0_ef3237d6",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "I agree with you that this could happen. Perhaps we should print a warning instead of DCHECK?",
+      "parentUuid": "d08319cd_f4ec6fa5",
+      "range": {
+        "startLine": 166,
+        "startChar": 40,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6c033a_3bdfa6eb",
         "filename": "chrome/browser/extensions/crx_installer.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3b1ed72b_dd0fd953",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6c033a_3bdfa6eb",
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fc017b4_173040f6",
         "filename": "chrome/browser/extensions/crx_installer.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ae4d91_e53fe937",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc017b4_173040f6",
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "49d82bae_bca972c4",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690b44ca_1132f0dd",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60b0517b_835ff6ef",
         "filename": "chrome/browser/extensions/crx_installer.h",
         "patchSetId": 1
@@ -102,6 +186,30 @@
       "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9b05ed_b0c8e7ca",
+        "filename": "chrome/browser/extensions/crx_installer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b0517b_835ff6ef",
+      "range": {
+        "startLine": 467,
+        "startChar": 25,
+        "endLine": 467,
+        "endChar": 0
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "66005b83_253e7c00",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62156863_317061b0",
+      "range": {
+        "startLine": 86,
+        "startChar": 71,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fceda2d2_1379abd3",
         "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
         "patchSetId": 1
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "540f6621_dd120d53",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fceda2d2_1379abd3",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 632,
+        "endChar": 5
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a4d0f55_0abfa362",
         "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
         "patchSetId": 1
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "9392b05f_3ec5ab6b",
+        "filename": "chrome/browser/extensions/crx_installer_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4d0f55_0abfa362",
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e073c912_ae2734b5",
         "filename": "extensions/browser/extension_system.h",
         "patchSetId": 1
@@ -179,6 +353,30 @@
       "writtenOn": "2017-10-10T22:57:07Z",
       "side": 1,
       "message": "which callback?",
+      "range": {
+        "startLine": 134,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 16
+      },
+      "revId": "48e4158920a7d22f62f406db78d1378a50896d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2094729_e4c9570f",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-11T00:38:55Z",
+      "side": 1,
+      "message": "Thanks for catching this silly comment. It should be on the next cl.",
+      "parentUuid": "e073c912_ae2734b5",
       "range": {
         "startLine": 134,
         "startChar": 8,
