@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b7acf41d_eb23cc98",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-11T14:54:27Z",
+      "side": 1,
+      "message": "I agree with Matt that Ensure implies that there\u0027s no need to DCHECK.\nReplacing.",
+      "parentUuid": "d7ae65d8_3e202599",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cd64bc_48200326",
         "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
         "patchSetId": 5
@@ -63,6 +87,24 @@
       "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33d3450_cbb86ad3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-11T14:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99cd64bc_48200326",
+      "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
