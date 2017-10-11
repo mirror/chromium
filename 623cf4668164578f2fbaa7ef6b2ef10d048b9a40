@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c7efb18_83716cf5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-11T18:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b627a892_e9daebae",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 33
+      },
+      "revId": "623cf4668164578f2fbaa7ef6b2ef10d048b9a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebd5a1f9_a5113482",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T23:32:40Z",
       "side": 1,
       "message": "The failure message shouldn\u0027t get printed unless the check fails, so this can be simplified to\n\nupdateFailureReason(..)\nreturn expectedTabCount \u003d\u003d actualTabCount;",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 178,
+        "endChar": 28
+      },
+      "revId": "623cf4668164578f2fbaa7ef6b2ef10d048b9a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea085df_226188f0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-11T18:13:42Z",
+      "side": 1,
+      "message": "Technically it\u0027ll be the same, but I like how the current version connects \"unsatisfied\" case to failure reason.",
+      "parentUuid": "ebd5a1f9_a5113482",
       "range": {
         "startLine": 171,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c67f1349_102294ad",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-11T18:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b900820_b1ae1c47",
+      "range": {
+        "startLine": 181,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 9
+      },
+      "revId": "623cf4668164578f2fbaa7ef6b2ef10d048b9a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9586f926_3d325f21",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-10T23:32:40Z",
       "side": 1,
       "message": "Does Locale.getDefault() work here?",
+      "range": {
+        "startLine": 189,
+        "startChar": 54,
+        "endLine": 189,
+        "endChar": 67
+      },
+      "revId": "623cf4668164578f2fbaa7ef6b2ef10d048b9a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98eeb5cc_a4a072ef",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-11T18:13:42Z",
+      "side": 1,
+      "message": "Yes, as any other locale. But I don\u0027t want any localization at all, so I pass null.",
+      "parentUuid": "9586f926_3d325f21",
       "range": {
         "startLine": 189,
         "startChar": 54,
