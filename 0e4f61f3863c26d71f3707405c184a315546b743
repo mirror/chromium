@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993d55fa_0a5b205a",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T07:01:49Z",
+      "side": 1,
+      "message": "I think this should probably always be non-null if LocalFrame is reachable?\n\nDo we / should we even allow the creation of a worker on a detached frame?",
+      "revId": "0e4f61f3863c26d71f3707405c184a315546b743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
