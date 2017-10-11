@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19849c1b_5c818a33",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T02:21:54Z",
+      "side": 1,
+      "message": "Since impl of |HasTextBoxes()| and |HasRenderedText()| are exactly same,\nI think we don\u0027t need to have |HasRenderedText()|.\n\nAlso, a comment of |HasTextBoxes()| says \"implies rendered text..\"",
+      "revId": "06bb28bd9f7afe12415466e1a6a14af56a35011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
