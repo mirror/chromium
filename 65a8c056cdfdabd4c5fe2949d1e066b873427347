@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de90d00c_8368befd",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-11T22:29:31Z",
+      "side": 1,
+      "message": "Should stay up I think based on:\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order\n\nWithin each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\nAlso, consider if it is still needed publicly, now that we have a static method.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d6222b_7caaa7c4",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-11T22:29:31Z",
+      "side": 1,
+      "message": "Is there a reason to keep this on the class declaration?\nCould you move it into the cc file?",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31dee81_283dfb2e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-11T22:29:31Z",
+      "side": 1,
+      "message": "how about text that does not parse to a number?",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1027ad_c2b59357",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-11T22:29:31Z",
+      "side": 1,
+      "message": "What is this condition testing?",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
