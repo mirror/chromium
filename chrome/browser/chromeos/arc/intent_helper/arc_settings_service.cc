@@ -263,6 +263,9 @@ void ArcSettingsServiceImpl::OnPrefChanged(const std::string& pref_name) const {
   } else if (pref_name == prefs::kArcLocationServiceEnabled) {
     if (ShouldSyncLocationServiceEnabled())
       SyncLocationServiceEnabled();
+  } else if (pref_name == ::prefs::kApplicationLocale ||
+             pref_name == ::prefs::kLanguagePreferredLanguages) {
+    SyncLocale();
   } else if (pref_name == ::prefs::kUse24HourClock) {
     SyncUse24HourClock();
   } else if (pref_name == ::prefs::kResolveTimezoneByGeolocation) {
@@ -316,6 +319,8 @@ void ArcSettingsServiceImpl::StartObservingSettingsChanges() {
   AddPrefToObserve(prefs::kArcBackupRestoreEnabled);
   AddPrefToObserve(prefs::kArcLocationServiceEnabled);
   AddPrefToObserve(prefs::kSmsConnectEnabled);
+  AddPrefToObserve(::prefs::kApplicationLocale);
+  AddPrefToObserve(::prefs::kLanguagePreferredLanguages);
   AddPrefToObserve(::prefs::kResolveTimezoneByGeolocation);
   AddPrefToObserve(::prefs::kUse24HourClock);
   AddPrefToObserve(::prefs::kWebKitDefaultFixedFontSize);
@@ -448,7 +453,17 @@ void ArcSettingsServiceImpl::SyncLocale() const {
   bool value_exists = pref->GetValue()->GetAsString(&locale);
   DCHECK(value_exists);
   base::DictionaryValue extras;
+  // Chrome OS locale may contain only the language part (e.g. fr) but country
+  // code (e.g. fr_FR).  Since Android expects locale to contain country code,
+  // ARC++ container will derive a likely locale with country code from such.
   extras.SetString("locale", locale);
+  std::string preferredLanguages =
+      registrar_.prefs()->GetString(::prefs::kLanguagePreferredLanguages);
+  // |preferredLanguages| consists of comma separated locale strings. It may be
+  // empty or contain empty items, but those are ignored on ARC++ container.  A
+  // derived locale from language only locale may be de-duped on ARC++
+  // container.
+  extras.SetString("preferredLanguages", preferredLanguages);
   SendSettingsBroadcast("org.chromium.arc.intent_helper.SET_LOCALE", extras);
 }
 
