@@ -22,6 +22,30 @@
       "revId": "c34130439832824136e238e314f02bcba478eaec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdc1120_844321df",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T01:26:36Z",
+      "side": 1,
+      "message": "Added helper functions\n\nbool ShouldUseNGAlternatives()\nconst NGOffsetMappingResult\u0026 GetNGOffsetMapping()",
+      "parentUuid": "a9638aa6_b87ed03a",
+      "range": {
+        "startLine": 1964,
+        "startChar": 9,
+        "endLine": 1964,
+        "endChar": 17
+      },
+      "revId": "c34130439832824136e238e314f02bcba478eaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
