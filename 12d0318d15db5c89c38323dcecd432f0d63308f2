@@ -118,6 +118,30 @@
       "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28e3b78_3b971a19",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-11T00:15:53Z",
+      "side": 1,
+      "message": "I think we need to make the assumptions clear for this method.  Right now, we assume this method is only called \"when SCREEN_ARC_TERMS_OF_SERVICE is currently showing if it is ever going to show during the login host session\".  If we cannot hold this assumption, a lot of checks here won\u0027t make sense.\n\nYue, you mentioned that you saw the problem is caused by the fact this method is called before SCREEN_ARC_TERMS_OF_SERVICE is shown.  Abe-san, do you know if we want to support this case?",
+      "parentUuid": "b4439956_62afd43a",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
