@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bde103a9_8df23080",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-11T08:18:23Z",
+      "side": 1,
+      "message": "Oh, don\u0027t do that, it\u0027s counter to our coding style: \"You may not use a using-directive to make all names from a namespace available.\" (https://google.github.io/styleguide/cppguide.html#Namespaces).",
+      "parentUuid": "ca9fbed5_9eda8b0a",
+      "range": {
+        "startLine": 214,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa31b3c_19272e65",
         "filename": "ui/base/win/tablet.h",
         "patchSetId": 11
