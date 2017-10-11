@@ -18,6 +18,9 @@
         android:label="@string/short_name"
         android:allowBackup="false"
         android:supportsRtl="true">
+
+        <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
         <activity android:name="org.chromium.webapk.shell_apk.MainActivity"
                   android:theme="@android:style/Theme.Translucent.NoTitleBar"
                   android:excludeFromRecents="true">
