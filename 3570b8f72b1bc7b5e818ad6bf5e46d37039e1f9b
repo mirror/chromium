@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a478e5_b33d250f",
+        "filename": "cc/test/fake_resource_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-11T16:29:54Z",
+      "side": 1,
+      "message": "Can these make_unique?",
+      "revId": "3570b8f72b1bc7b5e818ad6bf5e46d37039e1f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
