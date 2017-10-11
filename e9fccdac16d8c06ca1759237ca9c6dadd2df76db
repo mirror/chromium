@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b18e93_49ed150e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "Can we declare extendSiteListHandle_ and extendSiteListAnimationHandle_ here? They are being directly assigned a value below which works in JS, but it\u0027s not matching what we do elsewhere.\n\nSame for this.browserProxy_",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9085718a_f6ad7278",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "Should we reset this.extendSiteListHandle_ and this.extendSiteListAnimationHandle_ to some dummy value, maybe null? It seems cleaner to not leave stale state around, even if it is not being used anywhere.",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccfd115_af34b700",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "Does wrapping this line in rAf result in an observable difference? My expectation is that clearing the DOM is pretty fast and this would not be necessary.",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a33385a_d8566b45",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "Is it intentional to always create a new array here, instead of modifying the existing array in place? I think the latter would eliminate a lot of unnecessary work.",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b0bd9b_4d09fe81",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "extendSiteList_ is already asynchronous and yields internally before processing the async response, or calling itself again. Do we need this initial yielding? Could this just be\n\nthis.clearExtendSiteList_();\nthis.extendSiteList_();",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91b991e_0524e2eb",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data_details_subpage.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 1,
+      "message": "Nit: Quotes are not required here.",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

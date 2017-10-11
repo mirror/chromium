@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8fafd1e_99277f61",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T22:27:11Z",
+      "side": 0,
+      "message": "I don\u0027t think this string is used anywhere else. Can you also remove from https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?q\u003dIDS_SETTINGS_COOKIES_SINGLE_COOKIE\u0026sq\u003dpackage:chromium\u0026l\u003d2657\u0026dr\u003dC ?",
+      "revId": "1f15c0626aa82e53adb34764aa22b44a0f1b1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
