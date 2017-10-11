@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "709d7ffa_098d0896",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/HTMLAnchorElement/anchor-ismap-crash.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T18:12:08Z",
+      "side": 1,
+      "message": "nit: It\u0027ll be better if we have a comment explaining why we expect an error here, and why it can\u0027t be caught.",
+      "revId": "4573c60f6eb9370a93c2cad4053f9a1cd76b2fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
