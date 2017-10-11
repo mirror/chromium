@@ -249,7 +249,7 @@ void SyntheticSmoothMoveGesture::ForwardMouseWheelEvent(
 
   mouse_wheel_event.SetTimeStampSeconds(ConvertTimestampToSeconds(timestamp));
 
-  target->DispatchInputEventToPlatform(mouse_wheel_event);
+  target->InjectSyntheticInputEvent(mouse_wheel_event);
 }
 
 void SyntheticSmoothMoveGesture::PressPoint(SyntheticGestureTarget* target,

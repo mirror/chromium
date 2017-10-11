@@ -21,6 +21,7 @@
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
+#include "content/browser/renderer_host/input/synthetic_gesture_target.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -92,7 +93,8 @@ struct TextInputState;
 
 // Basic implementation shared by concrete RenderWidgetHostView subclasses.
 class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
-                                                public IPC::Listener {
+                                                public IPC::Listener,
+                                                public SyntheticGestureTarget {
  public:
   ~RenderWidgetHostViewBase() override;
 
@@ -139,6 +141,14 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // IPC::Listener implementation:
   bool OnMessageReceived(const IPC::Message& msg) override;
+
+  // SyntheticGestureTarget implementation.
+  void InjectSyntheticInputEvent(const blink::WebInputEvent& event) override;
+  SyntheticGestureParams::GestureSourceType
+  GetDefaultSyntheticGestureSourceType() const override;
+  base::TimeDelta PointerAssumedStoppedTime() const override;
+  float GetTouchSlopInDips() const override;
+  float GetMinScalingSpanInDips() const override;
 
   void SetPopupType(blink::WebPopupType popup_type);
 
@@ -212,10 +222,14 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual void GestureEventAck(const blink::WebGestureEvent& event,
                                InputEventAckState ack_result);
 
-  // Create a platform specific SyntheticGestureTarget implementation that will
-  // be used to inject synthetic input events.
-  virtual std::unique_ptr<SyntheticGestureTarget>
-  CreateSyntheticGestureTarget();
+  // Platform-dependent synthetic events implementation.
+  virtual void InjectSyntheticTouchEvent(const blink::WebTouchEvent& web_touch,
+                                         const ui::LatencyInfo& latency_info);
+  virtual void InjectSyntheticMouseWheelEvent(
+      const blink::WebMouseWheelEvent& web_wheel,
+      const ui::LatencyInfo& latency_info);
+  virtual void InjectSyntheticMouseEvent(const blink::WebMouseEvent& web_mouse,
+                                         const ui::LatencyInfo& latency_info);
 
   // Create a BrowserAccessibilityManager for a frame in this view.
   // If |for_root_frame| is true, creates a BrowserAccessibilityManager
@@ -525,6 +539,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                           int embed_id,
                           const base::UnguessableToken& token);
 #endif
+
+  bool PointIsWithinContents(int x, int y) const;
 
   gfx::Rect current_display_area_;
 

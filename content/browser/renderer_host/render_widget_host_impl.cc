@@ -1376,8 +1376,7 @@ void RenderWidgetHostImpl::QueueSyntheticGesture(
     base::OnceCallback<void(SyntheticGesture::Result)> on_complete) {
   if (!synthetic_gesture_controller_ && view_) {
     synthetic_gesture_controller_ =
-        base::MakeUnique<SyntheticGestureController>(
-            this, view_->CreateSyntheticGestureTarget());
+        base::MakeUnique<SyntheticGestureController>(this, view_);
   }
   if (synthetic_gesture_controller_) {
     synthetic_gesture_controller_->QueueSyntheticGesture(
@@ -1849,6 +1848,7 @@ void RenderWidgetHostImpl::Destroy(bool also_delete) {
     view_.reset();
   }
 
+  synthetic_gesture_controller_.reset();
   process_->GetSharedBitmapAllocationNotifier()->RemoveObserver(this);
   process_->RemoveWidget(this);
   process_->RemoveRoute(routing_id_);
