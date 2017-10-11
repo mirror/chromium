@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15f986d3_3aedbbe9",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "This is just testing that MockChooserController::OptionRemoved does nothing when it can\u0027t find a particular row, which isn\u0027t useful. I added a test to table_view_unittest.cc to cover this case instead.",
+      "parentUuid": "bb1ae5ea_c08a1781",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 49
+      },
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e25e4b2_50a1908e",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cc4127_bf7170a3",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "We already have tests to determine that Add and Remove are plumbed correctly, and the plumbing is not complicated so I think those tests are sufficient. At this point we\u0027re just testing capabilities of TableView, which is not the class of concern here.",
+      "parentUuid": "4e25e4b2_50a1908e",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f37497c2_594cb8fd",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "Ditto above.",
+      "parentUuid": "e987819f_59f7fa44",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77d21009_558edb9d",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9add14_7cd056fb",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "ditto",
+      "parentUuid": "77d21009_558edb9d",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "bd619563_e61cfa3f",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "ditto",
+      "parentUuid": "58411ebe_790d7616",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d215e1bc_3ce67673",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89116e02_3c151291",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "ditto",
+      "parentUuid": "d215e1bc_3ce67673",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "2ebea79e_162bfcd6",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "This test still exists, but was renamed to \"TurnBluetoothOffAndOn\"",
+      "parentUuid": "266db5b9_9980f9c3",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f79b487_6f91df35",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca53eb4f_d7156517",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "This test still exists, but was renamed \"FindNoDevices\"",
+      "parentUuid": "6f79b487_6f91df35",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "1ddb5569_b48272ed",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "This test still exists, and was renamed \"FindOneDevice.\" I removed the selection part of the test because again it\u0027s veering into just testing TableView.",
+      "parentUuid": "4dfc13ae_20abe41d",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d9b3c03_6ac60e8e",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d75287_e19d1996",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "It was rolled into device_chooser_browsertest.cc so that it can test ChooserBubbleUi as well.",
+      "parentUuid": "6d9b3c03_6ac60e8e",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "a7e07b6d_e11e96e3",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "Some of these are identical to tests I deleted for really testing TableView. Others are really testing DeviceChooserContentView; ChooserDialogView is such a thin wrapper that there isn\u0027t much to test in it. The thing I could find that was valuable here was the button state, which is why I added the test \"ButtonState\".",
+      "parentUuid": "eb45b9ca_248a52c5",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95ae43ae_b697737b",
         "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
         "patchSetId": 4
@@ -209,6 +413,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9866f840_1006edd5",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-11T21:55:14Z",
+      "side": 0,
+      "message": "In device_chooser_browsertest I call Show(nullptr), which gets plumbed to here. But the rest of the class is set up to handle a null bubble_reference and the test works fine, so I decided to just remove the DCHECK.",
+      "parentUuid": "95ae43ae_b697737b",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
