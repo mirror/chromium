@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5acd91_d0311289",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-10-11T16:55:15Z",
+      "side": 1,
+      "message": "Drive by comment: I might be understanding things wrong, but looking at [1], it appears the request is inserted in the loaders_ list after DispatchWillSendRequest is called. If we currently have 2 active requests, and we\u0027re at the WillSendRequest for the 3rd one, we will get request_count \u003d\u003d 2 here, and we won\u0027t end up resetting the timer. Should we do request_count \u003d local_frame_-\u003eGetDocument()-\u003eFetcher()-\u003eActiveRequestCount() + 1 instead?\n\n\n[1]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1432",
+      "revId": "6161e912bd613a6487e12410344cff99ba994db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
