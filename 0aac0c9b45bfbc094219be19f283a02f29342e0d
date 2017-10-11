@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe29447_4f501bc7",
+        "filename": "chrome/browser/installable/bucket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:57:44Z",
+      "side": 1,
+      "message": "Should this reset count_?",
+      "revId": "0aac0c9b45bfbc094219be19f283a02f29342e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b09abb0_89b69f36",
+        "filename": "chrome/browser/installable/bucket.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:57:44Z",
+      "side": 1,
+      "message": "This should move up a bit.",
+      "revId": "0aac0c9b45bfbc094219be19f283a02f29342e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9533ac00_429c4a7f",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:57:44Z",
+      "side": 1,
+      "message": "Can you move all of this into installable_metrics? That way you can remove a lot of the exposed stuff.",
+      "revId": "0aac0c9b45bfbc094219be19f283a02f29342e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f792371_b79b6952",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:57:44Z",
+      "side": 1,
+      "message": "Did you consider defining this in the new buckets file?",
+      "revId": "0aac0c9b45bfbc094219be19f283a02f29342e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13a0eea_89a46fa0",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:57:44Z",
+      "side": 1,
+      "message": "Does this work? I didn\u0027t think you could use the macro unless you had a constant histogram name, but there is a function version you can use.",
+      "revId": "0aac0c9b45bfbc094219be19f283a02f29342e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
