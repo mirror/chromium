@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00981be4_d6a62d0e",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-11T01:29:16Z",
+      "side": 1,
+      "message": "I was trying to fit in with the ranval stuff, but perhaps that is copied verbatim from its use in tcmalloc. I\u0027ll change this to conform to Chromium style. Done.",
+      "parentUuid": "a06bff72_5071ef44",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5e798f6_2b8cbc7b",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 2
@@ -114,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "68110983_ef420e32",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-11T01:29:16Z",
+      "side": 1,
+      "message": "My comment was a little confusing - I meant that we want WebView to behave like branded Chrome.\n\nAs far as disabling this, I\u0027m balancing the needs of the V8 team vs. Chrome - I\u0027m happy to make this a debug only feature, if V8 can live with that. Michael, Ulan?",
+      "parentUuid": "affe0095_5b334a49",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c0a517a_7b8deb47",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 2
@@ -125,6 +167,24 @@
       "writtenOn": "2017-10-11T00:10:22Z",
       "side": 1,
       "message": "Is there a benefit to having a separate |setSeed| function?",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306d442b_5b08c519",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-11T01:29:16Z",
+      "side": 1,
+      "message": "It seems better to keep knowledge of the internals of ranctx together. However, I can accomplish that by moving this function up there (and eliminating setSeed.)",
+      "parentUuid": "7c0a517a_7b8deb47",
       "revId": "c83641911607ac388d8461f3b380488bec011d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "5cef2050_2f9c1a7a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-11T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4fe00c9_abe271d4",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "428e2fdf_4f6cf3cc",
         "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
         "patchSetId": 2
@@ -162,6 +240,24 @@
       "revId": "c83641911607ac388d8461f3b380488bec011d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e941ff_bf493d10",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-11T01:29:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "428e2fdf_4f6cf3cc",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
