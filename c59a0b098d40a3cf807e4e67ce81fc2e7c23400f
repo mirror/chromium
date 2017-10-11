@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed3e39e1_57e50fd7",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T01:54:42Z",
+      "side": 1,
+      "message": "This should be done in LayoutTextControlSingleLine::CreateInnerEditorStyle()\nand follow HTMLInputElement::ShouldRevealPassword().\n\nNote: We don\u0027t need to have TextControlEmenet::IsPasswordType(). It can be\ndone by |HTMLInputElement::type() \u003d\u003d InputTypeNames::password|\n\nOr specified in \"html.css\"?\nFollowing rules are in \"html.css\".\n\n512 input::-webkit-input-placeholder {\n513    line-height: initial;\n514    white-space: pre;\n515    word-wrap: normal;\n516    overflow: hidden;\n517    -webkit-user-modify: read-only !important;\n517 }\n519\n520 input[type\u003d\"password\" i] {\n521    -webkit-text-security: disc !important;\n522 }",
+      "revId": "c59a0b098d40a3cf807e4e67ce81fc2e7c23400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c988cb_fe3506ff",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T01:54:42Z",
+      "side": 1,
+      "message": "Since text control can have black color background color, we should\nnot specify color balck here.\n\nWe may want to use color from pseudo element of ::placeholder[1]?\n\n\n[1] https://developer.mozilla.org/en-US/docs/Web/CSS/::placeholder",
+      "revId": "c59a0b098d40a3cf807e4e67ce81fc2e7c23400f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
