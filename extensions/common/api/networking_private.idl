@@ -65,6 +65,10 @@ namespace networkingPrivate {
     Direct, Manual, PAC, WPAD
   };
 
+  enum SourceType {
+    Device, DevicePolicy, User, UserPolicy
+  };
+
   // Managed property types. These types all share a common structure:
   // Active: For properties that are translated from the configuration
   //     manager (e.g. Shill), the 'active' value currently in use by the
@@ -720,7 +724,7 @@ namespace networkingPrivate {
     boolean? RestrictedConnectivity;
     IPConfigProperties? StaticIPConfig;
     IPConfigProperties? SavedIPConfig;
-    DOMString? Source;
+    SourceType? Source;
     TetherProperties? Tether;
     NetworkType Type;
     VPNProperties? VPN;
@@ -745,7 +749,7 @@ namespace networkingPrivate {
     boolean? RestrictedConnectivity;
     ManagedIPConfigProperties? StaticIPConfig;
     IPConfigProperties? SavedIPConfig;
-    DOMString? Source;
+    SourceType? Source;
     TetherProperties? Tether;
     NetworkType Type;
     ManagedVPNProperties? VPN;
@@ -762,7 +766,7 @@ namespace networkingPrivate {
     DOMString GUID;
     DOMString? Name;
     long? Priority;
-    DOMString? Source;
+    SourceType? Source;
     TetherProperties? Tether;
     NetworkType Type;
     VPNStateProperties? VPN;
@@ -922,7 +926,9 @@ namespace networkingPrivate {
     static void getState(DOMString networkGuid,
                          GetStatePropertiesCallback callback);
 
-    // Sets the properties of the network with id networkGuid.
+    // Sets the properties of the network with id |networkGuid|. This is only
+    // valid for configured networks (Source != None). Unconfigured visible
+    // networks should use createNetwork instead.
     // |networkGuid|: The GUID of the network to set properties for.
     // |properties|: The properties to set.
     // |callback|: Called when the operation has completed.
