@@ -2,17 +2,129 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 1
+// Next MinVersion: 2
 
 module arc.mojom;
 
-// Next method ID: 1
-interface PrintHost {
-  Print@0(handle file);
+struct PrintPageRange {
+  int32 start;
+  int32 end;
 };
 
-// Next method ID: 1
+struct PrintMediaSize {
+  string id;
+  string label;
+  int32 widthMils;
+  int32 heightMils;
+};
+
+struct PrintResolution {
+  string id;
+  string label;
+  int32 horizontalDpi;
+  int32 verticalDpi;
+};
+
+struct PrintMargins {
+  int32 leftMils;
+  int32 topMils;
+  int32 rightMils;
+  int32 bottomMils;
+};
+
+[Extensible]
+enum PrintColorMode {
+  MONOCHROME = 1,
+  COLOR = 2,
+};
+
+[Extensible]
+enum PrintDuplexMode {
+  NONE = 1,
+  LONG_EDGE = 2,
+  SHORT_EDGE = 4,
+};
+
+[Extensible]
+enum PrintContentType {
+  UNKNOWN = -1,
+  DOCUMENT = 0,
+  PHOTO = 1,
+};
+
+struct ArcPrintAttributes {
+  PrintMediaSize? mediaSize;
+  PrintResolution? resolution;
+  PrintMargins? minMargins;
+  PrintColorMode colorMode;
+  PrintDuplexMode duplexMode;
+};
+
+struct ArcPrintJob {
+  array<int8> id;
+  string label;
+  string? printerId;
+  int64 creationTime;
+  int32 copies;
+  array<PrintPageRange> pages;
+  ArcPrintAttributes attributes;
+  string documentName;
+  int32 documentPageCount;
+  PrintContentType contentType;
+  int64 dataSize;
+  handle? data;
+};
+
+// Next method ID: 9
+// Deprecated method ID: 0
+interface PrintHost {
+  PrintDeprecated@0(handle file);
+  [MinVersion=1] Print@1(ArcPrintJob printJob);
+  [MinVersion=1] Cancel@2(ArcPrintJob printJob);
+  [MinVersion=1] StartPrinterDiscovery@3(string sessionId, array<string> printerIds);
+  [MinVersion=1] StopPrinterDiscovery@4(string sessionId);
+  [MinVersion=1] ValidatePrinters@5(string sessionId, array<string> printerIds);
+  [MinVersion=1] StartPrinterStateTracking@6(string sessionId, string printerId);
+  [MinVersion=1] StopPrinterStateTracking@7(string sessionId, string printerId);
+  [MinVersion=1] DestroyDiscoverySession@8(string sessionId);
+};
+
+[Extensible]
+enum PrinterStatus {
+  IDLE = 1,
+  BUSY = 2,
+  UNAVAILABLE = 3,
+};
+
+struct PrinterCapabilities {
+  array<PrintMediaSize> mediaSizes;
+  array<PrintResolution> resolutions;
+  PrintMargins minMargins;
+  PrintColorMode colorModes;
+  PrintDuplexMode duplexModes;
+  ArcPrintAttributes defaults;
+};
+
+struct ArcPrinterInfo {
+  string id;
+  string name;
+  PrinterStatus status;
+  string? description;
+  string? infoIntent;
+  PrinterCapabilities? capabilities;
+};
+
+// Next method ID: 9
 interface PrintInstance {
   // Establishes full-duplex communication with the host.
   Init@0(PrintHost host_ptr);
+  [MinVersion=1] AddPrinters@1(string sessionId, array<ArcPrinterInfo> printers);
+  [MinVersion=1] RemovePrinters@2(string sessionId, array<string> printers);
+  [MinVersion=1] StartJob@3(array<int8> jobId);
+  [MinVersion=1] BlockJob@4(array<int8> jobId, string? reason);
+  [MinVersion=1] CompleteJob@5(array<int8> jobId);
+  [MinVersion=1] FailJob@6(array<int8> jobId, string? reason);
+  [MinVersion=1] CancelJob@7(array<int8> jobId);
+  [MinVersion=1] SetJobProgress@8(array<int8> jobId, float progress);
+  [MinVersion=1] SetJobStatus@9(array<int8> jobId, string? status);
 };

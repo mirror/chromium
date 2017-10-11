@@ -141,4 +141,14 @@ PrintingContext::Result PrintingContext::UpdatePrintSettings(
                                page_count);
 }
 
+PrintingContext::Result PrintingContext::UpdatePrintSettings(
+    std::unique_ptr<printing::PrintSettings> job_settings) {
+  ResetSettings();
+  settings_ = *job_settings;
+
+  return UpdatePrinterSettings(/* external_preview */ false,
+                               /* show_system_dialog */ false,
+                               /* page_count is only used on Android */ 0);
+}
+
 }  // namespace printing
