@@ -84,7 +84,8 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
         mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
         mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
         mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
-        blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)
+        blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy,
+        service_manager::mojom::InterfaceProviderPtr interface_provider)
         override;
     void StopWorker() override;
     void ResumeAfterDownload() override;
