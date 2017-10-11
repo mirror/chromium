@@ -22,6 +22,30 @@
       "revId": "cc058bb765120dccd871efb33c007ed07bfb8e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab918c7_6da32e3b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-11T19:02:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure we\u0027re allowed to destruct these things (https://cs.chromium.org/chromium/src/third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h?rcl\u003dee5cb1c6138d0be57e82ddafc1b54d7d3e3e5560\u0026l\u003d653), so I\u0027m not sure unique_ptr is much help.",
+      "parentUuid": "02bd97a2_14c2a7b1",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "cc058bb765120dccd871efb33c007ed07bfb8e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
