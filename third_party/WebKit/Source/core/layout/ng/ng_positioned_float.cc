@@ -8,8 +8,9 @@
 
 namespace blink {
 
-NGPositionedFloat::NGPositionedFloat(RefPtr<NGLayoutResult> layout_result,
-                                     const NGLogicalOffset& logical_offset)
+NGPositionedFloat::NGPositionedFloat(
+    scoped_refptr<NGLayoutResult> layout_result,
+    const NGLogicalOffset& logical_offset)
     : layout_result(layout_result), logical_offset(logical_offset) {}
 
 }  // namespace blink

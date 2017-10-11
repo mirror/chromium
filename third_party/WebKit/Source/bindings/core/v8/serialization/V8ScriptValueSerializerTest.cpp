@@ -62,7 +62,7 @@ v8::Local<v8::Value> RoundTrip(
     ExceptionState* override_exception_state = nullptr,
     Transferables* transferables = nullptr,
     WebBlobInfoArray* blob_info = nullptr) {
-  RefPtr<ScriptState> script_state = scope.GetScriptState();
+  scoped_refptr<ScriptState> script_state = scope.GetScriptState();
   ExceptionState& exception_state = override_exception_state
                                         ? *override_exception_state
                                         : scope.GetExceptionState();
@@ -81,7 +81,7 @@ v8::Local<v8::Value> RoundTrip(
   serialize_options.transferables = transferables;
   serialize_options.blob_info = blob_info;
   V8ScriptValueSerializer serializer(script_state, serialize_options);
-  RefPtr<SerializedScriptValue> serialized_script_value =
+  scoped_refptr<SerializedScriptValue> serialized_script_value =
       serializer.Serialize(value, exception_state);
   DCHECK_EQ(!serialized_script_value, exception_state.HadException());
   if (!serialized_script_value)
@@ -113,7 +113,8 @@ String ToJSON(v8::Local<v8::Object> object, const V8TestingScope& scope) {
 }
 }  // namespace
 
-RefPtr<SerializedScriptValue> SerializedValue(const Vector<uint8_t>& bytes) {
+scoped_refptr<SerializedScriptValue> SerializedValue(
+    const Vector<uint8_t>& bytes) {
   // TODO(jbroman): Fix this once SerializedScriptValue can take bytes without
   // endianness swapping.
   DCHECK_EQ(bytes.size() % 2, 0u);
@@ -197,7 +198,7 @@ TEST(V8ScriptValueSerializerTest, DeserializationErrorReturnsNull) {
   // exception.
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> invalid =
+  scoped_refptr<SerializedScriptValue> invalid =
       SerializedScriptValue::Create("invalid data");
   v8::Local<v8::Value> result =
       V8ScriptValueDeserializer(script_state, invalid).Deserialize();
@@ -245,7 +246,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMPoint) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMPoint) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x11, 0xff, 0x0d, 0x5c, 'Q',  0x00, 0x00, 0x00, 0x00,
        0x00, 0x00, 0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x40,
@@ -281,7 +282,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMPointReadOnly) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMPointReadOnly) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x11, 0xff, 0x0d, 0x5c, 'W',  0x00, 0x00, 0x00, 0x00,
        0x00, 0x00, 0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x40,
@@ -315,7 +316,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMRect) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMRect) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x11, 0xff, 0x0d, 0x5c, 'E',  0x00, 0x00, 0x00, 0x00,
        0x00, 0x00, 0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x40,
@@ -351,7 +352,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMRectReadOnly) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMRectReadOnly) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x11, 0xff, 0x0d, 0x5c, 'R',  0x00, 0x00, 0x00, 0x00,
        0x00, 0x00, 0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x40,
@@ -421,7 +422,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMQuad) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMQuad) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x11, 0xff, 0x0d, 0x5c, 0x54, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, 0x40, 0x00, 0x00,
        0x00, 0x00, 0x00, 0x00, 0x22, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -487,7 +488,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMMatrix2D) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMMatrix2D) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue({
+  scoped_refptr<SerializedScriptValue> input = SerializedValue({
       0xff, 0x11, 0xff, 0x0d, 0x5c, 0x49, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x08, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -545,7 +546,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMMatrixReadOnly2D) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMMatrixReadOnly2D) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue({
+  scoped_refptr<SerializedScriptValue> input = SerializedValue({
       0xff, 0x11, 0xff, 0x0d, 0x5c, 0x4f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0xf0, 0x3f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x08, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -621,7 +622,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMMatrix) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMMatrix) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue({
+  scoped_refptr<SerializedScriptValue> input = SerializedValue({
       0xff, 0x11, 0xff, 0x0d, 0x5c, 0x59, 0x9a, 0x99, 0x99, 0x99, 0x99, 0x99,
       0xf1, 0x3f, 0x33, 0x33, 0x33, 0x33, 0x33, 0x33, 0xf3, 0x3f, 0xcd, 0xcc,
       0xcc, 0xcc, 0xcc, 0xcc, 0xf4, 0x3f, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
@@ -712,7 +713,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripDOMMatrixReadOnly) {
 TEST(V8ScriptValueSerializerTest, DecodeDOMMatrixReadOnly) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue({
+  scoped_refptr<SerializedScriptValue> input = SerializedValue({
       0xff, 0x11, 0xff, 0x0d, 0x5c, 0x55, 0x9a, 0x99, 0x99, 0x99, 0x99, 0x99,
       0xf1, 0x3f, 0x33, 0x33, 0x33, 0x33, 0x33, 0x33, 0xf3, 0x3f, 0xcd, 0xcc,
       0xcc, 0xcc, 0xcc, 0xcc, 0xf4, 0x3f, 0x66, 0x66, 0x66, 0x66, 0x66, 0x66,
@@ -824,7 +825,7 @@ TEST(V8ScriptValueSerializerTest, DecodeImageDataV9) {
   // old versions.
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x23, 0x02, 0x01, 0x08, 0xc8,
                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
   v8::Local<v8::Value> result =
@@ -839,7 +840,7 @@ TEST(V8ScriptValueSerializerTest, DecodeImageDataV9) {
 TEST(V8ScriptValueSerializerTest, DecodeImageDataV16) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x10, 0xff, 0x0c, 0x23, 0x02, 0x01, 0x08, 0xc8,
                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
   v8::Local<v8::Value> result =
@@ -854,7 +855,7 @@ TEST(V8ScriptValueSerializerTest, DecodeImageDataV16) {
 TEST(V8ScriptValueSerializerTest, DecodeImageDataV18) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x23, 0x01, 0x03, 0x03, 0x02, 0x00, 0x02,
        0x01, 0x20, 0xc8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -941,7 +942,7 @@ TEST(V8ScriptValueSerializerTest,
 TEST(V8ScriptValueSerializerTest, OutOfRangeMessagePortIndex) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x4d, 0x01});
   MessagePort* port1 = MakeMessagePort(scope.GetExecutionContext());
   MessagePort* port2 = MakeMessagePort(scope.GetExecutionContext());
@@ -1067,11 +1068,11 @@ TEST(V8ScriptValueSerializerTest, DecodeImageBitmap) {
 // previously written. At format version 9, Android writes RGBA and every
 // other platform writes BGRA.
 #if defined(OS_ANDROID)
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x67, 0x01, 0x01, 0x02, 0x01,
                        0x08, 0xff, 0x00, 0x00, 0xff, 0x00, 0xff, 0x00, 0xff});
 #else
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x67, 0x01, 0x01, 0x02, 0x01,
                        0x08, 0x00, 0x00, 0xff, 0xff, 0x00, 0xff, 0x00, 0xff});
 #endif
@@ -1097,7 +1098,7 @@ TEST(V8ScriptValueSerializerTest, DecodeImageBitmap) {
 TEST(V8ScriptValueSerializerTest, DecodeImageBitmapV18) {
   V8TestingScope scope;
   ScriptState* script_state = scope.GetScriptState();
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x03, 0x04, 0x01,
        0x05, 0x01, 0x00, 0x02, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
        0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1135,7 +1136,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecode) {
   ScriptState* script_state = scope.GetScriptState();
   {
     // Too many bytes declared in pixel data.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x09, 0x3f, 0x00, 0x67, 0x01, 0x01, 0x02, 0x01, 0x09,
          0x00, 0x00, 0xff, 0xff, 0x00, 0xff, 0x00, 0xff, 0x00, 0x00});
     EXPECT_TRUE(
@@ -1143,7 +1144,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecode) {
   }
   {
     // Too few bytes declared in pixel data.
-    RefPtr<SerializedScriptValue> input =
+    scoped_refptr<SerializedScriptValue> input =
         SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x67, 0x01, 0x01, 0x02, 0x01,
                          0x07, 0x00, 0x00, 0xff, 0xff, 0x00, 0xff, 0x00, 0xff});
     EXPECT_TRUE(
@@ -1151,7 +1152,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecode) {
   }
   {
     // Nonsense for origin clean data.
-    RefPtr<SerializedScriptValue> input =
+    scoped_refptr<SerializedScriptValue> input =
         SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x67, 0x02, 0x01, 0x02, 0x01,
                          0x08, 0x00, 0x00, 0xff, 0xff, 0x00, 0xff, 0x00, 0xff});
     EXPECT_TRUE(
@@ -1159,7 +1160,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecode) {
   }
   {
     // Nonsense for premultiplied bit.
-    RefPtr<SerializedScriptValue> input =
+    scoped_refptr<SerializedScriptValue> input =
         SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x67, 0x01, 0x02, 0x02, 0x01,
                          0x08, 0x00, 0x00, 0xff, 0xff, 0x00, 0xff, 0x00, 0xff});
     EXPECT_TRUE(
@@ -1172,7 +1173,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   ScriptState* script_state = scope.GetScriptState();
   {
     // Too many bytes declared in pixel data.
-    RefPtr<SerializedScriptValue> input =
+    scoped_refptr<SerializedScriptValue> input =
         SerializedValue({0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02,
                          0x03, 0x04, 0x01, 0x05, 0x01, 0x00, 0x02, 0x01, 0x11,
                          0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c, 0x94,
@@ -1182,7 +1183,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Too few bytes declared in pixel data.
-    RefPtr<SerializedScriptValue> input = SerializedValue({
+    scoped_refptr<SerializedScriptValue> input = SerializedValue({
         0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x03, 0x04,
         0x01, 0x05, 0x01, 0x00, 0x02, 0x01, 0x0f, 0x94, 0x3a, 0x3f, 0x28,
         0x5f, 0x24, 0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
@@ -1192,7 +1193,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Nonsense for color space data.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x04, 0x02, 0x03, 0x04, 0x01,
          0x05, 0x01, 0x00, 0x02, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
          0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1201,7 +1202,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Nonsense for pixel format data.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x04, 0x04, 0x01,
          0x05, 0x01, 0x00, 0x02, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
          0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1210,7 +1211,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Nonsense for origin clean data.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x03, 0x04, 0x02,
          0x05, 0x01, 0x00, 0x02, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
          0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1219,7 +1220,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Nonsense for premultiplied bit.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x03, 0x04, 0x01,
          0x05, 0x02, 0x00, 0x02, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
          0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1228,7 +1229,7 @@ TEST(V8ScriptValueSerializerTest, InvalidImageBitmapDecodeV18) {
   }
   {
     // Wrong size declared in pixel data.
-    RefPtr<SerializedScriptValue> input = SerializedValue(
+    scoped_refptr<SerializedScriptValue> input = SerializedValue(
         {0xff, 0x12, 0xff, 0x0d, 0x5c, 0x67, 0x01, 0x03, 0x02, 0x03, 0x04, 0x01,
          0x05, 0x01, 0x00, 0x03, 0x01, 0x10, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24,
          0x00, 0x3c, 0x94, 0x3a, 0x3f, 0x28, 0x5f, 0x24, 0x00, 0x3c});
@@ -1309,7 +1310,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripBlob) {
 
 TEST(V8ScriptValueSerializerTest, DecodeBlob) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x09, 0x3f, 0x00, 0x62, 0x24, 0x64, 0x38, 0x37, 0x35, 0x64,
        0x66, 0x63, 0x32, 0x2d, 0x34, 0x35, 0x30, 0x35, 0x2d, 0x34, 0x36,
        0x31, 0x62, 0x2d, 0x39, 0x38, 0x66, 0x65, 0x2d, 0x30, 0x63, 0x66,
@@ -1356,7 +1357,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripBlobIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeBlobIndex) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x69, 0x00});
   WebBlobInfoArray blob_info_array;
   blob_info_array.emplace_back("d875dfc2-4505-461b-98fe-0cf6cc5eaf44",
@@ -1375,7 +1376,7 @@ TEST(V8ScriptValueSerializerTest, DecodeBlobIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeBlobIndexOutOfRange) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x69, 0x01});
   {
     V8ScriptValueDeserializer deserializer(scope.GetScriptState(), input);
@@ -1408,7 +1409,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripFileNative) {
 TEST(V8ScriptValueSerializerTest, RoundTripFileBackedByBlob) {
   V8TestingScope scope;
   const double kModificationTime = 0.0;
-  RefPtr<BlobDataHandle> blob_data_handle = BlobDataHandle::Create();
+  scoped_refptr<BlobDataHandle> blob_data_handle = BlobDataHandle::Create();
   File* file =
       File::Create("/native/path", kModificationTime, blob_data_handle);
   v8::Local<v8::Value> wrapper = ToV8(file, scope.GetScriptState());
@@ -1468,7 +1469,7 @@ class TimeIntervalChecker {
 TEST(V8ScriptValueSerializerTest, DecodeFileV3) {
   V8TestingScope scope;
   TimeIntervalChecker time_interval_checker;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x03, 0x3f, 0x00, 0x66, 0x04, 'p', 'a', 't', 'h', 0x24, 'f',
        '4',  'a',  '6',  'e',  'd',  'd',  '5', '-', '6', '5', 'a',  'd',
        '-',  '4',  'd',  'c',  '3',  '-',  'b', '6', '7', 'c', '-',  'a',
@@ -1490,7 +1491,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileV3) {
 TEST(V8ScriptValueSerializerTest, DecodeFileV4) {
   V8TestingScope scope;
   TimeIntervalChecker time_interval_checker;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x04, 0x3f, 0x00, 0x66, 0x04, 'p', 'a',  't',  'h', 0x04, 'n',
        'a',  'm',  'e',  0x03, 'r',  'e',  'l', 0x24, 'f',  '4', 'a',  '6',
        'e',  'd',  'd',  '5',  '-',  '6',  '5', 'a',  'd',  '-', '4',  'd',
@@ -1514,7 +1515,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileV4) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileV4WithSnapshot) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x04, 0x3f, 0x00, 0x66, 0x04, 'p', 'a',  't',  'h',  0x04, 'n',
        'a',  'm',  'e',  0x03, 'r',  'e',  'l', 0x24, 'f',  '4',  'a',  '6',
        'e',  'd',  'd',  '5',  '-',  '6',  '5', 'a',  'd',  '-',  '4',  'd',
@@ -1541,7 +1542,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileV4WithSnapshot) {
 TEST(V8ScriptValueSerializerTest, DecodeFileV7) {
   V8TestingScope scope;
   TimeIntervalChecker time_interval_checker;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x07, 0x3f, 0x00, 0x66, 0x04, 'p', 'a',  't',  'h', 0x04, 'n',
        'a',  'm',  'e',  0x03, 'r',  'e',  'l', 0x24, 'f',  '4', 'a',  '6',
        'e',  'd',  'd',  '5',  '-',  '6',  '5', 'a',  'd',  '-', '4',  'd',
@@ -1565,7 +1566,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileV7) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileV8WithSnapshot) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x08, 0x3f, 0x00, 0x66, 0x04, 'p',  'a',  't',  'h',  0x04, 'n',
        'a',  'm',  'e',  0x03, 'r',  'e',  'l',  0x24, 'f',  '4',  'a',  '6',
        'e',  'd',  'd',  '5',  '-',  '6',  '5',  'a',  'd',  '-',  '4',  'd',
@@ -1616,7 +1617,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripFileIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileIndex) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x65, 0x00});
   WebBlobInfoArray blob_info_array;
   blob_info_array.emplace_back("d875dfc2-4505-461b-98fe-0cf6cc5eaf44",
@@ -1636,7 +1637,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileIndexOutOfRange) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x65, 0x01});
   {
     V8ScriptValueDeserializer deserializer(scope.GetScriptState(), input);
@@ -1673,7 +1674,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripFileList) {
 
 TEST(V8ScriptValueSerializerTest, DecodeEmptyFileList) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x6c, 0x00});
   v8::Local<v8::Value> result =
       V8ScriptValueDeserializer(scope.GetScriptState(), input).Deserialize();
@@ -1684,7 +1685,7 @@ TEST(V8ScriptValueSerializerTest, DecodeEmptyFileList) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileListWithInvalidLength) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x6c, 0x01});
   v8::Local<v8::Value> result =
       V8ScriptValueDeserializer(scope.GetScriptState(), input).Deserialize();
@@ -1694,7 +1695,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileListWithInvalidLength) {
 TEST(V8ScriptValueSerializerTest, DecodeFileListV8WithoutSnapshot) {
   V8TestingScope scope;
   TimeIntervalChecker time_interval_checker;
-  RefPtr<SerializedScriptValue> input = SerializedValue(
+  scoped_refptr<SerializedScriptValue> input = SerializedValue(
       {0xff, 0x08, 0x3f, 0x00, 0x6c, 0x01, 0x04, 'p', 'a',  't',  'h', 0x04,
        'n',  'a',  'm',  'e',  0x03, 'r',  'e',  'l', 0x24, 'f',  '4', 'a',
        '6',  'e',  'd',  'd',  '5',  '-',  '6',  '5', 'a',  'd',  '-', '4',
@@ -1745,7 +1746,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripFileListIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeEmptyFileListIndex) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x4c, 0x00});
   WebBlobInfoArray blob_info_array;
   V8ScriptValueDeserializer::Options options;
@@ -1760,7 +1761,7 @@ TEST(V8ScriptValueSerializerTest, DecodeEmptyFileListIndex) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileListIndexWithInvalidLength) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x4c, 0x02});
   WebBlobInfoArray blob_info_array;
   V8ScriptValueDeserializer::Options options;
@@ -1773,7 +1774,7 @@ TEST(V8ScriptValueSerializerTest, DecodeFileListIndexWithInvalidLength) {
 
 TEST(V8ScriptValueSerializerTest, DecodeFileListIndex) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x09, 0x3f, 0x00, 0x4c, 0x01, 0x00, 0x00});
   WebBlobInfoArray blob_info_array;
   blob_info_array.emplace_back("d875dfc2-4505-461b-98fe-0cf6cc5eaf44",
@@ -1810,7 +1811,7 @@ TEST(V8ScriptValueSerializerTest, DecodeHardcodedNullValue) {
 // DCHECK failure. Thus this is "true" encoded slightly strangely.
 TEST(V8ScriptValueSerializerTest, DecodeWithInefficientVersionEnvelope) {
   V8TestingScope scope;
-  RefPtr<SerializedScriptValue> input =
+  scoped_refptr<SerializedScriptValue> input =
       SerializedValue({0xff, 0x80, 0x09, 0xff, 0x09, 0x54});
   EXPECT_TRUE(
       V8ScriptValueDeserializer(scope.GetScriptState(), std::move(input))

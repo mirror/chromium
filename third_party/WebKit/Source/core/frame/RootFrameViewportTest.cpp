@@ -66,7 +66,7 @@ class ScrollableAreaStub : public GarbageCollectedFinalized<ScrollableAreaStub>,
     contents_size_ = contents_size;
   }
 
-  RefPtr<WebTaskRunner> GetTimerTaskRunner() const final {
+  scoped_refptr<WebTaskRunner> GetTimerTaskRunner() const final {
     return Platform::Current()->CurrentThread()->Scheduler()->TimerTaskRunner();
   }
 

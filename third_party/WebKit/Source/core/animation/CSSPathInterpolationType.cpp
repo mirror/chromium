@@ -54,12 +54,12 @@ InterpolationValue CSSPathInterpolationType::MaybeConvertInitial(
 class InheritedPathChecker : public CSSInterpolationType::CSSConversionChecker {
  public:
   static std::unique_ptr<InheritedPathChecker> Create(
-      RefPtr<StylePath> style_path) {
+      scoped_refptr<StylePath> style_path) {
     return WTF::WrapUnique(new InheritedPathChecker(std::move(style_path)));
   }
 
  private:
-  InheritedPathChecker(RefPtr<StylePath> style_path)
+  InheritedPathChecker(scoped_refptr<StylePath> style_path)
       : style_path_(std::move(style_path)) {}
 
   bool IsValid(const StyleResolverState& state,
@@ -67,7 +67,7 @@ class InheritedPathChecker : public CSSInterpolationType::CSSConversionChecker {
     return state.ParentStyle()->SvgStyle().D() == style_path_.get();
   }
 
-  const RefPtr<StylePath> style_path_;
+  const scoped_refptr<StylePath> style_path_;
 };
 
 InterpolationValue CSSPathInterpolationType::MaybeConvertInherit(

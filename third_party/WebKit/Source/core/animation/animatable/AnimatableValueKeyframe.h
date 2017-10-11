@@ -16,10 +16,11 @@ namespace blink {
 // replaced it.
 class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
  public:
-  static RefPtr<AnimatableValueKeyframe> Create() {
+  static scoped_refptr<AnimatableValueKeyframe> Create() {
     return WTF::AdoptRef(new AnimatableValueKeyframe);
   }
-  void SetPropertyValue(CSSPropertyID property, RefPtr<AnimatableValue> value) {
+  void SetPropertyValue(CSSPropertyID property,
+                        scoped_refptr<AnimatableValue> value) {
     property_values_.Set(property, std::move(value));
   }
   void ClearPropertyValue(CSSPropertyID property) {
@@ -33,10 +34,10 @@ class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
 
   class PropertySpecificKeyframe : public Keyframe::PropertySpecificKeyframe {
    public:
-    static RefPtr<PropertySpecificKeyframe> Create(
+    static scoped_refptr<PropertySpecificKeyframe> Create(
         double offset,
-        RefPtr<TimingFunction> easing,
-        RefPtr<AnimatableValue> value,
+        scoped_refptr<TimingFunction> easing,
+        scoped_refptr<AnimatableValue> value,
         EffectModel::CompositeOperation composite) {
       return WTF::AdoptRef(new PropertySpecificKeyframe(
           offset, std::move(easing), std::move(value), composite));
@@ -48,33 +49,33 @@ class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
     }
 
     bool IsNeutral() const final { return false; }
-    RefPtr<Keyframe::PropertySpecificKeyframe> NeutralKeyframe(
+    scoped_refptr<Keyframe::PropertySpecificKeyframe> NeutralKeyframe(
         double offset,
-        RefPtr<TimingFunction> easing) const final {
+        scoped_refptr<TimingFunction> easing) const final {
       NOTREACHED();
       return nullptr;
     }
-    RefPtr<Interpolation> CreateInterpolation(
+    scoped_refptr<Interpolation> CreateInterpolation(
         const PropertyHandle&,
         const Keyframe::PropertySpecificKeyframe& end) const final;
 
    private:
     PropertySpecificKeyframe(double offset,
-                             RefPtr<TimingFunction> easing,
-                             RefPtr<AnimatableValue> value,
+                             scoped_refptr<TimingFunction> easing,
+                             scoped_refptr<AnimatableValue> value,
                              EffectModel::CompositeOperation composite)
         : Keyframe::PropertySpecificKeyframe(offset,
                                              std::move(easing),
                                              composite),
           value_(std::move(value)) {}
 
-    RefPtr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
+    scoped_refptr<Keyframe::PropertySpecificKeyframe> CloneWithOffset(
         double offset) const override;
     bool IsAnimatableValuePropertySpecificKeyframe() const override {
       return true;
     }
 
-    RefPtr<AnimatableValue> value_;
+    scoped_refptr<AnimatableValue> value_;
   };
 
  private:
@@ -82,13 +83,14 @@ class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
 
   AnimatableValueKeyframe(const AnimatableValueKeyframe& copy_from);
 
-  RefPtr<Keyframe> Clone() const override;
-  RefPtr<Keyframe::PropertySpecificKeyframe> CreatePropertySpecificKeyframe(
-      const PropertyHandle&) const override;
+  scoped_refptr<Keyframe> Clone() const override;
+  scoped_refptr<Keyframe::PropertySpecificKeyframe>
+  CreatePropertySpecificKeyframe(const PropertyHandle&) const override;
 
   bool IsAnimatableValueKeyframe() const override { return true; }
 
-  using PropertyValueMap = HashMap<CSSPropertyID, RefPtr<AnimatableValue>>;
+  using PropertyValueMap =
+      HashMap<CSSPropertyID, scoped_refptr<AnimatableValue>>;
   PropertyValueMap property_values_;
 };
 

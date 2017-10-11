@@ -164,7 +164,7 @@ void DatabaseContext::StopDatabases() {
   // to execute the task for closing the database. By the time we get to the
   // destructor, we're guaranteed that the databases are destructed (which is
   // why our ref count is 0 then and we're destructing). Then, the
-  // m_databaseThread RefPtr destructor will deref and delete the
+  // m_databaseThread scoped_refptr destructor will deref and delete the
   // DatabaseThread.
 
   if (DatabaseThreadAvailable()) {

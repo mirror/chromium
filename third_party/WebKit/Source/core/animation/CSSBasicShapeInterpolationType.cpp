@@ -21,14 +21,14 @@ class UnderlyingCompatibilityChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
   static std::unique_ptr<UnderlyingCompatibilityChecker> Create(
-      RefPtr<NonInterpolableValue> underlying_non_interpolable_value) {
+      scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value) {
     return WTF::WrapUnique(new UnderlyingCompatibilityChecker(
         std::move(underlying_non_interpolable_value)));
   }
 
  private:
   UnderlyingCompatibilityChecker(
-      RefPtr<NonInterpolableValue> underlying_non_interpolable_value)
+      scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value)
       : underlying_non_interpolable_value_(
             std::move(underlying_non_interpolable_value)) {}
 
@@ -39,7 +39,7 @@ class UnderlyingCompatibilityChecker
         *underlying.non_interpolable_value);
   }
 
-  RefPtr<NonInterpolableValue> underlying_non_interpolable_value_;
+  scoped_refptr<NonInterpolableValue> underlying_non_interpolable_value_;
 };
 
 class InheritedShapeChecker
@@ -47,14 +47,14 @@ class InheritedShapeChecker
  public:
   static std::unique_ptr<InheritedShapeChecker> Create(
       CSSPropertyID property,
-      RefPtr<BasicShape> inherited_shape) {
+      scoped_refptr<BasicShape> inherited_shape) {
     return WTF::WrapUnique(
         new InheritedShapeChecker(property, std::move(inherited_shape)));
   }
 
  private:
   InheritedShapeChecker(CSSPropertyID property,
-                        RefPtr<BasicShape> inherited_shape)
+                        scoped_refptr<BasicShape> inherited_shape)
       : property_(property), inherited_shape_(std::move(inherited_shape)) {}
 
   bool IsValid(const StyleResolverState& state,
@@ -65,7 +65,7 @@ class InheritedShapeChecker
   }
 
   const CSSPropertyID property_;
-  RefPtr<BasicShape> inherited_shape_;
+  scoped_refptr<BasicShape> inherited_shape_;
 };
 
 }  // namespace

@@ -156,7 +156,7 @@ class PLATFORM_EXPORT ImageBuffer {
 
   void NotifySurfaceInvalid();
 
-  RefPtr<StaticBitmapImage> NewImageSnapshot(
+  scoped_refptr<StaticBitmapImage> NewImageSnapshot(
       AccelerationHint = kPreferNoAcceleration,
       SnapshotReason = kSnapshotReasonUnknown) const;
 

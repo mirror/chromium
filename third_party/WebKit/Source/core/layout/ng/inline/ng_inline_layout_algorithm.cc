@@ -70,7 +70,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
 bool NGInlineLayoutAlgorithm::CreateLine(
     NGLineInfo* line_info,
     NGExclusionSpace* exclusion_space,
-    RefPtr<NGInlineBreakToken> break_token) {
+    scoped_refptr<NGInlineBreakToken> break_token) {
   if (Node().IsBidiEnabled())
     BidiReorder(&line_info->Results());
 
@@ -138,7 +138,7 @@ void NGInlineLayoutAlgorithm::BidiReorder(NGInlineItemResults* line_items) {
 bool NGInlineLayoutAlgorithm::PlaceItems(
     NGLineInfo* line_info,
     const NGExclusionSpace& exclusion_space,
-    RefPtr<NGInlineBreakToken> break_token) {
+    scoped_refptr<NGInlineBreakToken> break_token) {
   NGInlineItemResults* line_items = &line_info->Results();
 
   // Apply justification before placing items, because it affects size/position
@@ -201,7 +201,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
           box->ActivateTextMetrics();
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
-      RefPtr<NGPhysicalTextFragment> text_fragment =
+      scoped_refptr<NGPhysicalTextFragment> text_fragment =
           text_builder.ToTextFragment(item_result.item_index,
                                       item_result.start_offset,
                                       item_result.end_offset);
@@ -315,8 +315,8 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
 // Place a generated content that does not exist in DOM nor in LayoutObject
 // tree.
 void NGInlineLayoutAlgorithm::PlaceGeneratedContent(
-    RefPtr<const ShapeResult> shape_result,
-    RefPtr<const ComputedStyle> style,
+    scoped_refptr<const ShapeResult> shape_result,
+    scoped_refptr<const ComputedStyle> style,
     LayoutUnit* position,
     NGInlineBoxState* box,
     NGTextFragmentBuilder* text_builder,
@@ -325,7 +325,7 @@ void NGInlineLayoutAlgorithm::PlaceGeneratedContent(
     PlaceText(std::move(shape_result), std::move(style), position, box,
               text_builder, line_box);
   } else {
-    RefPtr<ComputedStyle> text_style =
+    scoped_refptr<ComputedStyle> text_style =
         ComputedStyle::CreateAnonymousStyleWithDisplay(*style,
                                                        EDisplay::kInline);
     NGInlineBoxState* box = box_states_.OnOpenTag(*text_style, line_box);
@@ -336,17 +336,18 @@ void NGInlineLayoutAlgorithm::PlaceGeneratedContent(
   }
 }
 
-void NGInlineLayoutAlgorithm::PlaceText(RefPtr<const ShapeResult> shape_result,
-                                        RefPtr<const ComputedStyle> style,
-                                        LayoutUnit* position,
-                                        NGInlineBoxState* box,
-                                        NGTextFragmentBuilder* text_builder,
-                                        NGLineBoxFragmentBuilder* line_box) {
+void NGInlineLayoutAlgorithm::PlaceText(
+    scoped_refptr<const ShapeResult> shape_result,
+    scoped_refptr<const ComputedStyle> style,
+    LayoutUnit* position,
+    NGInlineBoxState* box,
+    NGTextFragmentBuilder* text_builder,
+    NGLineBoxFragmentBuilder* line_box) {
   LayoutUnit inline_size = shape_result->SnappedWidth();
   text_builder->SetStyle(std::move(style));
   text_builder->SetSize({inline_size, box->text_metrics.LineHeight()});
   text_builder->SetShapeResult(std::move(shape_result));
-  RefPtr<NGPhysicalTextFragment> text_fragment =
+  scoped_refptr<NGPhysicalTextFragment> text_fragment =
       text_builder->ToTextFragment(std::numeric_limits<unsigned>::max(), 0, 0);
   line_box->AddChild(std::move(text_fragment), {*position, box->text_top});
   *position += inline_size;
@@ -399,9 +400,10 @@ void NGInlineLayoutAlgorithm::PlaceLayoutResult(
     NGTextFragmentBuilder text_builder(Node(), &style,
                                        ConstraintSpace().WritingMode());
     text_builder.SetSize({fragment.InlineSize(), metrics.LineHeight()});
-    RefPtr<NGPhysicalTextFragment> text_fragment = text_builder.ToTextFragment(
-        item_result->item_index, item_result->start_offset,
-        item_result->end_offset);
+    scoped_refptr<NGPhysicalTextFragment> text_fragment =
+        text_builder.ToTextFragment(item_result->item_index,
+                                    item_result->start_offset,
+                                    item_result->end_offset);
     line_box->AddChild(std::move(text_fragment), {position, line_top});
     // We need the box fragment as well to compute VisualRect() correctly.
   }
@@ -463,7 +465,7 @@ bool NGInlineLayoutAlgorithm::ApplyJustify(NGLineInfo* line_info) {
     if (item_result.shape_result) {
       // Mutate the existing shape result if only used here, if not create a
       // copy.
-      RefPtr<ShapeResult> shape_result =
+      scoped_refptr<ShapeResult> shape_result =
           item_result.shape_result->MutableUnique();
       DCHECK_GE(item_result.start_offset, line_info->StartOffset());
       // |shape_result| has more characters if it's hyphenated.
@@ -610,7 +612,7 @@ void NGInlineLayoutAlgorithm::PropagateBaselinesFromChildren() {
   }
 }
 
-RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
+scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   // Line boxes should start at (0,0).
   // The parent NGBlockLayoutAlgorithm places the anonymous wrapper using the
   // border and padding of the container block.

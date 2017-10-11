@@ -118,7 +118,7 @@ class LinkLoader::FinishObserver final
 };
 
 LinkLoader::LinkLoader(LinkLoaderClient* client,
-                       RefPtr<WebTaskRunner> task_runner)
+                       scoped_refptr<WebTaskRunner> task_runner)
     : client_(client) {
   DCHECK(client_);
 }
@@ -318,7 +318,7 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
     }
 
     // Preload only if media matches
-    RefPtr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
+    scoped_refptr<MediaQuerySet> media_queries = MediaQuerySet::Create(media);
     MediaQueryEvaluator evaluator(*media_values);
     if (!evaluator.Eval(*media_queries))
       return nullptr;

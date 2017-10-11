@@ -392,18 +392,20 @@ class DummyRefCounted : public RefCounted<DummyRefCounted> {
 int DummyRefCounted::ref_invokes_count_ = 0;
 
 template <typename Set>
-class ListOrLinkedHashSetRefPtrTest : public ::testing::Test {};
+class ListOrLinkedHashSetscoped_refptrTest : public ::testing::Test {};
 
-using RefPtrSetTypes = ::testing::Types<ListHashSet<RefPtr<DummyRefCounted>>,
-                                        ListHashSet<RefPtr<DummyRefCounted>, 1>,
-                                        LinkedHashSet<RefPtr<DummyRefCounted>>>;
-TYPED_TEST_CASE(ListOrLinkedHashSetRefPtrTest, RefPtrSetTypes);
+using scoped_refptrSetTypes =
+    ::testing::Types<ListHashSet<scoped_refptr<DummyRefCounted>>,
+                     ListHashSet<scoped_refptr<DummyRefCounted>, 1>,
+                     LinkedHashSet<scoped_refptr<DummyRefCounted>>>;
+TYPED_TEST_CASE(ListOrLinkedHashSetscoped_refptrTest, scoped_refptrSetTypes);
 
-TYPED_TEST(ListOrLinkedHashSetRefPtrTest, WithRefPtr) {
+TYPED_TEST(ListOrLinkedHashSetscoped_refptrTest, Withscoped_refptr) {
   using Set = TypeParam;
   bool is_deleted = false;
   DummyRefCounted::ref_invokes_count_ = 0;
-  RefPtr<DummyRefCounted> ptr = WTF::AdoptRef(new DummyRefCounted(is_deleted));
+  scoped_refptr<DummyRefCounted> ptr =
+      WTF::AdoptRef(new DummyRefCounted(is_deleted));
   EXPECT_EQ(0, DummyRefCounted::ref_invokes_count_);
 
   Set set;
@@ -429,14 +431,15 @@ TYPED_TEST(ListOrLinkedHashSetRefPtrTest, WithRefPtr) {
   EXPECT_EQ(1, DummyRefCounted::ref_invokes_count_);
 }
 
-TYPED_TEST(ListOrLinkedHashSetRefPtrTest, ExerciseValuePeekInType) {
+TYPED_TEST(ListOrLinkedHashSetscoped_refptrTest, ExerciseValuePeekInType) {
   using Set = TypeParam;
   Set set;
   bool is_deleted = false;
   bool is_deleted2 = false;
 
-  RefPtr<DummyRefCounted> ptr = WTF::AdoptRef(new DummyRefCounted(is_deleted));
-  RefPtr<DummyRefCounted> ptr2 =
+  scoped_refptr<DummyRefCounted> ptr =
+      WTF::AdoptRef(new DummyRefCounted(is_deleted));
+  scoped_refptr<DummyRefCounted> ptr2 =
       WTF::AdoptRef(new DummyRefCounted(is_deleted2));
 
   typename Set::AddResult add_result = set.insert(ptr);

@@ -41,8 +41,8 @@
 namespace blink {
 
 // The lifecycle of the IndexedDB metadata objects defined below is managed by
-// reference counting (RefPtr). We don't have to worry about cycles because
-// these objects form a tree with the hierarchy shown below.
+// reference counting (scoped_refptr). We don't have to worry about cycles
+// because these objects form a tree with the hierarchy shown below.
 //     IDBDatabaseMetadata -> IDBObjectStoreMetadata -> IDBIndexMetadata
 
 class IDBIndexMetadata : public RefCounted<IDBIndexMetadata> {
@@ -81,14 +81,14 @@ class MODULES_EXPORT IDBObjectStoreMetadata
 
   // Creates a deep copy of the object metadata, which includes copies of index
   // metadata items.
-  RefPtr<IDBObjectStoreMetadata> CreateCopy() const;
+  scoped_refptr<IDBObjectStoreMetadata> CreateCopy() const;
 
   String name;
   int64_t id;
   IDBKeyPath key_path;
   bool auto_increment;
   int64_t max_index_id;
-  HashMap<int64_t, RefPtr<IDBIndexMetadata>> indexes;
+  HashMap<int64_t, scoped_refptr<IDBIndexMetadata>> indexes;
 };
 
 struct MODULES_EXPORT IDBDatabaseMetadata {
@@ -113,7 +113,7 @@ struct MODULES_EXPORT IDBDatabaseMetadata {
   int64_t id;
   int64_t version;
   int64_t max_object_store_id;
-  HashMap<int64_t, RefPtr<IDBObjectStoreMetadata>> object_stores;
+  HashMap<int64_t, scoped_refptr<IDBObjectStoreMetadata>> object_stores;
 };
 
 }  // namespace blink

@@ -66,7 +66,7 @@ static String ReplaceNonPrintableCharacters(const String& text) {
 MHTMLArchive::MHTMLArchive() {}
 
 MHTMLArchive* MHTMLArchive::Create(const KURL& url,
-                                   RefPtr<const SharedBuffer> data) {
+                                   scoped_refptr<const SharedBuffer> data) {
   // MHTML pages can only be loaded from local URLs, http/https URLs, and
   // content URLs(Android specific).  The latter is now allowed due to full
   // sandboxing enforcement on MHTML pages.

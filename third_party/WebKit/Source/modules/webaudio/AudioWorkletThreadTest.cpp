@@ -71,7 +71,7 @@ class AudioWorkletThreadTest : public ::testing::Test {
     wait_event->Signal();
   }
 
-  RefPtr<SecurityOrigin> security_origin_;
+  scoped_refptr<SecurityOrigin> security_origin_;
   std::unique_ptr<WorkerReportingProxy> reporting_proxy_;
 };
 

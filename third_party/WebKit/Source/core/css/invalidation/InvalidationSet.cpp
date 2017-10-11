@@ -320,7 +320,7 @@ void InvalidationSet::Show() const {
 #endif  // NDEBUG
 
 SiblingInvalidationSet::SiblingInvalidationSet(
-    RefPtr<DescendantInvalidationSet> descendants)
+    scoped_refptr<DescendantInvalidationSet> descendants)
     : InvalidationSet(kInvalidateSiblings),
       max_direct_adjacent_selectors_(1),
       descendant_invalidation_set_(std::move(descendants)) {}

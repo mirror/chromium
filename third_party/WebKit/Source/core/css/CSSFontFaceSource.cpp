@@ -37,7 +37,7 @@ CSSFontFaceSource::CSSFontFaceSource() : face_(nullptr) {}
 
 CSSFontFaceSource::~CSSFontFaceSource() {}
 
-RefPtr<SimpleFontData> CSSFontFaceSource::GetFontData(
+scoped_refptr<SimpleFontData> CSSFontFaceSource::GetFontData(
     const FontDescription& font_description,
     const FontSelectionCapabilities& font_selection_capabilities) {
   // If the font hasn't loaded or an error occurred, then we've got nothing.
@@ -51,12 +51,12 @@ RefPtr<SimpleFontData> CSSFontFaceSource::GetFontData(
 
   FontCacheKey key = font_description.CacheKey(FontFaceCreationParams());
 
-  RefPtr<SimpleFontData>& font_data =
+  scoped_refptr<SimpleFontData>& font_data =
       font_data_table_.insert(key, nullptr).stored_value->value;
   if (!font_data)
     font_data = CreateFontData(font_description, font_selection_capabilities);
-  // No release, because fontData is a reference to a RefPtr that is held in the
-  // font_data_table_.
+  // No release, because fontData is a reference to a scoped_refptr that is held
+  // in the font_data_table_.
   return font_data;
 }
 

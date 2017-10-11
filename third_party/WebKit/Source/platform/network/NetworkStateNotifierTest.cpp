@@ -217,8 +217,8 @@ class NetworkStateNotifierTest : public ::testing::Test {
                downlink_throughput_mbps;
   }
 
-  RefPtr<FakeWebTaskRunner> task_runner_;
-  RefPtr<FakeWebTaskRunner> task_runner2_;
+  scoped_refptr<FakeWebTaskRunner> task_runner_;
+  scoped_refptr<FakeWebTaskRunner> task_runner2_;
   NetworkStateNotifier notifier_;
 };
 

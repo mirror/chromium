@@ -8,9 +8,9 @@
 
 namespace blink {
 
-RefPtr<const ShapeResult> CachingWordShapeIterator::ShapeWordWithoutSpacing(
-    const TextRun& word_run,
-    const Font* font) {
+scoped_refptr<const ShapeResult>
+CachingWordShapeIterator::ShapeWordWithoutSpacing(const TextRun& word_run,
+                                                  const Font* font) {
   ShapeCacheEntry* cache_entry = shape_cache_->Add(word_run, ShapeCacheEntry());
   if (cache_entry && cache_entry->shape_result_)
     return cache_entry->shape_result_;
@@ -19,7 +19,7 @@ RefPtr<const ShapeResult> CachingWordShapeIterator::ShapeWordWithoutSpacing(
   std::unique_ptr<UChar[]> word_text = word_run.NormalizedUTF16(&word_length);
 
   HarfBuzzShaper shaper(word_text.get(), word_length);
-  RefPtr<const ShapeResult> shape_result =
+  scoped_refptr<const ShapeResult> shape_result =
       shaper.Shape(font, word_run.Direction());
   if (!shape_result)
     return nullptr;

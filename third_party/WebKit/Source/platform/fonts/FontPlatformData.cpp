@@ -333,7 +333,7 @@ bool FontPlatformData::FontContainsCharacter(UChar32 character) {
 
 #endif
 
-RefPtr<OpenTypeVerticalData> FontPlatformData::VerticalData() const {
+scoped_refptr<OpenTypeVerticalData> FontPlatformData::VerticalData() const {
   return FontCache::GetFontCache()->GetVerticalData(Typeface()->uniqueID(),
                                                     *this);
 }

@@ -28,9 +28,10 @@ NGLineOrientation ToLineOrientation(NGWritingMode writing_mode) {
 
 }  // namespace
 
-NGTextFragmentBuilder::NGTextFragmentBuilder(NGInlineNode node,
-                                             RefPtr<const ComputedStyle> style,
-                                             NGWritingMode writing_mode)
+NGTextFragmentBuilder::NGTextFragmentBuilder(
+    NGInlineNode node,
+    scoped_refptr<const ComputedStyle> style,
+    NGWritingMode writing_mode)
     : NGBaseFragmentBuilder(style, writing_mode, TextDirection::kLtr),
       node_(node) {}
 
@@ -45,7 +46,7 @@ NGTextFragmentBuilder& NGTextFragmentBuilder::SetSize(
 }
 
 NGTextFragmentBuilder& NGTextFragmentBuilder::SetShapeResult(
-    RefPtr<const ShapeResult> shape_result) {
+    scoped_refptr<const ShapeResult> shape_result) {
   shape_result_ = shape_result;
   return *this;
 }
@@ -61,11 +62,11 @@ NGTextFragmentBuilder& NGTextFragmentBuilder::SetEndEffect(
   return *this;
 }
 
-RefPtr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
+scoped_refptr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
     unsigned index,
     unsigned start_offset,
     unsigned end_offset) {
-  RefPtr<NGPhysicalTextFragment> fragment =
+  scoped_refptr<NGPhysicalTextFragment> fragment =
       WTF::AdoptRef(new NGPhysicalTextFragment(
           node_.GetLayoutObject(), Style(), node_.Text(), index, start_offset,
           end_offset, size_.ConvertToPhysical(WritingMode()), expansion_,

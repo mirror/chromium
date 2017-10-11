@@ -26,14 +26,14 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
  public:
   NGFragmentBuilder(NGLayoutInputNode,
-                    RefPtr<const ComputedStyle>,
+                    scoped_refptr<const ComputedStyle>,
                     NGWritingMode,
                     TextDirection);
 
   // Build a fragment for LayoutObject without NGLayoutInputNode. LayoutInline
   // has NGInlineItem but does not have corresponding NGLayoutInputNode.
   NGFragmentBuilder(LayoutObject*,
-                    RefPtr<const ComputedStyle>,
+                    scoped_refptr<const ComputedStyle>,
                     NGWritingMode,
                     TextDirection);
 
@@ -47,8 +47,9 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGFragmentBuilder& SetIntrinsicBlockSize(LayoutUnit);
 
-  NGFragmentBuilder& AddChild(RefPtr<NGLayoutResult>, const NGLogicalOffset&);
-  NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
+  NGFragmentBuilder& AddChild(scoped_refptr<NGLayoutResult>,
+                              const NGLogicalOffset&);
+  NGFragmentBuilder& AddChild(scoped_refptr<NGPhysicalFragment>,
                               const NGLogicalOffset&);
 
   // Add a break token for a child that doesn't yet have any fragments, because
@@ -57,8 +58,8 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   NGFragmentBuilder& AddBreakBeforeChild(NGLayoutInputNode child);
 
   // Update if we have fragmented in this flow.
-  NGFragmentBuilder& PropagateBreak(RefPtr<NGLayoutResult>);
-  NGFragmentBuilder& PropagateBreak(RefPtr<NGPhysicalFragment>);
+  NGFragmentBuilder& PropagateBreak(scoped_refptr<NGLayoutResult>);
+  NGFragmentBuilder& PropagateBreak(scoped_refptr<NGPhysicalFragment>);
 
   NGFragmentBuilder& SetBfcOffset(const NGBfcOffset& offset);
 
@@ -120,16 +121,16 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   // do not provide a setter here.
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGLayoutResult> ToBoxFragment();
+  scoped_refptr<NGLayoutResult> ToBoxFragment();
 
-  RefPtr<NGLayoutResult> Abort(NGLayoutResult::NGLayoutResultStatus);
+  scoped_refptr<NGLayoutResult> Abort(NGLayoutResult::NGLayoutResultStatus);
 
   // A vector of child offsets. Initially set by AddChild().
   const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
   NGFragmentBuilder& SwapUnpositionedFloats(
-      Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats) {
+      Vector<scoped_refptr<NGUnpositionedFloat>>* unpositioned_floats) {
     unpositioned_floats_.swap(*unpositioned_floats);
     return *this;
   }
@@ -139,7 +140,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   const WTF::Optional<NGBfcOffset>& BfcOffset() const { return bfc_offset_; }
 
-  const Vector<RefPtr<NGPhysicalFragment>>& Children() const {
+  const Vector<scoped_refptr<NGPhysicalFragment>>& Children() const {
     return children_;
   }
 
@@ -187,14 +188,14 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   NGLogicalSize size_;
   LayoutUnit intrinsic_block_size_;
 
-  Vector<RefPtr<NGPhysicalFragment>> children_;
+  Vector<scoped_refptr<NGPhysicalFragment>> children_;
   Vector<NGLogicalOffset> offsets_;
 
   bool did_break_;
   LayoutUnit used_block_size_;
 
-  Vector<RefPtr<NGBreakToken>> child_break_tokens_;
-  RefPtr<NGBreakToken> last_inline_break_token_;
+  Vector<scoped_refptr<NGBreakToken>> child_break_tokens_;
+  scoped_refptr<NGBreakToken> last_inline_break_token_;
 
   Vector<NGOutOfFlowPositionedCandidate> oof_positioned_candidates_;
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
@@ -203,7 +204,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   // Floats that need to be positioned by the next in-flow fragment that can
   // determine its block position in space.
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
+  Vector<scoped_refptr<NGUnpositionedFloat>> unpositioned_floats_;
 
   WTF::Optional<NGBfcOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;

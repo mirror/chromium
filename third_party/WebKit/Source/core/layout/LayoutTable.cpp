@@ -1538,7 +1538,7 @@ bool LayoutTable::NodeAtPoint(HitTestResult& result,
 
 LayoutTable* LayoutTable::CreateAnonymousWithParent(
     const LayoutObject* parent) {
-  RefPtr<ComputedStyle> new_style =
+  scoped_refptr<ComputedStyle> new_style =
       ComputedStyle::CreateAnonymousStyleWithDisplay(
           parent->StyleRef(),
           parent->IsLayoutInline() ? EDisplay::kInlineTable : EDisplay::kTable);

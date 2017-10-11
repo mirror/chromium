@@ -76,11 +76,12 @@ struct SimpleClassVectorTraits : VectorTraitsBase<T> {
   static const bool kCanCompareWithMemcmp = true;
 };
 
-// We know std::unique_ptr and RefPtr are simple enough that initializing to 0
-// and moving with memcpy (and then not destructing the original) will totally
-// work.
+// We know std::unique_ptr and scoped_refptr are simple enough that initializing
+// to 0 and moving with memcpy (and then not destructing the original) will
+// totally work.
 template <typename P>
-struct VectorTraits<RefPtr<P>> : SimpleClassVectorTraits<RefPtr<P>> {};
+struct VectorTraits<scoped_refptr<P>>
+    : SimpleClassVectorTraits<scoped_refptr<P>> {};
 
 template <typename P>
 struct VectorTraits<std::unique_ptr<P>>
@@ -90,12 +91,12 @@ struct VectorTraits<std::unique_ptr<P>>
   // copyable".
   static const bool kCanCopyWithMemcpy = false;
 };
-static_assert(VectorTraits<RefPtr<int>>::kCanInitializeWithMemset,
-              "inefficient RefPtr Vector");
-static_assert(VectorTraits<RefPtr<int>>::kCanMoveWithMemcpy,
-              "inefficient RefPtr Vector");
-static_assert(VectorTraits<RefPtr<int>>::kCanCompareWithMemcmp,
-              "inefficient RefPtr Vector");
+static_assert(VectorTraits<scoped_refptr<int>>::kCanInitializeWithMemset,
+              "inefficient scoped_refptr Vector");
+static_assert(VectorTraits<scoped_refptr<int>>::kCanMoveWithMemcpy,
+              "inefficient scoped_refptr Vector");
+static_assert(VectorTraits<scoped_refptr<int>>::kCanCompareWithMemcmp,
+              "inefficient scoped_refptr Vector");
 static_assert(VectorTraits<std::unique_ptr<int>>::kCanInitializeWithMemset,
               "inefficient std::unique_ptr Vector");
 static_assert(VectorTraits<std::unique_ptr<int>>::kCanMoveWithMemcpy,

@@ -29,9 +29,10 @@ class StyleResolverState;
 // function.
 class CORE_EXPORT LegacyStyleInterpolation : public Interpolation {
  public:
-  static RefPtr<LegacyStyleInterpolation> Create(RefPtr<AnimatableValue> start,
-                                                 RefPtr<AnimatableValue> end,
-                                                 CSSPropertyID id) {
+  static scoped_refptr<LegacyStyleInterpolation> Create(
+      scoped_refptr<AnimatableValue> start,
+      scoped_refptr<AnimatableValue> end,
+      CSSPropertyID id) {
     return WTF::AdoptRef(new LegacyStyleInterpolation(
         InterpolableAnimatableValue::Create(std::move(start)),
         InterpolableAnimatableValue::Create(std::move(end)), id));
@@ -41,7 +42,7 @@ class CORE_EXPORT LegacyStyleInterpolation : public Interpolation {
 
   bool IsLegacyStyleInterpolation() const final { return true; }
 
-  RefPtr<AnimatableValue> CurrentValue() const {
+  scoped_refptr<AnimatableValue> CurrentValue() const {
     return ToInterpolableAnimatableValue(cached_value_.get())->Value();
   }
 

@@ -71,9 +71,9 @@ OffscreenCanvasFrameDispatcherImpl::~OffscreenCanvasFrameDispatcherImpl() {
 namespace {
 
 void UpdatePlaceholderImage(WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
-                            RefPtr<WebTaskRunner> task_runner,
+                            scoped_refptr<WebTaskRunner> task_runner,
                             int placeholder_canvas_id,
-                            RefPtr<blink::StaticBitmapImage> image,
+                            scoped_refptr<blink::StaticBitmapImage> image,
                             unsigned resource_id) {
   DCHECK(IsMainThread());
   OffscreenCanvasPlaceholder* placeholder_canvas =
@@ -88,11 +88,11 @@ void UpdatePlaceholderImage(WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
 }  // namespace
 
 void OffscreenCanvasFrameDispatcherImpl::PostImageToPlaceholder(
-    RefPtr<StaticBitmapImage> image) {
+    scoped_refptr<StaticBitmapImage> image) {
   // After this point, |image| can only be used on the main thread, until
   // it is returned.
   image->Transfer();
-  RefPtr<WebTaskRunner> dispatcher_task_runner =
+  scoped_refptr<WebTaskRunner> dispatcher_task_runner =
       Platform::Current()->CurrentThread()->GetWebTaskRunner();
 
   Platform::Current()
@@ -108,7 +108,7 @@ void OffscreenCanvasFrameDispatcherImpl::PostImageToPlaceholder(
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
-    RefPtr<StaticBitmapImage> image,
+    scoped_refptr<StaticBitmapImage> image,
     double commit_start_time,
     const SkIRect& damage_rect,
     bool is_web_gl_software_rendering /* This flag is true when WebGL's commit

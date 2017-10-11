@@ -26,7 +26,7 @@ bool ImageElementBase::IsSVGSource() const {
   return CachedImage() && CachedImage()->GetImage()->IsSVGImage();
 }
 
-RefPtr<Image> ImageElementBase::GetSourceImageForCanvas(
+scoped_refptr<Image> ImageElementBase::GetSourceImageForCanvas(
     SourceImageStatus* status,
     AccelerationHint,
     SnapshotReason,
@@ -41,7 +41,7 @@ RefPtr<Image> ImageElementBase::GetSourceImageForCanvas(
     return nullptr;
   }
 
-  RefPtr<Image> source_image;
+  scoped_refptr<Image> source_image;
   if (CachedImage()->GetImage()->IsSVGImage()) {
     UseCounter::Count(GetElement().GetDocument(), WebFeature::kSVGInCanvas2D);
     SVGImage* svg_image = ToSVGImage(CachedImage()->GetImage());
@@ -108,17 +108,17 @@ const KURL& ImageElementBase::SourceURL() const {
 
 int ImageElementBase::SourceWidth() {
   SourceImageStatus status;
-  RefPtr<Image> image = GetSourceImageForCanvas(&status, kPreferNoAcceleration,
-                                                kSnapshotReasonUnknown,
-                                                SourceDefaultObjectSize());
+  scoped_refptr<Image> image = GetSourceImageForCanvas(
+      &status, kPreferNoAcceleration, kSnapshotReasonUnknown,
+      SourceDefaultObjectSize());
   return image->width();
 }
 
 int ImageElementBase::SourceHeight() {
   SourceImageStatus status;
-  RefPtr<Image> image = GetSourceImageForCanvas(&status, kPreferNoAcceleration,
-                                                kSnapshotReasonUnknown,
-                                                SourceDefaultObjectSize());
+  scoped_refptr<Image> image = GetSourceImageForCanvas(
+      &status, kPreferNoAcceleration, kSnapshotReasonUnknown,
+      SourceDefaultObjectSize());
   return image->height();
 }
 

@@ -56,13 +56,13 @@ class PLATFORM_EXPORT FontData : public RefCounted<FontData> {
   virtual bool ShouldSkipDrawing() const = 0;
 };
 
-#define DEFINE_FONT_DATA_TYPE_CASTS(thisType, predicate)     \
-  template <typename T>                                      \
-  inline thisType* To##thisType(const RefPtr<T>& fontData) { \
-    return To##thisType(fontData.get());                     \
-  }                                                          \
-  DEFINE_TYPE_CASTS(thisType, FontData, fontData,            \
-                    fontData->IsSegmented() == predicate,    \
+#define DEFINE_FONT_DATA_TYPE_CASTS(thisType, predicate)            \
+  template <typename T>                                             \
+  inline thisType* To##thisType(const scoped_refptr<T>& fontData) { \
+    return To##thisType(fontData.get());                            \
+  }                                                                 \
+  DEFINE_TYPE_CASTS(thisType, FontData, fontData,                   \
+                    fontData->IsSegmented() == predicate,           \
                     fontData.IsSegmented() == predicate)
 
 }  // namespace blink

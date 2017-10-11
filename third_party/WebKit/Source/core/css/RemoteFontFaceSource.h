@@ -56,10 +56,11 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  RefPtr<SimpleFontData> CreateFontData(
+  scoped_refptr<SimpleFontData> CreateFontData(
       const FontDescription&,
       const FontSelectionCapabilities&) override;
-  RefPtr<SimpleFontData> CreateLoadingFallbackFontData(const FontDescription&);
+  scoped_refptr<SimpleFontData> CreateLoadingFallbackFontData(
+      const FontDescription&);
   void PruneTable();
 
  private:
@@ -126,7 +127,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   Member<CSSFontSelector> font_selector_;
 
   // |nullptr| if font is not loaded or failed to decode.
-  RefPtr<FontCustomPlatformData> custom_font_data_;
+  scoped_refptr<FontCustomPlatformData> custom_font_data_;
 
   const FontDisplay display_;
   DisplayPeriod period_;

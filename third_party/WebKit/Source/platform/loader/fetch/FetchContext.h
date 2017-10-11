@@ -232,7 +232,7 @@ class PLATFORM_EXPORT FetchContext
   // WebTaskRunner will not work after the context detaches (after Detach() is
   // called, this will return a generic timer suitable for post-detach actions
   // like keepalive requests.
-  virtual RefPtr<WebTaskRunner> GetLoadingTaskRunner() {
+  virtual scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() {
     return Platform::Current()->CurrentThread()->GetWebTaskRunner();
   }
 

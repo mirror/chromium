@@ -338,7 +338,7 @@ void WorkerFetchContext::SetFirstPartyCookieAndRequestorOrigin(
     out_request.SetRequestorOrigin(GetSecurityOrigin());
 }
 
-RefPtr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
+scoped_refptr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
   return loading_task_runner_;
 }
 

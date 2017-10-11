@@ -23,23 +23,25 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
-                           RefPtr<const ComputedStyle>,
+                           scoped_refptr<const ComputedStyle>,
                            NGWritingMode);
 
   NGLineBoxFragmentBuilder& SetInlineSize(LayoutUnit);
 
-  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
+  NGLineBoxFragmentBuilder& AddChild(scoped_refptr<NGPhysicalFragment>,
                                      const NGLogicalOffset&);
-  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGLayoutResult>,
+  NGLineBoxFragmentBuilder& AddChild(scoped_refptr<NGLayoutResult>,
                                      const NGLogicalOffset&);
   NGLineBoxFragmentBuilder& AddChild(std::nullptr_t, const NGLogicalOffset&);
   void MoveChildrenInBlockDirection(LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit, unsigned start, unsigned end);
 
-  const Vector<RefPtr<NGPhysicalFragment>>& Children() const {
+  const Vector<scoped_refptr<NGPhysicalFragment>>& Children() const {
     return children_;
   }
-  Vector<RefPtr<NGPhysicalFragment>>& MutableChildren() { return children_; }
+  Vector<scoped_refptr<NGPhysicalFragment>>& MutableChildren() {
+    return children_;
+  }
   const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
@@ -48,22 +50,22 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   // Set the break token for the fragment to build.
   // A finished break token will be attached if not set.
-  void SetBreakToken(RefPtr<NGInlineBreakToken>);
+  void SetBreakToken(scoped_refptr<NGInlineBreakToken>);
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
+  scoped_refptr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
 
  private:
   NGInlineNode node_;
 
   LayoutUnit inline_size_;
 
-  Vector<RefPtr<NGPhysicalFragment>> children_;
+  Vector<scoped_refptr<NGPhysicalFragment>> children_;
   Vector<NGLogicalOffset> offsets_;
 
   NGLineHeightMetrics metrics_;
 
-  RefPtr<NGInlineBreakToken> break_token_;
+  scoped_refptr<NGInlineBreakToken> break_token_;
 };
 
 }  // namespace blink

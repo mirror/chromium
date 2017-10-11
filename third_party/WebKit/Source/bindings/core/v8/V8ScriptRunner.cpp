@@ -156,7 +156,7 @@ v8::MaybeLocal<v8::Script> CompileWithoutOptions(
 // Compile a script, and consume a V8 cache that was generated previously.
 static v8::MaybeLocal<v8::Script> CompileAndConsumeCache(
     CachedMetadataHandler* cache_handler,
-    RefPtr<CachedMetadata> cached_metadata,
+    scoped_refptr<CachedMetadata> cached_metadata,
     v8::ScriptCompiler::CompileOptions compile_options,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
@@ -218,7 +218,8 @@ v8::MaybeLocal<v8::Script> CompileAndConsumeOrProduce(
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
     v8::ScriptOrigin origin) {
-  RefPtr<CachedMetadata> code_cache(cache_handler->GetCachedMetadata(tag));
+  scoped_refptr<CachedMetadata> code_cache(
+      cache_handler->GetCachedMetadata(tag));
   return code_cache.get()
              ? CompileAndConsumeCache(cache_handler, code_cache,
                                       consume_options, isolate, code, origin)
@@ -256,7 +257,7 @@ bool IsResourceHotForCaching(CachedMetadataHandler* cache_handler,
                              int hot_hours) {
   const double cache_within_seconds = hot_hours * 60 * 60;
   uint32_t tag = CacheTag(kCacheTagTimeStamp, cache_handler);
-  RefPtr<CachedMetadata> cached_metadata =
+  scoped_refptr<CachedMetadata> cached_metadata =
       cache_handler->GetCachedMetadata(tag);
   if (!cached_metadata)
     return false;
@@ -328,7 +329,7 @@ typedef Function<v8::MaybeLocal<v8::Script>(v8::Isolate*,
 static CompileFn SelectCompileFunction(
     V8CacheOptions cache_options,
     CachedMetadataHandler* cache_handler,
-    RefPtr<CachedMetadata> code_cache,
+    scoped_refptr<CachedMetadata> code_cache,
     v8::Local<v8::String> code,
     V8CompileHistogram::Cacheability cacheability_if_no_handler) {
   static const int kMinimalCodeLength = 1024;
@@ -500,7 +501,7 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
     cacheability_if_no_handler =
         V8CompileHistogram::Cacheability::kInlineScript;
 
-  RefPtr<CachedMetadata> code_cache(
+  scoped_refptr<CachedMetadata> code_cache(
       cache_handler ? cache_handler->GetCachedMetadata(
                           CacheTag(kCacheTagCode, cache_handler))
                     : nullptr);

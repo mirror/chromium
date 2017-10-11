@@ -191,7 +191,7 @@ class Canvas2DLayerBridgeTest : public Test {
                                   CanvasColorParams(), IsUnitTest())));
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_TRUE(bridge->IsAccelerated());
-      RefPtr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
+      scoped_refptr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
           kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsAccelerated());
       EXPECT_TRUE(snapshot->IsTextureBacked());
@@ -212,7 +212,7 @@ class Canvas2DLayerBridgeTest : public Test {
       // This will cause SkSurface_Gpu creation to fail without
       // Canvas2DLayerBridge otherwise detecting that anything was disabled.
       gr->abandonContext();
-      RefPtr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
+      scoped_refptr<StaticBitmapImage> snapshot = bridge->NewImageSnapshot(
           kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_FALSE(bridge->IsAccelerated());
       EXPECT_FALSE(snapshot->IsTextureBacked());
@@ -357,7 +357,7 @@ class Canvas2DLayerBridgeTest : public Test {
                                   CanvasColorParams(), IsUnitTest())));
       PaintFlags flags;
       bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-      RefPtr<StaticBitmapImage> image = bridge->NewImageSnapshot(
+      scoped_refptr<StaticBitmapImage> image = bridge->NewImageSnapshot(
           kPreferAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_TRUE(bridge->IsAccelerated());
@@ -370,7 +370,7 @@ class Canvas2DLayerBridgeTest : public Test {
                                   CanvasColorParams(), IsUnitTest())));
       PaintFlags flags;
       bridge->Canvas()->drawRect(SkRect::MakeXYWH(0, 0, 1, 1), flags);
-      RefPtr<StaticBitmapImage> image = bridge->NewImageSnapshot(
+      scoped_refptr<StaticBitmapImage> image = bridge->NewImageSnapshot(
           kPreferNoAcceleration, kSnapshotReasonUnitTests);
       EXPECT_TRUE(bridge->IsValid());
       EXPECT_FALSE(bridge->IsAccelerated());
@@ -837,7 +837,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_SnapshotWhileHibernating)
   EXPECT_TRUE(bridge->IsValid());
 
   // Take a snapshot and verify that it is not accelerated due to hibernation
-  RefPtr<StaticBitmapImage> image =
+  scoped_refptr<StaticBitmapImage> image =
       bridge->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
   EXPECT_FALSE(image->IsTextureBacked());
   image = nullptr;

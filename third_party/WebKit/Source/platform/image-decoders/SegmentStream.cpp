@@ -22,7 +22,7 @@ SegmentStream& SegmentStream::operator=(SegmentStream&& rhs) {
 
 SegmentStream::~SegmentStream() = default;
 
-void SegmentStream::SetReader(WTF::RefPtr<SegmentReader> reader) {
+void SegmentStream::SetReader(scoped_refptr<SegmentReader> reader) {
   reader_ = std::move(reader);
 }
 

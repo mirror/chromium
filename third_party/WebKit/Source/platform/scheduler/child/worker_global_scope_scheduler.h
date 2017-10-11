@@ -28,7 +28,7 @@ class PLATFORM_EXPORT WorkerGlobalScopeScheduler {
 
   // Returns the WebTaskRunner for tasks which should never get throttled. This
   // can be called from any thread.
-  RefPtr<WebTaskRunner> UnthrottledTaskRunner() {
+  scoped_refptr<WebTaskRunner> UnthrottledTaskRunner() {
     return unthrottled_task_runner_;
   }
 
@@ -36,7 +36,7 @@ class PLATFORM_EXPORT WorkerGlobalScopeScheduler {
   // state of the parent document (https://crbug.com/670534).
 
  private:
-  RefPtr<WebTaskRunnerImpl> unthrottled_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> unthrottled_task_runner_;
 
 #if DCHECK_IS_ON()
   bool is_disposed_ = false;

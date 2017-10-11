@@ -16,14 +16,14 @@ class CORE_EXPORT NGInlineBreakToken : public NGBreakToken {
  public:
   // Creates a break token for a node which did fragment, and can potentially
   // produce more fragments.
-  static RefPtr<NGInlineBreakToken> Create(NGInlineNode node,
-                                           unsigned item_index,
-                                           unsigned text_offset) {
+  static scoped_refptr<NGInlineBreakToken> Create(NGInlineNode node,
+                                                  unsigned item_index,
+                                                  unsigned text_offset) {
     return WTF::AdoptRef(new NGInlineBreakToken(node, item_index, text_offset));
   }
 
   // Creates a break token for a node which cannot produce any more fragments.
-  static RefPtr<NGInlineBreakToken> Create(NGLayoutInputNode node) {
+  static scoped_refptr<NGInlineBreakToken> Create(NGLayoutInputNode node) {
     return WTF::AdoptRef(new NGInlineBreakToken(node));
   }
 
