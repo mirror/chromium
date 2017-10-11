@@ -375,7 +375,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (CollectionViewItem*)switchItemForDataType:
     (SyncSetupService::SyncableDatatype)dataType {
   syncer::ModelType modelType = _syncSetupService->GetModelType(dataType);
-  BOOL isOn = _syncSetupService->IsDataTypeEnabled(modelType);
+  BOOL isOn = _syncSetupService->IsDataTypePreferred(modelType);
 
   SyncSwitchItem* syncDataTypeItem =
       [self switchItemWithType:ItemTypeSyncableDataType
@@ -784,7 +784,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     SyncSetupService::SyncableDatatype dataType =
         (SyncSetupService::SyncableDatatype)syncSwitchItem.dataType;
     syncer::ModelType modelType = _syncSetupService->GetModelType(dataType);
-    syncSwitchItem.on = _syncSetupService->IsDataTypeEnabled(modelType);
+    syncSwitchItem.on = _syncSetupService->IsDataTypePreferred(modelType);
     syncSwitchItem.enabled = [self shouldSyncableItemsBeEnabled];
     [switchsToReconfigure addObject:syncSwitchItem];
   }

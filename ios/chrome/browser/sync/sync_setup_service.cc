@@ -53,6 +53,10 @@ bool SyncSetupService::IsDataTypeEnabled(syncer::ModelType datatype) const {
   return sync_service_->GetActiveDataTypes().Has(datatype);
 }
 
+bool SyncSetupService::IsDataTypePreferred(syncer::ModelType datatype) const {
+  return GetDataTypes().Has(datatype);
+}
+
 void SyncSetupService::SetDataTypeEnabled(syncer::ModelType datatype,
                                           bool enabled) {
   sync_blocker_ = sync_service_->GetSetupInProgressHandle();
@@ -70,7 +74,7 @@ void SyncSetupService::SetDataTypeEnabled(syncer::ModelType datatype,
 }
 
 bool SyncSetupService::UserActionIsRequiredToHaveSyncWork() {
-  if (!IsSyncEnabled() || !IsDataTypeEnabled(syncer::PROXY_TABS)) {
+  if (!IsSyncEnabled() || !IsDataTypePreferred(syncer::PROXY_TABS)) {
     return true;
   }
   switch (this->GetSyncServiceState()) {
