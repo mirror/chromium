@@ -359,6 +359,13 @@ void DevToolsAgentHostImpl::NotifyCreated() {
     observer.DevToolsAgentHostCreated(this);
 }
 
+void DevToolsAgentHostImpl::NotifyNavigated() {
+  DCHECK(g_instances.Get().find(id_) == g_instances.Get().end());
+  g_instances.Get()[id_] = this;
+  for (auto& observer : g_observers.Get())
+    observer.DevToolsAgentHostNavigated(this);
+}
+
 void DevToolsAgentHostImpl::NotifyAttached() {
   for (auto& observer : g_observers.Get())
     observer.DevToolsAgentHostAttached(this);
