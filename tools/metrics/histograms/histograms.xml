@@ -90570,9 +90570,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="WebCore.IndexedDB.Context.ForcedCloseReason"
+<histogram name="WebCore.IndexedDB.Context.ForceCloseReason"
     enum="IDBContextForcedCloseReason">
-  <owner>dgrogan@chromium.org</owner>
+  <owner>cmumford@chromium.org</owner>
   <summary>The reason that a forced-close of a backing store occurred.</summary>
 </histogram>
 
@@ -98302,7 +98302,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="LevelDBEnv.TimeUntilSuccessFor"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="LevelDBOpenResults" separator="_">
+<histogram_suffixes name="LevelDBOpenResults" separator=".">
   <suffix name="DomDistillerStore" label="Databases for DomDistillerStore"/>
   <suffix name="GCMKeyStore" label="Databases for GCMKeyStore"/>
   <suffix name="ImageManager" label="Databases for ImageManager"/>
