@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af9ba5f_783bd9fe",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T06:27:25Z",
+      "side": 1,
+      "message": "Would you mind to share the ARC side change, too?\n\nSpecifically, I\u0027m interested in;\n- What is the expected behavior there if preferred_languages is empty.\n- What is the expected behavior if some dupped locales happen to be found accidentally.",
+      "revId": "2e3a3c8d62d2be381d79ae62dcd3fd9f9ac94923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7209bc98_77a20c1d",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T06:27:25Z",
+      "side": 1,
+      "message": "You split then join back the string. Is it possible to just strip the whitespaces?\nIf this is for re-formatting for some reason,\nI think it\u0027s nice to document what\u0027s the expected format in somewhere, IMHO.",
+      "revId": "2e3a3c8d62d2be381d79ae62dcd3fd9f9ac94923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
