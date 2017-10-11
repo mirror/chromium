@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ed956d6_2f1516cb",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-11T19:13:50Z",
+      "side": 1,
+      "message": "Does it not guarantee that?",
+      "revId": "c370dd81d096d45546fb7de469042c3ec22fa601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0be8ddb_06db3c17",
+        "filename": "content/browser/frame_host/render_widget_host_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-11T19:13:50Z",
+      "side": 1,
+      "message": "This seems to assume that rwhv is the root. If a PDF is loaded within an OOPIF then that wouldn\u0027t be true, right?\n\nI\u0027m not entirely sure if that is an issue or not, since BrowserPlugin within an OOPIF might have other problems.",
+      "revId": "c370dd81d096d45546fb7de469042c3ec22fa601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
