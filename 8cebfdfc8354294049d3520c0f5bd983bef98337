@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ee161d_bd32678d",
+        "filename": "chrome/installer/zucchini/test_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-11T20:25:18Z",
+      "side": 1,
+      "message": "s -\u003e hex_string or something (don\u0027t abbreviate)",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "8cebfdfc8354294049d3520c0f5bd983bef98337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
