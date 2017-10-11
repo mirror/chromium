@@ -1,10 +1,10 @@
-# Copyright 2013 The Chromium Authors. All rights reserved.
+# Copyright 2017 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Generates C++ source files from a mojom.Module."""
+"""Generates C source files from a mojom.Module."""
 
-import mojom.generate.generator as  generator
+import mojom.generate.generator as generator
 import mojom.generate.module as mojom
 import mojom.generate.pack as pack
 from mojom.generate.template_expander import UseJinja
@@ -71,7 +71,7 @@ class _NameFormatter(object):
   def FormatForCpp(self, omit_namespace_for_module=None, internal=False,
                    flatten_nested_kind=False):
     return self.Format(
-        "::", prefixed=True,
+        "_", prefixed=True,
         omit_namespace_for_module=omit_namespace_for_module,
         internal=internal, include_variant=True,
         flatten_nested_kind=flatten_nested_kind)
@@ -132,10 +132,6 @@ def GetWtfHashFnNameForEnum(enum):
 def IsNativeOnlyKind(kind):
   return (mojom.IsStructKind(kind) or mojom.IsEnumKind(kind)) and \
       kind.native_only
-
-
-def UseCustomSerializer(kind):
-  return mojom.IsStructKind(kind) and kind.custom_serializer
 
 
 def AllEnumValues(enum):
@@ -290,7 +286,6 @@ class Generator(generator.Generator):
 
     return {
       "all_enums": all_enums,
-      "allow_native_structs": self.allow_native_structs,
       "enums": self.module.enums,
       "export_attribute": self.export_attribute,
       "export_header": self.export_header,
@@ -312,11 +307,12 @@ class Generator(generator.Generator):
 
   @staticmethod
   def GetTemplatePrefix():
-    return "cpp_templates"
+    return "c_templates"
 
   def GetFilters(self):
     cpp_filters = {
       "all_enum_values": AllEnumValues,
+      "c_wrapper_type": self._GetCWrapperType,
       "constant_value": self._ConstantValue,
       "contains_handles_or_interfaces": mojom.ContainsHandlesOrInterfaces,
       "contains_move_only_members": self._ContainsMoveOnlyMembers,
@@ -364,13 +360,33 @@ class Generator(generator.Generator):
       "struct_constructors": self._GetStructConstructors,
       "under_to_camel": generator.ToCamel,
       "unmapped_type_for_serializer": self._GetUnmappedTypeForSerializer,
-      "use_custom_serializer": UseCustomSerializer,
       "wtf_hash_fn_name_for_enum": GetWtfHashFnNameForEnum,
     }
     return cpp_filters
 
-  @UseJinja("module.h.tmpl")
+  @UseJinja("module_c.h.tmpl")
   def _GenerateModuleHeader(self):
+    return self._GetJinjaExports()
+
+  @UseJinja("module_impl_interface.h.tmpl")
+  def _GenerateModuleInterfaceHeader(self):
+    return self._GetJinjaExports()
+
+  @UseJinja("module_impl_interface.cc.tmpl")
+  def _GenerateModuleInterfaceSource(self):
+    return self._GetJinjaExports()
+
+
+  @UseJinja("module_impl_struct.h.tmpl")
+  def _GenerateModuleStructHeader(self):
+    return self._GetJinjaExports()
+
+  @UseJinja("module_impl_struct.cc.tmpl")
+  def _GenerateModuleStructSource(self):
+    return self._GetJinjaExports()
+
+  @UseJinja("module_impl_struct_unittest.cc.tmpl")
+  def _GenerateModuleStructUnittest(self):
     return self._GetJinjaExports()
 
   @UseJinja("module.cc.tmpl")
@@ -402,9 +418,19 @@ class Generator(generator.Generator):
     else:
       suffix = "-%s" % self.variant if self.variant else ""
       self.Write(self._GenerateModuleHeader(),
-                 "%s%s.h" % (self.module.path, suffix))
-      self.Write(self._GenerateModuleSource(),
-                 "%s%s.cc" % (self.module.path, suffix))
+                 "%s%s_c.h" % (self.module.path, suffix))
+      self.Write(self._GenerateModuleInterfaceHeader(),
+                 "%s%s_impl_interface.h" % (self.module.path, suffix))
+      self.Write(self._GenerateModuleInterfaceSource(),
+                 "%s%s_impl_interface.cc" % (self.module.path, suffix))
+      self.Write(self._GenerateModuleStructHeader(),
+                 "%s%s_impl_struct.h" % (self.module.path, suffix))
+      self.Write(self._GenerateModuleStructSource(),
+                 "%s%s_impl_struct.cc" % (self.module.path, suffix))
+      self.Write(self._GenerateModuleStructUnittest(),
+                 "%s%s_impl_struct_unittest.cc" % (self.module.path, suffix))
+      #self.Write(self._GenerateModuleSource(),
+      #           "%s%s_c.cc" % (self.module.path, suffix))
 
   def _ConstantValue(self, constant):
     return self._ExpressionToText(constant.value, kind=constant.kind)
@@ -463,8 +489,6 @@ class Generator(generator.Generator):
       if mojom.IsNullableKind(kind):
         return False
       elif mojom.IsStructKind(kind):
-        if kind.native_only:
-          return False
         if (self._IsTypemappedKind(kind) and
             not self.typemap[self._GetFullMojomNameForKind(kind)]["hashable"]):
           return False
@@ -519,10 +543,10 @@ class Generator(generator.Generator):
       return self._GetNameForKind(
           kind, add_same_module_namespaces=add_same_module_namespaces)
     if mojom.IsStructKind(kind) or mojom.IsUnionKind(kind):
-      return "%sPtr" % self._GetNameForKind(
+      return "std::unique_ptr<%s>" % self._GetNameForKind(
           kind, add_same_module_namespaces=add_same_module_namespaces)
     if mojom.IsArrayKind(kind):
-      pattern = "WTF::Vector<%s>" if self.for_blink else "std::vector<%s>"
+      pattern = "void* /* std::vector<%s> */"
       if mojom.IsNullableKind(kind):
         pattern = _AddOptional(pattern)
       return pattern % self._GetCppWrapperType(
@@ -597,6 +621,13 @@ class Generator(generator.Generator):
     return ((not mojom.IsReferenceKind(kind)) or self._IsMoveOnlyKind(kind) or
         self._IsCopyablePassByValue(kind))
 
+  def _GetCWrapperType(self, kind):
+    if mojom.IsStringKind(kind):
+      return "CharString"
+    if mojom.IsStructKind(kind) or mojom.IsUnionKind(kind):
+      return "%sPtr" % self._GetNameForKind(kind)
+    return self._GetCppWrapperType(kind)
+
   def _GetCppWrapperParamType(self, kind):
     cpp_wrapper_type = self._GetCppWrapperType(kind)
     return (cpp_wrapper_type if self._ShouldPassParamByValue(kind)
@@ -660,8 +691,6 @@ class Generator(generator.Generator):
     return self._GetCppWrapperType(kind, add_same_module_namespaces=True)
 
   def _MethodSupportsLazySerialization(self, method):
-    # TODO(crbug.com/753431,crbug.com/753433): Support lazy serialization for
-    # methods which pass associated handles and InterfacePtrs.
     return self.support_lazy_serialization and (
         not mojom.MethodPassesAssociatedKinds(method) and
         not mojom.MethodPassesInterfaces(method))
@@ -685,7 +714,7 @@ class Generator(generator.Generator):
         return "std::numeric_limits<float>::quiet_NaN()"
 
     if (kind is not None and mojom.IsFloatKind(kind)):
-        return token if token.isdigit() else token + "f";
+      return token if token.isdigit() else token + "f";
 
     # Per C++11, 2.14.2, the type of an integer literal is the first of the
     # corresponding list in Table 6 in which its value can be represented. In
