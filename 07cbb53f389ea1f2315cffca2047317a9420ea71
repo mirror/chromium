@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831db037_6721d1f2",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T05:09:41Z",
+      "side": 1,
+      "message": "It is better to change CanBeSelectionLeaf() to match this condition.",
+      "revId": "07cbb53f389ea1f2315cffca2047317a9420ea71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
