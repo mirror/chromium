@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f034a1d4_936613fd",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-11T18:32:51Z",
+      "side": 1,
+      "message": "Delete the unused code.",
+      "revId": "6ca5c6f6bae17b2f868b6c649197597fbc4a3303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d9294b_9ad1ef67",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-11T18:32:51Z",
+      "side": 1,
+      "message": "How about \u0027parsed_value\u0027?",
+      "range": {
+        "startLine": 302,
+        "startChar": 33,
+        "endLine": 302,
+        "endChar": 39
+      },
+      "revId": "6ca5c6f6bae17b2f868b6c649197597fbc4a3303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377bb987_d33c1ff9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-11T18:32:51Z",
+      "side": 1,
+      "message": "actual value *type*?",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "6ca5c6f6bae17b2f868b6c649197597fbc4a3303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
