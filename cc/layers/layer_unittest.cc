@@ -1306,6 +1306,20 @@ TEST_F(LayerTest, DrawsContentChangedInSetLayerTreeHost) {
   EXPECT_EQ(1, root_layer->NumDescendantsThatDrawContent());
 }
 
+TEST_F(LayerTest, PushDrawsContentShouldUpdateShouldHitTest) {
+  scoped_refptr<Layer> draws_content = Layer::Create();
+  std::unique_ptr<LayerImpl> impl_layer =
+      LayerImpl::Create(host_impl_.active_tree(), 1);
+  EXPECT_SET_NEEDS_FULL_TREE_SYNC(
+      1, layer_tree_host_->SetRootLayer(draws_content));
+  EXPECT_CALL(*layer_tree_host_, SetNeedsCommit()).Times(1);
+  draws_content->SetIsDrawable(true);
+  draws_content->PushPropertiesTo(impl_layer.get());
+
+  EXPECT_TRUE(impl_layer->DrawsContent());
+  EXPECT_TRUE(impl_layer->should_hit_test());
+}
+
 void ReceiveCopyOutputResult(int* result_count,
                              std::unique_ptr<viz::CopyOutputResult> result) {
   ++(*result_count);
