@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecc2f344_8b572657",
+        "filename": "ash/mojo_interface_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5192fe1_ecf42979",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3147509_c60aff2e",
         "filename": "ash/mojo_test_interface_factory.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce6b0b1_1f76fcbc",
+        "filename": "ash/mojo_test_interface_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "I can\u0027t forward declare it, it\u0027s a typedef (well, a \"using\"). :-(",
+      "parentUuid": "a3147509_c60aff2e",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "37fa6118_4284d9e1",
+        "filename": "ash/mus/manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d5291393_9ae16786",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b5e04ba_13c4acda",
         "filename": "ash/public/interfaces/system_tray_test_api.mojom",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cde5abb_bdb949bf",
+        "filename": "ash/public/interfaces/system_tray_test_api.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5e04ba_13c4acda",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da86207f_e7c8b95d",
+        "filename": "ash/system/tray/system_tray_test_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Removed ASH_EXPORT.",
+      "parentUuid": "3ae31c04_4e1253b5",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b67d125_e31359d4",
         "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69648fa_49ad5a64",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b67d125_e31359d4",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 43
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "7e7d6b9e_2a1e25a5",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Per offline discussion - Ken\u0027s solution sounds good and he\u0027s going to look into the bindings generator. Thanks Ken!",
+      "parentUuid": "3bdbbabd_d9abfec3",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6691fb_7afd1b7c",
         "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
         "patchSetId": 5
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "aac00835_776d8d68",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6691fb_7afd1b7c",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce04e9be_a6c185c0",
         "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
         "patchSetId": 5
@@ -254,6 +446,30 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8979ffd2_aea4f3fe",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce04e9be_a6c185c0",
+      "range": {
+        "startLine": 150,
+        "startChar": 35,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -310,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "5362a79b_a2fb4739",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c09ab6bb_cb31bb23",
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6fe077_250a524e",
         "filename": "chrome/test/base/chrome_test_launcher.cc",
         "patchSetId": 5
@@ -330,6 +564,30 @@
       "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af86c2c4_9d246501",
+        "filename": "chrome/test/base/chrome_test_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6fe077_250a524e",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 10
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
