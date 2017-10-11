@@ -16,6 +16,24 @@
       "revId": "79f42b0b0b687a2f2bce25e18271b1627a136760",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e14984_4375ebf5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T12:44:13Z",
+      "side": 1,
+      "message": "Not quite sure I understand.  One thing I did notice is a lot of types come under the category of \u0027other\u0027 perhaps it makes sense to introduce some new ones?",
+      "parentUuid": "d0342d4e_bf56b303",
+      "revId": "79f42b0b0b687a2f2bce25e18271b1627a136760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
