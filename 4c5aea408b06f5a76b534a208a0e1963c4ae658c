@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "362b6d0f_e9ea5026",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-11T20:27:06Z",
+      "side": 1,
+      "message": "nit: writeBoolean(CHROME_HOME_OPT_OUT_SNACKBAR_SHOWN, true);",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 95
+      },
+      "revId": "4c5aea408b06f5a76b534a208a0e1963c4ae658c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
