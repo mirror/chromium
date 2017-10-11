@@ -6,7 +6,7 @@
 # certificates. See chrome/browser/ssl/ssl_error_assistant.proto for the full
 # format.
 
-version_id: 4
+version_id: 5
 
 # https://captive-portal.badssl.com leaf.
 # This is a test certificate, always keep it at the top.
@@ -37,9 +37,9 @@ captive_portal_cert {
 }
 
 # beeline.ru
-# https://crt.sh/?q=e64aa319a108ce49931ac19bf32f838f8db7427150cf7a781af7d9ff76f75cac
+# https://crt.sh/?q=54f7747b0ecbff922a2079d1dc8cd7442058d08b8c0c3da37aca0ddfd0117d62
 captive_portal_cert {
-  sha256_hash: "sha256/k/2eeJTznE32mblA/du19wpVDSIReFX44M8wXa2JY30="
+  sha256_hash: "sha256/M8EeVMUa3Y1mx2TWzARhMhH/WAsJ3/Yl5h/NrVwAZeM="
 }
 
 # BT Wi-fi
@@ -111,6 +111,15 @@ captive_portal_cert {
 #          CN=hautdebitmobile.orange.fr
 captive_portal_cert {
   sha256_hash: "sha256/AUSXlKDCf1X30WhWeAWbjToABfBkJrKWPL6KwEi5VH0="
+}
+
+# Telekom Malaysia
+# Issuer: C=BE, O=GlobalSign nv-sa,
+#         CN=GlobalSign Organization Validation CA - SHA256 - G2
+# Subject: C=MY, ST=Wilayah Persekutuan, L=Kuala Lumpur,
+#          O=Telekom Malaysia Berhad, CN=tmwifiac.tm.com.my
+captive_portal_cert {
+  sha256_hash: "sha256/MzxxiLjIoisjR03SH7AQWMPWDOGUVpyQ5Vi0OeqImxg="
 }
 
 # virginwifi.io
