@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e198c01b_636acc83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-11T04:02:52Z",
+      "side": 1,
+      "message": "OK, thanks, updated",
+      "parentUuid": "4372dc6d_440de3a6",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7890c0b4_1514849b",
         "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
         "patchSetId": 10
