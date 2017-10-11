@@ -196,6 +196,8 @@ void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
 // ui::EventHandler overrides:
 
 void Keyboard::OnKeyEvent(ui::KeyEvent* event) {
+  LOG(ERROR) << "OnKeyEvent:" << event->key_code();
+
   // These modifiers reflect what Wayland is aware of.  For example,
   // EF_SCROLL_LOCK_ON is missing because Wayland doesn't support scroll lock.
   const int kModifierMask = ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN |

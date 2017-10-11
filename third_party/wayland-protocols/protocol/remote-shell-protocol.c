@@ -102,6 +102,8 @@ static const struct wl_message zcr_remote_surface_v1_requests[] = {
 	{ "move", "5", types + 0 },
 	{ "set_orientation", "6i", types + 0 },
 	{ "set_window_type", "7u", types + 0 },
+	{ "set_window_capabilities", "8a", types + 0 },
+	{ "set_window_decoration", "8siiiii", types + 0 },
 };
 
 static const struct wl_message zcr_remote_surface_v1_events[] = {
@@ -111,8 +113,8 @@ static const struct wl_message zcr_remote_surface_v1_events[] = {
 };
 
 WL_EXPORT const struct wl_interface zcr_remote_surface_v1_interface = {
-	"zcr_remote_surface_v1", 7,
-	26, zcr_remote_surface_v1_requests,
+	"zcr_remote_surface_v1", 8,
+	28, zcr_remote_surface_v1_requests,
 	3, zcr_remote_surface_v1_events,
 };
 

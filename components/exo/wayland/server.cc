@@ -2006,8 +2006,7 @@ void remote_surface_set_rectangular_shadow_background_opacity(
     wl_client* client,
     wl_resource* resource,
     wl_fixed_t opacity) {
-  GetUserDataAs<ShellSurface>(resource)->SetRectangularShadowBackgroundOpacity(
-      wl_fixed_to_double(opacity));
+  // This is deprecated.
 }
 
 void remote_surface_set_title(wl_client* client,
@@ -2124,6 +2123,41 @@ void remote_surface_set_window_type(wl_client* client,
   }
 }
 
+void remote_surface_set_window_capabilities(struct wl_client* client,
+                                            struct wl_resource* resource,
+                                            struct wl_array* capabilities) {
+  // GetUserDataAs<ShellSurface>(resource)->SetWindowCapabilities();
+}
+
+void remote_surface_set_window_decoration(struct wl_client* client,
+                                          struct wl_resource* resource,
+                                          const char* title,
+                                          int32_t frame_height,
+                                          int32_t color,
+                                          int32_t frame_buttons,
+                                          int32_t enabled_buttons,
+                                          int32_t shadow_elevation) {
+  ShellSurface* shell_surface = GetUserDataAs<ShellSurface>(resource);
+  shell_surface->ConfigureFrame(color);
+  LOG(ERROR) << "SetWindowDecoration:"
+             << ", height=" << frame_height << ", title=" << title << ", color=" << color
+             << ", buttons=" << frame_buttons << ", enabled=" << enabled_buttons
+             << ", shadow_elevation=" << shadow_elevation
+             << ", resource=" << resource
+             << ", t=" << base::string16(base::UTF8ToUTF16(title));
+  shell_surface->SetTitle(base::string16(base::UTF8ToUTF16(title)));
+  if (frame_height > 0) {
+    shell_surface->OnSetFrame(SurfaceFrameType::NORMAL);
+  } else {
+    shell_surface->OnSetFrame(SurfaceFrameType::NONE);
+  }
+  /*
+  shell_surface->SetRectangularShadowBackgroundOpacity(
+      wl_fixed_to_double(background_opacity));
+  shell_surface->SetShadowElevation(shadow_elevation);
+  */
+}
+
 const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_destroy,
     remote_surface_set_app_id,
@@ -2150,7 +2184,10 @@ const struct zcr_remote_surface_v1_interface remote_surface_implementation = {
     remote_surface_ack_configure,
     remote_surface_move,
     remote_surface_set_orientation,
-    remote_surface_set_window_type};
+    remote_surface_set_window_type,
+    remote_surface_set_window_capabilities,
+    remote_surface_set_window_decoration,
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // notification_surface_interface:

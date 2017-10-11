@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/frame_border_hit_test.h"
 #include "ash/frame/header_view.h"
@@ -323,6 +324,7 @@ CustomFrameViewAsh::CustomFrameViewAsh(
         new CustomFrameViewAshWindowStateDelegate(window_state, this,
                                                   enable_immersive)));
   }
+  SetBackbuttonStatus(true, true);
 }
 
 CustomFrameViewAsh::~CustomFrameViewAsh() {}
@@ -339,6 +341,18 @@ void CustomFrameViewAsh::SetFrameColors(SkColor active_frame_color,
   aura::Window* frame_window = frame_->GetNativeWindow();
   frame_window->SetProperty(aura::client::kTopViewColor,
                             header_view_->GetInactiveFrameColor());
+}
+
+void CustomFrameViewAsh::SetShowFrame(bool show) {
+  if (show_frame_ == show)
+    return;
+  show_frame_ = show;
+  overlay_view_->SetVisible(show_frame_);
+  header_view_->SetVisible(show_frame_);
+}
+
+void CustomFrameViewAsh::SetBackbuttonStatus(bool show, bool enabled) {
+  header_view_->SetBackbuttonStatus(show, enabled);
 }
 
 void CustomFrameViewAsh::SetHeaderHeight(base::Optional<int> height) {
@@ -367,7 +381,8 @@ gfx::Rect CustomFrameViewAsh::GetWindowBoundsForClientBounds(
 
 int CustomFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
   return FrameBorderNonClientHitTest(
-      this, header_view_->caption_button_container(), point);
+      this, header_view_->back_button(),
+      header_view_->caption_button_container(), point);
 }
 
 void CustomFrameViewAsh::GetWindowMask(const gfx::Size& size,
@@ -481,7 +496,7 @@ CustomFrameViewAsh::GetFrameCaptionButtonContainerViewForTest() {
 }
 
 int CustomFrameViewAsh::NonClientTopBorderHeight() const {
-  if (frame_->IsFullscreen())
+  if (frame_->IsFullscreen() || !show_frame_)
     return 0;
 
   const bool should_hide_titlebar_in_tablet_mode =

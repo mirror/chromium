@@ -198,7 +198,7 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
   const int hit_test =
-      ash::FrameBorderNonClientHitTest(this, caption_button_container_, point);
+      ash::FrameBorderNonClientHitTest(this, nullptr, caption_button_container_, point);
 
   // When the window is restored we want a large click target above the tabs
   // to drag the window, so redirect clicks in the tab's shadow to caption.

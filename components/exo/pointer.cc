@@ -227,6 +227,7 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
     // but OnPointerMotion should only be called if location changed since
     // OnPointerEnter was called.
     if (!SameLocation(event, location_)) {
+
       location_ = event->location_f();
       delegate_->OnPointerMotion(event->time_stamp(), location_);
       delegate_->OnPointerFrame();

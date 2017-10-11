@@ -197,9 +197,6 @@ class ShellSurface : public SurfaceTreeHost,
   // Setting empty bounds will disable the shadow.
   void SetRectangularSurfaceShadow(const gfx::Rect& content_bounds);
 
-  // Set the pacity of the background for the window that has a shadow.
-  void SetRectangularShadowBackgroundOpacity(float opacity);
-
   // Set scale factor for surface. The scale factor will be applied to surface
   // and all descendants.
   void SetScale(double scale);
@@ -229,6 +226,8 @@ class ShellSurface : public SurfaceTreeHost,
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
   void OnSetFrame(SurfaceFrameType type) override;
+
+  void ConfigureFrame(SkColor color);
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
@@ -298,7 +297,6 @@ class ShellSurface : public SurfaceTreeHost,
   void CompositorLockTimedOut() override;
 
   aura::Window* shadow_overlay() { return shadow_overlay_.get(); }
-  aura::Window* shadow_underlay() { return shadow_underlay_.get(); }
 
   Surface* surface_for_testing() { return root_surface(); }
 
@@ -391,17 +389,13 @@ class ShellSurface : public SurfaceTreeHost,
   int resize_component_ = HTCAPTION;  // HT constant (see ui/base/hit_test.h)
   int pending_resize_component_ = HTCAPTION;
   std::unique_ptr<aura::Window> shadow_overlay_;
-  std::unique_ptr<aura::Window> shadow_underlay_;
   gfx::Rect shadow_content_bounds_;
   bool shadow_content_bounds_changed_ = false;
-  float shadow_background_opacity_ = 1.0;
   base::circular_deque<std::unique_ptr<Config>> pending_configs_;
   std::unique_ptr<ash::WindowResizer> resizer_;
   std::unique_ptr<ScopedAnimationsDisabled> scoped_animations_disabled_;
   int top_inset_height_ = 0;
   int pending_top_inset_height_ = 0;
-  bool shadow_underlay_in_surface_ = true;
-  bool pending_shadow_underlay_in_surface_ = true;
   // TODO(reveman): Use configure callbacks for orientation. crbug.com/765954
   Orientation pending_orientation_ = Orientation::LANDSCAPE;
   Orientation orientation_ = Orientation::LANDSCAPE;

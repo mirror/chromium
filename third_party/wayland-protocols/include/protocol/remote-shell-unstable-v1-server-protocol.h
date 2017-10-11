@@ -440,6 +440,46 @@ enum zcr_remote_surface_v1_window_type {
 };
 #endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_TYPE_ENUM */
 
+#ifndef ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_ENUM
+#define ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_ENUM
+enum zcr_remote_surface_v1_window_capability {
+	/**
+	 * window can resize
+	 */
+	ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_CAN_RESIZE = 1,
+	/**
+	 * window can snap
+	 */
+	ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_CAN_SNAP = 2,
+	/**
+	 * window can maximize
+	 */
+	ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_CAN_MAXIMIZE = 4,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_WINDOW_CAPABILITY_ENUM */
+
+#ifndef ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_ENUM
+#define ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_ENUM
+enum zcr_remote_surface_v1_frame_button {
+	/**
+	 * window_can_resize
+	 */
+	ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_MAXIMIZE = 1,
+	/**
+	 * window_can_resize
+	 */
+	ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_RESTORE = 2,
+	/**
+	 * window
+	 */
+	ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_CLOSE = 4,
+	/**
+	 * window
+	 */
+	ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_ZOOM = 8,
+};
+#endif /* ZCR_REMOTE_SURFACE_V1_FRAME_BUTTON_ENUM */
+
 /**
  * @ingroup iface_zcr_remote_surface_v1
  * @struct zcr_remote_surface_v1_interface
@@ -525,8 +565,8 @@ struct zcr_remote_surface_v1_interface {
 	/**
 	 * suggests the window's background opacity
 	 *
-	 * Suggests the window's background opacity when the shadow is
-	 * requested.
+	 * [Deprecated] Suggests the window's background opacity when the
+	 * shadow is requested.
 	 */
 	void (*set_rectangular_shadow_background_opacity)(struct wl_client *client,
 							  struct wl_resource *resource,
@@ -789,6 +829,23 @@ struct zcr_remote_surface_v1_interface {
 	void (*set_window_type)(struct wl_client *client,
 				struct wl_resource *resource,
 				uint32_t type);
+	/**
+	 * @since 8
+	 */
+	void (*set_window_capabilities)(struct wl_client *client,
+					struct wl_resource *resource,
+					struct wl_array *capabilities);
+	/**
+	 * @since 8
+	 */
+	void (*set_window_decoration)(struct wl_client *client,
+				      struct wl_resource *resource,
+				      const char *title,
+				      int32_t frame_height,
+				      int32_t color,
+				      int32_t shown_buttons,
+				      int32_t enabled_buttons,
+				      int32_t shadow_elevation);
 };
 
 #define ZCR_REMOTE_SURFACE_V1_CLOSE 0
@@ -912,6 +969,14 @@ struct zcr_remote_surface_v1_interface {
  * @ingroup iface_zcr_remote_surface_v1
  */
 #define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_TYPE_SINCE_VERSION 7
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_CAPABILITIES_SINCE_VERSION 8
+/**
+ * @ingroup iface_zcr_remote_surface_v1
+ */
+#define ZCR_REMOTE_SURFACE_V1_SET_WINDOW_DECORATION_SINCE_VERSION 8
 
 /**
  * @ingroup iface_zcr_remote_surface_v1

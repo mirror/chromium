@@ -180,7 +180,7 @@
     </event>
   </interface>
 
-  <interface name="zcr_remote_surface_v1" version="7">
+  <interface name="zcr_remote_surface_v1" version="8">
     <description summary="A desktop window">
       An interface that may be implemented by a wl_surface, for
       implementations that provide a desktop-style user interface
@@ -291,7 +291,7 @@
 
     <request name="set_rectangular_shadow_background_opacity">
       <description summary="suggests the window's background opacity">
-	Suggests the window's background opacity when the shadow is requested.
+	[Deprecated] Suggests the window's background opacity when the shadow is requested.
       </description>
       <arg name="opacity" type="fixed"/>
     </request>
@@ -577,6 +577,34 @@
       <arg name="type" type="uint" summary="type of the window"/>
     </request>
 
+    <enum name="window_capability">
+      <entry name="can_resize" value="1" summary="window can resize"/>
+      <entry name="can_snap" value="2" summary="window can snap"/>
+      <entry name="can_maximize" value="4" summary="window can maximize"/>
+    </enum>
+
+    <enum name="frame_button">
+      <entry name="maximize" value="1" summary="window_can_resize"/>
+      <entry name="restore" value="2" summary="window_can_resize"/>
+      <entry name="close" value="4" summary="window"/>
+      <entry name="zoom" value="8" summary="window"/>
+    </enum>
+
+    <!-- Version 8 additions -->
+    <request name="set_window_capabilities" since="8">
+      <arg name="capabilities" type="array"/>
+    </request>
+
+    <request name="set_window_decoration" since="8">
+      <!-- 0 means no frame -->
+      <arg name="title" type="string"/>
+      <arg name="frame_height" type="int"/>
+      <arg name="color" type="int"/>
+      <arg name="shown_buttons" type="int"/>
+      <arg name="enabled_buttons" type="int"/>
+      <!-- 0 means no shadow -->
+      <arg name="shadow_elevation" type="int"/>
+    </request>
   </interface>
 
   <interface name="zcr_notification_surface_v1" version="1">

@@ -8,18 +8,22 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/frame/caption_buttons/caption_button_types.h"
 #include "ash/public/interfaces/window_style.mojom.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/views/window/non_client_view.h"
 
+namespace gfx {
+struct VectorIcon;
+}
+
 namespace views {
 class Widget;
 }
 
 namespace ash {
-
 class FrameCaptionButtonContainerView;
 class HeaderView;
 class ImmersiveFullscreenController;
@@ -59,6 +63,12 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   // Sets the active and inactive frame colors. Note the inactive frame color
   // will have some transparency added when the frame is drawn.
   void SetFrameColors(SkColor active_frame_color, SkColor inactive_frame_color);
+
+  void SetShowFrame(bool show);
+  void SetBackbuttonStatus(bool show, bool enabled);
+  void SetButtonImage(
+      CaptionButtonIcon icon,
+      const gfx::VectorIcon& icon_definition);
 
   // Sets the height of the header. If |height| has no value (the default), the
   // preferred height is used.
@@ -109,6 +119,8 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
 
   // Not owned.
   views::Widget* frame_;
+
+  bool show_frame_ = true;
 
   // View which contains the title and window controls.
   HeaderView* header_view_;

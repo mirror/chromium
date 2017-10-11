@@ -132,7 +132,7 @@ gfx::Rect PanelFrameView::GetWindowBoundsForClientBounds(
 int PanelFrameView::NonClientHitTest(const gfx::Point& point) {
   if (!header_painter_)
     return HTNOWHERE;
-  return FrameBorderNonClientHitTest(this, caption_button_container_, point);
+  return FrameBorderNonClientHitTest(this, nullptr, caption_button_container_, point);
 }
 
 void PanelFrameView::OnPaint(gfx::Canvas* canvas) {
