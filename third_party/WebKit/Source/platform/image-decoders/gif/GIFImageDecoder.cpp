@@ -219,6 +219,9 @@ void GIFImageDecoder::Decode(size_t index) {
   UpdateAggressivePurging(index);
 
   ImageFrame& frame = frame_buffer_cache_[index];
+  if (frame.GetStatus() == ImageFrame::kFrameComplete)
+    return;
+
   if (frame.GetStatus() == ImageFrame::kFrameEmpty) {
     size_t required_previous_frame_index = frame.RequiredPreviousFrameIndex();
     if (required_previous_frame_index == kNotFound) {
