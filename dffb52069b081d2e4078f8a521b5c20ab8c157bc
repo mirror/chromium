@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274fd849_3e3701af",
+        "filename": "content/public/child/child_url_loader_factory_getter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-11T14:00:27Z",
+      "side": 1,
+      "message": "Can this be a GURL, or any other plan to use different information to select a right factory?\nThat would make it easier to deprecate following two methods.",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "dffb52069b081d2e4078f8a521b5c20ab8c157bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7367a10e_c8ae167e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6887,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-11T14:00:27Z",
+      "side": 1,
+      "message": "but?",
+      "range": {
+        "startLine": 6887,
+        "startChar": 63,
+        "endLine": 6887,
+        "endChar": 67
+      },
+      "revId": "dffb52069b081d2e4078f8a521b5c20ab8c157bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008a67d7_859f1fab",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6894,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-11T14:00:27Z",
+      "side": 1,
+      "message": "original code seems to override factory for blob regardless of factory existence. new code looks more natural for me. but just in case, is it an intentional change?",
+      "range": {
+        "startLine": 6894,
+        "startChar": 7,
+        "endLine": 6894,
+        "endChar": 14
+      },
+      "revId": "dffb52069b081d2e4078f8a521b5c20ab8c157bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
