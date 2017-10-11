@@ -182,6 +182,7 @@ class VrShell : device::GvrGamepadDataProvider,
                             vr::ExitVrPromptChoice choice);
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds);
 
+  bool ContentGestureIsLocked(blink::WebInputEvent::Type type);
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
   void SetWebVRSecureOrigin(bool secure_origin);
@@ -266,6 +267,10 @@ class VrShell : device::GvrGamepadDataProvider,
   device::CardboardGamepadDataFetcher* cardboard_gamepad_data_fetcher_ =
       nullptr;
   int64_t cardboard_gamepad_timer_ = 0;
+
+  // Content id
+  int content_id_ = 0;
+  int locked_content_id_ = 0;
 
   gfx::SizeF display_size_meters_;
   gfx::Size display_size_pixels_;

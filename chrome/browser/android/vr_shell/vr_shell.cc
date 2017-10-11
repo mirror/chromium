@@ -168,6 +168,7 @@ void VrShell::SwapContents(
     const JavaParamRef<jobject>& tab,
     const JavaParamRef<jobject>& android_ui_gesture_target) {
   DCHECK(tab.obj());
+  content_id_++;
   TabAndroid* active_tab =
       TabAndroid::GetNativeTab(env, JavaParamRef<jobject>(env, tab));
   DCHECK(active_tab);
@@ -792,8 +793,24 @@ void VrShell::SetContentCssSize(float width, float height, float dpr) {
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, width, height, dpr);
 }
 
+bool VrShell::ContentGestureIsLocked(blink::WebInputEvent::Type type) {
+  if (type != blink::WebInputEvent::kGestureFlingStart &&
+      type != blink::WebInputEvent::kGestureScrollUpdate &&
+      type != blink::WebInputEvent::kGestureScrollEnd)
+    locked_content_id_ = content_id_;
+
+  if (locked_content_id_ != content_id_)
+    return true;
+  return false;
+}
+
 void VrShell::ProcessContentGesture(
     std::unique_ptr<blink::WebInputEvent> event) {
+  // TODO(asimjour) We also need to stop the events when the content has been
+  // updated but the user hasn't seen the change yet.
+  if (ContentGestureIsLocked(event->GetType()))
+    return;
+
   if (web_contents_event_forwarder_) {
     web_contents_event_forwarder_->ForwardEvent(std::move(event));
   } else if (android_ui_gesture_target_) {
