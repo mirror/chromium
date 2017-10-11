@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ce9b417_9710dfdf",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-11T21:16:16Z",
+      "side": 1,
+      "message": "There is no encoding capability checking (whether an encoder is workable in current screen resolution, etc) in remoting now, I will work on it.\nOnce it\u0027s done, this should only happen when the screen resolution changes from a lower one (fit H264 capability) to a higher one (cannot fit H264 capability).",
+      "parentUuid": "4e8d8eab_48961b2d",
+      "revId": "0560cc2d4348ce6f3e56eb06206adea2a37c3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27f47869_52b990bc",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "0560cc2d4348ce6f3e56eb06206adea2a37c3629",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b8e59b_8202d4b4",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-11T21:16:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f47869_52b990bc",
+      "range": {
+        "startLine": 212,
+        "startChar": 28,
+        "endLine": 212,
+        "endChar": 48
+      },
+      "revId": "0560cc2d4348ce6f3e56eb06206adea2a37c3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
