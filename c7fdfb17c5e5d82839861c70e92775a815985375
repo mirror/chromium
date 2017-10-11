@@ -439,6 +439,30 @@
     },
     {
       "key": {
+        "uuid": "773043b2_4e6ca136",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T22:44:11Z",
+      "side": 1,
+      "message": "Fair enough. Done.",
+      "parentUuid": "4a249b1e_457349f2",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 5
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5dc9d61_bcf3ac68",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
