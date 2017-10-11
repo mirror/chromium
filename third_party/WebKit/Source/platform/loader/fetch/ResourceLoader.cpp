@@ -297,7 +297,7 @@ bool ResourceLoader::WillFollowRedirect(
     if (options.cors_handling_by_resource_fetcher ==
             kEnableCORSHandlingByResourceFetcher &&
         fetch_request_mode == WebURLRequest::kFetchRequestModeCORS) {
-      RefPtr<SecurityOrigin> source_origin = options.security_origin;
+      scoped_refptr<SecurityOrigin> source_origin = options.security_origin;
       if (!source_origin.get())
         source_origin = Context().GetSecurityOrigin();
       WebSecurityOrigin source_web_origin(source_origin.get());

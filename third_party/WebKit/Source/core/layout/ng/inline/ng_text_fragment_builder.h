@@ -21,13 +21,13 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
 
  public:
   NGTextFragmentBuilder(NGInlineNode,
-                        RefPtr<const ComputedStyle>,
+                        scoped_refptr<const ComputedStyle>,
                         NGWritingMode);
   NGTextFragmentBuilder(NGInlineNode, NGWritingMode);
 
   NGTextFragmentBuilder& SetSize(const NGLogicalSize&);
 
-  NGTextFragmentBuilder& SetShapeResult(RefPtr<const ShapeResult>);
+  NGTextFragmentBuilder& SetShapeResult(scoped_refptr<const ShapeResult>);
 
   // The amount of expansion for justification.
   // Not used in NG paint, only to copy to InlineTextBox::SetExpansion().
@@ -36,16 +36,16 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
   NGTextFragmentBuilder& SetEndEffect(NGTextEndEffect);
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGPhysicalTextFragment> ToTextFragment(unsigned index,
-                                                unsigned start_offset,
-                                                unsigned end_offset);
+  scoped_refptr<NGPhysicalTextFragment> ToTextFragment(unsigned index,
+                                                       unsigned start_offset,
+                                                       unsigned end_offset);
 
  private:
   NGInlineNode node_;
 
   NGLogicalSize size_;
 
-  RefPtr<const ShapeResult> shape_result_;
+  scoped_refptr<const ShapeResult> shape_result_;
 
   int expansion_ = 0;
 

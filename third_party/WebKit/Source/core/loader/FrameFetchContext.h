@@ -178,7 +178,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() override;
-  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;
@@ -212,8 +212,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   ContentSettingsClient* GetContentSettingsClient() const;
   Settings* GetSettings() const;
   String GetUserAgent() const;
-  RefPtr<SecurityOrigin> GetRequestorOrigin();
-  RefPtr<SecurityOrigin> GetRequestorOriginForFrameLoading();
+  scoped_refptr<SecurityOrigin> GetRequestorOrigin();
+  scoped_refptr<SecurityOrigin> GetRequestorOriginForFrameLoading();
   ClientHintsPreferences GetClientHintsPreferences() const;
   float GetDevicePixelRatio() const;
   bool ShouldSendClientHint(mojom::WebClientHintsType,

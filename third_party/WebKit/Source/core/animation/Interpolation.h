@@ -79,7 +79,7 @@ class CORE_EXPORT Interpolation : public RefCounted<Interpolation> {
   Interpolation() {}
 };
 
-using ActiveInterpolations = Vector<RefPtr<Interpolation>, 1>;
+using ActiveInterpolations = Vector<scoped_refptr<Interpolation>, 1>;
 using ActiveInterpolationsMap = HashMap<PropertyHandle, ActiveInterpolations>;
 
 }  // namespace blink

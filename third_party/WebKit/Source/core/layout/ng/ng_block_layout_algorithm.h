@@ -46,7 +46,7 @@ void PositionPendingFloats(
     const NGConstraintSpace&,
     LayoutUnit origin_block_offset,
     NGFragmentBuilder* container_builder,
-    Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
+    Vector<scoped_refptr<NGUnpositionedFloat>>* unpositioned_floats,
     NGExclusionSpace*);
 
 // A class for general block layout (e.g. a <div> with no special style).
@@ -64,14 +64,14 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
                          NGBlockBreakToken* break_token = nullptr);
 
   Optional<MinMaxSize> ComputeMinMaxSize() const override;
-  virtual RefPtr<NGLayoutResult> Layout() override;
+  virtual scoped_refptr<NGLayoutResult> Layout() override;
 
  private:
   NGBoxStrut CalculateMargins(NGLayoutInputNode child,
                               const NGBreakToken* child_break_token);
 
   // Creates a new constraint space for the current child.
-  RefPtr<NGConstraintSpace> CreateConstraintSpaceForChild(
+  scoped_refptr<NGConstraintSpace> CreateConstraintSpaceForChild(
       const NGLayoutInputNode child,
       const NGInflowChildData& child_data,
       const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt);
@@ -186,7 +186,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   bool abort_when_bfc_resolved_;
 
   std::unique_ptr<NGExclusionSpace> exclusion_space_;
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
+  Vector<scoped_refptr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 
 }  // namespace blink

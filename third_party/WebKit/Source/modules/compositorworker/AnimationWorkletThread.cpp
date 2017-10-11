@@ -82,7 +82,7 @@ WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
                "AnimationWorkletThread::createWorkerGlobalScope");
 
-  RefPtr<SecurityOrigin> security_origin =
+  scoped_refptr<SecurityOrigin> security_origin =
       SecurityOrigin::Create(creation_params->script_url);
   if (creation_params->starter_origin_privilege_data) {
     security_origin->TransferPrivilegesFrom(

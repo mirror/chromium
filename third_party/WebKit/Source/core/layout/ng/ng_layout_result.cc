@@ -11,9 +11,9 @@
 namespace blink {
 
 NGLayoutResult::NGLayoutResult(
-    RefPtr<NGPhysicalFragment> physical_fragment,
+    scoped_refptr<NGPhysicalFragment> physical_fragment,
     Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants,
-    Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
+    Vector<scoped_refptr<NGUnpositionedFloat>>& unpositioned_floats,
     std::unique_ptr<const NGExclusionSpace> exclusion_space,
     const WTF::Optional<NGBfcOffset> bfc_offset,
     const NGMarginStrut end_margin_strut,
@@ -33,10 +33,11 @@ NGLayoutResult::NGLayoutResult(
 // NGUnpositionedFloat in the header file.
 NGLayoutResult::~NGLayoutResult() {}
 
-RefPtr<NGLayoutResult> NGLayoutResult::CloneWithoutOffset() const {
+scoped_refptr<NGLayoutResult> NGLayoutResult::CloneWithoutOffset() const {
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants(
       oof_positioned_descendants_);
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats(unpositioned_floats_);
+  Vector<scoped_refptr<NGUnpositionedFloat>> unpositioned_floats(
+      unpositioned_floats_);
   std::unique_ptr<const NGExclusionSpace> exclusion_space(
       WTF::WrapUnique(new NGExclusionSpace(*exclusion_space_)));
   return WTF::AdoptRef(new NGLayoutResult(

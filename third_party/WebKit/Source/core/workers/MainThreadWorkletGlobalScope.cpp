@@ -17,7 +17,7 @@ MainThreadWorkletGlobalScope::MainThreadWorkletGlobalScope(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> security_origin,
+    scoped_refptr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy)
     : WorkletGlobalScope(url,

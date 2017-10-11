@@ -12,8 +12,8 @@
 namespace WTF {
 namespace {
 
-TEST(RefPtrTest, Basic) {
-  RefPtr<StringImpl> string;
+TEST(scoped_refptrTest, Basic) {
+  scoped_refptr<StringImpl> string;
   EXPECT_TRUE(!string);
   string = StringImpl::Create("test");
   EXPECT_TRUE(!!string);
@@ -21,9 +21,9 @@ TEST(RefPtrTest, Basic) {
   EXPECT_TRUE(!string);
 }
 
-TEST(RefPtrTest, MoveAssignmentOperator) {
-  RefPtr<StringImpl> a = StringImpl::Create("a");
-  RefPtr<StringImpl> b = StringImpl::Create("b");
+TEST(scoped_refptrTest, MoveAssignmentOperator) {
+  scoped_refptr<StringImpl> a = StringImpl::Create("a");
+  scoped_refptr<StringImpl> b = StringImpl::Create("b");
   b = std::move(a);
   EXPECT_TRUE(!!b);
   EXPECT_TRUE(!a);
@@ -31,10 +31,10 @@ TEST(RefPtrTest, MoveAssignmentOperator) {
 
 class RefCountedClass : public RefCounted<RefCountedClass> {};
 
-TEST(RefPtrTest, ConstObject) {
+TEST(scoped_refptrTest, ConstObject) {
   // This test is only to ensure we force the compilation of a const RefCounted
   // object to ensure the generated code compiles.
-  RefPtr<const RefCountedClass> ptr_to_const =
+  scoped_refptr<const RefCountedClass> ptr_to_const =
       WTF::AdoptRef(new RefCountedClass());
 }
 
@@ -61,9 +61,9 @@ void Deleter::Destruct(const CustomDeleter* obj) {
   delete obj;
 }
 
-TEST(RefPtrTest, CustomDeleter) {
+TEST(scoped_refptrTest, CustomDeleter) {
   bool deleted = false;
-  RefPtr<CustomDeleter> obj = WTF::AdoptRef(new CustomDeleter(&deleted));
+  scoped_refptr<CustomDeleter> obj = WTF::AdoptRef(new CustomDeleter(&deleted));
   EXPECT_FALSE(deleted);
   obj = nullptr;
   EXPECT_TRUE(deleted);
@@ -93,9 +93,9 @@ void DeleterThreadSafe::Destruct(const CustomDeleterThreadSafe* obj) {
   delete obj;
 }
 
-TEST(RefPtrTest, CustomDeleterThreadSafe) {
+TEST(scoped_refptrTest, CustomDeleterThreadSafe) {
   bool deleted = false;
-  RefPtr<CustomDeleterThreadSafe> obj =
+  scoped_refptr<CustomDeleterThreadSafe> obj =
       WTF::AdoptRef(new CustomDeleterThreadSafe(&deleted));
   EXPECT_FALSE(deleted);
   obj = nullptr;

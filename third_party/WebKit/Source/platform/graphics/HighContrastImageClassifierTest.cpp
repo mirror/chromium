@@ -14,13 +14,13 @@ namespace blink {
 
 class HighContrastImageClassifierTest : public ::testing::Test {
  public:
-  RefPtr<BitmapImage> LoadImage(const char* file_name) {
+  scoped_refptr<BitmapImage> LoadImage(const char* file_name) {
     String file_path = testing::BlinkRootDir();
     file_path.append(file_name);
-    RefPtr<SharedBuffer> image_data = testing::ReadFromFile(file_path);
+    scoped_refptr<SharedBuffer> image_data = testing::ReadFromFile(file_path);
     EXPECT_TRUE(image_data.get());
 
-    RefPtr<BitmapImage> image = BitmapImage::Create();
+    scoped_refptr<BitmapImage> image = BitmapImage::Create();
     image->SetData(image_data, true);
     return image;
   }
@@ -32,7 +32,7 @@ class HighContrastImageClassifierTest : public ::testing::Test {
 };
 
 TEST_F(HighContrastImageClassifierTest, ShouldApplyHighContrastFilterToImage) {
-  RefPtr<BitmapImage> image = LoadImage(
+  scoped_refptr<BitmapImage> image = LoadImage(
       "/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png");
   EXPECT_FALSE(classifier_.ShouldApplyHighContrastFilterToImage(*image.get()));
 

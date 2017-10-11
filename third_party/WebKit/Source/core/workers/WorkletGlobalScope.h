@@ -88,11 +88,12 @@ class CORE_EXPORT WorkletGlobalScope
   // When script evaluation is done or any exception happens, it's notified to
   // the given WorkletPendingTasks via |outside_settings_task_runner| (i.e., the
   // parent frame's task runner).
-  void FetchAndInvokeScript(const KURL& module_url_record,
-                            WorkletModuleResponsesMap*,
-                            WebURLRequest::FetchCredentialsMode,
-                            RefPtr<WebTaskRunner> outside_settings_task_runner,
-                            WorkletPendingTasks*);
+  void FetchAndInvokeScript(
+      const KURL& module_url_record,
+      WorkletModuleResponsesMap*,
+      WebURLRequest::FetchCredentialsMode,
+      scoped_refptr<WebTaskRunner> outside_settings_task_runner,
+      WorkletPendingTasks*);
 
   WorkletModuleResponsesMapProxy* ModuleResponsesMapProxy() const;
   void SetModuleResponsesMapProxyForTesting(WorkletModuleResponsesMapProxy*);
@@ -107,7 +108,7 @@ class CORE_EXPORT WorkletGlobalScope
   // parent ExecutionContext for Worklets.
   WorkletGlobalScope(const KURL&,
                      const String& user_agent,
-                     RefPtr<SecurityOrigin>,
+                     scoped_refptr<SecurityOrigin>,
                      v8::Isolate*,
                      WorkerClients*,
                      WorkerReportingProxy&);

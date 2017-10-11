@@ -248,7 +248,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     NGLineBoxFragmentBuilder* line_box) {
   DCHECK(!box_placeholders_.IsEmpty());
 
-  Vector<RefPtr<NGPhysicalFragment>> children =
+  Vector<scoped_refptr<NGPhysicalFragment>> children =
       std::move(line_box->MutableChildren());
   Vector<NGLogicalOffset> offsets = std::move(line_box->MutableOffsets());
   DCHECK(line_box->Children().IsEmpty() && line_box->Offsets().IsEmpty());
@@ -267,7 +267,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     const NGLogicalOffset& box_offset = offsets[placeholder.fragment_end];
     for (unsigned i = placeholder.fragment_start; i < placeholder.fragment_end;
          i++) {
-      if (RefPtr<NGPhysicalFragment>& child = children[i]) {
+      if (scoped_refptr<NGPhysicalFragment>& child = children[i]) {
         box.AddChild(std::move(child), offsets[i] - box_offset);
         DCHECK(!children[i]);
       }
@@ -278,7 +278,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     // supported today.
     box.SetBorderEdges(placeholder.border_edges);
     box.SetSize(placeholder.size);
-    RefPtr<NGLayoutResult> layout_result = box.ToBoxFragment();
+    scoped_refptr<NGLayoutResult> layout_result = box.ToBoxFragment();
     DCHECK(!children[placeholder.fragment_end]);
     children[placeholder.fragment_end] =
         std::move(layout_result->MutablePhysicalFragment());

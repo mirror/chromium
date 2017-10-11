@@ -38,7 +38,7 @@
 
 // The Life-Cycle of a SQLStatement i.e. Who's keeping the SQLStatement alive?
 // ==========================================================================
-// The RefPtr chain goes something like this:
+// The scoped_refptr chain goes something like this:
 //
 //     At birth (in SQLTransactionBackend::executeSQL()):
 //     =================================================

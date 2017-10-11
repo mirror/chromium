@@ -190,7 +190,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
       const DateTimeChooserParameters&) override;
   void OpenTextDataListChooser(HTMLInputElement&) override;
 
-  void OpenFileChooser(LocalFrame*, RefPtr<FileChooser>) override;
+  void OpenFileChooser(LocalFrame*, scoped_refptr<FileChooser>) override;
 
   void SetCursor(const Cursor&, LocalFrame* local_root) override {}
   void SetCursorOverridden(bool) override {}
@@ -462,7 +462,7 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   void Reload(FrameLoadType, ClientRedirectPolicy) override {}
   unsigned BackForwardLength() override { return 0; }
   void ForwardPostMessage(MessageEvent*,
-                          RefPtr<SecurityOrigin> target,
+                          scoped_refptr<SecurityOrigin> target,
                           LocalFrame* source_frame) const override {}
   void FrameRectsChanged(const IntRect& frame_rect) override {}
   void UpdateRemoteViewportIntersection(

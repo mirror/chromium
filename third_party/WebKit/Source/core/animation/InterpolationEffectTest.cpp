@@ -23,7 +23,7 @@ class AnimationInterpolationEffectTest : public ::testing::Test {
     return interpolation.GetCachedValueForTesting();
   }
 
-  double GetInterpolableNumber(RefPtr<Interpolation> value) {
+  double GetInterpolableNumber(scoped_refptr<Interpolation> value) {
     LegacyStyleInterpolation& interpolation =
         ToLegacyStyleInterpolation(*value.get());
     return ToInterpolableNumber(InterpolationValue(interpolation))->Value();
@@ -35,9 +35,9 @@ TEST_F(AnimationInterpolationEffectTest, SingleInterpolation) {
   interpolation_effect.AddInterpolation(
       SampleTestInterpolation::Create(InterpolableNumber::Create(0),
                                       InterpolableNumber::Create(10)),
-      RefPtr<TimingFunction>(), 0, 1, -1, 2);
+      scoped_refptr<TimingFunction>(), 0, 1, -1, 2);
 
-  Vector<RefPtr<Interpolation>> active_interpolations;
+  Vector<scoped_refptr<Interpolation>> active_interpolations;
   interpolation_effect.GetActiveInterpolations(-2, kInterpolationTestDuration,
                                                active_interpolations);
   EXPECT_EQ(0ul, active_interpolations.size());
@@ -67,7 +67,7 @@ TEST_F(AnimationInterpolationEffectTest, MultipleInterpolations) {
   interpolation_effect.AddInterpolation(
       SampleTestInterpolation::Create(InterpolableNumber::Create(10),
                                       InterpolableNumber::Create(15)),
-      RefPtr<TimingFunction>(), 1, 2, 1, 3);
+      scoped_refptr<TimingFunction>(), 1, 2, 1, 3);
   interpolation_effect.AddInterpolation(
       SampleTestInterpolation::Create(InterpolableNumber::Create(0),
                                       InterpolableNumber::Create(1)),
@@ -79,7 +79,7 @@ TEST_F(AnimationInterpolationEffectTest, MultipleInterpolations) {
           CubicBezierTimingFunction::EaseType::EASE),
       0.5, 1.5, 0.5, 1.5);
 
-  Vector<RefPtr<Interpolation>> active_interpolations;
+  Vector<scoped_refptr<Interpolation>> active_interpolations;
   interpolation_effect.GetActiveInterpolations(-0.5, kInterpolationTestDuration,
                                                active_interpolations);
   EXPECT_EQ(0ul, active_interpolations.size());

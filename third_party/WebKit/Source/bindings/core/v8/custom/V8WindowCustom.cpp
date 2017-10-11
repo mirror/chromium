@@ -203,8 +203,8 @@ void V8Window::postMessageMethodCustom(
     return;
   }
 
-  // None of these need to be RefPtr because info and context are guaranteed
-  // to hold on to them.
+  // None of these need to be scoped_refptr because info and context are
+  // guaranteed to hold on to them.
   DOMWindow* window = V8Window::ToImpl(info.Holder());
   // TODO(yukishiino): The HTML spec specifies that we should use the
   // Incumbent Realm instead of the Current Realm, but currently we don't have
@@ -244,8 +244,9 @@ void V8Window::postMessageMethodCustom(
 
   SerializedScriptValue::SerializeOptions options;
   options.transferables = &transferables;
-  RefPtr<SerializedScriptValue> message = SerializedScriptValue::Serialize(
-      info.GetIsolate(), info[0], options, exception_state);
+  scoped_refptr<SerializedScriptValue> message =
+      SerializedScriptValue::Serialize(info.GetIsolate(), info[0], options,
+                                       exception_state);
   if (exception_state.HadException())
     return;
 

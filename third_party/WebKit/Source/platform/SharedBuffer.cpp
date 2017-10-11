@@ -65,8 +65,8 @@ SharedBuffer::~SharedBuffer() {
   Clear();
 }
 
-RefPtr<SharedBuffer> SharedBuffer::AdoptVector(Vector<char>& vector) {
-  RefPtr<SharedBuffer> buffer = Create();
+scoped_refptr<SharedBuffer> SharedBuffer::AdoptVector(Vector<char>& vector) {
+  scoped_refptr<SharedBuffer> buffer = Create();
   buffer->buffer_.swap(vector);
   buffer->size_ = buffer->buffer_.size();
   return buffer;
@@ -263,7 +263,7 @@ void SharedBuffer::OnMemoryDump(const String& dump_prefix,
 }
 
 SharedBuffer::DeprecatedFlatData::DeprecatedFlatData(
-    RefPtr<const SharedBuffer> buffer)
+    scoped_refptr<const SharedBuffer> buffer)
     : buffer_(std::move(buffer)) {
   DCHECK(buffer_);
 

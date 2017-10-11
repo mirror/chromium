@@ -147,13 +147,17 @@ struct PtrHash {
 };
 
 template <typename T>
-struct RefPtrHash : PtrHash<T> {
+struct scoped_refptrHash : PtrHash<T> {
   using PtrHash<T>::GetHash;
-  static unsigned GetHash(const RefPtr<T>& key) { return GetHash(key.get()); }
+  static unsigned GetHash(const scoped_refptr<T>& key) {
+    return GetHash(key.get());
+  }
   using PtrHash<T>::Equal;
-  static bool Equal(const RefPtr<T>& a, const RefPtr<T>& b) { return a == b; }
-  static bool Equal(T* a, const RefPtr<T>& b) { return a == b; }
-  static bool Equal(const RefPtr<T>& a, T* b) { return a == b; }
+  static bool Equal(const scoped_refptr<T>& a, const scoped_refptr<T>& b) {
+    return a == b;
+  }
+  static bool Equal(T* a, const scoped_refptr<T>& b) { return a == b; }
+  static bool Equal(const scoped_refptr<T>& a, T* b) { return a == b; }
 };
 
 template <typename T>
@@ -222,8 +226,8 @@ struct DefaultHash<T*> {
   using Hash = PtrHash<T>;
 };
 template <typename T>
-struct DefaultHash<RefPtr<T>> {
-  using Hash = RefPtrHash<T>;
+struct DefaultHash<scoped_refptr<T>> {
+  using Hash = scoped_refptrHash<T>;
 };
 template <typename T>
 struct DefaultHash<std::unique_ptr<T>> {

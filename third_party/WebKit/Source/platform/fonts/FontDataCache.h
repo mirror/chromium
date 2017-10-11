@@ -74,9 +74,9 @@ class FontDataCache {
  public:
   FontDataCache() {}
 
-  RefPtr<SimpleFontData> Get(const FontPlatformData*,
-                             ShouldRetain = kRetain,
-                             bool = false);
+  scoped_refptr<SimpleFontData> Get(const FontPlatformData*,
+                                    ShouldRetain = kRetain,
+                                    bool = false);
   bool Contains(const FontPlatformData*) const;
   void Release(const SimpleFontData*);
 
@@ -93,11 +93,11 @@ class FontDataCache {
   bool PurgeLeastRecentlyUsed(int count);
 
   typedef HashMap<const FontPlatformData*,
-                  std::pair<RefPtr<SimpleFontData>, unsigned>,
+                  std::pair<scoped_refptr<SimpleFontData>, unsigned>,
                   FontDataCacheKeyHash>
       Cache;
   Cache cache_;
-  ListHashSet<RefPtr<SimpleFontData>> inactive_font_data_;
+  ListHashSet<scoped_refptr<SimpleFontData>> inactive_font_data_;
 };
 
 }  // namespace blink

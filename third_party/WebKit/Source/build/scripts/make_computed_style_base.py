@@ -29,7 +29,7 @@ ALIGNMENT_ORDER = [
     # Aligns like a pointer (can be 32 or 64 bits)
     'NamedGridLinesMap', 'OrderedNamedGridLines', 'NamedGridAreaMap', 'TransformOperations',
     'Vector<CSSPropertyID>', 'Vector<GridTrackSize>', 'GridPosition', 'AtomicString',
-    'RefPtr', 'Persistent', 'std::unique_ptr',
+    'scoped_refptr', 'Persistent', 'std::unique_ptr',
     'Vector<String>', 'Font', 'FillLayer', 'NinePieceImage',
     # Aligns like float
     'StyleOffsetRotation', 'TransformOrigin', 'ScrollPadding', 'ScrollSnapMargin', 'LengthBox',
@@ -155,7 +155,7 @@ class Field(object):
             Should be in upper camel case.
         property_name: Name of the property that the field is part of.
         type_name: Name of the C++ type exposed by the generated interface (e.g. EClear, int).
-        wrapper_pointer_name: Name of the pointer type that wraps this field (e.g. RefPtr).
+        wrapper_pointer_name: Name of the pointer type that wraps this field (e.g. scoped_refptr).
         field_template: Determines the interface generated for the field. Can be one of:
            keyword, flag, or monotonic_flag.
         size: Number of bits needed for storage.

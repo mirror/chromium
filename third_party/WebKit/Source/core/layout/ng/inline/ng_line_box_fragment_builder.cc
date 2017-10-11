@@ -14,7 +14,7 @@ namespace blink {
 
 NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(
     NGInlineNode node,
-    RefPtr<const ComputedStyle> style,
+    scoped_refptr<const ComputedStyle> style,
     NGWritingMode writing_mode)
     : NGBaseFragmentBuilder(style, writing_mode, TextDirection::kLtr),
       node_(node) {}
@@ -26,7 +26,7 @@ NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetInlineSize(
 }
 
 NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
-    RefPtr<NGPhysicalFragment> child,
+    scoped_refptr<NGPhysicalFragment> child,
     const NGLogicalOffset& child_offset) {
   children_.push_back(std::move(child));
   offsets_.push_back(child_offset);
@@ -34,7 +34,7 @@ NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
 }
 
 NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
-    RefPtr<NGLayoutResult> layout_result,
+    scoped_refptr<NGLayoutResult> layout_result,
     const NGLogicalOffset& child_offset) {
   // TODO(kojii): Keep a copy of oof_positioned_candidates_ and propagate as we
   // do with NGFragmentBuilder.
@@ -68,11 +68,11 @@ void NGLineBoxFragmentBuilder::SetMetrics(const NGLineHeightMetrics& metrics) {
 }
 
 void NGLineBoxFragmentBuilder::SetBreakToken(
-    RefPtr<NGInlineBreakToken> break_token) {
+    scoped_refptr<NGInlineBreakToken> break_token) {
   break_token_ = std::move(break_token);
 }
 
-RefPtr<NGPhysicalLineBoxFragment>
+scoped_refptr<NGPhysicalLineBoxFragment>
 NGLineBoxFragmentBuilder::ToLineBoxFragment() {
   DCHECK_EQ(offsets_.size(), children_.size());
 
@@ -88,7 +88,7 @@ NGLineBoxFragmentBuilder::ToLineBoxFragment() {
         writing_mode, Direction(), physical_size, child->Size()));
   }
 
-  RefPtr<NGPhysicalLineBoxFragment> fragment =
+  scoped_refptr<NGPhysicalLineBoxFragment> fragment =
       WTF::AdoptRef(new NGPhysicalLineBoxFragment(
           Style(), physical_size, children_, metrics_,
           break_token_ ? std::move(break_token_)

@@ -745,7 +745,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 200, 200));
   GraphicsContext context(GetPaintController());
 
-  RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
+  scoped_refptr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
       nullptr, nullptr, FloatRoundedRect(1, 1, 2, 2));
 
   {
@@ -817,7 +817,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
   DrawRect(context, first, kBackgroundDrawingType,
            FloatRect(100, 100, 150, 150));
 
-  RefPtr<ClipPaintPropertyNode> clip2 = ClipPaintPropertyNode::Create(
+  scoped_refptr<ClipPaintPropertyNode> clip2 = ClipPaintPropertyNode::Create(
       nullptr, nullptr, FloatRoundedRect(1, 1, 2, 2));
 
   {

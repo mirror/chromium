@@ -18,7 +18,7 @@ struct BlinkMessagePortMessage {
   BlinkMessagePortMessage();
   ~BlinkMessagePortMessage();
 
-  RefPtr<blink::SerializedScriptValue> message;
+  scoped_refptr<blink::SerializedScriptValue> message;
   Vector<MessagePortChannel> ports;
 };
 

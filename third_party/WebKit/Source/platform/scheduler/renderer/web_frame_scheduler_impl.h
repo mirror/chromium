@@ -54,12 +54,12 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetCrossOrigin(bool cross_origin) override;
   bool IsCrossOrigin() const override;
   WebFrameScheduler::FrameType GetFrameType() const override;
-  RefPtr<WebTaskRunner> LoadingTaskRunner() override;
-  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
-  RefPtr<WebTaskRunner> ThrottleableTaskRunner() override;
-  RefPtr<WebTaskRunner> DeferrableTaskRunner() override;
-  RefPtr<WebTaskRunner> PausableTaskRunner() override;
-  RefPtr<WebTaskRunner> UnpausableTaskRunner() override;
+  scoped_refptr<WebTaskRunner> LoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> LoadingControlTaskRunner() override;
+  scoped_refptr<WebTaskRunner> ThrottleableTaskRunner() override;
+  scoped_refptr<WebTaskRunner> DeferrableTaskRunner() override;
+  scoped_refptr<WebTaskRunner> PausableTaskRunner() override;
+  scoped_refptr<WebTaskRunner> UnpausableTaskRunner() override;
   WebViewScheduler* GetWebViewScheduler() override;
   void WillNavigateBackForwardSoon() override;
   void DidStartProvisionalLoad(bool is_main_frame) override;
@@ -117,12 +117,12 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
       throttleable_queue_enabled_voter_;
   std::unique_ptr<TaskQueue::QueueEnabledVoter> deferrable_queue_enabled_voter_;
   std::unique_ptr<TaskQueue::QueueEnabledVoter> pausable_queue_enabled_voter_;
-  RefPtr<WebTaskRunnerImpl> loading_web_task_runner_;
-  RefPtr<WebTaskRunnerImpl> loading_control_web_task_runner_;
-  RefPtr<WebTaskRunnerImpl> throttleable_web_task_runner_;
-  RefPtr<WebTaskRunnerImpl> deferrable_web_task_runner_;
-  RefPtr<WebTaskRunnerImpl> pausable_web_task_runner_;
-  RefPtr<WebTaskRunnerImpl> unpausable_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> loading_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> loading_control_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> throttleable_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> deferrable_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> pausable_web_task_runner_;
+  scoped_refptr<WebTaskRunnerImpl> unpausable_web_task_runner_;
   RendererSchedulerImpl* renderer_scheduler_;        // NOT OWNED
   WebViewSchedulerImpl* parent_web_view_scheduler_;  // NOT OWNED
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED

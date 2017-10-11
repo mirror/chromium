@@ -39,7 +39,7 @@ class WebAudioLatencyHint;
 
 class DefaultAudioDestinationHandler final : public AudioDestinationHandler {
  public:
-  static RefPtr<DefaultAudioDestinationHandler> Create(
+  static scoped_refptr<DefaultAudioDestinationHandler> Create(
       AudioNode&,
       const WebAudioLatencyHint&);
   ~DefaultAudioDestinationHandler() override;
@@ -74,9 +74,9 @@ class DefaultAudioDestinationHandler final : public AudioDestinationHandler {
 
   void StopDestination();
 
-  // Uses |RefPtr| to keep the AudioDestination alive until all the cross-thread
-  // tasks are completed.
-  RefPtr<AudioDestination> destination_;
+  // Uses |scoped_refptr| to keep the AudioDestination alive until all the
+  // cross-thread tasks are completed.
+  scoped_refptr<AudioDestination> destination_;
 
   String input_device_id_;
   unsigned number_of_input_channels_;

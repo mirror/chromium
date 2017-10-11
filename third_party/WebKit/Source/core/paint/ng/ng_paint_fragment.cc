@@ -10,7 +10,8 @@
 
 namespace blink {
 
-NGPaintFragment::NGPaintFragment(RefPtr<const NGPhysicalFragment> fragment)
+NGPaintFragment::NGPaintFragment(
+    scoped_refptr<const NGPhysicalFragment> fragment)
     : physical_fragment_(std::move(fragment)) {
   DCHECK(physical_fragment_);
   PopulateDescendants();

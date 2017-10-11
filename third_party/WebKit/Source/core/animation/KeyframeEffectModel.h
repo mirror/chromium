@@ -57,10 +57,10 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   // FIXME: Implement accumulation.
 
   using PropertySpecificKeyframeVector =
-      Vector<RefPtr<Keyframe::PropertySpecificKeyframe>>;
+      Vector<scoped_refptr<Keyframe::PropertySpecificKeyframe>>;
   class PropertySpecificKeyframeGroup {
    public:
-    void AppendKeyframe(RefPtr<Keyframe::PropertySpecificKeyframe>);
+    void AppendKeyframe(scoped_refptr<Keyframe::PropertySpecificKeyframe>);
     const PropertySpecificKeyframeVector& Keyframes() const {
       return keyframes_;
     }
@@ -68,7 +68,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
    private:
     void RemoveRedundantKeyframes();
     bool AddSyntheticKeyframeIfRequired(
-        RefPtr<TimingFunction> zero_offset_easing);
+        scoped_refptr<TimingFunction> zero_offset_easing);
 
     PropertySpecificKeyframeVector keyframes_;
 
@@ -79,7 +79,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
 
   PropertyHandleSet Properties() const;
 
-  using KeyframeVector = Vector<RefPtr<Keyframe>>;
+  using KeyframeVector = Vector<scoped_refptr<Keyframe>>;
   const KeyframeVector& GetFrames() const { return keyframes_; }
   void SetFrames(KeyframeVector& keyframes);
 
@@ -100,7 +100,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   bool Sample(int iteration,
               double fraction,
               double iteration_duration,
-              Vector<RefPtr<Interpolation>>&) const override;
+              Vector<scoped_refptr<Interpolation>>&) const override;
 
   bool IsKeyframeEffectModel() const override { return true; }
 
@@ -138,7 +138,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   bool IsTransformRelatedEffect() const override;
 
  protected:
-  KeyframeEffectModelBase(RefPtr<TimingFunction> default_keyframe_easing)
+  KeyframeEffectModelBase(scoped_refptr<TimingFunction> default_keyframe_easing)
       : last_iteration_(0),
         last_fraction_(std::numeric_limits<double>::quiet_NaN()),
         last_iteration_duration_(0),
@@ -161,7 +161,7 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
   mutable int last_iteration_;
   mutable double last_fraction_;
   mutable double last_iteration_duration_;
-  RefPtr<TimingFunction> default_keyframe_easing_;
+  scoped_refptr<TimingFunction> default_keyframe_easing_;
 
   mutable bool has_synthetic_keyframes_;
   mutable bool needs_compositor_keyframes_snapshot_;
@@ -173,17 +173,17 @@ class CORE_EXPORT KeyframeEffectModelBase : public EffectModel {
 template <class Keyframe>
 class KeyframeEffectModel final : public KeyframeEffectModelBase {
  public:
-  using KeyframeVector = Vector<RefPtr<Keyframe>>;
+  using KeyframeVector = Vector<scoped_refptr<Keyframe>>;
   static KeyframeEffectModel<Keyframe>* Create(
       const KeyframeVector& keyframes,
-      RefPtr<TimingFunction> default_keyframe_easing = nullptr) {
+      scoped_refptr<TimingFunction> default_keyframe_easing = nullptr) {
     return new KeyframeEffectModel(keyframes,
                                    std::move(default_keyframe_easing));
   }
 
  private:
   KeyframeEffectModel(const KeyframeVector& keyframes,
-                      RefPtr<TimingFunction> default_keyframe_easing)
+                      scoped_refptr<TimingFunction> default_keyframe_easing)
       : KeyframeEffectModelBase(std::move(default_keyframe_easing)) {
     keyframes_.AppendVector(keyframes);
   }

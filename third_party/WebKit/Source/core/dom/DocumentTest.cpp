@@ -564,7 +564,7 @@ TEST_F(DocumentTest, StyleVersion) {
 }
 
 TEST_F(DocumentTest, EnforceSandboxFlags) {
-  RefPtr<SecurityOrigin> origin =
+  scoped_refptr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("http://example.test");
   GetDocument().SetSecurityOrigin(origin);
   SandboxFlags mask = kSandboxNavigation;
@@ -833,7 +833,7 @@ TEST_F(DocumentTest, ValidationMessageCleanup) {
 }
 
 TEST_F(DocumentTest, SandboxDisablesAppCache) {
-  RefPtr<SecurityOrigin> origin =
+  scoped_refptr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("https://test.com");
   GetDocument().SetSecurityOrigin(origin);
   SandboxFlags mask = kSandboxOrigin;
@@ -853,7 +853,7 @@ TEST_F(DocumentTest, SandboxDisablesAppCache) {
 
 TEST_F(DocumentTest, SuboriginDisablesAppCache) {
   RuntimeEnabledFeatures::SetSuboriginsEnabled(true);
-  RefPtr<SecurityOrigin> origin =
+  scoped_refptr<SecurityOrigin> origin =
       SecurityOrigin::CreateFromString("https://test.com");
   Suborigin suborigin;
   suborigin.SetName("foobar");

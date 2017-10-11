@@ -55,7 +55,7 @@ DEFINE_TRACE(WindowProxy) {
 
 WindowProxy::WindowProxy(v8::Isolate* isolate,
                          Frame& frame,
-                         RefPtr<DOMWrapperWorld> world)
+                         scoped_refptr<DOMWrapperWorld> world)
     : isolate_(isolate),
       frame_(frame),
 

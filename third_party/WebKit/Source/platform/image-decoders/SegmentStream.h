@@ -24,7 +24,7 @@ class PLATFORM_EXPORT SegmentStream : public SkStream {
 
   ~SegmentStream() override;
 
-  void SetReader(WTF::RefPtr<SegmentReader>);
+  void SetReader(scoped_refptr<SegmentReader>);
   // If a buffer has shrunk beyond the point we have read, it has been cleared.
   // This allows clients to be aware of when data suddenly disappears.
   bool IsCleared() const;
@@ -42,7 +42,7 @@ class PLATFORM_EXPORT SegmentStream : public SkStream {
   size_t getLength() const override;
 
  private:
-  WTF::RefPtr<SegmentReader> reader_;
+  scoped_refptr<SegmentReader> reader_;
   size_t position_ = 0;
 };
 

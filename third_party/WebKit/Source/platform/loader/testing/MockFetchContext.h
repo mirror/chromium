@@ -44,7 +44,7 @@ class MockFetchContext : public FetchContext {
     return security_origin_.get();
   }
 
-  void SetSecurityOrigin(RefPtr<SecurityOrigin> security_origin) {
+  void SetSecurityOrigin(scoped_refptr<SecurityOrigin> security_origin) {
     security_origin_ = security_origin;
   }
 
@@ -91,26 +91,36 @@ class MockFetchContext : public FetchContext {
     return frame_scheduler_.get();
   }
 
-  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override {
+  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override {
     return frame_scheduler_->LoadingTaskRunner();
   }
 
  private:
   class MockFrameScheduler final : public scheduler::FakeWebFrameScheduler {
    public:
-    MockFrameScheduler(RefPtr<WebTaskRunner> runner)
+    MockFrameScheduler(scoped_refptr<WebTaskRunner> runner)
         : runner_(std::move(runner)) {}
-    RefPtr<WebTaskRunner> LoadingTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> LoadingControlTaskRunner() override {
+    scoped_refptr<WebTaskRunner> LoadingTaskRunner() override {
       return runner_;
     }
-    RefPtr<WebTaskRunner> ThrottleableTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> DeferrableTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> PausableTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> UnpausableTaskRunner() override { return runner_; }
+    scoped_refptr<WebTaskRunner> LoadingControlTaskRunner() override {
+      return runner_;
+    }
+    scoped_refptr<WebTaskRunner> ThrottleableTaskRunner() override {
+      return runner_;
+    }
+    scoped_refptr<WebTaskRunner> DeferrableTaskRunner() override {
+      return runner_;
+    }
+    scoped_refptr<WebTaskRunner> PausableTaskRunner() override {
+      return runner_;
+    }
+    scoped_refptr<WebTaskRunner> UnpausableTaskRunner() override {
+      return runner_;
+    }
 
    private:
-    RefPtr<WebTaskRunner> runner_;
+    scoped_refptr<WebTaskRunner> runner_;
   };
 
   MockFetchContext(LoadPolicy load_policy)
@@ -122,8 +132,8 @@ class MockFetchContext : public FetchContext {
         transfer_size_(-1) {}
 
   enum LoadPolicy load_policy_;
-  RefPtr<WebTaskRunner> runner_;
-  RefPtr<SecurityOrigin> security_origin_;
+  scoped_refptr<WebTaskRunner> runner_;
+  scoped_refptr<SecurityOrigin> security_origin_;
   std::unique_ptr<WebFrameScheduler> frame_scheduler_;
   bool complete_;
   long long transfer_size_;

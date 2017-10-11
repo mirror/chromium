@@ -13,7 +13,7 @@ namespace blink {
 
 class CORE_EXPORT NGPhysicalContainerFragment : public NGPhysicalFragment {
  public:
-  const Vector<RefPtr<NGPhysicalFragment>>& Children() const {
+  const Vector<scoped_refptr<NGPhysicalFragment>>& Children() const {
     return children_;
   }
 
@@ -21,14 +21,15 @@ class CORE_EXPORT NGPhysicalContainerFragment : public NGPhysicalFragment {
 
  protected:
   // This modifies the passed-in children vector.
-  NGPhysicalContainerFragment(LayoutObject*,
-                              const ComputedStyle&,
-                              NGPhysicalSize,
-                              NGFragmentType,
-                              Vector<RefPtr<NGPhysicalFragment>>& children,
-                              RefPtr<NGBreakToken> = nullptr);
+  NGPhysicalContainerFragment(
+      LayoutObject*,
+      const ComputedStyle&,
+      NGPhysicalSize,
+      NGFragmentType,
+      Vector<scoped_refptr<NGPhysicalFragment>>& children,
+      scoped_refptr<NGBreakToken> = nullptr);
 
-  Vector<RefPtr<NGPhysicalFragment>> children_;
+  Vector<scoped_refptr<NGPhysicalFragment>> children_;
 };
 
 DEFINE_TYPE_CASTS(NGPhysicalContainerFragment,

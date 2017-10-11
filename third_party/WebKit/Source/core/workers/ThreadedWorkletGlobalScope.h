@@ -28,7 +28,7 @@ class CORE_EXPORT ThreadedWorkletGlobalScope : public WorkletGlobalScope {
  protected:
   ThreadedWorkletGlobalScope(const KURL&,
                              const String& user_agent,
-                             RefPtr<SecurityOrigin>,
+                             scoped_refptr<SecurityOrigin>,
                              v8::Isolate*,
                              WorkerThread*,
                              WorkerClients*);
