@@ -42,6 +42,47 @@
     },
     {
       "key": {
+        "uuid": "199b35a9_0fd5015e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-11T09:14:19Z",
+      "side": 1,
+      "message": "Perhaps change to \"sleep and awake\" or just add \"during system sleep\"?",
+      "parentUuid": "5d7e791a_e4991375",
+      "range": {
+        "startLine": 2279,
+        "startChar": 25,
+        "endLine": 2279,
+        "endChar": 30
+      },
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdef6ff_0c6742a0",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-11T09:14:19Z",
+      "side": 1,
+      "message": "How would DISABLED_BY_DEFAULT affect the chances of us getting some useful stats out of the first couple of Canaries?",
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fb56a9f_035e6b0d",
         "filename": "media/base/media_switches.h",
         "patchSetId": 4
