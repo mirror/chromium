@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8063ec7e_b6a6f6fc",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-11T15:36:19Z",
+      "side": 1,
+      "message": "This looks incorrect. We might don\u0027t have ARC OOBE page at all but here you return true/",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 16
+      },
+      "revId": "cda058084673887083b03f519a6e946b0d94ab8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
