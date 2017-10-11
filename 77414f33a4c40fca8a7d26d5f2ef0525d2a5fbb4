@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b60092_27329035",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T13:38:34Z",
+      "side": 1,
+      "message": "peconn@, could you sanity check this?\n\nI saw others doing\n\nThreadUtils.runOnUiThreadBlocking(new Runnable() {\n            @Override\n            public void run() {\n                if (!NetworkChangeNotifier.isInitialized()) {\n                    NetworkChangeNotifier.init();\n                }\n                NetworkChangeNotifier.forceConnectivityState(true);\n            }\n        });\n\nand I don\u0027t understand the difference.\n\nThis words locally.",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 59
+      },
+      "revId": "77414f33a4c40fca8a7d26d5f2ef0525d2a5fbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
