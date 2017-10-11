@@ -20,7 +20,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 import java.util.Locale;
@@ -36,9 +35,8 @@ public class LollipopWebContentsAccessibility extends KitKatWebContentsAccessibi
     private String mSystemLanguageTag;
 
     LollipopWebContentsAccessibility(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordinates,
-            boolean shouldFocusOnPageLoad) {
-        super(context, containerView, webContents, renderCoordinates, shouldFocusOnPageLoad);
+            WebContents webContents, boolean shouldFocusOnPageLoad) {
+        super(context, containerView, webContents, shouldFocusOnPageLoad);
 
         // Cache the system language and set up a listener for when it changes.
         try {

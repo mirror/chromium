@@ -148,7 +148,7 @@ public class VrShellImpl
         ContentViewCore activeContentViewCore =
                 mActivity.getActivityTab().getActiveContentViewCore();
         assert activeContentViewCore != null;
-        mLastContentDpr = activeContentViewCore.getDeviceScaleFactor();
+        mLastContentDpr = activeContentViewCore.getWebContents().getDeviceScaleFactor();
         mLastContentWidth = activeContentViewCore.getViewportWidthPix() / mLastContentDpr;
         mLastContentHeight = activeContentViewCore.getViewportHeightPix() / mLastContentDpr;
 
