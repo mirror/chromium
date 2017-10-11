@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/protobuf/proto_library.gni")
+
+# TODO: visibility, protos
+
+source_set("tensorflow") {
+  visibility = [ "//components/learning:*" ]
+
+  deps = [
+    "//third_party/protobuf:protobuf_lite",
+  ]
+
+  public_deps = []
+
+  sources = []
+
+  defines = []
+}
