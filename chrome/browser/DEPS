@@ -6,6 +6,7 @@ include_rules = [
   "+chrome/grit",
   "+chrome/install_static",
   "+chrome/installer/util",
+  "+chrome/services/chrome_file_util/public",
   "+chrome_elf/blacklist",
   "+chrome_elf/chrome_elf_constants.h",
   "+chrome_elf/dll_hash",
