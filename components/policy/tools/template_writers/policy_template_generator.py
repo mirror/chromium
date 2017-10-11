@@ -46,7 +46,8 @@ class PolicyTemplateGenerator:
     for key in self._messages.keys():
       self._messages[key]['text'] = self._ImportMessage(
           self._messages[key]['text'])
-    self._policy_definitions = self._policy_data['policy_definitions']
+    self._policy_definitions =\
+        self._ExpandGroups(self._policy_data['policy_definitions'])
     self._ProcessPolicyList(self._policy_definitions)
 
   def _ProcessSupportedOn(self, supported_on):
@@ -155,3 +156,16 @@ class PolicyTemplateGenerator:
     # Create a copy, so that writers can't screw up subsequent writers.
     policy_data_copy = copy.deepcopy(self._policy_data)
     return template_writer.WriteTemplate(policy_data_copy)
+
+  def _ExpandGroups(self, policy_list):
+    groups = [policy for policy in policy_list if policy['type'] == 'group']
+    policies = {policy['name']:policy\
+                for policy in policy_list if policy['type'] != 'group'}
+    for group in groups:
+      assert 'policies' in group
+      expanded_policies = [policies[policy_name]\
+                           for policy_name in group['policies']]
+      for policy in expanded_policies:
+        policy_list.remove(policy)
+      group['policies'] = expanded_policies
+    return policy_list

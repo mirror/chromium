@@ -231,8 +231,9 @@ class PolicyTemplateChecker(object):
 
       # Check sub-policies.
       if policies is not None:
-        for nested_policy in policies:
-          self._CheckPolicy(nested_policy, True, policy_ids)
+        if not isinstance(policies, list):
+          self._Error('Policy list must be a dictionary.', 'policies', None,
+                      policy)
 
       # Groups must not have an |id|.
       if 'id' in policy:
