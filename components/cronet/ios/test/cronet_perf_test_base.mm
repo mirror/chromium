@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cronet_test_base.h"
+#include "cronet_perf_test_base.h"
 
 #include "components/grpc_support/test/quic_test_server.h"
 #include "crypto/sha2.h"
@@ -14,7 +14,7 @@
 
 #pragma mark
 
-@implementation TestDelegate {
+@implementation PerfTestDelegate {
   // Completion semaphore for this TestDelegate. When the request this delegate
   // is attached to finishes (either successfully or with an error), this
   // delegate signals this semaphore.
@@ -113,27 +113,27 @@ static NSMutableArray<NSData*>* _responseData;
 
 namespace cronet {
 
-void CronetTestBase::SetUp() {
+void CronetPerfTestBase::SetUp() {
   ::testing::Test::SetUp();
   grpc_support::StartQuicTestServer();
-  delegate_ = [[TestDelegate alloc] init];
+  delegate_ = [[PerfTestDelegate alloc] init];
 }
 
-void CronetTestBase::TearDown() {
+void CronetPerfTestBase::TearDown() {
   grpc_support::ShutdownQuicTestServer();
   ::testing::Test::TearDown();
 }
 
 // Launches the supplied |task| and blocks until it completes, with a timeout
 // of 1 second.
-void CronetTestBase::StartDataTaskAndWaitForCompletion(
+void CronetPerfTestBase::StartDataTaskAndWaitForCompletion(
     NSURLSessionDataTask* task) {
   [delegate_ reset];
   [task resume];
   CHECK([delegate_ waitForDone]);
 }
 
-::testing::AssertionResult CronetTestBase::IsResponseSuccessful() {
+::testing::AssertionResult CronetPerfTestBase::IsResponseSuccessful() {
   if ([delegate_ error])
     return ::testing::AssertionFailure() << "error in response: " <<
            [[[delegate_ error] description]
@@ -142,7 +142,8 @@ void CronetTestBase::StartDataTaskAndWaitForCompletion(
     return ::testing::AssertionSuccess() << "no errors in response";
 }
 
-std::unique_ptr<net::MockCertVerifier> CronetTestBase::CreateMockCertVerifier(
+std::unique_ptr<net::MockCertVerifier>
+CronetPerfTestBase::CreateMockCertVerifier(
     const std::vector<std::string>& certs,
     bool known_root) {
   std::unique_ptr<net::MockCertVerifier> mock_cert_verifier(
@@ -167,8 +168,9 @@ std::unique_ptr<net::MockCertVerifier> CronetTestBase::CreateMockCertVerifier(
   return mock_cert_verifier;
 }
 
-bool CronetTestBase::CalculatePublicKeySha256(const net::X509Certificate& cert,
-                                              net::HashValue* out_hash_value) {
+bool CronetPerfTestBase::CalculatePublicKeySha256(
+    const net::X509Certificate& cert,
+    net::HashValue* out_hash_value) {
   // Convert the cert to DER encoded bytes.
   std::string der_cert_bytes;
   net::X509Certificate::OSCertHandle cert_handle = cert.os_cert_handle();
