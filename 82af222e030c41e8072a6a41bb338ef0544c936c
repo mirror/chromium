@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dff240df_ab83807f",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "289a2f26_5828b72b",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ec69375_fe9fa2f0",
         "filename": "ui/message_center/change_queue.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3574e25_d4c6e508",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Sorry this comment was obsolete now.\n\nAt initial design, ApplyChanges may circularly be called from this method itself or its caller.",
+      "parentUuid": "3ec69375_fe9fa2f0",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1fbf6f2b_80290251",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Yes, and actually std::vector is faster than std::list if the size is small.",
+      "parentUuid": "effff39a_d0829ef7",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9770f383_4bb9f6bf",
         "filename": "ui/message_center/change_queue.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ef4876_8cd68185",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9770f383_4bb9f6bf",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7bf3afca_293da04d",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc877191_f2ca7677",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1f3271f_0f292e7e",
         "filename": "ui/message_center/change_queue.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-02T08:01:56Z",
       "side": 1,
       "message": "Why can\u0027t you just do ReplaceNotification like the previous case?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fcf96b_cac68c06",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Because the ID after changed may be used before this change.\n\nFor example, if there are 3 sequence of change: CHANGE(A-\u003eB), ADD(C), REMOVE(C) and the current change if CHANGE(B-\u003eC), replacing doesn\u0027t work correctly.",
+      "parentUuid": "c1f3271f_0f292e7e",
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c7f9dc8d_aa8fe558",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "b2512d3e_ca6da6cb",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7be6978_1ca939a3",
         "filename": "ui/message_center/change_queue.h",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d54268c_7871322f",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "f7be6978_1ca939a3",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "dc34e62f_a4a72a29",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcda1d53_e7c396cb",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef00ed4_8653529c",
         "filename": "ui/message_center/message_center_impl.cc",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2986ac_09acbc66",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef00ed4_8653529c",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "05ff1f91_e331528e",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "You\u0027re correct. I didn\u0027t consider that case. I update the method and now setting icon also goes the queue during iteration.",
+      "parentUuid": "020fa354_93dfe61c",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d76533d_9c09a89f",
         "filename": "ui/message_center/message_center_impl.cc",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6ac5af_432764f7",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-11T06:58:54Z",
+      "side": 1,
+      "message": "Good catch. I made them non-recursion. I think handling an event during handling other event might cause problems and I want to avoid it.",
+      "parentUuid": "1d76533d_9c09a89f",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
