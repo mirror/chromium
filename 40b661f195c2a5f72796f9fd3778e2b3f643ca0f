@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "155f7825_ca37c776",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-11T23:39:49Z",
+      "side": 1,
+      "message": "The only guidance I have anecdotally is to use anonymous namespaces instead of the static keyword to achieve internal linkage. The style guide doesn\u0027t mention a preference: https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Unnamed_Namespaces_and_Static_Variables\n\nafakhry: Done.",
+      "parentUuid": "e0a681a9_62bac9ed",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "146028f7_b8f0d247",
         "filename": "extensions/shell/app/shell_help.cc",
         "patchSetId": 2
