@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1169287e_d6c9148c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T09:16:39Z",
+      "side": 1,
+      "message": "Could you update this description to reflect code changes?",
+      "revId": "0380c7740e4281966301860662a187cc43ca5a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e08c5e_137eb4f0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3591,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T09:16:39Z",
+      "side": 1,
+      "message": "It seems |Style()-\u003eVisibility() !\u003d EVisibility::kVisible| comes from\n\n...\nCalcSelectionRangeAndSetSelectionState() {\n...\n  for (const Node\u0026 node : selection.Nodes()) {\n    LayoutObject* const layout_object \u003d node.GetLayoutObject();\n    if (!layout_object || !layout_object-\u003eCanBeSelectionLeaf() ||\n        layout_object-\u003eStyle()-\u003eVisibility() !\u003d EVisibility::kVisible)\n      continue;\n\n\nWe should change |CalcSelectionRangeAndSetSelectionState()| not to\nhave |layout_object-\u003eStyle()-\u003eVisibility() !\u003d EVisibility::kVisible|.",
+      "revId": "0380c7740e4281966301860662a187cc43ca5a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
