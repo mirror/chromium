@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f51731a_f5f75411",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T20:04:47Z",
+      "side": 1,
+      "message": "nit, suggestion: Same DCHECK on create_temp_file_ and path as above?",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce26da1_acc9024b",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T20:04:47Z",
+      "side": 1,
+      "message": "Why CREATE_ALWAYS if the file\u0027s just been created?  My concern is implementations that implement that if the file is already there by deleting, which might result in a race with Other Entities doing the creation.  (I don\u0027t know of any implementations that do that, just brainstorming.)",
+      "range": {
+        "startLine": 440,
+        "startChar": 56,
+        "endLine": 440,
+        "endChar": 74
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4550943_bddcfba4",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T20:04:47Z",
+      "side": 1,
+      "message": "Random thought: Have you considered taking the comment arguments to the various \"Execute!\" methods and putting them in the constructor/create method?",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f588c26b_e46125b2",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T20:04:47Z",
+      "side": 1,
+      "message": "It\u0027s a shared directory that\u0027s wholly owned by this test, right?  So you could compare the file list pre/post test?",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
