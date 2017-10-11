@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb02c8b_f3c5b6d2",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/animations/composited-pseudo-element-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T00:49:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure what we\u0027re testing, is it something about finishing a composited animation on a pseudoelement? Can we have a comment to describe what this test tests?",
+      "revId": "4ff38ffd48529e255826660e6ef461267f9b7394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
