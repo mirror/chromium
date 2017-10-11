@@ -17,6 +17,8 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -751,6 +753,97 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
         "</script>");
     main_document_response.Done();
     EXPECT_EQ(document_loaded_title, watcher.WaitAndGetTitle());
+  }
+}
+
+// This test reproduces issue 769645. It happens when the user reload the page
+// and an "unload" event triggers a back navigation. If the reload navigation
+// has reached the ReadyToCommit stage but not have committed, the back
+// navigation may interrupt its load.
+// See https://crbug.com/769645.
+IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
+                       OnBeforeUnloadSameDocumentHistoryNavigationWhileReload) {
+  ControllableHttpResponse response_1(embedded_test_server(), "/main_document");
+  ControllableHttpResponse response_2(embedded_test_server(),
+                                      "/main_document?projector=1");
+
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Navigate to a document that will:
+  //    * Use history.pushState() during page load.
+  //    * Use history.back() on "unload".
+  GURL main_document_url(embedded_test_server()->GetURL("/main_document"));
+  shell()->LoadURL(main_document_url);
+  response_1.WaitForRequest();
+  response_1.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<iframe srcdoc=\""
+      "  <script>"
+      "    parent.history.pushState({}, 'page 2', '?projector=1');"
+      "    window.addEventListener('unload', function() {"
+      "      setTimeout(parent.history.back(),0);"
+      "    });"
+      "  </script>"
+      "\"></iframe>");
+  response_1.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  // 2) Reload. Two parallels navigation will happens:
+  //    * The reload.
+  //    * The history.back().
+  GURL main_document_url_page_2(main_document_url.spec() + "?projector=1");
+  TestNavigationManager observer_reload(shell()->web_contents(),
+                                        main_document_url_page_2);
+  TestNavigationManager observer_back(shell()->web_contents(),
+                                      main_document_url);
+
+  shell()->Reload();
+
+  // 2.1) The reload reaches the ReadyToCommitNavigation stage.
+  EXPECT_TRUE(observer_reload.WaitForRequestStart());
+  observer_reload.ResumeNavigation();
+  response_2.WaitForRequest();
+  response_2.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html>"
+      "  <body>"
+      "    ...");
+
+  EXPECT_TRUE(observer_reload.WaitForResponse());
+  observer_reload.ResumeNavigation();
+
+  // 2.2) Back navigation starts and cancel the reload navigation.
+  observer_back.WaitForNavigationFinished();
+
+  // The server send the remaining part of the response.
+  response_2.Send(
+      "    ..."
+      "  </body>"
+      "</html>");
+  response_2.Done();
+
+  observer_reload.WaitForNavigationFinished();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  // Test what there are in the loaded document.
+  std::string html_content;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "domAutomationController.send(document.body.textContent)",
+      &html_content));
+
+  // TODO(arthursonzogni): The PlzNavigate case needs to be fixed.
+  // See http://crbug.com/773683.
+  if (IsBrowserSideNavigationEnabled() &&
+      !base::FeatureList::IsEnabled(features::kNetworkService)) {
+    EXPECT_EQ("    ...", html_content);
+  } else {
+    EXPECT_EQ("    ...    ...  ", html_content);
   }
 }
 
