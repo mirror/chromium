@@ -986,6 +986,9 @@ extern const char kChromeHomeDoodleDescription[];
 extern const char kChromeHomeExpandButtonName[];
 extern const char kChromeHomeExpandButtonDescription[];
 
+extern const char kChromeHomeOptOutSnackbarName[];
+extern const char kChromeHomeOptOutSnackbarDescription[];
+
 extern const char kChromeHomePersonalizedOmniboxSuggestionsName[];
 extern const char kChromeHomePersonalizedOmniboxSuggestionsDescription[];
 
