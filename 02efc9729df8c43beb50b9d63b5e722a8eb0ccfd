@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e52eb2_34b11fc8",
+        "filename": "chrome/test/data/extensions/api_test/bindings/extension_subframe_gets_bindings/page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:35:56Z",
+      "side": 1,
+      "message": "no (c)",
+      "revId": "02efc9729df8c43beb50b9d63b5e722a8eb0ccfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3d40a1_58c4dbe7",
+        "filename": "chrome/test/data/extensions/api_test/bindings/extension_subframe_gets_bindings/page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:35:56Z",
+      "side": 1,
+      "message": "hasOwnProperty will succeed, even if that property is null or undefined.  Prefer assertTrue(!!chrome.windows)",
+      "revId": "02efc9729df8c43beb50b9d63b5e722a8eb0ccfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

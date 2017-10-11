@@ -33,6 +33,24 @@
       "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4de1809_f3e3959d",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T23:35:56Z",
+      "side": 1,
+      "message": "Sounds reasonable, but maybe comment on that?  (Specifically, explaining when this can happen.)",
+      "parentUuid": "5e0c3d8d_434032b1",
+      "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
