@@ -4,13 +4,15 @@
 
 #include "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h"
 
+#include <utility>
+
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
+#include "chrome/browser/ui/blocked_content/console_logger.h"
 #include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
-#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/console_message_level.h"
 #include "third_party/WebKit/public/web/WebTriggeringEventInfo.h"
@@ -18,14 +20,6 @@
 namespace {
 
 const char kIgnoreSublistsParam[] = "ignore_sublists";
-
-constexpr char kDisallowNewWindowMessage[] =
-    "Chrome prevented this site from opening a new tab or window. Learn more "
-    "at https://www.chromestatus.com/feature/5243055179300864";
-constexpr char kWarnNewWindowMessage[] =
-    "Chrome might start preventing this site from opening new tabs or windows "
-    "in the future. Learn more at "
-    "https://www.chromestatus.com/feature/5243055179300864";
 
 }  // namespace
 
@@ -38,9 +32,11 @@ SafeBrowsingTriggeredPopupBlocker::~SafeBrowsingTriggeredPopupBlocker() =
     default;
 
 SafeBrowsingTriggeredPopupBlocker::SafeBrowsingTriggeredPopupBlocker(
-    content::WebContents* web_contents)
+    content::WebContents* web_contents,
+    std::unique_ptr<ConsoleLogger> logger)
     : content::WebContentsObserver(web_contents),
       scoped_observer_(this),
+      logger_(std::move(logger)),
       ignore_sublists_(
           base::GetFieldTrialParamByFeatureAsBool(kAbusiveExperienceEnforce,
                                                   kIgnoreSublistsParam,
@@ -71,8 +67,9 @@ bool SafeBrowsingTriggeredPopupBlocker::ShouldApplyStrongPopupBlocker(
 
   // TODO(csharrison): Migrate SubresourceFilter* popup metrics.
   if (should_block) {
-    web_contents()->GetMainFrame()->AddMessageToConsole(
-        content::CONSOLE_MESSAGE_LEVEL_ERROR, kDisallowNewWindowMessage);
+    logger_->LogInFrame(web_contents()->GetMainFrame(),
+                        content::CONSOLE_MESSAGE_LEVEL_ERROR,
+                        kAbusiveEnforceMessage);
   }
   return should_block;
 }
@@ -98,8 +95,9 @@ void SafeBrowsingTriggeredPopupBlocker::DidFinishNavigation(
 
   // Log a warning only if we've matched a warn-only safe browsing list.
   if (level == SubresourceFilterLevel::WARN) {
-    web_contents()->GetMainFrame()->AddMessageToConsole(
-        content::CONSOLE_MESSAGE_LEVEL_WARNING, kWarnNewWindowMessage);
+    logger_->LogInFrame(web_contents()->GetMainFrame(),
+                        content::CONSOLE_MESSAGE_LEVEL_WARNING,
+                        kAbusiveWarnMessage);
   }
 
   is_triggered_for_current_committed_load_ =
