@@ -28,7 +28,8 @@ class FakeU2fRequest : public U2fRequest {
   ~FakeU2fRequest() override {}
 
   void TryDevice() override {
-    cb_.Run(U2fReturnCode::SUCCESS, std::vector<uint8_t>());
+    cb_.Run(U2fReturnCode::SUCCESS, std::vector<uint8_t>(),
+            std::vector<uint8_t>());
   }
 };
 }  // namespace
@@ -41,7 +42,8 @@ class TestResponseCallback {
   ~TestResponseCallback() {}
 
   void ReceivedCallback(U2fReturnCode status,
-                        const std::vector<uint8_t>& data) {
+                        const std::vector<uint8_t>& data,
+                        const std::vector<uint8_t>& key_handle) {
     closure_.Run();
   }
 

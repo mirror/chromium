@@ -42,7 +42,8 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   void OnDeviceResponse(MakeCredentialCallback callback,
                         const std::string& client_data_json,
                         device::U2fReturnCode status_code,
-                        const std::vector<uint8_t>& data);
+                        const std::vector<uint8_t>& data,
+                        const std::vector<uint8_t>& key_handle);
 
   bool HasValidAlgorithm(
       const std::vector<webauth::mojom::PublicKeyCredentialParametersPtr>&
