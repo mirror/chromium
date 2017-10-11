@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3ca20e_4f1361bc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T10:30:32Z",
+      "side": 1,
+      "message": "These comments need to be updated to explain that we only support one fence (delayed or otherwise) at a time.",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 18
+      },
+      "revId": "198d2110e4483daeb80c57d98552f6bebb3daabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94320c40_89c01d77",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T10:30:32Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you mean by \"push\", perhaps activate is clearer.",
+      "range": {
+        "startLine": 326,
+        "startChar": 5,
+        "endLine": 326,
+        "endChar": 9
+      },
+      "revId": "198d2110e4483daeb80c57d98552f6bebb3daabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f897b3ef_0a1e1050",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T10:30:32Z",
+      "side": 1,
+      "message": "Could you add a comment here that we only support one fence at a time.",
+      "range": {
+        "startLine": 594,
+        "startChar": 21,
+        "endLine": 594,
+        "endChar": 34
+      },
+      "revId": "198d2110e4483daeb80c57d98552f6bebb3daabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253d06d8_ecfcc91d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T10:30:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 622,
+        "startChar": 2,
+        "endLine": 622,
+        "endChar": 13
+      },
+      "revId": "198d2110e4483daeb80c57d98552f6bebb3daabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf866f3f_e3870fff",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-11T10:30:32Z",
+      "side": 1,
+      "message": "I wonder if ActivateDelayedFenceIfNeeded is clearer about what this does. Sami WDYT?",
+      "range": {
+        "startLine": 965,
+        "startChar": 20,
+        "endLine": 965,
+        "endChar": 44
+      },
+      "revId": "198d2110e4483daeb80c57d98552f6bebb3daabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
