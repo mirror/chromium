@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a18ea6fb_2fb1a086",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-11T10:33:44Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "cf626da8_85ef39e9",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9569296e_648678c7",
         "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
         "patchSetId": 4
@@ -104,6 +122,24 @@
       "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08566fc_e0eeb140",
+        "filename": "third_party/WebKit/LayoutTests/svg/css/getcomputedstyle-width-height.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-11T10:33:44Z",
+      "side": 1,
+      "message": "Added additional permutation, and \"normalized\" the form (so all have the same tests for width/height with differing value classes in inline style.)",
+      "parentUuid": "9569296e_648678c7",
+      "revId": "77f489d0ddeb6470f6f7f729ca8c7e66f1554133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
