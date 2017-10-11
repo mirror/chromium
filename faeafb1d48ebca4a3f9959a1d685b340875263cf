@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d2b365e_322255fc",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T21:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4677e82_9e223361",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 14
+      },
+      "revId": "faeafb1d48ebca4a3f9959a1d685b340875263cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e501dcc_4bc247e6",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28e6cc49_1a80993e",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T21:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e501dcc_4bc247e6",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 51
+      },
+      "revId": "faeafb1d48ebca4a3f9959a1d685b340875263cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84527091_817f5297",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-11T21:29:34Z",
       "side": 1,
       "message": "Is it feasible to clarify what \"very old\" means?",
+      "range": {
+        "startLine": 52093,
+        "startChar": 13,
+        "endLine": 52093,
+        "endChar": 21
+      },
+      "revId": "faeafb1d48ebca4a3f9959a1d685b340875263cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2c6af7_e8ce953f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 52093,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T21:41:17Z",
+      "side": 1,
+      "message": "Done.  Reworded the comment to specify exactly what too old means.",
+      "parentUuid": "84527091_817f5297",
       "range": {
         "startLine": 52093,
         "startChar": 13,
