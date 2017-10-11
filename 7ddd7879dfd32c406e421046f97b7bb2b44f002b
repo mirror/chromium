@@ -22,6 +22,30 @@
       "revId": "7ddd7879dfd32c406e421046f97b7bb2b44f002b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6d954e_11b378ad",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T20:45:33Z",
+      "side": 1,
+      "message": "Per offline discussion, the logic here should be correct. I have added more test cases in the new patch to make sure that we do apply the accumulated pinch scale to the scroll updates that come after pinch update (not before).",
+      "parentUuid": "eb8a5619_117c39ab",
+      "range": {
+        "startLine": 98,
+        "startChar": 51,
+        "endLine": 98,
+        "endChar": 75
+      },
+      "revId": "7ddd7879dfd32c406e421046f97b7bb2b44f002b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
