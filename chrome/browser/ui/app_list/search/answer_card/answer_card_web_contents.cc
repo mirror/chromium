@@ -11,6 +11,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
+#include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_view_host.h"
@@ -24,10 +25,10 @@
 #include "ui/views/controls/native/native_view_host.h"
 #include "ui/views/controls/webview/web_contents_set_background_color.h"
 #include "ui/views/controls/webview/webview.h"
+#include "ui/views/focus/focus_manager.h"
 #include "ui/views/widget/widget.h"
 
 namespace app_list {
-
 namespace {
 
 constexpr char kSearchAnswerHasResult[] = "SearchAnswer-HasResult";
@@ -38,7 +39,7 @@ class SearchAnswerWebView : public views::WebView {
  public:
   explicit SearchAnswerWebView(content::BrowserContext* browser_context)
       : WebView(browser_context) {
-    holder()->set_can_process_events_within_subtree(false);
+    holder()->set_can_process_events_within_subtree(true /*false*/);
   }
 
   void OnVisibilityEvent(bool is_removing) {
@@ -87,6 +88,11 @@ class SearchAnswerWebView : public views::WebView {
   const char* GetClassName() const override { return "SearchAnswerWebView"; }
 
  private:
+  bool SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) override {
+    LOG(ERROR) << "Caught SkipDefaultEventProcessing on the webview!";
+    // never called.
+    return false;
+  }
   // Time when the answer became visible to the user.
   base::TimeTicks shown_time_;
 
@@ -191,8 +197,8 @@ content::WebContents* AnswerCardWebContents::OpenURLFromTab(
   if (!params.user_gesture)
     return WebContentsDelegate::OpenURLFromTab(source, params);
 
-  // Open the user-clicked link in the browser taking into account the requested
-  // disposition.
+  // Open the user-clicked link in the browser taking into account the
+  // requested disposition.
   chrome::NavigateParams new_tab_params(profile_, params.url,
                                         params.transition);
 
@@ -279,6 +285,28 @@ void AnswerCardWebContents::DetachFromHost() {
     return;
 
   host_ = nullptr;
+}
+
+bool AnswerCardWebContents::TakeFocus(content::WebContents* source,
+                                      bool reverse) {
+  LOG(ERROR) << "AnswerCardWebContents::TakeFocus, because there are no more "
+                "controls on the page so send focus to the next tile item "
+                "view.";
+  should_forward_keyboard_event_ = !reverse;
+  return false;
+}
+
+void AnswerCardWebContents::HandleKeyboardEvent(
+    content::WebContents* source,
+    const content::NativeWebKeyboardEvent& event) {
+  LOG(ERROR) << "AnswerCardWebContents::HandleKeyboardEvent";
+  if (should_forward_keyboard_event_) {
+    LOG(ERROR) << "Should forward event to unhandled keyboard event handler";
+    views::FocusManager* fm = web_view_->GetFocusManager();
+    unhandled_keyboard_event_handler_.HandleKeyboardEvent(event, fm);
+    // unhandled keyboard event handler is passing the event to focus manager,
+    // but the focus manager is not handling the event like I want.
+  }
 }
 
 }  // namespace app_list

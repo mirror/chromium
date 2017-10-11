@@ -196,8 +196,8 @@ View* FocusManager::GetNextFocusableView(View* original_starting_view,
                                          Widget* starting_widget,
                                          bool reverse,
                                          bool dont_loop) {
-  DCHECK(!focused_view_ || ContainsView(focused_view_)) << " focus_view="
-                                                        << focused_view_;
+  DCHECK(!focused_view_ || ContainsView(focused_view_))
+      << " focus_view=" << focused_view_;
 
   FocusTraversable* focus_traversable = NULL;
 
@@ -299,8 +299,8 @@ void FocusManager::SetKeyboardAccessible(bool keyboard_accessible) {
   AdvanceFocusIfNecessary();
 }
 
-void FocusManager::SetFocusedViewWithReason(
-    View* view, FocusChangeReason reason) {
+void FocusManager::SetFocusedViewWithReason(View* view,
+                                            FocusChangeReason reason) {
   if (focused_view_ == view)
     return;
   // TODO(oshima|achuith): This is to diagnose crbug.com/687232.
@@ -440,11 +440,7 @@ View* FocusManager::FindFocusableView(FocusTraversable* focus_traversable,
   FocusTraversable* new_focus_traversable = NULL;
   View* new_starting_view = NULL;
   View* v = focus_traversable->GetFocusSearch()->FindNextFocusableView(
-      starting_view,
-      reverse,
-      FocusSearch::DOWN,
-      false,
-      &new_focus_traversable,
+      starting_view, reverse, FocusSearch::DOWN, false, &new_focus_traversable,
       &new_starting_view);
 
   // Let's go down the FocusTraversable tree as much as we can.
@@ -454,12 +450,8 @@ View* FocusManager::FindFocusableView(FocusTraversable* focus_traversable,
     new_focus_traversable = NULL;
     starting_view = NULL;
     v = focus_traversable->GetFocusSearch()->FindNextFocusableView(
-        starting_view,
-        reverse,
-        FocusSearch::DOWN,
-        false,
-        &new_focus_traversable,
-        &new_starting_view);
+        starting_view, reverse, FocusSearch::DOWN, false,
+        &new_focus_traversable, &new_starting_view);
   }
   return v;
 }
@@ -481,6 +473,7 @@ void FocusManager::UnregisterAccelerators(ui::AcceleratorTarget* target) {
 }
 
 bool FocusManager::ProcessAccelerator(const ui::Accelerator& accelerator) {
+  LOG(ERROR) << "FocusManager::ProcessAccelerator";
   if (accelerator_manager_.Process(accelerator))
     return true;
   return delegate_ && delegate_->ProcessAccelerator(accelerator);

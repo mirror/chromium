@@ -74,11 +74,16 @@ Button* Button::AsButton(views::View* view) {
 // static
 Button::ButtonState Button::GetButtonStateFrom(ui::NativeTheme::State state) {
   switch (state) {
-    case ui::NativeTheme::kDisabled:  return Button::STATE_DISABLED;
-    case ui::NativeTheme::kHovered:   return Button::STATE_HOVERED;
-    case ui::NativeTheme::kNormal:    return Button::STATE_NORMAL;
-    case ui::NativeTheme::kPressed:   return Button::STATE_PRESSED;
-    case ui::NativeTheme::kNumStates: NOTREACHED();
+    case ui::NativeTheme::kDisabled:
+      return Button::STATE_DISABLED;
+    case ui::NativeTheme::kHovered:
+      return Button::STATE_HOVERED;
+    case ui::NativeTheme::kNormal:
+      return Button::STATE_NORMAL;
+    case ui::NativeTheme::kPressed:
+      return Button::STATE_PRESSED;
+    case ui::NativeTheme::kNumStates:
+      NOTREACHED();
   }
   return Button::STATE_NORMAL;
 }
@@ -349,10 +354,13 @@ bool Button::AcceleratorPressed(const ui::Accelerator& accelerator) {
 }
 
 bool Button::SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) {
+  LOG(ERROR) << "Button::SkipDefaultKeyEventProcessing";
   // If this button is focused and the user presses space or enter, don't let
   // that be treated as an accelerator if there is a key click action
   // corresponding to it.
-  return GetKeyClickActionForEvent(event) != KeyClickAction::CLICK_NONE;
+  bool ans = GetKeyClickActionForEvent(event) != KeyClickAction::CLICK_NONE;
+  LOG(ERROR) << ans;
+  return ans;
 }
 
 bool Button::GetTooltipText(const gfx::Point& p,

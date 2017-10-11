@@ -75,6 +75,9 @@ void SearchResultListView::UpdateAutoLaunchState() {
 
 bool SearchResultListView::OnKeyPressed(const ui::KeyEvent& event) {
   if (features::IsAppListFocusEnabled()) {
+    if (event.key_code() == ui::VKEY_RETURN) {
+      // is this hit when the card is shown?
+    }
     // TODO(weidongg/766807) Remove this function when the flag is enabled by
     // default.
     return false;

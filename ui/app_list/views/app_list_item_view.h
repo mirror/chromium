@@ -23,7 +23,7 @@ class ImageView;
 class Label;
 class MenuRunner;
 class ProgressBar;
-}
+}  // namespace views
 
 namespace app_list {
 
@@ -85,6 +85,7 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   // views::Button overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;
+  bool SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) override;
 
   // views::View overrides:
   bool GetTooltipText(const gfx::Point& p,

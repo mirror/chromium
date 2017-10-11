@@ -163,6 +163,11 @@ int SearchResultTileItemListView::DoUpdate() {
         } else {
           separator_views_[i]->SetVisible(false);
         }
+        if (item->display_type() == SearchResult::DISPLAY_CARD) {
+          // Store the next view so that focus can return to it after going into
+          // the answer card.
+          GetFocusManager()->SetStoredFocusView(tile_views_[i + 1]);
+        }
       }
 
       previous_type = item->result_type();

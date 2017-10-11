@@ -10,11 +10,9 @@
 namespace views {
 
 UnhandledKeyboardEventHandler::UnhandledKeyboardEventHandler()
-    : ignore_next_char_event_(false) {
-}
+    : ignore_next_char_event_(false) {}
 
-UnhandledKeyboardEventHandler::~UnhandledKeyboardEventHandler() {
-}
+UnhandledKeyboardEventHandler::~UnhandledKeyboardEventHandler() {}
 
 void UnhandledKeyboardEventHandler::HandleKeyboardEvent(
     const content::NativeWebKeyboardEvent& event,
@@ -23,6 +21,7 @@ void UnhandledKeyboardEventHandler::HandleKeyboardEvent(
     NOTREACHED();
     return;
   }
+  LOG(ERROR) << "UnhandledKeyboardEventHandler::HandleKeyboardEvent";
   // Previous calls to TranslateMessage can generate Char events as well as
   // RawKeyDown events, even if the latter triggered an accelerator.  In these
   // cases, we discard the Char events.

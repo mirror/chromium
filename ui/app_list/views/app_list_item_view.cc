@@ -78,7 +78,7 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
       progress_bar_(new views::ProgressBar),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   if (features::IsAppListFocusEnabled())
-    SetFocusBehavior(FocusBehavior::ALWAYS);
+    SetFocusBehavior(FocusBehavior::ALWAYS);  // Maybe disable if answer card.
   if (!is_fullscreen_app_list_enabled_) {
     shadow_animator_.reset(new ImageShadowAnimator(this));
     shadow_animator_->animation()->SetTweenType(gfx::Tween::FAST_OUT_SLOW_IN);
@@ -136,8 +136,7 @@ void AppListItemView::SetIcon(const gfx::ImageSkia& icon) {
   }
 
   gfx::ImageSkia resized(gfx::ImageSkiaOperations::CreateResizedImage(
-      icon,
-      skia::ImageOperations::RESIZE_BEST,
+      icon, skia::ImageOperations::RESIZE_BEST,
       gfx::Size(kGridIconDimension, kGridIconDimension)));
   if (shadow_animator_)
     shadow_animator_->SetOriginalImage(resized);
@@ -376,8 +375,8 @@ bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
                                 event.root_location());
 
   if (apps_grid_view_->IsDraggedView(this)) {
-    mouse_drag_timer_.Start(FROM_HERE,
-        base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
+    mouse_drag_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
         this, &AppListItemView::OnMouseDragTimer);
   }
   return true;
@@ -471,8 +470,7 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
     apps_grid_view_->ClearAnySelectedView();
 
   // Show dragging UI when it's confirmed without waiting for the timer.
-  if (ui_state_ != UI_STATE_DRAGGING &&
-      apps_grid_view_->dragging() &&
+  if (ui_state_ != UI_STATE_DRAGGING && apps_grid_view_->dragging() &&
       apps_grid_view_->IsDraggedView(this)) {
     mouse_drag_timer_.Stop();
     SetUIState(UI_STATE_DRAGGING);
@@ -481,6 +479,7 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
 }
 
 void AppListItemView::OnFocus() {
+  LOG(ERROR) << "AppListItemView::OnFocus()";
   apps_grid_view_->SetSelectedView(this);
 }
 
@@ -551,6 +550,11 @@ void AppListItemView::OnGestureEvent(ui::GestureEvent* event) {
   }
   if (!event->handled())
     Button::OnGestureEvent(event);
+}
+
+bool AppListItemView::SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) {
+  LOG(ERROR) << "ya";
+  return false;
 }
 
 bool AppListItemView::GetTooltipText(const gfx::Point& p,

@@ -237,6 +237,10 @@ void SearchResultTileItemView::OnFocus() {
   } else if (!is_recommendation()) {
     ScrollRectToVisible(GetLocalBounds());
   }
+  if (item_->display_type() == SearchResult::DISPLAY_CARD) {
+    LOG(ERROR)
+        << "SearchResultTileItemView::OnFocus for SearchResult::DISPLAY_CARD";
+  }
   TileItemView::OnFocus();
 }
 
@@ -366,6 +370,18 @@ gfx::Size SearchResultTileItemView::CalculatePreferredSize() const {
   }
 
   return TileItemView::CalculatePreferredSize();
+}
+
+void SearchResultTileItemView::AboutToRequestFocusFromTabTraversal(
+    bool reverse) {
+  if (item_->display_type() == SearchResult::DISPLAY_CARD) {
+    LOG(ERROR) << "SearchResultTileItemView::"
+                  "AboutToRequestFocusFromTabTraversal--SearchResult::DISPLAY_"
+                  "CARD";
+  } else {
+    LOG(ERROR) << "SearchResultTileItemView::"
+                  "AboutToRequestFocusFromTabTraversal--SearchResult:: -- ";
+  }
 }
 
 }  // namespace app_list

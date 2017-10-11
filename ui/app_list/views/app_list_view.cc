@@ -178,6 +178,7 @@ class AppListEventTargeter : public aura::WindowTargeter {
       if (event.type() != ui::ET_MOUSE_MOVED)
         return false;
     }
+
     return aura::WindowTargeter::SubtreeShouldBeExploredForEvent(window, event);
   }
 

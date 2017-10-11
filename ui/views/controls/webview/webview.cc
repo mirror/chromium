@@ -91,9 +91,9 @@ void WebView::SetEmbedFullscreenWidgetMode(bool enable) {
 }
 
 void WebView::LoadInitialURL(const GURL& url) {
-  GetWebContents()->GetController().LoadURL(
-      url, content::Referrer(), ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
-      std::string());
+  GetWebContents()->GetController().LoadURL(url, content::Referrer(),
+                                            ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
+                                            std::string());
 }
 
 void WebView::SetFastResize(bool fast_resize) {
@@ -128,14 +128,13 @@ void WebView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   // Only WebContentses that are in fullscreen mode and being screen-captured
   // will engage the special layout/sizing behavior.
   gfx::Rect holder_bounds(bounds().size());
-  if (!embed_fullscreen_widget_mode_enabled_ ||
-      !web_contents() ||
+  if (!embed_fullscreen_widget_mode_enabled_ || !web_contents() ||
       web_contents()->GetCapturerCount() == 0 ||
       web_contents()->GetPreferredSize().IsEmpty() ||
       !(is_embedding_fullscreen_widget_ ||
         (web_contents()->GetDelegate() &&
-         web_contents()->GetDelegate()->
-             IsFullscreenForTabOrPending(web_contents())))) {
+         web_contents()->GetDelegate()->IsFullscreenForTabOrPending(
+             web_contents())))) {
     holder_->SetBoundsRect(holder_bounds);
     return;
   }
@@ -169,8 +168,7 @@ void WebView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   holder_->SetBoundsRect(holder_bounds);
 }
 
-void WebView::ViewHierarchyChanged(
-    const ViewHierarchyChangedDetails& details) {
+void WebView::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {
   if (details.is_add)
     AttachWebContents();
 }
@@ -203,6 +201,7 @@ bool WebView::OnMousePressed(const ui::MouseEvent& event) {
 }
 
 void WebView::OnFocus() {
+  LOG(ERROR) << "WebView::OnFocus";
   if (web_contents())
     web_contents()->Focus();
 }
@@ -313,9 +312,10 @@ void WebView::AttachWebContents() {
   if (!GetWidget() || !web_contents())
     return;
 
-  const gfx::NativeView view_to_attach = is_embedding_fullscreen_widget_ ?
-      web_contents()->GetFullscreenRenderWidgetHostView()->GetNativeView() :
-      web_contents()->GetNativeView();
+  const gfx::NativeView view_to_attach =
+      is_embedding_fullscreen_widget_
+          ? web_contents()->GetFullscreenRenderWidgetHostView()->GetNativeView()
+          : web_contents()->GetNativeView();
   OnBoundsChanged(bounds());
   if (holder_->native_view() == view_to_attach)
     return;
@@ -360,7 +360,7 @@ void WebView::NotifyAccessibilityWebContentsChanged() {
 }
 
 content::WebContents* WebView::CreateWebContents(
-      content::BrowserContext* browser_context) {
+    content::BrowserContext* browser_context) {
   content::WebContents* contents = NULL;
   if (ViewsDelegate::GetInstance()) {
     contents =
@@ -368,8 +368,7 @@ content::WebContents* WebView::CreateWebContents(
   }
 
   if (!contents) {
-    content::WebContents::CreateParams create_params(
-        browser_context, NULL);
+    content::WebContents::CreateParams create_params(browser_context, NULL);
     return content::WebContents::Create(create_params);
   }
 

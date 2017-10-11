@@ -9,8 +9,7 @@
 
 namespace ui {
 
-EventHandler::EventHandler() {
-}
+EventHandler::EventHandler() {}
 
 EventHandler::~EventHandler() {
   while (!dispatchers_.empty()) {
@@ -35,22 +34,16 @@ void EventHandler::OnEvent(Event* event) {
     OnCancelMode(event->AsCancelModeEvent());
 }
 
-void EventHandler::OnKeyEvent(KeyEvent* event) {
-}
+void EventHandler::OnKeyEvent(KeyEvent* event) {}
 
-void EventHandler::OnMouseEvent(MouseEvent* event) {
-}
+void EventHandler::OnMouseEvent(MouseEvent* event) {}
 
-void EventHandler::OnScrollEvent(ScrollEvent* event) {
-}
+void EventHandler::OnScrollEvent(ScrollEvent* event) {}
 
-void EventHandler::OnTouchEvent(TouchEvent* event) {
-}
+void EventHandler::OnTouchEvent(TouchEvent* event) {}
 
-void EventHandler::OnGestureEvent(GestureEvent* event) {
-}
+void EventHandler::OnGestureEvent(GestureEvent* event) {}
 
-void EventHandler::OnCancelMode(CancelModeEvent* event) {
-}
+void EventHandler::OnCancelMode(CancelModeEvent* event) {}
 
 }  // namespace ui

@@ -72,6 +72,7 @@ class APP_LIST_EXPORT SearchResultTileItemView
   // Overridden from views::View:
   void Layout() override;
   gfx::Size CalculatePreferredSize() const override;
+  void AboutToRequestFocusFromTabTraversal(bool reverse) override;
 
   // Whether the tile item view is a suggested app, used in StartPageView.
   const bool is_suggested_app_;

@@ -96,21 +96,22 @@ const View* GetHierarchyRoot(const View* view) {
 namespace internal {
 
 #if DCHECK_IS_ON()
-  class ScopedChildrenLock {
-   public:
-    explicit ScopedChildrenLock(const View* view)
-        : reset_(&view->iterating_, true) {}
-    ~ScopedChildrenLock() {}
-   private:
-    base::AutoReset<bool> reset_;
-    DISALLOW_COPY_AND_ASSIGN(ScopedChildrenLock);
-  };
+class ScopedChildrenLock {
+ public:
+  explicit ScopedChildrenLock(const View* view)
+      : reset_(&view->iterating_, true) {}
+  ~ScopedChildrenLock() {}
+
+ private:
+  base::AutoReset<bool> reset_;
+  DISALLOW_COPY_AND_ASSIGN(ScopedChildrenLock);
+};
 #else
-  class ScopedChildrenLock {
-    public:
-      explicit ScopedChildrenLock(const View* view) {}
-      ~ScopedChildrenLock() {}
-  };
+class ScopedChildrenLock {
+ public:
+  explicit ScopedChildrenLock(const View* view) {}
+  ~ScopedChildrenLock() {}
+};
 #endif
 
 }  // namespace internal
@@ -331,9 +332,9 @@ void View::SetBoundsRect(const gfx::Rect& bounds) {
 
   if (visible_) {
     // Paint where the view is currently.
-    SchedulePaintBoundsChanged(
-        bounds_.size() == bounds.size() ? SCHEDULE_PAINT_SIZE_SAME :
-        SCHEDULE_PAINT_SIZE_CHANGED);
+    SchedulePaintBoundsChanged(bounds_.size() == bounds.size()
+                                   ? SCHEDULE_PAINT_SIZE_SAME
+                                   : SCHEDULE_PAINT_SIZE_CHANGED);
   }
 
   gfx::Rect prev = bounds_;
@@ -655,8 +656,8 @@ const View* View::GetAncestorWithClassName(const std::string& name) const {
 }
 
 View* View::GetAncestorWithClassName(const std::string& name) {
-  return const_cast<View*>(const_cast<const View*>(this)->
-      GetAncestorWithClassName(name));
+  return const_cast<View*>(
+      const_cast<const View*>(this)->GetAncestorWithClassName(name));
 }
 
 const View* View::GetViewByID(int id) const {
@@ -1047,20 +1048,15 @@ bool View::OnMouseDragged(const ui::MouseEvent& event) {
   return false;
 }
 
-void View::OnMouseReleased(const ui::MouseEvent& event) {
-}
+void View::OnMouseReleased(const ui::MouseEvent& event) {}
 
-void View::OnMouseCaptureLost() {
-}
+void View::OnMouseCaptureLost() {}
 
-void View::OnMouseMoved(const ui::MouseEvent& event) {
-}
+void View::OnMouseMoved(const ui::MouseEvent& event) {}
 
-void View::OnMouseEntered(const ui::MouseEvent& event) {
-}
+void View::OnMouseEntered(const ui::MouseEvent& event) {}
 
-void View::OnMouseExited(const ui::MouseEvent& event) {
-}
+void View::OnMouseExited(const ui::MouseEvent& event) {}
 
 void View::SetMouseHandler(View* new_mouse_handler) {
   // |new_mouse_handler| may be NULL.
@@ -1081,8 +1077,10 @@ bool View::OnMouseWheel(const ui::MouseWheelEvent& event) {
 }
 
 void View::OnKeyEvent(ui::KeyEvent* event) {
-  bool consumed = (event->type() == ui::ET_KEY_PRESSED) ? OnKeyPressed(*event) :
-                                                          OnKeyReleased(*event);
+  if (event->key_code() == ui::VKEY_RETURN) {
+  }
+  bool consumed = (event->type() == ui::ET_KEY_PRESSED) ? OnKeyPressed(*event)
+                                                        : OnKeyReleased(*event);
   if (consumed)
     event->StopPropagation();
 }
@@ -1095,13 +1093,13 @@ void View::OnMouseEvent(ui::MouseEvent* event) {
       return;
 
     case ui::ET_MOUSE_MOVED:
-      if ((event->flags() & (ui::EF_LEFT_MOUSE_BUTTON |
-                             ui::EF_RIGHT_MOUSE_BUTTON |
-                             ui::EF_MIDDLE_MOUSE_BUTTON)) == 0) {
+      if ((event->flags() &
+           (ui::EF_LEFT_MOUSE_BUTTON | ui::EF_RIGHT_MOUSE_BUTTON |
+            ui::EF_MIDDLE_MOUSE_BUTTON)) == 0) {
         OnMouseMoved(*event);
         return;
       }
-      // FALL-THROUGH
+    // FALL-THROUGH
     case ui::ET_MOUSE_DRAGGED:
       if (ProcessMouseDragged(*event))
         event->SetHandled();
@@ -1131,15 +1129,13 @@ void View::OnMouseEvent(ui::MouseEvent* event) {
   }
 }
 
-void View::OnScrollEvent(ui::ScrollEvent* event) {
-}
+void View::OnScrollEvent(ui::ScrollEvent* event) {}
 
 void View::OnTouchEvent(ui::TouchEvent* event) {
   NOTREACHED() << "Views should not receive touch events.";
 }
 
-void View::OnGestureEvent(ui::GestureEvent* event) {
-}
+void View::OnGestureEvent(ui::GestureEvent* event) {}
 
 const ui::InputMethod* View::GetInputMethod() const {
   Widget* widget = const_cast<Widget*>(GetWidget());
@@ -1249,9 +1245,8 @@ bool View::CanHandleAccelerators() const {
   // check if they are focused instead. ChromeOS also behaves different than
   // Linux when an extension popup is about to handle the accelerator.
   bool child = widget && widget->GetTopLevelWidget() != widget;
-  bool focus_in_child =
-      widget &&
-      widget->GetRootView()->Contains(GetFocusManager()->GetFocusedView());
+  bool focus_in_child = widget && widget->GetRootView()->Contains(
+                                      GetFocusManager()->GetFocusedView());
   if ((child && !focus_in_child) || (!child && !widget->IsActive()))
     return false;
 #endif
@@ -1381,22 +1376,19 @@ bool View::CanDrop(const OSExchangeData& data) {
   return false;
 }
 
-void View::OnDragEntered(const ui::DropTargetEvent& event) {
-}
+void View::OnDragEntered(const ui::DropTargetEvent& event) {}
 
 int View::OnDragUpdated(const ui::DropTargetEvent& event) {
   return ui::DragDropTypes::DRAG_NONE;
 }
 
-void View::OnDragExited() {
-}
+void View::OnDragExited() {}
 
 int View::OnPerformDrop(const ui::DropTargetEvent& event) {
   return ui::DragDropTypes::DRAG_NONE;
 }
 
-void View::OnDragDone() {
-}
+void View::OnDragDone() {}
 
 // static
 bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
@@ -1453,9 +1445,8 @@ gfx::NativeViewAccessible View::GetNativeViewAccessible() {
   return nullptr;
 }
 
-void View::NotifyAccessibilityEvent(
-    ui::AXEvent event_type,
-    bool send_native_event) {
+void View::NotifyAccessibilityEvent(ui::AXEvent event_type,
+                                    bool send_native_event) {
   if (ViewsDelegate::GetInstance())
     ViewsDelegate::GetInstance()->NotifyAccessibilityEvent(this, event_type);
 
@@ -1480,12 +1471,14 @@ void View::ScrollRectToVisible(const gfx::Rect& rect) {
 }
 
 int View::GetPageScrollIncrement(ScrollView* scroll_view,
-                                 bool is_horizontal, bool is_positive) {
+                                 bool is_horizontal,
+                                 bool is_positive) {
   return 0;
 }
 
 int View::GetLineScrollIncrement(ScrollView* scroll_view,
-                                 bool is_horizontal, bool is_positive) {
+                                 bool is_horizontal,
+                                 bool is_positive) {
   return 0;
 }
 
@@ -1513,8 +1506,7 @@ gfx::Size View::CalculatePreferredSize() const {
   return gfx::Size();
 }
 
-void View::OnBoundsChanged(const gfx::Rect& previous_bounds) {
-}
+void View::OnBoundsChanged(const gfx::Rect& previous_bounds) {}
 
 void View::PreferredSizeChanged() {
   InvalidateLayout();
@@ -1526,16 +1518,13 @@ bool View::GetNeedsNotificationWhenVisibleBoundsChange() const {
   return false;
 }
 
-void View::OnVisibleBoundsChanged() {
-}
+void View::OnVisibleBoundsChanged() {}
 
 // Tree operations -------------------------------------------------------------
 
-void View::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {
-}
+void View::ViewHierarchyChanged(const ViewHierarchyChangedDetails& details) {}
 
-void View::VisibilityChanged(View* starting_from, bool is_visible) {
-}
+void View::VisibilityChanged(View* starting_from, bool is_visible) {}
 
 void View::NativeViewHierarchyChanged() {
   FocusManager* focus_manager = GetFocusManager();
@@ -1704,9 +1693,7 @@ void View::OnPaintLayer(const ui::PaintContext& context) {
   PaintFromPaintRoot(context);
 }
 
-void View::OnDelegatedFrameDamage(
-    const gfx::Rect& damage_rect_in_dip) {
-}
+void View::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {}
 
 void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                       float new_device_scale_factor) {
@@ -1797,8 +1784,7 @@ void View::OnFocus() {
   NotifyAccessibilityEvent(ui::AX_EVENT_FOCUS, true);
 }
 
-void View::OnBlur() {
-}
+void View::OnBlur() {}
 
 void View::Focus() {
   OnFocus();
@@ -1820,9 +1806,9 @@ void View::TooltipTextChanged() {
 // Drag and drop ---------------------------------------------------------------
 
 int View::GetDragOperations(const gfx::Point& press_pt) {
-  return drag_controller_ ?
-      drag_controller_->GetDragOperationsForView(this, press_pt) :
-      ui::DragDropTypes::DRAG_NONE;
+  return drag_controller_
+             ? drag_controller_->GetDragOperationsForView(this, press_pt)
+             : ui::DragDropTypes::DRAG_NONE;
 }
 
 void View::WriteDragData(const gfx::Point& press_pt, OSExchangeData* data) {
@@ -1888,22 +1874,16 @@ std::string View::DoPrintViewGraph(bool first, View* view_with_children) {
 
   result.append(class_name.substr(base_name_index).c_str());
 
-  base::snprintf(bounds_buffer,
-                 arraysize(bounds_buffer),
-                 "\\n bounds: (%d, %d), (%dx%d)",
-                 bounds().x(),
-                 bounds().y(),
-                 bounds().width(),
-                 bounds().height());
+  base::snprintf(bounds_buffer, arraysize(bounds_buffer),
+                 "\\n bounds: (%d, %d), (%dx%d)", bounds().x(), bounds().y(),
+                 bounds().width(), bounds().height());
   result.append(bounds_buffer);
 
   gfx::DecomposedTransform decomp;
   if (!GetTransform().IsIdentity() &&
       gfx::DecomposeTransform(&decomp, GetTransform())) {
-    base::snprintf(bounds_buffer,
-                   arraysize(bounds_buffer),
-                   "\\n translation: (%f, %f)",
-                   decomp.translate[0],
+    base::snprintf(bounds_buffer, arraysize(bounds_buffer),
+                   "\\n translation: (%f, %f)", decomp.translate[0],
                    decomp.translate[1]);
     result.append(bounds_buffer);
 
@@ -1912,10 +1892,8 @@ std::string View::DoPrintViewGraph(bool first, View* view_with_children) {
                    gfx::RadToDeg(std::acos(decomp.quaternion.w()) * 2));
     result.append(bounds_buffer);
 
-    base::snprintf(bounds_buffer,
-                   arraysize(bounds_buffer),
-                   "\\n scale: (%2.4f, %2.4f)",
-                   decomp.scale[0],
+    base::snprintf(bounds_buffer, arraysize(bounds_buffer),
+                   "\\n scale: (%2.4f, %2.4f)", decomp.scale[0],
                    decomp.scale[1]);
     result.append(bounds_buffer);
   }
@@ -2248,9 +2226,9 @@ void View::SnapLayerToPixelBoundary(const LayerOffsetData& offset_data) {
 void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   if (visible_) {
     // Paint the new bounds.
-    SchedulePaintBoundsChanged(
-        bounds_.size() == previous_bounds.size() ? SCHEDULE_PAINT_SIZE_SAME :
-        SCHEDULE_PAINT_SIZE_CHANGED);
+    SchedulePaintBoundsChanged(bounds_.size() == previous_bounds.size()
+                                   ? SCHEDULE_PAINT_SIZE_SAME
+                                   : SCHEDULE_PAINT_SIZE_CHANGED);
   }
 
   if (layer()) {
@@ -2344,8 +2322,8 @@ void View::AddDescendantToNotify(View* view) {
 
 void View::RemoveDescendantToNotify(View* view) {
   DCHECK(view && descendants_to_notify_.get());
-  Views::iterator i(std::find(
-      descendants_to_notify_->begin(), descendants_to_notify_->end(), view));
+  Views::iterator i(std::find(descendants_to_notify_->begin(),
+                              descendants_to_notify_->end(), view));
   DCHECK(i != descendants_to_notify_->end());
   descendants_to_notify_->erase(i);
   if (descendants_to_notify_->empty())
@@ -2498,12 +2476,12 @@ void View::ReparentLayer(const gfx::Vector2d& offset, ui::Layer* parent_layer) {
 // Input -----------------------------------------------------------------------
 
 bool View::ProcessMousePressed(const ui::MouseEvent& event) {
-  int drag_operations =
-      (enabled_ && event.IsOnlyLeftMouseButton() &&
-       HitTestPoint(event.location())) ?
-       GetDragOperations(event.location()) : 0;
-  ContextMenuController* context_menu_controller = event.IsRightMouseButton() ?
-      context_menu_controller_ : 0;
+  int drag_operations = (enabled_ && event.IsOnlyLeftMouseButton() &&
+                         HitTestPoint(event.location()))
+                            ? GetDragOperations(event.location())
+                            : 0;
+  ContextMenuController* context_menu_controller =
+      event.IsRightMouseButton() ? context_menu_controller_ : 0;
   View::DragInfo* drag_info = GetDragInfo();
 
   const bool enabled = enabled_;
@@ -2540,8 +2518,8 @@ bool View::ProcessMouseDragged(const ui::MouseEvent& event) {
   if (possible_drag &&
       ExceededDragThreshold(GetDragInfo()->start_pt - event.location()) &&
       (!drag_controller_ ||
-       drag_controller_->CanStartDragForView(
-           this, GetDragInfo()->start_pt, event.location()))) {
+       drag_controller_->CanStartDragForView(this, GetDragInfo()->start_pt,
+                                             event.location()))) {
     DoDrag(event, GetDragInfo()->start_pt,
            ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE);
   } else {

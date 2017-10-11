@@ -11,6 +11,7 @@
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "ui/views/controls/webview/unhandled_keyboard_event_handler.h"
 
 class Profile;
 
@@ -54,11 +55,22 @@ class AnswerCardWebContents : public AnswerCardContents,
   void AttachToHost(content::RenderWidgetHost* host);
   void DetachFromHost();
 
+  // overridden from WebContentsDelegate:
+  bool TakeFocus(content::WebContents* source, bool reverse) override;
+
+  void HandleKeyboardEvent(
+      content::WebContents* source,
+      const content::NativeWebKeyboardEvent& event) override;
+
   // Web view for the web contents managed by this class.
   const std::unique_ptr<views::WebView> web_view_;
 
   // Web contents managed by this class.
   const std::unique_ptr<content::WebContents> web_contents_;
+
+  // Converts keyboard events on the WebContents to accelerators.
+  views::UnhandledKeyboardEventHandler unhandled_keyboard_event_handler_;
+  bool should_forward_keyboard_event_ = false;
 
   // Current widget host.
   content::RenderWidgetHost* host_ = nullptr;
