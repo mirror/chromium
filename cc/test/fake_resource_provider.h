@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
+#include "cc/resources/local_resource_provider.h"
 #include "cc/resources/resource_provider.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "ui/gfx/buffer_types.h"
@@ -40,6 +41,16 @@ class FakeResourceProvider : public ResourceProvider {
         viz::DefaultBufferToTextureTargetMapForTesting();
     return base::WrapUnique(new T(context_provider, shared_bitmap_manager,
                                   nullptr, true, resource_settings));
+  }
+
+  static std::unique_ptr<LocalResourceProvider> Create(
+      viz::ContextProvider* context_provider) {
+    viz::ResourceSettings resource_settings;
+    resource_settings.texture_id_allocation_chunk_size = 1;
+    resource_settings.buffer_to_texture_target_map =
+        viz::DefaultBufferToTextureTargetMapForTesting();
+    return base::WrapUnique(new LocalResourceProvider(context_provider, nullptr,
+                                                      resource_settings));
   }
 
   static std::unique_ptr<FakeResourceProvider> Create(

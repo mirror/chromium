@@ -181,13 +181,16 @@ void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
       child_context_provider_.get(), shared_bitmap_manager_.get(),
       gpu_memory_buffer_manager_.get(), true,
       settings_.resource_settings);
+  local_resource_provider_ = std::make_unique<LocalResourceProvider>(
+      output_surface_->context_provider(), gpu_memory_buffer_manager_.get(),
+      settings_.resource_settings);
 
   texture_mailbox_deleter_ = std::make_unique<viz::TextureMailboxDeleter>(
       base::ThreadTaskRunnerHandle::Get());
 
   renderer_ = std::make_unique<viz::GLRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get(),
-      texture_mailbox_deleter_.get());
+      local_resource_provider_.get(), texture_mailbox_deleter_.get());
   renderer_->Initialize();
   renderer_->SetVisible(true);
 }

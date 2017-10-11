@@ -187,15 +187,20 @@ void Display::InitializeRenderer() {
       gpu_memory_buffer_manager_, delegated_sync_points_required,
       settings_.resource_settings);
 
+  local_resource_provider_ = base::MakeUnique<cc::LocalResourceProvider>(
+      output_surface_->context_provider(), gpu_memory_buffer_manager_,
+      settings_.resource_settings);
+
   if (output_surface_->context_provider()) {
     DCHECK(texture_mailbox_deleter_);
     if (!settings_.use_skia_renderer) {
       renderer_ = base::MakeUnique<GLRenderer>(
           &settings_, output_surface_.get(), resource_provider_.get(),
-          texture_mailbox_deleter_.get());
+          local_resource_provider_.get(), texture_mailbox_deleter_.get());
     } else {
       renderer_ = base::MakeUnique<SkiaRenderer>(
-          &settings_, output_surface_.get(), resource_provider_.get());
+          &settings_, output_surface_.get(), resource_provider_.get(),
+          local_resource_provider_.get());
     }
   } else if (output_surface_->vulkan_context_provider()) {
 #if defined(ENABLE_VULKAN)

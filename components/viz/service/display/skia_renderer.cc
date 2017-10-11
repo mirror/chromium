@@ -8,6 +8,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
+#include "cc/resources/local_resource_provider.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -60,8 +61,12 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
 
 SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            OutputSurface* output_surface,
-                           cc::DisplayResourceProvider* resource_provider)
-    : DirectRenderer(settings, output_surface, resource_provider) {
+                           cc::DisplayResourceProvider* resource_provider,
+                           cc::LocalResourceProvider* local_resource_provider)
+    : DirectRenderer(settings,
+                     output_surface,
+                     resource_provider,
+                     local_resource_provider) {
   const auto& context_caps =
       output_surface_->context_provider()->ContextCapabilities();
   use_swap_with_bounds_ = context_caps.swap_buffers_with_bounds;
@@ -222,8 +227,8 @@ bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   current_framebuffer_surface_lock_ = nullptr;
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedWriteLockGL(
-          resource_provider_, texture->id()));
+      base::WrapUnique(new cc::LocalResourceProvider::ScopedUseGL(
+          local_resource_provider_, texture->id()));
 
   current_framebuffer_surface_lock_ =
       base::WrapUnique(new cc::ResourceProvider::ScopedSkSurface(

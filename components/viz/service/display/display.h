@@ -26,6 +26,7 @@
 
 namespace cc {
 class DisplayResourceProvider;
+class LocalResourceProvider;
 class RendererSettings;
 }  // namespace cc
 
@@ -134,6 +135,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<OutputSurface> output_surface_;
   std::unique_ptr<DisplayScheduler> scheduler_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
   std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<DirectRenderer> renderer_;

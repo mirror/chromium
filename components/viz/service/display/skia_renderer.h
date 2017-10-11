@@ -17,6 +17,7 @@ namespace cc {
 class OutputSurface;
 class RenderPassDrawQuad;
 class ResourceProvider;
+class LocalResourceProvider;
 }  // namespace cc
 
 namespace viz {
@@ -30,7 +31,8 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public DirectRenderer {
  public:
   SkiaRenderer(const RendererSettings* settings,
                OutputSurface* output_surface,
-               cc::DisplayResourceProvider* resource_provider);
+               cc::DisplayResourceProvider* resource_provider,
+               cc::LocalResourceProvider* local_resource_provider);
 
   ~SkiaRenderer() override;
 
@@ -101,7 +103,7 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public DirectRenderer {
   SkCanvas* root_canvas_ = nullptr;
   SkCanvas* current_canvas_ = nullptr;
   SkPaint current_paint_;
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<cc::LocalResourceProvider::ScopedUseGL>
       current_framebuffer_lock_;
   std::unique_ptr<cc::ResourceProvider::ScopedSkSurface>
       current_framebuffer_surface_lock_;

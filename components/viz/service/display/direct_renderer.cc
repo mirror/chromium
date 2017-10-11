@@ -84,6 +84,18 @@ DirectRenderer::DirectRenderer(const RendererSettings* settings,
     : settings_(settings),
       output_surface_(output_surface),
       resource_provider_(resource_provider),
+      local_resource_provider_(nullptr),
+      overlay_processor_(std::make_unique<OverlayProcessor>(output_surface)) {}
+
+DirectRenderer::DirectRenderer(
+    const RendererSettings* settings,
+    OutputSurface* output_surface,
+    cc::DisplayResourceProvider* resource_provider,
+    cc::LocalResourceProvider* local_resource_provider)
+    : settings_(settings),
+      output_surface_(output_surface),
+      resource_provider_(resource_provider),
+      local_resource_provider_(local_resource_provider),
       overlay_processor_(std::make_unique<OverlayProcessor>(output_surface)) {}
 
 DirectRenderer::~DirectRenderer() = default;
@@ -228,7 +240,12 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
   for (auto& pass : render_passes_in_draw_order) {
     auto& resource = render_pass_textures_[pass->id];
     if (!resource) {
-      resource = std::make_unique<cc::ScopedResource>(resource_provider_);
+      if (local_resource_provider_) {
+        resource =
+            std::make_unique<cc::ScopedResource>(local_resource_provider_);
+      } else {
+        resource = std::make_unique<cc::ScopedResource>(resource_provider_);
+      }
 
       // |has_damage_from_contributing_content| is used to determine if previous
       // contents can be reused when caching render pass and as a result needs
@@ -650,7 +667,7 @@ bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
   if (!texture->id()) {
     texture->Allocate(size, RenderPassTextureHint(render_pass),
                       BackbufferFormat(),
-                      current_frame()->current_render_pass->color_space);
+                      current_frame()->current_render_pass->color_space, true);
   } else if (render_pass->cache_render_pass &&
              !render_pass->has_damage_from_contributing_content) {
     return false;
