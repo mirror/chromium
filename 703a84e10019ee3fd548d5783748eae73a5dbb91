@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfc6964_6254b589",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T19:04:11Z",
+      "side": 1,
+      "message": "nit: Move trigger_url down to where it\u0027s used.",
+      "revId": "703a84e10019ee3fd548d5783748eae73a5dbb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b560485_4a6b4a23",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T19:04:11Z",
+      "side": 1,
+      "message": "q: Do we record the IGNORE_WARNING and MARK_AS_LEGITIMATE (below) somewhere, like in the threat-details report?  (ie so SB can tell if a lot of users are ignoring warnings on a particular site)",
+      "revId": "703a84e10019ee3fd548d5783748eae73a5dbb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464232ef_aad22d70",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T19:04:11Z",
+      "side": 1,
+      "message": "Is this called when a new navigation is started?  If so, add a comment to that effect (like \"Since there\u0027s a new navigation request, create a nav-throttle to it if there\u0027s pending request on this web_contents that might trigger a modal dialog, or that has already\")",
+      "revId": "703a84e10019ee3fd548d5783748eae73a5dbb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
