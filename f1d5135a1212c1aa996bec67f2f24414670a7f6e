@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "2b6089dc_d02421b9",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-11T18:17:01Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve got a CL in progress for that now: https://chromium-review.googlesource.com/c/chromium/src/+/709937.  I did a big more digging on that last devtools test and added some notes on the CL.  Assuming we can figure out what\u0027s going on there, that CL shouldn\u0027t be that far from landing.",
+      "parentUuid": "80bec837_4ecfaa1b",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a66f9a4_3e60abef",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 18
