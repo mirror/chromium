@@ -15,8 +15,6 @@
 namespace offline_pages {
 
 // static
-const char PrefetchDownloaderQuota::kMaxDailyQuotaBytesParamName[] =
-    "offline_pages_max_daily_quota_bytes";
 const int64_t PrefetchDownloaderQuota::kDefaultMaxDailyQuotaBytes =
     20LL * 1024 * 1024;  // 20 MB
 
@@ -44,6 +42,8 @@ PrefetchDownloaderQuota::PrefetchDownloaderQuota(sql::Connection* db,
 PrefetchDownloaderQuota::~PrefetchDownloaderQuota() = default;
 
 int64_t PrefetchDownloaderQuota::GetMaxDailyQuotaBytes() {
+  static const char kMaxDailyQuotaBytesParamName[] =
+      "offline_pages_max_daily_quota_bytes";
   std::string quota_bytes_as_string(variations::GetVariationParamValueByFeature(
       offline_pages::kPrefetchingOfflinePagesFeature,
       kMaxDailyQuotaBytesParamName));
