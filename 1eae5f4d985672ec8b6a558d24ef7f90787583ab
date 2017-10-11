@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165464c6_f0d99b20",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-11T01:39:24Z",
+      "side": 1,
+      "message": "small nit: you can put progressNotificationCreated \u003d true in the above if block.",
+      "range": {
+        "startLine": 793,
+        "startChar": 12,
+        "endLine": 795,
+        "endChar": 13
+      },
+      "revId": "1eae5f4d985672ec8b6a558d24ef7f90787583ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e00cccc_ebbf8bad",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-11T01:39:24Z",
+      "side": 1,
+      "message": "small nit: we only have a flag with the new patch set.",
+      "range": {
+        "startLine": 800,
+        "startChar": 68,
+        "endLine": 801,
+        "endChar": 25
+      },
+      "revId": "1eae5f4d985672ec8b6a558d24ef7f90787583ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00d6474_f015692b",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-11T01:39:24Z",
+      "side": 1,
+      "message": "small nit: add @return",
+      "range": {
+        "startLine": 594,
+        "startChar": 3,
+        "endLine": 594,
+        "endChar": 11
+      },
+      "revId": "1eae5f4d985672ec8b6a558d24ef7f90787583ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
