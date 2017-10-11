@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e786070_653090d2",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-11T18:56:54Z",
+      "side": 0,
+      "message": "Please repeat the JavaScript validation in Objective C as well. This mitigates bad actors calling directly into your native hooks an bypassing your JavaScript validation.\n\nThis is OK to do in a follow up patch.",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "249ceffbb5c6909ffdb4e0820d6a2dbb3f08aa6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
