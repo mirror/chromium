@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3a983a83_d366e69e",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T16:56:57Z",
+      "side": 1,
+      "message": "Yes. That is preferable.",
+      "parentUuid": "f1e7678d_d3dc8249",
+      "range": {
+        "startLine": 47,
+        "startChar": 60,
+        "endLine": 47,
+        "endChar": 70
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "820c51f2_485db81b",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
         "patchSetId": 5
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "f521cd05_97f8954d",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T16:56:57Z",
+      "side": 1,
+      "message": "Nope, but my assumption was that this was a protocol adopted by other parts of the UI, and was thus an external requirement.",
+      "parentUuid": "dcf70e98_f00b4de5",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 81
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35ec6efb_67a0b893",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
         "patchSetId": 5
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "The alternative is to pass in a UIViewController. The benefit of this protocol is to split out much of the presentation/dismissal logic from the SigninInteractionController.",
       "parentUuid": "67ef8989_de8d4248",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe65bac4_0561c696",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T16:56:57Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll need to look this over in more detail. My expectation is that I will OK this to land but will want follow-up CLs.",
+      "parentUuid": "2d3870d3_91834ee2",
       "range": {
         "startLine": 23,
         "startChar": 8,

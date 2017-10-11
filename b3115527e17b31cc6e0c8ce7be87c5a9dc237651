@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5efb0c_6227d447",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-11T16:56:57Z",
+      "side": 1,
+      "message": "boolean property names don\u0027t get the predicate prefix; their getters do. Thus its:\n\nfoo.active\n\nbut \n\n[foo isActive]\n\nAnd so the property declaration should be:\n\n@property(nonatomic, readonly, getter\u003d\"isActive\") BOOL active;",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 83,
+        "endChar": 52
+      },
+      "revId": "b3115527e17b31cc6e0c8ce7be87c5a9dc237651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
