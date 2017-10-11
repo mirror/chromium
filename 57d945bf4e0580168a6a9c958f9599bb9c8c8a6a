@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac7c1e9e_6a8e95f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T15:17:03Z",
+      "side": 1,
+      "message": "Can you flip the order of the arguments to \u003d\u003d? Otherwise it reads like Yoda-speak to me ;-)",
+      "range": {
+        "startLine": 261,
+        "startChar": 30,
+        "endLine": 261,
+        "endChar": 62
+      },
+      "revId": "57d945bf4e0580168a6a9c958f9599bb9c8c8a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "950a11bd_be490ba6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
