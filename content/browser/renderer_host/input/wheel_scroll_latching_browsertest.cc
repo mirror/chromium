@@ -121,6 +121,12 @@ class WheelScrollLatchingBrowserTest : public ContentBrowserTest {
         shell(), "domAutomationController.send(" + script + ")", &value));
     return value;
   }
+  std::string ExecuteScriptAndExtractString(const std::string& script) {
+    std::string value = "";
+    EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+        shell(), "domAutomationController.send(" + script + ")", &value));
+    return value;
+  }
   void EnableWheelScrollLatching() {
     feature_list_.InitFromCommandLine(
         features::kTouchpadAndWheelScrollLatching.name, "");
@@ -230,6 +236,65 @@ IN_PROC_BROWSER_TEST_F(WheelScrollLatchingBrowserTest, WheelEventTarget) {
 IN_PROC_BROWSER_TEST_F(WheelScrollLatchingDisabledBrowserTest,
                        WheelEventTarget) {
   WheelEventTargetTest();
+}
+
+// Tests that wheel events are retargeted if their target gets deleted in the
+// middle of scrolling.
+IN_PROC_BROWSER_TEST_F(WheelScrollLatchingBrowserTest,
+                       WheelEventRetargetWhenTargetRemoved) {
+  LoadURL();
+  EXPECT_EQ(0, ExecuteScriptAndExtractInt("documentWheelEventCounter"));
+  EXPECT_EQ(0, ExecuteScriptAndExtractInt("scrollableDivWheelEventCounter"));
+
+  FrameWatcher frame_watcher(shell()->web_contents());
+  scoped_refptr<InputMsgWatcher> input_msg_watcher(
+      new InputMsgWatcher(GetWidgetHost(), blink::WebInputEvent::kMouseWheel));
+
+  float scrollable_div_top =
+      ExecuteScriptAndExtractInt("scrollableDiv.getBoundingClientRect().top");
+  float x = (ExecuteScriptAndExtractInt(
+                 "scrollableDiv.getBoundingClientRect().left") +
+             ExecuteScriptAndExtractInt(
+                 "scrollableDiv.getBoundingClientRect().right")) /
+            2;
+  float y = 1.1 * scrollable_div_top;
+  float delta_x = 0;
+  float delta_y = -0.6 * scrollable_div_top;
+  blink::WebMouseWheelEvent wheel_event =
+      SyntheticWebMouseWheelEventBuilder::Build(x, y, x, y, delta_x, delta_y, 0,
+                                                true);
+  wheel_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
+  GetRouter()->RouteMouseWheelEvent(GetRootView(), &wheel_event,
+                                    ui::LatencyInfo());
+  // Runs until we get the InputMsgAck callback.
+  EXPECT_EQ(INPUT_EVENT_ACK_STATE_NOT_CONSUMED,
+            input_msg_watcher->WaitForAck());
+
+  while (ExecuteScriptAndExtractInt("scrollableDiv.scrollTop") < -delta_y) {
+    frame_watcher.WaitFrames(1);
+  }
+  EXPECT_EQ(0,
+            ExecuteScriptAndExtractInt("document.scrollingElement.scrollTop"));
+  EXPECT_EQ(0, ExecuteScriptAndExtractInt("documentWheelEventCounter"));
+  EXPECT_EQ(1, ExecuteScriptAndExtractInt("scrollableDivWheelEventCounter"));
+
+  // Remove the scrollableDiv which is the current target for wheel events.
+  EXPECT_TRUE(ExecuteScript(
+      shell(), "scrollableDiv.parentNode.removeChild(scrollableDiv)"));
+
+  wheel_event.phase = blink::WebMouseWheelEvent::kPhaseChanged;
+  GetRouter()->RouteMouseWheelEvent(GetRootView(), &wheel_event,
+                                    ui::LatencyInfo());
+  // Runs until we get the InputMsgAck callback.
+  EXPECT_EQ(INPUT_EVENT_ACK_STATE_NOT_CONSUMED,
+            input_msg_watcher->WaitForAck());
+
+  while (ExecuteScriptAndExtractInt("document.scrollingElement.scrollTop") ==
+         0) {
+    frame_watcher.WaitFrames(1);
+  }
+  EXPECT_EQ(1, ExecuteScriptAndExtractInt("documentWheelEventCounter"));
+  EXPECT_EQ(1, ExecuteScriptAndExtractInt("scrollableDivWheelEventCounter"));
 }
 
 }  // namespace content
