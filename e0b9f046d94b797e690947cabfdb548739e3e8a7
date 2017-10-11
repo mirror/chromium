@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b0e58c6_e56c90ee",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "How about naming this CanOpenProfileOnStartup?",
+      "range": {
+        "startLine": 249,
+        "startChar": 5,
+        "endLine": 249,
+        "endChar": 27
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53b535f_66447be6",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "Style guide says no else after a return.",
+      "range": {
+        "startLine": 751,
+        "startChar": 2,
+        "endLine": 751,
+        "endChar": 10
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b88416b_415174f7",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "for (auto\u0026 switch_pair : command_line.GetSwitches())\n  ...",
+      "range": {
+        "startLine": 766,
+        "startChar": 2,
+        "endLine": 772,
+        "endChar": 3
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79edc140_8bec104f",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 814,
+        "startChar": 4,
+        "endLine": 816,
+        "endChar": 5
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fa26d5_6820aecc",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "This is an improvement, but the code you have here is still roughly the same as 739-749. Is there a reason not to have last_opened_profiles always contains at least last_used_profile? That way you do need to duplicate parts. I\u0027m specifically asking for:\n\nif (last_opened_profiles.empty() \u0026\u0026 last_used_profile)\n  last_opened_profiles.push_back(last_used_profile);\n// loop through last_opened_profiles (probably in a separate function),\n// if nothing is launched, then ShowUserManagerOnStartup",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 77
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415d4d29_afd2cf8c",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:23:52Z",
+      "side": 1,
+      "message": "Document what the return value means.",
+      "range": {
+        "startLine": 147,
+        "startChar": 3,
+        "endLine": 156,
+        "endChar": 55
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
