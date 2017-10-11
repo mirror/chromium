@@ -23,7 +23,6 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.suggestions.ContentSuggestionPlaceholder;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SiteSection;
 import org.chromium.chrome.browser.suggestions.SuggestionsCarousel;
@@ -186,10 +185,6 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
 
             case ItemViewType.CAROUSEL:
                 return new SuggestionsCarousel.ViewHolder(mRecyclerView);
-
-            case ItemViewType.PLACEHOLDER_CARD:
-                return new ContentSuggestionPlaceholder.ViewHolder(
-                        mRecyclerView, mUiConfig, mContextMenuManager);
         }
 
         assert false : viewType;
@@ -263,11 +258,15 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     private void updateAllDismissedVisibility() {
         boolean areRemoteSuggestionsEnabled =
                 mUiDelegate.getSuggestionsSource().areRemoteSuggestionsEnabled();
+        boolean inStaleLoad =
+                mUiDelegate.getSuggestionsSource().getCategoryStatus(KnownCategories.ARTICLES)
+                == CategoryStatus.AVAILABLE_LOADING;
         boolean hasAllBeenDismissed = hasAllBeenDismissed();
 
-        mAllDismissed.setVisible(areRemoteSuggestionsEnabled && hasAllBeenDismissed);
-        mFooter.setVisible(!SuggestionsConfig.scrollToLoad() && areRemoteSuggestionsEnabled
-                && !hasAllBeenDismissed);
+        boolean visible = areRemoteSuggestionsEnabled && hasAllBeenDismissed && !inStaleLoad;
+
+        mAllDismissed.setVisible(visible);
+        mFooter.setVisible(!SuggestionsConfig.scrollToLoad() && visible);
 
         if (mBottomSpacer != null) {
             mBottomSpacer.setVisible(areRemoteSuggestionsEnabled || !hasAllBeenDismissed);
