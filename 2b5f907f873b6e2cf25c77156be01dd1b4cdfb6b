@@ -16,6 +16,24 @@
       "revId": "2b5f907f873b6e2cf25c77156be01dd1b4cdfb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90599a99_2e883eb9",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-11T09:07:54Z",
+      "side": 1,
+      "message": "Done.\nAlso changed the initialization order.",
+      "parentUuid": "4e30f027_1e42e5e9",
+      "revId": "2b5f907f873b6e2cf25c77156be01dd1b4cdfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
