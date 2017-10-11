@@ -140,6 +140,30 @@
       "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d1976a_be8129df",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-11T23:23:42Z",
+      "side": 1,
+      "message": "Good point Tim, although this seems like a good incremental step?\nNicolas, the bool is only set when script is involved within the task. No need to move this check down I think.",
+      "parentUuid": "8246184d_e359a1ab",
+      "range": {
+        "startLine": 298,
+        "startChar": 20,
+        "endLine": 298,
+        "endChar": 39
+      },
+      "revId": "0f3c4143039a312e54222b858297d7460a4360b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
