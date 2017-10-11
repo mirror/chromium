@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c51d72b_44b8ef87",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:25:13Z",
+      "side": 1,
+      "message": "nit: Document this one. CLC does so much stuff I think it\u0027s helpful to know what\u0027s being flushed.",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e11f90_bf41c8f0",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:25:13Z",
+      "side": 1,
+      "message": "Thanks for documenting coordinate system!",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db609079_05255c89",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:25:13Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think auto helps readability here, even if it reduces line wrapping. Use the full type name. ditto below",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cef3a3_20752f7d",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:25:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2f2915_62f3bc77",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:25:13Z",
+      "side": 1,
+      "message": "Hrm. -153 seems pretty fragile. Is there any other way to do this? Even number-of-items * item_height would be better.",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
