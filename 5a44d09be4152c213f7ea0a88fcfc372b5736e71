@@ -594,6 +594,24 @@
       "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1883c152_e513a500",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-11T17:13:50Z",
+      "side": 1,
+      "message": "as we talked offline, this is a theorical problem.",
+      "parentUuid": "7c9bc55a_db33982a",
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
