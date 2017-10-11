@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1a8e49f_99bc97d5",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T20:27:07Z",
+      "side": 1,
+      "message": "This callback might run after the test has finished.  Can you fix?",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed695e69_f65419a9",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T20:27:07Z",
+      "side": 1,
+      "message": "Lines 255-272 seem more complicated than they need to be. There is no need to use \"bind(this, dialog)\". |dialog| is already in scope.\n\nSee suggestion at https://pastebin.com/PJMPFGR2.",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4233185d_620b245c",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T20:27:07Z",
+      "side": 1,
+      "message": "Same here. Can you rewrite it similar to the previous suggestion (no need for intermediate promise variables, just chain everything together at once, and no need for calls to bind()).",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
