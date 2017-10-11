@@ -13,6 +13,7 @@
 #include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_infra_background_whitelist.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "base/trace_event/trace_log.h"
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -387,9 +388,8 @@ TEST(ProcessMemoryDumpTest, SharedMemoryOwnershipTest) {
 
   auto* client_dump2 = pmd->CreateAllocatorDump("discardable/segment2");
   auto shm_token2 = UnguessableToken::Create();
-  MemoryAllocatorDumpGuid shm_local_guid2 =
-      MemoryAllocatorDump::GetDumpIdFromName(
-          SharedMemoryTracker::GetDumpNameForTracing(shm_token2));
+  MemoryAllocatorDumpGuid shm_local_guid2 = MemoryAllocatorDump::GetDumpId(
+      pmd->guid_root(), SharedMemoryTracker::GetDumpNameForTracing(shm_token2));
   MemoryAllocatorDumpGuid shm_global_guid2 =
       SharedMemoryTracker::GetGlobalDumpIdForTracing(shm_token2);
   pmd->AddOverridableOwnershipEdge(shm_local_guid2, shm_global_guid2,
@@ -465,6 +465,19 @@ TEST(ProcessMemoryDumpTest, BackgroundModeTest) {
 
   // Check hex processing.
   ASSERT_TRUE(IsMemoryAllocatorDumpNameWhitelisted("Whitelisted/0xA1b2"));
+}
+
+TEST(ProcessMemoryDumpTest, GuidsTest) {
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::DETAILED};
+
+  ProcessMemoryDump pmd1(nullptr, dump_args);
+  MemoryAllocatorDump* mad1 = pmd1.CreateAllocatorDump("foo");
+
+  // MAD's from different PMDs get different GUIDs:
+  ProcessMemoryDump pmd2(nullptr, dump_args);
+  MemoryAllocatorDump* mad2 = pmd2.CreateAllocatorDump("foo");
+
+  ASSERT_NE(mad1->guid(), mad2->guid());
 }
 
 #if defined(COUNT_RESIDENT_BYTES_SUPPORTED)
