@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "6d313ac3_66c27b25",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T07:22:27Z",
+      "side": 1,
+      "message": "Doesn\u0027t the code explicitly check that the passed argument is not null before calling this conversion helper?",
+      "parentUuid": "44feb703_41a8e2a1",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5065335e_62b3db40",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 8
