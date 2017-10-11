@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "257cd371_910ccb1c",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-11T06:56:11Z",
+      "side": 1,
+      "message": "Yeah, I see your point.\nThinking more about this function, I am pretty confident that there\u0027s no reason to call this function with an empty string, so DCHECK() is appropriate.\nHowever I\u0027ll put it in the top-level public functions that call this one.",
+      "parentUuid": "2c16fb5c_2d0418b6",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c68c8f0_c4188a8b",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 13
@@ -176,6 +194,24 @@
       "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5211a82_efb878f2",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-11T06:56:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0229063b_1f552ed5",
+      "revId": "5c70868d867ef75a44ad47ad19cf85ce86082273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
