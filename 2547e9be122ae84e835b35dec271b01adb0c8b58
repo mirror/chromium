@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9cc75d0e_6714db3d",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-11T23:57:44Z",
+      "side": 1,
+      "message": "Sorry, I thought you were talking about OS_WIN / OS_LINUX flags.\n\nI think the buildflag_header is more useful if we would like to control the behavior with GN arguments. But we do not have plan to do so. Using a define is sufficient for now.\n\nIf some deps are missing, we will also have a build error by using current implementation. Isn\u0027t it?",
+      "parentUuid": "1ac152c7_0df17976",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "2547e9be122ae84e835b35dec271b01adb0c8b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8b0770_3a3adf0d",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 19
