@@ -34,6 +34,24 @@
       "revId": "df3e28ead686216948c348580ed886925e86b53f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11692fb7_6e4e5463",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T09:29:55Z",
+      "side": 1,
+      "message": "Yes, please since editing/ simply applies early-return style everywhere to\navoid consecutive lines having only close brace.",
+      "parentUuid": "ed8e369e_49b31597",
+      "revId": "df3e28ead686216948c348580ed886925e86b53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
