@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac603dd_9ccb3d81",
+        "filename": "services/metrics/public/cpp/ukm_source_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-11T18:33:27Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to make this an extern and allocate storage for this in the .cc, \u003d 0; inline in the header should work: https://cs.chromium.org/chromium/src/extensions/common/constants.h?type\u003dcs\u0026q\u003dextern+const\u0026sq\u003dpackage:chromium\u0026l\u003d196",
+      "revId": "7d0d611daf3d17277cca8d29f64a05d0ee896763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
