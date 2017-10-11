@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a5b98b4_27f8b162",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:13:54Z",
+      "side": 1,
+      "message": "q: I wonder if retaining the caret affinity is correct here? Perhaps if the bounds are at a Bidi level change the affinity should be changed? Even more pertinently, RenderText::SelectRange sets the affinity based on the selection direction and emptyness. Maybe just do SelectRange(Range(range.end(), range.start()) or similar?",
+      "revId": "8fae5a2ff35b69b935f95fa7b8f172eb50d5183f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
