@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb7b015_a112b953",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "This feels like it should live in ash/wm or ash/login. ash/system is specifically for the system tray.\n\ntools/git/move_source_file.py might help",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459fc536_76d1b648",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: g_factory_callback_for_testing",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23870892_9d5d835f",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: document that this is temporary",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab327c83_38ca9629",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "I wish there was a shorter name for this, but I can\u0027t think of one right now. :-(",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de71826_1d13fd10",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_state.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "How does this relate to mojom::TrayActionState, specifically the kLaunching state? I\u0027m curious why we\u0027re maintaining two separate state machines here. Should they be combined? If not, document how the two states relate to each other.",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3242b505_c6cd3e87",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "optional: I\u0027m OK with inlining the name here.",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379c1a8b_f7e4a2e3",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: document return value",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b32aac6_1667f569",
+        "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "optional: Do we care if the returned aura::Window is const?",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7589e61f_696c84d8",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: action",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7e4eea_edf9a4dd",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: WhileHiding",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9414fca_22c3d11d",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T01:08:59Z",
+      "side": 1,
+      "message": "nit: document what this is testing, either here or in the code below",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
