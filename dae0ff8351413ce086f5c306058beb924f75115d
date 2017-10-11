@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "e536fe38_49abee20",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-11T20:59:32Z",
+      "side": 1,
+      "message": "Delegate is fine with me.",
+      "parentUuid": "1dc4cc37_215d2b29",
+      "revId": "dae0ff8351413ce086f5c306058beb924f75115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab442e18_1e7e3836",
         "filename": "device/u2f/u2f_discovery.h",
         "patchSetId": 7
