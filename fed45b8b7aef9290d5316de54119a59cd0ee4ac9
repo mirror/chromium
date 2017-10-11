@@ -46,6 +46,30 @@
       "revId": "fed45b8b7aef9290d5316de54119a59cd0ee4ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580a98f0_26adfcdf",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-11T16:50:26Z",
+      "side": 1,
+      "message": "I agree with fernando.  I want to force callers to make a choice. Otherwise we might miss opportunities to use Opaque, which results in some optimizations.",
+      "parentUuid": "31897722_deaf2ceb",
+      "range": {
+        "startLine": 37,
+        "startChar": 57,
+        "endLine": 37,
+        "endChar": 68
+      },
+      "revId": "fed45b8b7aef9290d5316de54119a59cd0ee4ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

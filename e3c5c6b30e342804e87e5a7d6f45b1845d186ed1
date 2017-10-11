@@ -22,6 +22,30 @@
       "revId": "e3c5c6b30e342804e87e5a7d6f45b1845d186ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15595e73_a37511bd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedColorParams.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-11T16:50:26Z",
+      "side": 1,
+      "message": "I did not write this, but I agree with the design.  It makes the serialization more extensible IMHO. Things that are bool today might be multi-value enum tomorrow (I admit that is unlikely for origin-clean, but it is likely for the others).",
+      "parentUuid": "9c715b3d_8d108baa",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "e3c5c6b30e342804e87e5a7d6f45b1845d186ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
