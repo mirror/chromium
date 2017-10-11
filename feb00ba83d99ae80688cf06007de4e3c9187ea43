@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc08a9b_db6bd074",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "Why is this being added to the InputRouterImpl? This class doesn\u0027t use Chrome IPC anymore for InputHostMsgs.",
+      "range": {
+        "startLine": 271,
+        "startChar": 53,
+        "endLine": 271,
+        "endChar": 69
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eae413f_7c69642d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "Looking at the GesturePinchUpdate there is a zoom disabled value. I\u0027m not sure what sets it but it seems to dicard the pinch event if it is set. Should we handle that?",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dadf7d_2a050497",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "This kind of looks dubious... Can we make it look like line 252 where value() is on the RHS.",
+      "range": {
+        "startLine": 259,
+        "startChar": 26,
+        "endLine": 259,
+        "endChar": 31
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638d9050_0b4fa015",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "Should a GestureScrollUpdate be synthesized if there are pending accumulated scroll deltas? So as not to delay the event until the next input event that may or may not come in?",
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51365c9_00915a48",
+        "filename": "content/browser/renderer_host/input/touch_action_filter_unittest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "Should this test that when the touch action is set a gesture event is sent for the accumulated delta?",
+      "range": {
+        "startLine": 925,
+        "startChar": 28,
+        "endLine": 925,
+        "endChar": 0
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011983c1_bd60c274",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 2385,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T21:04:16Z",
+      "side": 1,
+      "message": "Please don\u0027t mix and match chrome IPC and mojo IPC. It looks like you want to define a new mojo message.",
+      "range": {
+        "startLine": 2385,
+        "startChar": 11,
+        "endLine": 2385,
+        "endChar": 38
+      },
+      "revId": "feb00ba83d99ae80688cf06007de4e3c9187ea43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
