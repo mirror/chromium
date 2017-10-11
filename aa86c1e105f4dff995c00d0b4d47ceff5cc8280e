@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "074e55c9_d4ccd575",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-11T21:26:33Z",
+      "side": 1,
+      "message": "s/And/Or/\n\nBetter yet, how about SafeToDestroy()?",
+      "range": {
+        "startLine": 115,
+        "startChar": 46,
+        "endLine": 115,
+        "endChar": 49
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a68e0bf_9b729a04",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-11T21:26:33Z",
+      "side": 1,
+      "message": "This could be more clearly implemented as:\n\nreturn HasNoTransactions() \u0026\u0026 !writers;",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 8
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67db3ea3_7b11f81a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-11T21:26:33Z",
+      "side": 1,
+      "message": "entry-\u003ewriters \u003d std::make_unique\u003cWriters\u003e(this, entry);",
+      "range": {
+        "startLine": 1096,
+        "startChar": 4,
+        "endLine": 1096,
+        "endChar": 51
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31008d3c_88a14278",
         "filename": "net/http/http_cache.h",
         "patchSetId": 57
@@ -69,6 +138,29 @@
       "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2e0405_edd9ee58",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-11T21:26:33Z",
+      "side": 1,
+      "message": "Seems like we can get rid of this function now that all it does is reset the network transaction, which the caller could just as easily do.",
+      "range": {
+        "startLine": 621,
+        "startChar": 25,
+        "endLine": 621,
+        "endChar": 56
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
