@@ -16,6 +16,24 @@
       "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb14610_210dbc1c",
+        "filename": "content/browser/gpu/browser_gpu_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-11T22:53:15Z",
+      "side": 1,
+      "message": "Want to me merge this CL into https://crrev.com/c/703274 to give the full context?\n\nBrowserGpuClient is basically half of BrowserGpuChannelHostFactory. It\u0027s the IO thread part of the browser/ui::Compositor connection to the GPU. The other half is ui::Gpu, which is a GpuChannelHostFactory and GpuEstablishHostFactory, and lives on the UI thread. ClientLayerTreeFrameSink/VizTransportFactory interact with ui::Gpu, which interacts with BrowserGpuClient via ui::mojom::GpuPtr, which interacts with the GPU process.\n\nI\u0027m not sure it\u0027s possible to merge the two things, since they\u0027re two different implementations of the same thing, one the old Chrome way and one the new Mojo mus-ws/viz way. I can look at BrowserGpuChannelHostFactory code closer tomorrow though.",
+      "parentUuid": "b521922e_ae7df216",
+      "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
