@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58f49c6e_5b50ec90",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T17:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739813ee_775f0ad5",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 15
+      },
+      "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "911aecea_04bfd63e",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f9b74503_b3c76b63",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T17:42:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911aecea_04bfd63e",
+      "range": {
+        "startLine": 212,
+        "startChar": 9,
+        "endLine": 212,
+        "endChar": 32
+      },
+      "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa970565_9e4589f8",
         "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d83215_69a49d80",
+        "filename": "components/offline_pages/core/offline_page_storage_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T17:42:15Z",
+      "side": 1,
+      "message": "I\u0027d like to leave this as is.  The string object has to be constructed anyway, either here or in the \"+\" statement.  If we have a string, we don\u0027t have to do an implicit conversion in the \u0027+\u0027 statement below, which leaves the intent closer to the actual code.",
+      "parentUuid": "fa970565_9e4589f8",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 13
+      },
+      "revId": "3f5c0517dfbd23a090bcd2e9ef4ab36310084180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
