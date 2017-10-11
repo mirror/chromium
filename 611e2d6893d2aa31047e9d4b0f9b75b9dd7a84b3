@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763947dc_2758aebf",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 1,
+      "message": "This should eventually move into its own file.",
+      "revId": "611e2d6893d2aa31047e9d4b0f9b75b9dd7a84b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5827439f_c4b3b1c5",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 1,
+      "message": "This line can be reverted.",
+      "revId": "611e2d6893d2aa31047e9d4b0f9b75b9dd7a84b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fd3c1d_091d52ae",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 1,
+      "message": "Bad merge?",
+      "revId": "611e2d6893d2aa31047e9d4b0f9b75b9dd7a84b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647310ee_a6520fd6",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 1,
+      "message": "Is the plan to move this into the LocationBarView eventually?",
+      "revId": "611e2d6893d2aa31047e9d4b0f9b75b9dd7a84b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

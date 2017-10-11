@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e459735_560b213d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 0,
+      "message": "Bad merge?",
+      "revId": "6b33c9b366c508efa14614a1c70290c41a4df507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

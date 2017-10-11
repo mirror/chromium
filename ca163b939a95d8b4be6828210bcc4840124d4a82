@@ -34,6 +34,24 @@
       "revId": "ca163b939a95d8b4be6828210bcc4840124d4a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c350069_ad87d3b7",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-11T12:13:49Z",
+      "side": 1,
+      "message": "Is there a reason why this is implemented as a layoutSubviews override instead of an autoresizing mask or constraints?  It\u0027s an unusual mechanism, so I\u0027d like to make sure I understand why it was chosen.",
+      "parentUuid": "207ef64a_f596cbfc",
+      "revId": "ca163b939a95d8b4be6828210bcc4840124d4a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
