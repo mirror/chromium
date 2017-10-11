@@ -10,6 +10,7 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -19,6 +20,7 @@
 #include "chrome/browser/offline_pages/offline_page_tab_helper.h"
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "components/previews/core/previews_decider.h"
@@ -185,9 +187,10 @@ RequestResultToAggregatedRequestResult(
       case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
         return OfflinePageRequestJob::AggregatedRequestResult::
             PAGE_NOT_FOUND_ON_CONNECTED_NETWORK;
-      default:
-        NOTREACHED();
+      case NetworkState::CONNECTED_NETWORK:
+        break;
     }
+    NOTREACHED();
   }
 
   if (request_result == RequestResult::REDIRECTED) {
@@ -204,9 +207,10 @@ RequestResultToAggregatedRequestResult(
       case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
         return OfflinePageRequestJob::AggregatedRequestResult::
             REDIRECTED_ON_CONNECTED_NETWORK;
-      default:
-        NOTREACHED();
+      case NetworkState::CONNECTED_NETWORK:
+        break;
     }
+    NOTREACHED();
   }
 
   DCHECK_EQ(RequestResult::OFFLINE_PAGE_SERVED, request_result);
@@ -224,18 +228,45 @@ RequestResultToAggregatedRequestResult(
     case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
       return OfflinePageRequestJob::AggregatedRequestResult::
           SHOW_OFFLINE_ON_CONNECTED_NETWORK;
-    default:
-      NOTREACHED();
-   }
+    case NetworkState::CONNECTED_NETWORK:
+      break;
+  }
+  NOTREACHED();
 
-   return OfflinePageRequestJob::AggregatedRequestResult::
-       AGGREGATED_REQUEST_RESULT_MAX;
+  return OfflinePageRequestJob::AggregatedRequestResult::
+      AGGREGATED_REQUEST_RESULT_MAX;
 }
 
-void ReportRequestResult(
-    RequestResult request_result, NetworkState network_state) {
+void ReportRequestResult(RequestResult request_result,
+                         NetworkState network_state) {
   OfflinePageRequestJob::ReportAggregatedRequestResult(
       RequestResultToAggregatedRequestResult(request_result, network_state));
+}
+
+void ReportOfflinePageSize(NetworkState network_state,
+                           const OfflinePageItem* offline_page) {
+  DCHECK(offline_page);
+  if (offline_page->client_id.name_space.empty())
+    return;
+
+  // The two histograms report values between 1KiB and 100MiB.
+  switch (network_state) {
+    case NetworkState::DISCONNECTED_NETWORK:        // Fall-through
+    case NetworkState::PROHIBITIVELY_SLOW_NETWORK:  // Fall-through
+    case NetworkState::FLAKY_NETWORK:
+      base::UmaHistogramCounts100000("OfflinePages.PageSizeOnAccess.Offline." +
+                                         offline_page->client_id.name_space,
+                                     offline_page->file_size / 1024);
+      return;
+    case NetworkState::FORCE_OFFLINE_ON_CONNECTED_NETWORK:
+      base::UmaHistogramCounts100000("OfflinePages.PageSizeOnAccess.Online." +
+                                         offline_page->client_id.name_space,
+                                     offline_page->file_size / 1024);
+      return;
+    case NetworkState::CONNECTED_NETWORK:
+      break;
+  }
+  NOTREACHED();
 }
 
 OfflinePageModel* GetOfflinePageModel(
@@ -376,6 +407,8 @@ void SucceededToFindOfflinePage(
       &offline_file_path);
 
   ReportRequestResult(request_result, network_state);
+  if (request_result == RequestResult::OFFLINE_PAGE_SERVED)
+    ReportOfflinePageSize(network_state, offline_page);
 
   // NotifyOfflineFilePathOnUI should always be called regardless the failure
   // result and empty file path such that OfflinePageRequestJob will be notified
