@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2ea061_eefbb530",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-11T17:58:25Z",
+      "side": 1,
+      "message": "Given the test failures, looks like you need to remove yourself as an observer in your destructor.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "1898a6b0231de5543eecc031c88d1e705cb799de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
