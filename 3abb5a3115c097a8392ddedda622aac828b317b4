@@ -16,6 +16,24 @@
       "revId": "3abb5a3115c097a8392ddedda622aac828b317b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9982bd5a_b3822e9c",
+        "filename": "services/service_manager/public/cpp/mojo_init.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-11T00:00:29Z",
+      "side": 1,
+      "message": "I see. I agree about having clear ownership for initializing Mojo. Unfortunately, we don\u0027t have that right now. We can call mojo::edk::Init(config) anywhere multiple times in a process similar to calling this InitializeMojo() function.\n\nMy thinking was that this patch makes things slightly better by preventing overriding the config and by fixing the leakage of mojo::edk::Core. Then, we can gradually fix uses of InitializeMojo() later.\n\nThanks for the comment.",
+      "parentUuid": "0264998c_2d5eaec4",
+      "revId": "3abb5a3115c097a8392ddedda622aac828b317b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
