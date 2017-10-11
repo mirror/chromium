@@ -4,12 +4,12 @@
 
 #include "modules/indexeddb/IDBValueWrapping.h"
 
+#include <memory>
 #include <utility>
 
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/serialization/SerializationTag.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
-#include "core/fileapi/Blob.h"
 #include "modules/indexeddb/IDBRequest.h"
 #include "modules/indexeddb/IDBValue.h"
 #include "platform/blob/BlobData.h"
@@ -110,27 +110,27 @@ bool IDBValueWrapper::WrapIfBiggerThan(unsigned max_bytes) {
 #endif  // DCHECK_IS_ON()
 
   serialized_value_->ToWireBytes(wire_bytes_);
-  if (wire_bytes_.size() <= max_bytes)
+  unsigned wire_bytes_size = wire_bytes_.size();
+  if (wire_bytes_size <= max_bytes)
     return false;
 
   // TODO(pwnall): The MIME type should probably be an atomic string.
   String mime_type(kWrapMimeType);
   // TODO(crbug.com/721516): Use WebBlobRegistry::CreateBuilder instead of
   //                         Blob::Create to avoid a buffer copy.
-  Blob* wrapper =
-      Blob::Create(reinterpret_cast<unsigned char*>(wire_bytes_.data()),
-                   wire_bytes_.size(), mime_type);
-
-  wrapper_handle_ = wrapper->GetBlobDataHandle();
+  std::unique_ptr<BlobData> wrapper_blob_data = BlobData::Create();
+  wrapper_blob_data->SetContentType(String(kWrapMimeType));
+  wrapper_blob_data->AppendBytes(wire_bytes_.data(), wire_bytes_size);
+  wrapper_handle_ =
+      BlobDataHandle::Create(std::move(wrapper_blob_data), wire_bytes_size);
   blob_info_.emplace_back(wrapper_handle_->Uuid(), wrapper_handle_->GetType(),
-                          wrapper->size());
+                          wire_bytes_size);
 
   wire_bytes_.clear();
-
   wire_bytes_.push_back(kVersionTag);
   wire_bytes_.push_back(kRequiresProcessingSSVPseudoVersion);
   wire_bytes_.push_back(kBlobWrappedValue);
-  IDBValueWrapper::WriteVarint(wrapper->size(), wire_bytes_);
+  IDBValueWrapper::WriteVarint(wrapper_handle_->size(), wire_bytes_);
   IDBValueWrapper::WriteVarint(serialized_value_->BlobDataHandles().size(),
                                wire_bytes_);
   return true;
