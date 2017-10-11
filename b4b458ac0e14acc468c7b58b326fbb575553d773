@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f57189a0_2b00588d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T10:03:01Z",
+      "side": 1,
+      "message": "That was my idea. ossu@ and I reconsidered it now, and it shouldn\u0027t really be necessary. Should anyone wish to force it for e.g. experimentation they can still use the command line flag. Removed.",
+      "parentUuid": "3f505698_d87fa17b",
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7e791a_e4991375",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 4
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "c8c655d1_b15fa356",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T10:03:01Z",
+      "side": 1,
+      "message": "I\u0027ve removed the feature from the flags.",
+      "parentUuid": "199b35a9_0fd5015e",
+      "range": {
+        "startLine": 2279,
+        "startChar": 25,
+        "endLine": 2279,
+        "endChar": 30
+      },
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bdef6ff_0c6742a0",
         "filename": "media/base/media_switches.cc",
         "patchSetId": 4
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "044703db_82e93530",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T10:03:01Z",
+      "side": 1,
+      "message": "It won\u0027t affect that at all. The server config will control this and set the feature to enabled for any group(s) we wish.",
+      "parentUuid": "8bdef6ff_0c6742a0",
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fb56a9f_035e6b0d",
         "filename": "media/base/media_switches.h",
         "patchSetId": 4
@@ -97,6 +157,24 @@
       "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540a175e_d19257a5",
+        "filename": "media/base/media_switches.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T10:03:01Z",
+      "side": 1,
+      "message": "It\u0027s for the existing\nstd::string GetEffectiveAutoplayPolicy()",
+      "parentUuid": "6fb56a9f_035e6b0d",
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
