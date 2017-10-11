@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2afca30c_adb29535",
+        "filename": "extensions/shell/app/shell_help.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-11T23:04:48Z",
+      "side": 1,
+      "message": "It\u0027s not by usage amount, but by what the style guide says. constexpr is preferred over const for constants like these: \n\n- http://chromium-cpp.appspot.com/#core-whitelist\n- https://google.github.io/styleguide/cppguide.html#Use_of_constexpr",
+      "parentUuid": "008e643a_786624fd",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "40b661f195c2a5f72796f9fd3778e2b3f643ca0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "146028f7_b8f0d247",
         "filename": "extensions/shell/app/shell_help.cc",
         "patchSetId": 2
