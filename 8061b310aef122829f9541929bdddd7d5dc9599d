@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66c6fa0_9bb91da1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextControlSingleLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-11T16:41:35Z",
+      "side": 1,
+      "message": "I\u0027m not certain about this change.. It seems you are changing the semantics of hit testing.",
+      "revId": "8061b310aef122829f9541929bdddd7d5dc9599d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
