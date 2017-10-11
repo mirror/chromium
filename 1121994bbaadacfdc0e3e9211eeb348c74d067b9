@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591f8e52_e5d3606d",
+        "filename": "components/cronet/ios/test/cronet_perf_test_base.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-11T19:44:46Z",
+      "side": 1,
+      "message": "CronetPerfTestBase is almost identical to CronetTestBase. Can we eliminate the code duplication?",
+      "revId": "1121994bbaadacfdc0e3e9211eeb348c74d067b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
