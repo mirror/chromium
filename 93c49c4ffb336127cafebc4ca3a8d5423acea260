@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ed9eb28_e2370571",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-11T01:42:54Z",
+      "side": 1,
+      "message": "Ack, but leaving as is for this CL",
+      "parentUuid": "a4145e6f_53a7d9c0",
+      "range": {
+        "startLine": 41,
+        "startChar": 20,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec5475c8_4512d13f",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5e9dd57e_8a85e1a4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-11T01:42:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec5475c8_4512d13f",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081582e4_7c641fae",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cf5b5a_a5b157a9",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-11T01:42:54Z",
+      "side": 1,
+      "message": "Actually, this seems required. win_clang fails w/o this.",
+      "parentUuid": "081582e4_7c641fae",
+      "revId": "93c49c4ffb336127cafebc4ca3a8d5423acea260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
