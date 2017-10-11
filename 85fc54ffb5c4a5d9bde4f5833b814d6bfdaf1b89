@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa1184f_112726c3",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T20:33:20Z",
+      "side": 1,
+      "message": "nit: Please document that the enum values... which in this case are the array indices, I suppose... are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 102,
+        "startChar": 61,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "85fc54ffb5c4a5d9bde4f5833b814d6bfdaf1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88dd2d7_c202b076",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T20:33:20Z",
+      "side": 1,
+      "message": "nit: enums.xml",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "85fc54ffb5c4a5d9bde4f5833b814d6bfdaf1b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
