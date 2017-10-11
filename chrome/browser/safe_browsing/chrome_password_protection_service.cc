@@ -47,6 +47,8 @@
 using content::BrowserThread;
 using sync_pb::UserEventSpecifics;
 using GaiaPasswordReuse = UserEventSpecifics::GaiaPasswordReuse;
+using PasswordReuseDialogInteraction =
+    GaiaPasswordReuse::PasswordReuseDialogInteraction;
 using PasswordReuseLookup = GaiaPasswordReuse::PasswordReuseLookup;
 using SafeBrowsingStatus =
     GaiaPasswordReuse::PasswordReuseDetected::SafeBrowsingStatus;
@@ -100,6 +102,11 @@ void OpenUrlInNewTab(const GURL& url, content::WebContents* web_contents) {
                                 ui::PAGE_TRANSITION_LINK,
                                 /*is_renderer_initiated=*/false);
   web_contents->OpenURL(params);
+}
+
+int64_t GetOnlyOrAnyUnhandledNavigationId(
+    const std::map<Origin, int64_t>& origin_navid_map) {
+  return origin_navid_map.empty() ? 0 : origin_navid_map.begin()->second;
 }
 
 }  // namespace
@@ -376,6 +383,31 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
   user_event_service->RecordUserEvent(std::move(specifics));
 }
 
+void ChromePasswordProtectionService::LogPasswordReuseDialogInteraction(
+    int64_t navigation_id,
+    PasswordReuseDialogInteraction::InteractionResult interaction_result) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+    return;
+
+  syncer::UserEventService* user_event_service =
+      browser_sync::UserEventServiceFactory::GetForProfile(profile_);
+  if (!user_event_service)
+    return;
+
+  std::unique_ptr<UserEventSpecifics> specifics =
+      GetUserEventSpecificsWithNavigationId(navigation_id);
+  if (!specifics)
+    return;
+
+  PasswordReuseDialogInteraction* const dialog_interaction =
+      specifics->mutable_gaia_password_reuse_event()
+          ->mutable_dialog_interaction();
+  dialog_interaction->set_interaction_result(interaction_result);
+  user_event_service->RecordUserEvent(std::move(specifics));
+}
+
 PasswordProtectionService::SyncAccountType
 ChromePasswordProtectionService::GetSyncAccountType() {
   const AccountInfo account_info = GetAccountInfo();
@@ -392,9 +424,10 @@ ChromePasswordProtectionService::GetSyncAccountType() {
 }
 
 std::unique_ptr<UserEventSpecifics>
-ChromePasswordProtectionService::GetUserEventSpecifics(
-    content::WebContents* web_contents) {
-  int64_t navigation_id = GetLastCommittedNavigationID(web_contents);
+ChromePasswordProtectionService::GetUserEventSpecificsWithNavigationId(
+    int64_t navigation_id) {
+  DCHECK_GT(navigation_id, 0);
+
   if (navigation_id <= 0)
     return nullptr;
 
@@ -403,6 +436,13 @@ ChromePasswordProtectionService::GetUserEventSpecifics(
       GetMicrosecondsSinceWindowsEpoch(base::Time::Now()));
   specifics->set_navigation_id(navigation_id);
   return specifics;
+}
+
+std::unique_ptr<UserEventSpecifics>
+ChromePasswordProtectionService::GetUserEventSpecifics(
+    content::WebContents* web_contents) {
+  return GetUserEventSpecificsWithNavigationId(
+      GetLastCommittedNavigationID(web_contents));
 }
 
 void ChromePasswordProtectionService::LogPasswordReuseLookupResult(
@@ -604,13 +644,26 @@ GURL ChromePasswordProtectionService::GetChangePasswordURL() {
 void ChromePasswordProtectionService::HandleUserActionOnModalWarning(
     content::WebContents* web_contents,
     PasswordProtectionService::WarningAction action) {
-  DCHECK(action == PasswordProtectionService::CHANGE_PASSWORD ||
-         action == PasswordProtectionService::IGNORE_WARNING ||
-         action == PasswordProtectionService::CLOSE);
+  DCHECK(!unhandled_password_reuses_.empty());
+  int64_t navigation_id =
+      unhandled_password_reuses_[Origin(web_contents->GetLastCommittedURL())];
   if (action == PasswordProtectionService::CHANGE_PASSWORD) {
+    LogPasswordReuseDialogInteraction(
+        navigation_id, PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+  } else if (action == PasswordProtectionService::IGNORE_WARNING) {
+    // No need to change state.
+    LogPasswordReuseDialogInteraction(
+        navigation_id, PasswordReuseDialogInteraction::WARNING_ACTION_IGNORED);
+  } else if (action == PasswordProtectionService::CLOSE) {
+    // No need to change state.
+    LogPasswordReuseDialogInteraction(
+        navigation_id, PasswordReuseDialogInteraction::WARNING_UI_IGNORED);
+  } else {
+    NOTREACHED();
   }
+
   RemoveWarningRequestsByWebContents(web_contents);
   MaybeFinishCollectingThreatDetails(
       web_contents,
@@ -620,17 +673,26 @@ void ChromePasswordProtectionService::HandleUserActionOnModalWarning(
 void ChromePasswordProtectionService::HandleUserActionOnPageInfo(
     content::WebContents* web_contents,
     PasswordProtectionService::WarningAction action) {
+  GURL url = web_contents->GetLastCommittedURL();
+  const Origin origin(url);
+
   if (action == PasswordProtectionService::CHANGE_PASSWORD) {
+    LogPasswordReuseDialogInteraction(
+        unhandled_password_reuses_[origin],
+        PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
+
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
     return;
   }
 
   if (action == PasswordProtectionService::MARK_AS_LEGITIMATE) {
+    // TODO(vakh): There's no good enum to report this dialog interaction.
+    // This needs to be investigated.
+
     UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
-    GURL url = web_contents->GetLastCommittedURL();
     // Removes the corresponding entry in |unhandled_password_reuses_|.
-    unhandled_password_reuses_.erase(url::Origin(url));
+    unhandled_password_reuses_.erase(origin);
     for (auto& observer : observer_list_)
       observer.OnMarkingSiteAsLegitimate(url);
     return;
@@ -643,6 +705,15 @@ void ChromePasswordProtectionService::HandleUserActionOnSettings(
     content::WebContents* web_contents,
     PasswordProtectionService::WarningAction action) {
   DCHECK_EQ(PasswordProtectionService::CHANGE_PASSWORD, action);
+
+  // Gets the first navigation_id from unhandled_password_reuses_.
+  // If there's only one unhandled reuse, getting the first is correct.
+  // If there are more than one, we have no way to figure out which
+  // event the user is responding to, so just pick the first one.
+  LogPasswordReuseDialogInteraction(
+      GetOnlyOrAnyUnhandledNavigationId(unhandled_password_reuses_),
+      PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
+
   // Opens https://account.google.com for user to change password.
   OpenUrlInNewTab(GetChangePasswordURL(), web_contents);
   for (auto& observer : observer_list_)
