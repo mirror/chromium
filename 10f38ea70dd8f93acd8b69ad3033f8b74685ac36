@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caedba8e_368fb64d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T04:53:30Z",
+      "side": 1,
+      "message": "It is better to have SetShouldInalidateIfNeedsInternal() to avoid\nrecursive call.",
+      "revId": "10f38ea70dd8f93acd8b69ad3033f8b74685ac36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
