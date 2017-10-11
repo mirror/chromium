@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "93444a37_cae0a557",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T03:44:59Z",
+      "side": 1,
+      "message": "Right, but why send the page info at all in this case then? Also, if 0 is an invalid UKM source ID and we do still send the page info, then doesn\u0027t the emitter code need to handle it?",
+      "parentUuid": "62e727cf_93b96469",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5184a8_590ddc39",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
         "patchSetId": 14
