@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ebf8996_59175fa8",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:59:37Z",
+      "side": 1,
+      "message": "Does software mirroring work for \u003e2 case now? If not, please return MULTI_EXTENDED for \u003e2 case, at least for now because tablet mode will try to switch to mirrror mode. Remove/update when you fixed mirroring for 2\u003e case.",
+      "revId": "35f51cd6ec32c630573f04b55ee27144dc1c38da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
