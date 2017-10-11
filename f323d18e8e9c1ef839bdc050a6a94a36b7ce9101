@@ -34,6 +34,24 @@
       "revId": "f323d18e8e9c1ef839bdc050a6a94a36b7ce9101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24d134e_3b4a8616",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:28:27Z",
+      "side": 1,
+      "message": "I certainly believe that this _could_ happen, but we should try to _not_ make it happen instead of working around. WDYT?",
+      "parentUuid": "f40c0c12_270f622a",
+      "revId": "f323d18e8e9c1ef839bdc050a6a94a36b7ce9101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
