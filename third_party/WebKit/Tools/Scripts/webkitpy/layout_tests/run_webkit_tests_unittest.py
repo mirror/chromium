@@ -1157,7 +1157,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             'failures/unexpected/missing_render_tree_dump',
             expected_extensions=['.txt'])
 
-    def test_reset_results_add_platform_exceptions(self):
+    def test_reset_results_with_copy_baselines(self):
         # Test that we update the baselines in the version-specific directories
         # if the new baseline is different from the fallback baseline.
         host = MockHost()
@@ -1170,7 +1170,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             'text-image-checksum_fail-txt')
         details, log_stream, _ = logging_run(
             [
-                '--reset-results', '--add-platform-exceptions',
+                '--reset-results', '--copy-baselines',
                 'failures/unexpected/text-image-checksum.html'
             ],
             tests_included=True, host=host)
@@ -1224,7 +1224,8 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             'text-image-checksum_fail-txt')
         details, log_stream, _ = logging_run(
             ['--additional-driver-flag=--flag',
-             '--new-flag-specific-baseline',
+             '--copy-baselines',
+             '--reset-results',
              'failures/unexpected/text-image-checksum.html'],
             tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
@@ -1256,7 +1257,8 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
 
         details, log_stream, _ = logging_run(
             ['--additional-driver-flag=--flag',
-             '--new-flag-specific-baseline',
+             '--copy-baselines',
+             '--reset-results',
              'failures/unexpected/text-image-checksum.html'],
             tests_included=True, host=host)
         self.assertEqual(details.exit_code, 0)

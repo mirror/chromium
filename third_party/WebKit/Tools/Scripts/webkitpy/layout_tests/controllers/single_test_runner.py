@@ -192,10 +192,12 @@ class SingleTestRunner(object):
         port = self._port
         fs = self._filesystem
 
-        if self._options.add_platform_exceptions:
-            output_dir = fs.join(port.baseline_version_dir(), fs.dirname(self._test_name))
-        elif self._options.new_flag_specific_baseline:
-            output_dir = fs.join(port.baseline_flag_specific_dir(), fs.dirname(self._test_name))
+        if self._options.copy_baselines:
+            flag_specific_dir = port.baseline_flag_specific_dir()
+            if flag_specific_dir:
+                output_dir = fs.join(flag_specific_dir, fs.dirname(self._test_name))
+            else:
+                output_dir = fs.join(port.baseline_version_dir(), fs.dirname(self._test_name))
         else:
             output_dir = fs.dirname(port.expected_filename(self._test_name, extension))
 
@@ -212,12 +214,20 @@ class SingleTestRunner(object):
 
         current_expected_path = port.expected_filename(self._test_name, extension)
         if fs.exists(current_expected_path) and fs.sha1(current_expected_path) == hashlib.sha1(data).hexdigest():
-            _log.info('Not writing new expected result "%s" because it is the same as the current expected result',
-                      port.relative_test_filename(output_path))
+            if self._options.reset_results:
+                _log.info('Not writing new expected result "%s" because it is the same as the current expected result',
+                          port.relative_test_filename(output_path))
+            else:
+                _log.info('Not copying baseline to "%s" because the actual result is the same as the current expected result',
+                          port.relative_test_filename(output_path))
             return
 
-        _log.info('Writing new expected result "%s"', port.relative_test_filename(output_path))
-        port.update_baseline(output_path, data)
+        if self._options.reset_results:
+            _log.info('Writing new expected result "%s"', port.relative_test_filename(output_path))
+            port.update_baseline(output_path, data)
+        else:
+            _log.info('Copying baseline to "%s"', port.relative_test_filename(output_path))
+            fs.copyfile(current_expected_path, output_path)
 
     def _handle_error(self, driver_output, reference_filename=None):
         """Returns test failures if some unusual errors happen in driver's run.
