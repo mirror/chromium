@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9a1064_339a702b",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-11T00:32:20Z",
+      "side": 1,
+      "message": "It seems like if direction_aware is true, then you must have a logical_side and a shorthand_for_physical_side (except for  CSS logical properties, why?). Instead of having both flags, can the presence of logical_side indicate that a property is direction_aware?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef525f11_86ded957",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-11T00:32:20Z",
+      "side": 1,
+      "message": "I guess the default value is \"\" if not specified?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f85d718_65f05c3e",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-11T00:32:20Z",
+      "side": 1,
+      "message": "Is it possible to have objects inside the property objects? It would be great if these could be bundled in a \"direction_aware_options\" object or something. From what I can tell you always have both logical_side and shorthand_for_physical_side?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15524a64_5ecce12b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-11T00:32:20Z",
+      "side": 1,
+      "message": "When do you use this one as opposed to the other more specificly-named ones? Can this also be given a more specific name?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c400a76_4913a4fc",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-11T00:32:20Z",
+      "side": 1,
+      "message": "This refactoring has exposed that there\u0027s actually a lot of calls to Get, only to call api.GetPropertyID() immediately from the caller. Do you think it\u0027s worth changing it back to returning a property ID until we fix the caller?",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
