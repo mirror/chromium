@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce185e5f_383f2d68",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T08:11:14Z",
+      "side": 1,
+      "message": "[spec text]",
+      "revId": "b0e5a7b5246dc975e0d6f4eabefcbac4f91cba54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34702bca_cb8206ec",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T08:11:14Z",
+      "side": 1,
+      "message": "how about using the multipage version?\nhttps://html.spec.whatwg.org/multipage/webappapis.html#set-up-the-module-script-request",
+      "revId": "b0e5a7b5246dc975e0d6f4eabefcbac4f91cba54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e7fbdc_d6ac6617",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T08:11:14Z",
+      "side": 1,
+      "message": "how about quoting \"Script fetch options\" than repeating the fragment here and in L15?",
+      "revId": "b0e5a7b5246dc975e0d6f4eabefcbac4f91cba54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
