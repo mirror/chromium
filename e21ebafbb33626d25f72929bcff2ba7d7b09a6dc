@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fcf43a2_b64db13c",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done, hopefully that clears it up? I also updated the CL description for more context. There\u0027s also a screenshot here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d773149#c3 (the bug is irrelevant though).",
+      "parentUuid": "eacc1da6_4ff2160d",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3054707_1c00f9ba",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22183c83_c97017a2",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3054707_1c00f9ba",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1cce5dcb_74faed65",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Oops, thank you! Done.",
+      "parentUuid": "50b587dc_9b9fe942",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2f8a83_1826757c",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53267a84_764b2d3d",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done!\n\nThere are a few places where the toView: arg is like the security section (the text at the top) and the internal Page Info bubble (the one that says \"you are viewing a internal page\" or something), so it\u0027s sometimes useful :O\n\nProbably some of them specifically are always one argument though, I didn\u0027t check very thoroughly.",
+      "parentUuid": "dc2f8a83_1826757c",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "a51eebf2_df8972b5",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Thanks - I will keep that in mind for future patches!",
+      "parentUuid": "39d0a4b2_be27bf63",
+      "range": {
+        "startLine": 1313,
+        "startChar": 6,
+        "endLine": 1313,
+        "endChar": 39
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e52d3e2_8a4d136d",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ac906_1bad4b6f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e52d3e2_8a4d136d",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "9d368e5b_2ca88ad6",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf156cf_0ba10ab8",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1de9d4_654e8987",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -138,6 +270,30 @@
       "writtenOn": "2017-10-11T02:57:36Z",
       "side": 1,
       "message": "style guide prohibits c-style casts - can we avoid the cast somehow? (is there a mapping function somewhere?)",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d310830_00f873b1",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "I don\u0027t think so :( there are some for strings used for extensions/site settings web ui, but I don\u0027t think any between ContentSettingsTypes and ints. Is static_casting OK?",
+      "parentUuid": "5b1de9d4_654e8987",
       "range": {
         "startLine": 1344,
         "startChar": 28,
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "b49b18ef_c4ad23e8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Resolving this in favour of the comment above ^",
+      "parentUuid": "e1c6429c_be7ef623",
+      "range": {
+        "startLine": 1348,
+        "startChar": 22,
+        "endLine": 1348,
+        "endChar": 57
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fba99f44_1d920ddd",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -187,6 +367,24 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39378d1_99964997",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba99f44_1d920ddd",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +408,30 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4283bf5b_4e7d2cc7",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00d661cc_89e23ef3",
+      "range": {
+        "startLine": 1369,
+        "startChar": 10,
+        "endLine": 1369,
+        "endChar": 23
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +475,48 @@
     },
     {
       "key": {
+        "uuid": "a005b5de_42318929",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "I realised we don\u0027t need this since this whole if statement is checking that |permissionView_| doesn\u0027t have any subviews in it - deleted.",
+      "parentUuid": "bbb0fddb_ffb764c2",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b78c1e9_93040f10",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Sorry, that was my fault - cleaned it up now.",
+      "parentUuid": "a88a97d3_d5f35499",
+      "range": {
+        "startLine": 1372,
+        "startChar": 4,
+        "endLine": 1372,
+        "endChar": 51
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca492b2e_6c52ad7f",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
@@ -264,6 +528,24 @@
       "writtenOn": "2017-10-11T02:57:36Z",
       "side": 1,
       "message": "why is this only set when there are no subviews?\n\n(maybe at the top of the method,\n\nNSPoint controlOrigin;\nif ([[permissionsView_ subviews] count]) {\n  DCHECK(permissionsPresent_);\n  controlOrigin \u003d [self refreshPermissions:permissionInfoList];\n} else {\n  permissionsPresent_ \u003d YES;\n  controlOrigin \u003d [self setInitialPermissions:permissionInfoList];\n}\n\n(I don\u0027t think there\u0027s a need to pass in controlOrigin - it should always be `NSMakePoint(kSectionHorizontalPadding, 0)`)",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0169bf8_f59797da",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "We don\u0027t actually need this, so I deleted it entirely (it was just always set to true).\n\nI didn\u0027t implement your suggestion to split it into two separate methods, but let me know if you\u0027d still like me to do it.",
+      "parentUuid": "ca492b2e_6c52ad7f",
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -287,6 +569,24 @@
     },
     {
       "key": {
+        "uuid": "6c6e9573_2f74a942",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "Fixed, sorry! This was from before and I just didn\u0027t clean it up \u003e\u003c",
+      "parentUuid": "ecdbeff0_a1b51419",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f81907_bd08082e",
         "filename": "chrome/browser/ui/cocoa/page_info/permission_selector_button.mm",
         "patchSetId": 3
@@ -307,6 +607,30 @@
       "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6170ae_5dbe614d",
+        "filename": "chrome/browser/ui/cocoa/page_info/permission_selector_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:27:07Z",
+      "side": 1,
+      "message": "I don\u0027t think so! Deleted.",
+      "parentUuid": "d2f81907_bd08082e",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
