@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "40f74376_8e67c074",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "Done. This found an interesting case where the origin doesn\u0027t match: extensions. If an extensions has permission for an origin, it can launch a worker with a script from that origin. I\u0027m not sure whether this is intentional. The docs only mention XHR: https://developer.chrome.com/extensions/xhr#requesting-permission.\n\nA test is using this for testing the webRequest API:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F562356%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FExtensionWebRequestApiTest.WebRequestTypes%2F0",
+      "parentUuid": "41ebe904_e80dbf04",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe8469b_60171346",
         "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
         "patchSetId": 5

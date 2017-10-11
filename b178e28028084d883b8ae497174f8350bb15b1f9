@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a414bf7b_aaf38307",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44062ac5_63bb7fdd",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "790ace32_e50d9f67",
         "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff12c98_2b5f5efd",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790ace32_e50d9f67",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6feca095_d60c500d",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ead4d0d_1e0fad4a",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23378713_767f519b",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "44209356_9aab4361",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "I\u0027ve split them out into https://chromium-review.googlesource.com/c/chromium/src/+/711335 so changes to other worker types aren\u0027t blocked by https://chromium-review.googlesource.com/c/706740, but forgot to mention it here.",
+      "parentUuid": "23378713_767f519b",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b62f3fe_180228d1",
         "filename": "third_party/WebKit/public/platform/dedicated_worker_factory.mojom",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0341158c_80a7df61",
+        "filename": "third_party/WebKit/public/platform/dedicated_worker_factory.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T06:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b62f3fe_180228d1",
+      "revId": "b178e28028084d883b8ae497174f8350bb15b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
