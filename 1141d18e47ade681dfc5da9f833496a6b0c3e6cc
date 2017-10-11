@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c5b464bc_5554f9ee",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Good suggestion, but we decided not to do it for timing reasons,  We might well want to do this later.",
+      "parentUuid": "adea7359_dbcdc819",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9d4a95a_cabd04f8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 3
@@ -68,6 +92,30 @@
       "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8c1d1d_e07fb963",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9d4a95a_cabd04f8",
+      "range": {
+        "startLine": 124,
+        "startChar": 66,
+        "endLine": 124,
+        "endChar": 67
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "425de1ef_f46377c4",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8e6917_049b74b7",
+      "range": {
+        "startLine": 161,
+        "startChar": 70,
+        "endLine": 161,
+        "endChar": 75
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d563385a_2bf10855",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 3
@@ -114,6 +186,30 @@
       "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c24799_80975074",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "It might be better to put it here. If the user is off the internet and this task doesn\u0027t run, we should probably not report anything that is going to get cleaned up properly, since the intent of this check is to find problems not handled by the normal cases.  We discussed this offline, and agreed to leave the statement here.",
+      "parentUuid": "d563385a_2bf10855",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 18
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "344215b1_2e800bdb",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa202fb6_fe164c8d",
+      "range": {
+        "startLine": 179,
+        "startChar": 26,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a84b6df_6ca48483",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
         "patchSetId": 3
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "6b79608b_c656df7e",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Left as is since we did not move the ReportStuckItems call",
+      "parentUuid": "9a84b6df_6ca48483",
+      "range": {
+        "startLine": 378,
+        "startChar": 36,
+        "endLine": 378,
+        "endChar": 62
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f676f5_c2d4918f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -183,6 +327,30 @@
       "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4527d92b_eecad491",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 52096,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f676f5_c2d4918f",
+      "range": {
+        "startLine": 52094,
+        "startChar": 0,
+        "endLine": 52096,
+        "endChar": 14
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
