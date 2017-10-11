@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b7d1b3db_c9e1212a",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T02:38:03Z",
+      "side": 1,
+      "message": "\u003e Ah, I may be confused by thinking that Vulcanize/JS bundler would inline those anyway(?).\n\nCSS variables are not inlined by any of the tools involved AFAIK (also inspected the output manually).\n\nPrefer to keep this as HEX for the following reasons\n1) The value that this is copied from (--md-background-color) is also defined using HEX, see https://cs.chromium.org/chromium/src/ui/webui/resources/css/md_colors.css?l\u003d8,9\n2) The style guide suggests (but does not require) that rgb() should be preferred because \"because alpha can be more easily added.\" I don\u0027t see this being relevant here (unlikely to add alpha for the toolbar or background).\n\nEither way, I don\u0027t mind as much, so if you feel strongly let me know and I\u0027ll upload a new patch.\n\n\u003e and adding a comment about what the value represents\n\nDone",
+      "parentUuid": "68399c8f_3ad21f43",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60584bef_e1a18acb",
         "filename": "chrome/browser/resources/md_extensions/extensions.html",
         "patchSetId": 3
@@ -105,6 +123,24 @@
       "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e54446_7b5d98db",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T02:38:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e32c69b6_3bf3802c",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
