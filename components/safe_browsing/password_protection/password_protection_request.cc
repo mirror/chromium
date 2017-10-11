@@ -111,10 +111,10 @@ void PasswordProtectionRequest::OnWhitelistCheckDoneOnIO(
 
 void PasswordProtectionRequest::OnWhitelistCheckDone(bool match_whitelist) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (match_whitelist)
-    Finish(PasswordProtectionService::MATCHED_WHITELIST, nullptr);
-  else
-    CheckCachedVerdicts();
+  /* if (match_whitelist)
+     Finish(PasswordProtectionService::MATCHED_WHITELIST, nullptr);
+   else*/
+  CheckCachedVerdicts();
 }
 
 void PasswordProtectionRequest::CheckCachedVerdicts() {
