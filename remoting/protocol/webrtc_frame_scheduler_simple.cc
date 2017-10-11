@@ -148,6 +148,14 @@ void WebrtcFrameSchedulerSimple::OnChannelParameters(int packet_loss,
 
 void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Temporary hack: Allow some slack to avoid completely saturating the
+  // network when sending lots of large frames. This triggers massive packet
+  // loss at the receiver, resulting in dropped frames and multi-second lags.
+  // TODO(crbug.com/773549): Remove this hack when the underlying bug is fixed.
+  constexpr double kBandwidthMultiplier = 0.75;
+  bandwidth_kbps *= kBandwidthMultiplier;
+
   base::TimeTicks now = base::TimeTicks::Now();
   pacing_bucket_.UpdateRate(bandwidth_kbps * 1000 / 8, now);
   encoder_bitrate_.SetBandwidthEstimate(bandwidth_kbps, now);
