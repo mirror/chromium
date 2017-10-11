@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc8bb9e_7d760959",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T21:52:11Z",
+      "side": 1,
+      "message": "Please add a comment in StaleEntryFinalizerTask and MetricsFinalizationTask that these tasks must be idempotent and must not cause progress in the pipeline since they are run during some event handlers.",
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2101731_19b49d73",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T21:52:11Z",
+      "side": 1,
+      "message": "I would prefer to add the urls first, if Chrome exits in between tasks we will still have new URLs.  WDYT?",
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
