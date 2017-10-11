@@ -1150,10 +1150,8 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   // policy, since it is being created as part of the navigation that will
   // commit it. (I.e., the RenderFrame needs to know the policy to use when
   // initializing the new document once it commits).
-  params->replication_state.sandbox_flags =
-      frame_tree_node()->pending_sandbox_flags();
-  params->replication_state.container_policy =
-      frame_tree_node()->pending_container_policy();
+  params->replication_state.frame_policy =
+      frame_tree_node()->pending_frame_policy();
 
   params->frame_owner_properties =
       FrameOwnerProperties(frame_tree_node()->frame_owner_properties());
@@ -2236,8 +2234,7 @@ void RenderFrameHostImpl::OnDidChangeFramePolicy(
   if (!child)
     return;
 
-  child->SetPendingSandboxFlags(frame_policy.sandbox_flags);
-  child->SetPendingContainerPolicy(frame_policy.container_policy);
+  child->SetPendingFramePolicy(frame_policy);
 
   // Notify the RenderFrame if it lives in a different process from its parent.
   // The frame's proxies in other processes also need to learn about the updated
@@ -4046,7 +4043,9 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
   const FeaturePolicy* parent_policy =
       parent_frame_host ? parent_frame_host->feature_policy() : nullptr;
   ParsedFeaturePolicyHeader container_policy =
-      frame_tree_node()->effective_container_policy();
+      frame_tree_node()
+          ->current_replication_state()
+          .frame_policy.container_policy;
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
 }
