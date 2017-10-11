@@ -1136,7 +1136,7 @@ CrSettingsInternetPageTest.prototype = {
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     ROOT_PATH + 'ui/webui/resources/js/assert.js',
     '../fake_chrome_event.js',
-    'fake_networking_private.js',
+    '../chromeos/fake_networking_private.js',
     'internet_page_tests.js',
   ]),
 };
