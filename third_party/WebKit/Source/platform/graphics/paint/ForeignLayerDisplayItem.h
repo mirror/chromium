@@ -5,7 +5,7 @@
 #ifndef ForeignLayerDisplayItem_h
 #define ForeignLayerDisplayItem_h
 
-#include "base/memory/ref_counted.h"
+#include "base/memory/scoped_refptr.h"
 #include "platform/PlatformExport.h"
 #include "platform/graphics/paint/DisplayItem.h"
 
