@@ -9,12 +9,14 @@
 #include "base/threading/thread.h"
 #include "gpu/ipc/in_process_command_buffer.h"
 #include "gpu/ipc/service/gpu_init.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 
 namespace gpu {
 class GpuMemoryBufferFactory;
+class SyncPointManager;
 }
 
 namespace viz {
@@ -27,8 +29,33 @@ namespace ui {
 
 class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
  public:
-  explicit GpuMain(mojom::GpuMainRequest request);
+  struct LogMessage {
+    int severity;
+    std::string header;
+    std::string message;
+  };
+  using LogMessages = std::vector<LogMessage>;
+
+  class Delegate {
+   public:
+    virtual ~Delegate() = default;
+
+    virtual gpu::SyncPointManager* GetSyncPointManager() = 0;
+    virtual base::WaitableEvent* GetShutDownEvent() = 0;
+    virtual void OnInitializationFailed() = 0;
+    virtual void OnGpuServiceConnection(viz::GpuServiceImpl* gpu_service) = 0;
+  };
+
+  GpuMain(Delegate* delegate,
+          bool create_display_compositor,
+          scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner,
+          std::unique_ptr<gpu::GpuInit> gpu_init = nullptr);
   ~GpuMain() override;
+
+  void SetLogMessagesForHost(LogMessages messages);
+
+  void Bind(mojom::GpuMainRequest request);
+  void BindAssociated(mojom::GpuMainAssociatedRequest request);
 
   // Calling this from the gpu or compositor thread can lead to crash/deadlock.
   // So this must be called from a different thread.
@@ -46,6 +73,7 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
       viz::mojom::FrameSinkManagerClientPtr client) override;
 
   viz::GpuServiceImpl* gpu_service() { return gpu_service_.get(); }
+  const viz::GpuServiceImpl* gpu_service() const { return gpu_service_.get(); }
 
  private:
   void CreateFrameSinkManagerInternal(
@@ -64,8 +92,13 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
   bool EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
                                 const gpu::GPUInfo* gpu_info) override;
 
+  Delegate* const delegate_;
+
   // The thread that handles IO events for Gpu.
-  base::Thread io_thread_;
+  std::unique_ptr<base::Thread> io_thread_;
+  const scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
+
+  LogMessages log_messages_;
 
   std::unique_ptr<gpu::GpuInit> gpu_init_;
   std::unique_ptr<viz::GpuServiceImpl> gpu_service_;
@@ -94,6 +127,7 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
 
   std::unique_ptr<base::PowerMonitor> power_monitor_;
   mojo::Binding<mojom::GpuMain> binding_;
+  mojo::AssociatedBinding<mojom::GpuMain> associated_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuMain);
 };
