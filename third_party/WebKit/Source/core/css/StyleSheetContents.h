@@ -188,6 +188,32 @@ class CORE_EXPORT StyleSheetContents
 
   DECLARE_TRACE();
 
+  /*
+  void Dump() {
+    LOG(ERROR) << "dump: " <<
+      owner_rule_ << " " <<
+      original_url_ << " " <<
+      import_rules_.size() << " " <<
+      namespace_rules_.size() << " " <<
+      child_rules_.size() << " " <<
+      namespaces_.size() << " " <<
+      default_namespace_ << " " <<
+      referenced_from_resource_ << " " <<
+      has_syntactically_valid_css_header_  << " " <<
+      did_load_error_occur_  << " " <<
+      is_mutable_  << " " <<
+      has_font_face_rule_  << " " <<
+      has_viewport_rule_  << " " <<
+      has_media_queries_  << " " <<
+      has_single_owner_document_  << " " <<
+      is_used_from_text_cache_  << " " <<
+      parser_context_ << " " <<
+      loading_clients_.size() << " " <<
+      completed_clients_.size() << " " <<
+      rule_set_ << " " <<
+      source_map_url_ << " ";
+  }*/
+
  private:
   StyleSheetContents(StyleRuleImport* owner_rule,
                      const String& original_url,
