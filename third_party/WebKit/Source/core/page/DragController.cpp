@@ -781,6 +781,18 @@ bool DragController::TryDHTMLDrag(DragData* drag_data,
   return true;
 }
 
+bool IsWithinDraggableLink(const Node* node) {
+  if (HasEditableStyle(*node))
+    return false;
+
+  while (node) {
+    if (IsHTMLAnchorElement(node) && ToHTMLAnchorElement(node)->IsLiveLink())
+      return true;
+    node = FlatTreeTraversal::ParentElement(*node);
+  }
+  return false;
+}
+
 Node* DragController::DraggableNode(const LocalFrame* src,
                                     Node* start_node,
                                     const IntPoint& drag_origin,
@@ -805,10 +817,10 @@ Node* DragController::DraggableNode(const LocalFrame* src,
       continue;
     }
     if (drag_type != kDragSourceActionSelection && node->IsTextNode() &&
-        node->CanStartSelection()) {
-      // In this case we have a click in the unselected portion of text. If this
-      // text is selectable, we want to start the selection process instead of
-      // looking for a parent to try to drag.
+        !IsWithinDraggableLink(node) && node->CanStartSelection()) {
+      // We have a click in an unselected, selectable text that is not a
+      // link text... so we want to start the selection process instead
+      // of looking for a parent to try to drag.
       return nullptr;
     }
     if (node->IsElementNode()) {
