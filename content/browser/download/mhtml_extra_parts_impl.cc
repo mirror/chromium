@@ -54,7 +54,7 @@ void MHTMLExtraPartsImpl::AddExtraMHTMLPart(const std::string& content_type,
 
   // Add this part to the list of parts to be saved out when the file is
   // written.
-  parts_.push_back(part);
+  parts_.push_back(std::move(part));
 }
 
 }  // namespace content

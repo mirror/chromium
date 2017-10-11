@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_DOWNLOAD_MHTML_EXTRA_PARTS_IMPL_H_
 #define CONTENT_BROWSER_DOWNLOAD_MHTML_EXTRA_PARTS_IMPL_H_
 
+#include "base/memory/weak_ptr.h"
 #include "content/public/browser/mhtml_extra_parts.h"
 
 namespace content {
@@ -27,7 +28,8 @@ struct MHTMLExtraDataPart {
 // one MHTML part.  This allows arbitrary extra MHTML parts to be added into the
 // complete file.  For instance, this might be used for gathering load time
 // signals in debug code for analysis.
-class MHTMLExtraPartsImpl : public content::MHTMLExtraParts {
+class MHTMLExtraPartsImpl : public content::MHTMLExtraParts,
+                            public base::SupportsWeakPtr<MHTMLExtraPartsImpl> {
  public:
   MHTMLExtraPartsImpl();
   ~MHTMLExtraPartsImpl() override;
