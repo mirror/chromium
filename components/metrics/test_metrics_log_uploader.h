@@ -24,7 +24,8 @@ class TestMetricsLogUploader : public MetricsLogUploader {
  private:
   // MetricsLogUploader:
   void UploadLog(const std::string& compressed_log_data,
-                 const std::string& log_hash) override;
+                 const std::string& log_hash,
+                 const ReportingInfo& reporting_info) override;
 
   const MetricsLogUploader::UploadCallback on_upload_complete_;
   bool is_uploading_;
