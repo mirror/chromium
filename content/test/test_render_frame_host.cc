@@ -276,7 +276,7 @@ void TestRenderFrameHost::SimulateFeaturePolicyHeader(
   header[0].feature = feature;
   header[0].matches_all_origins = false;
   header[0].origins = whitelist;
-  OnDidSetFeaturePolicyHeader(header);
+  OnDidSetFramePolicyHeaders(blink::WebSandboxFlags::kNone, header);
 }
 
 void TestRenderFrameHost::SendNavigate(int nav_entry_id,
