@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "53b3f045_ad598deb",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-11T20:21:41Z",
+      "side": 1,
+      "message": "I think that if db_ was guaranteed to be set automatically then you wouldn\u0027t need the lock, but I just had a discussion with pwnall@ about that and it\u0027s really not guaranteed. I\u0027d keep it in to be on the safe side.",
+      "parentUuid": "f3e474c2_dfad3d6e",
+      "revId": "de9bbd45153b23d4853dee606f91dadf8e6173d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb847c4_07ce6c5a",
         "filename": "content/browser/dom_storage/session_storage_database.cc",
         "patchSetId": 2
