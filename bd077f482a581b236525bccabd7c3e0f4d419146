@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb2a62b1_0533abe5",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T08:58:31Z",
+      "side": 0,
+      "message": "This macro is defined in both files: maybe it should only be here, since it\u0027s a helper for base::RefCounted*?",
+      "revId": "bd077f482a581b236525bccabd7c3e0f4d419146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "268a6eb4_3e8215ad",
+        "filename": "base/memory/scoped_refptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T08:58:31Z",
+      "side": 1,
+      "message": "Delete",
+      "revId": "d96e088dd055cb19df1f1bf16da7627805906542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0dc1700_30333a52",
+        "filename": "base/memory/scoped_refptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T08:58:31Z",
+      "side": 1,
+      "message": "This part of the comment wasn\u0027t removed from ref_counted.h (and probably belongs there). So let\u0027s just keep it there for now?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 2
+      },
+      "revId": "d96e088dd055cb19df1f1bf16da7627805906542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
