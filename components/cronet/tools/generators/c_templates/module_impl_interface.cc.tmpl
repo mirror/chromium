@@ -1,0 +1,58 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/* DO NOT EDIT. Generated from {{module.path}} */
+
+{%- if variant -%}
+{%-   set variant_path = "%s-%s"|format(module.path, variant) -%}
+{%- else -%}
+{%-   set variant_path = module.path -%}
+{%- endif %}
+
+{%- macro declare_c_params(prefix, parameters) %}
+{%-   for param in parameters -%}
+{{param.kind|c_wrapper_type}} {{prefix}}{{param.name}}
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+{%- endmacro %}
+
+{%- macro forward_c_params(prefix, parameters) %}
+{%-   for param in parameters -%}
+{{prefix}}{{param.name}}
+{%- if not loop.last %}, {% endif %}
+{%-   endfor %}
+{%- endmacro %}
+
+#include "{{variant_path}}_impl_interface.h"
+
+#include "base/logging.h"
+
+{#--- Interface Stubs -#}
+{%  for interface in interfaces %}
+
+// Interface {{interface.name}} methods.
+void {{interface.name}}_Destroy({{interface.name}}Ptr self) {
+  DCHECK(self);
+  return delete self;
+}
+{%- for method in interface.methods %}
+{%-  if method.response_parameters and method.sync %}
+{%-   for param in method.response_parameters %}
+{{param.kind|c_wrapper_type}}
+{%-   endfor -%}
+{%-  else %}
+void
+{%- endif %}
+ {{interface.name}}_{{method.name}}({{interface.name}}Ptr self
+{%-   if method.parameters %}, {{declare_c_params("", method.parameters)}}
+{%-   endif %}) {
+  DCHECK(self);
+{%-  if method.response_parameters and method.sync %}
+  return
+{%- endif %}
+  self->{{method.name}}({{forward_c_params("", method.parameters)}});
+}
+{%- endfor %}
+{%- endfor %}
+
