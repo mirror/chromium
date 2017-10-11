@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775ff5ee_22448fc6",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/resources/utf-8-invalid-chars-at-chunk-boundary.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115961
+      },
+      "writtenOn": "2017-10-11T09:04:31Z",
+      "side": 1,
+      "message": "These characters are not displayed correctly, but this seems to be a gerrit problem and not a problem in the actual patch.",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
