@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d76782ac_7f12a25e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Oops, please see the message on later patches.",
+      "parentUuid": "ccdc9bb6_349901c5",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbcb45d8_9c88e940",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dcf451_0713b9cc",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbcb45d8_9c88e940",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 72
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d31e89b_b77195b6",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d348282a_31a4ae5f",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 70
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2104d24e_67faa5a5",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570dfa9e_8b334485",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2104d24e_67faa5a5",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 41
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1b1868bb_45c7c1eb",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32621493_8605f042",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 9
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55f28aeb_3bb2bec1",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cb13fa_42ac98e6",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f28aeb_3bb2bec1",
+      "range": {
+        "startLine": 877,
+        "startChar": 0,
+        "endLine": 877,
+        "endChar": 39
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "49bcb42e_d85e2660",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cdc410f_d8901673",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 77
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4fac772_cbd6db9d",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9b6c1757_a17fe323",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4fac772_cbd6db9d",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 62
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95ea4e1_f4958c60",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection_unittest.cc",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8773d7c7_0de147de",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-11T00:15:30Z",
+      "side": 1,
+      "message": "Done -- had to tweak CreateAndDestroyWithoutConnectCallDoesntCrash though, so PTAL.",
+      "parentUuid": "e95ea4e1_f4958c60",
+      "range": {
+        "startLine": 322,
+        "startChar": 6,
+        "endLine": 322,
+        "endChar": 58
+      },
+      "revId": "54c5766fb8e605a63aeddbba1734e5050d5f3c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
