@@ -11,6 +11,8 @@
 
 namespace blink {
 
+struct NGPhysicalOffset;
+
 // NGPhysicalLocation is the position of a rect (typically a fragment) relative
 // to the root document.
 struct CORE_EXPORT NGPhysicalLocation {
@@ -20,6 +22,8 @@ struct CORE_EXPORT NGPhysicalLocation {
   LayoutUnit top;
 
   bool operator==(const NGPhysicalLocation& other) const;
+
+  void operator+=(const NGPhysicalOffset&);
 
   String ToString() const;
 };
