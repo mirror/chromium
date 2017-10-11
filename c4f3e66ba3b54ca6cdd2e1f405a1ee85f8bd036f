@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a9fd8f_c15f0a3e",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T15:01:37Z",
+      "side": 1,
+      "message": "I think it\u0027s actually worth having a stub method in here which may even be called but not yet used to report that the animation worklet has run so that it looks like less of a franken-interface.\ni.e. Similar to the method here: https://chromium-review.googlesource.com/c/chromium/src/+/613860/21/cc/trees/layer_tree_mutator.h#59\n\n// TODO(majidvp): Pass updated keyframe effect times.\nvoid NotifyMutationUpdate();",
+      "revId": "c4f3e66ba3b54ca6cdd2e1f405a1ee85f8bd036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
