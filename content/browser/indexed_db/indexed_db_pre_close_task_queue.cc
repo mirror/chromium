@@ -33,7 +33,7 @@ void IndexedDBPreCloseTaskQueue::StopForNewConnection() {
     tasks_.front()->Stop(StopReason::NEW_CONNECTION);
     tasks_.pop_front();
   }
-  OnComplete();
+  OnComplete(false);
 }
 
 void IndexedDBPreCloseTaskQueue::Start(
@@ -42,7 +42,7 @@ void IndexedDBPreCloseTaskQueue::Start(
   DCHECK(!started_);
   started_ = true;
   if (tasks_.empty()) {
-    OnComplete();
+    OnComplete(true);
     return;
   }
   timeout_timer_->Start(FROM_HERE, timeout_time_,
@@ -59,13 +59,15 @@ void IndexedDBPreCloseTaskQueue::Start(
                                         ptr_factory_.GetWeakPtr()));
 }
 
-void IndexedDBPreCloseTaskQueue::OnComplete() {
+void IndexedDBPreCloseTaskQueue::OnComplete(bool run_callback) {
   DCHECK(started_);
   DCHECK(!done_);
   ptr_factory_.InvalidateWeakPtrs();
   timeout_timer_->Stop();
   done_ = true;
-  std::move(on_done_).Run();
+  base::OnceClosure done = std::move(on_done_);
+  if (run_callback)
+    std::move(done).Run();
 }
 
 void IndexedDBPreCloseTaskQueue::StopForTimout() {
@@ -76,7 +78,7 @@ void IndexedDBPreCloseTaskQueue::StopForTimout() {
     tasks_.front()->Stop(StopReason::TIMEOUT);
     tasks_.pop_front();
   }
-  OnComplete();
+  OnComplete(true);
 }
 
 void IndexedDBPreCloseTaskQueue::StopForMetadataError(
@@ -92,7 +94,7 @@ void IndexedDBPreCloseTaskQueue::StopForMetadataError(
     tasks_.front()->Stop(StopReason::METADATA_ERROR);
     tasks_.pop_front();
   }
-  OnComplete();
+  OnComplete(true);
 }
 
 void IndexedDBPreCloseTaskQueue::RunLoop() {
@@ -100,7 +102,7 @@ void IndexedDBPreCloseTaskQueue::RunLoop() {
     return;
 
   if (tasks_.empty()) {
-    OnComplete();
+    OnComplete(true);
     return;
   }
 
@@ -108,7 +110,7 @@ void IndexedDBPreCloseTaskQueue::RunLoop() {
   if (done) {
     tasks_.pop_front();
     if (tasks_.empty()) {
-      OnComplete();
+      OnComplete(true);
       return;
     }
     tasks_.front()->SetMetadata(&metadata_);

@@ -13,7 +13,13 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/time/clock.h"
+#include "base/time/time.h"
 #include "content/browser/indexed_db/indexed_db_factory.h"
+
+namespace base {
+struct Feature;
+}
 
 namespace url {
 class Origin;
@@ -23,8 +29,17 @@ namespace content {
 
 class IndexedDBContextImpl;
 
+CONTENT_EXPORT extern const base::Feature kIDBTombstoneStatistics;
+CONTENT_EXPORT extern const base::Feature kIDBTombstoneDeletion;
+
 class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
  public:
+  // Visible for testing.
+  CONTENT_EXPORT static constexpr const base::TimeDelta
+      kMaxEarliestGlobalSweepFromNow = base::TimeDelta::FromHours(2);
+  CONTENT_EXPORT static constexpr const base::TimeDelta
+      kMaxEarliestOriginSweepFromNow = base::TimeDelta::FromDays(7);
+
   explicit IndexedDBFactoryImpl(IndexedDBContextImpl* context);
 
   // content::IndexedDBFactory overrides:
@@ -86,6 +101,10 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
       const url::Origin& origin,
       const base::string16& database_name,
       const base::string16& object_store_name) override;
+
+  void SetClockForTesting(std::unique_ptr<base::Clock> clock) {
+    clock_ = std::move(clock);
+  }
 
  protected:
   ~IndexedDBFactoryImpl() override;
@@ -154,6 +173,9 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
   std::map<url::Origin, scoped_refptr<IndexedDBBackingStore>>
       backing_stores_with_active_blobs_;
   std::set<url::Origin> backends_opened_since_boot_;
+
+  base::Time allowed_sweep_;
+  std::unique_ptr<base::Clock> clock_;
 
   DISALLOW_COPY_AND_ASSIGN(IndexedDBFactoryImpl);
 };

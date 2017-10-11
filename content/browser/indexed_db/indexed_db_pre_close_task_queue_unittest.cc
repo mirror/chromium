@@ -246,7 +246,7 @@ TEST_F(IndexedDBPreCloseTaskQueueTest, StopForNewConnectionBeforeStart) {
   scoped_task_environment_.RunUntilIdle();
 
   EXPECT_TRUE(metadata_called);
-  EXPECT_TRUE(done_called);
+  EXPECT_FALSE(done_called);
   EXPECT_TRUE(queue.started());
   EXPECT_TRUE(queue.done());
 }
@@ -286,7 +286,7 @@ TEST_F(IndexedDBPreCloseTaskQueueTest, StopForNewConnectionAfterRound) {
   scoped_task_environment_.RunUntilIdle();
 
   EXPECT_TRUE(metadata_called);
-  EXPECT_TRUE(done_called);
+  EXPECT_FALSE(done_called);
   EXPECT_TRUE(queue.started());
   EXPECT_TRUE(queue.done());
 }
@@ -330,7 +330,7 @@ TEST_F(IndexedDBPreCloseTaskQueueTest, StopForNewConnectionAfterTaskCompletes) {
   scoped_task_environment_.RunUntilIdle();
 
   EXPECT_TRUE(metadata_called);
-  EXPECT_TRUE(done_called);
+  EXPECT_FALSE(done_called);
   EXPECT_TRUE(queue.started());
   EXPECT_TRUE(queue.done());
 }
