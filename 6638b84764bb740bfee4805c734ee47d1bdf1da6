@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0234082c_9580a7ef",
+        "filename": "components/arc/common/rotation_lock.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T17:47:12Z",
+      "side": 1,
+      "message": "If there\u0027s any chance that you\u0027ll add more member(s) to the enum, please use [Extensible].\n\n [Extensible]\n enum Rotation {",
+      "revId": "6638b84764bb740bfee4805c734ee47d1bdf1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34641b58_de822ebe",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T17:47:12Z",
+      "side": 1,
+      "message": "nit: probably unused.",
+      "revId": "6638b84764bb740bfee4805c734ee47d1bdf1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fd1337_0eda8737",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T17:47:12Z",
+      "side": 1,
+      "message": "same",
+      "revId": "6638b84764bb740bfee4805c734ee47d1bdf1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f08bdba_dbecda96",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T17:47:12Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "6638b84764bb740bfee4805c734ee47d1bdf1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee7a56d_940a91f8",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T17:47:12Z",
+      "side": 1,
+      "message": "Can\u0027t we use typemap for this? components/arc/common/volume_mounter.typemap and components/arc/volume_mounter/volume_mounter_traits.cc do a similar thing for chromeos::DeviceType for example.",
+      "revId": "6638b84764bb740bfee4805c734ee47d1bdf1da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
