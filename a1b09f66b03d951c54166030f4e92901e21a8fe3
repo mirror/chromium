@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b70adf88_6ab2a6bf",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T20:53:38Z",
+      "side": 1,
+      "message": "drive-by comment: Putting this here SGTM.",
+      "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
