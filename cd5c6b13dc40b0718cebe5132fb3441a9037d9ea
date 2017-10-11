@@ -22,6 +22,92 @@
       "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85a7045_09810e4a",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/utf-8-invalid-chars-at-chunk-boundary.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-10-11T09:51:52Z",
+      "side": 1,
+      "message": "nit: \u003chtml\u003e\n(\"htm\" comes from the file extension in the MS-DOS 8+3 naming style; it\u0027s not the name of the root element of HTML.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4496f030_6f10f733",
+        "filename": "third_party/WebKit/LayoutTests/fast/encoding/utf-8-invalid-chars-at-chunk-boundary.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-10-11T09:51:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f60afe_3830c4d9",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUTF8.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-10-11T09:51:52Z",
+      "side": 1,
+      "message": "Sorry if I misunderstand the standard behavior \u0026 what this code is doing, but this code seems to emit less kReplacementCharacters than the original code when we see kNonCharacter[23], since we now skip 2 or 3 bytes at once while we generate just one replacement character. Am I wrong?",
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c267c1b_40028bea",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextCodecUTF8.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-10-11T09:51:52Z",
+      "side": 1,
+      "message": "nit, optional: I might name this \"num_bytes\" instead, since \"no\" looks like a word (the reverse of \"yes\") to me. Google C++ style guide also has some examples of variables named \"num_something\".\n\nApplies to other occurrences of \"no_of_*\".",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "cd5c6b13dc40b0718cebe5132fb3441a9037d9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
