@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "e7b0aa63_9b63e148",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-11T23:11:27Z",
+      "side": 1,
+      "message": "drive by nit: thirsd -\u003ethird",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2101731_19b49d73",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 1
