@@ -151,6 +151,8 @@ source_set("common_sources") {
     "file_chooser_params.h",
     "frame_navigate_params.cc",
     "frame_navigate_params.h",
+    "ignore_errors_cert_verifier_utils.cc",
+    "ignore_errors_cert_verifier_utils.h",
     "injection_test_mac.h",
     "injection_test_win.h",
     "isolated_world_ids.h",
