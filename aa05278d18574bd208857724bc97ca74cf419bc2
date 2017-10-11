@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae0cfbf8_41d340b1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Notice that it returns true when |total_count \u003e 1|, meaning we should report EQT to UKM. This means that we never do sampling when multiple tabs are loading at the same time.\n\nI updated the comment, which might be confusing.",
+      "parentUuid": "ddbf5bcb_a3cc858e",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f594b45e_d5f2f209",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a81911b_0176a7f3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f594b45e_d5f2f209",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7944087e_3de66bbd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "I actually mean to use this for SessionRestore, too. It is also called in OnSessionRestoreStartedLoadingTabs(). This can be shared because BTO and SessionRestore do not overlap when reporting metrics.\n\n\nI added some comments.",
+      "parentUuid": "57347979_eb32c7c2",
+      "range": {
+        "startLine": 369,
+        "startChar": 31,
+        "endLine": 369,
+        "endChar": 55
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e153ddc_a539d4e7",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963964f6_0b20f261",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Changed this to ExpectedTaskQueueingDurationGenerated because this is recorded when this metric is generated.",
+      "parentUuid": "6e153ddc_a539d4e7",
+      "range": {
+        "startLine": 1368,
+        "startChar": 56,
+        "endLine": 1368,
+        "endChar": 84
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "45d4e74a_51aa355e",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Renamed to TabSwitchLoadStopped, meaning this is recorded when the tab load is stopped for the tabs that are switched to.",
+      "parentUuid": "19abbc0d_7004abe1",
+      "range": {
+        "startLine": 1414,
+        "startChar": 58,
+        "endLine": 1414,
+        "endChar": 75
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "043a0075_79e1a338",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "29170473_44675a74",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043a0075_79e1a338",
+      "range": {
+        "startLine": 1448,
+        "startChar": 16,
+        "endLine": 1448,
+        "endChar": 25
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f12473_c386d4d3",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 12
@@ -160,6 +304,30 @@
       "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a500cb_efe9bd2f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-11T23:38:26Z",
+      "side": 1,
+      "message": "Renamed to TabSwitchLoadTime",
+      "parentUuid": "75f12473_c386d4d3",
+      "range": {
+        "startLine": 1458,
+        "startChar": 16,
+        "endLine": 1458,
+        "endChar": 32
+      },
+      "revId": "aa05278d18574bd208857724bc97ca74cf419bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
