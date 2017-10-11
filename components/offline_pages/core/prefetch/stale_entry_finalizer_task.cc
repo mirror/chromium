@@ -7,6 +7,8 @@
 #include <array>
 
 #include "base/bind.h"
+#include "base/metrics/histogram_functions.h"
+#include "base/metrics/sparse_histogram.h"
 #include "components/offline_pages/core/offline_store_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
@@ -113,6 +115,25 @@ bool FinalizeFutureItems(PrefetchItemState state,
   return statement.Run();
 }
 
+// If there is a bug in our code, an item might be stuck in the queue waiting
+// on an event that didn't happen.  If so, report that item.
+void ReportStuckItems(base::Time now, sql::Connection* db) {
+  static const char kSql[] =
+      "SELECT state FROM prefetch_items"
+      " WHERE creation_time < ?";
+  const int64_t earliest_valid_creation_time =
+      store_utils::ToDatabaseTime(now - base::TimeDelta::FromDays(7));
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  statement.BindInt64(0, earliest_valid_creation_time);
+
+  while (statement.Step()) {
+    base::HistogramBase* histogram = base::SparseHistogram::FactoryGet(
+        "OfflinePages.Prefetching.StuckItemState",
+        base::HistogramBase::kUmaTargetedHistogramFlag);
+    histogram->AddCount(statement.ColumnInt(0), 1);
+  }
+}
+
 Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
                                 sql::Connection* db) {
   if (!db)
@@ -139,6 +160,10 @@ Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
     if (!FinalizeFutureItems(state, now, db))
       return Result::NO_MORE_WORK;
   }
+
+  // Items could also be stuck in a non-expirable state due to a bug, clean them
+  // too.
+  ReportStuckItems(now, db);
 
   Result result = Result::MORE_WORK_NEEDED;
   if (!MoreWorkInQueue(db))
