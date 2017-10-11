@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fa1090c5_010d4e81",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-11T08:17:10Z",
+      "side": 1,
+      "message": "Instead of checking the \u0027draggable\u0027 attribute, should we test for EUserDrag::kElement?  \n\nHTMLElement::CollectStyleForPresentationAttribute() makes EUserDrag::kElement cover both \u0027-webkit-user-drag\u0027 and the \u0027draggable\u0027 attribute?",
+      "parentUuid": "b8cb673b_1f01dd2a",
+      "revId": "cdbf9e5dc010959ba96eff0a73034b5004e389cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bca2363a_6f9f45af",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 4
