@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64914d3_333682be",
+        "filename": "components/arc/common/rotation_lock.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-11T16:30:49Z",
+      "side": 1,
+      "message": "maybe call this ROTATION_90 so its named after what it represents rather than how it is represented.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "b10f3b11d4cf6a92052e6cd7e5ff343d7bd00ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ed232e_c759c92e",
+        "filename": "components/arc/common/rotation_lock.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-11T16:30:49Z",
+      "side": 1,
+      "message": "Maybe comment about rotation from what? clockwise? counterclockwise? etc.",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "b10f3b11d4cf6a92052e6cd7e5ff343d7bd00ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
