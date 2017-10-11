@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d80e2ff7_1dd058b3",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-11T19:38:52Z",
+      "side": 1,
+      "message": "ClusterFuzz was hitting the stack overflow in crbug.com/772743, which I took to mean that we need to protect against it even if there aren\u0027t code paths that call it twice. i.e. it could be called twice by a compromised Renderer.\n\nI don\u0027t think any other automated tests were hitting this, however Klaus let me know via chat that WebVR encountering the stack overflow for him locally.\n\nAlso, old comments above GLSurface::Initialize make it seem like it was intended to be called more than once for re-creation.\n\n\"\n  // (Re)create the surface. TODO(apatrick): This is an ugly hack to allow the\n  // EGL surface associated to be recreated without destroying the associated\n  // context. The implementation of this function for other GLSurface derived\n  // classes is in a pending changelist.\n\"",
+      "parentUuid": "091a271c_fcca7c46",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "264558cc_407dfc1f",
         "filename": "ui/gl/gl_surface_egl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T04:41:16Z",
       "side": 1,
       "message": "DCHECK(condition) followed by if(condition) -- or in this case the std::min() call -- is an anti-pattern. Either we should rely on the DCHECK and not add the min() call or we should upgrade the DCHECK to a CHECK.",
+      "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fec1f48_591b52cd",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-11T19:38:52Z",
+      "side": 1,
+      "message": "Give the security implications, I am inclined to upgrade to a CHECK. CHECK overhead can sometimes be a concern, but this code path is only taken when tracing is enabled - so we should b okay.",
+      "parentUuid": "264558cc_407dfc1f",
       "revId": "0e7fb2f9e40213ddc37e5ee457399159eec8903a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
