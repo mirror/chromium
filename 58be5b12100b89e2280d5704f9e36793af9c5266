@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b0ae8b3_524c591e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-11T22:35:58Z",
+      "side": 1,
+      "message": "I think this change will yield the correct result, but readability issue worries me.\n\nIf I don\u0027t have the context of this CL, it would be quite puzzling to see that normal-flow descendant of a fixed-pos element is no longer fixed to the viewport.\n\nIIUC the core issue this CL is fixing is that paint_offset_root is an ambiguous way to represent the box origin our paint offset is relative to, because most of the time we are referring to the scrolled border box, but for fixed-to-viewport we are actually referring to the unscrolled border box of the LayoutView.\n\nPerhaps we should rename fixed_to_viewport to something like \"paint_offset_root_use_unscrolled_box\" to reflect the fact that it is closely coupled to how paint_offset_root gets interpreted?",
+      "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a561658_e5c9b352",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-11T22:35:58Z",
+      "side": 1,
+      "message": "I think it is debatable whether to switch paint_offset_root whenever the first fixed-to-viewport object is seen, or the alternative approach to adjust paint offset at the time of use.\n\nSwitching paint offset root here we would lose a valuable invariant that paint_offset_root being consistent with paint_info.root_layer, although I don\u0027t think we rely on that invariant.\n\nWDYT? Would adjusting paint offset at the time of use adding too much complexity to the code comparing to the current approach?",
+      "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
