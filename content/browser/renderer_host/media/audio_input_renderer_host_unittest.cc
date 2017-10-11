@@ -25,6 +25,7 @@
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/audio/audio_device_description.h"
+#include "media/audio/audio_input_controller.h"
 #include "media/audio/audio_system_impl.h"
 #include "media/audio/fake_audio_log_factory.h"
 #include "media/audio/fake_audio_manager.h"
@@ -87,13 +88,13 @@ class AudioInputRendererHostWithInterception : public AudioInputRendererHost {
   AudioInputRendererHostWithInterception(
       int render_process_id,
       media::AudioManager* audio_manager,
-      MediaStreamManager* media_stream_manager,
+      AudioInputDeviceManager* audio_input_device_manager,
       AudioMirroringManager* audio_mirroring_manager,
       media::UserInputMonitor* user_input_monitor,
       MockRenderer* renderer)
       : AudioInputRendererHost(render_process_id,
                                audio_manager,
-                               media_stream_manager,
+                               audio_input_device_manager,
                                audio_mirroring_manager,
                                user_input_monitor),
         renderer_(renderer) {
@@ -166,8 +167,7 @@ class MockAudioInputController : public AudioInputController {
     GetTaskRunnerForTesting()->PostTask(
         FROM_HERE,
         base::BindOnce(&AudioInputController::EventHandler::OnCreated,
-                       base::Unretained(event_handler), base::Unretained(this),
-                       false));
+                       base::Unretained(event_handler), false));
   }
 
   EventHandler* handler() { return GetHandlerForTesting(); }
@@ -252,8 +252,8 @@ class AudioInputRendererHostTest : public testing::Test {
         audio_system_.get(), audio_manager_->GetTaskRunner());
     airh_ = new AudioInputRendererHostWithInterception(
         kRenderProcessId, media::AudioManager::Get(),
-        media_stream_manager_.get(), AudioMirroringManager::GetInstance(),
-        nullptr, &renderer_);
+        media_stream_manager_->audio_input_device_manager(),
+        AudioMirroringManager::GetInstance(), nullptr, &renderer_);
   }
 
   ~AudioInputRendererHostTest() override {
@@ -323,7 +323,7 @@ TEST_F(AudioInputRendererHostTest, CreateWithDefaultDevice) {
   EXPECT_CALL(*controller_factory_.controller(0), DidClose());
 }
 
-// If authorization hasn't been granted, only reply with and error and do
+// If authorization hasn't been granted, only reply with an error and do
 // nothing else.
 TEST_F(AudioInputRendererHostTest, CreateWithoutAuthorization_Error) {
   EXPECT_CALL(renderer_, NotifyStreamError(kStreamId));
@@ -497,7 +497,7 @@ TEST_F(AudioInputRendererHostTest, Error_ClosesController) {
   EXPECT_CALL(renderer_, NotifyStreamError(kStreamId));
 
   controller_factory_.controller(0)->handler()->OnError(
-      controller_factory_.controller(0), AudioInputController::UNKNOWN_ERROR);
+      AudioInputController::UNKNOWN_ERROR);
 
   // Check Close expectation before the destructor.
   base::RunLoop().RunUntilIdle();
