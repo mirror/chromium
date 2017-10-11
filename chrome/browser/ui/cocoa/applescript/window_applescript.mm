@@ -145,9 +145,9 @@
 }
 
 - (TabAppleScript*)activeTab {
-  TabAppleScript* currentTab =
-      [[[TabAppleScript alloc] initWithWebContents:
-          browser_->tab_strip_model()->GetActiveWebContents()] autorelease];
+  TabAppleScript* currentTab = [[[TabAppleScript alloc]
+      initWithWebContents:browser_->tab_strip_model()->GetActiveWebContents()
+                  profile:browser_->profile()] autorelease];
   [currentTab setContainer:self
                   property:AppleScript::kTabsProperty];
   return currentTab;
@@ -164,8 +164,9 @@
       continue;
     }
 
-    base::scoped_nsobject<TabAppleScript> tab(
-        [[TabAppleScript alloc] initWithWebContents:webContents]);
+    base::scoped_nsobject<TabAppleScript> tab([[TabAppleScript alloc]
+        initWithWebContents:webContents
+                    profile:browser_->profile()]);
     [tab setContainer:self
              property:AppleScript::kTabsProperty];
     [tabs addObject:tab];

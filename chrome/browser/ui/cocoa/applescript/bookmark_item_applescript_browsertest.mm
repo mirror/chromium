@@ -40,6 +40,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkItemAppleScriptTest, GetAndSetURL) {
   [item1 setURL:@"invalid-url.org"];
   EXPECT_EQ((int)AppleScript::errInvalidURL,
             [fakeScriptCommand.get() scriptErrorNumber]);
+
+  // If the scripter enters a URL with a Javscript scheme.
 }
 
 }  // namespace
