@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "893a0cda_afbe23f1",
+        "filename": "base/values.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-11T21:06:06Z",
+      "side": 1,
+      "message": "Optional, I just thought of it because you are touching this line anyway:\n\nDo you mind upgrading this to the C++14 version of std::equal and drop the explicit size comparison?",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 46
+      },
+      "revId": "0545388a569e928e17ea16a34eb3427fce3506fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
