@@ -1819,6 +1819,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   AddUIThreadInterface(
       registry.get(),
+      base::Bind(&RenderProcessHostImpl::BindCompositingModeReporter,
+                 base::Unretained(this)));
+
+  AddUIThreadInterface(
+      registry.get(),
       base::Bind(&RenderProcessHostImpl::BindSharedBitmapAllocationNotifier,
                  base::Unretained(this)));
 
@@ -2008,6 +2013,12 @@ void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
 void RenderProcessHostImpl::BindFrameSinkProvider(
     mojom::FrameSinkProviderRequest request) {
   frame_sink_provider_.Bind(std::move(request));
+}
+
+void RenderProcessHostImpl::BindCompositingModeReporter(
+    viz::mojom::CompositingModeReporterRequest request) {
+  BrowserMainLoop::GetInstance()->GetCompositingModeReporter(
+      std::move(request));
 }
 
 void RenderProcessHostImpl::BindSharedBitmapAllocationNotifier(
@@ -3700,6 +3711,8 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   frame_sink_provider_.Unbind();
   if (renderer_host_binding_.is_bound())
     renderer_host_binding_.Unbind();
+
+  compositing_mode_reporter_.reset();
 
   shared_bitmap_allocation_notifier_impl_.ChildDied();
 

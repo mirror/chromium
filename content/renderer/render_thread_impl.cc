@@ -609,6 +609,10 @@ RenderThreadImpl::RenderThreadImpl(
                           .ConnectToBrowser(true)
                           .Build()),
       renderer_scheduler_(std::move(scheduler)),
+      gpu_compositing_initial_state_event_(
+          // Only signaled once.
+          base::WaitableEvent::ResetPolicy::MANUAL,
+          base::WaitableEvent::InitialState::NOT_SIGNALED),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       renderer_binding_(this),
       client_id_(1) {
@@ -625,6 +629,10 @@ RenderThreadImpl::RenderThreadImpl(
                           .ConnectToBrowser(true)
                           .Build()),
       renderer_scheduler_(std::move(scheduler)),
+      gpu_compositing_initial_state_event_(
+          // Only signaled once.
+          base::WaitableEvent::ResetPolicy::MANUAL,
+          base::WaitableEvent::InitialState::NOT_SIGNALED),
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
@@ -837,6 +845,9 @@ void RenderThreadImpl::Init(
 #endif
   }
 
+  if (command_line.HasSwitch(switches::kDisableGpuCompositing))
+    is_gpu_compositing_disabled_ = true;
+
   is_gpu_rasterization_forced_ =
       command_line.HasSwitch(switches::kForceGpuRasterization);
   is_async_worker_context_enabled_ =
@@ -955,10 +966,20 @@ void RenderThreadImpl::Init(
 
   GetConnector()->BindInterface(mojom::kBrowserServiceName,
                                 mojo::MakeRequest(&frame_sink_provider_));
+
+  viz::mojom::CompositingModeReporterPtr mode_reporter;
+  GetConnector()->BindInterface(mojom::kBrowserServiceName,
+                                mojo::MakeRequest(&mode_reporter));
+  GetIOTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&RenderThreadImpl::SetUpCompositingModeWatcherOnIOThread,
+                     // This class is never destroyed before the process is.
+                     base::Unretained(this),
+                     base::ThreadTaskRunnerHandle::Get(),
+                     mode_reporter.PassInterface()));
 }
 
-RenderThreadImpl::~RenderThreadImpl() {
-}
+RenderThreadImpl::~RenderThreadImpl() = default;
 
 void RenderThreadImpl::Shutdown() {
   // In a multi-process mode, we immediately exit the renderer.
@@ -1930,10 +1951,16 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
     const GURL& url,
     const LayerTreeFrameSinkCallback& callback) {
+  // Wait for the compositing mode to be known before any frame sink is
+  // created.
+  // TODO(danakj): But clients might decide on their compositing mode before
+  // this, so they need to ask somewhere and find out before making a context.
+  gpu_compositing_initial_state_event_.Wait();
+  if (is_gpu_compositing_disabled_)
+    use_software = true;
+
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kDisableGpuCompositing))
-    use_software = true;
 
   viz::ClientLayerTreeFrameSink::InitParams params;
   params.enable_surface_synchronization =
@@ -2541,6 +2568,77 @@ bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
     return false;
   base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
   return passed.InMinutes() >= 5;
+}
+
+class RenderThreadImpl::CompositingModeWatcherImpl
+    : public viz::mojom::CompositingModeWatcher {
+ public:
+  explicit CompositingModeWatcherImpl(
+      scoped_refptr<base::SequencedTaskRunner> rti_task_runner,
+      RenderThreadImpl* rti)
+      : rti_task_runner_(std::move(rti_task_runner)),
+        rti_(rti),
+        binding_(this) {}
+
+  void AttachToPtr(viz::mojom::CompositingModeWatcherRequest request) {
+    binding_.Bind(std::move(request));
+  }
+
+  // viz::mojom::CompositingModeWatcher implementation.
+  void CompositingModeFallbackToSoftware() override {
+    rti_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&RenderThreadImpl::DisableGpuCompositing,
+                   // The RenderThreadImpl class outlives the process.
+                   base::Unretained(rti_)));
+  }
+
+ private:
+  scoped_refptr<base::SequencedTaskRunner> rti_task_runner_;
+  RenderThreadImpl* rti_;
+  mojo::Binding<viz::mojom::CompositingModeWatcher> binding_;
+};
+
+void RenderThreadImpl::SetUpCompositingModeWatcherOnIOThread(
+    scoped_refptr<base::SequencedTaskRunner> rti_task_runner,
+    viz::mojom::CompositingModeReporterPtrInfo mode_reporter) {
+  io_compositing_mode_watcher_ = std::make_unique<CompositingModeWatcherImpl>(
+      std::move(rti_task_runner), this);
+
+  // This attaches the |watcher_ptr| so that we can pass the |watcher_ptr| to
+  // the CompositingModeReporter, and it can call back to the
+  // CompositingModeWatcherImpl.
+  viz::mojom::CompositingModeWatcherPtr watcher_ptr;
+  io_compositing_mode_watcher_->AttachToPtr(mojo::MakeRequest(&watcher_ptr));
+
+  // Bind the CompositingModeReporter to this thread so the
+  // CompositingModeWatcherImpl will be called on the right thread. Then pass
+  // the watcher to the reporter.
+  io_compositing_mode_reporter_.Bind(std::move(mode_reporter));
+  io_compositing_mode_reporter_->AddCompositingModeWatcher(
+      std::move(watcher_ptr),
+      base::BindOnce(&RenderThreadImpl::InitialCompositingModeOnIOThread,
+                     // The RenderThreadImpl class outlives the process.
+                     base::Unretained(this)));
+}
+
+void RenderThreadImpl::InitialCompositingModeOnIOThread(bool gpu_compositing) {
+  if (!gpu_compositing)
+    is_gpu_compositing_disabled_ = true;
+  // The main sequence will not try to read |is_gpu_compositing_disabled_| until
+  // this event is signaled, so the variable is synchronized between threads.
+  gpu_compositing_initial_state_event_.Signal();
+}
+
+void RenderThreadImpl::DisableGpuCompositing() {
+  if (gpu_channel_) {
+    // TODO(danakj): Tell all clients of the compositor. We sould send a more
+    // scoped message than this.
+    gpu_channel_->DestroyChannel();
+    gpu_channel_ = nullptr;
+  }
+
+  is_gpu_compositing_disabled_ = true;
 }
 
 }  // namespace content

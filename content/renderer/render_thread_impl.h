@@ -53,6 +53,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/effective_connection_type.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
+#include "services/viz/public/interfaces/compositing/compositing_mode_watcher.mojom.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebMemoryStatistics.h"
@@ -605,6 +606,14 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<discardable_memory::ClientDiscardableSharedMemoryManager>
       discardable_shared_memory_manager_;
 
+  // Runs on the IO thread.
+  void SetUpCompositingModeWatcherOnIOThread(
+      scoped_refptr<base::SequencedTaskRunner> rti_task_runner,
+      viz::mojom::CompositingModeReporterPtrInfo mode_reporter);
+  void InitialCompositingModeOnIOThread(bool gpu_compositing);
+  // Runs on the main sequence.
+  void DisableGpuCompositing();
+
   // These objects live solely on the render thread.
   std::unique_ptr<AppCacheDispatcher> appcache_dispatcher_;
   std::unique_ptr<DomStorageDispatcher> dom_storage_dispatcher_;
@@ -671,6 +680,13 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Timer that periodically calls IdleHandler.
   base::RepeatingTimer idle_timer_;
+
+  // Signaled once from the IO thread once |is_gpu_compositing_disabled_|
+  // initial value is known.
+  base::WaitableEvent gpu_compositing_initial_state_event_;
+  // Can not be read on the main sequence until
+  // |gpu_compositing_initial_state_event_| has been signalled.
+  bool is_gpu_compositing_disabled_ = false;
 
   // The channel from the renderer process to the GPU process.
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
@@ -797,6 +813,12 @@ class CONTENT_EXPORT RenderThreadImpl
   int32_t client_id_;
 
   mojom::FrameSinkProviderPtr frame_sink_provider_;
+
+  class CompositingModeWatcherImpl;
+  // Lives on the IO thread.
+  std::unique_ptr<CompositingModeWatcherImpl> io_compositing_mode_watcher_;
+  // Lives on the IO thread.
+  viz::mojom::CompositingModeReporterPtr io_compositing_mode_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderThreadImpl);
 };
