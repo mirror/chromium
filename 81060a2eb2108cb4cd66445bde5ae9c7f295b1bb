@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf544745_b1021268",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T23:09:30Z",
+      "side": 1,
+      "message": "Please either have a bug or refer to (I assume) puppeteer issue in description.",
+      "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9ecc87_2e8011b5",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/input/dispatchKeyEvent.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T23:09:30Z",
+      "side": 1,
+      "message": "Can I send ShiftLet with location\u003d2? Sounds terrible :)",
+      "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7c0359_c03c789e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T23:09:30Z",
+      "side": 1,
+      "message": "experimental",
+      "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
