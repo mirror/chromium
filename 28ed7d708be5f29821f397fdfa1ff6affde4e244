@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87632b1_dd34bb1e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-11T18:58:12Z",
+      "side": 1,
+      "message": "Fixed name to follow coding style: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#naming",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "28ed7d708be5f29821f397fdfa1ff6affde4e244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
