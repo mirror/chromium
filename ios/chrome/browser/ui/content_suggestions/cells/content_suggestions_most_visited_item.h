@@ -34,8 +34,6 @@ class GURL;
 @property(nonatomic, weak, nullable) id<ContentSuggestionsGestureCommands>
     commandHandler;
 
-- (ntp_tiles::TileVisualType)tileType;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CELLS_CONTENT_SUGGESTIONS_MOST_VISITED_ITEM_H_

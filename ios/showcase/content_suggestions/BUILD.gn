@@ -15,6 +15,7 @@ source_set("content_suggestions") {
   ]
   deps = [
     "//base",
+    "//components/favicon_base",
     "//components/strings",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser/ui/collection_view/cells",

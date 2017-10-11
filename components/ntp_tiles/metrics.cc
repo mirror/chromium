@@ -140,6 +140,14 @@ void RecordTileImpression(const NTPTileImpression& impression,
         "NewTabPage.SuggestionsImpression.%s", tile_type_suffix);
     LogHistogramEvent(icon_impression_histogram, impression.index,
                       kMaxNumTiles);
+
+    if (impression.icon_type != favicon_base::INVALID_ICON) {
+      std::string favicon_type_histogram =
+          base::StringPrintf("NewTabPage.TileFaviconType.%s", tile_type_suffix);
+      LogHistogramEvent(favicon_type_histogram,
+                        GetUmaFaviconType(impression.icon_type),
+                        favicon_base::ICON_TYPE_MAX + 1);
+    }
   }
 }
 
@@ -157,6 +165,14 @@ void RecordTileClick(const NTPTileImpression& impression) {
     std::string tile_type_histogram =
         base::StringPrintf("NewTabPage.MostVisited.%s", tile_type_suffix);
     LogHistogramEvent(tile_type_histogram, impression.index, kMaxNumTiles);
+
+    if (impression.icon_type != favicon_base::INVALID_ICON) {
+      std::string favicon_type_histogram = base::StringPrintf(
+          "NewTabPage.TileFaviconTypeClicked.%s", tile_type_suffix);
+      LogHistogramEvent(favicon_type_histogram,
+                        GetUmaFaviconType(impression.icon_type),
+                        favicon_base::ICON_TYPE_MAX + 1);
+    }
   }
 
   UMA_HISTOGRAM_ENUMERATION("NewTabPage.TileTitleClicked",

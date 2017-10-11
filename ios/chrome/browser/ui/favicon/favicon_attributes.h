@@ -7,6 +7,9 @@
 
 #import <UIKit/UIKit.h>
 
+#include "components/favicon_base/favicon_types.h"
+#include "components/ntp_tiles/tile_visual_type.h"
+
 // Attributes of a favicon. A favicon is represented either with an image or
 // with a fallback monogram of a given color and background color.
 @interface FaviconAttributes : NSObject
@@ -24,13 +27,20 @@
 // no image.
 @property(nonatomic, readonly, assign, getter=isDefaultBackgroundColor)
     BOOL defaultBackgroundColor;
+// Icon type.
+@property(nonatomic, readonly, assign) favicon_base::IconType iconType;
 
-+ (nullable instancetype)attributesWithImage:(nonnull UIImage*)image;
-+ (nullable instancetype)attributesWithMonogram:(nonnull NSString*)monogram
-                                      textColor:(nonnull UIColor*)textColor
-                                backgroundColor:
-                                    (nonnull UIColor*)backgroundColor
-                         defaultBackgroundColor:(BOOL)defaultBackgroundColor;
++ (nullable instancetype)attributesWithImage:(nonnull UIImage*)image
+                                    iconType:(favicon_base::IconType)iconType;
++ (nullable instancetype)
+attributesWithMonogram:(nonnull NSString*)monogram
+             textColor:(nonnull UIColor*)textColor
+       backgroundColor:(nonnull UIColor*)backgroundColor
+defaultBackgroundColor:(BOOL)defaultBackgroundColor
+              iconType:(favicon_base::IconType)iconType;
+
++ (ntp_tiles::TileVisualType)tileVisualTypeFromAttributes:
+    (nullable FaviconAttributes*)attributes;
 
 - (nullable instancetype)init NS_UNAVAILABLE;
 @end
