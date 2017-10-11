@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e30f027_1e42e5e9",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T08:48:55Z",
+      "side": 1,
+      "message": "Could you call:\n\narc_session_manager_-\u003eShutdown();\nprofile_.reset();\narc_session_manager_.reset();\narc_service_manager_.reset();\n\nto follow the real use case?",
+      "revId": "2b5f907f873b6e2cf25c77156be01dd1b4cdfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
