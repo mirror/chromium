@@ -459,6 +459,10 @@
       name: "HeapCompaction",
       status: "stable",
     },
+    {
+      name: "HeapIncrementalMarking",
+      status: "experimental",
+    },
     // https://crbug.com/523952 for testing disabling the feature.
     {
       name: "HTMLImportsStyleApplication",
