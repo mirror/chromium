@@ -7,6 +7,7 @@
 
 #include <set>
 #include <string>
+#include <tuple>
 
 #include "base/callback_forward.h"
 #include "base/files/file.h"
@@ -36,27 +37,15 @@ class CONTENT_EXPORT CdmStorageImpl final
  public:
   // The file system is different for each CDM and each origin. So track files
   // in use based on the tuple CDM file system ID, origin, and file name.
-  struct FileLockKey {
-    FileLockKey(const std::string& cdm_file_system_id,
-                const url::Origin& origin,
-                const std::string& file_name);
-    ~FileLockKey() = default;
+  using FileLockKey = std::tuple<std::string, url::Origin, std::string>;
 
-    // Allow use as a key in std::set.
-    bool operator<(const FileLockKey& other) const;
+  // Check if |file_system_id| is valid.
+  static bool IsValidFileSystemId(const std::string& file_system_id);
 
-    std::string cdm_file_system_id;
-    url::Origin origin;
-    std::string file_name;
-  };
-
-  // Check if |cdm_file_system_id| is valid.
-  static bool IsValidCdmFileSystemId(const std::string& cdm_file_system_id);
-
-  // Create a CdmStorageImpl object for |cdm_file_system_id| and bind it to
+  // Create a CdmStorageImpl object for |file_system_id| and bind it to
   // |request|.
   static void Create(RenderFrameHost* render_frame_host,
-                     const std::string& cdm_file_system_id,
+                     const std::string& file_system_id,
                      media::mojom::CdmStorageRequest request);
 
   // media::mojom::CdmStorage implementation.
@@ -64,7 +53,7 @@ class CONTENT_EXPORT CdmStorageImpl final
 
  private:
   CdmStorageImpl(RenderFrameHost* render_frame_host,
-                 const std::string& cdm_file_system_id,
+                 const std::string& file_system_id,
                  scoped_refptr<storage::FileSystemContext> file_system_context,
                  media::mojom::CdmStorageRequest request);
   ~CdmStorageImpl() final;
@@ -83,13 +72,15 @@ class CONTENT_EXPORT CdmStorageImpl final
                     const base::Closure& on_close_callback);
 
   // Files are stored in the PluginPrivateFileSystem, so keep track of the
-  // CDM file system ID in order to open the files in the correct context.
-  const std::string cdm_file_system_id_;
+  // file system ID in order to open the files in the correct context. As the
+  // files were initially used by the CDM running as a pepper plugin, the ID
+  // must be based on the pepper plugin MIME type (as was done by pepper).
+  std::string file_system_id_;
   scoped_refptr<storage::FileSystemContext> file_system_context_;
 
   // This is the child process that will actually read and write the file(s)
   // returned, and it needs permission to access the file when it's opened.
-  const int child_process_id_;
+  int child_process_id_;
 
   // As a lock is taken on a file when Open() is called, it needs to be
   // released if the async operations to open the file haven't completed

@@ -6,7 +6,6 @@
 
 #include <map>
 #include <memory>
-#include <tuple>
 #include <utility>
 
 #include "base/callback.h"
@@ -33,6 +32,9 @@ namespace content {
 
 namespace {
 
+// Index for file name in FileLockKey.
+const size_t kFileNameIndex = 2;
+
 // File map shared by all CdmStorageImpl objects to prevent read/write race.
 // A lock must be acquired before opening a file to ensure that the file is not
 // currently in use. Once the file is opened the file map must be updated to
@@ -48,7 +50,7 @@ class FileLockMap {
   // Acquire a lock on the file represented by |key|. Returns true if |key|
   // is not currently in use, false otherwise.
   bool AcquireFileLock(const Key& key) {
-    DVLOG(3) << __func__ << " file: " << key.file_name;
+    DVLOG(3) << __func__ << " file: " << std::get<kFileNameIndex>(key);
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
     // Add a new entry. If |key| already has an entry, emplace() tells so
@@ -60,7 +62,7 @@ class FileLockMap {
   // Update the entry for the file represented by |key| so that
   // |on_close_callback| will be called when the lock is released.
   void SetOnCloseCallback(const Key& key, base::Closure on_close_callback) {
-    DVLOG(3) << __func__ << " file: " << key.file_name;
+    DVLOG(3) << __func__ << " file: " << std::get<kFileNameIndex>(key);
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
     DCHECK(!file_lock_map_.empty());
@@ -72,12 +74,13 @@ class FileLockMap {
   // Release the lock held on the file represented by |key|. If
   // |on_close_callback| has been set, run it before releasing the lock.
   void ReleaseFileLock(const Key& key) {
-    DVLOG(3) << __func__ << " file: " << key.file_name;
+    DVLOG(3) << __func__ << " file: " << std::get<kFileNameIndex>(key);
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
     auto entry = file_lock_map_.find(key);
     if (entry == file_lock_map_.end()) {
-      NOTREACHED() << "Unable to relase lock on file " << key.file_name;
+      NOTREACHED() << "Unable to relase lock on file "
+                   << std::get<kFileNameIndex>(key);
       return;
     }
 
@@ -125,27 +128,15 @@ class CdmFileReleaserImpl final : public media::mojom::CdmFileReleaser {
 
 }  // namespace
 
-CdmStorageImpl::FileLockKey::FileLockKey(const std::string& cdm_file_system_id,
-                                         const url::Origin& origin,
-                                         const std::string& file_name)
-    : cdm_file_system_id(cdm_file_system_id),
-      origin(origin),
-      file_name(file_name) {}
-
-bool CdmStorageImpl::FileLockKey::operator<(const FileLockKey& other) const {
-  return std::tie(cdm_file_system_id, origin, file_name) <
-         std::tie(other.cdm_file_system_id, other.origin, other.file_name);
-}
-
 // static
 void CdmStorageImpl::Create(RenderFrameHost* render_frame_host,
-                            const std::string& cdm_file_system_id,
+                            const std::string& file_system_id,
                             media::mojom::CdmStorageRequest request) {
   DVLOG(3) << __func__;
   DCHECK(!render_frame_host->GetLastCommittedOrigin().unique())
       << "Invalid origin specified for CdmStorageImpl::Create";
 
-  // Take a reference to the FileSystemContext.
+  // Take a reference to the FileSystemContext, if it exists.
   scoped_refptr<storage::FileSystemContext> file_system_context;
   StoragePartition* storage_partition =
       render_frame_host->GetProcess()->GetStoragePartition();
@@ -153,34 +144,32 @@ void CdmStorageImpl::Create(RenderFrameHost* render_frame_host,
     file_system_context = storage_partition->GetFileSystemContext();
 
   // The created object is bound to (and owned by) |request|.
-  new CdmStorageImpl(render_frame_host, cdm_file_system_id,
+  new CdmStorageImpl(render_frame_host, file_system_id,
                      std::move(file_system_context), std::move(request));
 }
 
 // static
-bool CdmStorageImpl::IsValidCdmFileSystemId(
-    const std::string& cdm_file_system_id) {
+bool CdmStorageImpl::IsValidFileSystemId(const std::string& file_system_id) {
   // To be compatible with PepperFileSystemBrowserHost::GeneratePluginId(),
-  // |cdm_file_system_id| must contain only letters (A-Za-z), digits(0-9),
-  // or "._-".
-  for (const auto& ch : cdm_file_system_id) {
+  // |file_system_id| must contain only letters (A-Za-z), digits(0-9), or "._-".
+  for (const auto& ch : file_system_id) {
     if (!base::IsAsciiAlpha(ch) && !base::IsAsciiDigit(ch) && ch != '.' &&
         ch != '_' && ch != '-') {
       return false;
     }
   }
 
-  // Also ensure that |cdm_file_system_id| contains at least 1 character.
-  return !cdm_file_system_id.empty();
+  // Also ensure that |file_system_id| contains at least 1 character.
+  return !file_system_id.empty();
 }
 
 CdmStorageImpl::CdmStorageImpl(
     RenderFrameHost* render_frame_host,
-    const std::string& cdm_file_system_id,
+    const std::string& file_system_id,
     scoped_refptr<storage::FileSystemContext> file_system_context,
     media::mojom::CdmStorageRequest request)
     : FrameServiceBase(render_frame_host, std::move(request)),
-      cdm_file_system_id_(cdm_file_system_id),
+      file_system_id_(file_system_id),
       file_system_context_(std::move(file_system_context)),
       child_process_id_(render_frame_host->GetProcess()->GetID()),
       weak_factory_(this) {}
@@ -198,22 +187,29 @@ void CdmStorageImpl::Open(const std::string& file_name, OpenCallback callback) {
   DVLOG(3) << __func__ << " file: " << file_name;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  if (!IsValidCdmFileSystemId(cdm_file_system_id_)) {
+  if (!IsValidFileSystemId(file_system_id_)) {
     DVLOG(1) << "CdmStorageImpl not initialized properly.";
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
+    return;
+  }
+
+  if (!file_system_context_) {
+    DVLOG(1) << "Unable to get FileSystemContext.";
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
     return;
   }
 
   if (file_name.empty()) {
     DVLOG(1) << "No file specified.";
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
     return;
   }
 
-  FileLockKey file_lock_key(cdm_file_system_id_, origin(), file_name);
+  FileLockKey file_lock_key =
+      std::make_tuple(file_system_id_, origin(), file_name);
   if (!GetFileLockMap()->AcquireFileLock(file_lock_key)) {
     DVLOG(1) << "File " << file_name << " is already in use.";
-    std::move(callback).Run(Status::kInUse, base::File(), nullptr);
+    std::move(callback).Run(Status::IN_USE, base::File(), nullptr);
     return;
   }
 
@@ -224,7 +220,7 @@ void CdmStorageImpl::Open(const std::string& file_name, OpenCallback callback) {
   if (!storage::ValidateIsolatedFileSystemId(fsid)) {
     DVLOG(1) << "Invalid file system ID.";
     GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
     return;
   }
 
@@ -239,7 +235,7 @@ void CdmStorageImpl::Open(const std::string& file_name, OpenCallback callback) {
 
   file_system_context_->OpenPluginPrivateFileSystem(
       origin().GetURL(), storage::kFileSystemTypePluginPrivate, fsid,
-      cdm_file_system_id_, storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
+      file_system_id_, storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
       base::Bind(&CdmStorageImpl::OnFileSystemOpened,
                  weak_factory_.GetWeakPtr(), file_lock_key, fsid,
                  base::Passed(&callback)));
@@ -256,17 +252,17 @@ void CdmStorageImpl::OnFileSystemOpened(const FileLockKey& file_lock_key,
     DVLOG(1) << "Unable to access the file system.";
     pending_open_.erase(file_lock_key);
     GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
     return;
   }
 
   std::string root = storage::GetIsolatedFileSystemRootURIString(
                          origin().GetURL(), fsid, ppapi::kPluginPrivateRootName)
-                         .append(file_lock_key.file_name);
+                         .append(std::get<kFileNameIndex>(file_lock_key));
   storage::FileSystemURL file_url = file_system_context_->CrackURL(GURL(root));
   storage::AsyncFileUtil* file_util = file_system_context_->GetAsyncFileUtil(
       storage::kFileSystemTypePluginPrivate);
-  auto operation_context =
+  std::unique_ptr<storage::FileSystemOperationContext> operation_context =
       std::make_unique<storage::FileSystemOperationContext>(
           file_system_context_.get());
   operation_context->set_allowed_bytes_growth(storage::QuotaManager::kNoLimit);
@@ -293,11 +289,11 @@ void CdmStorageImpl::OnFileOpened(const FileLockKey& file_lock_key,
   pending_open_.erase(file_lock_key);
 
   if (!file.IsValid()) {
-    DLOG(WARNING) << "Unable to open file " << file_lock_key.file_name
-                  << ", error: "
+    DLOG(WARNING) << "Unable to open file "
+                  << std::get<kFileNameIndex>(file_lock_key) << ", error: "
                   << base::File::ErrorToString(file.error_details());
     GetFileLockMap()->ReleaseFileLock(file_lock_key);
-    std::move(callback).Run(Status::kFailure, base::File(), nullptr);
+    std::move(callback).Run(Status::FAILURE, base::File(), nullptr);
     return;
   }
 
@@ -311,7 +307,7 @@ void CdmStorageImpl::OnFileOpened(const FileLockKey& file_lock_key,
   mojo::MakeStrongAssociatedBinding(
       std::make_unique<CdmFileReleaserImpl>(file_lock_key),
       mojo::MakeRequest(&releaser));
-  std::move(callback).Run(Status::kSuccess, std::move(file),
+  std::move(callback).Run(Status::SUCCESS, std::move(file),
                           std::move(releaser));
 }
 

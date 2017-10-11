@@ -214,7 +214,7 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::GetCdmInterfaceFactory(
     NOTREACHED() << "Invalid CDM GUID " << cdm_info->guid;
     return nullptr;
   }
-  if (!CdmStorageImpl::IsValidCdmFileSystemId(cdm_info->file_system_id)) {
+  if (!CdmStorageImpl::IsValidFileSystemId(cdm_info->file_system_id)) {
     NOTREACHED() << "Invalid file system ID " << cdm_info->file_system_id;
     return nullptr;
   }

@@ -64,7 +64,7 @@ class CdmStorageTest : public RenderViewHostTestHarness {
 
   // Open the file |name|. Returns true if the file returned is valid, false
   // otherwise. Updates |status|, |file|, and |releaser| with the values
-  // returned by CdmStorage. If |status| = kSuccess, |file| should be valid to
+  // returned by CdmStorage. If |status| = SUCCESS, |file| should be valid to
   // access, and |releaser| should be reset when the file is closed.
   bool Open(const std::string& name,
             CdmStorage::Status* status,
@@ -119,7 +119,7 @@ TEST_F(CdmStorageTest, InvalidFileSystemIdWithSlash) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_FALSE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kFailure);
+  EXPECT_EQ(status, CdmStorage::Status::FAILURE);
   EXPECT_FALSE(file.IsValid());
   EXPECT_FALSE(releaser.is_bound());
 }
@@ -132,7 +132,7 @@ TEST_F(CdmStorageTest, InvalidFileSystemIdWithBackSlash) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_FALSE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kFailure);
+  EXPECT_EQ(status, CdmStorage::Status::FAILURE);
   EXPECT_FALSE(file.IsValid());
   EXPECT_FALSE(releaser.is_bound());
 }
@@ -145,7 +145,7 @@ TEST_F(CdmStorageTest, InvalidFileSystemIdEmpty) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_FALSE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kFailure);
+  EXPECT_EQ(status, CdmStorage::Status::FAILURE);
   EXPECT_FALSE(file.IsValid());
   EXPECT_FALSE(releaser.is_bound());
 }
@@ -158,7 +158,7 @@ TEST_F(CdmStorageTest, InvalidFileNameEmpty) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_FALSE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kFailure);
+  EXPECT_EQ(status, CdmStorage::Status::FAILURE);
   EXPECT_FALSE(file.IsValid());
   EXPECT_FALSE(releaser.is_bound());
 }
@@ -171,7 +171,7 @@ TEST_F(CdmStorageTest, OpenFile) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_TRUE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file.IsValid());
   EXPECT_TRUE(releaser.is_bound());
 }
@@ -184,7 +184,7 @@ TEST_F(CdmStorageTest, OpenFileLocked) {
   base::File file1;
   media::mojom::CdmFileReleaserAssociatedPtr releaser1;
   EXPECT_TRUE(Open(kFileName, &status, &file1, &releaser1));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file1.IsValid());
   EXPECT_TRUE(releaser1.is_bound());
 
@@ -192,7 +192,7 @@ TEST_F(CdmStorageTest, OpenFileLocked) {
   base::File file2;
   media::mojom::CdmFileReleaserAssociatedPtr releaser2;
   EXPECT_FALSE(Open(kFileName, &status, &file2, &releaser2));
-  EXPECT_EQ(status, CdmStorage::Status::kInUse);
+  EXPECT_EQ(status, CdmStorage::Status::IN_USE);
   EXPECT_FALSE(file2.IsValid());
   EXPECT_FALSE(releaser2.is_bound());
 
@@ -203,7 +203,7 @@ TEST_F(CdmStorageTest, OpenFileLocked) {
   base::File file3;
   media::mojom::CdmFileReleaserAssociatedPtr releaser3;
   EXPECT_TRUE(Open(kFileName, &status, &file3, &releaser3));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file3.IsValid());
   EXPECT_TRUE(releaser3.is_bound());
 }
@@ -216,7 +216,7 @@ TEST_F(CdmStorageTest, MultipleFiles) {
   base::File file1;
   media::mojom::CdmFileReleaserAssociatedPtr releaser1;
   EXPECT_TRUE(Open(kFileName1, &status, &file1, &releaser1));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file1.IsValid());
   EXPECT_TRUE(releaser1.is_bound());
 
@@ -224,7 +224,7 @@ TEST_F(CdmStorageTest, MultipleFiles) {
   base::File file2;
   media::mojom::CdmFileReleaserAssociatedPtr releaser2;
   EXPECT_TRUE(Open(kFileName2, &status, &file2, &releaser2));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file2.IsValid());
   EXPECT_TRUE(releaser2.is_bound());
 
@@ -232,7 +232,7 @@ TEST_F(CdmStorageTest, MultipleFiles) {
   base::File file3;
   media::mojom::CdmFileReleaserAssociatedPtr releaser3;
   EXPECT_TRUE(Open(kFileName3, &status, &file3, &releaser3));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file3.IsValid());
   EXPECT_TRUE(releaser3.is_bound());
 }
@@ -245,7 +245,7 @@ TEST_F(CdmStorageTest, ReadWriteFile) {
   base::File file;
   media::mojom::CdmFileReleaserAssociatedPtr releaser;
   EXPECT_TRUE(Open(kFileName, &status, &file, &releaser));
-  EXPECT_EQ(status, CdmStorage::Status::kSuccess);
+  EXPECT_EQ(status, CdmStorage::Status::SUCCESS);
   EXPECT_TRUE(file.IsValid());
   EXPECT_TRUE(releaser.is_bound());
 
