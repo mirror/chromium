@@ -49,7 +49,7 @@ CONTENT_EXPORT bool InitializeSandbox(
 // then it just has to outlive this method call. |handles_to_inherit| is a list
 // of handles for the child process to inherit. The caller retains ownership of
 // the handles.
-CONTENT_EXPORT sandbox::ResultCode StartSandboxedProcess(
+CONTENT_EXPORT bool StartSandboxedProcess(
     SandboxedProcessLauncherDelegate* delegate,
     base::CommandLine* cmd_line,
     const base::HandlesToInheritVector& handles_to_inherit,
