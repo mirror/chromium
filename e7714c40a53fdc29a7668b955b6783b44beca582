@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f6c8859_e9a168b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-11T06:49:41Z",
+      "side": 1,
+      "message": "Oops. It\u0027s supposed to be \"when we try to open the app\".",
+      "parentUuid": "619cd65c_235be9a9",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac2174d_a56ceaa7",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fbc296_4f421294",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-11T06:49:41Z",
+      "side": 1,
+      "message": "The comment wasn\u0027t completely accurate. I changed it to better reflect the cases we want to handle. The bug comes up when the navigation in the new WebContents is being done synchronously.\n\nSadly, there is no is_being_created()/is_new(), but IsInitialNavigation() should be close enough.\n\n!HasOpener() is the only case we know of in which the navigation is done synchronously so we use it to decide if we open the app asynchronously.",
+      "parentUuid": "7ac2174d_a56ceaa7",
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0f77b5_bd7fbc1c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-11T06:49:41Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a good DCHECK that we could use here. IsInitialNavigation() which we use to figure out if it\u0027s a new WebContents , will still be true here :/",
+      "parentUuid": "d9e83f7d_d6ee17fa",
+      "range": {
+        "startLine": 149,
+        "startChar": 37,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
