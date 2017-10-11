@@ -51841,7 +51841,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="OfflinePages.Prefetching.StateCounts."
+<histogram name="OfflinePages.Prefetching.StateCounts"
     enum="OfflinePrefetchItemState">
   <owner>petewil@chromium.org</owner>
   <summary>
