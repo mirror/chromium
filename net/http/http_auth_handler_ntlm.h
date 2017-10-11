@@ -109,7 +109,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNTLM : public HttpAuthHandler {
 #endif
 
 #if defined(NTLM_PORTABLE)
-  HttpAuthHandlerNTLM();
+  HttpAuthHandlerNTLM(const HttpAuthPreferences* http_auth_preferences);
 #endif
 #if defined(NTLM_SSPI)
   HttpAuthHandlerNTLM(SSPILibrary* sspi_library,

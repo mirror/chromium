@@ -11524,6 +11524,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="390" label="DeviceTPMFirmwareUpdateSettings"/>
   <int value="391" label="RunAllFlashInAllowMode"/>
   <int value="392" label="AutoFillCreditCardEnabled"/>
+  <int value="393" label="NtlmV2Enabled"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
