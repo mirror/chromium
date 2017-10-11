@@ -96,13 +96,13 @@ video::-internal-media-controls-button-panel {
  * Media Buttons
  */
 
-audio::-webkit-media-controls-play-button,
 video::-webkit-media-controls-play-button {
   /* The play button is not used in the new design and will be removed in the
    * future. */
   display: none;
 }
 
+audio::-webkit-media-controls-play-button,
 audio::-webkit-media-controls-mute-button,
 video::-webkit-media-controls-mute-button,
 video::-internal-media-controls-cast-icon,
@@ -269,6 +269,10 @@ input[pseudo="-webkit-media-controls-timeline" i]::-webkit-slider-thumb {
   flex: 0 0 0;
 }
 
+.state-no-source input[pseudo="-webkit-media-controls-timeline" i]::-webkit-slider-thumb {
+  display: none;
+}
+
 input[pseudo="-webkit-media-controls-timeline" i]::-internal-track-segment-background {
   position: absolute;
   width: 100%;
@@ -361,4 +365,65 @@ label[pseudo="-internal-media-controls-overflow-menu-list-item"] input {
 video::-internal-media-controls-overflow-menu-list-item:hover,
 audio::-internal-media-controls-overflow-menu-list-item:hover {
   background-color: #e0e0e0;
+}
+
+/**
+ * Audio Controls
+ */
+
+audio::-webkit-media-controls {
+  min-width: 240px;
+}
+
+audio::-webkit-media-controls {
+  max-height: 54px;
+  flex-direction: row;
+  background: #F1F3F4;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+audio::-webkit-media-controls-overlay-enclosure {
+  display: none;
+}
+
+audio::-webkit-media-controls-panel {
+  flex-direction: row;
+  background: none;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+audio::-internal-media-controls-play-button {
+  display: none;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-image: -webkit-image-set(
+    url(default_100_percent/modern/ic_play_arrow.png) 1x,
+    url(default_200_percent/modern/ic_play_arrow.png) 2x);
+}
+
+audio::-webkit-media-controls-current-time-display {
+  text-align: right;
+  margin-left: 5px;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  min-width: auto;
+  flex: 0;
+  white-space: nowrap;
+}
+
+audio::-webkit-media-controls-timeline {
+  flex: 1 0 0px;
+  width: 0;
+}
+
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-mute-button,
+audio::-internal-media-controls-overflow-button {
+  flex: 0 0 32px;
 }
