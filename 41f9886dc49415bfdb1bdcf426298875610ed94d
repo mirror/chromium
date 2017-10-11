@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "6b679d0e_9cc3fd37",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Not done? :)",
+      "parentUuid": "2b0b1077_d3a1c55a",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fafbc_992c7323",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 4
@@ -288,6 +306,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "4a6b27b1_2adccdbe",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ada97e2f_832c088e",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Not done? :)",
+      "parentUuid": "6361662d_002cdad7",
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -493,6 +529,24 @@
     },
     {
       "key": {
+        "uuid": "bf9f3f9e_5ecbf962",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Hmm... not sure I follow.  And the latest version seems like it basically does this, except that it copies the array and implements includes() manually?  More comments there.",
+      "parentUuid": "dd4f6910_89822569",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "730fad39_43b8ca42",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
         "patchSetId": 4
@@ -609,6 +663,24 @@
       "side": 1,
       "message": "You are correct, most of the context menus already exist - but I haven\u0027t been able to find a way to pull information on context menu items that already exist without storing them in local/global storage, which was the general idea of what is happening here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/685456/2/chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js#20\n\nPart of this code was comparing which boxes had been checked to the object that were in \"keep\" (created) if they weren\u0027t stored there, the context menu was created.\n\nPlease let me know if I\u0027m missing something - if not, I can go back to storing created items and comparing them before creating the context menu items. \n\nBut the current code does work, it just throws \"already created\" errors, but doesn\u0027t effect functionality  --but I understand the issue behind sample extensions throwing errors. \n\nHope this makes sense",
       "parentUuid": "0b16a639_216407c3",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8577865b_9c809e30",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Commented in the latest patch with a suggestion.",
+      "parentUuid": "f1184e5c_d55deb94",
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

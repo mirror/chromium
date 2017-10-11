@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdc22ee_34212640",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "remove unneeded newline",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4228eb_77415d6b",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "indentation off",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4377ae_9df15c4a",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "This will throw an error if the context menu wasn\u0027t previously added.  How about instead:\n\nlet newlyDisabled \u003d [];\nlet newlyEnabled \u003d [];\nlet currentRemoved \u003d list.removedContextMenu.newValue;\nlet oldRemoved \u003d list.removedContextMenu.oldValue || [];\nfor (let locale of kLocales) {\n  if (currentRemoved.includes(locale) \u0026\u0026 !oldRemoved.includes(locale))\n    newlyDisabled.push(locale);\n  else if (oldRemoved.includes(locale) \u0026\u0026 !currentRemoved.includes(locale))\n    newlyEnabled.push(locale);\n}\n\nfor (let locale of newlyEnabled) {\n  chrome.contextMenus.create({...});\n}\n\nfor (let locale of newlyDisabled) {\n  chrome.contextMenus.remove(...);\n}\n\nThis will also handle adding/removing context menus from the options page.",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e80f849_9e652cbd",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "add ;",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1a1806_0c4f666b",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Doesn\u0027t this just copy the array into removed?  Why not just use list.removedContextMenu directly?",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8583bfb5_87b59e7a",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "Is there any difference between this and removed.includes(key)?",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6020db7_851dfac1",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T14:16:36Z",
+      "side": 1,
+      "message": "We could just let the storage handler in the background page handle creation/removal of context menu items.  So this would just be:\n\nlet removed \u003d [];\nfor (let checkbox of Array.from(checkboxes)) {\n  if (!checkbox.checked)\n    removed.push(checkbox.name);\n}\nchrome.storage.sync.set({removedContextMenu: removed});",
+      "revId": "35093614876f63ad9039edd44e73ab8221298daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
