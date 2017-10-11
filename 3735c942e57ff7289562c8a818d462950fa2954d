@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933939e2_1e9c0c2d",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-11T18:20:25Z",
+      "side": 1,
+      "message": "WDYT of folding node-\u003eCanStartSelection() into IsDraggable?\n\nI\u0027m thinking something like:\nif (drag_type !\u003d kDragSourceActionSelection \u0026\u0026 SelectTextInsteadOfDrag(node))\n  return nullptr;\n\nbool SelectTextInsteadOfDrag(node) {\n  if (!node-\u003eIsTextNode())\n    return false;\n  if (HasEditableStyle(node))\n    return false;\n  if (!node-\u003eCanStartSelection())\n    return false;\n  for (Node\u0026 node : NodeTraversal::InclusiveAncestorsOf(node)) {\n    if (node.IsHTMLElement() \u0026\u0026 ToHTMLElement(\u0026node)-\u003edraggable())\n      return false;\n  }\n  return true;\n}",
+      "revId": "3735c942e57ff7289562c8a818d462950fa2954d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
