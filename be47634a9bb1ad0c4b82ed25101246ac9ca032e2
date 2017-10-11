@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd59f869_a8f6ead2",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T13:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9a36106_6a564551",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a1db45_f3649f67",
         "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-10T15:27:43Z",
       "side": 1,
       "message": "This becomes a no-op with DCHECKs disabled. Please restructure so that this is outside the DCHECK - or use ASSERT/EXPECTs.",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7d9cd7_716009d5",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T13:18:01Z",
+      "side": 1,
+      "message": "Done.  Though it\u0027s a test so DCHECK is always enabled.",
+      "parentUuid": "d7a1db45_f3649f67",
       "range": {
         "startLine": 37,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed4bd757_40eac646",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T13:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708f1c22_4a3bea61",
+      "range": {
+        "startLine": 941,
+        "startChar": 9,
+        "endLine": 941,
+        "endChar": 15
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2839aef8_4d16819a",
         "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "23e0b164_16f8b0a3",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T13:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2839aef8_4d16819a",
+      "range": {
+        "startLine": 945,
+        "startChar": 35,
+        "endLine": 945,
+        "endChar": 40
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9c74647_67468294",
         "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9122be_9de4910e",
+        "filename": "base/metrics/persistent_memory_allocator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-11T13:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9c74647_67468294",
+      "range": {
+        "startLine": 955,
+        "startChar": 33,
+        "endLine": 955,
+        "endChar": 38
+      },
+      "revId": "be47634a9bb1ad0c4b82ed25101246ac9ca032e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
