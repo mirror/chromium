@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8cd504_e24238a2",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: missing \"to\"?",
+      "range": {
+        "startLine": 111,
+        "startChar": 64,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a8e509_f717b0e0",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: this now implements the RestrictedCookieManager interface, right? CookieStore was from an earlier version of this CL. Of course it is used by the web-exposed CookieStore interface, which might be helpful to mention, but it certainly doesn\u0027t implement that interface directly.",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfd87e1_c23bc8d4",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 41
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: It doesn\u0027t return all the cookies, it returns the cookies described by the options, right? (at least that\u0027s it intention)",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aeb1392_c376ddd7",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: ReserveInitialCapacity",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e526b4_fe19c7a6",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: emplace_back above already return back()",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb839d31_8d109ebe",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06de832e_2b49f129",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T20:57:38Z",
+      "side": 1,
+      "message": "nit: you no longer need to pass in the InterfaceProvider separately as execution_context-\u003eGetInterfaceProvider() exists now",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
