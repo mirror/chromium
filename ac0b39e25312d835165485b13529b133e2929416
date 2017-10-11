@@ -22,6 +22,30 @@
       "revId": "ac0b39e25312d835165485b13529b133e2929416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fa2362_287df64d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-11T15:42:16Z",
+      "side": 1,
+      "message": "+1 to include extension. Here we should have DCHECK(ArcSupportHost::IsAppAvailable(profile_)). Besides ToS this ext is responsible for showing errors.",
+      "parentUuid": "9080d671_e810033c",
+      "range": {
+        "startLine": 414,
+        "startChar": 27,
+        "endLine": 414,
+        "endChar": 67
+      },
+      "revId": "ac0b39e25312d835165485b13529b133e2929416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
