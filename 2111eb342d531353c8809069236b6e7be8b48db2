@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec4e47f_71945026",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-11T06:42:17Z",
+      "side": 1,
+      "message": "No move needed?\nbase/time/time.h says TimeTicks should be passed by value instead of by reference.",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 29
+      },
+      "revId": "2111eb342d531353c8809069236b6e7be8b48db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
