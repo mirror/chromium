@@ -16,6 +16,41 @@
       "revId": "f7e021374180a2f9b2946c4d8b9fdd2cd0068a78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077672c4_93dd0156",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-11T14:32:07Z",
+      "side": 1,
+      "message": "Done.  Everything is working as expected, modulo reporting a 0 size for the list.  Bug that required this identified \u0026 fixed.",
+      "parentUuid": "fa23068a_c0e78653",
+      "revId": "f7e021374180a2f9b2946c4d8b9fdd2cd0068a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e0dc950_86977f2c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-11T14:32:07Z",
+      "side": 1,
+      "message": "Not.",
+      "revId": "f7e021374180a2f9b2946c4d8b9fdd2cd0068a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
