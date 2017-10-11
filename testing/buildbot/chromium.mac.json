@@ -1274,6 +1274,9 @@
         }
       },
       {
+        "args": [
+          "--jobs=1"
+        ],
         "isolate_name": "telemetry_perf_unittests",
         "name": "telemetry_perf_unittests",
         "swarming": {
@@ -1283,6 +1286,9 @@
         }
       },
       {
+        "args": [
+          "--jobs=1"
+        ],
         "isolate_name": "telemetry_unittests",
         "name": "telemetry_unittests",
         "swarming": {
