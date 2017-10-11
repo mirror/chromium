@@ -124,6 +124,7 @@
 #include "sql/sql_memory_dump_provider.h"
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "ui/base/clipboard/clipboard.h"
+#include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
 
 #if defined(USE_AURA) || defined(OS_MACOSX)
@@ -169,6 +170,7 @@
 #include "content/common/sandbox_win.h"
 #include "net/base/winsock_init.h"
 #include "ui/base/l10n/l10n_util_win.h"
+#include "ui/display/win/screen_win.h"
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -517,6 +519,58 @@ class GpuDataManagerVisualProxy : public GpuDataManagerObserver {
 };
 
 }  // namespace internal
+#endif
+
+#if defined(OS_WIN)
+namespace {
+
+// Provides a bridge whereby display::win::ScreenWin can ask the GPU process
+// about the HDR status of the system.
+class HDRProxyGpu : public display::win::ScreenWin::HDRProxy {
+ public:
+  static void Initialize() {
+    display::win::ScreenWin::SetHDRProxy(new HDRProxyGpu);
+  }
+
+  // display::win::ScreenWin::HDRProxy implementation:
+  void SetScreenWin(display::win::ScreenWin* screen_win) override {
+    screen_win_ = screen_win;
+  }
+  void RequestHDRStatus() override {
+    // The request must be sent to the GPU process from the IO thread.
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                            base::Bind(&HDRProxyGpu::RequestOnIOThread, this));
+  }
+
+ private:
+  HDRProxyGpu() {}
+  virtual ~HDRProxyGpu() {}
+
+  void RequestOnIOThread() {
+    auto* gpu_process_host =
+        GpuProcessHost::Get(GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED, false);
+    if (gpu_process_host) {
+      gpu_process_host->RequestHDRStatus(
+          base::Bind(&HDRProxyGpu::GotResultOnIOThread, this));
+    } else {
+      bool hdr_enabled = false;
+      GotResultOnIOThread(hdr_enabled);
+    }
+  }
+  void GotResultOnIOThread(bool hdr_enabled) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&HDRProxyGpu::GotResult, this, hdr_enabled));
+  }
+  void GotResult(bool hdr_enabled) {
+    if (screen_win_)
+      screen_win_->SetHDREnabled(hdr_enabled);
+  }
+
+  display::win::ScreenWin* screen_win_ = nullptr;
+};
+
+}  // namespace
 #endif
 
 // The currently-running BrowserMainLoop.  There can be one or zero.
@@ -1531,6 +1585,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   }
 
 #if defined(OS_WIN)
+  if (base::FeatureList::IsEnabled(features::kHighDynamicRange))
+    HDRProxyGpu::Initialize();
   system_message_window_.reset(new media::SystemMessageWindowWin);
 #elif defined(OS_LINUX) && defined(USE_UDEV)
   device_monitor_linux_.reset(
