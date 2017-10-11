@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "973f1393_f38b094c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T18:36:40Z",
+      "side": 1,
+      "message": "nit: We can use the ABORT_EDITING_COMMAND_IF macro here.",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "2a4676875730d027abfd47298bbf16fabc692368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba323a4_54547aad",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T18:36:40Z",
+      "side": 1,
+      "message": "nit: We can use the ABORT_EDITING_COMMAND_IF macro here.",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 3
+      },
+      "revId": "2a4676875730d027abfd47298bbf16fabc692368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
