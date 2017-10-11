@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a57e4274_1bba6d68",
+        "filename": "google_apis/google_api_keys.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-10-11T00:24:44Z",
+      "side": 1,
+      "message": "It is possible that the default value is overridden in other ways, like env var or plist file.  You can use the suggestion discussed over chat.",
+      "range": {
+        "startLine": 123,
+        "startChar": 46,
+        "endLine": 123,
+        "endChar": 58
+      },
+      "revId": "7112430c8aff5e6903fb613c2cfcb87dfaa743e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
