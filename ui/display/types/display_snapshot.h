@@ -22,7 +22,7 @@
 namespace display {
 
 // This class represents the state of a display at one point in time. Platforms
-// will extend this class in order to add platform specific configuration and
+// may extend this class in order to add platform specific configuration and
 // identifiers required to configure this display.
 class DISPLAY_TYPES_EXPORT DisplaySnapshot {
  public:
@@ -52,7 +52,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
     return is_aspect_preserving_scaling_;
   }
   bool has_overscan() const { return has_overscan_; }
-  std::string display_name() const { return display_name_; }
+  const std::string& display_name() const { return display_name_; }
   const base::FilePath& sys_path() const { return sys_path_; }
 
   int64_t display_id() const { return display_id_; }
@@ -77,10 +77,10 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   }
 
   // Clones display state.
-  virtual std::unique_ptr<DisplaySnapshot> Clone();
+  std::unique_ptr<DisplaySnapshot> Clone();
 
   // Returns a textual representation of this display state.
-  virtual std::string ToString() const;
+  std::string ToString() const;
 
   // Used when no product id known.
   static const int64_t kInvalidProductID = -1;
@@ -88,26 +88,26 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   // Return the buffer format to be used for the primary plane buffer.
   static gfx::BufferFormat PrimaryFormat();
 
- protected:
+ private:
   // Display id for this output.
-  int64_t display_id_;
+  const int64_t display_id_;
 
   // Display's origin on the framebuffer.
   gfx::Point origin_;
 
-  gfx::Size physical_size_;
+  const gfx::Size physical_size_;
 
-  DisplayConnectionType type_;
+  const DisplayConnectionType type_;
 
-  bool is_aspect_preserving_scaling_;
+  const bool is_aspect_preserving_scaling_;
 
-  bool has_overscan_;
+  const bool has_overscan_;
 
-  bool has_color_correction_matrix_;
+  const bool has_color_correction_matrix_;
 
-  std::string display_name_;
+  const std::string display_name_;
 
-  base::FilePath sys_path_;
+  const base::FilePath sys_path_;
 
   DisplayModeList modes_;
 
@@ -119,13 +119,13 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   const DisplayMode* current_mode_;
 
   // "Best" mode supported by the output.
-  const DisplayMode* native_mode_;
+  const DisplayMode* const native_mode_;
 
   // Combination of manufacturer and product code.
-  int64_t product_id_;
+  const int64_t product_id_;
 
   // Maximum supported cursor size on this display.
-  gfx::Size maximum_cursor_size_;
+  const gfx::Size maximum_cursor_size_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DisplaySnapshot);
