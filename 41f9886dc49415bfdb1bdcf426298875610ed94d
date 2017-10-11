@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "e129a34d_310e2019",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-11T18:12:01Z",
+      "side": 1,
+      "message": "whoops! Done",
+      "parentUuid": "6b679d0e_9cc3fd37",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fafbc_992c7323",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 4
@@ -327,6 +345,24 @@
       "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cfa4abb_398f175f",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-11T18:12:01Z",
+      "side": 1,
+      "message": "Should countryLocales just be kLocales?",
+      "parentUuid": "ada97e2f_832c088e",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
