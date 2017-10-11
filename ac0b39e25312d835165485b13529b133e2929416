@@ -46,6 +46,30 @@
       "revId": "ac0b39e25312d835165485b13529b133e2929416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80f40b4_1a0526a3",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1223189
+      },
+      "writtenOn": "2017-10-11T16:51:36Z",
+      "side": 1,
+      "message": "when IsArcOptInVerificationDisabled, actually we don\u0027t have ArcSupportHost and ARC does work. Since this bug is found in autologin mode, I guess we actually don\u0027t want to show TOS to users.\nPerhaps arc shouldn\u0027t get run in this mode, I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d773440\n\nLet me revert this one.",
+      "parentUuid": "e8fa2362_287df64d",
+      "range": {
+        "startLine": 414,
+        "startChar": 27,
+        "endLine": 414,
+        "endChar": 67
+      },
+      "revId": "ac0b39e25312d835165485b13529b133e2929416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
