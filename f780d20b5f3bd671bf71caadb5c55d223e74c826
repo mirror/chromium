@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fdff56e_8f9c5b94",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T00:53:17Z",
+      "side": 1,
+      "message": "- Maybe name this ForceSinkDiscoveryCallback or something like that? (this class isn\u0027t specific to MediaRouteProvider)\n- Can this method be part of the MediaSinkService interface?",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a678019_fb5019cd",
+        "filename": "chrome/browser/media/router/discovery/media_sink_service_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T00:53:17Z",
+      "side": 1,
+      "message": "nit: move RecordDeviceCounts() to here?",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777b018b_f35c2748",
+        "filename": "chrome/browser/media/router/discovery/media_sink_service_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T00:53:17Z",
+      "side": 1,
+      "message": "It seems this should be private?",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959e1bfe_d575b0c8",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T00:53:17Z",
+      "side": 1,
+      "message": "Seems ProvideSinks should be in MediaRouterDesktop, and also not part of MediaRouter interface?",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
