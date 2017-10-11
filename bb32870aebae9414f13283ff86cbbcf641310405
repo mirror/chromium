@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7efab162_82c53fae",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-10-11T05:07:22Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to kUseLocalHostForDevToolsHttpServer, because it really is just a flag that is passed in the HostPortPair. I\u0027ve also added it to headless_devtools.cc, where it is tested.",
+      "parentUuid": "33b3f187_cff37391",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 40
+      },
+      "revId": "bb32870aebae9414f13283ff86cbbcf641310405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0156195c_fb1f1f59",
         "filename": "headless/lib/browser/headless_devtools.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T04:38:31Z",
       "side": 1,
       "message": "could you just do:\nif (endpoint.host() !\u003d \"localhost\") {\n\n}",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "bb32870aebae9414f13283ff86cbbcf641310405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bca46c_8822d47e",
+        "filename": "headless/lib/browser/headless_devtools.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230841
+      },
+      "writtenOn": "2017-10-11T05:07:22Z",
+      "side": 1,
+      "message": "Actually no, because the IPAddress.AssignFromIPLiteral won\u0027t fail when given an empty string, believe it or not. I followed it far enough in to see that an empty string is valid, but I\u0027m not certain what it parses to. I think it\u0027s 0.0.0.0.",
+      "parentUuid": "0156195c_fb1f1f59",
       "range": {
         "startLine": 34,
         "startChar": 7,
