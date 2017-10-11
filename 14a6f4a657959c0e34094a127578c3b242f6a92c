@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b109095_f42a847f",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-11T18:46:07Z",
+      "side": 1,
+      "message": "We don\u0027t reply to the same thread. This is called on Mojo thread. Responses are received on UI thread.",
+      "parentUuid": "8f68e3db_f1c7388c",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecc7100b_84bed549",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "310714e5_d4b5b461",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-11T18:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecc7100b_84bed549",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 15
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b4db05_426a7333",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-10T16:23:36Z",
       "side": 1,
       "message": "You\u0027ll eventually want to create a typemapping instead of doing manual conversions (security reviewers will ask you to do this). See https://cs.chromium.org/chromium/src/components/arc/common/app.typemap for an example.",
+      "range": {
+        "startLine": 186,
+        "startChar": 25,
+        "endLine": 186,
+        "endChar": 37
+      },
+      "revId": "14a6f4a657959c0e34094a127578c3b242f6a92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de5819f_1324e274",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-11T18:46:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t lend itself to typemapping.\n1) Like in this particular example there\u0027s no 1-1 correspondence between mojo classes and chrome classes.\n2) Almost all mojo classes are unidirectional (only for input or only for output) which mojo doesn\u0027t support.\n3) Printing enums are a mess (on Chrome side).",
+      "parentUuid": "35b4db05_426a7333",
       "range": {
         "startLine": 186,
         "startChar": 25,
