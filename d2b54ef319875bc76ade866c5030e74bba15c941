@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e446490e_801b4c7f",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "Why are we no longer using our mOutputBuffer array?",
+      "range": {
+        "startLine": 412,
+        "startChar": 31,
+        "endLine": 412,
+        "endChar": 47
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4bcb35_ccf21bae",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "Is there a reason this no longer catches IllegalState?",
+      "range": {
+        "startLine": 418,
+        "startChar": 9,
+        "endLine": 418,
+        "endChar": 0
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc07526_ba06f820",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "Declaration can move closer to usage.",
+      "range": {
+        "startLine": 481,
+        "startChar": 19,
+        "endLine": 481,
+        "endChar": 36
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960dc0c1_abaed0e0",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "Naming style not consistent here",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 482,
+        "endChar": 28
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98762616_2bfe4fe0",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "Does this need to update mLastPresentationTimeUs?",
+      "range": {
+        "startLine": 518,
+        "startChar": 48,
+        "endLine": 518,
+        "endChar": 67
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4a5088_603d9916",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-11T01:20:22Z",
+      "side": 1,
+      "message": "I\u0027m worried about doubling the memory consumed by output buffers. Wouldn\u0027t it be better to keep a reference to the ByteBuffer that MediaCodec#getOutputBuffer() returns, maybe along with the offset, size, and config?",
+      "range": {
+        "startLine": 553,
+        "startChar": 32,
+        "endLine": 553,
+        "endChar": 49
+      },
+      "revId": "d2b54ef319875bc76ade866c5030e74bba15c941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
