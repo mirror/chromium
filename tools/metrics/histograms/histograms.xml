@@ -8245,6 +8245,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="CheckerableImageCount" enum="CheckerableImageType">
+  <owner>khushalsagar@chromium.org</owner>
+  <summary>
+    The number of images which could have been checkered (async decoded) for a
+    performance gain, split by the DOM element type on which they were used.
+  </summary>
+</histogram>
+
 <histogram name="ChildProcess.BadMessgeTerminated" enum="ProcessType2">
   <owner>jam@chromium.org</owner>
   <summary>

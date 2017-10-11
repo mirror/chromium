@@ -216,6 +216,9 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                                         const FloatRect& dest,
                                         const FloatSize& image_size);
 
+  enum class ImageType { kImg, kSvg, kCss };
+  static void RecordCheckerableImageUMA(Image&, ImageType);
+
   virtual sk_sp<PaintRecord> PaintRecordForContainer(
       const KURL& url,
       const IntSize& container_size,
@@ -263,6 +266,9 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   // Initializes a PaintImageBuilder with the metadata flags for the PaintImage.
   void InitPaintImageBuilder(PaintImageBuilder&);
+
+  // Whether or not size is available yet.
+  virtual bool IsSizeAvailable() { return true; }
 
  private:
   bool image_observer_disabled_;
