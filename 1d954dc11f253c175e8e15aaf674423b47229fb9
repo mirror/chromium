@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58c7474b_1cf059f5",
+        "filename": "ios/chrome/browser/sync/sync_setup_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-11T17:26:16Z",
+      "side": 1,
+      "message": "Renamed both methods preferred.",
+      "parentUuid": "27fabfba_18d47c28",
+      "revId": "1d954dc11f253c175e8e15aaf674423b47229fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8111e9c6_d6ecfac9",
         "filename": "ios/chrome/browser/sync/sync_setup_service.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "1d954dc11f253c175e8e15aaf674423b47229fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174df3ef_e8f570f6",
+        "filename": "ios/chrome/browser/sync/sync_setup_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-11T17:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8111e9c6_d6ecfac9",
+      "revId": "1d954dc11f253c175e8e15aaf674423b47229fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
