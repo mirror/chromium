@@ -22,6 +22,30 @@
       "revId": "74ee3ce246028acd76222ff7a2d5b4438e7373af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb2501c_768751bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/ColorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-11T18:06:58Z",
+      "side": 0,
+      "message": "I opted to remove it since it would take all the same parameters + one for color. I don\u0027t think it\u0027s saving much if any trouble. I can do that if you think it is more clear.",
+      "parentUuid": "05653848_082e0626",
+      "range": {
+        "startLine": 171,
+        "startChar": 26,
+        "endLine": 171,
+        "endChar": 52
+      },
+      "revId": "74ee3ce246028acd76222ff7a2d5b4438e7373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
