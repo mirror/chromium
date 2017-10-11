@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032233a4_efde63e0",
+        "filename": "base/task_scheduler/platform_native_worker_pool_win.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "Nit: This should be SchedulerWorkerPool.\n\nI had an earlier review with pkasting@ regarding this. Since this class doesn\u0027t directly extend CanScheduleSequenceObserver, it would be unexpected to see this in the overrides section.",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78fb178_fb207caa",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "Note this comes from CanScheduleSequenceObserver.",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8719843_fc864577",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "This should probably going at the beginning of the list.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812cecd5_1d057f5c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "Similarly, this comes from SchedulerWorkerPool (which brings in CanScheduleSequenceObserver).",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbee984_dc941ae9",
+        "filename": "base/task_scheduler/scheduler_worker_stack_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "This should also probably go to the top. Apply to the other overrides that are public.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a590f1d6_3603f90e",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "It would probably be useful to define the possible states for a sequence (I\u0027ve gathered IDLE, PREEMPTED, SCHEDULED, Running(?).",
+      "range": {
+        "startLine": 43,
+        "startChar": 42,
+        "endLine": 43,
+        "endChar": 46
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7856008_9431e24d",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T19:10:15Z",
+      "side": 1,
+      "message": "Scheduled.",
+      "range": {
+        "startLine": 61,
+        "startChar": 38,
+        "endLine": 61,
+        "endChar": 48
+      },
+      "revId": "7d6be180e2cfc0d730387817df3057809103336d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
