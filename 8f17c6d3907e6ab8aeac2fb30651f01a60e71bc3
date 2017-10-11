@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d81d7c6d_5efb92e2",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "It was actually decided as part of the review when I added this function. Folks found empty not very intuitive from an ActiveEntry\u0027s perspective and I agree since ActiveEntry might have disk_entry and so should  not be considered empty.",
+      "parentUuid": "fb645839_cb3b3f59",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44212d21_af78fc8b",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 55
@@ -92,6 +116,30 @@
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a443d4e_e1479af3",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Agree.",
+      "parentUuid": "44212d21_af78fc8b",
+      "range": {
+        "startLine": 331,
+        "startChar": 12,
+        "endLine": 331,
+        "endChar": 21
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "650febbd_c3c28eb3",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85e12c4d_2a485025",
+      "range": {
+        "startLine": 865,
+        "startChar": 16,
+        "endLine": 865,
+        "endChar": 29
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23fedad4_2040bca6",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 55
@@ -132,6 +204,24 @@
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cca021_0ab38502",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23fedad4_2040bca6",
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6dbb71a6_8fcbb07e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18f7f39_64084e54",
+      "range": {
+        "startLine": 90,
+        "startChar": 50,
+        "endLine": 90,
+        "endChar": 61
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7cb0ec_3088aa8b",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 55
@@ -225,6 +339,30 @@
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2ec3e8_6167b3b9",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "This is now changed to call DoLoop inside InitiateTruncateEntry.",
+      "parentUuid": "fa7cb0ec_3088aa8b",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -251,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "b0c45fe0_460ff03f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Also called from unit tests.",
+      "parentUuid": "28e0eb91_31f5d57a",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f820117_7a4d4b3c",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 55
@@ -271,6 +433,30 @@
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912eca5a_2c2b99dc",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f820117_7a4d4b3c",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 23
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

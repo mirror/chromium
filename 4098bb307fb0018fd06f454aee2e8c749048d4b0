@@ -846,6 +846,30 @@
     },
     {
       "key": {
+        "uuid": "c5145c1d_f371cadc",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "One of the paths just went away with our ASYNC_OP_COMPLETE_PRE_TRUNCATE related changes. Since when the last transaction is destroyed, we would be in state ASYNC_OP_COMPLETE_PRE_TRUNCATE, OnDataReceived will never have the path all_writers_.empty().\n\nAdded a test case for the MidReadDeleteActiveTransaction for the RemoveTransaction path.\nThe existing test case WritersTest.ReadMultipleNetworkReadFailed and HttpCache.TruncatedByContentLength2 follow the path through OnNetworkReadFailure.",
+      "parentUuid": "426f8d10_6c4e39d7",
+      "range": {
+        "startLine": 624,
+        "startChar": 20,
+        "endLine": 624,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6affda12_76946b1c",
         "filename": "net/http/http_cache_writers_unittest.cc",
         "patchSetId": 45

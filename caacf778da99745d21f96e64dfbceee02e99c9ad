@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "b5506bd0_c4816bfb",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "398cb272_fd349ceb",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69690beb_0e794569",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -278,6 +296,24 @@
       "side": 1,
       "message": "You either run the doloop here or in InitiateTruncateEntry. Either way you need to not touch any members after. It makes no difference. So just add a comment (to the function header and here):\n\nif (!success \u0026\u0026 InitiateTruncateEntry()) { \n  // |this| may have been deleted after truncation, so don\u0027t touch any members.\n  return;\n}\n\ncache_-\u003eCurrentWritersDoneWritingToEntry(entry_, success, TransactionSet());",
       "parentUuid": "8dcfee8b_0a67bacd",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c71c63d_385c2e30",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e4b15f7_441800d6",
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

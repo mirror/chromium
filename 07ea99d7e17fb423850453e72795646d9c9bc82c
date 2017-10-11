@@ -69,6 +69,30 @@
       "revId": "07ea99d7e17fb423850453e72795646d9c9bc82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab61885_f07c8ef2",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 7208,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 0,
+      "message": "In the future patches because we have changed truncation to only happen after the outstanding operation is complete, the truncated flag is only checked after we invoke base::RunLoop().RunUntilIdle() so that will make sure that the test is consistent.",
+      "parentUuid": "99d8b591_92569472",
+      "range": {
+        "startLine": 7208,
+        "startChar": 29,
+        "endLine": 7208,
+        "endChar": 47
+      },
+      "revId": "07ea99d7e17fb423850453e72795646d9c9bc82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

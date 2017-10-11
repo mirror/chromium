@@ -69,6 +69,30 @@
       "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2394c388_7bd5b0c9",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 7733,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T20:51:15Z",
+      "side": 0,
+      "message": "The way redirect is implemented is that it behaves as a normal HC::T except that after receiving the headers , urlRequest invokes DoneReading. So what is now happening is that it gets added to writers like a normal transaction and in DoneReading the network transaction is reset. When the test delegate gets the redirect notification the network transaction is not around to provide the headers. Do you see any changes that we should make here or is it ok to have this behavior? Thanks for this question.",
+      "parentUuid": "9e52e24f_fcb32d27",
+      "range": {
+        "startLine": 7733,
+        "startChar": 6,
+        "endLine": 7733,
+        "endChar": 29
+      },
+      "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
