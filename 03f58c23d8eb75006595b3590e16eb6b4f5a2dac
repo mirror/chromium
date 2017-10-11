@@ -63,6 +63,24 @@
       "revId": "03f58c23d8eb75006595b3590e16eb6b4f5a2dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a805dc_b54226df",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-11T21:32:32Z",
+      "side": 1,
+      "message": "Aha yeah, it should only destroy if this didn\u0027t just make. Thanks.\n\n(FTR I\u0027m not trying to land this right now, I\u0027m exploring a mojo interface to hear about mode first, and then this can be less tightly coupled to the context and the renderer wont ever have to choose to use software compositing on its own - see viz slack if u want to see the struggles).\n\nBut I appreciate the buyin and discovery of other fundamental issues for clients. The RenderThreadImpl should be taken with a grain of salt for now.",
+      "parentUuid": "63953b6c_4fb158b6",
+      "revId": "03f58c23d8eb75006595b3590e16eb6b4f5a2dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
