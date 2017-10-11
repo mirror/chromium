@@ -28,7 +28,7 @@ class Thread;
 
 // NSURLSessionDataDelegate delegate implementation used by the tests to
 // wait for a response and check its status.
-@interface TestDelegate : NSObject<NSURLSessionDataDelegate>
+@interface PerfTestDelegate : NSObject<NSURLSessionDataDelegate>
 
 // Error the request this delegate is attached to failed with, if any.
 @property(retain, atomic) NSError* error;
@@ -60,7 +60,7 @@ namespace cronet {
 
 // A base class that should be extended by all other Cronet tests.
 // The class automatically starts and stops the test QUIC server.
-class CronetTestBase : public ::testing::Test {
+class CronetPerfTestBase : public ::testing::Test {
  protected:
   static bool CalculatePublicKeySha256(const net::X509Certificate& cert,
                                        net::HashValue* out_hash_value);
@@ -74,7 +74,7 @@ class CronetTestBase : public ::testing::Test {
 
   ::testing::AssertionResult IsResponseSuccessful();
 
-  TestDelegate* delegate_;
+  PerfTestDelegate* delegate_;
 };  // class CronetTestBase
 
 }  // namespace cronet
