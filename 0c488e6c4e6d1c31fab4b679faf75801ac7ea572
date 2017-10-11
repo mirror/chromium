@@ -16,6 +16,24 @@
       "revId": "0c488e6c4e6d1c31fab4b679faf75801ac7ea572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36ff029_61fabf04",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-10-11T07:18:09Z",
+      "side": 1,
+      "message": "Yes, but this should only occur until the three worker types start passing valid interface providers; then this can be unconditional. Added a TODO.",
+      "parentUuid": "5527513a_410ab89b",
+      "revId": "0c488e6c4e6d1c31fab4b679faf75801ac7ea572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
