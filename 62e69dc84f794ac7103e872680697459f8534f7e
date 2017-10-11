@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a217d6_ee6b7e53",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-11T17:20:07Z",
+      "side": 1,
+      "message": "It seems that the problem is that a queue becomes unregistered. Let\u0027s check for this instead:\n\nif (!main_thread_only().task_queue_manager) {\n  state-\u003eSetBoolean(\"unregistered\", true);\n  return;\n}",
+      "revId": "62e69dc84f794ac7103e872680697459f8534f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
