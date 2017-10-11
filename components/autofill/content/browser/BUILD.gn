@@ -69,6 +69,7 @@ source_set("unit_tests") {
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
     "//components/autofill/core/common",
+    "//components/security_state/content",
     "//content/public/browser",
     "//content/public/common",
     "//content/test:test_support",

@@ -20,6 +20,7 @@
 #include "components/autofill/core/browser/test_autofill_client.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_data_predictions.h"
+#include "components/security_state/content/ssl_status_input_event_data.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -244,6 +245,7 @@ class MockAutofillManager : public AutofillManager {
 class MockAutofillClient : public TestAutofillClient {
  public:
   MOCK_METHOD0(OnFirstUserGestureObserved, void());
+  MOCK_METHOD1(DidInteractWithCreditCardInput, void(content::RenderFrameHost*));
 };
 
 class TestContentAutofillDriver : public ContentAutofillDriver {
@@ -469,14 +471,14 @@ TEST_F(ContentAutofillDriverTest, PreviewFieldWithValue) {
 TEST_F(ContentAutofillDriverTest, CreditCardFormInteraction) {
   GURL url("http://example.test");
   NavigateAndCommit(url);
+  EXPECT_CALL(*test_autofill_client_,
+              DidInteractWithCreditCardInput(testing::_));
   driver_->DidInteractWithCreditCardForm();
 
   content::NavigationEntry* entry =
       web_contents()->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
   EXPECT_EQ(url, entry->GetURL());
-  EXPECT_TRUE(!!(entry->GetSSL().content_status &
-                 content::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP));
 }
 
 // Tests that credit card form interactions are *not* recorded on the current
@@ -484,14 +486,15 @@ TEST_F(ContentAutofillDriverTest, CreditCardFormInteraction) {
 TEST_F(ContentAutofillDriverTest, CreditCardFormInteractionOnHTTPS) {
   GURL url("https://example.test");
   NavigateAndCommit(url);
+  EXPECT_CALL(*test_autofill_client_,
+              DidInteractWithCreditCardInput(testing::_))
+      .Times(0);
   driver_->DidInteractWithCreditCardForm();
 
   content::NavigationEntry* entry =
       web_contents()->GetController().GetVisibleEntry();
   ASSERT_TRUE(entry);
   EXPECT_EQ(url, entry->GetURL());
-  EXPECT_FALSE(!!(entry->GetSSL().content_status &
-                  content::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP));
 }
 
 }  // namespace autofill
