@@ -701,6 +701,10 @@ void NavigatorImpl::DidNavigate(
   }
 }
 
+void NavigatorImpl::DidStopLoading(RenderFrameHostImpl* render_frame_host) {
+  controller_->FrameStoppedLoading(render_frame_host->frame_tree_node());
+}
+
 bool NavigatorImpl::ShouldAssignSiteForURL(const GURL& url) {
   // about:blank should not "use up" a new SiteInstance.  The SiteInstance can
   // still be used for a normal web site.

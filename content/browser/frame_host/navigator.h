@@ -80,6 +80,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) {}
 
+  virtual void DidStopLoading(RenderFrameHostImpl* render_frame_host) {}
+
   // Called by the NavigationController to cause the Navigator to navigate
   // to the current pending entry. The NavigationController should be called
   // back with RendererDidNavigate on success or DiscardPendingEntry on failure.

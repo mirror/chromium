@@ -1157,8 +1157,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
         params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
         params.url, params.referrer, params.method, params.post_id);
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
-        frame_entry, true, rfh->frame_tree_node(),
-        delegate_->GetFrameTree()->root());
+        frame_entry, true, rfh->frame_tree_node(), nullptr);
     if (new_entry->GetURL().GetOrigin() != params.url.GetOrigin()) {
       // TODO(jam): we had one report of this with a URL that was redirecting to
       // only tildes. Until we understand that better, don't copy the cert in
@@ -2273,6 +2272,11 @@ void NavigationControllerImpl::DiscardPendingEntry(bool was_failure) {
 void NavigationControllerImpl::SetPendingNavigationSSLError(bool error) {
   if (pending_entry_)
     pending_entry_->set_ssl_error(error);
+}
+
+void NavigationControllerImpl::FrameStoppedLoading(FrameTreeNode* node) {
+  if (auto* entry = GetLastCommittedEntry())
+    entry->ClearEntriesForMissingChildren(node);
 }
 
 void NavigationControllerImpl::DiscardTransientEntry() {
