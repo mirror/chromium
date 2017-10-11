@@ -69,6 +69,42 @@
       "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edbf932_697808ce",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-11T23:25:52Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like it - see line 44 which calls Update() and ignores return code.",
+      "parentUuid": "2078de6b_fc85ed43",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bd9056_bfa4b910",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-11T23:25:52Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like it - see line 44 which calls Update() and ignores return code.",
+      "parentUuid": "2078de6b_fc85ed43",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
