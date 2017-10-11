@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4532b33d_7dd7bc92",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-11T18:52:30Z",
+      "side": 1,
+      "message": "This opts everything into the set-a-SkColorSpace-for-SkSurfaces mode, resulting in the various layout test failures.",
+      "revId": "d4542173f64c6871c69e3e8d3c4ce955937661dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
