@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/constants.mojom.h"
 #include "android_webview/common/render_view_messages.h"
 #include "android_webview/common/url_constants.h"
 #include "android_webview/grit/aw_resources.h"
@@ -89,7 +90,7 @@ void AwContentRendererClient::RenderThreadStarted() {
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   if (!spellcheck_) {
-    spellcheck_ = base::MakeUnique<SpellCheck>();
+    spellcheck_ = base::MakeUnique<SpellCheck>(this);
     thread->AddObserver(spellcheck_.get());
   }
 #endif
@@ -177,7 +178,7 @@ void AwContentRendererClient::RenderFrameCreated(
   }
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  new SpellCheckProvider(render_frame, spellcheck_.get());
+  new SpellCheckProvider(render_frame, spellcheck_.get(), this);
 #endif
 }
 
@@ -362,6 +363,14 @@ bool AwContentRendererClient::ShouldUseMediaPlayerForURL(const GURL& url) {
     }
   }
   return false;
+}
+
+void AwContentRendererClient::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  RenderThread::Get()->GetConnector()->BindInterface(
+      service_manager::Identity(android_webview::mojom::kServiceName),
+      interface_name, std::move(interface_pipe));
 }
 
 bool AwContentRendererClient::UsingSafeBrowsingMojoService() {
