@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e333255_7bd59923",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:03:34Z",
+      "side": 1,
+      "message": "DCHECK can produce difficult-to-read stack traces so I wouldn\u0027t necessarily change that.",
+      "parentUuid": "11d798b1_48533edc",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58af7015_4bcfbb04",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4

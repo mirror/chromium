@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "5e0d692b_72a09513",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:03:34Z",
+      "side": 1,
+      "message": "DCHECK is specifically intended for conditions that NEVER happen. If you are inclined to check for this condition, then it is inappropriate to DCHECK.",
+      "parentUuid": "1077b9e1_b15dba10",
+      "revId": "26a03acd5fa1706a810bce5c8b83422ed744f4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "facce82d_7510e14c",
         "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
         "patchSetId": 2
