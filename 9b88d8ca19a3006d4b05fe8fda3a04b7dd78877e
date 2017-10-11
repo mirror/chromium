@@ -16,6 +16,24 @@
       "revId": "9b88d8ca19a3006d4b05fe8fda3a04b7dd78877e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c4b173_5e2ede5a",
+        "filename": "chrome/test/data/webui/cr_components/network_config_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-11T01:21:19Z",
+      "side": 1,
+      "message": "suiteSetup is only called once ever (the name is confusing) and we need to reset the api once per suite. It would probably be more clear to remove it from suiteSetup, so done.",
+      "parentUuid": "e252619f_bd46281e",
+      "revId": "9b88d8ca19a3006d4b05fe8fda3a04b7dd78877e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
