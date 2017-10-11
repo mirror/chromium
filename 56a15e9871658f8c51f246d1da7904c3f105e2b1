@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b6b9a86e_ee736945",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-11T17:42:19Z",
+      "side": 1,
+      "message": "Actually, that is a good point. I was trying to mimic the old way before PageInfo, but now I can just not add a page_info. Also the ProcessMetricsCollector works if we have exactly one PageInfo, so it should not have a problem with the new logic.",
+      "parentUuid": "93444a37_cae0a557",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5184a8_590ddc39",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
         "patchSetId": 14
