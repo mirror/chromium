@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "components/ntp_tiles/tile_visual_type.h"
+
 // Attributes of a favicon. A favicon is represented either with an image or
 // with a fallback monogram of a given color and background color.
 @interface FaviconAttributes : NSObject
@@ -31,6 +33,8 @@
                                 backgroundColor:
                                     (nonnull UIColor*)backgroundColor
                          defaultBackgroundColor:(BOOL)defaultBackgroundColor;
++ (ntp_tiles::TileVisualType)tileVisualTypeFromAttributes:
+    (nullable FaviconAttributes*)attributes;
 
 - (nullable instancetype)init NS_UNAVAILABLE;
 @end
