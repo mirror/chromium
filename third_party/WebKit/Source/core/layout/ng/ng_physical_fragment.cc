@@ -184,6 +184,44 @@ NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {
   return box_strut.SnapToDevicePixels();
 }
 
+// TODO(kojii): Remove this function when NGPaintFragment is updated to
+// type-safe NGPhysicalRect with self/contents visual rect distinctions.
+LayoutRect NGPhysicalFragment::LocalVisualRect() const {
+  if (IsBox())
+    return ToNGPhysicalBoxFragment(*this).ContentsVisualRect().ToLayoutRect();
+  return {LayoutPoint(), Size().ToLayoutSize()};
+}
+
+void NGPhysicalFragment::PropagateContentsVisualRect(
+    NGPhysicalRect* parent_visual_rect) const {
+  switch (Type()) {
+    case NGPhysicalFragment::kFragmentBox: {
+      const auto& box = ToNGPhysicalBoxFragment(*this);
+      NGPhysicalRect visual_rect = box.ContentsVisualRect();
+      // TODO(kojii): Implement self VisualRect.
+      visual_rect.location += Offset();
+      parent_visual_rect->Unite(visual_rect);
+      break;
+    }
+    case NGPhysicalFragment::kFragmentText: {
+      const auto& text = ToNGPhysicalTextFragment(*this);
+      NGPhysicalRect visual_rect = text.LocalVisualRect();
+      visual_rect.location += Offset();
+      parent_visual_rect->Unite(visual_rect);
+      break;
+    }
+    case NGPhysicalFragment::kFragmentLineBox: {
+      const auto& line_box = ToNGPhysicalLineBoxFragment(*this);
+      NGPhysicalRect visual_rect;
+      for (const auto& child : line_box.Children())
+        child->PropagateContentsVisualRect(&visual_rect);
+      visual_rect.location += Offset();
+      parent_visual_rect->Unite(visual_rect);
+      break;
+    }
+  }
+}
+
 RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
   switch (Type()) {
     case kFragmentBox:
@@ -203,10 +241,6 @@ RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
       break;
   }
   return nullptr;
-}
-
-void NGPhysicalFragment::UpdateVisualRect() const {
-  SetVisualRect({LayoutPoint(), LayoutSize(Size().width, Size().height)});
 }
 
 String NGPhysicalFragment::ToString() const {
