@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99e8594a_f4fc0c9d",
+        "filename": "chrome/browser/resources/download_internals/download_internals.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cae060_396b8404",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10fc66c3_616e68ea",
         "filename": "chrome/browser/resources/download_internals/download_internals.html",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d868cac1_79443164",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10fc66c3_616e68ea",
+      "range": {
+        "startLine": 8,
+        "startChar": 56,
+        "endLine": 8,
+        "endChar": 60
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7c137878_150c6c9c",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb43f9b2_ce38cda9",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40107c95_23509cbb",
         "filename": "chrome/browser/resources/download_internals/download_internals.html",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb8ed7b_916fe1f3",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40107c95_23509cbb",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 57
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "79f1988b_33ed2fb1",
+        "filename": "chrome/browser/resources/download_internals/download_internals.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b30bc5_6c7a11fd",
+      "range": {
+        "startLine": 44,
+        "startChar": 34,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a9063f0_dda61b63",
         "filename": "chrome/browser/resources/download_internals/download_internals.js",
         "patchSetId": 4
@@ -128,6 +248,24 @@
       "writtenOn": "2017-10-10T21:58:46Z",
       "side": 1,
       "message": "please provide Closure annotations for these functions, specifying the types of the params and return values (if any). this helps prevent unintended breakages in the future, which is important for -internals pages that tend to be less tested than our \"production\" pages",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3c2d41_9ba1c864",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done good call!",
+      "parentUuid": "7a9063f0_dda61b63",
       "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "cc067bd5_27e54baf",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Thanks that\u0027s so much nicer.  Sorry I haven\u0027t done much web programming!",
+      "parentUuid": "b06dbc27_bbaa83e4",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f563984_54325279",
         "filename": "chrome/browser/resources/download_internals/download_internals.js",
         "patchSetId": 4
@@ -165,6 +321,24 @@
       "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df65e48_66aac2d9",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f563984_54325279",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "503b9520_b47471f7",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b4f80a5_d4824834",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18388115_ffeef8bc",
         "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
         "patchSetId": 4
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "d5b23292_937368be",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18388115_ffeef8bc",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4715ed53_678bf773",
         "filename": "chrome/browser/resources/download_internals/download_internals_visuals.js",
         "patchSetId": 4
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "3ed1dab6_932a8932",
+        "filename": "chrome/browser/resources/download_internals/download_internals_visuals.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4715ed53_678bf773",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ec78b82_b9dc62fc",
         "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui_message_handler.cc",
         "patchSetId": 4
@@ -245,6 +485,24 @@
       "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c2bb91_4f97a1e6",
+        "filename": "chrome/browser/ui/webui/download_internals/download_internals_ui_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec78b82_b9dc62fc",
+      "revId": "99f0b2fd2036001e7fde516284e3abc6726ca621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
