@@ -94,6 +94,30 @@
       "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8585e5d7_74aa0a46",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-10-11T18:22:08Z",
+      "side": 1,
+      "message": "I got a chance to read the article you pointed me to. I\u0027m good keeping it at z-index: 1 here since the z-index makes more sense in the local context (cr-toolbar\u0027s z-index is set with each instance as well).\n\nYou\u0027re right that z-index 100 is arbitrary. Let\u0027s keep it at 1 and adjusting in the future if there\u0027s a conflict. Just FIY: cr-toolbar\u0027s z-index is 2 and we have z-index ranging from -1 to 3 in settings.",
+      "parentUuid": "b520cc86_9c34ce11",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
