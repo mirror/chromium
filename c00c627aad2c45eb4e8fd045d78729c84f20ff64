@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6077ba91_85ca0dac",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T22:52:57Z",
+      "side": 1,
+      "message": "I\u0027m not clear on the name of this function.  Is it \"get first nav id, or zero?\" Maybe add a comment, or a more clear name.",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 41
+      },
+      "revId": "c00c627aad2c45eb4e8fd045d78729c84f20ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26886dba_7d4305d8",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T22:52:57Z",
+      "side": 1,
+      "message": "nit: Add a comment as to the expected relationship of the pair entries.  I can\u0027t tell from reading it",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 26
+      },
+      "revId": "c00c627aad2c45eb4e8fd045d78729c84f20ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5515710a_4b172c63",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T22:52:57Z",
+      "side": 1,
+      "message": "nit: Rather than vlog, can you do \n  assert_true(..) \u003c\u003c \"case: \" \u003c\u003c t\n That way you get actionable results from the first test failure, rather than having to recompile/rerun w/ verbose logging. Or maybe that only work with EXPECT_TRUE().",
+      "revId": "c00c627aad2c45eb4e8fd045d78729c84f20ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434e7824_da670ace",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-11T22:52:57Z",
+      "side": 1,
+      "message": "nit: add comment for name of \"1000\"",
+      "range": {
+        "startLine": 370,
+        "startChar": 10,
+        "endLine": 370,
+        "endChar": 11
+      },
+      "revId": "c00c627aad2c45eb4e8fd045d78729c84f20ff64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
