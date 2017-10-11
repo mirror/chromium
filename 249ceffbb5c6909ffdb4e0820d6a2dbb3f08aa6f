@@ -22,6 +22,30 @@
       "revId": "249ceffbb5c6909ffdb4e0820d6a2dbb3f08aa6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01f5bb2_adce44cf",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-11T19:47:28Z",
+      "side": 0,
+      "message": "Ack. I don\u0027t think it is necessary to validate the method data in Obj-C since the data_util::ParseSupportedMethods() filters out invalid methods. So we\u0027re safe. Desktop also seems to trust the Renderer for the method data, as opposed to the details that are further validated in browser.",
+      "parentUuid": "1e786070_653090d2",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "249ceffbb5c6909ffdb4e0820d6a2dbb3f08aa6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
