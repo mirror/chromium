@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11396215_3af261dd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T23:24:23Z",
+      "side": 1,
+      "message": "Revert?",
+      "revId": "4274b5be2e89bb9dbc4591474cc46787536158af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
