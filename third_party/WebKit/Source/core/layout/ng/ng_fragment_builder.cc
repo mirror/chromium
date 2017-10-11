@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_fragment_builder.h"
 
+
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -46,6 +47,11 @@ NGFragmentBuilder& NGFragmentBuilder::SetBlockSize(LayoutUnit size) {
 NGFragmentBuilder& NGFragmentBuilder::SetIntrinsicBlockSize(
     LayoutUnit intrinsic_block_size) {
   intrinsic_block_size_ = intrinsic_block_size;
+  return *this;
+}
+
+NGFragmentBuilder& NGFragmentBuilder::AddContentsVisualRect(const NGPhysicalRect& rect) {
+  contents_visual_rect_.Unite(rect);
   return *this;
 }
 
@@ -257,9 +263,9 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
 
   RefPtr<NGPhysicalBoxFragment> fragment =
       WTF::AdoptRef(new NGPhysicalBoxFragment(
-          layout_object_, Style(), physical_size, children_, baselines_,
-          border_edges_.ToPhysical(WritingMode()), std::move(break_token)));
-  fragment->UpdateVisualRect();
+          layout_object_, Style(), physical_size, contents_visual_rect_,
+          children_, baselines_, border_edges_.ToPhysical(WritingMode()),
+          std::move(break_token)));
 
   return WTF::AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,

@@ -6,6 +6,7 @@
 #define NGPhysicalBoxFragment_h
 
 #include "core/CoreExport.h"
+#include "core/layout/ng/geometry/ng_physical_rect.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_physical_container_fragment.h"
 
@@ -18,18 +19,22 @@ class CORE_EXPORT NGPhysicalBoxFragment final
   NGPhysicalBoxFragment(LayoutObject* layout_object,
                         const ComputedStyle& style,
                         NGPhysicalSize size,
+                        const NGPhysicalRect& contents_visual_rect,
                         Vector<RefPtr<NGPhysicalFragment>>& children,
                         Vector<NGBaseline>& baselines,
                         unsigned,  // NGBorderEdges::Physical
                         RefPtr<NGBreakToken> break_token = nullptr);
 
-  const NGBaseline* Baseline(const NGBaselineRequest&) const;
+  const NGPhysicalRect& ContentsVisualRect() const {
+    return contents_visual_rect_;
+  }
 
-  void UpdateVisualRect() const override;
+  const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
 
  private:
+  NGPhysicalRect contents_visual_rect_;
   Vector<NGBaseline> baselines_;
 };
 

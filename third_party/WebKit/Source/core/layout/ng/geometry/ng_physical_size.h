@@ -27,6 +27,10 @@ struct CORE_EXPORT NGPhysicalSize {
 
   bool operator==(const NGPhysicalSize& other) const;
 
+  bool IsEmpty() const {
+    return width == LayoutUnit() || height == LayoutUnit();
+  }
+
   String ToString() const;
 };
 
