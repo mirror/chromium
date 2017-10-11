@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f354dcba_53c31ad1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-11T18:49:15Z",
+      "side": 1,
+      "message": "nit: Add a TODO to create a new MouseEnter when we swap webcontents?",
+      "range": {
+        "startLine": 752,
+        "startChar": 36,
+        "endLine": 752,
+        "endChar": 46
+      },
+      "revId": "4da764e45d64e8fd9489327ade2664cc0f8f779d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
