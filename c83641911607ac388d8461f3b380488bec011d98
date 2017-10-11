@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a06bff72_5071ef44",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:10:22Z",
+      "side": 1,
+      "message": "Style nit: Should this be |SetSeed| (capital S)?",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5e798f6_2b8cbc7b",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 2
@@ -67,6 +84,81 @@
         "endLine": 87,
         "endChar": 28
       },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affe0095_5b334a49",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:10:22Z",
+      "side": 1,
+      "message": "I think we need randomization for WebView, at least in production.\n\nI also wonder if we should reverse the logic, such that |setSeed| is a no-op in all builds except Debug builds. I\u0027m thinking of e.g. Linux distributions shipping Chromium, Opera, Brave, and others who ship production builds of Chromium code but who might or might not set OFFICIAL_BUILD.",
+      "parentUuid": "b88bf252_2407682f",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0a517a_7b8deb47",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:10:22Z",
+      "side": 1,
+      "message": "Is there a benefit to having a separate |setSeed| function?",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fe00c9_abe271d4",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:10:22Z",
+      "side": 1,
+      "message": "Nit: Maybe name this \"Unpredictable\", to more obviously mirror \"Predictable\"?",
+      "revId": "c83641911607ac388d8461f3b380488bec011d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428e2fdf_4f6cf3cc",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:10:22Z",
+      "side": 1,
+      "message": "It might be a good idea to assert the comment here, too:\n\n  #if defined(OS_WIN) \u0026\u0026 defined(ARCH_CPU_32_BITS)\n    EXPECT_EQ(nullptr, base::GetRandomPageBase());\n    return;\n  #else\n    EXPECT_NE(nullptr, base::GetRandomPageBase());\n  #endif",
       "revId": "c83641911607ac388d8461f3b380488bec011d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
