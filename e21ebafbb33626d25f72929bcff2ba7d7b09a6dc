@@ -1,0 +1,312 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eacc1da6_4ff2160d",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "Also describe? E.g. - \"Tag given to views that are repopulated according to....\"\n\nMaybe describe what a \"chosen object view\" is - I haven\u0027t grokked it yet.",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3054707_1c00f9ba",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "Could the tag be set inside `addPopUpButtonForPermission`?",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b587dc_9b9fe942",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "Here, and more below:\n [button setTag:permissionInfo.type]",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2f8a83_1826757c",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "setTag, also I think this would be nicer in the view-create methods.\n\n(aside - is the `toView` argument always permissionView_? Seems it always is... and the changes in setPermissionInfo: depend on that. it probably doesn\u0027t need to be plumbed through everywhere.. probably not worth changing that in this CL though)",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d0a4b2_be27bf63",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "[[permissionsView_ subviews] count]\n\nI think we prefer `!\u003d 0` in Chrome too, since MSVC spits out a warning",
+      "range": {
+        "startLine": 1313,
+        "startChar": 6,
+        "endLine": 1313,
+        "endChar": 39
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e52d3e2_8a4d136d",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "when does this happen? (// comment?)",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf156cf_0ba10ab8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "PermissionSelectorButton* button \u003d base::mac::ObjCCastStrict\u003cPermissionSelectorButton\u003e(view);\n\n(and use |button| below rather than c-style cast",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1de9d4_654e8987",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "style guide prohibits c-style casts - can we avoid the cast somehow? (is there a mapping function somewhere?)",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c6429c_be7ef623",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1348,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1348,
+        "startChar": 22,
+        "endLine": 1348,
+        "endChar": 57
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba99f44_1d920ddd",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "!\u003d 0",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d661cc_89e23ef3",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "CGRectGetMaxY -\u003e NSMaxY?",
+      "range": {
+        "startLine": 1369,
+        "startChar": 10,
+        "endLine": 1369,
+        "endChar": 23
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88a97d3_d5f35499",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "comment before this? i\u0027m a bit lost.... - or see next comment",
+      "range": {
+        "startLine": 1372,
+        "startChar": 4,
+        "endLine": 1372,
+        "endChar": 51
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb0fddb_ffb764c2",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "[NSArray array] -\u003e @[]",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca492b2e_6c52ad7f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "why is this only set when there are no subviews?\n\n(maybe at the top of the method,\n\nNSPoint controlOrigin;\nif ([[permissionsView_ subviews] count]) {\n  DCHECK(permissionsPresent_);\n  controlOrigin \u003d [self refreshPermissions:permissionInfoList];\n} else {\n  permissionsPresent_ \u003d YES;\n  controlOrigin \u003d [self setInitialPermissions:permissionInfoList];\n}\n\n(I don\u0027t think there\u0027s a need to pass in controlOrigin - it should always be `NSMakePoint(kSectionHorizontalPadding, 0)`)",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdbeff0_a1b51419",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "the body of this `if` only seems to do anything if the first condition here is met (and the body of the for loop does nothing if the first condition is not met, so I don\u0027t think this if is needed)",
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f81907_bd08082e",
+        "filename": "chrome/browser/ui/cocoa/page_info/permission_selector_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T02:57:36Z",
+      "side": 1,
+      "message": "is the .get() needed?",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
