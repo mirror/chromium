@@ -477,6 +477,7 @@ void EmbeddedWorkerInstance::Start(
     ProviderInfoGetter provider_info_getter,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+    service_manager::mojom::InterfaceProviderPtr interface_provider,
     StatusCallback callback) {
   restart_count_++;
   if (!context_) {
@@ -509,6 +510,7 @@ void EmbeddedWorkerInstance::Start(
       base::BindOnce(&EmbeddedWorkerInstance::Detach, base::Unretained(this)));
   pending_dispatcher_request_ = std::move(dispatcher_request);
   pending_installed_scripts_info_ = std::move(installed_scripts_info);
+  pending_interface_provider_ = std::move(interface_provider);
 
   inflight_start_task_.reset(
       new StartTask(this, params->script_url, std::move(request)));
@@ -655,7 +657,8 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(pending_installed_scripts_info_),
                        std::move(host_ptr_info), std::move(provider_info),
-                       std::move(content_settings_proxy_ptr_info));
+                       std::move(content_settings_proxy_ptr_info),
+                       std::move(pending_interface_provider_));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   return SERVICE_WORKER_OK;

@@ -137,6 +137,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
              ProviderInfoGetter provider_info_getter,
              mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
              mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+             service_manager::mojom::InterfaceProviderPtr interface_provider,
              StatusCallback callback);
 
   // Stops the worker. It is invalid to call this when the worker is not in
@@ -326,6 +327,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // changed to a mojo struct and we put them in EmbeddedWorkerStartParams.
   mojom::ServiceWorkerEventDispatcherRequest pending_dispatcher_request_;
   mojom::ServiceWorkerInstalledScriptsInfoPtr pending_installed_scripts_info_;
+  service_manager::mojom::InterfaceProviderPtr pending_interface_provider_;
 
   // This is set at Start and used on SendStartWorker.
   ProviderInfoGetter provider_info_getter_;
