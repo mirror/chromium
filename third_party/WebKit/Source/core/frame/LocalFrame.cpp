@@ -1002,6 +1002,11 @@ service_manager::InterfaceProvider& LocalFrame::GetInterfaceProvider() {
   return *Client()->GetInterfaceProvider();
 }
 
+AssociatedInterfaceProvider* LocalFrame::GetAssociatedInterfaceProvider() {
+  DCHECK(Client());
+  return Client()->GetAssociatedInterfaceProvider();
+}
+
 LocalFrameClient* LocalFrame::Client() const {
   return static_cast<LocalFrameClient*>(Frame::Client());
 }

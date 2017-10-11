@@ -9,12 +9,13 @@
 #include <string>
 
 #include "base/macros.h"
-#include "content/public/common/associated_interface_registry.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_registry.h"
 
 namespace content {
 
-class AssociatedInterfaceRegistryImpl : public AssociatedInterfaceRegistry {
+class AssociatedInterfaceRegistryImpl
+    : public blink::AssociatedInterfaceRegistry {
  public:
   AssociatedInterfaceRegistryImpl();
   ~AssociatedInterfaceRegistryImpl() override;
