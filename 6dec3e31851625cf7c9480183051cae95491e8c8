@@ -226,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "c9a7b9df_875706ca",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-11T14:45:43Z",
+      "side": 1,
+      "message": "Time histograms log values as milliseconds. If seconds is the granularity you care about, you should just use a count histogram and log the seconds. It will be more efficient because values will be smaller and protobufs (which is how UMA data is sent up to server) use varint encoding - which uses less space for smaller numbers.\n\nHere\u0027s an example of just using a counts histogram to log a different time unit (minutes):\nhttps://cs.chromium.org/chromium/src/components/variations/service/variations_field_trial_creator.cc?rcl\u003d9fc521cbe571957d8d1d600797e090791ecdbb09\u0026l\u003d200",
+      "parentUuid": "1aa229af_13394597",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63340335_9e94746e",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 8
