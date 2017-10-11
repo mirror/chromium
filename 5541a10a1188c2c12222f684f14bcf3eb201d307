@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0ca6f82_68b6bcb2",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/clientXY-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c12b95_472d46d3",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a9bd6ff_cc9b4362",
         "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae93c090_d22592d9",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9bd6ff_cc9b4362",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4bf7ccc9_a5943101",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce5b176b_5ab6f8f8",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002786bd_993e8352",
         "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b5d443eb_a5a88c09",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T20:37:42Z",
+      "side": 1,
+      "message": "I forgot to delete it. :(",
+      "parentUuid": "002786bd_993e8352",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87767863_b9d99712",
         "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/resources/frame-pointerevent-forwarder.html",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-06T17:27:29Z",
       "side": 1,
       "message": "You can add the listener in the outer frame since they are from the same domain. Similar to this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/pointerevents/pointerevent_attributes_hoverable_pointers-manual.html?l\u003d97",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062ff3a6_86c0b6d8",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/resources/frame-pointerevent-forwarder.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T20:37:42Z",
+      "side": 1,
+      "message": "I tried to add it in the outer frame, but some how it doesn\u0027t work. Will it be a problem if I keep it this way?",
+      "parentUuid": "87767863_b9d99712",
       "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
