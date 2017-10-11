@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce3895a9_37c3f94c",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:25:31Z",
+      "side": 1,
+      "message": "nit: |target_mode_| is not a flag anymore.",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc0a249_d22137d4",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:25:31Z",
+      "side": 1,
+      "message": "Can this be |requested_mode|? That\u0027ll make the rest of the code easier to understand.",
+      "range": {
+        "startLine": 93,
+        "startChar": 52,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23a85ac_f8bbfbdf",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:25:31Z",
+      "side": 1,
+      "message": "nit: Consecutive was correct.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 18
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe61e00_0e8bdc5b",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:25:31Z",
+      "side": 1,
+      "message": "Please mention that in this case, |target_mode_| will be nullopt / will not have a value.",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a41ee3_6aa1293b",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-11T15:25:31Z",
+      "side": 1,
+      "message": "Would it be possible to extract this into a function called IsUpgradeToFullInstance()? Then you can write this as the conceptually simpler and closer to the comment:\n\n  if (!target_mode_.has_value() || IsUpgradeToFullInstance(target_mode_, requested_mode))\n\nTried to use de Morgan, and didn\u0027t result in something objectively easier to understand :/",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "0080499e3b55acea0c050c3570e0544cdd3fd6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
