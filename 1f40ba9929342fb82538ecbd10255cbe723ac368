@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c74bb112_cd4fd2a9",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "I think the comment below refers specifically to certificate transparency, which (at least from the component point of view) is a distinct thing.",
+      "parentUuid": "027a93b1_8a3ac6f0",
+      "range": {
+        "startLine": 523,
+        "startChar": 45,
+        "endLine": 523,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3f6574_2709b958",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "81e72c7a_bfffd562",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Local style omits them for single-line conditionals with single-line bodies.",
+      "parentUuid": "ae3f6574_2709b958",
+      "range": {
+        "startLine": 1510,
+        "startChar": 8,
+        "endLine": 1510,
+        "endChar": 11
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bafca871_47f75d11",
         "filename": "components/component_updater/crl_set_component_installer.cc",
         "patchSetId": 13
@@ -62,6 +110,42 @@
       "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f5a7eb_30fb915e",
+        "filename": "components/component_updater/crl_set_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Hm, including crypto/sha2.h here requires a DEPS change. Do you think it\u0027s worth it for just this constant?",
+      "parentUuid": "bafca871_47f75d11",
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c474feee_7195fa86",
+        "filename": "components/component_updater/crl_set_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bafca871_47f75d11",
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "31dbf7b1_d8c8986a",
+        "filename": "components/component_updater/crl_set_component_installer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "MayBlock indicates that the task itself might do blocking operations (e.g. disk I/O) - this method will not block on the task\u0027s completion.",
+      "parentUuid": "31bdcfbe_6e770f49",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c73c90a_8118bc54",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 13
@@ -99,6 +207,30 @@
       "writtenOn": "2017-10-10T21:09:17Z",
       "side": 1,
       "message": "Do you specifically prefer to use the same path for the old and new updater?",
+      "range": {
+        "startLine": 223,
+        "startChar": 56,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1f8d4e_e5a45cd3",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "In this case, |path| refers to the user-data-directory; the old file that we\u0027re deleting is \"[path]/Certificate Revocation Lists\" and the new files will be at \"[path]/CertificateRevocation/[version]/crl-set\". We can\u0027t reuse the old path/file because we need to transition to the versioned-directory approach.\n\nDoes that answer the question?",
+      "parentUuid": "4c73c90a_8118bc54",
       "range": {
         "startLine": 223,
         "startChar": 56,
@@ -134,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "ac2cf378_91de039b",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19947047_5c12b633",
+      "range": {
+        "startLine": 49,
+        "startChar": 76,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e559a0b_9d944ee1",
         "filename": "net/ssl/ssl_config_service.h",
         "patchSetId": 13
@@ -157,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "30237815_ca013e68",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e559a0b_9d944ee1",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e784287a_bb65e22b",
         "filename": "net/ssl/ssl_config_service.h",
         "patchSetId": 13
@@ -177,6 +357,30 @@
       "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffaf423_6cb834fd",
+        "filename": "net/ssl/ssl_config_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-11T15:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e784287a_bb65e22b",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
