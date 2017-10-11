@@ -128,6 +128,9 @@
 #define USE_BUILTIN_CERT_VERIFIER
 #endif
 
+// TODO(eroman): Temporary hack for testing.
+#define USE_BUILTIN_CERT_VERIFIER
+
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
 #include "net/base/filename_util.h"
 #include "net/url_request/file_protocol_handler.h"
@@ -10373,8 +10376,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
 // If it does not, then tests which rely on 'hard fail' behaviour should be
 // skipped.
 static bool SystemSupportsHardFailRevocationChecking() {
-#if defined(OS_WIN) || defined(USE_NSS_CERTS)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
+#if defined(OS_WIN) || defined(USE_NSS_CERTS) || \
+    defined(USE_BUILTIN_CERT_VERIFIER)
   return true;
 #else
   return false;
@@ -10409,9 +10412,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineEVRevocationCheck() {
 }
 
 static bool SystemSupportsOCSP() {
-#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
+#if defined(OS_ANDROID)
   // TODO(jnd): http://crbug.com/117478 - EV verification is not yet supported.
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return false;
 #else
   return true;
@@ -10419,8 +10421,8 @@ static bool SystemSupportsOCSP() {
 }
 
 static bool SystemSupportsOCSPStapling() {
-#if defined(USE_NSS_CERTS) || defined(OS_WIN)
-  // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
+#if defined(USE_NSS_CERTS) || defined(OS_WIN) || \
+    defined(USE_BUILTIN_CERT_VERIFIER)
   return true;
 #else
   return false;

@@ -13,6 +13,34 @@
 namespace net {
 
 class CertPathErrors;
+class CertNetFetcher;
+struct CertPathBuilderResultPath;
+
+struct NET_EXPORT_PRIVATE RevocationPolicy {
+  RevocationPolicy(bool check_revocation,
+                   bool networking_allowed,
+                   bool allow_missing_info,
+                   bool allow_network_failure);
+
+  // If |check_revocation| is true, then revocation checking (OCSP/CRL) is
+  // mandatory. The other properties of RevocationPolicy qualify how revocation
+  // checking works.
+  bool check_revocation : 1;
+
+  // If |networking_allowed| is true then revocation checking is allowed to
+  // issue network requests in order to fetch fresh OCSP/CRL. Otherwise ne
+  bool networking_allowed : 1;
+  bool allow_missing_info : 1;
+  bool allow_network_failure : 1;
+};
+
+// |crl_set| and |net_fetcher| may be null.
+NET_EXPORT_PRIVATE void CheckCertChainRevocation(
+    const CertPathBuilderResultPath& path,
+    const RevocationPolicy& policy,
+    base::StringPiece stapled_leaf_ocsp_response,
+    CertNetFetcher* net_fetcher,
+    CertPathErrors* errors);
 
 // Checks the revocation status of a certificate chain using the CRLSet and adds
 // revocation errors to |errors|.
