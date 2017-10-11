@@ -8,6 +8,7 @@ cr.define('extension_navigation_helper_tests', function() {
     Basic: 'basic',
     Conversions: 'conversions',
     PushAndReplaceState: 'push and replace state',
+    SupportedRoutes: 'supported routes'
   };
 
   /**
@@ -42,7 +43,6 @@ cr.define('extension_navigation_helper_tests', function() {
 
       navigationHelper.addListener(changePage);
 
-      expectEquals('chrome://extensions/navigation_helper.html', location.href);
       expectDeepEquals(
           {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS},
           navigationHelper.getCurrentPage());
@@ -164,6 +164,25 @@ cr.define('extension_navigation_helper_tests', function() {
       navigationHelper.updateHistory(
           {page: Page.DETAILS, extensionId: id2});
       expectEquals(++expectedLength, history.length);
+    });
+
+    test(assert(TestNames.SupportedRoutes), function() {
+      loadTimeData.overrideValues({isGuest: false});
+      expectTrue(navigationHelper.isRouteSupported('/'));
+      expectTrue(navigationHelper.isRouteSupported('/shortcuts'));
+      expectTrue(navigationHelper.isRouteSupported('/apps'));
+      expectFalse(navigationHelper.isRouteSupported('/fake-route'));
+
+      loadTimeData.overrideValues({isGuest: true});
+      expectTrue(navigationHelper.isRouteSupported('/'));
+      expectFalse(navigationHelper.isRouteSupported('/shortcuts'));
+      expectFalse(navigationHelper.isRouteSupported('/apps'));
+      expectFalse(navigationHelper.isRouteSupported('/fake-route'));
+
+      // Makes sure constructor replace path if current path not supported.
+      window.history.replaceState(undefined, '', 'fake-route');
+      navigationHelper = new extensions.NavigationHelper();
+      expectEquals(window.location.pathname, '/');
     });
   });
 
