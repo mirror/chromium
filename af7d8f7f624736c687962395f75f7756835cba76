@@ -16,6 +16,24 @@
       "revId": "af7d8f7f624736c687962395f75f7756835cba76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5299fe_fa00f231",
+        "filename": "base/files/file_path_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-11T13:35:15Z",
+      "side": 1,
+      "message": "\u003e Might be a good idea to add a test for the FILE_PATH_USES_WIN_SEPARATORS case, too.\n\nDone\n\n\u003e it might also be good to document why we expect the result that we do\n\nDone\n\n\u003e we may need an error signal\n\nI don\u0027t see any reason this should trigger an error signal. FilePath seems to make no difference between \"..\" and any other component name, and neither does my check. Going to the parent directory is one example of what is forbidden in that check, but it\u0027s not limited to it. For example, going to subdirectory is also not allowed (otherwise, I could just call FilePath::ReferencesParents).",
+      "parentUuid": "4dc4e629_5b6ea12b",
+      "revId": "af7d8f7f624736c687962395f75f7756835cba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
