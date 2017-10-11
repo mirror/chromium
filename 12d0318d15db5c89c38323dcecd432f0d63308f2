@@ -142,6 +142,30 @@
       "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c8b621_480ee37c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-11T09:44:28Z",
+      "side": 1,
+      "message": "\u003e fired on corporate account\n\u003e Abe-san, do you know if we want to support this case?\n\nIt sounds interesting, because on corp account, we don\u0027t expect ARC ToS page on OOBE, IIUC.\nSergey, could you check?",
+      "parentUuid": "f28e3b78_3b971a19",
+      "range": {
+        "startLine": 174,
+        "startChar": 1,
+        "endLine": 174,
+        "endChar": 38
+      },
+      "revId": "12d0318d15db5c89c38323dcecd432f0d63308f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
