@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06b45c71_b292c982",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-10-11T11:21:41Z",
+      "side": 1,
+      "message": "I was wrong about this change (https://chromium-review.googlesource.com/c/chromium/src/+/635567/7/components/subresource_filter/core/common/document_subresource_filter.cc).\nBoth histograms hadn\u0027t been sent intentionally if !ScopedThreadTimers::IsSupported().\n\nSee: https://codereview.chromium.org/2545863003/diff/40001/components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+      "revId": "50a57f87e827de31732a7fa24537dcdd524864be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
