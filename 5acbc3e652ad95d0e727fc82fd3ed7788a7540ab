@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86b7adf_96764596",
+        "filename": "third_party/WebKit/LayoutTests/animations/animations-parsing.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-11T02:53:05Z",
+      "side": 1,
+      "message": "i only skimmed this file",
+      "revId": "5acbc3e652ad95d0e727fc82fd3ed7788a7540ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f3efa1_96efbc8d",
+        "filename": "third_party/WebKit/LayoutTests/transitions/transitions-parsing.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-11T02:53:05Z",
+      "side": 1,
+      "message": "i just skimmed this file",
+      "revId": "5acbc3e652ad95d0e727fc82fd3ed7788a7540ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
