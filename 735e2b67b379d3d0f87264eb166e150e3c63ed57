@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4d7153a_3d45dfce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199f3d33_56e8f4e7",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b77bdf_02543183",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T14:53:52Z",
       "side": 1,
       "message": "Wow amazing analysis, I also think it\u0027s good to avoid to clear the overrides\nas much as possible.\nAnyway probably we should double-check with @cbiesinger about making grid items\nObjectRelayoutBoundary, as it might have impact in other cases.",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ae15df_4996f0e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "Yes, I think it\u0027s a good idea. As agreed in the meeting with @svillar, the best approach is to avoid clearing the override as much as possible, which is the root cause of these issues. Then, we can considering if making grid items relayout boundaries makes sense or not; this is a decision that would have performance implications, so we must analyze it carefully.",
+      "parentUuid": "d7b77bdf_02543183",
       "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01acb64a_fc30cc47",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/preferred-width-computed-after-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "We need to ensure a test is completed before we run the next one. This is not guaranteed, as far as I know, just using setTimeout. The only was I figured out to do it just using timeouts would be to define all the tests as a chain, where the next test would be the timeout handled of the one before. In my opinion, this approach is unnecessary complex.\n\nThere is also the approach of using async_test, but as the doc states, it doesn\u0027t guarantee either the test are sequentially executed. \n\nhttp://web-platform-tests.org/writing-tests/testharness-api.html\n\"Unlike Asynchronous Tests, Promise Tests don’t start running until after the previous Promise Test finishes.\"",
+      "parentUuid": "624522c3_79fc5765",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92b7b028_ae95f677",
         "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/preferred-width-computed-after-layout.html",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-05T16:04:12Z",
       "side": 1,
       "message": "If you strongly defend using promises and do not want to change the test, you can still refactor all these calls in a single loop.",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d9122e_9725226e",
+        "filename": "third_party/WebKit/LayoutTests/fast/css-grid-layout/preferred-width-computed-after-layout.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "I really open to suggestions, it\u0027s just that I think in this case Promises fit better. I also thought on using the loop, but I faced some difficulties when trying to share variables between the tests defined inside the loop. It may be that I lack of experience on Promises to do so, hence I\u0027ll give it another try if we all agree Promises is the best tool in this case.",
+      "parentUuid": "92b7b028_ae95f677",
       "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2567a06f_713f7bf5",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "553da27b_1c8d498c",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a0881d_05d2fea7",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b82f761b_f45d7b86",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2a0881d_05d2fea7",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39263193_b0120326",
         "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa01554_ae6173d0",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-10-11T13:02:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "39263193_b0120326",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
