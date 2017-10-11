@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3eb17aef_7047f5b4",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-11T23:21:26Z",
+      "side": 1,
+      "message": "Why is the --force needed?\n\nAs an aside, the typing of `def Update(force\u003dFalse)` in vs_toolchain.py is awful :); that should probably at least be force\u003d\u0027\u0027 to be consistently-typed.",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6486d38_7a617f63",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "Return code is passed to sys.exit(), no?",
       "parentUuid": "d6486d38_7a617f63",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970b876c_fb5352c9",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-11T23:21:26Z",
+      "side": 1,
+      "message": "Hm. I\u0027m not wild about the whoe idea of setting up a case-insensitive mount.\n\nDo we have any idea if or when they\u0027ll fix their SDK? I thought I heard someone say they were working on it.",
+      "parentUuid": "2078de6b_fc85ed43",
       "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
