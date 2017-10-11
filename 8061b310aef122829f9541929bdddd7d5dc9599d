@@ -16,6 +16,24 @@
       "revId": "8061b310aef122829f9541929bdddd7d5dc9599d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc97192_accf49c5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextControlSingleLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-11T17:24:01Z",
+      "side": 1,
+      "message": "I think this might change the semantics in the event the inner text has, say, spans or other sub-structure. The comment above implies we want anything inside to count.\n\nWhat motivated this change?",
+      "parentUuid": "a66c6fa0_9bb91da1",
+      "revId": "8061b310aef122829f9541929bdddd7d5dc9599d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
