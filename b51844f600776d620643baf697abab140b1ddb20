@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "533758f9_fe722c28",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-11T20:03:33Z",
+      "side": 1,
+      "message": "I moved this into VizProcessTransportFactory (it will be needed there for restartability anyways) and simplified the comments a bit.",
+      "parentUuid": "6ecd6618_1d964409",
+      "revId": "b51844f600776d620643baf697abab140b1ddb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8b55ae_27228ea3",
         "filename": "content/browser/compositor/viz_process_transport_factory.h",
         "patchSetId": 7
@@ -50,6 +68,24 @@
       "revId": "b51844f600776d620643baf697abab140b1ddb20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efbe82e_3d744d6e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-11T20:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8b55ae_27228ea3",
+      "revId": "b51844f600776d620643baf697abab140b1ddb20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
