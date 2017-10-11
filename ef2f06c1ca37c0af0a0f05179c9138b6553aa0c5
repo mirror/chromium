@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "134ba4d2_760583bb",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T15:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e5f4a1e_23eb9554",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "ef2f06c1ca37c0af0a0f05179c9138b6553aa0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97585765_33ec9e22",
         "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ef2f06c1ca37c0af0a0f05179c9138b6553aa0c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc799c7c_46aeef36",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T15:38:33Z",
+      "side": 1,
+      "message": "The race condition is between opening the NTP and finishing async request to Offline Page model to determine whether a URL is prefetched. I assume that manually opening a suggestion is not comparable to opening the NTP and, thus, should be fine.\n\nUPD: I measured time on Micromax (but only on Popular Sites, because it does not have internet). The delay between asking the model and obtaining results is 0.7-1.5 seconds. However, the input is blocked longer than that. My best click was 0.25 seconds after obtaining results, but I was violently clicking all the time during the NTP opening, so this looks ok for me and I will probably leave it as it is.",
+      "parentUuid": "97585765_33ec9e22",
+      "range": {
+        "startLine": 74,
+        "startChar": 35,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "ef2f06c1ca37c0af0a0f05179c9138b6553aa0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
