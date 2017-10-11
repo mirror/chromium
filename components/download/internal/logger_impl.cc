@@ -5,8 +5,10 @@
 #include "components/download/internal/logger_impl.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/values.h"
 #include "components/download/internal/log_source.h"
+#include "components/download/internal/startup_status.h"
 
 namespace download {
 namespace {

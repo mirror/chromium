@@ -10,25 +10,13 @@
 namespace download {
 namespace test {
 
-// Test device status listener can directly notify the observer about battery
-// and network changes, without calling external class methods.
+// Used in tests which only loads the default NetworkStatusListener.
 class TestDeviceStatusListener : public DeviceStatusListener {
  public:
-  TestDeviceStatusListener();
-  ~TestDeviceStatusListener() override;
-
-  // Notifies observer with current device status.
-  void NotifyObserver(const DeviceStatus& device_status);
-
-  // Sets the device status without notifying the observer.
-  void SetDeviceStatus(const DeviceStatus& status);
+  explicit TestDeviceStatusListener(const base::TimeDelta& delay);
 
   // DeviceStatusListener implementation.
-  void Start(DeviceStatusListener::Observer* observer) override;
-  void Stop() override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TestDeviceStatusListener);
+  void BuildNetworkStatusListener() override;
 };
 
 }  // namespace test

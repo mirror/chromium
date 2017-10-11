@@ -23,6 +23,7 @@
 #include "chrome/browser/domain_reliability/service_factory.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/download/download_service_factory.h"
+#include "chrome/browser/download/navigation_monitor_factory.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/engagement/site_engagement_service_factory.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
@@ -229,6 +230,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   domain_reliability::DomainReliabilityServiceFactory::GetInstance();
   DownloadCoreServiceFactory::GetInstance();
   DownloadServiceFactory::GetInstance();
+  NavigationMonitorFactory::GetInstance();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   EasyUnlockServiceFactory::GetInstance();
   EnhancedBookmarkKeyServiceFactory::GetInstance();
