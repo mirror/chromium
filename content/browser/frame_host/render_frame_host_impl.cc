@@ -425,12 +425,13 @@ bool RenderFrameHost::IsDataUrlNavigationAllowedForAndroidWebView() {
   return g_allow_data_url_navigation;
 }
 
-void CreateMediaPlayerRenderer(
-    int process_id,
-    int routing_id,
-    media::mojom::RendererRequest request) {
+void CreateMediaPlayerRenderer(int process_id,
+                               int routing_id,
+                               WebContents* web_contents,
+                               media::mojom::RendererRequest request) {
   std::unique_ptr<MediaPlayerRenderer> renderer =
-      base::MakeUnique<MediaPlayerRenderer>(process_id, routing_id);
+      base::MakeUnique<MediaPlayerRenderer>(process_id, routing_id,
+                                            web_contents);
 
   // base::Unretained is safe here because the lifetime of the MediaPlayerRender
   // is tied to the lifetime of the MojoRendererService.
@@ -2983,7 +2984,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   // Creates a MojoRendererService, passing it a MediaPlayerRender.
   registry_->AddInterface<media::mojom::Renderer>(
       base::Bind(&content::CreateMediaPlayerRenderer, GetProcess()->GetID(),
-                 GetRoutingID()));
+                 GetRoutingID(), delegate_->GetAsWebContents()));
 #endif  // defined(OS_ANDROID)
 
   registry_->AddInterface(base::Bind(

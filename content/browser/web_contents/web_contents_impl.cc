@@ -148,6 +148,7 @@
 #include "content/browser/android/content_video_view.h"
 #include "content/browser/android/date_time_chooser_android.h"
 #include "content/browser/android/java_interfaces_impl.h"
+#include "content/browser/media/android/media_player_renderer_web_contents_observer.h"
 #include "content/browser/media/android/media_web_contents_observer_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
 #include "services/device/public/interfaces/nfc.mojom.h"
@@ -554,6 +555,8 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
                  base::Unretained(this)));
 #if defined(OS_ANDROID)
   media_web_contents_observer_.reset(new MediaWebContentsObserverAndroid(this));
+  media_player_renderer_web_contents_observer_.reset(
+      new MediaPlayerRendererWebContentsObserver(this));
 #else
   media_web_contents_observer_.reset(new MediaWebContentsObserver(this));
 #endif
