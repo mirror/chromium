@@ -693,6 +693,24 @@
     },
     {
       "key": {
+        "uuid": "cbe7b89c_95bebf17",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T23:39:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91230919_7f296d75",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a541fdb_36713b41",
         "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
         "patchSetId": 4

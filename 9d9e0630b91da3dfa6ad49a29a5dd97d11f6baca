@@ -431,6 +431,24 @@
       "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f39e5381_9c0a1fcb",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T23:39:52Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9866f840_1006edd5",
+      "revId": "9d9e0630b91da3dfa6ad49a29a5dd97d11f6baca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

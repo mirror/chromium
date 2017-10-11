@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e013a47_2b18f0f7",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 4568,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T23:39:52Z",
+      "side": 1,
+      "message": "is_mac --\u003e is_mac \u0026\u0026 !mac_views_browser\n\n(this will serve as a reminder to delete it... eventually)",
+      "revId": "8ff406b2c7fb851adf63e6ad0258ce1b9d2b4e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
