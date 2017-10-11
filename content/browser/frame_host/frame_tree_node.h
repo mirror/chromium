@@ -202,7 +202,7 @@ class CONTENT_EXPORT FrameTreeNode {
   // have been updated in an <iframe> element but have not taken effect yet;
   // use pending_sandbox_flags() for those.
   blink::WebSandboxFlags effective_sandbox_flags() const {
-    return replication_state_.sandbox_flags;
+    return replication_state_.frame_policy.sandbox_flags;
   }
 
   // Returns the latest sandbox flags for this frame.  This includes flags
@@ -232,7 +232,7 @@ class CONTENT_EXPORT FrameTreeNode {
   // not include policy changes that have been made by updating the containing
   // iframe element attributes since the frame was last navigated.
   const ParsedFeaturePolicyHeader& effective_container_policy() const {
-    return replication_state_.container_policy;
+    return replication_state_.frame_policy.container_policy;
   }
 
   // Update this frame's container policy. This is used when a parent frame
