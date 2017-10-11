@@ -39,8 +39,8 @@ TEST_F(VpnListTest, BuiltInProvider) {
   // The VPN list should only contain the built-in provider.
   ASSERT_EQ(1u, vpn_list.vpn_providers().size());
   VPNProvider provider = vpn_list.vpn_providers()[0];
-  EXPECT_FALSE(provider.third_party);
-  EXPECT_TRUE(provider.extension_id.empty());
+  EXPECT_EQ(provider.provider_type, VPNProvider::OPN_VPN);
+  EXPECT_TRUE(provider.app_id.empty());
 }
 
 TEST_F(VpnListTest, ThirdPartyProviders) {
