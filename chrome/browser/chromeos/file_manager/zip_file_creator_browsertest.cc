@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/file_manager/zip_file_creator.h"
+#include "chrome/services/chrome_file_util/public/cpp/zip_file_creator.h"
 
+#include <string>
 #include <vector>
 
 #include "base/bind.h"
@@ -13,11 +14,12 @@
 #include "base/rand_util.h"
 #include "base/run_loop.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/zlib/google/zip_reader.h"
 
-namespace file_manager {
+namespace chrome {
 
 namespace {
 
@@ -25,6 +27,12 @@ void TestCallback(bool* out_success, const base::Closure& quit, bool success) {
   *out_success = success;
   quit.Run();
 }
+
+// bool CreateFile(const base::FilePath& parent, const std::string& file_name,
+//     const std::string& content) {
+//   return base::WriteFile(parent.Append(file_name),
+//                   content.c_str(), content.size());
+// }
 
 class ZipFileCreatorTest : public InProcessBrowserTest {
  protected:
@@ -57,7 +65,8 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, FailZipForAbsentFile) {
        base::Bind(&TestCallback, &success,
                   content::GetDeferredQuitTaskForRunLoop(&run_loop)),
        zip_base_dir(), paths, zip_archive_path()))
-      ->Start();
+      ->Start(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
   content::RunThisRunLoop(&run_loop);
   EXPECT_FALSE(success);
@@ -86,7 +95,8 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, SomeFilesZip) {
        base::Bind(&TestCallback, &success,
                   content::GetDeferredQuitTaskForRunLoop(&run_loop)),
        zip_base_dir(), paths, zip_archive_path()))
-      ->Start();
+      ->Start(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
 
   content::RunThisRunLoop(&run_loop);
   EXPECT_TRUE(success);
@@ -118,4 +128,62 @@ IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, SomeFilesZip) {
   }
 }
 
-}  // namespace file_manager
+// IN_PROC_BROWSER_TEST_F(ZipFileCreatorTest, ZipDirectoryWithManyFiles) {
+//   // Create a directory tree with many files.
+//   base::FilePath root_dir = zip_base_dir().Append("root_dir");
+//   ASSERT_TRUE(base::CreateDirectory(root_dir));
+
+//   for (int i = 0; i < 100; i++) {
+//     ASSERT_TRUE(CreateFile(root_dir, std::to_string(i), "Hello" +
+//     std::to_string(i)));
+//   }
+//   for (int i = 0; i < 10; i++) {
+//     base::FilePath dir = root_dir.Append(std::to_string(i));
+//     ASSERT_TRUE(base::CreateDirectory(dir));
+//     for (int j = 0; j < 10; j++) {
+//       std::string content = "Hello" + std::to_string(i) + std::to_string(i);
+//       ASSERT_TRUE(CreateFile(root_dir, std::to_string(i), content));
+//     }
+//   }
+//   bool success = false;
+//   base::RunLoop run_loop;
+//   (new ZipFileCreator(
+//        base::Bind(&TestCallback, &success, run_loop.QuitClosure()),
+//        root_dir, std::vector<base::FilePath> { root_dir },
+//        zip_archive_path()))
+//       ->Start(
+//           content::ServiceManagerConnection::GetForProcess()->GetConnector());
+
+//   content::RunThisRunLoop(&run_loop);
+//   EXPECT_TRUE(success);
+
+//   // Check the archive content.
+//   // zip::ZipReader reader;
+//   // ASSERT_TRUE(reader.Open(zip_archive_path()));
+//   // EXPECT_EQ(3, reader.num_entries());
+//   // while (reader.HasMore()) {
+//   //   ASSERT_TRUE(reader.OpenCurrentEntryInZip());
+//   //   const zip::ZipReader::EntryInfo* entry = reader.current_entry_info();
+//   //   // ZipReader returns directory path with trailing slash.
+//   //   if (entry->file_path() == kDir1.AsEndingWithSeparator()) {
+//   //     EXPECT_TRUE(entry->is_directory());
+//   //   } else if (entry->file_path() == kFile1) {
+//   //     EXPECT_FALSE(entry->is_directory());
+//   //     EXPECT_EQ(3, entry->original_size());
+//   //   } else if (entry->file_path() == kFile2) {
+//   //     EXPECT_FALSE(entry->is_directory());
+//   //     EXPECT_EQ(kRandomDataSize, entry->original_size());
+
+//   //     const base::FilePath out =
+//   dir_.GetPath().AppendASCII("archived_content");
+//   //     EXPECT_TRUE(reader.ExtractCurrentEntryToFilePath(out));
+//   //     EXPECT_TRUE(base::ContentsEqual(zip_base_dir().Append(kFile2),
+//   out));
+//   //   } else {
+//   //     ADD_FAILURE();
+//   //   }
+//   //   ASSERT_TRUE(reader.AdvanceToNextEntry());
+//   // }
+// }
+
+}  // namespace chrome
