@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b160dd_a8cec209",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T00:09:47Z",
+      "side": 1,
+      "message": "nit: typos",
+      "revId": "ebacd3fbefccde0e1a85331a525925ba247e6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29be09ec_bf1f189f",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T00:09:47Z",
+      "side": 1,
+      "message": "Can this just check the pref for night light being enabled?\n\nIt would be nice to keep all the cursor compositing checks in one place. If that can\u0027t be here, I would move all this code to the other location. But this seems like an OK place for it.",
+      "revId": "ebacd3fbefccde0e1a85331a525925ba247e6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384aa91f_da8438b2",
+        "filename": "ash/shell.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T00:09:47Z",
+      "side": 1,
+      "message": "This is weird. Either |prefs| should be the correct prefs service, or we shouldn\u0027t need the parameter at all and use the active pref service. Be aware the \"active pref service\" can be null early in startup.",
+      "revId": "ebacd3fbefccde0e1a85331a525925ba247e6704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
