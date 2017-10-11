@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4c24445d_5d7b22fd",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-11T17:39:04Z",
+      "side": 1,
+      "message": "I agree with using e notation if we have lots of zeroes, but there is only 4 zeroes here so I prefer 20000 :-)",
+      "parentUuid": "91c04ea1_36f78202",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1d0efc_64a89c68",
         "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
         "patchSetId": 8
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The comment on line 83 explains:\npageset_repeat doesn\u0027t matter because values are summarized across repetitions before uploading.",
       "parentUuid": "4d1d0efc_64a89c68",
+      "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5524b335_62a1bbdc",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-11T17:39:04Z",
+      "side": 1,
+      "message": "Interesting, I thought we keep separate histograms for separate story run?",
+      "parentUuid": "794ff770_6584c94d",
       "revId": "314d62c4fb60674a5ce62dea5682d8d570dff4cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
