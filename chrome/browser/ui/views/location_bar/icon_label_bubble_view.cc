@@ -249,6 +249,7 @@ void IconLabelBubbleView::AddInkDropLayer(ui::Layer* ink_drop_layer) {
 
 void IconLabelBubbleView::RemoveInkDropLayer(ui::Layer* ink_drop_layer) {
   ink_drop_container_->RemoveInkDropLayer(ink_drop_layer);
+  separator_view_->UpdateOpacity();
 }
 
 std::unique_ptr<views::InkDrop> IconLabelBubbleView::CreateInkDrop() {
