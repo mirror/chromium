@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1bf91ad_428767fa",
+        "filename": "ios/chrome/browser/sync/sync_setup_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:51:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"setup is complete\" means. Can you expand a bit on this comment?",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "be0e98659cd8168defdbc7c431a90b144352696d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
