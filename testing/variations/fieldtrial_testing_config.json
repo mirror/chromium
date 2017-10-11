@@ -3887,21 +3887,6 @@
             ]
         }
     ],
-    "XGEOVisibleNetworks": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Experiment",
-                    "enable_features": [
-                        "XGEOVisibleNetworks"
-                    ]
-                }
-            ]
-        }
-    ],
     "YieldBetweenContentScriptRuns": [
         {
             "platforms": [
