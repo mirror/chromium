@@ -16,6 +16,24 @@
       "revId": "4bc3db988cc6faebcdc3bc9f6bdde747e4b65519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37df283_2f9ee9e0",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T21:48:43Z",
+      "side": 1,
+      "message": "Can\u0027t we use a Persistent\u003cEmptyCompositorAnimator\u003e so we don\u0027t have to neuter garbage collection? My concern is this will now need to track garbage collection changes.",
+      "parentUuid": "96d4ba65_65280f8c",
+      "revId": "4bc3db988cc6faebcdc3bc9f6bdde747e4b65519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
