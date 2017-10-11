@@ -5383,6 +5383,12 @@ void RenderFrameImpl::OnFailedNavigation(
   if (request_params.page_state.IsValid())
     history_entry = PageStateToHistoryEntry(request_params.page_state);
 
+  // If possible, commit a chrome-error://<error code> instead.
+  if (error_code == net::ERR_BLOCKED_BY_CLIENT) {
+    error.unreachable_url = GURL(std::string(kChromeErrorScheme) + "://" +
+                                 net::ErrorToShortString(error_code));
+  }
+
   // For renderer initiated navigations, we send out a didFailProvisionalLoad()
   // notification.
   bool had_provisional_document_loader = frame_->GetProvisionalDocumentLoader();
