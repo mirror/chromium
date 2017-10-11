@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "634bfa5b_a1d98cf1",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-11T18:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd1bf60c_2de338f0",
+      "revId": "b4970a72a2d969d753958149a571edff4650784b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a72622_7672b621",
         "filename": "ash/public/interfaces/highlighter_controller.mojom",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "b4970a72a2d969d753958149a571edff4650784b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd56727_a5cfe956",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-11T18:38:37Z",
+      "side": 1,
+      "message": "Yes, it is much simpler, thanks for the pointer!",
+      "parentUuid": "f6a72622_7672b621",
+      "revId": "b4970a72a2d969d753958149a571edff4650784b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
