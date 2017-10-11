@@ -180,7 +180,6 @@ struct GPU_EXPORT Capabilities {
   bool disable_non_empty_post_sub_buffers = false;
 
   bool disable_2d_canvas_copy_on_write = false;
-  bool disable_overlay_ca_layers = false;
 
   bool texture_npot = false;
 
