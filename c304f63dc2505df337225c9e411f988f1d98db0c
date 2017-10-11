@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bed70ea_a5eb5226",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T21:57:19Z",
+      "side": 1,
+      "message": "no need for the local variable and we should be able to just return here",
+      "range": {
+        "startLine": 273,
+        "startChar": 27,
+        "endLine": 273,
+        "endChar": 28
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e01b93_bfc7f163",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T21:57:19Z",
+      "side": 1,
+      "message": "I worry slightly that we\u0027re generating a lot of bitmaps where we could share, but I don\u0027t know the lifetime of this to know whether we could cache this and reuse it and delete it ondestroy (but I don\u0027t know if and when that is called so likely more work than needed)",
+      "range": {
+        "startLine": 512,
+        "startChar": 23,
+        "endLine": 512,
+        "endChar": 33
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9cf024_2de25d19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T21:57:19Z",
+      "side": 1,
+      "message": "I thought the point of the translucent colors was that they compounded correctly with translucent backgrounds and got darker accordingly.",
+      "range": {
+        "startLine": 517,
+        "startChar": 33,
+        "endLine": 517,
+        "endChar": 38
+      },
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f1cda6_2758434b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarkswidget/BookmarkWidgetService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T21:57:19Z",
+      "side": 1,
+      "message": "I was thinking we could just call setTint on the TintedDrawable and then call folderIcon.draw(canvas) and rely on the drawable\u0027s implementation, but it looks like setTint requires a color list and this is only a single color.",
+      "revId": "c304f63dc2505df337225c9e411f988f1d98db0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
