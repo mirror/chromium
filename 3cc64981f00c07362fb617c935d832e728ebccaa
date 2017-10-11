@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9471e8_e5840177",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-11T18:44:29Z",
+      "side": 1,
+      "message": "nit: \"IfNeeded\" sounds better.",
+      "range": {
+        "startLine": 220,
+        "startChar": 31,
+        "endLine": 220,
+        "endChar": 38
+      },
+      "revId": "3cc64981f00c07362fb617c935d832e728ebccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
