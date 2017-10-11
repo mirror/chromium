@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8c99eb84_7a7c9c7b",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-10-11T03:41:12Z",
+      "side": 1,
+      "message": "\"Exception: shades of gray (i.e. #333)\"\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md#Color",
+      "parentUuid": "b7d1b3db_c9e1212a",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60584bef_e1a18acb",
         "filename": "chrome/browser/resources/md_extensions/extensions.html",
         "patchSetId": 3
