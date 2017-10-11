@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5630cfdb_18261dcf",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T17:29:21Z",
+      "side": 1,
+      "message": "This is an adapter that wraps a URLLoaderThrottle into an old ResourceThrottle, so that the SafeBrowsing URLLoaderThrottle can be used in the old code path.",
+      "parentUuid": "dc372a27_278a0bd0",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "374afb7e_7070a325",
         "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
         "patchSetId": 1
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "I slightly prefer the cost ref approach too.",
       "parentUuid": "374afb7e_7070a325",
+      "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da564874_08006b61",
+        "filename": "components/safe_browsing/browser/base_parallel_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T17:29:21Z",
+      "side": 1,
+      "message": "+1 for const ref\n\nThe SafeBrowsing URLLoaderThrottle doesn\u0027t rely on this field, so passing in a default-constructed one is fine.",
+      "parentUuid": "e1f437b5_be756e51",
       "revId": "db8274f3c055e0776e8d9ddc26d9be663205e884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
