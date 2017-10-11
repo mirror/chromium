@@ -164,13 +164,19 @@ ArcSessionManager* ArcSessionManager::Get() {
 
 // static
 bool ArcSessionManager::IsOobeOptInActive() {
-  // Check if ARC ToS screen for OOBE or OPA OptIn flow is currently showing.
+  // Check if Chrome OS OOBE or OPA OptIn flow is currently showing.
   // TODO(b/65861628): Rename the method since it is no longer accurate.
   // Redesign the OptIn flow since there is no longer reason to have two
   // different OptIn flows.
   chromeos::LoginDisplayHost* host = chromeos::LoginDisplayHost::default_host();
   if (!host)
     return false;
+  if (!host->IsVoiceInteractionOobe() &&
+      user_manager::UserManager::Get()->IsCurrentUserNew() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          chromeos::switches::kEnableArcOOBEOptIn)) {
+    return true;
+  }
   const chromeos::WizardController* wizard_controller =
       host->GetWizardController();
   if (!wizard_controller)
