@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4472dc9c_506c8126",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T14:55:12Z",
+      "side": 1,
+      "message": "Nit; \u0027Implement path() animation for...\u0027\n\nAs I understand it, this CL only implements animating between offset-path values if they are both path()s, and has no support for e.g. arc().",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c97a450_ed35cf73",
+        "filename": "third_party/WebKit/LayoutTests/animations/interpolation/offset-path-interpolation-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T14:55:12Z",
+      "side": 1,
+      "message": "Is it feasible for these new offset-path tests be moved to WPT instead?",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d6d617_64d16902",
+        "filename": "third_party/WebKit/LayoutTests/animations/interpolation/offset-path-interpolation-002.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T14:55:12Z",
+      "side": 1,
+      "message": "So what is the difference between 001, 002, etc? are they just split up to avoid making the tests too long?",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189e070b_cc5cd5bb",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T14:55:12Z",
+      "side": 1,
+      "message": "Nit; please use TODO(ericwilligers) or similar instead of FIXME. https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#todo-style",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec682141_7e2032ba",
+        "filename": "third_party/WebKit/Source/core/animation/PathPropertyFunctions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T14:55:12Z",
+      "side": 1,
+      "message": "Can you add a brief comment to each of these explaining what they do (and why)?",
+      "revId": "49b7a5b43d7b5f5cda6f09d5d81870bc8df1c6da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
