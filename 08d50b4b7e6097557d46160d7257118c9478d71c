@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3cafdebf_25625450",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-11T15:08:35Z",
+      "side": 1,
+      "message": "\u003e \u003e 1. I think it needs to be sent via a different signal than OnNetworkChanged() as this could incorrectly trigger observers to think the network has actually changed.  This sending of the signal back is also racing observers registering which could lead to various problems.  Perhaps adding a OnInitialNetworkType signal could solve this.\n\u003e \n\u003e I am not sure if there\u0027s a race w.r.t observer registration here. Mojo APIs are all async, so here we are essentially posting a task to notify the client.\n\nThe race is between the initial OnNetworkChanged() signal proceeding back to the NetworkConnectionTracker, and a potential call to NetworkConnectionTracker::GetConnectionType().  If GetConnectionType() wins the race it gets an incorrect connection status.\n\n\u003e  \n\u003e \u003e 2. We\u0027ll still need NetworkConnectionTracker::GetConnectionType() to block until the OnInitialNetworkType() signal is received.\n\u003e \n\u003e Is that a good idea though? Network service might be unavailable, and we do not want the browser thread to be blocked on this.\n\nBlocking is bad but that\u0027s the cost of having GetConnectionType() a synchronous interface.  Making it an async interface would fix this issue, but would require modifications to users of the interface.  Looks like there are 28 references to NCN::GetConnectionType (ignoring test and net/ references).",
+      "parentUuid": "841f21a5_18f69160",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce32e905_a9d2d726",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 20
