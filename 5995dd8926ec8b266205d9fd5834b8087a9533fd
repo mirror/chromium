@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c93c20f7_2ee7bf27",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-11T09:21:25Z",
+      "side": 1,
+      "message": "Ah yes! Certainly! Done in PS8.",
+      "parentUuid": "9b3db445_9a3dce3f",
+      "revId": "5995dd8926ec8b266205d9fd5834b8087a9533fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b16d5b82_3ed217ac",
         "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "5995dd8926ec8b266205d9fd5834b8087a9533fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a3f7b7_184a53f9",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-11T09:21:25Z",
+      "side": 1,
+      "message": "Done in PS8.",
+      "parentUuid": "b16d5b82_3ed217ac",
+      "revId": "5995dd8926ec8b266205d9fd5834b8087a9533fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
