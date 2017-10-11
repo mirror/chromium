@@ -1522,8 +1522,6 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
   if (!CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
     return;
@@ -3615,6 +3613,27 @@ bool RenderFrameHostImpl::CanCommitURL(const GURL& url) {
   // TODO(creis): We should also check for WebUI pages here.  Also, when the
   // out-of-process iframes implementation is ready, we should check for
   // cross-site URLs that are not allowed to commit in this process.
+
+  // WebView guests can commit any origin.
+  // This is safe, because:
+  // 1) WebView guests are in a different StoragePartition, essentially outside
+  //    the browser.
+  // 2) The user has to trust the app that's providing the webview (e.g.
+  //    Webviews don't have reliable address bars so the user has to trust that
+  //    the Webview won't contain any malicious or phishing sites).
+  // This is difficult to change, because:
+  // 1) WebView guests cannot contain OOPIFs today.
+  // 2) extensions::ProcessMap doesn't track webview accessible resources
+  //    (see WebViewTest.ReloadWebviewAccessibleResource).
+  //
+  // TODO(lukasza): https://crbug.com/614463: Removes this exception once
+  // WebView guests support OOPIFs.
+  if (GetSiteInstance()->GetSiteURL().SchemeIs(kGuestScheme))
+    return true;
+
+  // chrome-error://<net error code> pages can commit in any process.
+  if (url.SchemeIs(kChromeErrorScheme))
+    return true;
 
   // Give the client a chance to disallow URLs from committing.
   return GetContentClient()->browser()->CanCommitURL(GetProcess(), url);
