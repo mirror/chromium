@@ -20,6 +20,7 @@
 #include "content/common/content_constants_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/frame_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -64,8 +65,7 @@ void CreateChildFrameOnUI(int process_id,
                           blink::WebTreeScopeType scope,
                           const std::string& frame_name,
                           const std::string& frame_unique_name,
-                          blink::WebSandboxFlags sandbox_flags,
-                          const ParsedFeaturePolicyHeader& container_policy,
+                          const FramePolicy& frame_policy,
                           const FrameOwnerProperties& frame_owner_properties,
                           int new_routing_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -74,9 +74,9 @@ void CreateChildFrameOnUI(int process_id,
   // Handles the RenderFrameHost being deleted on the UI thread while
   // processing a subframe creation message.
   if (render_frame_host) {
-    render_frame_host->OnCreateChildFrame(
-        new_routing_id, scope, frame_name, frame_unique_name, sandbox_flags,
-        container_policy, frame_owner_properties);
+    render_frame_host->OnCreateChildFrame(new_routing_id, scope, frame_name,
+                                          frame_unique_name, frame_policy,
+                                          frame_owner_properties);
   }
 }
 
@@ -344,9 +344,8 @@ void RenderFrameMessageFilter::OnCreateChildFrame(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&CreateChildFrameOnUI, render_process_id_,
                      params.parent_routing_id, params.scope, params.frame_name,
-                     params.frame_unique_name, params.sandbox_flags,
-                     params.container_policy, params.frame_owner_properties,
-                     *new_routing_id));
+                     params.frame_unique_name, params.frame_policy,
+                     params.frame_owner_properties, *new_routing_id));
 }
 
 void RenderFrameMessageFilter::OnCookiesEnabled(int render_frame_id,

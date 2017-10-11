@@ -31,6 +31,7 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/frame_policy.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/render_view_host.h"
@@ -2223,8 +2224,7 @@ TEST_F(NavigationControllerTest, NewSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://foo1/subframe");
@@ -2299,8 +2299,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name0("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name0, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name0, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url2("http://foo/2");
@@ -2343,8 +2342,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name1("uniqueName1");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name1, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name1, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe2 = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(1)->current_frame_host());
   const GURL url3("http://foo/3");
@@ -2387,8 +2385,7 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
   std::string unique_name2("uniqueName2");
   subframe->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name2, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name2, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe3 =
       static_cast<TestRenderFrameHost*>(contents()
                                             ->GetFrameTree()
@@ -2449,8 +2446,7 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://foo1/subframe");
@@ -3852,8 +3848,7 @@ TEST_F(NavigationControllerTest, SameSubframe) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://www.google.com/#");
@@ -4026,8 +4021,7 @@ TEST_F(NavigationControllerTest, SubframeWhilePending) {
   std::string unique_name("uniqueName0");
   main_test_rfh()->OnCreateChildFrame(
       process()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
-      std::string(), unique_name, blink::WebSandboxFlags::kNone,
-      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+      std::string(), unique_name, FramePolicy(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url1_sub("http://foo/subframe");
