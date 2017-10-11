@@ -44,6 +44,8 @@ public class ChromePreferenceManager {
     private static final String CONTEXTUAL_SEARCH_CURRENT_WEEK_NUMBER =
             "contextual_search_current_week_number";
     private static final String HERB_FLAVOR_KEY = "herb_flavor";
+    private static final String CHROME_HOME_BOTTOM_NAV_LABELS_ENABLED_KEY =
+            "chrome_home_bottom_nav_labels_enabled";
     private static final String CHROME_HOME_ENABLED_KEY = "chrome_home_enabled";
     private static final String CHROME_HOME_USER_ENABLED_KEY = "chrome_home_user_enabled";
 
