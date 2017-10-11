@@ -25,6 +25,7 @@ namespace content {
 class BackgroundFetchJobController;
 struct BackgroundFetchOptions;
 class BackgroundFetchRegistrationId;
+class BackgroundFetchRegistrationNotifier;
 class BlobHandle;
 class BrowserContext;
 class ServiceWorkerContextWrapper;
@@ -57,6 +58,13 @@ class CONTENT_EXPORT BackgroundFetchContext
   BackgroundFetchJobController* GetActiveFetch(
       const std::string& unique_id) const;
 
+  // Registers the |observer| to be notified of progress events for the
+  // registration identified by |unique_id| whenever they happen. The observer
+  // will unregister itself when the Mojo endpoint goes away.
+  void AddRegistrationObserver(
+      const std::string& unique_id,
+      blink::mojom::BackgroundFetchRegistrationObserverPtr observer);
+
   BackgroundFetchDataManager& data_manager() { return data_manager_; }
 
  private:
@@ -70,14 +78,16 @@ class CONTENT_EXPORT BackgroundFetchContext
   // Creates a new Job Controller for the given |registration_id| and |options|,
   // which will start fetching the files that are part of the registration.
   void CreateController(const BackgroundFetchRegistrationId& registration_id,
-                        const BackgroundFetchOptions& options);
+                        const BackgroundFetchOptions& options,
+                        const BackgroundFetchRegistration& registration);
 
   // Called when a new registration has been created by the data manager.
   void DidCreateRegistration(
       const BackgroundFetchRegistrationId& registration_id,
       const BackgroundFetchOptions& options,
       blink::mojom::BackgroundFetchService::FetchCallback callback,
-      blink::mojom::BackgroundFetchError error);
+      blink::mojom::BackgroundFetchError error,
+      const base::Optional<BackgroundFetchRegistration>& registration);
 
   // Called when the given |controller| has finished processing its job.
   void DidCompleteJob(BackgroundFetchJobController* controller);
@@ -108,6 +118,8 @@ class CONTENT_EXPORT BackgroundFetchContext
   // controllers. Must be destroyed before |data_manager_|.
   std::map<std::string, std::unique_ptr<BackgroundFetchJobController>>
       active_fetches_;
+
+  std::unique_ptr<BackgroundFetchRegistrationNotifier> registration_notifier_;
 
   base::WeakPtrFactory<BackgroundFetchContext> weak_factory_;  // Must be last.
 
