@@ -22,6 +22,47 @@
       "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ae65d8_3e202599",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T02:15:53Z",
+      "side": 1,
+      "message": "drive by comment: seems wrong for something called \"Ensure\" which presumably has side-effects to be in a DCHECK. Should it rather be  EnsureResourceFetcher(); DCHECK(Fetcher())?",
+      "parentUuid": "b57b1e96_f919ce27",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 51
+      },
+      "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cd64bc_48200326",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T02:15:53Z",
+      "side": 1,
+      "message": "Can we make these names consistent, i.e., Fetcher() and EnsureFetcher()?",
+      "revId": "51931ba4144441080edb13fa159a455d2d3b9405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
