@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d93b071e_5ac8b278",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "ACK.\n\nI do not know any way to get more than 15 suggestions without fetching more.\nIt is 20 in case we increase number of kept longer prefetched pages from 5.\n\nFetching more does not affect prefetching (fetched more suggestions cannot be prefetched).\n\nThus, your concern is valid for Opened or Shown metrics, but it looks like we are not interested in such data for fetched more suggestions.",
+      "parentUuid": "d93e2be0_e792b5f0",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4081f7ab_3be4631d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageUma.java",
         "patchSetId": 3
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6137a5d8_457a12ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "ACK\n\nI want to report only on NTP opened. If I figure inside, then someone may call the function in a different context and pollute my metric. As it is now, they will have to intentionally set parameter to true, which should be unlikely.",
+      "parentUuid": "1e4414d8_75c34216",
+      "range": {
+        "startLine": 91,
+        "startChar": 54,
+        "endLine": 91,
+        "endChar": 86
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a50f12f_2672038b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 3
@@ -115,6 +163,30 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3288674_529ea5ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a50f12f_2672038b",
+      "range": {
+        "startLine": 464,
+        "startChar": 7,
+        "endLine": 464,
+        "endChar": 18
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c5a3de2b_69034ac4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28673afd_520b72f3",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 54
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f45dc820_eb5a4b5b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
         "patchSetId": 3
@@ -161,6 +257,30 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ed365c_c0b27e6d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f45dc820_eb5a4b5b",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "35591906_e28c7d0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done.\n\nThank you, this looks much better!",
+      "parentUuid": "8f083729_5da30c4f",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95de379_22924262",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
         "patchSetId": 3
@@ -207,6 +351,30 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7862c87_52fbf190",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95de379_22924262",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a2454b87_b6d9c131",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02265fdf_eaa48346",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 55
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e50eb05_a6ef69a7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
         "patchSetId": 3
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "0bf0e527_10957684",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e50eb05_a6ef69a7",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84665b14_7fd3cc8f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
         "patchSetId": 3
@@ -276,6 +492,30 @@
       "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb2c45b_9e975747",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsOfflineModelObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-11T07:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84665b14_7fd3cc8f",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 83
+      },
+      "revId": "0fc003e02ed6adb3002169b05f0636eff44ae715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
