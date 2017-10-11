@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db2cf94_0e646107",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "nit: emplace",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2d8223_e34363bb",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "nit: touch_device_id ?",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e994e568_0e4a2499",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "It\u0027s probably better to have InitInternalTouchDevice/InitExternalTouchDevice rather than using default parameter.",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7682c7f7_a00da169",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "can you add comment why this should succeed?",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e27d81_9f5d7331",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_display_chooser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "debug log?",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6340151e_8c4ce196",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "this looks odd/wrong?",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e8fc3f_ad21101d",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "it sounds like it does opposite?",
+      "range": {
+        "startLine": 399,
+        "startChar": 5,
+        "endLine": 399,
+        "endChar": 33
+      },
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f99b8a_976d534c",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "is this comment still true? I assume we no longer remove a display because it can be associated with multiple devices, correct?",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2f9075_d1627c2e",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "optional : just removing will work?",
+      "range": {
+        "startLine": 1089,
+        "startChar": 21,
+        "endLine": 1089,
+        "endChar": 22
+      },
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877386eb_da353302",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "optional: size() ? available : unavailable",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2ccda0_29cb9378",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "emplace",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9dc486a_eb0fc1ad",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44815d8e_8f253523",
+        "filename": "ui/display/manager/managed_display_info_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94560bc6_df21f059",
+        "filename": "ui/display/manager/managed_display_info_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 1,
+      "message": "i think you can now uses constexpr for these.",
+      "range": {
+        "startLine": 140,
+        "startChar": 11,
+        "endLine": 140,
+        "endChar": 12
+      },
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

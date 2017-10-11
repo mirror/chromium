@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b9b0348_d6990ac6",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 0,
+      "message": "please keep this newline",
+      "revId": "35aa56bd9a4c8f6a889289c57be1ef3492b8f972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f8a0c4_f88bb029",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T17:55:04Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "35aa56bd9a4c8f6a889289c57be1ef3492b8f972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
