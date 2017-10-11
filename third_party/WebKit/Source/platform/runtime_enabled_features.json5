@@ -742,6 +742,7 @@
     {
       name: "PassPaintVisualRectToCompositor",
     },
+    // PaymentApp is enabled by default in canary and dev.
     {
       name: "PaymentApp",
       status: "experimental",

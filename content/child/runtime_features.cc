@@ -320,6 +320,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnablePaymentRequest(
       base::FeatureList::IsEnabled(features::kWebPayments));
 
+  WebRuntimeFeatures::EnablePaymentApp(
+      base::FeatureList::IsEnabled(features::kServiceWorkerPaymentApps));
+
   WebRuntimeFeatures::EnableServiceWorkerScriptStreaming(
       base::FeatureList::IsEnabled(features::kServiceWorkerScriptStreaming));
 
