@@ -348,14 +348,12 @@ void MessageListView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
 
   if (clear_all_started_) {
     clear_all_started_ = false;
-    // TODO(yoshiki): we shouldn't touch views in OnAllNotificationsCleared().
-    // Or rename it to like OnAllNotificationsClearing().
     for (auto& observer : observers_)
       observer.OnAllNotificationsCleared();
 
-    // Need to update layout after deleting the views.
-    if (!deleted_when_done_.empty())
-      need_update = true;
+    // Just return here if new animation is initiated in the above observers.
+    if (animator_.IsAnimating())
+      return;
   }
 
   // None of these views should be deleted.
@@ -397,10 +395,18 @@ void MessageListView::DoUpdateIfPossible() {
     return;
   }
 
-  if (!clearing_all_views_.empty()) {
-    if (!clear_all_started_)
-      AnimateClearingOneNotification();
-    return;
+  // Start the clearing all animation if necessary.
+  if (!clearing_all_views_.empty() && !clear_all_started_)
+    AnimateClearingOneNotification();
+  return;
+}
+
+// Skip during the clering all animation.
+// This checks |clear_all_started_! rather than |clearing_all_views_|, since
+// the latter is empty during the animation of the last element.
+if (clear_all_started_) {
+  DCHECK(!clearing_all_views_.empty());
+  return;
   }
 
   AnimateNotifications();
@@ -527,6 +533,10 @@ bool MessageListView::AnimateChild(views::View* child,
                                    int top,
                                    int height,
                                    bool animate_on_move) {
+  // Do not call this during clearing all animation.
+  DCHECK(clearing_all_views_.empty());
+  DCHECK(!clear_all_started_);
+
   gfx::Rect child_area = GetContentsBounds();
   if (adding_views_.find(child) != adding_views_.end()) {
     child->SetBounds(child_area.right(), top, child_area.width(), height);
@@ -560,9 +570,6 @@ void MessageListView::AnimateClearingOneNotification() {
   gfx::Rect new_bounds = child->bounds();
   new_bounds.set_x(new_bounds.right() + kMarginBetweenItems);
   animator_.AnimateViewTo(child, new_bounds);
-
-  // Deleting the child after animation.
-  deleted_when_done_.insert(child);
 
   // Schedule to start sliding out next notification after a short delay.
   if (!clearing_all_views_.empty()) {
