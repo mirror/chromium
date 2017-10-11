@@ -41,12 +41,14 @@ class TestSignCallback {
   ~TestSignCallback() {}
 
   void ReceivedCallback(U2fReturnCode status_code,
-                        const std::vector<uint8_t>& response) {
-    response_ = std::make_pair(status_code, response);
+                        const std::vector<uint8_t>& response,
+                        const std::vector<uint8_t>& key_handle) {
+    response_ = std::make_tuple(status_code, response, key_handle);
     closure_.Run();
   }
 
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& WaitForCallback() {
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
     return response_;
@@ -55,7 +57,8 @@ class TestSignCallback {
   const U2fRequest::ResponseCallback& callback() { return callback_; }
 
  private:
-  std::pair<U2fReturnCode, std::vector<uint8_t>> response_;
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>
+      response_;
   base::Closure closure_;
   U2fRequest::ResponseCallback callback_;
   base::RunLoop run_loop_;
@@ -75,12 +78,17 @@ TEST_F(U2fSignTest, TestSignSuccess) {
                        std::vector<uint8_t>(32), cb.callback());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+
   // Correct key was sent so a sign response is expected
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign), response.second[0]);
+  ASSERT_GE(1u, std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign),
+            std::get<1>(response)[0]);
+
+  // Verify that we get the key handle used for signing.
+  EXPECT_EQ(key, std::get<2>(response));
 }
 
 TEST_F(U2fSignTest, TestDelayedSuccess) {
@@ -102,12 +110,18 @@ TEST_F(U2fSignTest, TestDelayedSuccess) {
                        std::vector<uint8_t>(32), cb.callback());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+
   // Correct key was sent so a sign response is expected
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign), response.second[0]);
+  ASSERT_GE(1u, std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign),
+            std::get<1>(response)[0]);
+
+  // Verify that we get the key handle used for signing.
+  EXPECT_EQ(key, std::get<2>(response));
 }
 
 TEST_F(U2fSignTest, TestMultipleHandles) {
@@ -136,12 +150,18 @@ TEST_F(U2fSignTest, TestMultipleHandles) {
                        std::vector<uint8_t>(32), cb.callback());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+
   // Correct key was sent so a sign response is expected
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign), response.second[0]);
+  ASSERT_GE(1u, std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign),
+            std::get<1>(response)[0]);
+
+  // Verify that we get the key handle used for signing.
+  EXPECT_EQ(key, std::get<2>(response));
 }
 
 TEST_F(U2fSignTest, TestMultipleDevices) {
@@ -170,12 +190,18 @@ TEST_F(U2fSignTest, TestMultipleDevices) {
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+
   // Correct key was sent so a sign response is expected
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign), response.second[0]);
+  ASSERT_GE(1u, std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kSign),
+            std::get<1>(response)[0]);
+
+  // Verify that we get the key handle used for signing.
+  EXPECT_EQ(key0, std::get<2>(response));
 }
 
 TEST_F(U2fSignTest, TestFakeEnroll) {
@@ -207,13 +233,19 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+
   // Device that responded had no correct keys, so a registration response is
-  // expected
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister), response.second[0]);
+  // expected.
+  ASSERT_GE(1u, std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
+            std::get<1>(response)[0]);
+
+  // Verify that we get a blank key handle for the key that was registered.
+  EXPECT_TRUE(std::get<2>(response).empty());
 }
 
 }  // namespace device

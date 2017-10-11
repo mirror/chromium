@@ -113,10 +113,14 @@ void AuthenticatorImpl::MakeCredential(
 }
 
 // Callback to handle the async response from a U2fDevice.
-void AuthenticatorImpl::OnDeviceResponse(MakeCredentialCallback callback,
-                                         const std::string& client_data_json,
-                                         device::U2fReturnCode status_code,
-                                         const std::vector<uint8_t>& data) {
+// |data| is returned for successful responses, and |key_handle| is only
+// returned for successful sign responses.
+void AuthenticatorImpl::OnDeviceResponse(
+    MakeCredentialCallback callback,
+    const std::string& client_data_json,
+    device::U2fReturnCode status_code,
+    const std::vector<uint8_t>& data,
+    const std::vector<uint8_t>& key_handle) {
   timeout_callback_.Cancel();
 
   if (status_code == device::U2fReturnCode::SUCCESS) {
