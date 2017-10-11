@@ -5797,6 +5797,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="FAILURE_UNKNOWN_KEY"/>
   <int value="11" label="FAILURE_SESSION_RATE_IMPACT_PARSE"/>
   <int value="12" label="FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE"/>
+  <int value="13" label="FAILURE_TRACKING_ONLY_PARSE"/>
 </enum>
 
 <enum name="ConnectionDiagnosticsIssue">
@@ -38865,6 +38866,7 @@ would be helpful to identify which type is being sent.
   <int value="9" label="FAILURE_SESSION_RATE"/>
   <int value="10" label="FAILURE_AVAILABILITY_MODEL_NOT_READY"/>
   <int value="11" label="FAILURE_AVAILABILITY_PRECONDITION_UNMET"/>
+  <int value="12" label="SUCCESS_TRACKING_ONLY"/>
 </enum>
 
 <enum name="TrimMemoryLevel">
