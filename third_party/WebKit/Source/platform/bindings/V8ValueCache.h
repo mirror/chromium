@@ -26,6 +26,7 @@
 #ifndef V8ValueCache_h
 #define V8ValueCache_h
 
+#include <algorithm>
 #include "platform/PlatformExport.h"
 #include "platform/bindings/V8GlobalValueMap.h"
 #include "platform/wtf/Allocator.h"
@@ -89,18 +90,49 @@ class PLATFORM_EXPORT StringCache {
   v8::Local<v8::String> V8ExternalString(v8::Isolate* isolate,
                                          StringImpl* string_impl) {
     DCHECK(string_impl);
-    if (last_string_impl_.get() == string_impl)
-      return last_v8_string_.NewLocal(isolate);
+    if (FindStringInFirstCache(string_impl))
+      return last_v8_strings_[0].NewLocal(isolate);
     return V8ExternalStringSlow(isolate, string_impl);
   }
+
+  void rotateCache(int index) {
+    std::rotate(std::begin(last_string_impls_),
+                std::begin(last_string_impls_) + index,
+                std::begin(last_string_impls_) + index + 1);
+    std::rotate(std::begin(last_v8_strings_),
+                std::begin(last_v8_strings_) + index,
+                std::begin(last_v8_strings_) + index + 1);
+  }
+
+  bool FindStringInFirstCache(StringImpl* string_impl) {
+    for (int i = 0; i < cache_size_; i++) {
+      if (last_string_impls_[i].get() == string_impl) {
+        rotateCache(i);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void AddStringToFirstCache(
+      StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string,
+      StringImpl* string_impl) {
+    int replace_index = GetInsertIndexForFirstCache();
+    last_string_impls_[replace_index] = string_impl;
+    last_v8_strings_[replace_index] = cached_v8_string;
+    rotateCache(replace_index);
+  }
+
+  int GetInsertIndexForFirstCache() const { return cache_size_ - 1; }
 
   void SetReturnValueFromString(v8::ReturnValue<v8::Value> return_value,
                                 StringImpl* string_impl) {
     DCHECK(string_impl);
-    if (last_string_impl_.get() == string_impl)
-      last_v8_string_.SetReturnValue(return_value);
-    else
+    if (FindStringInFirstCache(string_impl)) {
+      last_v8_strings_[0].SetReturnValue(return_value);
+    } else {
       SetReturnValueFromStringSlow(return_value, string_impl);
+    }
   }
 
   void Dispose();
@@ -115,12 +147,12 @@ class PLATFORM_EXPORT StringCache {
   void InvalidateLastString();
 
   StringCacheMapTraits::MapType string_cache_;
-  StringCacheMapTraits::MapType::PersistentValueReference last_v8_string_;
 
-  // Note: RefPtr is a must as we cache by StringImpl* equality, not identity
-  // hence lastStringImpl might be not a key of the cache (in sense of identity)
-  // and hence it's not refed on addition.
-  RefPtr<StringImpl> last_string_impl_;
+  static const int cache_size_ = 5;
+  StringCacheMapTraits::MapType::PersistentValueReference
+      last_v8_strings_[cache_size_];
+  RefPtr<StringImpl> last_string_impls_[cache_size_];
+  int start_index_ = 0;
 };
 
 }  // namespace blink
