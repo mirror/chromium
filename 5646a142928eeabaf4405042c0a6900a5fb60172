@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947d20ee_ec61d232",
+        "filename": "ui/base/clipboard/clipboard_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T06:58:17Z",
+      "side": 1,
+      "message": "Nit: static and name these kSrcUrlStr",
+      "revId": "5646a142928eeabaf4405042c0a6900a5fb60172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
