@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9ab5601_e9b6dccd",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T17:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c51d72b_44b8ef87",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00e11f90_bf41c8f0",
         "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26a34f7_c4c5e0ef",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T17:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00e11f90_bf41c8f0",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dbad19f2_cee867e1",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T17:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db609079_05255c89",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cef3a3_20752f7d",
         "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bf7e624d_ee7bc39d",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T17:39:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55cef3a3_20752f7d",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e2f2915_62f3bc77",
         "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-11T01:25:13Z",
       "side": 1,
       "message": "Hrm. -153 seems pretty fragile. Is there any other way to do this? Even number-of-items * item_height would be better.",
+      "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb28a28_b66038db",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T17:39:56Z",
+      "side": 1,
+      "message": "Done, though I worry that it\u0027s now just as fragile and slightly more complicated (still assumes the menu content, sizing, and positioning). It would take a bit of plumbing (that wouldn\u0027t work in mash) to get the actual menu item view\u0027s position by command id. I guess the views menu code could use a better test api.",
+      "parentUuid": "6e2f2915_62f3bc77",
       "revId": "bf1c20b3a8499f273dceeb2d82d5f246c393b03d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
