@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c5157ee5_5cfbfcca",
+        "filename": "components/viz/service/gl/gpu_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "Actually, I think I\u0027d prefer to do a DCHECK(io_runner_-\u003eBelongsToCurrentThread()); and then do the post-task to anther function, but it\u0027s not that big of a deal.",
+      "parentUuid": "e10430dc_ce9dd2e1",
+      "range": {
+        "startLine": 322,
+        "startChar": 6,
+        "endLine": 322,
+        "endChar": 16
+      },
+      "revId": "634064de3c02a85087f1917e1111a79057e09949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33d338b9_b617b8f2",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 3
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b696e7f5_e0e3f0a0",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb95ce2c_d6371720",
+      "range": {
+        "startLine": 538,
+        "startChar": 9,
+        "endLine": 538,
+        "endChar": 10
+      },
+      "revId": "634064de3c02a85087f1917e1111a79057e09949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d04ec91_725164de",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 3
@@ -140,6 +188,30 @@
       "revId": "634064de3c02a85087f1917e1111a79057e09949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2cca210_6737a6e8",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "I think the callbacks are better than the HDRProxy class actually.",
+      "parentUuid": "9ccee086_3b816ab1",
+      "range": {
+        "startLine": 543,
+        "startChar": 44,
+        "endLine": 543,
+        "endChar": 53
+      },
+      "revId": "634064de3c02a85087f1917e1111a79057e09949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

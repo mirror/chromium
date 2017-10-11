@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab15eeb_b00e9f61",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "I don\u0027t like this, it\u0027s pretty complicated I think it was better to use callbacks.",
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13062da7_5be77f44",
+        "filename": "gpu/ipc/service/direct_composition_surface_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "ENABLE_HDR_DETECTION is actually always true now, so we can remove the #if (and clean things up at the top of the file.)",
+      "range": {
+        "startLine": 1090,
+        "startChar": 12,
+        "endLine": 1090,
+        "endChar": 32
+      },
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39926f9c_58ad0494",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-11T22:56:01Z",
+      "side": 1,
+      "message": "this is what weak pointers are for",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 28
+      },
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
