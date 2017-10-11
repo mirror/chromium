@@ -570,5 +570,20 @@
     "prefix": "dynamic-import",
     "base": "external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import",
     "args": ["--enable-features=ModuleScriptsDynamicImport"]
+  },
+  {
+    "prefix": "modern-media-controls",
+    "base": "compositing/video",
+    "args": ["-enable-features=UseModernMediaControls"]
+  },
+  {
+    "prefix": "modern-media-controls",
+    "base": "http/tests/media",
+    "args": ["-enable-features=UseModernMediaControls"]
+  },
+  {
+    "prefix": "modern-media-controls",
+    "base": "media",
+    "args": ["-enable-features=UseModernMediaControls"]
   }
 ]
