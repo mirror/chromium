@@ -187,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "3bdbbabd_d9abfec3",
+        "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-11T16:44:36Z",
+      "side": 1,
+      "message": "\u003e There is no way to destructure the nice familiar member function call syntax (i.e. \"test_api-\u003eDoWhatever()\") with template magic, so we can\u0027t really do this without either making the call syntax worse or making test_api a different type. We also can\u0027t create an appropriate wrapper type using templates alone, because the transform between response callback argument types and sync call output argument types is too complex.\n\u003e \n\u003e We can however generate a new test helper type from the bindings generator. We already generate  *InterceptorForTesting as one example. Could do something like:\n\u003e \n\u003e   // generated from a mojom Foo interface definition\n\u003e   class FooAsyncWaiter : public Foo {\n\u003e    public:\n\u003e     FooAsyncWaiter(FooPtr* proxy) : proxy_(proxy) {}\n\u003e \n\u003e     // generated methods for every Foo message that expects a response\n\u003e     // we use sync call signatures and forward to the async proxy\n\u003e     void QueryFrobinator(int index, std::string* status) override {\n\u003e       base::RunLoop loop;\n\u003e       proxy_-\u003eQueryFrobinator(\n\u003e           index,\n\u003e           base::BindOnce([](base::RunLoop* loop, std::string* out_status,\n\u003e                             const std::string\u0026 status) {\n\u003e                            *out_status \u003d status;\n\u003e                            loop-\u003eQuit();\n\u003e                          }));\n\nAnd of course we\u0027d actually bind loop and out_status here...\n\n\u003e       loop.Run();\n\u003e     }\n\u003e    // ...\n\u003e   };\n\u003e \n\u003e Then test code can simply write\n\u003e \n\u003e   mojom::FooPtr foo \u003d /* get a FooPtr... */;\n\u003e   mojom::FooAsyncWaiter foo_waiter(\u0026foo);\n\u003e \n\u003e   foo-\u003eMakeNonResponseCalls();\n\u003e   foo-\u003eQueryFrobinator(42, base::Bind...) // can still make async calls\n\u003e \n\u003e   // make an async call that blocks and looks like a sync call, but\n\u003e   // still pumps the message loop.\n\u003e   std::string status;\n\u003e   foo_waiter-\u003eQueryFrobinator(42, \u0026status);\n\u003e \n\u003e Note that I would like to avoid actually replacing the FooPtr in tests like this, so if we were to add a new generated helper I\u0027d want it to wrap an externally owned FooPtr as above.\n\u003e \n\u003e Also not crazy about the \"async waiter\" name. It\u0027s really a kind of pseudo-synchronous Foo than a Foo \"waiter\". mojom::FooPseudosync just rolls right off the tongue, doesn\u0027t it?",
+      "parentUuid": "f458622f_ebf68fba",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "546aee9f3f82b9e718e6ccbdcfab87ecf2b77fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf6691fb_7afd1b7c",
         "filename": "chrome/browser/ui/ash/networking_config_delegate_chromeos_browsertest.cc",
         "patchSetId": 5
