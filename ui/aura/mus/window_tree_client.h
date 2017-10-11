@@ -587,6 +587,7 @@ class AURA_EXPORT WindowTreeClient
                             base::TimeTicks start_time) override;
   void OnCompositingEnded(ui::Compositor* compositor) override;
   void OnCompositingLockStateChanged(ui::Compositor* compositor) override;
+  void OnCompositingChildResizing(ui::Compositor* compositor) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
   // The one int in |cursor_location_mapping_|. When we read from this

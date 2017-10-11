@@ -2374,6 +2374,8 @@ void WindowTreeClient::OnCompositingEnded(ui::Compositor* compositor) {
 void WindowTreeClient::OnCompositingLockStateChanged(
     ui::Compositor* compositor) {}
 
+void WindowTreeClient::OnCompositingChildResizing(ui::Compositor* compositor) {}
+
 void WindowTreeClient::OnCompositingShuttingDown(ui::Compositor* compositor) {
   compositor->RemoveObserver(this);
 }
