@@ -22,6 +22,30 @@
       "revId": "65d2ae27171db5ca6ffdba43f5df99a3dcdb8484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a46f39_3649efec",
+        "filename": "chrome/android/java/res/layout/new_tab_page_layout.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T17:33:00Z",
+      "side": 1,
+      "message": "\u003csigh\u003e Well, we don\u0027t know. In English on my N5X it\u0027s a single line, but in other languages and on smaller screens it might not be... I suppose it turns into a tradeoff between those factors and the OS version. I\u0027m tempted to keep the leading, because if we have that, we can treat the inconsistent behavior as a bug and try to fix it somehow for all instances, whereas if we use padding, it\u0027s going to be more difficult to distinguish it from true padding later.",
+      "parentUuid": "fe166737_5e4ced46",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 33
+      },
+      "revId": "65d2ae27171db5ca6ffdba43f5df99a3dcdb8484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
