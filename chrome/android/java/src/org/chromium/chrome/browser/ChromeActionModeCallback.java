@@ -13,12 +13,14 @@ import android.view.MenuItem;
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.omnibox.geo.GeolocationHeader;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
+import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.content.R;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -106,6 +108,8 @@ public class ChromeActionModeCallback implements ActionMode.Callback {
 
     private void search(String searchText) {
         RecordUserAction.record("MobileActionMode.WebSearch");
+        TrackerFactory.getTrackerForProfile(mTab.getProfile())
+                .notifyEvent(EventConstants.QUERY_SEARCHED_EXTERNALLY);
         if (mTab.getTabModelSelector() == null) return;
 
         String query = ActionModeCallbackHelper.sanitizeQuery(
