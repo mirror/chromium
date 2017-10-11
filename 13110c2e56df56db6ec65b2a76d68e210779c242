@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5277267b_09f7b7b1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "nit: Maybe base::Time::kMillisecondsPerSecond?",
+      "range": {
+        "startLine": 59,
+        "startChar": 65,
+        "endLine": 59,
+        "endChar": 69
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b008924c_84b920b1",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 10
@@ -48,6 +71,46 @@
     },
     {
       "key": {
+        "uuid": "2a4cfbc5_9c97a4a3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit preferable to use:\n\n  ... \u003d base::MakeUnique(...",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b587cf89_1dc0701b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Store |timer_clock| as a unique_ptr member too, because otherwise it will have to be deleted by the external code - which is weird, given that |clock| is owned by DeviceOffHoursController.",
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5efe66dc_92dd9df6",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 10
@@ -59,6 +122,30 @@
       "writtenOn": "2017-10-11T16:06:42Z",
       "side": 1,
       "message": "Please, create \"SetClockForTesting\" instead.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b64bad_dabbd733",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Agreed. And also please change this to receive these parameters as unique_ptr\u0027s, because their ownership is passed to DeviceOffHoursController.",
+      "parentUuid": "5efe66dc_92dd9df6",
       "range": {
         "startLine": 61,
         "startChar": 0,
@@ -117,6 +204,247 @@
     },
     {
       "key": {
+        "uuid": "5a201f4e_75728289",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Won\u0027t base::SimpleTestClock, base::SimpleTestTickClock be enough?",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 15
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45b34af_d83e78cb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "This is disallowed by the Style Guide - you\u0027d want to use a pointer in case you need to modify the argument. See https://google.github.io/styleguide/cppguide.html#Reference_Arguments .\n(Ditto for analogous cases throughout this file.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e55611_334ccd81",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "nit: Remove this initialization, it\u0027s implicit in C++ for non-trivial objects.",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 78
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b9d499_5e690ebd",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Hmm, the function itself is complex, and it\u0027s also not easy to understand its callsites... Ideally tests should just contain human-written ready-to-use parameters, without tricky computations in order to infer them from the small set of parameters.\n\nWould it help if you introduced a small struct that would be an analog of the DeviceOffHoursProto proto message? The tests would then just construct it, and some helper function will transform this into DeviceOffHoursProto and feed into policy proto. WDYT?",
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2c5358_6b94ecf1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Once you have fake clocks, why bother with using Now()? This makes the test harder to understand, given that the real time continues advancing throughout the test.\n\nWould it be possible to use fake times universally throughout the test?",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 49
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf46ad7_bfa1cf62",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "This style of ownership looks dangerous - here the objects are created and never deleted, and the assumption is that the test contents will create an exactly one instance of DeviceOffHoursController. If some test deviates from it, then it will either leak memory or crash.\n\nI\u0027d suggest restructuring the tests code so that the clocks are created close to the place where they are passed to DeviceOffHoursController. Probably it\u0027ll be simpler to move the DeviceOffHoursController construction into a method of the test fixture, or even into one of the SetUp*() methods (but I haven\u0027t thought too much on the exact location).",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 56
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8eb43e9_a0e0eeb3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "These old tests don\u0027t need fake clocks, therefore it\u0027s better to separate out the new \"fake clock\" part into a separate test fixture class. This way, each field of the test fixture class will be relevant, and this will avoid constructing unnecessary objects and improve readability.",
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf45f49b_e7270161",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Tests are becoming more and more complex in this file. Could you please write a short comment before each TEST_F with a brief explanation containing the main idea of the test?",
+      "range": {
+        "startLine": 206,
+        "startChar": 37,
+        "endLine": 206,
+        "endChar": 64
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e212765_285a84bd",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "nit: Designating the constant variables explicitly will help to understand the code:\n\n  const WeeklyTime kStart \u003d ...\n  const std::vector\u003cem::DeviceOffHoursIntervalProto\u003e kIntervalsProto \u003d ...",
+      "range": {
+        "startLine": 207,
+        "startChar": 13,
+        "endLine": 207,
+        "endChar": 18
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57d3629_68c38087",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Better introduce file-level constants for these numbers - then their usages will be self-explanatory.",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 55
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246ae7a6_4d4fdb40",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "nit: The class name should include \"DeviceOffHoursController\" - remember that all test fixtures from all browser test files are linked together and therefore fall into the same huge bucket.\n\nI also don\u0027t quite understand the meaning of \"OneOffHoursInterval\" - it doesn\u0027t seem to comply with the parameter names?",
+      "range": {
+        "startLine": 266,
+        "startChar": 6,
+        "endLine": 266,
+        "endChar": 29
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e9f3d7a_9bf5971c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
         "patchSetId": 10
@@ -156,6 +484,29 @@
         "startChar": 41,
         "endLine": 44,
         "endChar": 59
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28ad2db_cdd6ca37",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T20:15:55Z",
+      "side": 1,
+      "message": "Perhaps, this CL needs a rebase? There\u0027s already DeviceSettingsService::SetDeviceOffHoursControllerForTesting() on master, and it accepts std::unique_ptr\u003cDeviceOffHoursController\u003e (which is good, because currently this CL leaks the memory here).",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 44
       },
       "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
