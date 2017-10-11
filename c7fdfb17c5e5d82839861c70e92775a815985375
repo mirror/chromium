@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e717dc93_44b8563f",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafc80db_d2689a69",
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8321f21d_adbd7270",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "nit: Could this param be passed by const-ref?  Applies to the other helper functions as well.",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96da7a0_81fc9a07",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "It can\u0027t: the FileAccessor methods are not const. (and I don\u0027t think they should be const, that would be too constraining on the implementation).",
+      "parentUuid": "8321f21d_adbd7270",
       "range": {
         "startLine": 35,
         "startChar": 18,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4675d92c_f82351a4",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Good suggestion. Done.",
+      "parentUuid": "23535d23_9f163491",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bb88d82_06cf5700",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c4f0ba50_7a11a9f9",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb88d82_06cf5700",
+      "range": {
+        "startLine": 129,
+        "startChar": 45,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09218a2_486c1589",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "Could you DCHECK that the |dest_file| is not set in this case?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf1d18b_c26e960b",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f09218a2_486c1589",
       "range": {
         "startLine": 158,
         "startChar": 0,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "845334a2_41932d6e",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "On the IPC side, we have no enumeration mechanisms, we can only list a directory content at a time.",
+      "parentUuid": "a260fa6f_decba83a",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 80
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edb84963_de475c49",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -145,6 +283,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "Could you share this loop across the if/else, and just use the if-else to build up the list of files?",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 5
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7984adc_935da906",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "I can, but then I do have to traverse twice (once to build the files, then to add them to the ZIP file).",
+      "parentUuid": "edb84963_de475c49",
       "range": {
         "startLine": 207,
         "startChar": 0,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "b68bdb85_235ab3a3",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Good idea, done.\nAlso changed the name to DirectoryContentEntry, as I realize it was confusing to have a DirectoryEntry that has a is_directory field.",
+      "parentUuid": "e5dc9d61_bcf3ac68",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7696a0fc_3ccf762e",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -200,6 +386,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8799c407_2e875e04",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7696a0fc_3ccf762e",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "436250d8_2f2b30e7",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c67655_0b4a9d4f",
+      "range": {
+        "startLine": 52,
+        "startChar": 60,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1068c5bc_a97b0828",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -246,6 +480,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1e0b6c_cc2cd01b",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1068c5bc_a97b0828",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "90b67973_a96e59b3",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deea285f_2e2ace28",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 33
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805d18af_99e87afe",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "b942d3f6_c207ff51",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "805d18af_99e87afe",
+      "range": {
+        "startLine": 75,
+        "startChar": 13,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97a2406c_3cee5ec8",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -306,6 +612,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "nit: I think this phrase is missing some words. At least, I\u0027m having trouble parsing it as a complete phrase.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce463151_9c55e388",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "97a2406c_3cee5ec8",
       "range": {
         "startLine": 89,
         "startChar": 5,
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "c8f891bb_40e1be4b",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da75e783_dc6c3fd3",
+      "range": {
+        "startLine": 93,
+        "startChar": 34,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e90c0e_5389ebcb",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "0a7a84a7_6d32e6c7",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e90c0e_5389ebcb",
+      "range": {
+        "startLine": 100,
+        "startChar": 34,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a6a75b_b9de6127",
         "filename": "third_party/zlib/google/zip_internal.cc",
         "patchSetId": 4
@@ -375,6 +753,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "nit: While you\u0027re here... do you happen to know whether this \"zipfi\" comment makes sense as-is?  It kind of looks truncated...",
+      "range": {
+        "startLine": 356,
+        "startChar": 59,
+        "endLine": 356,
+        "endChar": 64
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cad18db_03aaeee5",
+        "filename": "third_party/zlib/google/zip_internal.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "It means zip_fileinfo. Changed to file_info which I think is clearer.",
+      "parentUuid": "b6a6a75b_b9de6127",
       "range": {
         "startLine": 356,
         "startChar": 59,
@@ -410,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "efe935a6_76b27a4d",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d52e09c_4907520c",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 80
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e7da58d_0df214ef",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 4
@@ -421,6 +847,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "Is this case reachable?  If so, mebbe document why.",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 72
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbcb1e2_8b10cd37",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "No, it should not be reachable. Now asserting.",
+      "parentUuid": "1e7da58d_0df214ef",
       "range": {
         "startLine": 80,
         "startChar": 60,
@@ -456,6 +906,30 @@
     },
     {
       "key": {
+        "uuid": "3fbfe583_bc1c048f",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d97a72e6_671f8a32",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 65
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3f82140_ae58157b",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 4
@@ -476,6 +950,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d301601f_6abd7505",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f82140_ae58157b",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -502,6 +1000,30 @@
     },
     {
       "key": {
+        "uuid": "4bd6b487_58b5dc36",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53d7ce85_940f5893",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508996a4_89ba0544",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 4
@@ -513,6 +1035,30 @@
       "writtenOn": "2017-10-11T19:52:45Z",
       "side": 1,
       "message": "Optional: I really like \"This is bar too\" for the contents of a file named bar2, but maybe that\u0027s just me \u003dP",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 64
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21602cd3_86650ceb",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "OK :-)",
+      "parentUuid": "508996a4_89ba0544",
       "range": {
         "startLine": 106,
         "startChar": 47,
@@ -548,6 +1094,30 @@
     },
     {
       "key": {
+        "uuid": "87655275_a1abfeee",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838801e5_cc29aa3e",
+      "range": {
+        "startLine": 175,
+        "startChar": 19,
+        "endLine": 175,
+        "endChar": 23
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ef7c6a_dafaf354",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 4
@@ -571,6 +1141,30 @@
     },
     {
       "key": {
+        "uuid": "3599f42b_00e9ff33",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ef7c6a_dafaf354",
+      "range": {
+        "startLine": 183,
+        "startChar": 43,
+        "endLine": 183,
+        "endChar": 45
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4a4b35c_48ad13a8",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 4
@@ -591,6 +1185,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00d198c_1db7493b",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-11T21:24:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a4b35c_48ad13a8",
+      "range": {
+        "startLine": 187,
+        "startChar": 67,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
