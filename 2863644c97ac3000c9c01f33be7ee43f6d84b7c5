@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10bcc461_261abd12",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T14:26:49Z",
+      "side": 1,
+      "message": "nit: please write a lightweight class-level comment, e.g. \"A wrapper URLLoaderClient that invokes given RewriteHeaderCallback whenever response or redirect is received. It self-destruct itself when the Mojo connection is closed.\"",
+      "revId": "2863644c97ac3000c9c01f33be7ee43f6d84b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d639114e_440bc849",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T14:26:49Z",
+      "side": 1,
+      "message": "Oh... I see we still need to set these.",
+      "revId": "2863644c97ac3000c9c01f33be7ee43f6d84b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
