@@ -129,6 +129,30 @@
       "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffa301b_3a303a3c",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-11T20:15:15Z",
+      "side": 1,
+      "message": "Marking as done since the bug will track this issue.",
+      "parentUuid": "1a2749ea_bdf37b58",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

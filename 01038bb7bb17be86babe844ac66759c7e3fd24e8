@@ -460,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "aa384bc2_f2b1bccc",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-11T20:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a37171_4aeaf08d",
+      "revId": "01038bb7bb17be86babe844ac66759c7e3fd24e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742b2877_dbea5f04",
         "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller_delegate.h",
         "patchSetId": 6
