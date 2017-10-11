@@ -42,12 +42,14 @@ class TestRegisterCallback {
   ~TestRegisterCallback() {}
 
   void ReceivedCallback(U2fReturnCode status_code,
-                        const std::vector<uint8_t>& response) {
-    response_ = std::make_pair(status_code, response);
+                        const std::vector<uint8_t>& response,
+                        const std::vector<uint8_t>& key_handle) {
+    response_ = std::make_tuple(status_code, response, key_handle);
     closure_.Run();
   }
 
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& WaitForCallback() {
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
     return response_;
@@ -56,7 +58,8 @@ class TestRegisterCallback {
   const U2fRequest::ResponseCallback& callback() { return callback_; }
 
  private:
-  std::pair<U2fReturnCode, std::vector<uint8_t>> response_;
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>
+      response_;
   base::Closure closure_;
   U2fRequest::ResponseCallback callback_;
   base::RunLoop run_loop_;
@@ -73,11 +76,17 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
       std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister), response.second[0]);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+  ASSERT_LT(static_cast<size_t>(0), std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
+            std::get<1>(response)[0]);
+
+  // Verify that we get a blank key handle.
+  ASSERT_EQ(static_cast<size_t>(0), std::get<2>(response).size());
+  EXPECT_EQ(std::vector<uint8_t>(), std::get<2>(response));
 }
 
 TEST_F(U2fRegisterTest, TestDelayedSuccess) {
@@ -96,11 +105,17 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
       std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister), response.second[0]);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+  ASSERT_LT(static_cast<size_t>(0), std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
+            std::get<1>(response)[0]);
+
+  // Verify that we get a blank key handle.
+  ASSERT_EQ(static_cast<size_t>(0), std::get<2>(response).size());
+  EXPECT_EQ(std::vector<uint8_t>(), std::get<2>(response));
 }
 
 TEST_F(U2fRegisterTest, TestMultipleDevices) {
@@ -124,11 +139,17 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
-  std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(U2fReturnCode::SUCCESS, response.first);
-  ASSERT_LT(static_cast<size_t>(0), response.second.size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister), response.second[0]);
+  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+      response = cb.WaitForCallback();
+
+  EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
+  ASSERT_LT(static_cast<size_t>(0), std::get<1>(response).size());
+  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
+            std::get<1>(response)[0]);
+
+  // Verify that we get a blank key handle.
+  ASSERT_EQ(static_cast<size_t>(0), std::get<2>(response).size());
+  EXPECT_EQ(std::vector<uint8_t>(), std::get<2>(response));
 }
 
 }  // namespace device
