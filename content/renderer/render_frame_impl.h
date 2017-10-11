@@ -12,6 +12,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -188,6 +189,7 @@ class CONTENT_EXPORT RenderFrameImpl
   static RenderFrameImpl* CreateMainFrame(
       RenderViewImpl* render_view,
       int32_t routing_id,
+      service_manager::mojom::InterfaceProviderPtr interfaces,
       int32_t widget_routing_id,
       bool hidden,
       const ScreenInfo& screen_info,
@@ -215,16 +217,18 @@ class CONTENT_EXPORT RenderFrameImpl
   // Note: This is called only when RenderFrame is being created in response
   // to IPC message from the browser process. All other frame creation is driven
   // through Blink and Create.
-  static void CreateFrame(int routing_id,
-                          int proxy_routing_id,
-                          int opener_routing_id,
-                          int parent_routing_id,
-                          int previous_sibling_routing_id,
-                          const base::UnguessableToken& devtools_frame_token,
-                          const FrameReplicationState& replicated_state,
-                          CompositorDependencies* compositor_deps,
-                          const mojom::CreateFrameWidgetParams& params,
-                          const FrameOwnerProperties& frame_owner_properties);
+  static void CreateFrame(
+      int routing_id,
+      service_manager::mojom::InterfaceProviderPtr interfaces,
+      int proxy_routing_id,
+      int opener_routing_id,
+      int parent_routing_id,
+      int previous_sibling_routing_id,
+      const base::UnguessableToken& devtools_frame_token,
+      const FrameReplicationState& replicated_state,
+      CompositorDependencies* compositor_deps,
+      const mojom::CreateFrameWidgetParams& params,
+      const FrameOwnerProperties& frame_owner_properties);
 
   // Returns the RenderFrameImpl for the given routing ID.
   static RenderFrameImpl* FromRoutingID(int routing_id);
@@ -234,22 +238,23 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Used by content_layouttest_support to hook into the creation of
   // RenderFrameImpls.
-  struct CreateParams {
+  struct CONTENT_EXPORT CreateParams {
     CreateParams(RenderViewImpl* render_view,
                  int32_t routing_id,
-                 const base::UnguessableToken& devtools_frame_token)
-        : render_view(render_view),
-          routing_id(routing_id),
-          devtools_frame_token(devtools_frame_token) {}
-    ~CreateParams() {}
+                 service_manager::mojom::InterfaceProviderPtr interfaces,
+                 const base::UnguessableToken& devtools_frame_token);
+    ~CreateParams();
+
+    CreateParams(CreateParams&&);
+    CreateParams& operator=(CreateParams&&);
 
     RenderViewImpl* render_view;
     int32_t routing_id;
+    service_manager::mojom::InterfaceProviderPtr interfaces;
     base::UnguessableToken devtools_frame_token;
   };
 
-  using CreateRenderFrameImplFunction =
-      RenderFrameImpl* (*)(const CreateParams&);
+  using CreateRenderFrameImplFunction = RenderFrameImpl* (*)(CreateParams);
   static void InstallCreateHook(
       CreateRenderFrameImplFunction create_render_frame_impl);
 
@@ -727,8 +732,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Binds to the FrameHost in the browser.
   void BindFrame(const service_manager::BindSourceInfo& browser_info,
-                 mojom::FrameRequest request,
-                 mojom::FrameHostInterfaceBrokerPtr frame_host);
+                 mojom::FrameRequest request);
 
   // Virtual so that a TestRenderFrame can mock out the interface.
   virtual mojom::FrameHost* GetFrameHost();
@@ -814,7 +818,7 @@ class CONTENT_EXPORT RenderFrameImpl
       mojo::MessagePipeHandle custom_loader_factory_handle);
 
  protected:
-  explicit RenderFrameImpl(const CreateParams& params);
+  explicit RenderFrameImpl(CreateParams params);
 
  private:
   friend class RenderFrameImplTest;
@@ -887,10 +891,12 @@ class CONTENT_EXPORT RenderFrameImpl
       EngagementOriginAndLevel;
 
   // Creates a new RenderFrame. |render_view| is the RenderView object that this
-  // frame belongs to.
+  // frame belongs to, and |interfaces| is the RenderFrameHost's
+  // InterfaceProvider through which services are exposed to the RenderFrame.
   static RenderFrameImpl* Create(
       RenderViewImpl* render_view,
       int32_t routing_id,
+      service_manager::mojom::InterfaceProviderPtr interfaces,
       const base::UnguessableToken& devtools_frame_token);
 
   // Functions to add and remove observers for this object.
@@ -1365,8 +1371,6 @@ class CONTENT_EXPORT RenderFrameImpl
   service_manager::BinderRegistry registry_;
   std::unique_ptr<service_manager::InterfaceProvider> remote_interfaces_;
   std::unique_ptr<BlinkInterfaceRegistryImpl> blink_interface_registry_;
-  service_manager::mojom::InterfaceProviderRequest
-      pending_remote_interface_provider_request_;
 
   service_manager::BindSourceInfo local_info_;
   service_manager::BindSourceInfo remote_info_;
@@ -1453,7 +1457,6 @@ class CONTENT_EXPORT RenderFrameImpl
   mojo::AssociatedBinding<mojom::HostZoom> host_zoom_binding_;
   mojo::AssociatedBinding<mojom::FrameBindingsControl>
       frame_bindings_control_binding_;
-  mojom::FrameHostInterfaceBrokerPtr frame_host_interface_broker_;
 
   // Indicates whether |didAccessInitialDocument| was called.
   bool has_accessed_initial_document_;
@@ -1464,6 +1467,7 @@ class CONTENT_EXPORT RenderFrameImpl
   AssociatedInterfaceRegistryImpl associated_interfaces_;
   std::unique_ptr<AssociatedInterfaceProviderImpl>
       remote_associated_interfaces_;
+  mojom::FrameHostAssociatedPtr frame_host_;
 
   // TODO(dcheng): Remove these members.
   bool committed_first_load_ = false;

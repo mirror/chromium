@@ -200,6 +200,7 @@ class CONTENT_EXPORT RenderFrameHostManager
   void Init(SiteInstance* site_instance,
             int32_t view_routing_id,
             int32_t frame_routing_id,
+            service_manager::mojom::InterfaceProviderRequest interfaces_request,
             int32_t widget_routing_id,
             bool renderer_initiated_creation);
 
@@ -670,6 +671,7 @@ class CONTENT_EXPORT RenderFrameHostManager
       SiteInstance* instance,
       int32_t view_routing_id,
       int32_t frame_routing_id,
+      service_manager::mojom::InterfaceProviderRequest interfaces_request,
       int32_t widget_routing_id,
       bool hidden,
       bool renderer_initiated_creation);

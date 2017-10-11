@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/common/content_export.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
 
 namespace content {
 
@@ -43,6 +44,8 @@ class RenderWidgetHostDelegate;
 class CONTENT_EXPORT FrameTree {
  public:
   class NodeRange;
+  using InterfaceProviderRequest =
+      service_manager::mojom::InterfaceProviderRequest;
 
   class CONTENT_EXPORT NodeIterator
       : public std::iterator<std::forward_iterator_tag, FrameTreeNode> {
@@ -121,9 +124,14 @@ class CONTENT_EXPORT FrameTree {
   // Adds a new child frame to the frame tree. |process_id| is required to
   // disambiguate |new_routing_id|, and it must match the process of the
   // |parent| node. Otherwise no child is added and this method returns false.
+  // |interfaces_request| is the request end of the InterfaceProvider
+  // interface through which the child RenderFrame can access Mojo services
+  // exposed by the corresponding RenderFrameHost. The caller takes care of
+  // sending the client end of the interface down to the RenderFrame.
   bool AddFrame(FrameTreeNode* parent,
                 int process_id,
                 int new_routing_id,
+                InterfaceProviderRequest interfaces_request,
                 blink::WebTreeScopeType scope,
                 const std::string& frame_name,
                 const std::string& frame_unique_name,
