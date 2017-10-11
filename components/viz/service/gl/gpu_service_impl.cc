@@ -51,6 +51,10 @@
 #include "media/gpu/android/content_video_view_overlay_allocator.h"
 #endif
 
+#if defined(OS_WIN)
+#include "gpu/ipc/service/direct_composition_surface_win.h"
+#endif
+
 namespace viz {
 
 namespace {
@@ -312,6 +316,21 @@ void GpuServiceImpl::RequestCompleteGpuInfo(
 #endif
           },
           this, std::move(callback))));
+}
+
+void GpuServiceImpl::RequestHDRStatus(RequestHDRStatusCallback callback) {
+  if (io_runner_->BelongsToCurrentThread()) {
+    main_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&GpuServiceImpl::RequestHDRStatus, weak_ptr_,
+                                  std::move(callback)));
+    return;
+  }
+  bool hdr_enabled = false;
+#if defined(OS_WIN)
+  hdr_enabled = gpu::DirectCompositionSurfaceWin::IsHDRSupported();
+#endif
+  io_runner_->PostTask(FROM_HERE,
+                       base::BindOnce(std::move(callback), hdr_enabled));
 }
 
 #if defined(OS_MACOSX)

@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "ui/display/display_change_notifier.h"
 #include "ui/display/display_export.h"
 #include "ui/display/screen.h"
@@ -111,6 +112,31 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // you are targeting.
   static float GetSystemScaleFactor();
 
+  // A proxy that can query the HDR status on our behalf.
+  class HDRProxy : public base::RefCountedThreadSafe<HDRProxy> {
+   public:
+    // Set and un-set the ScreenWin to call back to when the HDR status is
+    // available. Note that the proxy may outlive the ScreenWin.
+    virtual void SetScreenWin(ScreenWin* screen_win) = 0;
+    // Request that the proxy query the HDR status and call SetHDREnabled
+    // when it is available. It is not required that the callback ever be
+    // made.
+    virtual void RequestHDRStatus() = 0;
+
+   protected:
+    friend class base::RefCountedThreadSafe<HDRProxy>;
+    virtual ~HDRProxy() {}
+  };
+  static void SetHDRProxy(scoped_refptr<HDRProxy> hdr_proxy);
+
+  // Set whether or not to treat all displays as HDR capable. Note that
+  // more precise information about which displays are HDR capable is
+  // available. We make a conscious choice to force all displays to HDR mode if
+  // any display is in HDR mode, under the assumption that the user will be
+  // using the HDR display to view media, and thus will want all media queries
+  // to return that HDR is supported.
+  void SetHDREnabled(bool hdr_enabled);
+
   // Returns the HWND associated with the NativeView.
   virtual HWND GetHWNDFromNativeView(gfx::NativeView view) const;
 
@@ -155,6 +181,7 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
  private:
   void Initialize();
   void OnWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
+  void OnGetHDRStatus(bool hdr_enabled);
 
   // Returns the ScreenWinDisplay closest to or enclosing |hwnd|.
   ScreenWinDisplay GetScreenWinDisplayNearestHWND(HWND hwnd) const;
@@ -203,9 +230,11 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // A helper to read color profiles from the filesystem.
   std::unique_ptr<ColorProfileReader> color_profile_reader_;
 
-  // Whether or not HDR mode is enabled.
-  // TODO(ccameron): Set this via the GPU process when the system "HDR and
-  // advanced color" setting is enabled.
+  // Proxy to use to query when the HDR status may have changed.
+  scoped_refptr<HDRProxy> hdr_proxy_;
+
+  // Whether or not HDR mode is enabled for any monitor via the "HDR and
+  // advanced color" setting.
   bool hdr_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
