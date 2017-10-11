@@ -1386,7 +1386,13 @@ public class Tab
         IntentHandler.addTrustedIntentExtras(intent);
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.TAB_REPARENTING)) {
-            detach(intent, finalizeCallback);
+            // Add the tab to AsyncTabParamsManager before removing it from the current model to
+            // ensure the global count of tabs is correct. See crbug.com/611806.
+            intent.putExtra(IntentHandler.EXTRA_TAB_ID, mId);
+            AsyncTabParamsManager.add(
+                    mId, new TabReparentingParams(this, intent, finalizeCallback));
+
+            detach();
         }
 
         activity.startActivity(intent, startActivityOptions);
@@ -1398,25 +1404,17 @@ public class Tab
      *
      * In details, this function:
      * - Tags the tab using mIsDetached.
-     * - Registers some information for later reparenting in {@link AsyncTabParamsManager}.
      * - Removes the tab from its current {@link TabModelSelector}, effectively severing
      *   the {@link Activity} to {@link Tab} link.
-     *
-     * @param intent to be stored within a {@link TabReparentingParams}
-     * @param finalizeCallback to be stored within a {@link TabReparentingParams}
      */
-    private void detach(Intent intent, Runnable finalizeCallback) {
+    public void detach() {
         mIsDetached = true;
-        // Add the tab to AsyncTabParamsManager before removing it from the current model to
-        // ensure the global count of tabs is correct. See crbug.com/611806.
-        if (intent == null) intent = new Intent();
-        intent.putExtra(IntentHandler.EXTRA_TAB_ID, mId);
-        AsyncTabParamsManager.add(mId, new TabReparentingParams(this, intent, finalizeCallback));
 
         TabModelSelector tabModelSelector = getTabModelSelector();
         if (tabModelSelector != null) {
             tabModelSelector.getModel(mIncognito).removeTab(this);
         }
+
         // TODO(yusufo): We can't call updateWindowAndroid here and set mWindowAndroid to null
         // because many code paths (including navigation) expect the tab to always be associated
         // with an activity, and will crash. crbug.com/657007
@@ -1431,10 +1429,11 @@ public class Tab
      *
      * @param activity The new activity this tab should be associated with.
      * @param tabDelegateFactory The new delegate factory this tab should be using.
-     * @Param reparentingParams The TabReparentingParams associated with this reparenting process.
+     * @param reparentingParams The TabReparentingParams associated with this reparenting process.
      */
     public void attachAndFinishReparenting(ChromeActivity activity,
-            TabDelegateFactory tabDelegateFactory, TabReparentingParams reparentingParams) {
+            TabDelegateFactory tabDelegateFactory,
+            @Nullable TabReparentingParams reparentingParams) {
         // TODO(yusufo): Share these calls with the construction related calls.
         // crbug.com/590281
         activity.getCompositorViewHolder().prepareForTabReparenting();
@@ -1444,6 +1443,10 @@ public class Tab
         mIsTabStateDirty = true;
 
         reparentingParams.finalizeTabReparenting();
+
+        // TODO(peconn): Should we take a Runnable here (the finalizeCallback) instead of a
+        // TabReparentingParams.
+        if (reparentingParams != null) reparentingParams.finalizeTabReparenting();
 
         for (TabObserver observer : mObservers) {
             observer.onReparentingFinished(this);
@@ -2619,8 +2622,11 @@ public class Tab
         if (isFrozen()) return;
 
         int constraints = getBrowserControlsStateConstraints();
-        updateBrowserControlsState(
-                constraints, BrowserControlsState.BOTH, constraints != BrowserControlsState.HIDDEN);
+
+        // TODO(peconn): Figure out why updating without animations breaks fullscreen activity.
+        boolean animate = constraints != BrowserControlsState.HIDDEN
+                && !ChromeFeatureList.isEnabled(ChromeFeatureList.FULLSCREEN_ACTIVITY);
+        updateBrowserControlsState(constraints, BrowserControlsState.BOTH, animate);
 
         if (getContentViewCore() != null && mFullscreenManager != null) {
             getContentViewCore().updateMultiTouchZoomSupport(
@@ -3037,7 +3043,7 @@ public class Tab
         tab.getContentViewCore().onSizeChanged(width, height, 0, 0);
         tab.getWebContents().setSize(width, height);
 
-        tab.detach(null, null);
+        tab.detach();
         return tab;
     }
 
