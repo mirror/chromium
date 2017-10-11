@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "89938c52_98ac410f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/input/dispatchKeyEvent.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-11T23:38:32Z",
+      "side": 1,
+      "message": "Keyboard lets you send whatever you want.",
+      "parentUuid": "bd9ecc87_2e8011b5",
+      "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7c0359_c03c789e",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53a6676_17abf16a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-11T23:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7c0359_c03c789e",
+      "revId": "81060a2eb2108cb4cd66445bde5ae9c7f295b1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
