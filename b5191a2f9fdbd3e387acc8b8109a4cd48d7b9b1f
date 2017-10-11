@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e006239_cabbafae",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-11T00:12:09Z",
+      "side": 1,
+      "message": "nit: you can append \".\" after the UMA name constants in order to get rid of this line.\n\nEver simpler, you can return histogram_nam + client_id.name_space;",
+      "revId": "b5191a2f9fdbd3e387acc8b8109a4cd48d7b9b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11d798b1_48533edc",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4
