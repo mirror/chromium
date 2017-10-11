@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d4530c_fd256912",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T17:58:47Z",
+      "side": 1,
+      "message": "Doesn\u0027t line 876 mean this is always false? In other words, it seems like you shouldn\u0027t need this particular change at all.",
+      "range": {
+        "startLine": 1007,
+        "startChar": 4,
+        "endLine": 1007,
+        "endChar": 22
+      },
+      "revId": "398ab1bec1a262491817d1ef77062e46d5a1748b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbde3619_146e6c8c",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T17:58:47Z",
+      "side": 1,
+      "message": "Are you sure this won\u0027t break bots that might be expecting to compile chrome_app_unittests? Who is referring to this target now? I tend to think the right thing is removing chrome_app_unittests from the list of targets on the bots, which would mean you wouldn\u0027t need this change either.",
+      "range": {
+        "startLine": 5109,
+        "startChar": 4,
+        "endLine": 5109,
+        "endChar": 30
+      },
+      "revId": "398ab1bec1a262491817d1ef77062e46d5a1748b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
