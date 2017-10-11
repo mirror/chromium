@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9284746c_e0b8fa1b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T17:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fdd54d7_b4ad1781",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8bae45_366ca7d0",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e21d7795_ef661232",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T17:42:53Z",
+      "side": 1,
+      "message": "In the new patch, I make it switch when |paints_before_switching_global_scope_| is 0, because this var will eventually stay at 0.",
+      "parentUuid": "ae8bae45_366ca7d0",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcc5ad5a_df6e02df",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 5
@@ -86,6 +122,24 @@
       "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9cf65b_7f5bab79",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T17:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc5ad5a_df6e02df",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2762e11f_c60bf1d2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T17:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "613d5850_3af256a8",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6222d6f6_6f01e2fa",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
         "patchSetId": 5
@@ -126,6 +204,24 @@
       "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28898fa4_6d459dae",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T17:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6222d6f6_6f01e2fa",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
