@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ce868f_b438b483",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet-expected.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-11T13:49:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure why the order must change here, but I\u0027m guessing it\u0027s because important rules are processed later.",
+      "revId": "eb5135f12e3e91262ca8d98f5dd6dc45865d1407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdeb5648_333a1e18",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet-expected.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-11T13:49:17Z",
+      "side": 1,
+      "message": "This looks genuine to me. The order has changed, now injected style sheets come before any author style sheets.",
+      "revId": "eb5135f12e3e91262ca8d98f5dd6dc45865d1407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a997ca34_55e84730",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet-expected.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-11T13:49:17Z",
+      "side": 1,
+      "message": "Same as above. Important injected rules override any author rules, but the injected style sheets comes first.",
+      "revId": "eb5135f12e3e91262ca8d98f5dd6dc45865d1407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6281630_0cc1bb82",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/styles-2/inject-stylesheet.html",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-11T13:49:17Z",
+      "side": 1,
+      "message": "I had to add \"!important\" to these rules to make them behave as before. This seems appropriate to me.",
+      "revId": "eb5135f12e3e91262ca8d98f5dd6dc45865d1407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
