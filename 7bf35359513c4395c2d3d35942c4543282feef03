@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "db47a7ff_57396573",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-11T00:54:41Z",
+      "side": 1,
+      "message": "Thanks, but does the iter.second will be more efficient than provider_clients_[provider_id]? or do we need also replace ContainsKey() in all other places of this file?",
+      "parentUuid": "2f039b2f_7046a329",
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ac4805_00d450f3",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 12
