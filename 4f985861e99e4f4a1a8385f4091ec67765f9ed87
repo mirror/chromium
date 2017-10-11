@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17c9bfff_52fbf778",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-11T16:53:57Z",
+      "side": 1,
+      "message": "It was chosen somewhat arbitrarily as a \"short time between scans.\" :)",
+      "parentUuid": "0ea6740d_d668568f",
+      "range": {
+        "startLine": 29,
+        "startChar": 48,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "4f985861e99e4f4a1a8385f4091ec67765f9ed87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8455fee4_a1d43e19",
         "filename": "chromeos/components/tether/host_scan_scheduler.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4f985861e99e4f4a1a8385f4091ec67765f9ed87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84b527a_e66bf5a4",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-11T16:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8455fee4_a1d43e19",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "4f985861e99e4f4a1a8385f4091ec67765f9ed87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
