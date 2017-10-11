@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a57bc65_75909be7",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "89c207c9_8f14c98f",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd89527_fa8f12a1",
         "filename": "content/public/renderer/content_renderer_client.h",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "395450e8_c36ddc12",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "Thanks. I went with \"Create\" which is quite common in this file.",
+      "parentUuid": "ecd89527_fa8f12a1",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16258158_42898e8a",
         "filename": "extensions/browser/extension_util.cc",
         "patchSetId": 18
@@ -50,6 +86,24 @@
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38b364a_6f602279",
+        "filename": "extensions/browser/extension_util.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Done.",
+      "parentUuid": "16258158_42898e8a",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c04fcbc8_71ed88a1",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "Thanks. I think it will be a while before I can land this code (need to resolve blink issues first) so most probably Alex\u0027s CL will have landed by then.",
+      "parentUuid": "2b6089dc_d02421b9",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a66f9a4_3e60abef",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 18
@@ -99,6 +171,24 @@
       "writtenOn": "2017-10-11T09:37:03Z",
       "side": 1,
       "message": "Why would plugin controller creation fail? It looks like it\u0027s doing some mime type checks, but shouldn\u0027t those have been handled already?\n\nAt the very least, it would be nice to just defer creation of the new frame until we know that CreatePluginController() is going to succeed--perhaps they should even be paired somehow.",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44e1f7a_7e62d020",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "\u003e Why would plugin controller creation fail? It looks like it\u0027s doing some mime type checks, but shouldn\u0027t those have been handled already?\n\nHere are the reasons it might fail:\n 1- The flag is not set (kPdfExtensionInCrossProcessFrame)\n 2- BUILD_FLAG(ENABLE_PLUGINS) is not set.\n 3- BUILD_FLAG(ENABLE_EXTENSIONS) is not set.\n 4- We don\u0027t have a handler for the mime-type\nNow my implementation of \"reason 4\" is missing from this patch. But basicaly what we do right now before creating BrowserPlugin is to send IPCs to browser the query the mime type and the handler for the given URL. See here:\nhttps://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?rcl\u003d4a7d884be5a9e4268cefc56ec2747979254f7b29\u0026l\u003d2977\n\nand here on chrome/ layer.\nhttps://cs.chromium.org/chromium/src/chrome/renderer/chrome_content_renderer_client.cc?rcl\u003d89b6ce1ae3701d825a5519a156d6110c0b5e8e9a\u0026l\u003d686\n\nWe do override the mime-type if needed and determine if a handler for the plugin exists. Right now I am not doing any of these but I suppose these steps in creating browser plugin should be eventually carried over.\n\n\u003e At the very least, it would be nice to just defer creation of the new frame until we know that CreatePluginController() is going to succeed--perhaps they should even be paired somehow.\n\nThe reason I created the frame before the controller was to make sure the when the controller is created we do have a frame (to send the load request for the PDF resource right away). But I looking at the code again after changes it looks like this is not a mandatory assumption so I will change this code to create the controller first and create the frame only if controller creation is successful.",
+      "parentUuid": "2a66f9a4_3e60abef",
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "03c3b34a_a14b1c15",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrame.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "This was intentional since I did not expect a \"PluginFrame\" to be swapped again (detach as soon as the embed becomes a plugin or is navigated to another PDF).\n\nI did however follow your suggestion and put it below (so it goes both way although given current design we would not go local from remote on a PluginFrame).",
+      "parentUuid": "5ce5b1e5_a9d79d93",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9139d21_5c596faa",
         "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
         "patchSetId": 18
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "ca6b05d6_1c0d975b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "Yes this is a mistake. The block has to be moved below.Thanks.",
+      "parentUuid": "d9139d21_5c596faa",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3296f409_4335dac4",
         "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
         "patchSetId": 18
@@ -153,6 +279,24 @@
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dc514d_67bf8005",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "I am not sure if I understand what \"recoverable\" is here.\n\nAs long as we have already verified that we do have IsPluginFrame() then I guess |object| can never be empty (unless we end up using PluginFrame for some other mime-type which would not require scripting).",
+      "parentUuid": "3296f409_4335dac4",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,30 @@
     },
     {
       "key": {
+        "uuid": "050a56d5_2ce8c8f1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLPlugInElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "\u003e When a HTMLPlugInElement switches from frame to plugin,\n\nTryUsingExternalHandler() will get called in any call to RequestObjectInternal(). So in the case of plugin we call this first which will detach and remove the frame and then line 717 returns |false| which will proceed with the current code path for plugin creation in RequestObjectInternal().\n\n\u003e how is the previous frame torn down?\n\nAre you asking about the MimeHandlerView* objects or tearing down the blink side? MimeHandlerViewManagerHost (browser) observers WebContents and will organically clean its state, MimeHandlerViewManager (renderer) cleans the state in line 717 (it understands that a controller was already assigned to this owner element).\n\nI am actually not quite certain about blink repercussions and was assuming that detaching is sufficient to properly free the blink state for the current content frame.\n\n\u003e As currently written, this is unsafe (since detach can result GetFrame() returning null). \n\nBy \"GetFrame()\" are you referring to GetDocument().GetFrame() on line 717? Would removing a child frame some how remove the parent frame? (Isn\u0027t GetDocument().GetFrame() parent frame to ContentFrame()).\n\n\u003e Rather than trying to make sure everything gets it correct, I\u0027d strongly prefer to minimize the number of calls to detach.\n\nIIUC removing the frame would be the cleanest option in many ways; specifically going from frame to plugin should remove the content frame. Also it makes transitions between different PDF sources much easier and pose less restrictions on tracking navigation to PDF extension on the browser side.\n\nThat being said, do you have a better suggestion for this purpose (specifically to address frame to plugin transition)?",
+      "parentUuid": "ec0a692f_8d32f44f",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 718,
+        "endChar": 60
+      },
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af39059a_efe24b5b",
         "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
         "patchSetId": 18
@@ -190,6 +358,24 @@
       "writtenOn": "2017-10-11T09:37:03Z",
       "side": 1,
       "message": "Hmm... is this because when the mime type is PDF, we currently always create a plugin document? Should we actually be doing that? It\u0027s not really a \u0027plugin\u0027 anymore, so maybe we can just use a more standard loading path rather than having to forward the bytes here?",
+      "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af510a7_3d3a98e6",
+        "filename": "third_party/WebKit/Source/core/html/PluginDocument.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-11T19:44:28Z",
+      "side": 1,
+      "message": "\u003e Hmm... is this because when the mime type is PDF, we currently always create a plugin document? Should we actually be doing that?\n\nPluginDocument is exclusively created for navigation to PDF resource. Specifically, the \u003ciframe\u003e/main frame requests the PDF file -\u003e browser sends a message which includes some GUID (for the intercepted stream) -\u003e From the mime-type blink decides to create a PluginDocument.\n\nIIUC all PluginDocument does is to attach an \u003cembed\u003e and forward the GUID to PluginView.\n\nSo if eventually we do not use Plugin for loading PDF extension this class can be renamed to something else.\n\n\u003e It\u0027s not really a \u0027plugin\u0027 anymore, so maybe we can just use a more standard loading path rather than having to forward the bytes here?\n\nYes (although technically we are still loading a plugin in a separate process inside this page).\nI think if we can load a static HTML in the",
+      "parentUuid": "af39059a_efe24b5b",
       "revId": "f1d5135a1212c1aa996bec67f2f24414670a7f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
