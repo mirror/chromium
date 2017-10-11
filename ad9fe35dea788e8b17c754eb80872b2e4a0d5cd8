@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22965595_789ed819",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T19:14:48Z",
+      "side": 1,
+      "message": "Side note as I\u0027m going through this code, why isn\u0027t the compositor thread a default message loop on all platforms? The GPU thread is the one that talks to X11, I\u0027m not sure having 2 threads that do makes sense (and this won\u0027t work with the sandbox).",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849f9e56_ccfe101e",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T19:14:48Z",
+      "side": 1,
+      "message": "This is too late though. On Linux at least, you have to initialize the sandbox before you create threads.",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1e49cd_237e50f4",
+        "filename": "services/ui/gpu/gpu_main.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T19:14:48Z",
+      "side": 1,
+      "message": "nit: add move-assign operator (rule-of-3)",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
