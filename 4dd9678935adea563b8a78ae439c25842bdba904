@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "73a4b07a_415fe86f",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-11T01:06:10Z",
+      "side": 1,
+      "message": "Not needed, removed.\n\nGenerally, we force a style recalc at the beginning of a test, before adding a class to ensure the animation\u0027s begin time is now and not some time 0 in the past.",
+      "parentUuid": "a7ac31fe_06c83239",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f139f49_4fcb4edb",
         "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "232c2d4a_3df99ec3",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-11T01:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f139f49_4fcb4edb",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9b058c_0f211240",
         "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-10T14:25:09Z",
       "side": 1,
       "message": "I don\u0027t follow the purpose of measuring the effects second run of the animation over time - can you explain what purpose measureProgress() serves?",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7f7e6e_a46644a8",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-11T01:06:10Z",
+      "side": 1,
+      "message": "Comment added. The progress should be based on the animation time elapsed since \u0027block\u0027 was added, it doesn\u0027t include the first run\u0027s time.\n\n[Using this implementation\u0027s terminology] The previous implementation waited a longer interval before setDisplayNone, and just checked that the progress in measureProgress was less that the progress detected in setDisplayNone. As events can be delayed on a busy machine, that approach was flaky.",
+      "parentUuid": "cd9b058c_0f211240",
       "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
