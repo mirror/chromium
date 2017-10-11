@@ -770,6 +770,12 @@ void ChromeResourceDispatcherHostDelegate::OnResponseStarted(
     net::URLRequest* request,
     content::ResourceContext* resource_context,
     content::ResourceResponse* response) {
+  if (response->head.mime_type == "multipart/related") {
+    const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
+    if (info->GetResourceType() == content::RESOURCE_TYPE_MAIN_FRAME)
+      response->head.mime_type = "multipart/rejected";
+  }
+
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
 

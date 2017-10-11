@@ -179,8 +179,11 @@ enum class PrefetchItemErrorCode {
   DOWNLOAD_MAX_ATTEMPTS_REACHED = 1400,
   // Clock was set back too far in time.
   MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED = 1500,
+  // The importing was cancelled because we did not receive the import completed
+  // event, probably due to that Chrome was killed before that.
+  IMPORT_ABORTED = 1600,
   // Note: Must always have the same value as the last actual entry.
-  MAX = MAXIMUM_CLOCK_BACKWARD_SKEW_EXCEEDED
+  MAX = IMPORT_ABORTED
 };
 
 // Callback invoked upon completion of a prefetch request.
