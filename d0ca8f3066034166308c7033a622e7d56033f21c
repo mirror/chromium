@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b95f64e_d402db73",
+        "filename": "content/browser/download/download_request_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-11T17:11:52Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need the temporary content_length variable.",
+      "revId": "d0ca8f3066034166308c7033a622e7d56033f21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
