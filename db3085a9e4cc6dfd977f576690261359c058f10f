@@ -123,6 +123,24 @@
       "revId": "db3085a9e4cc6dfd977f576690261359c058f10f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a64f59b1_35ee2029",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T15:36:18Z",
+      "side": 1,
+      "message": "Huh? I\u0027m confused now. What exactly are you suggesting?",
+      "parentUuid": "3f0528a8_94e117b4",
+      "revId": "db3085a9e4cc6dfd977f576690261359c058f10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
