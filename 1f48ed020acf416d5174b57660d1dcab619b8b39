@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f2e20e_614d0810",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-11T19:07:44Z",
+      "side": 1,
+      "message": "Add a note that this is not a constrained window and is actually modal.",
+      "revId": "1f48ed020acf416d5174b57660d1dcab619b8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a559043_2f320e5e",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-11T19:07:44Z",
+      "side": 1,
+      "message": "naming: sheet_ ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 55,
+        "endLine": 56,
+        "endChar": 62
+      },
+      "revId": "1f48ed020acf416d5174b57660d1dcab619b8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3033ea2_9d2749d3",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-11T19:07:44Z",
+      "side": 1,
+      "message": "naming: parent_window_ ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "1f48ed020acf416d5174b57660d1dcab619b8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4184f37b_18244195",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-11T19:07:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this route through OnIgnore instead? What happens to the model?",
+      "revId": "1f48ed020acf416d5174b57660d1dcab619b8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
