@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd792b6_3d199b8f",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-11T22:02:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to get into the business of having a pref for each of the feature trackers. That\u0027s extra state per component. Each of those should basically be running in lock step, no?",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 59
+      },
+      "revId": "66fa613fed46daf0ec6547340a2ae9c6e1fd91cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
