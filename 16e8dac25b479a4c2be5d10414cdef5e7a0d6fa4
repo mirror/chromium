@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef70ab45_16c154be",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-11T17:17:06Z",
+      "side": 1,
+      "message": "nit: returned by the device (?)\n\nHow can one tell apart a successful response from a successful sign response? Or does this refer to a successful response to a `sign` operation, as opposed to a `register` operation?",
+      "revId": "16e8dac25b479a4c2be5d10414cdef5e7a0d6fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bed514_420233b9",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-11T17:17:06Z",
+      "side": 1,
+      "message": "This is intentionally not yet used here, right?",
+      "revId": "16e8dac25b479a4c2be5d10414cdef5e7a0d6fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
