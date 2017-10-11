@@ -70,6 +70,24 @@
       "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfc7d4f_998398d3",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-11T16:51:26Z",
+      "side": 1,
+      "message": "I don\u0027t know that I\u0027m the right person to ask about this test.  Do you know who owns these?\n\nPersonally, I think it\u0027d be better to have both paths be consistent than to add rounding in one path.  I also don\u0027t think this literal edge case is spec\u0027d, so it\u0027s weird to have a ref test for it.  Maybe somebody who owns this test feels more strongly though.  Can you figure out who to ask?",
+      "parentUuid": "4d026436_afc2c097",
+      "revId": "2dd0027ea76b4ee0d81b58c334ceaa7ccb41a946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
