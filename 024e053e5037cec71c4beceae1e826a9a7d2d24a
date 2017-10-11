@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1484aa9f_7e771354",
+        "filename": "chrome/browser/ui/cocoa/first_run_dialog_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-11T16:08:05Z",
+      "side": 1,
+      "message": "setNextState makes me a little nervous because it assumes the button\u0027s state is NSOffState. There is the test, but that doesn\u0027t guarantee anything in the real world (though the button *should* always start off NSOffState).",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 39
+      },
+      "revId": "024e053e5037cec71c4beceae1e826a9a7d2d24a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
