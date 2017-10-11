@@ -3933,10 +3933,6 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
       kGpuFeatureStatusEnabled;
   caps.disable_webgl_rgb_multisampling_usage =
       workarounds().disable_webgl_rgb_multisampling_usage;
-  caps.software_to_accelerated_canvas_upgrade =
-      !workarounds().disable_software_to_accelerated_canvas_upgrade;
-  caps.emulate_rgb_buffer_with_rgba =
-      workarounds().disable_gl_rgb_format;
   if (workarounds().disable_non_empty_post_sub_buffers_for_onscreen_surfaces &&
       !surface_->IsOffscreen()) {
     caps.disable_non_empty_post_sub_buffers = true;
@@ -3944,9 +3940,6 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   if (workarounds().broken_egl_image_ref_counting &&
       group_->gpu_preferences().enable_threaded_texture_mailboxes) {
     caps.disable_2d_canvas_copy_on_write = true;
-  }
-  if (workarounds().disable_overlay_ca_layers) {
-    caps.disable_overlay_ca_layers = true;
   }
   caps.texture_npot = feature_info_->feature_flags().npot_ok;
 
