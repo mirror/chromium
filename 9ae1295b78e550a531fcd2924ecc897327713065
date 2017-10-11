@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d96d033_8b8f04cc",
+        "filename": "third_party/WebKit/Source/core/page/Page.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-11T21:32:28Z",
+      "side": 1,
+      "message": "This comment is kind of confusing, we\u0027re already on Page and ScrollbarTheme will eventually move into here so I don\u0027t think we need a comment here at all.",
+      "range": {
+        "startLine": 306,
+        "startChar": 5,
+        "endLine": 306,
+        "endChar": 55
+      },
+      "revId": "9ae1295b78e550a531fcd2924ecc897327713065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

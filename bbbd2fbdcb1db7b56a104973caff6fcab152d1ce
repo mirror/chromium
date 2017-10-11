@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8b4d626a_136ebca3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-11T21:32:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand, can you point me to the tests? Why can\u0027t we just have the test body modify the theme returned by these methods?",
+      "parentUuid": "8388c8e3_ae6160c4",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "171fc0d9_eb0ee809",
         "filename": "third_party/WebKit/Source/core/frame/RootFrameViewport.cpp",
         "patchSetId": 7
@@ -390,6 +414,30 @@
       "side": 1,
       "message": "I have seen page is not the same between main frame and iframe when I working on crrev.com/646727. But I just add a DCHECK here and can not reproduce. Lets leave this to crrev.com/646727.",
       "parentUuid": "beb89cf5_e9efc0e4",
+      "range": {
+        "startLine": 716,
+        "startChar": 4,
+        "endLine": 716,
+        "endChar": 71
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c142f534_e93b7f9f",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-11T21:32:28Z",
+      "side": 1,
+      "message": "I misspoke above, OOPIFs will have their own Page. But, since you\u0027ve confirmed the main frame is local, I believe they must share a page.",
+      "parentUuid": "3a36493a_62a62afa",
       "range": {
         "startLine": 716,
         "startChar": 4,
