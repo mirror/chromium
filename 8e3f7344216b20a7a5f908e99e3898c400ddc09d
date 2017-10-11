@@ -51,6 +51,24 @@
       "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac19511_ba013c31",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-11T08:15:17Z",
+      "side": 1,
+      "message": "I\u0027m fine with leaving this out.",
+      "parentUuid": "de0ac409_f96d9d69",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
