@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87a5c3a5_3aae2797",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "I\u0027d rather move this to callsite. Otherwise, it\u0027s unclear which method to call (or both?).",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbef3459_cba2cfdf",
+        "filename": "content/browser/devtools/devtools_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "Looks like GetProcess() never changes, so it\u0027s safe to update it only when frame host changes, right?",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0847fa4_9b861ba3",
+        "filename": "content/browser/devtools/devtools_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "nit: process_host_",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ae57a6_1a9ec9f6",
+        "filename": "content/browser/devtools/devtools_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "Rename to frame_host_?",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d927636e_a29a14cd",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "I\u0027d leave this as is to be symmetrical with SetRequestInterceptionEnabled.",
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab1065e_fd1989ca",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "process_host_",
+      "range": {
+        "startLine": 135,
+        "startChar": 21,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010f2d1d_8c79b67a",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "frame_host_",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48945792_1eabb220",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "process_host_",
+      "range": {
+        "startLine": 74,
+        "startChar": 21,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db80d40c_ab6ebb45",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-11T17:08:05Z",
+      "side": 1,
+      "message": "process_host_",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "2081fded9a4e3c4f6e8ae680c4e07d53052dbc32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
