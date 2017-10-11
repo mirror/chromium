@@ -117,6 +117,30 @@
       "revId": "39797a0f93ddc67620934b56336a488e4d20bea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde41b04_d3264c4e",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-11T19:13:32Z",
+      "side": 1,
+      "message": "a) If Fuchsia is an independent OS that doesn\u0027t use any of this code and this code just compiles Chrome as a standalone executable, then line 114 is correct and line 98 should be chrome.fuchsia.\n\nb) If this code is used to compile the operating system itself like the way we\u0027re doing it for Chrome OS, then \u0027fuchsia\u0027 should be removed here and line 98 should stay.\n\nTBH, platform confuses the hell out of me.\n\nTake a look at policy_templates.json. Do the chrome.* policies apply to Fuchsia? Then it should be a). If chrome_os policies, in particular device policies, apply to Fuchsia, then it should be b).\n\nBtw, please update the platform documentation in policy_templates.json as well:\nhttps://cs.chromium.org/chromium/src/components/policy/resources/policy_templates.json?q\u003dpolicy_templates.json\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d96",
+      "parentUuid": "020f64d9_51b698a4",
+      "range": {
+        "startLine": 114,
+        "startChar": 53,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "39797a0f93ddc67620934b56336a488e4d20bea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
