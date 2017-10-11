@@ -10,6 +10,7 @@
 
 #include "base/i18n/rtl.h"
 #include "base/mac/bind_objc_block.h"
+#include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "chrome/browser/certificate_viewer.h"
@@ -31,6 +32,7 @@
 #import "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/navigation_handle.h"
@@ -65,63 +67,68 @@ namespace {
 
 // The default width of the window, in view coordinates. It may be larger to
 // fit the content.
-const CGFloat kDefaultWindowWidth = 320;
+constexpr CGFloat kDefaultWindowWidth = 320;
 
 // Padding around each section
-const CGFloat kSectionVerticalPadding = 20;
-const CGFloat kSectionHorizontalPadding = 16;
+constexpr CGFloat kSectionVerticalPadding = 20;
+constexpr CGFloat kSectionHorizontalPadding = 16;
 
 // Links are buttons with invisible padding, so we need to move them back to
 // align with other text.
-const CGFloat kLinkButtonXAdjustment = 1;
+constexpr CGFloat kLinkButtonXAdjustment = 1;
 
 // Built-in margin for NSButton to take into account.
-const CGFloat kNSButtonBuiltinMargin = 4;
+constexpr CGFloat kNSButtonBuiltinMargin = 4;
 
 // Security Section ------------------------------------------------------------
 
 // Spacing between security summary, security details, and cert decisions text.
-const CGFloat kSecurityParagraphSpacing = 12;
+constexpr CGFloat kSecurityParagraphSpacing = 12;
 
 // Site Settings Section -------------------------------------------------------
 
 // Square size of the permission images.
-const CGFloat kPermissionImageSize = 16;
+constexpr CGFloat kPermissionImageSize = 16;
 
 // Spacing between a permission image and the text.
-const CGFloat kPermissionImageSpacing = 6;
+constexpr CGFloat kPermissionImageSpacing = 6;
 
 // Minimum distance between the label and its corresponding menu.
-const CGFloat kMinSeparationBetweenLabelAndMenu = 16;
+constexpr CGFloat kMinSeparationBetweenLabelAndMenu = 16;
 
 // Square size of the permission delete button image.
-const CGFloat kPermissionDeleteImageSize = 16;
+constexpr CGFloat kPermissionDeleteImageSize = 16;
 
 // The spacing between individual permissions.
-const CGFloat kPermissionsVerticalSpacing = 16;
+constexpr CGFloat kPermissionsVerticalSpacing = 16;
 
 // Spacing to add after a permission label, either directly on top of
 // kPermissionsVerticalSpacing, or before additional text (e.g. "X in use" for
 // cookies).
-const CGFloat kPermissionLabelBottomPadding = 4;
+constexpr CGFloat kPermissionLabelBottomPadding = 4;
 
 // Amount to lower each permission icon to align the icon baseline with the
 // label text.
-const CGFloat kPermissionIconYAdjustment = 1;
+constexpr CGFloat kPermissionIconYAdjustment = 1;
 
 // Amount to lower each permission popup button to make its text align with the
 // permission label.
-const CGFloat kPermissionPopupButtonYAdjustment = 3;
+constexpr CGFloat kPermissionPopupButtonYAdjustment = 3;
 
 // Internal Page Bubble --------------------------------------------------------
 
 // Padding between the window frame and content for the internal page bubble.
-const CGFloat kInternalPageFramePadding = 10;
+constexpr CGFloat kInternalPageFramePadding = 10;
 
 // Spacing between the image and text for internal pages.
-const CGFloat kInternalPageImageSpacing = 10;
+constexpr CGFloat kInternalPageImageSpacing = 10;
 
 // -----------------------------------------------------------------------------
+
+// A unique tag given to chosen object views (e.g. to show a site has access to
+// a USB/Bluetooth device) in order to repopulate them on permissions updates.
+// This number must not be the same as any permission in ContentSettingsType.
+constexpr int kChosenObjectTag = CONTENT_SETTINGS_NUM_TYPES;
 
 // NOTE: This assumes that there will never be more than one page info
 // bubble shown, and that the one that is shown is associated with the current
@@ -239,7 +246,6 @@ bool IsInternalURL(const GURL& url) {
   DCHECK(parentWindow);
 
   webContents_ = webContents;
-  permissionsPresent_ = NO;
   url_ = url;
 
   // Use an arbitrary height; it will be changed in performLayout.
@@ -335,7 +341,8 @@ bool IsInternalURL(const GURL& url) {
   NSImage* productLogoImage = rb.GetNativeImageNamed(icon).ToNSImage();
   NSImageView* imageView = [self addImageWithSize:[productLogoImage size]
                                            toView:contentView_
-                                          atPoint:controlOrigin];
+                                          atPoint:controlOrigin
+                                          withTag:0];
   [imageView setImage:productLogoImage];
 
   NSRect imageFrame = [imageView frame];
@@ -344,7 +351,8 @@ bool IsInternalURL(const GURL& url) {
                                 withSize:[NSFont smallSystemFontSize]
                                     bold:NO
                                   toView:contentView_
-                                 atPoint:controlOrigin];
+                                 atPoint:controlOrigin
+                                 withTag:0];
   // Center the image vertically with the text. Previously this code centered
   // the text vertically while holding the image in place. That produced correct
   // results when the image, at 26x26, was taller than (or just slightly
@@ -388,13 +396,15 @@ bool IsInternalURL(const GURL& url) {
                                withSize:[NSFont systemFontSize]
                                    bold:NO
                                  toView:securitySectionView
-                                atPoint:controlOrigin];
+                                atPoint:controlOrigin
+                                withTag:0];
 
   securityDetailsField_ = [self addText:base::string16()
                                withSize:[NSFont smallSystemFontSize]
                                    bold:NO
                                  toView:securitySectionView
-                                atPoint:controlOrigin];
+                                atPoint:controlOrigin
+                                withTag:0];
 
   // These will be created only if necessary.
   resetDecisionsField_ = nil;
@@ -480,7 +490,8 @@ bool IsInternalURL(const GURL& url) {
 
   NSImageView* imageView = [self addImageWithSize:[imageIcon size]
                                            toView:newView
-                                          atPoint:controlOrigin];
+                                          atPoint:controlOrigin
+                                          withTag:0];
   [imageView setImage:imageIcon];
 
   NSButton* actionLink = [self addLinkButtonWithText:linkText toView:newView];
@@ -492,7 +503,8 @@ bool IsInternalURL(const GURL& url) {
                                      withSize:[NSFont systemFontSize]
                                          bold:NO
                                        toView:newView
-                                      atPoint:controlOrigin];
+                                      atPoint:controlOrigin
+                                      withTag:0];
     [sectionTitle sizeToFit];
 
     NSPoint sectionTitleOrigin = [sectionTitle frame].origin;
@@ -512,7 +524,8 @@ bool IsInternalURL(const GURL& url) {
                                      withSize:[NSFont systemFontSize]
                                          bold:NO
                                        toView:newView
-                                      atPoint:controlOrigin];
+                                      atPoint:controlOrigin
+                                      withTag:0];
     [sectionTitle sizeToFit];
 
     // Align the icon with the text.
@@ -724,10 +737,8 @@ bool IsInternalURL(const GURL& url) {
   // Margins are handled by the caller.
   CGFloat yPos = 0;
 
-  if (permissionsPresent_) {
-    yPos = [self setYPositionOfView:permissionsView_ to:yPos] +
-           kPermissionsVerticalSpacing;
-  }
+  yPos = [self setYPositionOfView:permissionsView_ to:yPos] +
+         kPermissionsVerticalSpacing;
 
   if (certificateView_) {
     yPos = [self setYPositionOfView:certificateView_ to:yPos] +
@@ -788,7 +799,8 @@ bool IsInternalURL(const GURL& url) {
                withSize:(CGFloat)fontSize
                    bold:(BOOL)bold
                  toView:(NSView*)view
-                atPoint:(NSPoint)point {
+                atPoint:(NSPoint)point
+                withTag:(int)tag {
   // Size the text to take up the full available width, with some padding.
   // The height is arbitrary as it will be adjusted later.
   CGFloat width = NSWidth([view frame]) - point.x - kSectionHorizontalPadding;
@@ -803,6 +815,8 @@ bool IsInternalURL(const GURL& url) {
   [self sizeTextFieldHeightToFit:textField];
   [textField setAutoresizingMask:NSViewWidthSizable];
   [view addSubview:textField.get()];
+  if (tag > 0)
+    [textField setTag:tag];
   return textField.get();
 }
 
@@ -812,13 +826,16 @@ bool IsInternalURL(const GURL& url) {
 // the new NSImageView.
 - (NSImageView*)addImageWithSize:(NSSize)size
                           toView:(NSView*)view
-                         atPoint:(NSPoint)point {
+                         atPoint:(NSPoint)point
+                         withTag:(int)tag {
   NSRect frame = NSMakeRect(point.x, point.y, size.width, size.height);
   base::scoped_nsobject<NSImageView> imageView(
       [[NSImageView alloc] initWithFrame:frame]);
   ui::a11y_util::HideImageFromAccessibilityOrder(imageView);
   [imageView setImageFrameStyle:NSImageFrameNone];
   [view addSubview:imageView.get()];
+  if (tag > 0)
+    [imageView setTag:tag];
   return imageView.get();
 }
 
@@ -903,7 +920,8 @@ bool IsInternalURL(const GURL& url) {
                withSize:[NSFont smallSystemFontSize]
                    bold:NO
                  toView:securitySectionView_
-                atPoint:NSMakePoint(kSectionHorizontalPadding, 0)];
+                atPoint:NSMakePoint(kSectionHorizontalPadding, 0)
+                withTag:0];
       [resetDecisionsField_
           setStringValue:l10n_util::GetNSString(
                              IDS_PAGE_INFO_INVALID_CERTIFICATE_DESCRIPTION)];
@@ -999,6 +1017,9 @@ bool IsInternalURL(const GURL& url) {
                point.x + maxTitleWidth + kSectionHorizontalPadding);
   [view setFrame:containerFrame];
   [view addSubview:button.get()];
+
+  // Tag the button with the permission type so it can be updated later.
+  [button setTag:permissionInfo.type];
   return button.get();
 }
 
@@ -1024,6 +1045,7 @@ bool IsInternalURL(const GURL& url) {
                                             kSectionHorizontalPadding);
   [view setFrame:containerFrame];
   [view addSubview:button.get()];
+  [button setTag:kChosenObjectTag];
   return button.get();
 }
 
@@ -1062,7 +1084,10 @@ bool IsInternalURL(const GURL& url) {
   if (isRTL) {
     point.x = NSWidth([view frame]) - kPermissionImageSize -
               kSectionHorizontalPadding;
-    imageView = [self addImageWithSize:[image size] toView:view atPoint:point];
+    imageView = [self addImageWithSize:[image size]
+                                toView:view
+                               atPoint:point
+                               withTag:0];
     [imageView setImage:image];
     point.x -= kPermissionImageSpacing;
 
@@ -1070,7 +1095,8 @@ bool IsInternalURL(const GURL& url) {
                  withSize:[NSFont systemFontSize]
                      bold:NO
                    toView:view
-                  atPoint:point];
+                  atPoint:point
+                  withTag:0];
     [label sizeToFit];
     point.x -= NSWidth([label frame]);
     [label setFrameOrigin:point];
@@ -1083,7 +1109,10 @@ bool IsInternalURL(const GURL& url) {
     position.x -= NSWidth([button frame]);
     [button setFrameOrigin:position];
   } else {
-    imageView = [self addImageWithSize:[image size] toView:view atPoint:point];
+    imageView = [self addImageWithSize:[image size]
+                                toView:view
+                               atPoint:point
+                               withTag:0];
     [imageView setImage:image];
     point.x += kPermissionImageSize + kPermissionImageSpacing;
 
@@ -1091,7 +1120,8 @@ bool IsInternalURL(const GURL& url) {
                  withSize:[NSFont systemFontSize]
                      bold:NO
                    toView:view
-                  atPoint:point];
+                  atPoint:point
+                  withTag:0];
     [label sizeToFit];
 
     position = NSMakePoint(NSMaxX([label frame]),
@@ -1168,7 +1198,8 @@ bool IsInternalURL(const GURL& url) {
                  withSize:[NSFont smallSystemFontSize]
                      bold:NO
                    toView:view
-                  atPoint:point];
+                  atPoint:point
+                  withTag:0];
     if (isRTL) {
       [label setAlignment:NSRightTextAlignment];
       // Shift the reason left to align the permission label and the permission
@@ -1208,7 +1239,10 @@ bool IsInternalURL(const GURL& url) {
   if (isRTL) {
     point.x = NSWidth([view frame]) - kPermissionImageSize -
               kPermissionImageSpacing - kSectionHorizontalPadding;
-    imageView = [self addImageWithSize:[image size] toView:view atPoint:point];
+    imageView = [self addImageWithSize:[image size]
+                                toView:view
+                               atPoint:point
+                               withTag:kChosenObjectTag];
     [imageView setImage:image];
     point.x -= kPermissionImageSpacing;
 
@@ -1216,7 +1250,8 @@ bool IsInternalURL(const GURL& url) {
                  withSize:[NSFont systemFontSize]
                      bold:NO
                    toView:view
-                  atPoint:point];
+                  atPoint:point
+                  withTag:kChosenObjectTag];
     [label sizeToFit];
     point.x -= NSWidth([label frame]);
     [label setFrameOrigin:point];
@@ -1228,7 +1263,10 @@ bool IsInternalURL(const GURL& url) {
     position.x -= NSWidth([button frame]);
     [button setFrameOrigin:position];
   } else {
-    imageView = [self addImageWithSize:[image size] toView:view atPoint:point];
+    imageView = [self addImageWithSize:[image size]
+                                toView:view
+                               atPoint:point
+                               withTag:kChosenObjectTag];
     [imageView setImage:image];
     point.x += kPermissionImageSize + kPermissionImageSpacing;
 
@@ -1236,7 +1274,8 @@ bool IsInternalURL(const GURL& url) {
                  withSize:[NSFont systemFontSize]
                      bold:NO
                    toView:view
-                  atPoint:point];
+                  atPoint:point
+                  withTag:kChosenObjectTag];
     [label sizeToFit];
 
     position = NSMakePoint(NSMaxX([label frame]), point.y);
@@ -1288,12 +1327,81 @@ bool IsInternalURL(const GURL& url) {
 
 - (void)setPermissionInfo:(const PermissionInfoList&)permissionInfoList
          andChosenObjects:(ChosenObjectInfoList)chosenObjectInfoList {
-  [permissionsView_ setSubviews:[NSArray array]];
   NSPoint controlOrigin = NSMakePoint(kSectionHorizontalPadding, 0);
 
-  permissionsPresent_ = YES;
+  // If |permissionsView_| is already populated, just handle updates to
+  // permissions made by the user here. This will avoid removing/adding new
+  // views (and thus breaking the responder chain), and also avoid immediately
+  // removing permissions set back to the default, which could be user error.
+  // Note that "update" means setPermissionInfo will only change the title of
+  // the permission |PermissionSelectorButton|. This is OK because it is not
+  // possible for the following to occur without closing the Page Info bubble:
+  //   - a permission gets changed away from the factory default (and thus needs
+  //     to be shown in Page Info)
+  //   - a permission's source changes (and becomes disabled / needs to show a
+  //     reason).
+  if ([permissionsView_ subviews].count != 0) {
+    NSView* view = nil;
+    // Remove all the chosen object views. They will be repopulated if the site
+    // still has access to them.
+    while ((view = [permissionsView_ viewWithTag:kChosenObjectTag]))
+      [view removeFromSuperview];
 
-  if (permissionInfoList.size() > 0 || chosenObjectInfoList.size() > 0) {
+    for (view in [permissionsView_ subviews]) {
+      const int permissionType = [view tag];
+      // Skip views that don't need to be modified (default tags are -1 or 0).
+      if (permissionType <= 0)
+        continue;
+
+      PermissionSelectorButton* button =
+          base::mac::ObjCCastStrict<PermissionSelectorButton>(view);
+      const int yOrigin = [button frame].origin.y;
+      // Permissions set back to the factory default setting will disappear from
+      // |permissionInfoList|, so use |updated| to keep track of whether
+      // |button| has been updated with its new permission value yet.
+      bool updated = false;
+      for (const auto& permission : permissionInfoList) {
+        if (permissionType != permission.type)
+          continue;
+
+        updated = true;
+        [(PermissionSelectorButton*)button setButtonTitle:permission
+                                                  profile:[self profile]];
+        break;
+      }
+
+      if (!updated) {
+        // Permissions that are no longer in |permissionInfoList| have been set
+        // back to factory default settings.
+        PageInfoUI::PermissionInfo default_info;
+        default_info.type = static_cast<ContentSettingsType>(permissionType);
+        default_info.setting = CONTENT_SETTING_DEFAULT;
+        default_info.default_setting =
+            content_settings::ContentSettingsRegistry::GetInstance()
+                ->Get(static_cast<ContentSettingsType>(permissionType))
+                ->GetInitialDefaultSetting();
+        default_info.source = content_settings::SETTING_SOURCE_USER;
+        default_info.is_incognito = [self profile]->IsOffTheRecord();
+        [button setButtonTitle:default_info profile:[self profile]];
+      }
+
+      // Updating the text might have changed the width of the
+      // |PermissionSelectorRow|, so reposition here.
+      if (base::i18n::IsRTL()) {
+        [button setFrameOrigin:NSMakePoint(kSectionHorizontalPadding, yOrigin)];
+      } else {
+        [button setFrameOrigin:NSMakePoint(NSWidth([permissionsView_ frame]) -
+                                               kSectionHorizontalPadding -
+                                               NSWidth([button frame]),
+                                           yOrigin)];
+      }
+    }
+    if ([[permissionsView_ subviews] count] != 0) {
+      controlOrigin.y =
+          NSMaxY([[[permissionsView_ subviews] lastObject] frame]);
+    }
+  } else {
+    // Creates permissions views (if any) for the first time.
     for (const auto& permission : permissionInfoList) {
       controlOrigin.y += kPermissionsVerticalSpacing;
       NSPoint rowBottomRight = [self addPermission:permission
@@ -1301,15 +1409,19 @@ bool IsInternalURL(const GURL& url) {
                                            atPoint:controlOrigin];
       controlOrigin.y = rowBottomRight.y;
     }
-
-    for (auto& object : chosenObjectInfoList) {
-      controlOrigin.y += kPermissionsVerticalSpacing;
-      NSPoint rowBottomRight = [self addChosenObject:std::move(object)
-                                              toView:permissionsView_
-                                             atPoint:controlOrigin];
-      controlOrigin.y = rowBottomRight.y;
-    }
   }
+
+  for (auto& object : chosenObjectInfoList) {
+    controlOrigin.y += kPermissionsVerticalSpacing;
+    NSPoint rowBottomRight = [self addChosenObject:std::move(object)
+                                            toView:permissionsView_
+                                           atPoint:controlOrigin];
+    controlOrigin.y = rowBottomRight.y;
+  }
+
+  // |permissionsView_| was updated here, so make sure keyboard access still
+  // works by updating the responder chain.
+  [[self window] recalculateKeyViewLoop];
 
   [permissionsView_ setFrameSize:NSMakeSize(NSWidth([permissionsView_ frame]),
                                             controlOrigin.y)];
