@@ -3369,8 +3369,10 @@ void RenderFrameHostImpl::CommitNavigation(
     last_navigation_previews_state_ = common_params.previews_state;
   }
 
-  // Released in OnStreamHandleConsumed().
-  stream_handle_ = std::move(body);
+  if (body) {
+    // Released in OnStreamHandleConsumed().
+    stream_handle_ = std::move(body);
+  }
 
   // When navigating to a debug url, no commit is expected from the
   // RenderFrameHost, nor should the throbber start. The NavigationRequest is
