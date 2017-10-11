@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "45755546_93eeac7d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "Totally following, I was just confused since it\u0027s not a class or a toll-free bridged CF type.",
+      "parentUuid": "a9d59529_2f55d273",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be3ceca_9e97be62",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1

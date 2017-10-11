@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba8b4db_f06f4b91",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "Why is this in a IIFE?",
+      "range": {
+        "startLine": 196,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209436bd_27d79a7f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "Why reset and recreate rather than just keeping it around?",
+      "range": {
+        "startLine": 323,
+        "startChar": 24,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed647b7d_116ecb7b",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "Consider renaming animation to \"step\" or something similar since it seems like most of them set state along with triggering animations; this way it\u0027s clear that the actual CAAnimations aren\u0027t nested.",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 22
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8d2a27_5b4efa15",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "What condition is the absence of a layer representing?",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 19
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7dd521_5a940d1c",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-11T21:11:45Z",
+      "side": 1,
+      "message": "This is to ensure it reaches 1 first, right? Consider restoring that comment if so.",
+      "range": {
+        "startLine": 374,
+        "startChar": 32,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
