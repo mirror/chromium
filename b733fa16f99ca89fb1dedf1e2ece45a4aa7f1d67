@@ -22,6 +22,30 @@
       "revId": "b733fa16f99ca89fb1dedf1e2ece45a4aa7f1d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fabd70_ca8bf277",
+        "filename": "components/feature_engagement/internal/chrome_variations_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-11T23:41:39Z",
+      "side": 1,
+      "message": "Oh. Yeah, you\u0027re right. It\u0027ll just magically fall out of the checks below.",
+      "parentUuid": "18b14a2c_b3ecba3c",
+      "range": {
+        "startLine": 275,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 17
+      },
+      "revId": "b733fa16f99ca89fb1dedf1e2ece45a4aa7f1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
