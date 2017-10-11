@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a68b4e6_0487d39b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-11T16:41:03Z",
+      "side": 1,
+      "message": "Please elaborate slightly on this message, feel free to copy the comment from the code.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "a506ca0cbcadb8feba61d19a40dd4cdc23d5b378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
