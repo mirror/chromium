@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de854f5f_e67ace2f",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T05:44:08Z",
+      "side": 1,
+      "message": "Improper",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02df5e3f_3ad59a65",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T05:44:08Z",
+      "side": 1,
+      "message": "Just to make sure, when we use this we don\u0027t need to run the callback right?\n\n(I know you used to have a comment \"// Will close current binding.\" but that doesn\u0027t really talk about the callback. And if it\u0027s known that bindings_.ReportBadMessage means we don\u0027t\u0027need to run the callback, then we don\u0027t need a comment)\n\nDo we have unit test coverage about this?",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c312f5a_8be1b89d",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T05:44:08Z",
+      "side": 1,
+      "message": "\"for a\"",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496d64a4_21d5ebd2",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T05:44:08Z",
+      "side": 1,
+      "message": "clients -\u003e client\ncontexts( -\u003e context (",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08247832_02bda937",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T05:44:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we implement dedicated worker as a client yet?",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
