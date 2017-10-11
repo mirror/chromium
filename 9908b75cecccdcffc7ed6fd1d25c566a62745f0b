@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13327b27_88d92875",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:07:07Z",
+      "side": 1,
+      "message": "Can we use a paper- or google- color here instead",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60584bef_e1a18acb",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:07:07Z",
+      "side": 1,
+      "message": "Can use use --google-blue-700 here directly",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
