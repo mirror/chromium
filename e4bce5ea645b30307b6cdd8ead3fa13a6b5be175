@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3909ba4_eb218fc7",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-11T20:23:03Z",
+      "side": 1,
+      "message": "This is because chrome://settings page is opened in a different web_contents. \nHow about this? If there is only 1 entry in the unhandled_password_reuses_, you can get the navigation id of that entry; if there are more than 1 (I hope it will be pretty rare), take your pick then. :-)",
+      "revId": "e4bce5ea645b30307b6cdd8ead3fa13a6b5be175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
