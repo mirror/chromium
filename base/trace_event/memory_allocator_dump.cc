@@ -26,10 +26,11 @@ const char MemoryAllocatorDump::kUnitsBytes[] = "bytes";
 const char MemoryAllocatorDump::kUnitsObjects[] = "objects";
 
 // static
-MemoryAllocatorDumpGuid MemoryAllocatorDump::GetDumpIdFromName(
+MemoryAllocatorDumpGuid MemoryAllocatorDump::GetDumpId(
+    const UnguessableToken& guid_root,
     const std::string& absolute_name) {
   return MemoryAllocatorDumpGuid(StringPrintf(
-      "%d:%s", TraceLog::GetInstance()->process_id(), absolute_name.c_str()));
+      "%s:%s", guid_root.ToString().c_str(), absolute_name.c_str()));
 }
 
 MemoryAllocatorDump::MemoryAllocatorDump(
@@ -54,10 +55,11 @@ MemoryAllocatorDump::MemoryAllocatorDump(
 // process, the pid will make it unique among all processes.
 MemoryAllocatorDump::MemoryAllocatorDump(
     const std::string& absolute_name,
-    MemoryDumpLevelOfDetail level_of_detail)
+    MemoryDumpLevelOfDetail level_of_detail,
+    const UnguessableToken& guid_root)
     : MemoryAllocatorDump(absolute_name,
                           level_of_detail,
-                          GetDumpIdFromName(absolute_name)) {}
+                          GetDumpId(guid_root, absolute_name)) {}
 
 MemoryAllocatorDump::~MemoryAllocatorDump() {
 }
