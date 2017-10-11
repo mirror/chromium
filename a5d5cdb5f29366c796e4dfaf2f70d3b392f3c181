@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "899eb644_c98eeede",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Ok, I rewrote the timestamped cache to use base::MRUCache as a member.\nConcerning the style for template type , I now use *Type as in MRUCache.",
+      "parentUuid": "070bdff0_f587a1a0",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea19abe_bb61bff6",
         "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "14209215_a693a19c",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19965f83_b8c369d8",
+      "range": {
+        "startLine": 24,
+        "startChar": 48,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e051dae6_deb542b4",
         "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
         "patchSetId": 5
@@ -116,6 +164,30 @@
       "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d06104_0fbc9fed",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e051dae6_deb542b4",
+      "range": {
+        "startLine": 44,
+        "startChar": 38,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "283f9d30_b2fe0da3",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c2ba559d_b013b1dc",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c82b12af_2ee82ce3",
         "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
         "patchSetId": 5
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "4176b763_8b055967",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c82b12af_2ee82ce3",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884ce124_93263a9d",
         "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
         "patchSetId": 5
@@ -185,6 +305,30 @@
       "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830a0eb1_a46176e4",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-10-11T08:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884ce124_93263a9d",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
