@@ -22,6 +22,30 @@
       "revId": "5059eda23792c069550c70f6753c399d071407e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12bc41c_f2fba7ee",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-10-11T11:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca0c26c6_abaf5171",
+      "range": {
+        "startLine": 436,
+        "startChar": 4,
+        "endLine": 436,
+        "endChar": 33
+      },
+      "revId": "5059eda23792c069550c70f6753c399d071407e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
