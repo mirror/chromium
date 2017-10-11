@@ -942,6 +942,24 @@ hooks = [
                 '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
     ],
   },
+
+  # Download and initialize "vpython" VirtualEnv environment packages.
+  {
+    'name': 'vpython_common',
+    'pattern': '.',
+    'action': [ 'vpython',
+                '-vpython-spec', 'src/.vpython',
+                '-vpython-tool', 'install',
+    ],
+  },
+  {
+    'name': 'vpython_webkitpy',
+    'pattern': '.',
+    'action': [ 'vpython',
+                '-vpython-spec', 'src/third_party/WebKit/Tools/Scripts/common.vpython',
+                '-vpython-tool', 'install',
+    ],
+  },
 ]
 
 # Note: These are keyed off target os, not host os. So don't move things here
