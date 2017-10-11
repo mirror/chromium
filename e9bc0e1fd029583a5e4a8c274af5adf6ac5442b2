@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee03566_5d7fd429",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-11T15:47:38Z",
+      "side": 1,
+      "message": "Add an empty line in between functions.",
+      "revId": "e9bc0e1fd029583a5e4a8c274af5adf6ac5442b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c966255_c408d50b",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-11T15:47:38Z",
+      "side": 1,
+      "message": "Please add the bug number (create one if we don\u0027t have one).",
+      "revId": "e9bc0e1fd029583a5e4a8c274af5adf6ac5442b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
