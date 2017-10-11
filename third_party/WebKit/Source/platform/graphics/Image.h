@@ -216,6 +216,11 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                                         const FloatRect& dest,
                                         const FloatSize& image_size);
 
+  // Note that this enum is used for UMA recording, so should be treated as
+  // append only. Keep it consistent with DomImageType in enums.xml.
+  enum class ImageType { kImg = 0, kSvg = 1, kCss = 2, kCount = 3 };
+  static void RecordCheckerableImageUMA(Image&, ImageType);
+
   virtual sk_sp<PaintRecord> PaintRecordForContainer(
       const KURL& url,
       const IntSize& container_size,
@@ -263,6 +268,9 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   // Initializes a PaintImageBuilder with the metadata flags for the PaintImage.
   void InitPaintImageBuilder(PaintImageBuilder&);
+
+  // Whether or not size is available yet.
+  virtual bool IsSizeAvailable() { return true; }
 
  private:
   bool image_observer_disabled_;

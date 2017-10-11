@@ -26,6 +26,8 @@
 
 #include "platform/graphics/Image.h"
 
+#include "build/build_config.h"
+#include "platform/Histogram.h"
 #include "platform/Length.h"
 #include "platform/SharedBuffer.h"
 #include "platform/geometry/FloatPoint.h"
@@ -40,6 +42,7 @@
 #include "platform/instrumentation/PlatformInstrumentation.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
@@ -407,6 +410,34 @@ FloatRect Image::ComputeSubsetForTile(const FloatRect& tile,
   subset.SetHeight(dest.Height() / scale.Height());
 
   return subset;
+}
+
+// static
+void Image::RecordCheckerableImageUMA(Image& image, ImageType type) {
+  DCHECK_NE(type, ImageType::kCount);
+
+  if (!image.IsSizeAvailable())
+    return;
+
+  if (image.MaybeAnimated())
+    return;
+
+  CheckedNumeric<size_t> checked_size = 4u;
+  IntSize size = image.Size();
+  checked_size *= size.Width();
+  checked_size *= size.Height();
+
+#if defined(OS_ANDROID)
+  static const size_t kMinImageSizeCheckered = 512 * 1024;
+#else
+  static const size_t kMinImageSizeCheckered = 1 * 1024 * 1024;
+#endif
+  if (checked_size.ValueOrDefault(std::numeric_limits<size_t>::max()) <
+      kMinImageSizeCheckered) {
+    return;
+  }
+
+  UMA_HISTOGRAM_ENUMERATION("CheckerableImageCount", type, ImageType::kCount);
 }
 
 }  // namespace blink
