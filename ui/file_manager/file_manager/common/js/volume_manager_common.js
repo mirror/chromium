@@ -99,6 +99,34 @@ VolumeManagerCommon.RootType = {
 Object.freeze(VolumeManagerCommon.RootType);
 
 /**
+ * Keep the order of this in sync with FileManagerRootType in
+ * tools/metrics/histograms/histograms.xml.
+ *
+ * @type {!Array<VolumeManagerCommon.RootType>}
+ * @const
+ */
+VolumeManagerCommon.RootTypesForUMA = [
+  VolumeManagerCommon.RootType.DOWNLOADS,
+  VolumeManagerCommon.RootType.ARCHIVE,
+  VolumeManagerCommon.RootType.REMOVABLE,
+  VolumeManagerCommon.RootType.DRIVE,
+  VolumeManagerCommon.RootType.TEAM_DRIVES_GRAND_ROOT,
+  VolumeManagerCommon.RootType.TEAM_DRIVE,
+  VolumeManagerCommon.RootType.MTP,
+  VolumeManagerCommon.RootType.PROVIDED,
+  VolumeManagerCommon.RootType.DRIVE_OTHER,
+  VolumeManagerCommon.RootType.DRIVE_OFFLINE,
+  VolumeManagerCommon.RootType.DRIVE_SHARED_WITH_ME,
+  VolumeManagerCommon.RootType.DRIVE_RECENT,
+  VolumeManagerCommon.RootType.MEDIA_VIEW,
+  VolumeManagerCommon.RootType.RECENT,
+];
+console.assert(
+    Object.keys(VolumeManagerCommon.RootType).length ===
+        VolumeManagerCommon.RootTypesForUMA.length,
+    'Members in RootTypesForUMA do not match them in RootTypes.');
+
+/**
  * Error type of VolumeManager.
  * @enum {string}
  * @const
