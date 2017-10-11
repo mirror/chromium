@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28987e00_8c982175",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-11T05:26:22Z",
+      "side": 1,
+      "message": "This is probably good as a short-term fix but it seems that this would be better handled in the long term if were able to retrieve the value from PermissionManager? Then I think it would correctly realise that the actual value doesn\u0027t match the default.",
+      "revId": "a417532ea722608b7d7a5749e334cc959addf46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
