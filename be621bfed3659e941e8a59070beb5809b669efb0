@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27add588_9cfc8a4c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "Can we have a better comment here? It would be fine to remove the comment at all, if the enum gets a more explicit name (Code or CharCode or Ascii, I don\u0027t know :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2657cd_d3ed4944",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "nit: maybe use \"A_LOWER\" and \"A_UPPER\" naming format?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0613462_91762fb6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "nit: could you please specify TODO more precisely (https://google.github.io/styleguide/cppguide.html#TODO_Comments)",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ba1783_8ab4e84b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "nit: is this header needed? If yes, move it to line #14 (https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes)",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbde512_cf2d5e9b",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "nit: kParserModeMap as per https://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1067f4f3_9bf976d0",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "Do you really need this array? I guess you can use \"std::numeric_limits\" to get max value for \"blink::CSSParserMode\" enum, and then select the mode by % max_enum_value.",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6170f4_3be0f006",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "Should it be \"data + 5\"? It looks like you\u0027ve already used data[4] byte above. Also, where are data[2] and data[3] used? Let\u0027s switch to the hash approach as we discussed over hangouts.",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7664f166_c5c4d1ea",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "It should be:\n\nConverter::Converter() : s(\"\") {}\n\n\nOr can be even empty, as default string constructor creates an empty string as well.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8252b210_2a7b11f5",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "we shouldn\u0027t use C-style casts: https://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97815cba_5360512f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T18:09:51Z",
+      "side": 1,
+      "message": "nit: let\u0027s name it \"string_\" or \"text_\".",
+      "range": {
+        "startLine": 22,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
