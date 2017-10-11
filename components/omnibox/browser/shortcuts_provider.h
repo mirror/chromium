@@ -48,13 +48,18 @@ class ShortcutsProvider : public AutocompleteProvider,
   static WordMap CreateWordMapForString(const base::string16& text);
 
   // Given |text| and a corresponding base set of classifications
-  // |original_class|, adds ACMatchClassification::MATCH markers for all
-  // instances of the words from |find_words| within |text| and returns the
-  // resulting classifications.  (|find_text| is provided as the original string
-  // used to create |find_words|.  This is supplied because it's common for this
-  // to be a prefix of |text|, so we can quickly check for that and mark that
-  // entire substring as a match before proceeding with the more generic
-  // algorithm.)
+  // |original_class|,
+  //   - if |text_is_search_query| is true and |find_text| is a prefix of
+  //   |text|, function adds ACMatchClassification::MATCH markers for all
+  //   characters after |find_text| withing |text|.
+  //
+  //   - if |text_is_search_query| is false, function adds
+  //   ACMatchClassification::MATCH markers for all instances of the words from
+  //   |find_words| within |text| and returns the resulting classifications.
+  //   (|find_text| is provided as the original string used to create
+  //   |find_words|.  This is supplied because it's common for this to be a
+  //   prefix of |text|, so we can quickly check for that and mark that entire
+  //   substring as a match before proceeding with the more generic algorithm.)
   //
   // For example, given the |text|
   // "Sports and News at sports.somesite.com - visit us!" and |original_class|
@@ -71,6 +76,7 @@ class ShortcutsProvider : public AutocompleteProvider,
       const base::string16& find_text,
       const WordMap& find_words,
       const base::string16& text,
+      const bool text_is_search_query,
       const ACMatchClassifications& original_class);
 
   // ShortcutsBackendObserver:

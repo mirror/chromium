@@ -198,6 +198,7 @@ ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
     const base::string16& find_text,
     const WordMap& find_words,
     const base::string16& text,
+    const bool text_is_search_query,
     const ACMatchClassifications& original_class) {
   DCHECK(!find_text.empty());
   DCHECK(!find_words.empty());
@@ -212,19 +213,24 @@ ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
   // First check whether |text| begins with |find_text| and mark that whole
   // section as a match if so.
   base::string16 text_lowercase(base::i18n::ToLower(text));
+  const ACMatchClassification::Style& class_of_find_text =
+      text_is_search_query ? ACMatchClassification::NONE
+                           : ACMatchClassification::MATCH;
+  const ACMatchClassification::Style& class_of_additional_text =
+      text_is_search_query ? ACMatchClassification::MATCH
+                           : ACMatchClassification::NONE;
   ACMatchClassifications match_class;
   size_t last_position = 0;
   if (base::StartsWith(text_lowercase, find_text,
                        base::CompareCase::SENSITIVE)) {
-    match_class.push_back(
-        ACMatchClassification(0, ACMatchClassification::MATCH));
+    match_class.push_back(ACMatchClassification(0, class_of_find_text));
     last_position = find_text.length();
     // If |text_lowercase| is actually equal to |find_text|, we don't need to
     // (and in fact shouldn't) put a trailing NONE classification after the end
     // of the string.
     if (last_position < text_lowercase.length()) {
       match_class.push_back(
-          ACMatchClassification(last_position, ACMatchClassification::NONE));
+          ACMatchClassification(last_position, class_of_additional_text));
     }
   } else {
     // |match_class| should start at position 0.  If the first matching word is
@@ -233,38 +239,41 @@ ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
         ACMatchClassification(0, ACMatchClassification::NONE));
   }
 
-  // Now, starting with |last_position|, check each character in
-  // |text_lowercase| to see if we have words starting with that character in
-  // |find_words|.  If so, check each of them to see if they match the portion
-  // of |text_lowercase| beginning with |last_position|.  Accept the first
-  // matching word found (which should be the longest possible match at this
-  // location, given the construction of |find_words|) and add a MATCH region to
-  // |match_class|, moving |last_position| to be after the matching word.  If we
-  // found no matching words, move to the next character and repeat.
-  while (last_position < text_lowercase.length()) {
-    std::pair<WordMap::const_iterator, WordMap::const_iterator> range(
-        find_words.equal_range(text_lowercase[last_position]));
-    size_t next_character = last_position + 1;
-    for (WordMap::const_iterator i(range.first); i != range.second; ++i) {
-      const base::string16& word = i->second;
-      size_t word_end = last_position + word.length();
-      if ((word_end <= text_lowercase.length()) &&
-          !text_lowercase.compare(last_position, word.length(), word)) {
-        // Collapse adjacent ranges into one.
-        if (match_class.back().offset == last_position)
-          match_class.pop_back();
+  // If the text is not a search query, check each character, starting with
+  // |last_position|, in |text_lowercase| to see if we have words starting with
+  // that character in |find_words|.  If so, check each of them to see if they
+  // match the portion of |text_lowercase| beginning with |last_position|.
+  // Accept the first matching word found (which should be the longest possible
+  // match at this location, given the construction of |find_words|) and add a
+  // MATCH region to |match_class|, moving |last_position| to be after the
+  // matching word.  If we found no matching words, move to the next character
+  // and repeat.
+  if (!text_is_search_query) {
+    while (last_position < text_lowercase.length()) {
+      std::pair<WordMap::const_iterator, WordMap::const_iterator> range(
+          find_words.equal_range(text_lowercase[last_position]));
+      size_t next_character = last_position + 1;
+      for (WordMap::const_iterator i(range.first); i != range.second; ++i) {
+        const base::string16& word = i->second;
+        size_t word_end = last_position + word.length();
+        if ((word_end <= text_lowercase.length()) &&
+            !text_lowercase.compare(last_position, word.length(), word)) {
+          // Collapse adjacent ranges into one.
+          if (match_class.back().offset == last_position)
+            match_class.pop_back();
 
-        AutocompleteMatch::AddLastClassificationIfNecessary(
-            &match_class, last_position, ACMatchClassification::MATCH);
-        if (word_end < text_lowercase.length()) {
-          match_class.push_back(
-              ACMatchClassification(word_end, ACMatchClassification::NONE));
+          AutocompleteMatch::AddLastClassificationIfNecessary(
+              &match_class, last_position, ACMatchClassification::MATCH);
+          if (word_end < text_lowercase.length()) {
+            match_class.push_back(
+                ACMatchClassification(word_end, ACMatchClassification::NONE));
+          }
+          last_position = word_end;
+          break;
         }
-        last_position = word_end;
-        break;
       }
+      last_position = std::max(last_position, next_character);
     }
-    last_position = std::max(last_position, next_character);
   }
 
   return AutocompleteMatch::MergeClassifications(original_class, match_class);
@@ -393,7 +402,8 @@ AutocompleteMatch ShortcutsProvider::ShortcutToACMatch(
   // otherwise prevent inline autocompletion.  This allows, for example, the
   // input of "foo.c" to autocomplete to "foo.com" for a fill_into_edit of
   // "http://foo.com".
-  if (AutocompleteMatch::IsSearchType(match.type)) {
+  const bool is_search_type = AutocompleteMatch::IsSearchType(match.type);
+  if (is_search_type) {
     if (match.fill_into_edit.size() >= input.text().size() &&
         std::equal(match.fill_into_edit.begin(),
                    match.fill_into_edit.begin() + input.text().size(),
@@ -423,10 +433,12 @@ AutocompleteMatch ShortcutsProvider::ShortcutToACMatch(
   // Try to mark pieces of the contents and description as matches if they
   // appear in |input.text()|.
   if (!terms_map.empty()) {
-    match.contents_class = ClassifyAllMatchesInString(
-        term_string, terms_map, match.contents, match.contents_class);
+    match.contents_class =
+        ClassifyAllMatchesInString(term_string, terms_map, match.contents,
+                                   is_search_type, match.contents_class);
     match.description_class = ClassifyAllMatchesInString(
-        term_string, terms_map, match.description, match.description_class);
+        term_string, terms_map, match.description,
+        /*text_is_search_query=*/false, match.description_class);
   }
   return match;
 }
