@@ -10,7 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/ignore_errors_cert_verifier.h"
+#include "content/public/browser/ignore_errors_cert_verifier_utils.h"
 #include "content/shell/browser/shell_network_delegate.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
 #include "net/cert/cert_verifier.h"
@@ -48,9 +48,9 @@ LayoutTestURLRequestContextGetter::CreateNetworkDelegate() {
 
 std::unique_ptr<net::CertVerifier>
 LayoutTestURLRequestContextGetter::GetCertVerifier() {
-  return IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-      *base::CommandLine::ForCurrentProcess(), switches::kRunLayoutTest,
-      net::CertVerifier::CreateDefault());
+  return content::MaybeWrapCertVerifier(*base::CommandLine::ForCurrentProcess(),
+                                        switches::kRunLayoutTest,
+                                        net::CertVerifier::CreateDefault());
 }
 
 std::unique_ptr<net::ProxyConfigService>
