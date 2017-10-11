@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "d4d31c81_bcd44a47",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-11T23:39:42Z",
+      "side": 1,
+      "message": "This works only with Ozone right now, because it is at the moment the only concrete implementation of what is otherwise designed and intended to be a platform-independent GPU process API.\n\nI believe that moving it to ozone and making it use NativePixmap, which are an ozone abstraction, would actually make this platform-dependent (ozone-only), which would make it difficult to expose as a general GPU process API.\n\nIn my understanding, GpuMemoryBuffer is a general platform-independent buffer abstraction to share and pass around GPU-allocated buffers, while NativePixmaps are a platform-specific way to implement GpuMemoryBuffers.\n\nPerhaps we could instead discuss/address issues with this design and/or idea of this API that could make it difficult or not suitable for/usable on other platforms. Would you be able to explain any technical or design reasons you may be seeing why this would not work on other platforms (once implemented by means available there) please?\n\nOr, alternatively, could you perhaps suggest an alternative API that would allow exposing and sharing GPU-allocated buffers inaccessible to unprivileged clients of the GPU process in a way transparent to them please?",
+      "parentUuid": "3561679b_5e96c1db",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09dd482_659e8d60",
         "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
         "patchSetId": 6
