@@ -371,6 +371,7 @@ static LayoutTextFragment* FirstLetterPartFor(LayoutObject* layout_object) {
 static void MarkSelected(SelectedLayoutObjects* invalidation_set,
                          LayoutObject* layout_object,
                          SelectionState state) {
+  DCHECK(!layout_object->SlowFirstChild());
   layout_object->SetSelectionStateIfNeeded(state);
   InsertLayoutObjectAndAncestorBlocks(invalidation_set, layout_object);
 }

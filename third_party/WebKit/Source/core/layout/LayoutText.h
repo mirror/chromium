@@ -186,7 +186,6 @@ class CORE_EXPORT LayoutText : public LayoutObject {
 
   virtual void TransformText();
 
-  bool CanBeSelectionLeaf() const override { return true; }
   void SetSelectionState(SelectionState) final;
   LayoutRect LocalSelectionRect() const final;
   LayoutRect LocalCaretRect(
@@ -248,6 +247,8 @@ class CORE_EXPORT LayoutText : public LayoutObject {
       unsigned short length);  // Subclassed by SVG.
 
   void InvalidateDisplayItemClients(PaintInvalidationReason) const override;
+
+  bool CanBeSelectionLeafInternal() const final { return true; }
 
  private:
   void ComputePreferredLogicalWidths(float lead_width);
