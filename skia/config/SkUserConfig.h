@@ -220,16 +220,8 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_TILED_BITMAPS
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_SAFESIZE64
-#define SK_SUPPORT_LEGACY_SAFESIZE64
-#endif
-
 #ifndef SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
 #define SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
-#endif
-
-#ifndef SK_SUPPORT_LEGACY_COMPUTEBYTESIZE_RET_0
-#define SK_SUPPORT_LEGACY_COMPUTEBYTESIZE_RET_0
 #endif
 
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi
