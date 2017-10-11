@@ -2873,11 +2873,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
   EXPECT_EQ(entry2, controller.GetLastCommittedEntry());
 
-  // The entry should have both the stale FrameNavigationEntry with the old
-  // name and the new FrameNavigationEntry for the fallback navigation.
-  ASSERT_EQ(2U, entry2->root_node()->children.size());
-  EXPECT_EQ(frame_url_b, entry2->root_node()->children[0]->frame_entry->url());
-  EXPECT_EQ(data_url, entry2->root_node()->children[1]->frame_entry->url());
+  // The entry should have only the new FrameNavigationEntry for the fallback
+  // navigation. The stale FrameNavigationEntry with the old name was deleted
+  // when load stopped.
+  ASSERT_EQ(1U, entry2->root_node()->children.size());
+  EXPECT_EQ(data_url, entry2->root_node()->children[0]->frame_entry->url());
 }
 
 // Allows waiting until an URL with a data scheme commits in any frame.
@@ -2968,13 +2968,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0, controller.GetLastCommittedEntryIndex());
   EXPECT_EQ(entry1, controller.GetLastCommittedEntry());
 
-  // The entry should have both the stale FrameNavigationEntry with the old
-  // name and the new FrameNavigationEntry for the fallback navigation.
-  ASSERT_EQ(2U, entry1->root_node()->children.size());
+  // The entry should have only the new FrameNavigationEntry for the fallback
+  // navigation. The stale FrameNavigationEntry was deleted when load stopped.
+  ASSERT_EQ(1U, entry1->root_node()->children.size());
   EXPECT_EQ("data",
             entry1->root_node()->children[0]->frame_entry->url().scheme());
-  EXPECT_EQ("data",
-            entry1->root_node()->children[1]->frame_entry->url().scheme());
 
   // The iframe commit should have been classified AUTO_SUBFRAME and not
   // NEW_SUBFRAME, so we should still be able to go forward.
@@ -3302,7 +3300,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
                        FrameNavigationEntry_RemoveRecreatedBlankSubframe) {
   // 1. Start on a page that removes its about:blank iframe during onload.
   GURL main_url(embedded_test_server()->GetURL(
-      "/navigation_controller/remove_blank_iframe_on_load.html"));
+      "/navigation_controller/remove_blank_iframe_on_second_load.html"));
   GURL blank_url(url::kAboutBlankURL);
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
   NavigationControllerImpl& controller = static_cast<NavigationControllerImpl&>(
@@ -3316,8 +3314,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0, controller.GetLastCommittedEntryIndex());
   NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
 
-  // The entry should have a FrameNavigationEntry for the blank subframe, even
-  // though it is being removed from the page.
+  // The entry should have a FrameNavigationEntry for the blank subframe.
   ASSERT_EQ(1U, entry->root_node()->children.size());
   EXPECT_EQ(blank_url, entry->root_node()->children[0]->frame_entry->url());
 
@@ -3331,7 +3328,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(2, controller.GetEntryCount());
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
 
-  // 3. Go back, recreating the iframe (and removing it again).
+  // 3. Go back, recreating the iframe and removing it.
+  // TODO: Maybe check that the frame is added and then removed?
   {
     TestNavigationObserver back_load_observer(shell()->web_contents());
     controller.GoBack();
@@ -3346,9 +3344,8 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(0, controller.GetLastCommittedEntryIndex());
   EXPECT_EQ(entry, controller.GetLastCommittedEntry());
 
-  // The entry should have a FrameNavigationEntry for the blank subframe.
-  ASSERT_EQ(1U, entry->root_node()->children.size());
-  EXPECT_EQ(blank_url, entry->root_node()->children[0]->frame_entry->url());
+  // The entry should not have a FrameNavigationEntry for non-existent subframe.
+  EXPECT_EQ(0U, entry->root_node()->children.size());
 }
 
 // Verifies that we clear the children FrameNavigationEntries if a history
@@ -6117,6 +6114,53 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_TRUE(ExecuteScriptAndExtractString(
       web_contents, "domAutomationController.send(document.origin)", &origin));
   EXPECT_EQ(start_url.GetOrigin().spec(), origin + "/");
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       FrameNavigationEntriesKeptOnSameDocumentNavigation) {
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL(
+                   "/navigation_controller/pushstate_and_iframe.html")));
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(1U, root->child_count());
+  ASSERT_NE(nullptr, root->child_at(0));
+  const GURL subframe_new_url = embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html");
+  NavigateFrameToURL(root->child_at(0), subframe_new_url);
+
+  // Load another page and go back. The child frame should load
+  // simple_page_2.html.
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  shell()->web_contents()->GetController().GoBack();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  ASSERT_EQ(1U, root->child_count());
+  ASSERT_NE(nullptr, root->child_at(0));
+  EXPECT_EQ(subframe_new_url, root->child_at(0)->current_url());
+}
+
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ClearChildFrameNavigationEntriesOnStopLoading) {
+  EXPECT_TRUE(NavigateToURL(
+      shell(), embedded_test_server()->GetURL(
+                   "/navigation_controller/iframe_loaded_once.html")));
+  EXPECT_TRUE(
+      NavigateToURL(shell(), embedded_test_server()->GetURL("/title1.html")));
+  auto& controller = shell()->web_contents()->GetController();
+  controller.GoBack();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  EXPECT_EQ(0U, root->child_count());
+  // After going back, the page has no iframes. Since it stopped loading, the
+  // FrameNavigationEntry for child frame should be cleared.
+  EXPECT_TRUE(
+      static_cast<NavigationEntryImpl*>(controller.GetLastCommittedEntry())
+          ->root_node()
+          ->children.empty());
 }
 
 // Helper to trigger a history-back navigation in the WebContents after the
