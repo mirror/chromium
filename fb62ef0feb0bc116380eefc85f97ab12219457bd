@@ -16,6 +16,24 @@
       "revId": "fb62ef0feb0bc116380eefc85f97ab12219457bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac125c9a_59d1c03b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-11T02:00:57Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/#/c/chromium/src/+/711379",
+      "parentUuid": "cd732c94_5ee0f58d",
+      "revId": "fb62ef0feb0bc116380eefc85f97ab12219457bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
