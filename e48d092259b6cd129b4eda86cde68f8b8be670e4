@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50b31228_cdbda216",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-11T18:29:02Z",
+      "side": 1,
+      "message": "Why does this function still exist? Shouldn\u0027t the logic for updating which id the gl thread sends events for live on the gl thread?",
+      "range": {
+        "startLine": 799,
+        "startChar": 14,
+        "endLine": 799,
+        "endChar": 36
+      },
+      "revId": "e48d092259b6cd129b4eda86cde68f8b8be670e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
