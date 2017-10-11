@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e5e906e_bd676c6d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T23:36:28Z",
+      "side": 1,
+      "message": "Done. I added a comment to show that it is only public for unit tests.",
+      "parentUuid": "de90d00c_8368befd",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24d6222b_7caaa7c4",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba94babd_3a44ab67",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T23:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d6222b_7caaa7c4",
+      "range": {
+        "startLine": 42,
+        "startChar": 20,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0839834a_96abcbe5",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T23:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31dee81_283dfb2e",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1027ad_c2b59357",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed11c2e8_6a021287",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T23:36:28Z",
+      "side": 1,
+      "message": "Oops, thanks. It was intended to test the default.",
+      "parentUuid": "1d1027ad_c2b59357",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "65a8c056cdfdabd4c5fe2949d1e066b873427347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
