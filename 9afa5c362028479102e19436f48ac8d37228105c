@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e24ee8d3_09a8b93b",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T13:24:53Z",
+      "side": 1,
+      "message": "nit: maybe mention that whitespace is optional/arbitrary?",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5584b30_5b6cab04",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T13:24:53Z",
+      "side": 1,
+      "message": "prefer \u0027%\u0027 to avoid requiring strlen calls",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64028d4_6fdbe3fd",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T13:24:53Z",
+      "side": 1,
+      "message": "Do we want to coerce values to be valid, or just fail parsing?  It seems a bit weird that we\u0027ll happily parse rgba(1000, 1000, 1000, 1000).",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7000f1fc_1046c603",
+        "filename": "extensions/common/image_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-11T13:24:53Z",
+      "side": 1,
+      "message": "Maybe just add a quick comment // We don\u0027t support percents yet.\n(Since this is actually valid RGB)",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
