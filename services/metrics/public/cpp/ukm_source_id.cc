@@ -17,6 +17,8 @@ const int64_t kTypeMask = (INT64_C(1) << kNumTypeBits) - 1;
 
 }  // namespace
 
+const SourceId kInvalidSourceId = 0;
+
 SourceId AssignNewSourceId() {
   static base::AtomicSequenceNumber seq;
   return ConvertToSourceId(seq.GetNext() + 1, SourceIdType::UKM);
