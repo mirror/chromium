@@ -60,6 +60,17 @@ std::unique_ptr<GlobalDumpGraph> GraphProcessor::ComputeMemoryGraph(
   for (auto& pid_to_dump : process_dumps) {
     AddEdges(pid_to_dump.second, global_graph.get());
   }
+
+  auto* global_root = global_graph->shared_memory_graph()->root();
+
+  // Third pass: mark recursively nodes as weak if they own a node which is
+  // weak or they don't have an associated dump and all theird children are
+  // weak. Implicitly consider child nodes as weak if parent is weak.
+  MarkImplicitWeakParentsRecursively(global_root);
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    MarkImplicitWeakParentsRecursively(pid_to_process.second->root());
+  }
+
   return global_graph;
 }
 
@@ -125,6 +136,25 @@ void GraphProcessor::AddEdges(
                                          edge.importance);
     }
   }
+}
+
+void GraphProcessor::MarkImplicitWeakParentsRecursively(Node* node) {
+  // If a node is already weak or was explicitly marked as non-weak then don't
+  // change it.
+  if (node->is_weak() || node->is_explicit())
+    return;
+
+  // Recurse into each child and find out if all the children of this node are
+  // weak.
+  bool all_children_weak = true;
+  for (auto& path_to_child : *node->children()) {
+    MarkImplicitWeakParentsRecursively(path_to_child.second);
+    all_children_weak = all_children_weak && path_to_child.second->is_weak();
+  }
+
+  // If all the children are weak then we consider the parent as weak as well
+  // and we will later remove it.
+  node->set_weak(all_children_weak);
 }
 
 }  // namespace memory_instrumentation
