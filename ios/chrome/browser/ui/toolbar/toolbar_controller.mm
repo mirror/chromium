@@ -23,6 +23,7 @@
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/tools_menu_button_observer_bridge.h"
@@ -68,6 +69,125 @@ using ios::material::TimingFunction;
 
 @end
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+@implementation ToolbarView
+
+@synthesize delegate = delegate_;
+@synthesize animatingTransition = animatingTransition_;
+@synthesize hitTestBoundsContraintRelaxed = hitTestBoundsContraintRelaxed_;
+
+// Some views added to the toolbar have bounds larger than the toolbar bounds
+// and still needs to receive touches. The overscroll actions view is one of
+// those. That method is overridden in order to still perform hit testing on
+// subviews that resides outside the toolbar bounds.
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
+  UIView* hitView = [super hitTest:point withEvent:event];
+  if (hitView || !self.hitTestBoundsContraintRelaxed)
+    return hitView;
+
+  for (UIView* view in [[self subviews] reverseObjectEnumerator]) {
+    if (!view.userInteractionEnabled || [view isHidden] || [view alpha] < 0.01)
+      continue;
+    const CGPoint convertedPoint = [view convertPoint:point fromView:self];
+    if ([view pointInside:convertedPoint withEvent:event]) {
+      hitView = [view hitTest:convertedPoint withEvent:event];
+      if (hitView)
+        break;
+    }
+  }
+  return hitView;
+}
+
+- (void)setFrame:(CGRect)frame {
+  CGRect oldFrame = self.frame;
+  [super setFrame:frame];
+  [delegate_ frameDidChangeFrame:frame fromFrame:oldFrame];
+}
+
+- (void)didMoveToWindow {
+  [super didMoveToWindow];
+  [delegate_ windowDidChange];
+}
+
+- (id<CAAction>)actionForLayer:(CALayer*)layer forKey:(NSString*)event {
+  // Don't allow UIView block-based animations if we're already performing
+  // explicit transition animations.
+  if (self.animatingTransition)
+    return (id<CAAction>)[NSNull null];
+  return [super actionForLayer:layer forKey:event];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [delegate_ traitCollectionDidChange];
+}
+
+@end
+
+=======
+@implementation ToolbarView
+
+@synthesize delegate = delegate_;
+@synthesize animatingTransition = animatingTransition_;
+@synthesize hitTestBoundsContraintRelaxed = hitTestBoundsContraintRelaxed_;
+
+// Some views added to the toolbar have bounds larger than the toolbar bounds
+// and still needs to receive touches. The overscroll actions view is one of
+// those. That method is overridden in order to still perform hit testing on
+// subviews that resides outside the toolbar bounds.
+- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
+  UIView* hitView = [super hitTest:point withEvent:event];
+  if (hitView || !self.hitTestBoundsContraintRelaxed)
+    return hitView;
+
+  for (UIView* view in [[self subviews] reverseObjectEnumerator]) {
+    if (!view.userInteractionEnabled || [view isHidden] || [view alpha] < 0.01)
+      continue;
+    const CGPoint convertedPoint = [view convertPoint:point fromView:self];
+    if ([view pointInside:convertedPoint withEvent:event]) {
+      hitView = [view hitTest:convertedPoint withEvent:event];
+      if (hitView)
+        break;
+    }
+  }
+  return hitView;
+}
+
+- (void)setFrame:(CGRect)frame {
+  CGRect oldFrame = self.frame;
+  [super setFrame:frame];
+  [delegate_ frameDidChangeFrame:frame fromFrame:oldFrame];
+}
+
+- (void)didMoveToWindow {
+  [super didMoveToWindow];
+  [delegate_ windowDidChange];
+}
+
+- (void)willMoveToSuperview:(UIView*)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [self removeConstraints:self.constraints];
+  }
+}
+
+- (id<CAAction>)actionForLayer:(CALayer*)layer forKey:(NSString*)event {
+  // Don't allow UIView block-based animations if we're already performing
+  // explicit transition animations.
+  if (self.animatingTransition)
+    return (id<CAAction>)[NSNull null];
+  return [super actionForLayer:layer forKey:event];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [delegate_ traitCollectionDidChange];
+}
+
+@end
+
+>>>>>>> Foo.
 @interface ToolbarController () {
   // The shadow view. Only used on iPhone.
   UIImageView* fullBleedShadowView_;
@@ -113,6 +233,39 @@ using ios::material::TimingFunction;
 @synthesize style = style_;
 @synthesize dispatcher = dispatcher_;
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+- (void)setReadingListModel:(ReadingListModel*)readingListModel {
+  readingListModel_ = readingListModel;
+  if (readingListModel_) {
+    toolsMenuButtonObserverBridge_ =
+        [[ToolsMenuButtonObserverBridge alloc] initWithModel:readingListModel_
+                                               toolbarButton:toolsMenuButton_];
+  }
+}
+
+=======
+- (void)setReadingListModel:(ReadingListModel*)readingListModel {
+  readingListModel_ = readingListModel;
+  if (readingListModel_) {
+    toolsMenuButtonObserverBridge_ =
+        [[ToolsMenuButtonObserverBridge alloc] initWithModel:readingListModel_
+                                               toolbarButton:toolsMenuButton_];
+  }
+}
+
+- (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen {
+  DCHECK(base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar));
+  InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
+  CGRect frame = kToolbarFrame[idiom];
+  if (idiom == IPHONE_IDIOM) {
+    CGFloat statusBarOffset = [self statusBarOffset];
+    frame.size.height += statusBarOffset;
+  }
+  return frame.size.height;
+}
+
+>>>>>>> Foo.
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
@@ -138,6 +291,14 @@ using ios::material::TimingFunction;
     }
 
     view_ = [[ToolbarView alloc] initWithFrame:viewFrame];
+    if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+      [view_ setTranslatesAutoresizingMaskIntoConstraints:NO];
+    }
+
+    UIViewAutoresizing autoresizingMask =
+        UIViewAutoresizingFlexibleLeadingMargin() |
+        UIViewAutoresizingFlexibleTopMargin;
+
     backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
     toolsMenuButton_ =
         [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
@@ -145,9 +306,7 @@ using ios::material::TimingFunction;
     [toolsMenuButton_ addTarget:self.dispatcher
                          action:@selector(showToolsMenu)
                forControlEvents:UIControlEventTouchUpInside];
-    [toolsMenuButton_
-        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
+    [toolsMenuButton_ setAutoresizingMask:autoresizingMask];
 
     [view_ addSubview:backgroundView_];
     [view_ addSubview:toolsMenuButton_];
@@ -158,9 +317,7 @@ using ios::material::TimingFunction;
     if (idiom == IPAD_IDIOM) {
       CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
       shareButton_ = [[UIButton alloc] initWithFrame:shareButtonFrame];
-      [shareButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+      [shareButton_ setAutoresizingMask:autoresizingMask];
       [self setUpButton:shareButton_
              withImageEnum:ToolbarButtonNameShare
            forInitialState:UIControlStateNormal
@@ -177,7 +334,9 @@ using ios::material::TimingFunction;
     CGRect shadowFrame = kShadowViewFrame[idiom];
     shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
     shadowView_ = [[UIImageView alloc] initWithFrame:shadowFrame];
-    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                     UIViewAutoresizingFlexibleTopMargin];
+
     [shadowView_ setUserInteractionEnabled:NO];
     [view_ addSubview:shadowView_];
     [shadowView_ setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW)];
@@ -189,7 +348,9 @@ using ios::material::TimingFunction;
       fullBleedShadowView_ =
           [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
       [fullBleedShadowView_
-          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+          setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                              UIViewAutoresizingFlexibleTopMargin];
+
       [fullBleedShadowView_ setUserInteractionEnabled:NO];
       [fullBleedShadowView_ setAlpha:0];
       [view_ addSubview:fullBleedShadowView_];
@@ -222,9 +383,7 @@ using ios::material::TimingFunction;
       [stackButton_ setTitleColor:highlightColor
                          forState:UIControlStateHighlighted];
 
-      [stackButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+      [stackButton_ setAutoresizingMask:autoresizingMask];
 
       [self setUpButton:stackButton_
              withImageEnum:ToolbarButtonNameStack
@@ -259,7 +418,70 @@ using ios::material::TimingFunction;
   [toolsPopupController_ setDelegate:nil];
 }
 
+<<<<<<< HEAD
 #pragma mark - Public API
+||||||| merged common ancestors
+- (CGFloat)statusBarOffset {
+  return StatusBarHeight();
+}
+
+- (NSMutableArray*)transitionLayers {
+  return transitionLayers_;
+}
+
+- (BOOL)imageShouldFlipForRightToLeftLayoutDirection:(int)imageEnum {
+  // None of the images this class knows about should flip.
+  return NO;
+}
+
+- (void)updateStandardButtons {
+  BOOL shareButtonShouldBeVisible = [self shareButtonShouldBeVisible];
+  [shareButton_ setHidden:!shareButtonShouldBeVisible];
+  NSMutableArray* standardButtons = [NSMutableArray array];
+  [standardButtons addObject:toolsMenuButton_];
+  if (stackButton_)
+    [standardButtons addObject:stackButton_];
+  if (shareButtonShouldBeVisible)
+    [standardButtons addObject:shareButton_];
+  standardButtons_ = standardButtons;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [self updateStandardButtons];
+}
+=======
+- (CGFloat)statusBarOffset {
+  return StatusBarHeight();
+}
+
+- (NSMutableArray*)transitionLayers {
+  return transitionLayers_;
+}
+
+- (BOOL)imageShouldFlipForRightToLeftLayoutDirection:(int)imageEnum {
+  // None of the images this class knows about should flip.
+  return NO;
+}
+
+- (void)updateStandardButtons {
+  BOOL shareButtonShouldBeVisible = [self shareButtonShouldBeVisible];
+  [shareButton_ setHidden:!shareButtonShouldBeVisible];
+  NSMutableArray* standardButtons = [NSMutableArray array];
+  [standardButtons addObject:toolsMenuButton_];
+  if (stackButton_)
+    [standardButtons addObject:stackButton_];
+  if (shareButtonShouldBeVisible)
+    [standardButtons addObject:shareButton_];
+  standardButtons_ = standardButtons;
+}
+
+- (void)updateStandardButtons:(UITraitCollection*)previousTraitCollection {
+  [self updateStandardButtons];
+}
+>>>>>>> Foo.
+
+- (void)safeAreaInsetsDidChange {
+}
 
 - (void)applicationDidEnterBackground:(NSNotification*)notify {
   if (toolsPopupController_) {
