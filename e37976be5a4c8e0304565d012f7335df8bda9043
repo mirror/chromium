@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be663cc5_d7f6ea2f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T06:49:38Z",
+      "side": 1,
+      "message": "It feels like this function should be split so that: \n1) setting the web state handler happens in AttachTabHelpers\n2) setting the ManageAccountsDelegate happens once in BVC.",
+      "range": {
+        "startLine": 2423,
+        "startChar": 33,
+        "endLine": 2423,
+        "endChar": 71
+      },
+      "revId": "e37976be5a4c8e0304565d012f7335df8bda9043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09681b3_4c4d1a2e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5196,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-11T06:49:38Z",
+      "side": 1,
+      "message": "These methods could be extracted to an object, \nbut that object would need the tabModel and a dispatcher.",
+      "range": {
+        "startLine": 5196,
+        "startChar": 0,
+        "endLine": 5196,
+        "endChar": 26
+      },
+      "revId": "e37976be5a4c8e0304565d012f7335df8bda9043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
