@@ -22,6 +22,30 @@
       "revId": "2425a5e904f59ae33487525f3018c7acfdb32cbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d775bb07_b0a629e7",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-11T23:50:10Z",
+      "side": 1,
+      "message": "Agreed.\n\nWe can do a follow-up CL to change the time type. Looks like ChunkDemuxer is also using the doubles. We\u0027ll have to decide how much of the media pipeline is affected, and whether migrating it all is a good idea.",
+      "parentUuid": "b68584a1_21a96b7f",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "2425a5e904f59ae33487525f3018c7acfdb32cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
