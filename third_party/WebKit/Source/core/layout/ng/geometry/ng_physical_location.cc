@@ -5,12 +5,18 @@
 #include "core/layout/ng/geometry/ng_physical_location.h"
 
 #include <ostream>
+#include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 bool NGPhysicalLocation::operator==(const NGPhysicalLocation& other) const {
   return other.left == left && other.top == top;
+}
+
+void NGPhysicalLocation::operator+=(const NGPhysicalOffset& offset) {
+  left += offset.left;
+  top += offset.top;
 }
 
 String NGPhysicalLocation::ToString() const {

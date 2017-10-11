@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/geometry/ng_physical_rect.h"
 
+#include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
@@ -20,6 +21,30 @@ NGPixelSnappedPhysicalRect NGPhysicalRect::SnapToDevicePixels() const {
 
 bool NGPhysicalRect::operator==(const NGPhysicalRect& other) const {
   return other.location == location && other.size == size;
+}
+
+void NGPhysicalRect::Unite(const NGPhysicalRect& other) {
+  if (other.IsEmpty())
+    return;
+  if (IsEmpty()) {
+    *this = other;
+    return;
+  }
+
+  LayoutUnit left = std::min(location.left, other.location.left);
+  LayoutUnit top = std::min(location.top, other.location.top);
+  LayoutUnit right = std::max(Right(), other.Right());
+  LayoutUnit bottom = std::max(Bottom(), other.Bottom());
+  location = {left, top};
+  size = {right - left, bottom - top};
+}
+
+NGPhysicalRect::NGPhysicalRect(const LayoutRect& source)
+    : NGPhysicalRect({source.X(), source.Y()},
+                     {source.Width(), source.Height()}) {}
+
+LayoutRect NGPhysicalRect::ToLayoutRect() const {
+  return {location.left, location.top, size.width, size.height};
 }
 
 String NGPhysicalRect::ToString() const {

@@ -7,6 +7,7 @@
 
 #include "core/layout/ng/geometry/ng_bfc_offset.h"
 #include "core/layout/ng/geometry/ng_border_edges.h"
+#include "core/layout/ng/geometry/ng_physical_rect.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -20,6 +21,7 @@
 namespace blink {
 
 class NGExclusionSpace;
+struct NGPhysicalRect;
 
 class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   DISALLOW_NEW();
@@ -186,6 +188,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGLogicalSize size_;
   LayoutUnit intrinsic_block_size_;
+  NGPhysicalRect contents_visual_rect_;
 
   Vector<RefPtr<NGPhysicalFragment>> children_;
   Vector<NGLogicalOffset> offsets_;
