@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "380dbdd4_d9796363",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T21:00:28Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing it, but I don\u0027t see in the changes below why this is necessary.",
+      "revId": "6c5251590f72aae2eff888fab8abb71c0d2ff96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf97b83_67b8aa4e",
+        "filename": "components/autofill/content/renderer/form_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T21:00:28Z",
+      "side": 1,
+      "message": "It was not until here that I began to understand what |should_attach_to_field| means. Is there a better name, or a more complete comment you can put in the .mojom?",
+      "revId": "6c5251590f72aae2eff888fab8abb71c0d2ff96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
