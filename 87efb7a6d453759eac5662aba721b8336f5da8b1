@@ -423,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "d753cd79_dd4876b2",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-11T22:35:13Z",
+      "side": 1,
+      "message": "Thanks! That looks much better. Since we make the decision about RFH here, we are passing it directly to the code that uses it, without exposing it any further. Awesome!",
+      "parentUuid": "9f218c7c_1479ba36",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44f14c49_8fc4bdcf",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 51
@@ -434,6 +452,24 @@
       "writtenOn": "2017-10-07T00:39:36Z",
       "side": 1,
       "message": "estark@: You commented earlier that we should maybe be looking at the result action.\n\nI don\u0027t think we need to distinguish between PROCEED and CANCEL, but the documentation for CANCEL_AND_IGNORE suggests to me that we *actually* should check for CANCEL_AND_IGNORE and reset the navigation request instead of committing an error page here if we see it.\n\n[1] \"Cancels the navigation and makes the requester of the navigation act like the request was never made\":\nhttps://cs.chromium.org/chromium/src/content/public/browser/navigation_throttle.h?l\u003d36\u0026rcl\u003d16a004fe1218715520e4ecfd0d673d2cf0101c60",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c41c5a_91264b77",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-11T22:35:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be using the actual |action| part of the ThrottleCheckResult? With arbitrary error codes being supported by throttles now, we need to avoid using net error codes when we really need to be deciding based on the action the throttle wants us to perform.",
+      "parentUuid": "44f14c49_8fc4bdcf",
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
