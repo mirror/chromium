@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "619cd65c_235be9a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:31:11Z",
+      "side": 1,
+      "message": "is this meant to be \u0027when the user tries\u0027, or something?",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac2174d_a56ceaa7",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:31:11Z",
+      "side": 1,
+      "message": "Could this be something like:\nif (source.is_being_created()) {\n  .. post task\n  .. defer\n  return\n}\n\ncancel_and_ignore;\n\n?? That way you don\u0027t need the comment and it only defers if it should.",
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e83f7d_d6ee17fa",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-11T00:31:11Z",
+      "side": 1,
+      "message": "Is it possible to add a DCHECK here that the web contents has finished being created? It isn\u0027t clear to me that the post task will ensure this.",
+      "range": {
+        "startLine": 149,
+        "startChar": 37,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "e7714c40a53fdc29a7668b955b6783b44beca582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
