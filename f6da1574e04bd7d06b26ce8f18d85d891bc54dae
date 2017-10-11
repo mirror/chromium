@@ -46,6 +46,30 @@
       "revId": "f6da1574e04bd7d06b26ce8f18d85d891bc54dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c312fa9c_cf9742a0",
+        "filename": "headless/lib/browser/headless_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1245991
+      },
+      "writtenOn": "2017-10-11T07:07:17Z",
+      "side": 0,
+      "message": "I\u0027m still not convinced that transaction factory should be made configurable. It seems too low level and too far-reaching into chrome\u0027s internals to be set in the browser options. Now that it is guarded by the extra checks, do you still think it should be configurable?",
+      "parentUuid": "6a663696_cfeae4a2",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 78
+      },
+      "revId": "f6da1574e04bd7d06b26ce8f18d85d891bc54dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
