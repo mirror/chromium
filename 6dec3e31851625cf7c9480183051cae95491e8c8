@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f35a0b2_98eec2d7",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f66ccd_6b653e8c",
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94644fcb_e2e5b792",
         "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-10T23:45:35Z",
       "side": 1,
       "message": "Shouldn\u0027t these be DCHECKs as well?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 24
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44feb703_41a8e2a1",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "Added DCHECK(value). value-\u003eIsNull() is needed for the case where there\u0027s no date available and hence javascript returns null.",
+      "parentUuid": "94644fcb_e2e5b792",
       "range": {
         "startLine": 213,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cc05900c_56953c35",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5065335e_62b3db40",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78d3ef06_31c84a30",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-10T19:40:34Z",
       "side": 1,
       "message": "If your max is 14-days, are you sure logging in milliseconds is the right granularity? For example, if you only care about minutes then I would suggest to log in minutes - using a regular non-times histogram.",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa229af_13394597",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "We care about seconds, sometimes minutes, and occasionally days. Subsecond is not relevant. Are time histograms not appropriate for this?",
+      "parentUuid": "78d3ef06_31c84a30",
       "range": {
         "startLine": 55,
         "startChar": 49,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4497ca92_0af6c805",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "Done, actually with 20.",
+      "parentUuid": "63340335_9e94746e",
+      "range": {
+        "startLine": 57,
+        "startChar": 76,
+        "endLine": 57,
+        "endChar": 79
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a9517b8_ffc64747",
         "filename": "components/ntp_tiles/ntp_tile_impression.h",
         "patchSetId": 8
@@ -131,6 +245,30 @@
       "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a15be6_8b4be030",
+        "filename": "components/ntp_tiles/ntp_tile_impression.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-11T07:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9517b8_ffc64747",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
