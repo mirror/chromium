@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "9cb4a0a0_4bf66822",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-11T07:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5cab7f0_35a0abd9",
+      "revId": "b5cad29b12512eb46f1b0fe56ca9250e4eb6edf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15524a64_5ecce12b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseCustom.cpp",
         "patchSetId": 4
