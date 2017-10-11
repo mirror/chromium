@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2beca367_e98802eb",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-11T04:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c72739_f6fd73e4",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c1ad593_154bfc8c",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6194ee11_de132763",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-11T04:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c1ad593_154bfc8c",
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f83f2a38_b1b566d0",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-11T04:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d022cbd5_6dba71e8",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2250a6c3_38fa52d2",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_media_webview_content.js",
         "patchSetId": 7
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e2ea45a1_29b1121f",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_media_webview_content.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-11T04:11:59Z",
+      "side": 1,
+      "message": "Thx! I didn\u0027t know about its existence, the API looks pretty nice :)",
+      "parentUuid": "2250a6c3_38fa52d2",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55171bf9_05485d91",
         "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
         "patchSetId": 7
@@ -102,6 +192,24 @@
       "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9457bc34_32fd40c0",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-11T04:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55171bf9_05485d91",
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
