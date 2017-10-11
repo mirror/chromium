@@ -49,6 +49,7 @@ class TracedValue;
 enum InvalidationType { kInvalidateDescendants, kInvalidateSiblings };
 
 class InvalidationSet;
+class DescendantInvalidationSet;
 
 struct CORE_EXPORT InvalidationSetDeleter {
   static void Destruct(const InvalidationSet*);
@@ -164,6 +165,9 @@ class CORE_EXPORT InvalidationSet
 
   void Combine(const InvalidationSet& other);
 
+  static inline RefPtr<DescendantInvalidationSet> SelfInvalidationSet();
+  bool IsSelfInvalidationSet() const { return this == SelfInvalidationSet(); }
+
  protected:
   explicit InvalidationSet(InvalidationType);
 
@@ -262,6 +266,13 @@ class CORE_EXPORT SiblingInvalidationSet final : public InvalidationSet {
   // a SiblingInvalidationSet and not also a DescendantInvalidationSet.
   RefPtr<DescendantInvalidationSet> descendant_invalidation_set_;
 };
+
+inline RefPtr<DescendantInvalidationSet>
+InvalidationSet::SelfInvalidationSet() {
+  DEFINE_STATIC_REF(DescendantInvalidationSet, singleton_,
+                    DescendantInvalidationSet::Create());
+  return singleton_;
+}
 
 using InvalidationSetVector = Vector<RefPtr<InvalidationSet>>;
 
