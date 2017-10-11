@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7daf5238_3fae6003",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9331fc9_ffa45b5f",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "748579c0_ec1efd0a",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad2d448_5b257a88",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748579c0_ec1efd0a",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4cc7faf6_8ade39c5",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad5527e_028a0d56",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3808bcbc_a7270aa7",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d59529_2f55d273",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "I think having a Mutable type that can be upcast to an immutable type is common knowledge (NSMutableArray → NSArray, NSMutableString → NSString). I\u0027m treating it like the Create rule, where the word has well-defined assumptions attached to it. Hope that\u0027s OK?",
+      "parentUuid": "3808bcbc_a7270aa7",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "eacfbb14_6279aec3",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be3ceca_9e97be62",
+      "range": {
+        "startLine": 53,
+        "startChar": 75,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1245d78a_501d3442",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -131,6 +251,24 @@
       "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd6dd8c_fafd4551",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1245d78a_501d3442",
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "dd1127b7_1dd12138",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "I think this is done, but let\u0027s chat if you think it could be even better.",
+      "parentUuid": "9ce7635a_288eae2c",
+      "range": {
+        "startLine": 296,
+        "startChar": 48,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8006abf5_954e6748",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -177,6 +339,30 @@
       "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf270969_7957cc63",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Take a look at the current round of changes and let me know what you think.",
+      "parentUuid": "8006abf5_954e6748",
+      "range": {
+        "startLine": 339,
+        "startChar": 72,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "2ec75c77_eb065c97",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be possible because adding a completion handler, below, causes future state changes to queue up behind, so when the next one runs the state will have finished changing. Either way, I got rid of the dispatch_after *and* dealt with this with some design changes.",
+      "parentUuid": "bc971893_e46eab0f",
+      "range": {
+        "startLine": 349,
+        "startChar": 62,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf60527_57425cd4",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -223,6 +433,30 @@
       "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e34781_6b8739aa",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf60527_57425cd4",
+      "range": {
+        "startLine": 350,
+        "startChar": 18,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "9f58a972_849ea72c",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d3b09e_afdb915f",
+      "range": {
+        "startLine": 376,
+        "startChar": 10,
+        "endLine": 376,
+        "endChar": 15
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f5b241_5c436159",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "ce84690d_e0eb7bef",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f5b241_5c436159",
+      "range": {
+        "startLine": 398,
+        "startChar": 10,
+        "endLine": 398,
+        "endChar": 15
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ebb751_1d4c086c",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
@@ -283,6 +565,30 @@
       "writtenOn": "2017-10-06T17:28:26Z",
       "side": 1,
       "message": "Why here?",
+      "range": {
+        "startLine": 475,
+        "startChar": 31,
+        "endLine": 475,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518b3f99_e662e0ab",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-11T20:23:38Z",
+      "side": 1,
+      "message": "-setState:progress:animations:completion: just queues up changes if there\u0027s no layer, because presumably the view hasn\u0027t been inserted into a hierarchy yet and the sublayers don\u0027t exist at all. This seems like a good time to kick things off. Is there a better one?",
+      "parentUuid": "31ebb751_1d4c086c",
       "range": {
         "startLine": 475,
         "startChar": 31,
