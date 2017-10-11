@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cbb45cd_201dac20",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-11T22:22:47Z",
+      "side": 1,
+      "message": "should we just make this transformfeedback/* ? not sure if there are any passing tests.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 75
+      },
+      "revId": "ffa9dd09db67faf8829064bfc476a5fac082cfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
