@@ -69,6 +69,24 @@
       "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0387de25_9b101ec8",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-11T02:57:58Z",
+      "side": 1,
+      "message": "After a second thought, I think it is better to transfer in TimeDelta and change to seconds afterwards, specially if other use case require finer granularity.",
+      "parentUuid": "9093d45c_f521bc8c",
+      "revId": "56a15e9871658f8c51f246d1da7904c3f105e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
