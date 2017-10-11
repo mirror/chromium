@@ -206,7 +206,7 @@ MATCHER_P(KURLEq,
 
 TEST_F(DocumentWebSocketChannelTest, connectSuccess) {
   Vector<String> protocols;
-  RefPtr<SecurityOrigin> origin;
+  scoped_refptr<SecurityOrigin> origin;
 
   Checkpoint checkpoint;
   {
@@ -563,7 +563,7 @@ TEST_F(DocumentWebSocketChannelTest,
   EXPECT_EQ(18ul, sum_of_consumed_buffered_amount_);
 }
 
-// FIXME: Add tests for WebSocketChannel::send(RefPtr<BlobDataHandle>)
+// FIXME: Add tests for WebSocketChannel::send(scoped_refptr<BlobDataHandle>)
 
 TEST_F(DocumentWebSocketChannelTest, receiveText) {
   Connect();

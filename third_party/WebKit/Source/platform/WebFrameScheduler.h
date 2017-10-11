@@ -116,30 +116,30 @@ class WebFrameScheduler {
 
   // Returns a WebTaskRunner for throtteable tasks, e.g. javascript timers.
   // WebFrameScheduler owns the returned WebTaskRunner.
-  virtual RefPtr<WebTaskRunner> ThrottleableTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> ThrottleableTaskRunner() = 0;
 
   // Returns a WebTaskRunner for tasks which can be deferred for several
   // seconds due to anticipated high-priority work like user gesture.
-  virtual RefPtr<WebTaskRunner> DeferrableTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> DeferrableTaskRunner() = 0;
 
   // Returns a WebTaskRunner for high-priority javascript tasks. They run
   // unrestricted in most cases except context pausing (e.g. alert dialog).
-  virtual RefPtr<WebTaskRunner> PausableTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> PausableTaskRunner() = 0;
 
   // Returns a WebTaskRunner for tasks which should run during context pausing.
   // The usage should be rare and limited to tasks controlling context pausing
   // and unpausing.
-  virtual RefPtr<WebTaskRunner> UnpausableTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> UnpausableTaskRunner() = 0;
 
   // Returns the WebTaskRunner for loading tasks.
   // WebFrameScheduler owns the returned WebTaskRunner.
-  virtual RefPtr<WebTaskRunner> LoadingTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> LoadingTaskRunner() = 0;
 
   // Return a WebTaskRunner for very short control messages between loading
   // tasks. Caution is needed when posting tasks to this WebTaskRunner because
   // they could starve out other work.
   // WebFrameScheduler owns the returned WebTaskRunner.
-  virtual RefPtr<WebTaskRunner> LoadingControlTaskRunner() = 0;
+  virtual scoped_refptr<WebTaskRunner> LoadingControlTaskRunner() = 0;
 
   // Returns the parent WebViewScheduler.
   virtual WebViewScheduler* GetWebViewScheduler() = 0;

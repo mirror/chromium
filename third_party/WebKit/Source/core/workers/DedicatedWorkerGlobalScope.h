@@ -60,7 +60,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   const AtomicString& InterfaceName() const override;
 
   void postMessage(ScriptState*,
-                   RefPtr<SerializedScriptValue>,
+                   scoped_refptr<SerializedScriptValue>,
                    const MessagePortArray&,
                    ExceptionState&);
 

@@ -1119,8 +1119,9 @@ void LocalFrame::SetViewportIntersectionFromParent(
   }
 }
 
-void LocalFrame::ForceSynchronousDocumentInstall(const AtomicString& mime_type,
-                                                 RefPtr<SharedBuffer> data) {
+void LocalFrame::ForceSynchronousDocumentInstall(
+    const AtomicString& mime_type,
+    scoped_refptr<SharedBuffer> data) {
   CHECK(loader_.StateMachine()->IsDisplayingInitialEmptyDocument());
   DCHECK(!Client()->IsLocalFrameClientImpl());
 

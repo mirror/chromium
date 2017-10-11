@@ -109,7 +109,7 @@ class PLATFORM_EXPORT PluginData final
 
   HeapVector<Member<PluginInfo>> plugins_;
   HeapVector<Member<MimeClassInfo>> mimes_;
-  RefPtr<SecurityOrigin> main_frame_origin_;
+  scoped_refptr<SecurityOrigin> main_frame_origin_;
 };
 
 }  // namespace blink

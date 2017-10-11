@@ -37,11 +37,11 @@ class CORE_EXPORT V8ScriptValueSerializer
 
  public:
   using Options = SerializedScriptValue::SerializeOptions;
-  explicit V8ScriptValueSerializer(RefPtr<ScriptState>,
+  explicit V8ScriptValueSerializer(scoped_refptr<ScriptState>,
                                    const Options& = Options());
 
-  RefPtr<SerializedScriptValue> Serialize(v8::Local<v8::Value>,
-                                          ExceptionState&);
+  scoped_refptr<SerializedScriptValue> Serialize(v8::Local<v8::Value>,
+                                                 ExceptionState&);
 
   static const uint32_t kLatestVersion;
 
@@ -101,8 +101,8 @@ class CORE_EXPORT V8ScriptValueSerializer
                                size_t* actual_size) override;
   void FreeBufferMemory(void* buffer) override;
 
-  RefPtr<ScriptState> script_state_;
-  RefPtr<SerializedScriptValue> serialized_script_value_;
+  scoped_refptr<ScriptState> script_state_;
+  scoped_refptr<SerializedScriptValue> serialized_script_value_;
   v8::ValueSerializer serializer_;
   const Transferables* transferables_ = nullptr;
   const ExceptionState* exception_state_ = nullptr;
@@ -116,7 +116,8 @@ class CORE_EXPORT V8ScriptValueSerializer
 };
 
 // For code testing V8ScriptValueSerializer
-RefPtr<SerializedScriptValue> SerializedValue(const Vector<uint8_t>& bytes);
+scoped_refptr<SerializedScriptValue> SerializedValue(
+    const Vector<uint8_t>& bytes);
 
 }  // namespace blink
 

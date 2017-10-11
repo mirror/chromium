@@ -32,7 +32,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   static WorkerFetchContext* Create(WorkerOrWorkletGlobalScope&);
   virtual ~WorkerFetchContext();
 
-  RefPtr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }
+  scoped_refptr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }
 
   // BaseFetchContext implementation:
   KURL GetSiteForCookies() const override;
@@ -100,7 +100,7 @@ class WorkerFetchContext final : public BaseFetchContext {
                                const FetchParameters::ResourceWidth&,
                                ResourceRequest&) override;
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
-  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -112,7 +112,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   std::unique_ptr<WebWorkerFetchContext> web_context_;
   Member<SubresourceFilter> subresource_filter_;
   Member<ResourceFetcher> resource_fetcher_;
-  RefPtr<WebTaskRunner> loading_task_runner_;
+  scoped_refptr<WebTaskRunner> loading_task_runner_;
 };
 
 }  // namespace blink

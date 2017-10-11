@@ -31,7 +31,8 @@ DEFINE_TRACE(RemoteSecurityContext) {
   SecurityContext::Trace(visitor);
 }
 
-void RemoteSecurityContext::SetReplicatedOrigin(RefPtr<SecurityOrigin> origin) {
+void RemoteSecurityContext::SetReplicatedOrigin(
+    scoped_refptr<SecurityOrigin> origin) {
   DCHECK(origin);
   SetSecurityOrigin(std::move(origin));
   GetContentSecurityPolicy()->SetupSelf(*GetSecurityOrigin());

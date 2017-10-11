@@ -37,7 +37,7 @@ class RequestInit {
   String cache;
   String redirect;
   String integrity;
-  RefPtr<EncodedFormData> attached_credential;
+  scoped_refptr<EncodedFormData> attached_credential;
   // True if any members in RequestInit are set and hence the referrer member
   // should be used in the Request constructor.
   bool are_any_members_set;

@@ -33,7 +33,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   void SetSuspendAnimation(bool) final;
   bool NeedsBeginFrame() const final { return needs_begin_frame_; }
   bool IsAnimationSuspended() const final { return suspend_animation_; }
-  void DispatchFrame(RefPtr<StaticBitmapImage>,
+  void DispatchFrame(scoped_refptr<StaticBitmapImage>,
                      double commit_start_time,
                      const SkIRect& damage_rect,
                      bool is_web_gl_software_rendering = false) final;
@@ -76,7 +76,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
       offscreen_canvas_resource_provider_;
 
   bool VerifyImageSize(const IntSize);
-  void PostImageToPlaceholder(RefPtr<StaticBitmapImage>);
+  void PostImageToPlaceholder(scoped_refptr<StaticBitmapImage>);
 
   viz::mojom::blink::CompositorFrameSinkPtr sink_;
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;

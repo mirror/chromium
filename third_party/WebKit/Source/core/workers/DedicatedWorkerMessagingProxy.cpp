@@ -25,7 +25,7 @@
 namespace blink {
 
 struct DedicatedWorkerMessagingProxy::QueuedTask {
-  RefPtr<SerializedScriptValue> message;
+  scoped_refptr<SerializedScriptValue> message;
   Vector<MessagePortChannel> channels;
 };
 
@@ -78,7 +78,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
-    RefPtr<SerializedScriptValue> message,
+    scoped_refptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
@@ -121,7 +121,7 @@ bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(
-    RefPtr<SerializedScriptValue> message,
+    scoped_refptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels) {
   DCHECK(IsParentContextThread());
   if (!worker_object_ || AskedToTerminate())

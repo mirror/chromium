@@ -82,11 +82,11 @@ class CORE_EXPORT DOMArrayBufferView
   DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(dom_array_buffer_); }
 
  protected:
-  explicit DOMArrayBufferView(RefPtr<WTF::ArrayBufferView> buffer_view)
+  explicit DOMArrayBufferView(scoped_refptr<WTF::ArrayBufferView> buffer_view)
       : buffer_view_(std::move(buffer_view)) {
     DCHECK(buffer_view_);
   }
-  DOMArrayBufferView(RefPtr<WTF::ArrayBufferView> buffer_view,
+  DOMArrayBufferView(scoped_refptr<WTF::ArrayBufferView> buffer_view,
                      DOMArrayBufferBase* dom_array_buffer)
       : buffer_view_(std::move(buffer_view)),
         dom_array_buffer_(dom_array_buffer) {
@@ -96,7 +96,7 @@ class CORE_EXPORT DOMArrayBufferView
   }
 
  private:
-  RefPtr<WTF::ArrayBufferView> buffer_view_;
+  scoped_refptr<WTF::ArrayBufferView> buffer_view_;
   mutable Member<DOMArrayBufferBase> dom_array_buffer_;
 };
 

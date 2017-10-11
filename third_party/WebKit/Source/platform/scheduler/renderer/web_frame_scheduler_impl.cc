@@ -156,7 +156,7 @@ WebFrameScheduler::FrameType WebFrameSchedulerImpl::GetFrameType() const {
   return frame_type_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
+scoped_refptr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_web_task_runner_) {
     loading_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
@@ -171,7 +171,8 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
   return loading_web_task_runner_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingControlTaskRunner() {
+scoped_refptr<blink::WebTaskRunner>
+WebFrameSchedulerImpl::LoadingControlTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!loading_control_web_task_runner_) {
     loading_control_task_queue_ = renderer_scheduler_->NewLoadingTaskQueue(
@@ -187,7 +188,8 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingControlTaskRunner() {
   return loading_control_web_task_runner_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::ThrottleableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner>
+WebFrameSchedulerImpl::ThrottleableTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!throttleable_web_task_runner_) {
     throttleable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -221,7 +223,8 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::ThrottleableTaskRunner() {
   return throttleable_web_task_runner_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::DeferrableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner>
+WebFrameSchedulerImpl::DeferrableTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!deferrable_web_task_runner_) {
     deferrable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -241,7 +244,8 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::DeferrableTaskRunner() {
   return deferrable_web_task_runner_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::PausableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner>
+WebFrameSchedulerImpl::PausableTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!pausable_web_task_runner_) {
     pausable_task_queue_ = renderer_scheduler_->NewTaskQueue(
@@ -259,7 +263,8 @@ RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::PausableTaskRunner() {
   return pausable_web_task_runner_;
 }
 
-RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::UnpausableTaskRunner() {
+scoped_refptr<blink::WebTaskRunner>
+WebFrameSchedulerImpl::UnpausableTaskRunner() {
   DCHECK(parent_web_view_scheduler_);
   if (!unpausable_web_task_runner_) {
     unpausable_task_queue_ = renderer_scheduler_->NewTaskQueue(

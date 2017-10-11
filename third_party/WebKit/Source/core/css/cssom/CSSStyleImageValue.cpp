@@ -49,7 +49,7 @@ int CSSStyleImageValue::SourceWidth() {
   return intrinsicWidth(not_used);
 }
 
-RefPtr<Image> CSSStyleImageValue::GetImage() const {
+scoped_refptr<Image> CSSStyleImageValue::GetImage() const {
   if (IsCachePending())
     return nullptr;
   // cachedImage can be null if image is StyleInvalidImage

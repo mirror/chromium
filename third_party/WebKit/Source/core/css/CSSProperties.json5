@@ -111,10 +111,10 @@
       default: [],
     },
 
-    // Name of the pointer type that wraps this field (e.g. RefPtr).
+    // Name of the pointer type that wraps this field (e.g. scoped_refptr).
     wrapper_pointer_name: {
       valid_type: "str",
-      valid_values: ["RefPtr", "Persistent", "std::unique_ptr"],
+      valid_values: ["scoped_refptr", "Persistent", "std::unique_ptr"],
     },
 
     // - keywords: ["keyword1", "keyword2"]
@@ -1066,7 +1066,7 @@
       type_name: "ShadowList",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["core/style/ShadowList.h"],
     },
     {
@@ -1163,7 +1163,7 @@
       type_name: "ClipPathOperation",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["core/style/ClipPathOperation.h"],
     },
     {
@@ -1903,7 +1903,7 @@
       field_template: "pointer",
       type_name: "BasicShape",
       field_group: "*",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       default_value: "nullptr",
       include_paths: ["core/style/BasicShapes.h"],
     },
@@ -2153,7 +2153,7 @@
       type_name: "QuotesData",
       include_paths: ["core/style/QuotesData.h"],
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       field_group: "*",
     },
     {
@@ -2729,7 +2729,7 @@
       field_template: "pointer",
       type_name: "ShadowList",
       include_paths: ["core/style/ShadowList.h"],
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       default_value: "nullptr",
       field_group: "*",
     },
@@ -2845,7 +2845,7 @@
       type_name: "TranslateTransformOperation",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["platform/transforms/TranslateTransformOperation.h"],
     },
     {
@@ -2859,7 +2859,7 @@
       type_name: "RotateTransformOperation",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["platform/transforms/RotateTransformOperation.h"],
     },
     {
@@ -2873,7 +2873,7 @@
       type_name: "ScaleTransformOperation",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["platform/transforms/ScaleTransformOperation.h"],
     },
     {
@@ -3071,7 +3071,7 @@
       type_name: "StyleReflection",
       field_group: "*",
       default_value: "nullptr",
-      wrapper_pointer_name: "RefPtr",
+      wrapper_pointer_name: "scoped_refptr",
       include_paths: ["core/style/StyleReflection.h"],
     },
     {

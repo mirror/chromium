@@ -92,7 +92,7 @@ ScriptPromise ShapeDetector::detect(
                        canvas_image_source->SourceHeight());
 
   SourceImageStatus source_image_status = kInvalidSourceImageStatus;
-  RefPtr<Image> image = canvas_image_source->GetSourceImageForCanvas(
+  scoped_refptr<Image> image = canvas_image_source->GetSourceImageForCanvas(
       &source_image_status, kPreferNoAcceleration, kSnapshotReasonDrawImage,
       size);
   if (!image || source_image_status != kNormalSourceImageStatus) {
@@ -106,7 +106,7 @@ ScriptPromise ShapeDetector::detect(
   }
 
   SkPixmap pixmap;
-  RefPtr<Uint8Array> pixel_data;
+  scoped_refptr<Uint8Array> pixel_data;
   uint8_t* pixel_data_ptr = nullptr;
   WTF::CheckedNumeric<int> allocation_size = 0;
 

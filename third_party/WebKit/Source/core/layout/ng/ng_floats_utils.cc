@@ -115,7 +115,7 @@ WTF::Optional<LayoutUnit> CalculateFragmentationOffset(
 }
 
 // Creates a constraint space for an unpositioned float.
-RefPtr<NGConstraintSpace> CreateConstraintSpaceForFloat(
+scoped_refptr<NGConstraintSpace> CreateConstraintSpaceForFloat(
     const NGUnpositionedFloat& unpositioned_float,
     const NGConstraintSpace& parent_space,
     WTF::Optional<LayoutUnit> fragmentation_offset = WTF::nullopt) {
@@ -160,7 +160,7 @@ LayoutUnit ComputeInlineSizeForUnpositionedFloat(
         .InlineSize();
   }
 
-  const RefPtr<NGConstraintSpace> space =
+  const scoped_refptr<NGConstraintSpace> space =
       CreateConstraintSpaceForFloat(*unpositioned_float, parent_space);
 
   // If the float has the same writing mode as the block formatting context we
@@ -215,7 +215,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
       parent_space.WritingMode();
 #endif
 
-  RefPtr<NGLayoutResult> layout_result;
+  scoped_refptr<NGLayoutResult> layout_result;
   // We should only have a fragment if its writing mode is different, i.e. it
   // can't fragment.
   if (unpositioned_float->layout_result) {
@@ -231,7 +231,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
         CalculateFragmentationOffset(origin_block_offset, *unpositioned_float,
                                      parent_space);
 
-    RefPtr<NGConstraintSpace> space = CreateConstraintSpaceForFloat(
+    scoped_refptr<NGConstraintSpace> space = CreateConstraintSpaceForFloat(
         *unpositioned_float, parent_space, fragmentation_offset);
     layout_result = unpositioned_float->node.Layout(
         *space, unpositioned_float->token.get());
@@ -280,7 +280,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
 const Vector<NGPositionedFloat> PositionFloats(
     LayoutUnit origin_block_offset,
     LayoutUnit parent_bfc_block_offset,
-    const Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
+    const Vector<scoped_refptr<NGUnpositionedFloat>>& unpositioned_floats,
     const NGConstraintSpace& space,
     LayoutUnit parent_inline_size,
     NGExclusionSpace* exclusion_space) {

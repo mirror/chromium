@@ -176,8 +176,8 @@ SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
       is_unique_origin_potentially_trustworthy_(
           other->is_unique_origin_potentially_trustworthy_) {}
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
-  if (RefPtr<SecurityOrigin> origin = GetOriginFromMap(url))
+scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
+  if (scoped_refptr<SecurityOrigin> origin = GetOriginFromMap(url))
     return origin;
 
   if (ShouldTreatAsUniqueOrigin(url))
@@ -189,13 +189,13 @@ RefPtr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
   return WTF::AdoptRef(new SecurityOrigin(url));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::CreateUnique() {
-  RefPtr<SecurityOrigin> origin = WTF::AdoptRef(new SecurityOrigin());
+scoped_refptr<SecurityOrigin> SecurityOrigin::CreateUnique() {
+  scoped_refptr<SecurityOrigin> origin = WTF::AdoptRef(new SecurityOrigin());
   DCHECK(origin->IsUnique());
   return origin;
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
+scoped_refptr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
   return WTF::AdoptRef(new SecurityOrigin(this));
 }
 
@@ -291,7 +291,7 @@ bool SecurityOrigin::CanRequest(const KURL& url) const {
   if (IsUnique())
     return false;
 
-  RefPtr<SecurityOrigin> target_origin = SecurityOrigin::Create(url);
+  scoped_refptr<SecurityOrigin> target_origin = SecurityOrigin::Create(url);
 
   if (target_origin->IsUnique())
     return false;
@@ -520,14 +520,14 @@ void SecurityOrigin::BuildRawString(StringBuilder& builder,
   }
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::CreateFromString(
+scoped_refptr<SecurityOrigin> SecurityOrigin::CreateFromString(
     const String& origin_string) {
   return SecurityOrigin::Create(KURL(NullURL(), origin_string));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                              const String& host,
-                                              int port) {
+scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
+                                                     const String& host,
+                                                     int port) {
   if (port < 0 || port > kMaxAllowedPort)
     return CreateUnique();
 
@@ -537,11 +537,11 @@ RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
   return Create(KURL(NullURL(), protocol + "://" + host + port_part + "/"));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                              const String& host,
-                                              int port,
-                                              const String& suborigin) {
-  RefPtr<SecurityOrigin> origin = Create(protocol, host, port);
+scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
+                                                     const String& host,
+                                                     int port,
+                                                     const String& suborigin) {
+  scoped_refptr<SecurityOrigin> origin = Create(protocol, host, port);
   if (!suborigin.IsEmpty())
     origin->suborigin_.SetName(suborigin);
   return origin;
@@ -586,13 +586,13 @@ bool SecurityOrigin::HasSuboriginAndShouldAllowCredentialsFor(
           Suborigin::SuboriginPolicyOptions::kUnsafeCredentials))
     return false;
 
-  RefPtr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
   return IsSameSchemeHostPort(other.get());
 }
 
 bool SecurityOrigin::AreSameSchemeHostPort(const KURL& a, const KURL& b) {
-  RefPtr<SecurityOrigin> origin_a = SecurityOrigin::Create(a);
-  RefPtr<SecurityOrigin> origin_b = SecurityOrigin::Create(b);
+  scoped_refptr<SecurityOrigin> origin_a = SecurityOrigin::Create(a);
+  scoped_refptr<SecurityOrigin> origin_b = SecurityOrigin::Create(b);
   return origin_b->IsSameSchemeHostPort(origin_a.get());
 }
 

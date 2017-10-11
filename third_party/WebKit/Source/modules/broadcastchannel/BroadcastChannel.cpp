@@ -61,7 +61,7 @@ void BroadcastChannel::postMessage(const ScriptValue& message,
     exception_state.ThrowDOMException(kInvalidStateError, "Channel is closed");
     return;
   }
-  RefPtr<SerializedScriptValue> value = SerializedScriptValue::Serialize(
+  scoped_refptr<SerializedScriptValue> value = SerializedScriptValue::Serialize(
       message.GetIsolate(), message.V8Value(),
       SerializedScriptValue::SerializeOptions(), exception_state);
   if (exception_state.HadException())
@@ -99,7 +99,7 @@ DEFINE_TRACE(BroadcastChannel) {
 
 void BroadcastChannel::OnMessage(const WTF::Vector<uint8_t>& message) {
   // Queue a task to dispatch the event.
-  RefPtr<SerializedScriptValue> value = SerializedScriptValue::Create(
+  scoped_refptr<SerializedScriptValue> value = SerializedScriptValue::Create(
       message.IsEmpty() ? nullptr
                         : reinterpret_cast<const char*>(&message.front()),
       message.size());

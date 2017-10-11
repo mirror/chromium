@@ -41,9 +41,9 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   //         direction.
   bool CreateLine(NGLineInfo*,
                   NGExclusionSpace*,
-                  RefPtr<NGInlineBreakToken> = nullptr);
+                  scoped_refptr<NGInlineBreakToken> = nullptr);
 
-  RefPtr<NGLayoutResult> Layout() override;
+  scoped_refptr<NGLayoutResult> Layout() override;
 
  private:
   bool IsHorizontalWritingMode() const { return is_horizontal_writing_mode_; }
@@ -52,15 +52,15 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   bool PlaceItems(NGLineInfo*,
                   const NGExclusionSpace&,
-                  RefPtr<NGInlineBreakToken>);
-  void PlaceText(RefPtr<const ShapeResult>,
-                 RefPtr<const ComputedStyle>,
+                  scoped_refptr<NGInlineBreakToken>);
+  void PlaceText(scoped_refptr<const ShapeResult>,
+                 scoped_refptr<const ComputedStyle>,
                  LayoutUnit* position,
                  NGInlineBoxState*,
                  NGTextFragmentBuilder*,
                  NGLineBoxFragmentBuilder*);
-  void PlaceGeneratedContent(RefPtr<const ShapeResult>,
-                             RefPtr<const ComputedStyle>,
+  void PlaceGeneratedContent(scoped_refptr<const ShapeResult>,
+                             scoped_refptr<const ComputedStyle>,
                              LayoutUnit* position,
                              NGInlineBoxState*,
                              NGTextFragmentBuilder*,
@@ -103,7 +103,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   unsigned quirks_mode_ : 1;
 
   std::unique_ptr<NGExclusionSpace> exclusion_space_;
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
+  Vector<scoped_refptr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 
 }  // namespace blink

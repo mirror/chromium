@@ -23,7 +23,7 @@ class TestUserGestureToken final : public UserGestureToken {
   WTF_MAKE_NONCOPYABLE(TestUserGestureToken);
 
  public:
-  static RefPtr<UserGestureToken> Create(
+  static scoped_refptr<UserGestureToken> Create(
       Status status = kPossiblyExistingGesture) {
     return AdoptRef(new TestUserGestureToken(status));
   }
@@ -134,7 +134,7 @@ TEST(UserGestureIndicatorTest, Timeouts) {
 
   {
     // Token times out after 1 second.
-    RefPtr<UserGestureToken> token = TestUserGestureToken::Create();
+    scoped_refptr<UserGestureToken> token = TestUserGestureToken::Create();
     EXPECT_TRUE(token->HasGestures());
     UserGestureIndicator user_gesture_scope(token.Get());
     EXPECT_TRUE(token->HasGestures());
@@ -146,7 +146,7 @@ TEST(UserGestureIndicatorTest, Timeouts) {
 
   {
     // Timestamp is reset when a token is put in a UserGestureIndicator.
-    RefPtr<UserGestureToken> token = TestUserGestureToken::Create();
+    scoped_refptr<UserGestureToken> token = TestUserGestureToken::Create();
     EXPECT_TRUE(token->HasGestures());
     AdvanceClock(0.75);
     EXPECT_TRUE(token->HasGestures());

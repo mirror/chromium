@@ -192,8 +192,10 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void Finish(double finish_time);
   void Finish() { Finish(0.0); }
 
-  virtual RefPtr<const SharedBuffer> ResourceBuffer() const { return data_; }
-  void SetResourceBuffer(RefPtr<SharedBuffer>);
+  virtual scoped_refptr<const SharedBuffer> ResourceBuffer() const {
+    return data_;
+  }
+  void SetResourceBuffer(scoped_refptr<SharedBuffer>);
 
   virtual bool WillFollowRedirect(const ResourceRequest&,
                                   const ResourceResponse&);
@@ -425,7 +427,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   CORSStatus cors_status_;
 
   Member<CachedMetadataHandlerImpl> cache_handler_;
-  RefPtr<SecurityOrigin> fetcher_security_origin_;
+  scoped_refptr<SecurityOrigin> fetcher_security_origin_;
 
   ResourceError error_;
 
@@ -476,7 +478,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   Member<ResourceLoader> loader_;
   ResourceResponse response_;
 
-  RefPtr<SharedBuffer> data_;
+  scoped_refptr<SharedBuffer> data_;
 };
 
 class ResourceFactory {

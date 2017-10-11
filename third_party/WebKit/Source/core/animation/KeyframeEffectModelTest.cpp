@@ -41,14 +41,14 @@ namespace blink {
 
 const double kDuration = 1.0;
 
-RefPtr<AnimatableValue> UnknownAnimatableValue(double n) {
+scoped_refptr<AnimatableValue> UnknownAnimatableValue(double n) {
   return AnimatableUnknown::Create(
       CSSPrimitiveValue::Create(n, CSSPrimitiveValue::UnitType::kUnknown));
 }
 
 AnimatableValueKeyframeVector KeyframesAtZeroAndOne(
-    RefPtr<AnimatableValue> zero_value,
-    RefPtr<AnimatableValue> one_value) {
+    scoped_refptr<AnimatableValue> zero_value,
+    scoped_refptr<AnimatableValue> one_value) {
   AnimatableValueKeyframeVector keyframes(2);
   keyframes[0] = AnimatableValueKeyframe::Create();
   keyframes[0]->SetOffset(0.0);
@@ -60,17 +60,17 @@ AnimatableValueKeyframeVector KeyframesAtZeroAndOne(
 }
 
 void ExpectProperty(CSSPropertyID property,
-                    RefPtr<Interpolation> interpolation_value) {
+                    scoped_refptr<Interpolation> interpolation_value) {
   LegacyStyleInterpolation* interpolation =
       ToLegacyStyleInterpolation(interpolation_value.get());
   ASSERT_EQ(property, interpolation->Id());
 }
 
 void ExpectDoubleValue(double expected_value,
-                       RefPtr<Interpolation> interpolation_value) {
+                       scoped_refptr<Interpolation> interpolation_value) {
   LegacyStyleInterpolation* interpolation =
       ToLegacyStyleInterpolation(interpolation_value.get());
-  RefPtr<AnimatableValue> value = interpolation->CurrentValue();
+  scoped_refptr<AnimatableValue> value = interpolation->CurrentValue();
 
   ASSERT_TRUE(value->IsDouble() || value->IsUnknown());
 
@@ -85,7 +85,7 @@ void ExpectDoubleValue(double expected_value,
   EXPECT_FLOAT_EQ(static_cast<float>(expected_value), actual_value);
 }
 
-Interpolation* FindValue(Vector<RefPtr<Interpolation>>& values,
+Interpolation* FindValue(Vector<scoped_refptr<Interpolation>>& values,
                          CSSPropertyID id) {
   for (auto& value : values) {
     if (ToLegacyStyleInterpolation(value.get())->Id() == id)
@@ -99,7 +99,7 @@ TEST(AnimationKeyframeEffectModel, BasicOperation) {
       UnknownAnimatableValue(3.0), UnknownAnimatableValue(5.0));
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ASSERT_EQ(1UL, values.size());
   ExpectProperty(CSSPropertyLeft, values.at(0));
@@ -113,7 +113,7 @@ TEST(AnimationKeyframeEffectModel, CompositeReplaceNonInterpolable) {
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(5.0, values.at(0));
 }
@@ -125,7 +125,7 @@ TEST(AnimationKeyframeEffectModel, CompositeReplace) {
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(3.0 * 0.4 + 5.0 * 0.6, values.at(0));
 }
@@ -138,7 +138,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_CompositeAdd) {
   keyframes[1]->SetComposite(EffectModel::kCompositeAdd);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue((7.0 + 3.0) * 0.4 + (7.0 + 5.0) * 0.6, values.at(0));
 }
@@ -152,7 +152,7 @@ TEST(AnimationKeyframeEffectModel, CompositeEaseIn) {
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(3.8579516, values.at(0));
   effect->Sample(0, 0.6, kDuration * 100, values);
@@ -167,7 +167,7 @@ TEST(AnimationKeyframeEffectModel, CompositeCubicBezier) {
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(4.3363357, values.at(0));
   effect->Sample(0, 0.6, kDuration * 1000, values);
@@ -181,7 +181,7 @@ TEST(AnimationKeyframeEffectModel, ExtrapolateReplaceNonInterpolable) {
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 1.6, kDuration, values);
   ExpectDoubleValue(5.0, values.at(0));
 }
@@ -193,7 +193,7 @@ TEST(AnimationKeyframeEffectModel, ExtrapolateReplace) {
       AnimatableValueKeyframeEffectModel::Create(keyframes);
   keyframes[0]->SetComposite(EffectModel::kCompositeReplace);
   keyframes[1]->SetComposite(EffectModel::kCompositeReplace);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 1.6, kDuration, values);
   ExpectDoubleValue(3.0 * -0.6 + 5.0 * 1.6, values.at(0));
 }
@@ -206,7 +206,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_ExtrapolateAdd) {
   keyframes[1]->SetComposite(EffectModel::kCompositeAdd);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 1.6, kDuration, values);
   ExpectDoubleValue((7.0 + 3.0) * -0.6 + (7.0 + 5.0) * 1.6, values.at(0));
 }
@@ -215,7 +215,7 @@ TEST(AnimationKeyframeEffectModel, ZeroKeyframes) {
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(
           AnimatableValueKeyframeVector());
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.5, kDuration, values);
   EXPECT_TRUE(values.IsEmpty());
 }
@@ -230,7 +230,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_SingleKeyframeAtOffsetZero) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(3.0, values.at(0));
 }
@@ -245,7 +245,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_SingleKeyframeAtOffsetOne) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(7.0 * 0.4 + 5.0 * 0.6, values.at(0));
 }
@@ -267,7 +267,7 @@ TEST(AnimationKeyframeEffectModel, MoreThanTwoKeyframes) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.3, kDuration, values);
   ExpectDoubleValue(4.0, values.at(0));
   effect->Sample(0, 0.8, kDuration, values);
@@ -289,7 +289,7 @@ TEST(AnimationKeyframeEffectModel, EndKeyframeOffsetsUnspecified) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.1, kDuration, values);
   ExpectDoubleValue(3.0, values.at(0));
   effect->Sample(0, 0.6, kDuration, values);
@@ -315,7 +315,7 @@ TEST(AnimationKeyframeEffectModel, SampleOnKeyframe) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.0, kDuration, values);
   ExpectDoubleValue(3.0, values.at(0));
   effect->Sample(0, 0.5, kDuration, values);
@@ -365,7 +365,7 @@ TEST(AnimationKeyframeEffectModel, MultipleKeyframesWithSameOffset) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.0, kDuration, values);
   ExpectDoubleValue(0.0, values.at(0));
   effect->Sample(0, 0.2, kDuration, values);
@@ -397,7 +397,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_PerKeyframeComposite) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue(3.0 * 0.4 + (7.0 + 5.0) * 0.6, values.at(0));
 }
@@ -419,7 +419,7 @@ TEST(AnimationKeyframeEffectModel, MultipleProperties) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   EXPECT_EQ(2UL, values.size());
   Interpolation* left_value = FindValue(values, CSSPropertyLeft);
@@ -438,7 +438,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_RecompositeCompositableValue) {
   keyframes[1]->SetComposite(EffectModel::kCompositeAdd);
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.6, kDuration, values);
   ExpectDoubleValue((7.0 + 3.0) * 0.4 + (7.0 + 5.0) * 0.6, values.at(0));
   ExpectDoubleValue((9.0 + 3.0) * 0.4 + (9.0 + 5.0) * 0.6, values.at(1));
@@ -449,7 +449,7 @@ TEST(AnimationKeyframeEffectModel, MultipleIterations) {
       AnimatableDouble::Create(1.0), AnimatableDouble::Create(3.0));
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0.5, kDuration, values);
   ExpectDoubleValue(2.0, values.at(0));
   effect->Sample(1, 0.5, kDuration, values);
@@ -477,7 +477,7 @@ TEST(AnimationKeyframeEffectModel, DISABLED_DependsOnUnderlyingValue) {
 
   AnimatableValueKeyframeEffectModel* effect =
       AnimatableValueKeyframeEffectModel::Create(keyframes);
-  Vector<RefPtr<Interpolation>> values;
+  Vector<scoped_refptr<Interpolation>> values;
   effect->Sample(0, 0, kDuration, values);
   EXPECT_TRUE(values.at(0));
   effect->Sample(0, 0.1, kDuration, values);
