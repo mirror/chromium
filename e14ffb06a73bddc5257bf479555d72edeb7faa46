@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4cdd6f8_9fd1c644",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-11T21:23:53Z",
+      "side": 1,
+      "message": "We could create a thread in the unit tests so that this is called on a different thread like AnimationWorkletThreadTest: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp?sq\u003dpackage:chromium\u0026dr\u0026l\u003d36",
+      "revId": "e14ffb06a73bddc5257bf479555d72edeb7faa46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
