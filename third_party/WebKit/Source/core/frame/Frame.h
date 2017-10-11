@@ -134,7 +134,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   // didStartLoading() callback, but not the matching didStopLoading(). Inside
   // blink, you probably want Document::loadEventFinished() instead.
   void SetIsLoading(bool is_loading) { is_loading_ = is_loading; }
-  bool IsLoading() const { return is_loading_; }
+  bool IsLoading() const { return is_loading_ && !is_deferred; }
 
   WindowProxyManager* GetWindowProxyManager() const {
     return window_proxy_manager_;
@@ -171,6 +171,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   // itself is not within the dialog.
   virtual void SetIsInert(bool) = 0;
   void UpdateInertIfPossible();
+  bool is_deferred = false;
 
  protected:
   Frame(FrameClient*, Page&, FrameOwner*, WindowProxyManager*);

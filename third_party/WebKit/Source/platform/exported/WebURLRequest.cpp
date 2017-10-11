@@ -429,6 +429,14 @@ void WebURLRequest::SetIsSameDocumentNavigation(bool is_same_document) {
   resource_request_->SetIsSameDocumentNavigation(is_same_document);
 }
 
+bool WebURLRequest::IsDelayedSubframeRequest() const {
+  return resource_request_->isDelayedSubframeRequest();
+}
+
+void WebURLRequest::SetDelayedSubframeRequest(bool value) {
+  resource_request_->setDelayedSubframeRequest(value);
+}
+
 WebURLRequest::InputToLoadPerfMetricReportPolicy
 WebURLRequest::InputPerfMetricReportPolicy() const {
   return static_cast<WebURLRequest::InputToLoadPerfMetricReportPolicy>(
