@@ -268,7 +268,7 @@ TEST_F(UpdateServiceTest, BasicUpdateOperations) {
   new_manifest->SetString("version", "2.0");
 
   installer->Install(
-      std::move(new_manifest), new_version_dir.GetPath(),
+      new_version_dir.GetPath(),
       base::Bind([](const update_client::CrxInstaller::Result& result) {}));
 
   scoped_refptr<content::MessageLoopRunner> loop_runner =
