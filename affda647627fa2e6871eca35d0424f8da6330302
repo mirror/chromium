@@ -22,6 +22,30 @@
       "revId": "affda647627fa2e6871eca35d0424f8da6330302",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8783183_43ba2dc0",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-11T21:02:08Z",
+      "side": 1,
+      "message": "Do you mean check suggestions not shown? It\u0027s handled in the upper case: ShouldNotShowCreditCardsSuggestionsIfCreditCardAutofillDisabled",
+      "parentUuid": "850cd488_f53fa3e6",
+      "range": {
+        "startLine": 2153,
+        "startChar": 2,
+        "endLine": 2153,
+        "endChar": 24
+      },
+      "revId": "affda647627fa2e6871eca35d0424f8da6330302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
