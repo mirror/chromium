@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68528f3b_2c1b4dde",
+        "filename": "gpu/command_buffer/service/service_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T18:54:11Z",
+      "side": 1,
+      "message": "So, this is in a place that\u0027s misleading. We don\u0027t pass the kUsePassthroughCmdDecoder switch to the GPU process any more, but this code is in gpu/command_buffer/service which is code that we expect to run in the GPU process. If someone tries to call this in the GPU process, it will get the wrong result.\n\nI would just move the logic to content::GetGpuPreferencesFromCommandLine and GLManager explicitly.",
+      "revId": "917158c9cac476a353f80d055acd2487ad9a795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
