@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5486a01b_a4c2d57b",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-11T05:25:13Z",
+      "side": 1,
+      "message": "Should there be a unittest that returns a different salt the second time around to make sure an operation that requires salt works even if the browser history is cleared?",
+      "revId": "f17f0641db86c8e2b6723e6df01d8d29648768a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
