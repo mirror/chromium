@@ -16,6 +16,24 @@
       "revId": "f323d18e8e9c1ef839bdc050a6a94a36b7ce9101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40c0c12_270f622a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ResourceScriptMapping.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-11T17:16:47Z",
+      "side": 1,
+      "message": "- console.log adds live location to UISourceCode by url,\n- new script with the same url is evaluated, so remove old UISourceCode and trigger live location update,\n- add new UISourceCode by url,\n- during old live location update we can get new UISourceCode by url but we should not use this UISourceCode since it\u0027s created for new script.",
+      "parentUuid": "5a64dbea_b4bb7143",
+      "revId": "f323d18e8e9c1ef839bdc050a6a94a36b7ce9101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
