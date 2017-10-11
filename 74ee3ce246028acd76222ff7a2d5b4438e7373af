@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05653848_082e0626",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/ColorUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T17:53:01Z",
+      "side": 0,
+      "message": "Should we update this method to take modern into account rather than removing it?",
+      "range": {
+        "startLine": 171,
+        "startChar": 26,
+        "endLine": 171,
+        "endChar": 52
+      },
+      "revId": "74ee3ce246028acd76222ff7a2d5b4438e7373af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
