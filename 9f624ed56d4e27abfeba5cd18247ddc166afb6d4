@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cdc877ad_5ce908aa",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T10:19:24Z",
+      "side": 1,
+      "message": "Yah, this comes out pretty neat :). Done.\n\nI\u0027ve inlined ResolveDirectedCursor for now. Mouse selections may need it later too, or something similar (Shift+click on mac always grows in that direction ... or shrinks so the \"centre\" of the selection remains selected).",
+      "parentUuid": "2464b8da_e16758cd",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "341ca217_c4d4d47d",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6cb922d5_e3e48a92",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T10:19:24Z",
+      "side": 1,
+      "message": "\u003e Yikes, the established direction is ignored when a left/right key press collapses the selection? That seems odd.\n\nIgnoring is correct. Certainly, it\u0027s what NSTextField does -- the direction is only preserved while holding down shift.",
+      "parentUuid": "341ca217_c4d4d47d",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40440594_b4545b66",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-10T17:12:12Z",
       "side": 1,
       "message": "Can you check if we have sufficient coverage of collapsing selections (SELECTION_NONE)?\nIgnoring the established direction when collapsing seems easily breakable (especially on Mac?).\nI assume we do indeed already test the pre-existing selection flipping behavior of MoveCursor.",
+      "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837b89e8_b08f3a2c",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-11T10:19:24Z",
+      "side": 1,
+      "message": "\u003e Can you check if we have sufficient coverage of collapsing selections (SELECTION_NONE)?\n\u003e Ignoring the established direction when collapsing seems easily breakable (especially on Mac?).\n\u003e I assume we do indeed already test the pre-existing selection flipping behavior of MoveCursor.\n\nThere is RenderTextHarfBuzzTest.MoveCursorLeftRightWithSelection/HarfBuzz - it gets 2 failures if I break ResolveDirectedCursor.\n\nI added some extra test cases here too, since there\u0027s state that carries over.\n\nThe ~scripted testing being done in bridged_native_widget_unittest.mm is already super-thorough (it gets hundreds of failures if I break ResolveDirectedCursor). The tests there compare directly against a native Cocoa text field, so we know the behavior is consistent (except where Cocoa has RTL bugs).",
+      "parentUuid": "40440594_b4545b66",
       "revId": "9f624ed56d4e27abfeba5cd18247ddc166afb6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
