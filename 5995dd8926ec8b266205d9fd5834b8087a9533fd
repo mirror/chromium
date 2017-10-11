@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3db445_9a3dce3f",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T09:08:42Z",
+      "side": 1,
+      "message": "nit: s/const Node*/const Node\u0026/",
+      "revId": "5995dd8926ec8b266205d9fd5834b8087a9533fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16d5b82_3ed217ac",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-11T09:08:42Z",
+      "side": 1,
+      "message": "nit: s/Node\u0026/const Node\u0026/",
+      "revId": "5995dd8926ec8b266205d9fd5834b8087a9533fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
