@@ -33,6 +33,24 @@
       "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c08917_141c34d7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-11T23:57:00Z",
+      "side": 1,
+      "message": "paint_offset_root is changed in other situations too, such when a fixed-position\nelement sets context.current to context.fixed_position. It makes sense to me to\nput the code at line 1194, because this is about setting up the painting/property tree\ncontext for all children which have position:fixed.\n\nAm I missing a subtlety? Might be, this code is subtle...",
+      "parentUuid": "e2ae40b6_db0f5021",
+      "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
