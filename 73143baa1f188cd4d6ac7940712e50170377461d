@@ -22,6 +22,30 @@
       "revId": "73143baa1f188cd4d6ac7940712e50170377461d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcb841a_957ece7d",
+        "filename": "chrome/browser/ui/views/location_bar/icon_label_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-11T21:04:30Z",
+      "side": 1,
+      "message": "Good point, I had a closer look and it looks like I can trigger an update when the ink drop layer is removed instead. I added the reason why in the CL description. Let me know if I\u0027m missing anything!",
+      "parentUuid": "150f3f38_93dafdd2",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 37
+      },
+      "revId": "73143baa1f188cd4d6ac7940712e50170377461d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
