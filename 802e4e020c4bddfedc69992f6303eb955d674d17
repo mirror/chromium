@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8fdd54d7_b4ad1781",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-10-11T13:18:50Z",
+      "side": 1,
+      "message": "I think a function pointer would work. Do we need to worry anything about performance? When we use a function pointer, we are generating the value indirectly, and it might be (not sure) expensive if this function is called multiple times a frame?",
+      "parentUuid": "f17c5b3d_16791650",
+      "revId": "802e4e020c4bddfedc69992f6303eb955d674d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae8bae45_366ca7d0",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 5
