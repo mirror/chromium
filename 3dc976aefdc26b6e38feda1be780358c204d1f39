@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ebd60ae_3bfb1ee3",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T16:22:23Z",
+      "side": 1,
+      "message": "optional: I\u0027d just define the color itself (you can use SkColorSetA here because it\u0027s inline)",
+      "revId": "3dc976aefdc26b6e38feda1be780358c204d1f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034fb1ec_f4b2faae",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T16:22:23Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "3dc976aefdc26b6e38feda1be780358c204d1f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4960dc5f_c4eb52d2",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-11T16:22:23Z",
+      "side": 1,
+      "message": "then I think you can use constexpr here?",
+      "revId": "3dc976aefdc26b6e38feda1be780358c204d1f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
