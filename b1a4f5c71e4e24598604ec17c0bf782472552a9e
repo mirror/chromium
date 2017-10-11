@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "164edab0_6328c644",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T18:39:13Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "d3b5317a_40017557",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "459fc536_76d1b648",
         "filename": "ash/system/lock_screen_action/lock_screen_action_background_controller.cc",
         "patchSetId": 19
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I plan to investigate possibility of combining TrayActionState and LockScreenActionBackgroundState little more in future, but for now, I added comments to better describe interactions between the two.\n\nThe main difference is who drives the state machines\n*  TrayActionStates are controlled by Chrome (and describe the lock screen app state). State\n   changes are one directional (i.e. they go from Chrome to ash)\n*  LockScreenActionBackgroundStates are controlled by ash (and describe the state of the \n   background window). Note that the background state is ash specific - it\u0027s currently not \n   exposed to Chrome in any way.",
       "parentUuid": "4de71826_1d13fd10",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a523e16b_49d5e36b",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_state.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-11T18:39:13Z",
+      "side": 1,
+      "message": "Thanks. I would just paste the last thing you wrote in this reply into line 14 in this file -- it\u0027s a nice overview of who owns what.",
+      "parentUuid": "bae7e7c8_b075c896",
       "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
