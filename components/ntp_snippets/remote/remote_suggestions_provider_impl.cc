@@ -1200,7 +1200,23 @@ void RemoteSuggestionsProviderImpl::PrependArticleSuggestion(
   std::vector<std::unique_ptr<RemoteSuggestion>> suggestions;
   suggestions.push_back(std::move(remote_suggestion));
 
-  SanitizeReceivedSuggestions(content->dismissed, &suggestions);
+  // Delete the pushed suggestion in the following cases:
+  // Incomplete - has been dismissed before -
+  // exists in the current active suggestions - has been archived before.
+  RemoveIncompleteSuggestions(&suggestions);
+  EraseMatchingSuggestions(&suggestions, content->dismissed);
+  EraseMatchingSuggestions(&suggestions, content->suggestions);
+  // Check archived suggestions.
+  std::set<std::string> archived_ids;
+  for (const auto& archived_suggestion : content->archived) {
+    archived_ids.insert(archived_suggestion->id());
+  }
+
+  base::EraseIf(
+      suggestions,
+      [&archived_ids](const std::unique_ptr<RemoteSuggestion>& suggestion) {
+        return HasIntersection(suggestion->GetAllIDs(), archived_ids);
+      });
 
   if (!suggestions.empty()) {
     content->suggestions.insert(content->suggestions.begin(),
