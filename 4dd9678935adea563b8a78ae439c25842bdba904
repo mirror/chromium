@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d65b8262_34656850",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T13:09:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73a4b07a_415fe86f",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f139f49_4fcb4edb",
         "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
         "patchSetId": 2
@@ -121,6 +139,24 @@
       "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dec8a68_77111e30",
+        "filename": "third_party/WebKit/LayoutTests/animations/display-none-terminates-animation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-11T13:09:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd7f7e6e_a46644a8",
+      "revId": "4dd9678935adea563b8a78ae439c25842bdba904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
