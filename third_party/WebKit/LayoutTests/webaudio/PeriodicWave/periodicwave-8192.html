@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test PeriodicWave Uses Lengths up to 8192
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      let renderSec = 1;
+
+      let audit = Audit.createTaskRunner();
+
+      // Verify that PeriodicWave of length 8192 produces non-zero output by
+      // setting (only) coefficient 8191 to be non-zero.
+      audit.define(
+          {
+            label: 'Length 8192',
+            description: 'PeriodicWave with one coef at 8191'
+          },
+          (task, should) => {
+            let sampleRate = 48000;
+
+            let coef = new Float32Array(10000);
+            coef[8191] = 1;
+
+            createTest(coef, sampleRate)
+                .then(buffer => {
+                  let output = buffer.getChannelData(0);
+                  should(output, `Output with ${sampleRate / 1000} kHz context`)
+                      .notBeConstantValueOf(0);
+                })
+                .then(() => task.done());
+          });
+
+      // Verify that PeriodicWave of length 8193 produces non-zero output by
+      // setting (only) coefficient 8192 to be non-zero.
+      //
+      // Strictly speaking, the spec allows implementations to support more.
+      // This tests that Chrome supports exactly 8192 coefficients.
+      audit.define(
+          {
+            label: 'Length 8193',
+            description: 'PeriodicWave with one coef at 8192'
+          },
+          (task, should) => {
+            let sampleRate = 48000;
+
+            let coef = new Float32Array(10000);
+            coef[8191] = 1;
+
+            createTest(coef, sampleRate)
+                .then(buffer => {
+                  let output = buffer.getChannelData(0);
+                  should(output, `Output with ${sampleRate / 1000} kHz context`)
+                      .beConstantValueOf(0);
+                })
+                .then(() => task.done());
+          });
+
+      // With an 8 kHz sampleRate, a PeriodicWave with a coefficient at 8191
+      // should produce 0 output because that is above Nyquist.
+      audit.define(
+          {
+            label: 'Length 8192, 8000 Hz',
+            description: 'PeriodicWave with one coef at 8191 at 8000 Hz'
+          },
+          (task, should) => {
+            let sampleRate = 8000;
+
+            let coef = new Float32Array(10000);
+            coef[8191] = 1;
+
+            createTest(coef, sampleRate)
+                .then(buffer => {
+                  let output = buffer.getChannelData(0);
+                  should(output, `Output with ${sampleRate / 1000} kHz context`)
+                      .beConstantValueOf(0);
+                })
+                .then(() => task.done());
+          });
+
+      function createTest(coef, sampleRate) {
+        let context = new OfflineAudioContext(
+            {length: renderSec * sampleRate, sampleRate: sampleRate});
+
+        let wave = new PeriodicWave(context, {imag: coef});
+        // Create an oscillator with the given periodic wave.  The frequency is
+        // set to 1 to make oscillator output be the (single) frequency given by
+        // the wave.
+        let osc =
+            new OscillatorNode(context, {frequency: 1, periodicWave: wave});
+        osc.connect(context.destination);
+        osc.start();
+
+        return context.startRendering();
+      }
+
+      audit.run();
+    </script>
+  </body>
+</html>
