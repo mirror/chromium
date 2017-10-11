@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e5f4a1e_23eb9554",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T12:04:11Z",
+      "side": 1,
+      "message": "nit: Missing a dot between \"Visible\" and \"Articles\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "ef2f06c1ca37c0af0a0f05179c9138b6553aa0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97585765_33ec9e22",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-11T12:04:11Z",
+      "side": 1,
+      "message": "Does the same apply to the .Opened histogram? (I.e. what happens when a user clicks a suggestion before we know whether it\u0027s prefetched?) Maybe that\u0027s unlikely enough that it doesn\u0027t matter...",
+      "range": {
+        "startLine": 74,
+        "startChar": 35,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "ef2f06c1ca37c0af0a0f05179c9138b6553aa0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
