@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8bf91c_cee3fa11",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-11T20:30:58Z",
+      "side": 1,
+      "message": "If this was (cdm) ? cdm-\u003eGetInterfaceVersion() : 0 the same UMA could collect failures. WDYT?",
+      "range": {
+        "startLine": 455,
+        "startChar": 30,
+        "endLine": 455,
+        "endChar": 56
+      },
+      "revId": "48586db6a332c7b0b0f0c3b13e98a1e2dd533463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
