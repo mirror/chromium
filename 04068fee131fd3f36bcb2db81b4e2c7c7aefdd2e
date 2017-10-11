@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eacb6e62_5f260b1c",
+        "filename": "cc/scheduler/scheduler_state_machine_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T11:13:52Z",
+      "side": 1,
+      "message": "Please run \"git cl format\" to fix the alignment here (or do it manually in case that command doesn\u0027t handle trailing backslashes).",
+      "range": {
+        "startLine": 41,
+        "startChar": 68,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "04068fee131fd3f36bcb2db81b4e2c7c7aefdd2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
