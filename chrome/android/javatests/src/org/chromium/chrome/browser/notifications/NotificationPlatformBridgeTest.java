@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
@@ -702,6 +703,9 @@ public class NotificationPlatformBridgeTest {
         mNotificationTestRule.waitForNotificationManagerMutation();
         Assert.assertTrue(mNotificationTestRule.getNotificationEntries().isEmpty());
         Assert.assertEquals(6.5, getEngagementScoreBlocking(), 0);
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "Notifications.Android.JobStartDelay"));
     }
 
     /**
@@ -738,6 +742,9 @@ public class NotificationPlatformBridgeTest {
                 return 2 == mNotificationTestRule.getActivity().getCurrentTabModel().getCount();
             }
         });
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramTotalCountForTesting(
+                        "Notifications.Android.JobStartDelay"));
     }
 
     /**
