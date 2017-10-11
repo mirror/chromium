@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "326a8f7d_94f9914b",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-11T20:03:51Z",
+      "side": 1,
+      "message": "I\u0027ll keep that in mind going forward, but won\u0027t change right now.",
+      "parentUuid": "de5a3cc2_dec6da01",
+      "revId": "15d38ab0efbf97ae1d79b8c6b0d87c7f09b3b948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997a8521_01762534",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "15d38ab0efbf97ae1d79b8c6b0d87c7f09b3b948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8674a94b_946cca55",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 30692,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-11T20:03:51Z",
+      "side": 1,
+      "message": "Added this.",
+      "parentUuid": "997a8521_01762534",
+      "revId": "15d38ab0efbf97ae1d79b8c6b0d87c7f09b3b948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
