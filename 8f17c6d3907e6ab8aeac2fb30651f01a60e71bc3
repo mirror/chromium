@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1182e81f_0c59079c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T15:59:53Z",
+      "side": 1,
+      "message": "Its the TestDelegate that gets the headers filled in on receiving the response headers so it is safe to query them. \nSince we are now destroying the network transaction on our way up the stack in writers when the request is complete, we can\u0027t expect the network transaction to be queried after the request is complete for the request headers.",
+      "parentUuid": "b5eb18fe_9ac47c4d",
+      "range": {
+        "startLine": 661,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb645839_cb3b3f59",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 55
@@ -131,6 +155,30 @@
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0be4e88_015fcecd",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-11T15:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8029d222_06203b9c",
+      "range": {
+        "startLine": 439,
+        "startChar": 15,
+        "endLine": 439,
+        "endChar": 47
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
