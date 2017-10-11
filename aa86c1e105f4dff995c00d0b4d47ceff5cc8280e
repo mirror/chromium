@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31008d3c_88a14278",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 57
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:01:56Z",
+      "side": 1,
+      "message": "Incomplete comment?",
+      "range": {
+        "startLine": 291,
+        "startChar": 43,
+        "endLine": 291,
+        "endChar": 53
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede9489c_dda601a3",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 57
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:01:56Z",
+      "side": 1,
+      "message": "How does this work if a cache write failure occurs when there are several writers?  Is there some reason that can\u0027t happen?  Network read only can only work for a single writer.",
+      "range": {
+        "startLine": 568,
+        "startChar": 2,
+        "endLine": 568,
+        "endChar": 20
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d6e031_0651bbbe",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 57
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-11T19:01:56Z",
+      "side": 1,
+      "message": "In all cases when this is called, the single DCHECK in the function (that all_writers_ is empty) is very clear from code very near the calling site, and the only thing this function does it call network_transaction_.reset().  IMO, the code would be simpler and clearer if that reset was just hoisted into all calling locations.",
+      "range": {
+        "startLine": 215,
+        "startChar": 7,
+        "endLine": 215,
+        "endChar": 38
+      },
+      "revId": "aa86c1e105f4dff995c00d0b4d47ceff5cc8280e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
