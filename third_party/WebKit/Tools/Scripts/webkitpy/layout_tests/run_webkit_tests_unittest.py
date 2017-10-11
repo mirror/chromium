@@ -1224,7 +1224,8 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             'text-image-checksum_fail-txt')
         details, log_stream, _ = logging_run(
             ['--additional-driver-flag=--flag',
-             '--new-flag-specific-baseline',
+             '--copy-baselines',
+             '--reset-results',
              'failures/unexpected/text-image-checksum.html'],
             tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
@@ -1256,7 +1257,8 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
 
         details, log_stream, _ = logging_run(
             ['--additional-driver-flag=--flag',
-             '--new-flag-specific-baseline',
+             '--copy-baselines',
+             '--reset-results',
              'failures/unexpected/text-image-checksum.html'],
             tests_included=True, host=host)
         self.assertEqual(details.exit_code, 0)
