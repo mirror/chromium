@@ -32,6 +32,7 @@ class ImageView;
 namespace ash {
 
 class PaletteToolManager;
+class PaletteWelcomeBubble;
 class TrayBubbleWrapper;
 
 // The PaletteTray shows the palette in the bottom area of the screen. This
@@ -52,6 +53,10 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
 
     PaletteToolManager* GetPaletteToolManager() {
       return palette_tray_->palette_tool_manager_.get();
+    }
+
+    PaletteWelcomeBubble* GetWelcomeBubble() {
+      return palette_tray_->welcome_bubble_.get();
     }
 
     TrayBubbleWrapper* GetTrayBubbleWrapper() {
@@ -135,6 +140,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   bool DeactivateActiveTool();
 
   std::unique_ptr<PaletteToolManager> palette_tool_manager_;
+  std::unique_ptr<PaletteWelcomeBubble> welcome_bubble_;
   std::unique_ptr<TrayBubbleWrapper> bubble_;
   std::unique_ptr<StylusWatcher> watcher_;
 
