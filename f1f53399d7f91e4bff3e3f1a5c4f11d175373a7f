@@ -22,6 +22,30 @@
       "revId": "f1f53399d7f91e4bff3e3f1a5c4f11d175373a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d72f64_e02560bc",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-11T17:53:13Z",
+      "side": 1,
+      "message": "It is this include that sets up the ENABLE_VR build flag below. We\u0027re not currently using this in the renderers, but we may. Eg, we might want to experimentally change our touch fuzzing logic while in the VR browser.",
+      "parentUuid": "bbe1f911_08407ffb",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "f1f53399d7f91e4bff3e3f1a5c4f11d175373a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
