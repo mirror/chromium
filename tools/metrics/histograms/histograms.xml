@@ -52087,6 +52087,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Prefetching.StuckItemState"
+    enum="OfflinePrefetchItemState">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    A prefetch item was seen in this state after enough time has expired that it
+    should have made it all the way through the processing queue, so this item
+    got stuck.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.Prefetching.UniqueUrlsAddedCount" units="urls">
   <owner>dewittj@chromium.org</owner>
   <summary>
