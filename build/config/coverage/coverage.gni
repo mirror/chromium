@@ -15,3 +15,8 @@ declare_args() {
 
 assert(!use_clang_coverage || is_clang,
        "Clang Source-based Code Coverage requires clang.")
+
+assert(
+    !(current_toolchain == default_toolchain && use_clang_coverage &&
+          is_component_build),
+    "Clang Source-based Code Coverage is incompatible with is_component_build.")
