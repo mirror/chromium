@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53432328_d3a13eb8",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T16:43:59Z",
+      "side": 1,
+      "message": "These are Web exposed properties, so I\u0027m just matching the names defined in the standard. (The reader of this code is very likely to be aware of those.) Do you feel strongly?",
+      "parentUuid": "e5fb7dcc_eec49983",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "e1972199618d14593b7be36868f9d2d84d22fbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fa10f97_15cc30ee",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T16:38:10Z",
       "side": 1,
       "message": "who generates these IDs?  How do we avoid collisions? \nAre the guessable? Can I spy on some information I\u0027m not entitled to if I can guess an ID?",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "e1972199618d14593b7be36868f9d2d84d22fbfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67c163a_c8679632",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-11T16:43:59Z",
+      "side": 1,
+      "message": "They\u0027re GUIDs. Chris reviewed this in the CL where John Mellor introduced this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/693099\n\n(John\u0027s last comment includes the rationale.)",
+      "parentUuid": "9fa10f97_15cc30ee",
       "range": {
         "startLine": 101,
         "startChar": 26,
