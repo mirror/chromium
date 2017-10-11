@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f161d5fc_38aff89a",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-10-11T17:08:59Z",
+      "side": 1,
+      "message": "Also add a line for swiftshader here:\n\"//third_party/swiftshader\",",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 38
+      },
+      "revId": "27494e97edd0c1545bb67bfe8051e194c3e3b7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789bce16_dd197024",
+        "filename": "ui/gl/init/gl_initializer_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-10-11T17:08:59Z",
+      "side": 1,
+      "message": "Currently named swiftshader_libGLESv2.dylib and swiftshader_libEGL.dylib on MacOS.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "27494e97edd0c1545bb67bfe8051e194c3e3b7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73be0501_7326074f",
+        "filename": "ui/gl/init/gl_initializer_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-10-11T17:08:59Z",
+      "side": 1,
+      "message": "Not on MacOS, this is part of the name instead, as mentioned previously.",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 53
+      },
+      "revId": "27494e97edd0c1545bb67bfe8051e194c3e3b7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
