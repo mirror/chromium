@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54bc840d_f2cac945",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T01:05:28Z",
+      "side": 1,
+      "message": "Could you add some comments on why we need to do this?",
+      "revId": "b202747e9814f6c5fddaa30f0a8987e5126ea826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2392581_b570ecb5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T01:05:28Z",
+      "side": 1,
+      "message": "Should this be |\u003d ? Doesn\u0027t matter I suppose, since capabilities should be initially 0 if discovered_by_dial is true.",
+      "revId": "b202747e9814f6c5fddaa30f0a8987e5126ea826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68281cae_724abb0f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-11T01:05:28Z",
+      "side": 1,
+      "message": "nit: typo in \"Adding\"",
+      "revId": "b202747e9814f6c5fddaa30f0a8987e5126ea826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
