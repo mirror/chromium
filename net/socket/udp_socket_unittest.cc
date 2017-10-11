@@ -47,6 +47,16 @@ namespace net {
 
 namespace {
 
+// Creates an address from ip address and port and writes it to |*address|.
+void CreateUDPAddress(const std::string& ip_str,
+                      uint16_t port,
+                      IPEndPoint* address) {
+  IPAddress ip_address;
+  if (!ip_address.AssignFromIPLiteral(ip_str))
+    return;
+  *address = IPEndPoint(ip_address, port);
+}
+
 class UDPSocketTest : public PlatformTest {
  public:
   UDPSocketTest() : buffer_(new IOBufferWithSize(kMaxRead)) {}
@@ -103,16 +113,6 @@ class UDPSocketTest : public PlatformTest {
   void WriteSocketIgnoreResult(UDPClientSocket* socket,
                                const std::string& msg) {
     WriteSocket(socket, msg);
-  }
-
-  // Creates an address from ip address and port and writes it to |*address|.
-  void CreateUDPAddress(const std::string& ip_str,
-                        uint16_t port,
-                        IPEndPoint* address) {
-    IPAddress ip_address;
-    if (!ip_address.AssignFromIPLiteral(ip_str))
-      return;
-    *address = IPEndPoint(ip_address, port);
   }
 
   // Run unit test for a connection test.
@@ -779,121 +779,119 @@ TEST_F(UDPSocketTest, TestBindToNetwork) {
 namespace {
 
 const HANDLE kFakeHandle = (HANDLE)19;
-const QOS_FLOWID kFakeFlowId = (QOS_FLOWID)27;
 
-BOOL WINAPI FakeQOSCreateHandleFAIL(PQOS_VERSION version, PHANDLE handle) {
-  EXPECT_EQ(0, version->MinorVersion);
-  EXPECT_EQ(1, version->MajorVersion);
-  SetLastError(ERROR_OPEN_FAILED);
-  return false;
-}
+class TestUDPSocketWin : public UDPSocketWin {
+ public:
+  TestUDPSocketWin(QwaveAPI& qos,
+                   DatagramSocket::BindType bind_type,
+                   const RandIntCallback& rand_int_cb,
+                   net::NetLog* net_log,
+                   const net::NetLogSource& source)
+      : UDPSocketWin(bind_type, rand_int_cb, net_log, source), qos_(qos) {}
 
-BOOL WINAPI FakeQOSCreateHandle(PQOS_VERSION version, PHANDLE handle) {
-  EXPECT_EQ(0, version->MinorVersion);
-  EXPECT_EQ(1, version->MajorVersion);
-  *handle = kFakeHandle;
-  return true;
-}
+  // This causes instances of TestUDPSocketWin to use the injected QwaveAPI
+  // instance instead of the singleton.
+  QwaveAPI& GetQwaveAPI() override { return qos_; }
 
-BOOL WINAPI FakeQOSCloseHandle(HANDLE handle) {
-  EXPECT_EQ(kFakeHandle, handle);
-  return true;
-}
+ private:
+  QwaveAPI& qos_;
 
-QOS_TRAFFIC_TYPE g_expected_traffic_type;
+  DISALLOW_COPY_AND_ASSIGN(TestUDPSocketWin);
+};
 
-BOOL WINAPI FakeQOSAddSocketToFlow(HANDLE handle,
-                                   SOCKET socket,
-                                   PSOCKADDR addr,
-                                   QOS_TRAFFIC_TYPE traffic_type,
-                                   DWORD flags,
-                                   PQOS_FLOWID flow_id) {
-  EXPECT_EQ(kFakeHandle, handle);
-  EXPECT_EQ(NULL, addr);
-  EXPECT_EQ(static_cast<DWORD>(QOS_NON_ADAPTIVE_FLOW), flags);
-  EXPECT_EQ(0u, *flow_id);
-  *flow_id = kFakeFlowId;
-  return true;
-}
+class MockQwaveAPI : public QwaveAPI {
+ public:
+  MOCK_METHOD2(CreateHandle, BOOL(PQOS_VERSION version, PHANDLE handle));
 
-BOOL WINAPI FakeQOSRemoveSocketFromFlow(HANDLE handle,
-                                        SOCKET socket,
-                                        QOS_FLOWID flowid,
-                                        DWORD reserved) {
-  EXPECT_EQ(kFakeHandle, handle);
-  EXPECT_EQ(0u, socket);
-  EXPECT_EQ(kFakeFlowId, flowid);
-  EXPECT_EQ(0u, reserved);
-  return true;
-}
+  MOCK_METHOD6(AddSocketToFlow,
+               BOOL(HANDLE handle,
+                    SOCKET socket,
+                    PSOCKADDR addr,
+                    QOS_TRAFFIC_TYPE traffic_type,
+                    DWORD flags,
+                    PQOS_FLOWID flow_id));
 
-DWORD g_expected_dscp;
+  MOCK_METHOD7(SetFlow,
+               BOOL(HANDLE handle,
+                    QOS_FLOWID flow_id,
+                    QOS_SET_FLOW op,
+                    ULONG size,
+                    PVOID data,
+                    DWORD reserved,
+                    LPOVERLAPPED overlapped));
+};
 
-BOOL WINAPI FakeQOSSetFlow(HANDLE handle,
-                           QOS_FLOWID flow_id,
-                           QOS_SET_FLOW op,
-                           ULONG size,
-                           PVOID data,
-                           DWORD reserved,
-                           LPOVERLAPPED overlapped) {
-  EXPECT_EQ(kFakeHandle, handle);
-  EXPECT_EQ(QOSSetOutgoingDSCPValue, op);
-  EXPECT_EQ(sizeof(DWORD), size);
-  EXPECT_EQ(g_expected_dscp, *reinterpret_cast<DWORD*>(data));
-  EXPECT_EQ(kFakeFlowId, flow_id);
-  EXPECT_EQ(0u, reserved);
-  EXPECT_EQ(NULL, overlapped);
-  return true;
+std::unique_ptr<UDPSocket> DscpTestClient(QwaveAPI& qos) {
+  IPEndPoint bind_address;
+  // We need a real IP, but we won't actually send anything to it.
+  CreateUDPAddress("8.8.8.8", 9999, &bind_address);
+
+  auto client = base::MakeUnique<TestUDPSocketWin>(
+      qos, DatagramSocket::DEFAULT_BIND, RandIntCallback(), nullptr,
+      NetLogSource());
+  int rv = client->Open(bind_address.GetFamily());
+  EXPECT_THAT(rv, IsOk());
+
+  rv = client->Connect(bind_address);
+  EXPECT_THAT(rv, IsOk());
+
+  return client;
 }
 
 }  // namespace
 
-// Mock out the Qwave functions and make sure they are
-// called correctly. Must be in net namespace for friendship
-// reasons.
-TEST_F(UDPSocketTest, SetDSCPFake) {
-  // Setup the server to listen.
-  IPEndPoint bind_address;
-  // We need a real IP, but we won't actually send anything to it.
-  CreateUDPAddress("8.8.8.8", 9999, &bind_address);
-  UDPSocket client(DatagramSocket::DEFAULT_BIND, RandIntCallback(), NULL,
-                   NetLogSource());
-  int rv = client.SetDiffServCodePoint(DSCP_AF41);
-  EXPECT_THAT(rv, IsError(ERR_SOCKET_NOT_CONNECTED));
+using ::testing::_;
+using ::testing::Return;
+using ::testing::SetArgPointee;
 
-  rv = client.Open(bind_address.GetFamily());
-  EXPECT_THAT(rv, IsOk());
+TEST_F(UDPSocketTest, SetDSCPNoopIfPassedNoChange) {
+  MockQwaveAPI qos;
+  std::unique_ptr<UDPSocket> client = DscpTestClient(qos);
+  EXPECT_THAT(client->SetDiffServCodePoint(DSCP_NO_CHANGE), IsOk());
+}
 
-  rv = client.Connect(bind_address);
-  EXPECT_THAT(rv, IsOk());
+TEST_F(UDPSocketTest, SetDSCPFailsIfQOSHandleCanNotBeCreated) {
+  MockQwaveAPI qos;
+  std::unique_ptr<UDPSocket> client = DscpTestClient(qos);
 
-  QwaveAPI& qos(QwaveAPI::Get());
-  qos.create_handle_func_ = FakeQOSCreateHandleFAIL;
-  qos.close_handle_func_ = FakeQOSCloseHandle;
-  qos.add_socket_to_flow_func_ = FakeQOSAddSocketToFlow;
-  qos.remove_socket_from_flow_func_ = FakeQOSRemoveSocketFromFlow;
-  qos.set_flow_func_ = FakeQOSSetFlow;
-  qos.qwave_supported_ = true;
+  EXPECT_CALL(qos, CreateHandle(_, _)).WillOnce(Return(false));
+  EXPECT_EQ(ERROR_NOT_SUPPORTED, client->SetDiffServCodePoint(DSCP_AF41));
+}
 
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_NO_CHANGE), IsOk());
-  EXPECT_EQ(ERROR_NOT_SUPPORTED, client.SetDiffServCodePoint(DSCP_AF41));
-  qos.create_handle_func_ = FakeQOSCreateHandle;
-  g_expected_dscp = DSCP_AF41;
-  g_expected_traffic_type = QOSTrafficTypeAudioVideo;
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_AF41), IsOk());
-  g_expected_dscp = DSCP_DEFAULT;
-  g_expected_traffic_type = QOSTrafficTypeBestEffort;
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_DEFAULT), IsOk());
-  g_expected_dscp = DSCP_CS2;
-  g_expected_traffic_type = QOSTrafficTypeExcellentEffort;
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_CS2), IsOk());
-  g_expected_dscp = DSCP_CS3;
-  g_expected_traffic_type = QOSTrafficTypeExcellentEffort;
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_NO_CHANGE), IsOk());
-  g_expected_dscp = DSCP_DEFAULT;
-  g_expected_traffic_type = QOSTrafficTypeBestEffort;
-  EXPECT_THAT(client.SetDiffServCodePoint(DSCP_DEFAULT), IsOk());
-  client.Close();
+MATCHER_P(DscpPointee, dscp, "") {
+  return *(DWORD*)arg == (DWORD)dscp;
+}
+
+TEST_F(UDPSocketTest, SetDSCPCallsQwaveFunctions) {
+  MockQwaveAPI qos;
+  std::unique_ptr<UDPSocket> client = DscpTestClient(qos);
+
+  EXPECT_CALL(qos, CreateHandle(_, _))
+      .WillOnce(DoAll(SetArgPointee<1>(kFakeHandle), Return(true)));
+  // AddSocketToFlow also sets flow_id, but we don't use that here
+  EXPECT_CALL(qos, AddSocketToFlow(_, _, _, QOSTrafficTypeAudioVideo, _, _))
+      .WillOnce(Return(true));
+  EXPECT_CALL(qos, SetFlow(_, _, QOSSetOutgoingDSCPValue, _,
+                           DscpPointee(DSCP_AF41), _, _));
+  EXPECT_THAT(client->SetDiffServCodePoint(DSCP_AF41), IsOk());
+}
+
+TEST_F(UDPSocketTest, SecondSetDSCPCallsQwaveFunctions) {
+  MockQwaveAPI qos;
+  std::unique_ptr<UDPSocket> client = DscpTestClient(qos);
+
+  EXPECT_CALL(qos, CreateHandle(_, _))
+      .WillOnce(DoAll(SetArgPointee<1>(kFakeHandle), Return(true)));
+  // AddSocketToFlow also sets flow_id, but we don't use that here
+  EXPECT_CALL(qos, AddSocketToFlow(_, _, _, _, _, _)).WillOnce(Return(true));
+  EXPECT_CALL(qos, SetFlow(_, _, _, _, _, _, _));
+  EXPECT_THAT(client->SetDiffServCodePoint(DSCP_AF41), IsOk());
+
+  EXPECT_CALL(qos, AddSocketToFlow(_, _, _, QOSTrafficTypeBestEffort, _, _))
+      .WillOnce(Return(true));
+  EXPECT_CALL(qos, SetFlow(_, _, QOSSetOutgoingDSCPValue, _,
+                           DscpPointee(DSCP_DEFAULT), _, _));
+  EXPECT_THAT(client->SetDiffServCodePoint(DSCP_DEFAULT), IsOk());
 }
 #endif
 
