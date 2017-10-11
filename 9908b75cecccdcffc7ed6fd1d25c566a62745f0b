@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "68399c8f_3ad21f43",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:36:10Z",
+      "side": 1,
+      "message": "Ah, I may be confused by thinking that Vulcanize/JS bundler would inline those anyway(?).\n\nIf it\u0027s going to stay as a hard coded value, how about doing the rgb() version (which is in the style guide I think). and adding a comment about what the value represents (like the google-blue-700 reference below).",
+      "parentUuid": "66e70328_27f5c540",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60584bef_e1a18acb",
         "filename": "chrome/browser/resources/md_extensions/extensions.html",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Same here.",
       "parentUuid": "60584bef_e1a18acb",
+      "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32c69b6_3bf3802c",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:36:10Z",
+      "side": 1,
+      "message": "Okay, this one is good then. It has a comment and uses rgb().",
+      "parentUuid": "8550b681_a073ebfc",
       "revId": "9908b75cecccdcffc7ed6fd1d25c566a62745f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
