@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c60d0b21_9ddb196a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-11T18:09:47Z",
+      "side": 1,
+      "message": "Darren, after some discussion with Max, I realized that using parts of the hash is better than grabbing bytes from data. Sorry for the bad suggestion.\nAlso, I ran a modified version of your fuzzer that sets parser mode based on input rather than looping. It\u0027s about twice as fast, but since looping will probably hit more edges per execution, it seems like the better approach.",
+      "parentUuid": "7ad96e72_6418e2fe",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5046352c_ae695167",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserMode.h",
         "patchSetId": 1
