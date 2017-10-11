@@ -14,8 +14,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
-#include "components/autofill/core/browser/address_validation_util.h"
-#include "components/autofill/core/browser/phone_email_validation_util.h"
+#include "components/autofill/core/browser/autofill_profile.h"
+#include "components/autofill/core/browser/autofill_profile_validation_util.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_data.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_validator.h"
 
@@ -61,27 +61,15 @@ void AutofillProfileValidator::ValidationRequest::OnRulesLoaded() {
   if (has_responded_)
     return;
   has_responded_ = true;
-  AutofillProfile::ValidityState profile_validity =
-      AutofillProfile::UNVALIDATED;
-  AutofillProfile::ValidityState address_validity =
-      address_validation_util::ValidateAddress(profile_, validator_);
-  AutofillProfile::ValidityState phone_email_validity =
-      phone_email_validation_util::ValidatePhoneAndEmail(profile_);
 
-  if (address_validity == AutofillProfile::INVALID ||
-      phone_email_validity == AutofillProfile::INVALID) {
-    profile_validity = AutofillProfile::INVALID;
-  } else if (address_validity == AutofillProfile::VALID &&
-             phone_email_validity == AutofillProfile::VALID) {
-    profile_validity = AutofillProfile::VALID;
-  }
+  profile_validation_util::ValidateProfile(profile_, validator_);
 
-  std::move(on_validated_).Run(profile_validity);
+  std::move(on_validated_).Run(profile_);
 }
 
 AutofillProfileValidator::AutofillProfileValidator(
-    std::unique_ptr<Source> source,
-    std::unique_ptr<Storage> storage)
+    std::unique_ptr<::i18n::addressinput::Source> source,
+    std::unique_ptr<::i18n::addressinput::Storage> storage)
     : address_validator_(std::move(source), std::move(storage), this) {}
 
 AutofillProfileValidator::~AutofillProfileValidator() {}
@@ -89,9 +77,9 @@ AutofillProfileValidator::~AutofillProfileValidator() {}
 void AutofillProfileValidator::ValidateProfile(
     AutofillProfile* profile,
     AutofillProfileValidatorCallback cb) {
+  DCHECK(profile);
   if (!profile) {
-    // An null profile is an unvalidated profile.
-    std::move(cb).Run(AutofillProfile::UNVALIDATED);
+    std::move(cb).Run(profile);
     return;
   }
   std::unique_ptr<ValidationRequest> request(

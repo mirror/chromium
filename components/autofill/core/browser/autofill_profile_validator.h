@@ -14,23 +14,16 @@
 
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
-#include "components/autofill/core/browser/address_i18n.h"
-#include "components/autofill/core/browser/address_validation_util.h"
-#include "components/autofill/core/browser/autofill_profile.h"
 #include "third_party/libaddressinput/chromium/chrome_address_validator.h"
-#include "third_party/libaddressinput/src/cpp/include/libaddressinput/preload_supplier.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/source.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/storage.h"
 
 namespace autofill {
 
-using ::i18n::addressinput::BuildCallback;
-using ::i18n::addressinput::PreloadSupplier;
-using ::i18n::addressinput::Source;
-using ::i18n::addressinput::Storage;
+class AutofillProfile;
 
 using AutofillProfileValidatorCallback =
-    base::OnceCallback<void(AutofillProfile::ValidityState)>;
+    base::OnceCallback<void(AutofillProfile*)>;
 
 // AutofillProfileValidator Loads Rules from the server and validates an
 // autofill profile. For a given autofill profile, it will set the ValidityState
@@ -58,7 +51,7 @@ class AutofillProfileValidator : public autofill::LoadRulesListener {
   class ValidationRequest {
    public:
     ValidationRequest(AutofillProfile* profile,
-                      autofill::AddressValidator* validator,
+                      AddressValidator* validator,
                       AutofillProfileValidatorCallback on_validated);
 
     ~ValidationRequest();
@@ -70,7 +63,7 @@ class AutofillProfileValidator : public autofill::LoadRulesListener {
     // Not owned. Not Null. Outlives this object.
     AutofillProfile* profile_;
     // Not owned. Outlives this object.
-    autofill::AddressValidator* validator_;
+    AddressValidator* validator_;
 
     AutofillProfileValidatorCallback on_validated_;
 
@@ -98,7 +91,7 @@ class AutofillProfileValidator : public autofill::LoadRulesListener {
       pending_requests_;
 
   // The address validator used to load rules.
-  autofill::AddressValidator address_validator_;
+  AddressValidator address_validator_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillProfileValidator);
 };
