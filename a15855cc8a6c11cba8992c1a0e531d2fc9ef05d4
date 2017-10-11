@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c51e1e_fb4ceb63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-11T14:34:08Z",
+      "side": 1,
+      "message": "Can you expand the description, e.g. how computeByteSize() differs from now-deprecated getSize(), getSafeSize64()?",
+      "revId": "a15855cc8a6c11cba8992c1a0e531d2fc9ef05d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
