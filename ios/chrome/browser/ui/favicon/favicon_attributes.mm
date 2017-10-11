@@ -57,4 +57,16 @@
               defaultBackgroundColor:defaultBackgroundColor];
 }
 
++ (ntp_tiles::TileVisualType)tileVisualTypeFromAttributes:
+    (nullable FaviconAttributes*)attributes {
+  if (!attributes) {
+    return ntp_tiles::TileVisualType::NONE;
+  } else if (attributes.faviconImage) {
+    return ntp_tiles::TileVisualType::ICON_REAL;
+  }
+  return attributes.defaultBackgroundColor
+             ? ntp_tiles::TileVisualType::ICON_DEFAULT
+             : ntp_tiles::TileVisualType::ICON_COLOR;
+}
+
 @end
