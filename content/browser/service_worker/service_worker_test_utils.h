@@ -11,17 +11,26 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/memory/weak_ptr.h"
+#include "content/browser/service_worker/service_worker_database.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
+namespace net {
+
+class HttpResponseInfo;
+
+}  // namespace net
+
 namespace content {
 
 class ServiceWorkerContextCore;
 class ServiceWorkerDispatcherHost;
 class ServiceWorkerProviderHost;
+class ServiceWorkerRegistration;
+class ServiceWorkerStorage;
 class ServiceWorkerVersion;
 struct ServiceWorkerProviderHostInfo;
 
@@ -107,6 +116,22 @@ std::unique_ptr<ServiceWorkerProviderHost> CreateProviderHostWithDispatcherHost(
     int route_id,
     ServiceWorkerDispatcherHost* dispatcher_host,
     ServiceWorkerRemoteProviderEndpoint* output_endpoint);
+
+ServiceWorkerDatabase::ResourceRecord WriteToDiskCache(
+    ServiceWorkerStorage* storage,
+    const GURL& script_url,
+    int64_t resource_id,
+    const std::vector<std::pair<std::string, std::string>>& headers,
+    const std::string& body,
+    const std::string& meta_data);
+
+ServiceWorkerDatabase::ResourceRecord WriteToDiskCacheWithCustomResponseInfo(
+    ServiceWorkerStorage* storage,
+    const GURL& script_url,
+    int64_t resource_id,
+    std::unique_ptr<net::HttpResponseInfo> http_info,
+    const std::string& body,
+    const std::string& meta_data);
 
 }  // namespace content
 
