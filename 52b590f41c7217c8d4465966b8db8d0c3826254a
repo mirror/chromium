@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faace0ca_bb1b5098",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-11T12:09:18Z",
+      "side": 1,
+      "message": "That looks fine, but I\u0027m not totally sure what surprises are hidden in the depth of nested message loops. Is there a special motivation behind DeletionSentinel deletion. Could this be a separate change?",
+      "revId": "52b590f41c7217c8d4465966b8db8d0c3826254a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
