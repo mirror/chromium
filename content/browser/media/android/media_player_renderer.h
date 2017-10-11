@@ -11,6 +11,7 @@
 #include "base/unguessable_token.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "media/base/android/media_player_bridge.h"
 #include "media/base/android/media_player_manager.h"
 #include "media/base/media_log.h"
@@ -36,13 +37,14 @@ namespace content {
 // TODO(tguilbert): Remove the MediaPlayerManager implementation and update
 // MediaPlayerBridge, once WMPA has been deleted. See http://crbug.com/580626
 class CONTENT_EXPORT MediaPlayerRenderer : public media::Renderer,
-                                           public media::MediaPlayerManager {
+                                           public media::MediaPlayerManager,
+                                           public WebContentsObserver {
  public:
   // Permits embedders to handle custom urls.
   static void RegisterMediaUrlInterceptor(
       media::MediaUrlInterceptor* media_url_interceptor);
 
-  MediaPlayerRenderer(int process_id, int routing_id);
+  MediaPlayerRenderer(int process_id, int routing_id, WebContents* contents);
 
   ~MediaPlayerRenderer() override;
 
@@ -87,6 +89,9 @@ class CONTENT_EXPORT MediaPlayerRenderer : public media::Renderer,
                    base::TimeDelta duration,
                    bool has_audio) override;
 
+  // WebContentsObserver implementation.
+  void DidUpdateAudioMutingState(bool muted) override;
+
   // Registers a request in the content::ScopedSurfaceRequestManager, and
   // returns the token associated to the request. The token can then be used to
   // complete the request via the gpu::ScopedSurfaceRequestConduit.
@@ -129,6 +134,9 @@ class CONTENT_EXPORT MediaPlayerRenderer : public media::Renderer,
   base::UnguessableToken surface_request_token_;
 
   std::unique_ptr<media::MediaResourceGetter> media_resource_getter_;
+
+  bool web_contents_muted_;
+  float volume_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<MediaPlayerRenderer> weak_factory_;
