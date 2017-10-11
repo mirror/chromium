@@ -26,6 +26,7 @@
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/frame_policy.h"
 #include "content/common/input_messages.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
@@ -1947,13 +1948,11 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation, DetachPendingChild) {
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
   contents()->GetMainFrame()->OnCreateChildFrame(
       contents()->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName2",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
   RenderFrameHostManager* root_manager =
       contents()->GetFrameTree()->root()->render_manager();
   RenderFrameHostManager* iframe1 =
@@ -2088,8 +2087,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   contents1->GetMainFrame()->OnCreateChildFrame(
       contents1->GetMainFrame()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame_name", "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
   RenderFrameHostManager* iframe =
       contents()->GetFrameTree()->root()->child_at(0)->render_manager();
   NavigationEntryImpl entry(NULL /* instance */, kUrl2,
@@ -2135,11 +2133,10 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   NavigateAndCommit(kUrl1);
   EXPECT_TRUE(main_rfh->render_view_host()->IsRenderViewLive());
   EXPECT_TRUE(main_rfh->IsRenderFrameLive());
-  main_rfh->OnCreateChildFrame(
-      main_rfh->GetProcess()->GetNextRoutingID(),
-      blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+  main_rfh->OnCreateChildFrame(main_rfh->GetProcess()->GetNextRoutingID(),
+                               blink::WebTreeScopeType::kDocument,
+                               std::string(), "uniqueName1", FramePolicy(),
+                               FrameOwnerProperties());
   RenderFrameHostManager* subframe_rfhm =
       contents()->GetFrameTree()->root()->child_at(0)->render_manager();
 
@@ -2296,11 +2293,11 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root1 = tree1->root();
   int process_id = root1->current_frame_host()->GetProcess()->GetID();
   tree1->AddFrame(root1, process_id, 12, blink::WebTreeScopeType::kDocument,
-                  std::string(), "uniqueName0", blink::WebSandboxFlags::kNone,
-                  ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                  std::string(), "uniqueName0", FramePolicy(),
+                  FrameOwnerProperties());
   tree1->AddFrame(root1, process_id, 13, blink::WebTreeScopeType::kDocument,
-                  std::string(), "uniqueName1", blink::WebSandboxFlags::kNone,
-                  ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                  std::string(), "uniqueName1", FramePolicy(),
+                  FrameOwnerProperties());
 
   std::unique_ptr<TestWebContents> tab2(
       TestWebContents::Create(browser_context(), nullptr));
@@ -2309,11 +2306,11 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root2 = tree2->root();
   process_id = root2->current_frame_host()->GetProcess()->GetID();
   tree2->AddFrame(root2, process_id, 22, blink::WebTreeScopeType::kDocument,
-                  std::string(), "uniqueName2", blink::WebSandboxFlags::kNone,
-                  ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                  std::string(), "uniqueName2", FramePolicy(),
+                  FrameOwnerProperties());
   tree2->AddFrame(root2, process_id, 23, blink::WebTreeScopeType::kDocument,
-                  std::string(), "uniqueName3", blink::WebSandboxFlags::kNone,
-                  ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                  std::string(), "uniqueName3", FramePolicy(),
+                  FrameOwnerProperties());
 
   std::unique_ptr<TestWebContents> tab3(
       TestWebContents::Create(browser_context(), nullptr));
@@ -2327,8 +2324,8 @@ TEST_F(RenderFrameHostManagerTest, TraverseComplexOpenerChain) {
   FrameTreeNode* root4 = tree4->root();
   process_id = root4->current_frame_host()->GetProcess()->GetID();
   tree4->AddFrame(root4, process_id, 42, blink::WebTreeScopeType::kDocument,
-                  std::string(), "uniqueName4", blink::WebSandboxFlags::kNone,
-                  ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+                  std::string(), "uniqueName4", FramePolicy(),
+                  FrameOwnerProperties());
 
   root1->child_at(1)->SetOpener(root1->child_at(1));
   root1->SetOpener(root2->child_at(1));
@@ -2377,18 +2374,15 @@ TEST_F(RenderFrameHostManagerTest, PageFocusPropagatesToSubframeProcesses) {
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame2", "uniqueName2",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame3", "uniqueName3",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
 
   FrameTreeNode* root = contents()->GetFrameTree()->root();
   RenderFrameHostManager* child1 = root->child_at(0)->render_manager();
@@ -2478,8 +2472,7 @@ TEST_F(RenderFrameHostManagerTest,
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
 
   FrameTreeNode* root = contents()->GetFrameTree()->root();
   RenderFrameHostManager* child = root->child_at(0)->render_manager();
@@ -3023,8 +3016,7 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   main_test_rfh()->OnCreateChildFrame(
       main_test_rfh()->GetProcess()->GetNextRoutingID(),
       blink::WebTreeScopeType::kDocument, "frame1", "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
-      FrameOwnerProperties());
+      FramePolicy(), FrameOwnerProperties());
 
   FrameTreeNode* root = contents()->GetFrameTree()->root();
   RenderFrameHostManager* child = root->child_at(0)->render_manager();

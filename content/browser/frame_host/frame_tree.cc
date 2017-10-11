@@ -25,6 +25,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/frame_owner_properties.h"
+#include "content/common/frame_policy.h"
 #include "content/common/input_messages.h"
 #include "content/common/site_isolation_policy.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
@@ -175,8 +176,7 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
                          blink::WebTreeScopeType scope,
                          const std::string& frame_name,
                          const std::string& frame_unique_name,
-                         blink::WebSandboxFlags sandbox_flags,
-                         const ParsedFeaturePolicyHeader& container_policy,
+                         const FramePolicy& frame_policy,
                          const FrameOwnerProperties& frame_owner_properties) {
   CHECK_NE(new_routing_id, MSG_ROUTING_NONE);
 
@@ -197,8 +197,8 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
   // empty document in the frame. This needs to happen before the call to
   // AddChild so that the effective policy is sent to any newly-created
   // RenderFrameProxy objects when the RenderFrameHost is created.
-  new_node->SetPendingSandboxFlags(sandbox_flags);
-  new_node->SetPendingContainerPolicy(container_policy);
+  new_node->SetPendingSandboxFlags(frame_policy.sandbox_flags);
+  new_node->SetPendingContainerPolicy(frame_policy.container_policy);
   new_node->CommitPendingFramePolicy();
 
   // Add the new node to the FrameTree, creating the RenderFrameHost.
