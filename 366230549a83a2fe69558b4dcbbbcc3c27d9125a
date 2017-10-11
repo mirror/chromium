@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee7c2ccc_8e3ed593",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-11T17:51:32Z",
+      "side": 1,
+      "message": "metrics",
+      "range": {
+        "startLine": 205,
+        "startChar": 27,
+        "endLine": 205,
+        "endChar": 34
+      },
+      "revId": "366230549a83a2fe69558b4dcbbbcc3c27d9125a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
