@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8d8eab_48961b2d",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-11T18:44:33Z",
+      "side": 1,
+      "message": "If it\u0027s expected that this will often fail, maybe downgrade this to LOG(WARNING) ?",
+      "revId": "0560cc2d4348ce6f3e56eb06206adea2a37c3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f47869_52b990bc",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-10-11T18:44:33Z",
+      "side": 1,
+      "message": "Instead of \"Process\", maybe a more descriptive name such as RunAnyPendingEncode or EncodeIfPending ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 28,
+        "endLine": 212,
+        "endChar": 48
+      },
+      "revId": "0560cc2d4348ce6f3e56eb06206adea2a37c3629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
