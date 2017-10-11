@@ -22,6 +22,30 @@
       "revId": "03f58c23d8eb75006595b3590e16eb6b4f5a2dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96583842_f280f54a",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-11T16:13:00Z",
+      "side": 1,
+      "message": "We would have to not report software_rendering, else the compositor will not try to use GPU. This has been true foreverish, but before it was down on line 2005. If thats not possible we\u0027ll have to make some override.\n\nIt\u0027s something good to keep in mind.",
+      "parentUuid": "2ae0adc0_e1a0260c",
+      "range": {
+        "startLine": 1955,
+        "startChar": 6,
+        "endLine": 1955,
+        "endChar": 27
+      },
+      "revId": "03f58c23d8eb75006595b3590e16eb6b4f5a2dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
