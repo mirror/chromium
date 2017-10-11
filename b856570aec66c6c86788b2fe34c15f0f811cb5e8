@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddbefc7b_d8ebb57a",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-11T20:32:57Z",
+      "side": 1,
+      "message": "I wouldn\u0027t put this in the code. It\u0027s making a statement of policy and might be misinterpreted the wrong way by some.\n\nInstead, this threshold really applies to a much wider set of videos. Suggestion: \"Frequent switching into and out of Remoting for short-duration media can feel \u0027janky\u0027 to the user.\"\n\nAlso, please change the commit message to match.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "b856570aec66c6c86788b2fe34c15f0f811cb5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
