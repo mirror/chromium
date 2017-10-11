@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<body>
-<script src="../../../resources/js-test.js"></script> 
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
 <a href="javascript:">foo<img ismap style="content:'bar'; display:block;"></a>
 <script>
-document.getElementsByTagName('img')[0].click();
-testPassed('if not crashed.');
+let t = async_test('This test passes if no crash');
+setup({allow_uncaught_exception: true});
+window.onload = t.step_func(function() {
+  document.getElementsByTagName('img')[0].click();
+});
+window.onerror = t.step_func_done(function(message) {
+  assert_equals(message, 'Uncaught SyntaxError: Unexpected token ?');
+});
 </script>
-</body>
