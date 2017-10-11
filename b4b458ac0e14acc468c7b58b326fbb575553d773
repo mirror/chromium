@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "f444c72d_0d3c194a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T11:55:18Z",
+      "side": 1,
+      "message": "However, I updated the feature comment in media_switches.cc to add info about this being during sleep.",
+      "parentUuid": "c8c655d1_b15fa356",
+      "range": {
+        "startLine": 2279,
+        "startChar": 25,
+        "endLine": 2279,
+        "endChar": 30
+      },
+      "revId": "b4b458ac0e14acc468c7b58b326fbb575553d773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bdef6ff_0c6742a0",
         "filename": "media/base/media_switches.cc",
         "patchSetId": 4
