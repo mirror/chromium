@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5cefd4_b872f9c0",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "Remove this header?",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "f59ac06f96db8073b8d6bdca2804856e9a03ae95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

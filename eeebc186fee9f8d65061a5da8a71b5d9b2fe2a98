@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016cb761_76e26645",
+        "filename": "ios/chrome/browser/ui/favicon/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "This dependency should not be here. These classes are after the mediator and should not be exposed to any model classes. In fact I believe showcase will stop compiling if you do this.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "eeebc186fee9f8d65061a5da8a71b5d9b2fe2a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accdcc70_18e4879d",
+        "filename": "ios/chrome/browser/ui/favicon/favicon_attributes.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "This can be an instance method, instead a class method. \n\n-(ntp_tiles::TileVisualType)tileVisualType;\n\nIf send to a nil object this will return zero, which matches ::NONE, so it should work just fine. Ideally a test should be added as well, as this class has now gained some logic.\n\nBut in fact I believe this method should move out of here.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "eeebc186fee9f8d65061a5da8a71b5d9b2fe2a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f216f04_10122bfe",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "No idea. Can you file a bug, make this TODO(\u003cbugnumber\u003e) and assign the bug to Gauthier?",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 71
+      },
+      "revId": "eeebc186fee9f8d65061a5da8a71b5d9b2fe2a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf1f5fa_965f4dc4",
+        "filename": "ios/chrome/browser/ui/ntp/most_visited_cell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "update the comment, it\u0027s not just the type anymore.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 68
+      },
+      "revId": "eeebc186fee9f8d65061a5da8a71b5d9b2fe2a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0ad9fd_5c7a1184",
+        "filename": "ios/chrome/browser/ui/ntp/most_visited_cell.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-11T09:06:36Z",
+      "side": 1,
+      "message": "Please add documentation. I would call this method updateWithFaviconAttributes: instead of just setFaviconAttribute. It\u0027s more than a setter really.",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "eeebc186fee9f8d65061a5da8a71b5d9b2fe2a98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
