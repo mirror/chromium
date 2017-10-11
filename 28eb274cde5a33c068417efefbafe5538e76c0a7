@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "477bd931_9bc70810",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2170,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-11T14:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5848dbc_9996ab2d",
+      "revId": "28eb274cde5a33c068417efefbafe5538e76c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6083f4b7_53309cd7",
         "filename": "content/test/gpu/generate_buildbot_json.py",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-11T03:48:53Z",
       "side": 1,
       "message": "This target looks mis-named; it says it\u0027s running the WebGL 2.0 tests but seems to be running the WebGL 1.0 tests. Could you please re-check this and the shard count you intended?",
+      "range": {
+        "startLine": 2203,
+        "startChar": 7,
+        "endLine": 2203,
+        "endChar": 13
+      },
+      "revId": "28eb274cde5a33c068417efefbafe5538e76c0a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f06b33_9bef722d",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-10-11T14:31:53Z",
+      "side": 1,
+      "message": "Good catch, I fixed it in this CL. Added Yuly and Geoff in case we catch any failures pop up on the ANGLE CQ. There was some coverage of webgl 2 conformance with the GL backend with the passthrough at least.",
+      "parentUuid": "6083f4b7_53309cd7",
       "range": {
         "startLine": 2203,
         "startChar": 7,
