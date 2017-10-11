@@ -150,8 +150,10 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     return inputs_.is_root_for_isolated_group;
   }
 
-  void SetShouldHitTest(bool should_hit_test);
-  bool should_hit_test() const { return inputs_.should_hit_test; }
+  void SetShouldHitTestNonDrawable(bool should_hit_test);
+  bool should_hit_test_non_drawable() const {
+    return inputs_.should_hit_test_non_drawable;
+  }
 
   void SetFilters(const FilterOperations& filters);
   const FilterOperations& filters() const { return inputs_.filters; }
@@ -550,7 +552,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
     bool is_root_for_isolated_group : 1;
 
-    bool should_hit_test : 1;
+    bool should_hit_test_non_drawable : 1;
 
     bool contents_opaque : 1;
 
