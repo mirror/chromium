@@ -140,22 +140,23 @@ const GpuFeatureInfo GetGpuFeatureInfo(size_t index, bool* eof) {
 
 int NumberOfRendererRasterThreads() {
   int num_processors = base::SysInfo::NumberOfProcessors();
-
-#if defined(OS_ANDROID) || \
-    (defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY))
-  // Android and ChromeOS ARM devices may report 6 to 8 CPUs for big.LITTLE
-  // configurations. Limit the number of raster threads based on maximum of
-  // 4 big cores.
-  num_processors = std::min(num_processors, 4);
-#endif
-
   int num_raster_threads = num_processors / 2;
 
-#if defined(OS_ANDROID)
-  // Limit the number of raster threads to 1 on Android.
-  // TODO(reveman): Remove this when we have a better mechanims to prevent
-  // pre-paint raster work from slowing down non-raster work. crbug.com/504515
-  num_raster_threads = 1;
+#if (defined(OS_CHROMEOS) || defined(OS_ANDROID))
+  // If GPU raster is active, spawn a single software raster thread.
+  bool gpu_raster = false, eof = false;
+  for (size_t i = 0; !eof; ++i) {
+    const GpuFeatureInfo gpu_feature_info = GetGpuFeatureInfo(i, &eof);
+    if (gpu_feature_info.name == kRasterizationFeatureName) {
+      gpu_raster = (!gpu_feature_info.blocked && !gpu_feature_info.disabled);
+    }
+  }
+
+  if (gpu_raster) {
+    num_raster_threads = 1;
+  } else {
+    num_raster_threads = num_processors;
+  }
 #endif
 
   const base::CommandLine& command_line =
@@ -170,8 +171,13 @@ int NumberOfRendererRasterThreads() {
     }
   }
 
+#if (defined(OS_CHROMEOS) || defined(OS_ANDROID))
+  return base::ClampToRange(num_raster_threads, kMinRasterThreads,
+                            num_processors);
+#else
   return base::ClampToRange(num_raster_threads, kMinRasterThreads,
                             kMaxRasterThreads);
+#endif
 }
 
 bool IsZeroCopyUploadEnabled() {
