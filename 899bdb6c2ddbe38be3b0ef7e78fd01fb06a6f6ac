@@ -16,6 +16,24 @@
       "revId": "899bdb6c2ddbe38be3b0ef7e78fd01fb06a6f6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "948d4310_b8167b88",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-11T04:48:59Z",
+      "side": 1,
+      "message": "Thanks for catching! Somehow that file didn\u0027t get saved when I renamed the crash key in PS3.  Fixed.",
+      "parentUuid": "dd58ab5d_90575eab",
+      "revId": "899bdb6c2ddbe38be3b0ef7e78fd01fb06a6f6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
