@@ -70,6 +70,30 @@
       "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b520cc86_9c34ce11",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T01:28:38Z",
+      "side": 1,
+      "message": "afaik, each dome node will create a \u0027context\u0027 within which items are ordered. The actual number value only matters in a relative sense.\n\nSetting it to 100 (or any number) is amounts to use a \u0027magic number\u0027 in the code, which is something I try not to do (I still do it on occasion, but only after considering alternatives). E.g. why is 100 better than 1 or 1000 or 99999?\n\nTo really get the toast on-top, I think we\u0027d need to move it near the root of the tree (and into the highest context within the peers at the root). (I\u0027m not suggesting this, illustrating the context thing).\n\nAll that said, I\u0027m open to what you\u0027d like. Thanks for asking for my thoughts. I don\u0027t have a strong opinion on this.",
+      "parentUuid": "7a205b1e_903df3c6",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "c695176fa4b0357bf9315368e53f19be37ee7e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
