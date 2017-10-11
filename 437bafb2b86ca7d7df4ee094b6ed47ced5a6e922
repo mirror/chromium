@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "bc5adf49_0201e74b",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-11T12:30:34Z",
+      "side": 1,
+      "message": "As discussed offline, this is supposed to be a stress mode that triggers immediately. Clarified that in a comment.",
+      "parentUuid": "bec3d97e_b8b04200",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4cecef7_a87b073e",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 3
@@ -195,6 +213,24 @@
       "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee43f85_89682e15",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-11T12:30:34Z",
+      "side": 1,
+      "message": "Removed the call for now.",
+      "parentUuid": "d0362103_2c7ff095",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
