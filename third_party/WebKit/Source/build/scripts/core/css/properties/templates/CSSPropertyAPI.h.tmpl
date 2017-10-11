@@ -24,7 +24,6 @@ class StyleResolverState;
 class StylePropertyShorthand;
 class CSSParserTokenRange;
 
-enum LogicalBoxSide { kBeforeSide, kEndSide, kAfterSide, kStartSide };
 enum LogicalExtent { kLogicalWidth, kLogicalHeight };
 enum PhysicalBoxSide { kTopSide, kRightSide, kBottomSide, kLeftSide };
 
@@ -81,16 +80,23 @@ class CSSPropertyAPI {
   }
 
  protected:
-  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+  static const StylePropertyShorthand& BorderDirections();
+  static const CSSPropertyAPI& ResolveAfterToPhysicalPropertyAPI(
       TextDirection,
       WritingMode,
-      LogicalBoxSide,
       const StylePropertyShorthand&);
-  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
+  static const CSSPropertyAPI& ResolveBeforeToPhysicalPropertyAPI(
+      TextDirection,
       WritingMode,
-      LogicalExtent,
-      const CSSPropertyID*);
-  static const StylePropertyShorthand& BorderDirections();
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveEndToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
+  static const CSSPropertyAPI& ResolveStartToPhysicalPropertyAPI(
+      TextDirection,
+      WritingMode,
+      const StylePropertyShorthand&);
 
  private:
   const CSSPropertyID id_;
