@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2801e4e_91e2dd0b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-11T00:54:44Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right we shouldn\u0027t CHECK() here. Although the value comes from a trusted source (the data stored by the browser process on disk), it\u0027s possible that sharing a profile with multiple Chrome versions could result in a feature that this Chrome version doesn\u0027t know about.\n\nWe fixed this once in the renderer process but not in the browser:\nhttps://chromium-review.googlesource.com/640193\n\nFor the purpose of this patch, let\u0027s just silently drop unknown features and add a TODO that version-\u003eused_features() should never have a feature outside the known feature range.",
+      "parentUuid": "810719d8_1d2428d5",
+      "range": {
+        "startLine": 887,
+        "startChar": 5,
+        "endLine": 887,
+        "endChar": 13
+      },
+      "revId": "7bf35359513c4395c2d3d35942c4543282feef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a72f25_ff7b407c",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 12
