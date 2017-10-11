@@ -16,6 +16,24 @@
       "revId": "35d83893731867c6951bfd9b62bbc283a431b831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68b2e717_aca50399",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-11T22:45:03Z",
+      "side": 1,
+      "message": "Found only because it failed for me with an earlier patch :P",
+      "parentUuid": "220c652e_d6ec50cf",
+      "revId": "35d83893731867c6951bfd9b62bbc283a431b831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
