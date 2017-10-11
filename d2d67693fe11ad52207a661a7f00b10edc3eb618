@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "bd639072_866d12e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-11T00:09:00Z",
+      "side": 1,
+      "message": "This has been approved by UI-Review now:\nhttps://groups.google.com/a/google.com/forum/#!topic/chrome-ui-review/XweYPuM5uBM\n\nCan we try to get this in before the branch point? Thanks!",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8851d7_40eb9683",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
         "patchSetId": 1
