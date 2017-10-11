@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27fabfba_18d47c28",
+        "filename": "ios/chrome/browser/sync/sync_setup_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-11T16:15:29Z",
+      "side": 1,
+      "message": "Do you think it\u0027d be a good idea to rename this to GetEnabledDataTypes to be consistent? \n\nAlso a bit wierd that that the ProfileSyncService uses the term \"preferred\" but here we\u0027re using the term \"enabled\" through out all the method names to mean the exact same thing. Now that you\u0027re differentiating between active and preferred/enabled, it may make more sense to use preferred. But I think sticking with enabled is reasonable as well, especailly within the scope of this CL.",
+      "revId": "1d954dc11f253c175e8e15aaf674423b47229fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8111e9c6_d6ecfac9",
+        "filename": "ios/chrome/browser/sync/sync_setup_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-11T16:15:29Z",
+      "side": 1,
+      "message": "Love the detailed comment!",
+      "revId": "1d954dc11f253c175e8e15aaf674423b47229fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
