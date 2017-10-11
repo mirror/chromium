@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d727af7_b888dd66",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "optional nit: s/one/grapheme/?",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061d6580_6286555a",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "q: when is this non-zero? for RTL/Bidi?",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b372fe61_49d68601",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "optional nit: extra context on the coordinate space or units for the span might be nice.",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d38db36_5c02f378",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4714,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "nit: Telugu spelling here and elsewhere? (according to wikipedia)",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2006de_b64ee4c5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4737,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "q: Is actually drawing the selection necessary? (ditto here and below)",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25187b7f_8b6a9777",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4743,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "nit: maybe checks against the start and end would be clearer?\n(though I\u0027m not sure if the rounding would make that easy...)\nEXPECT_EQ(0, selection_bounds.x());\nEXPECT_LE(half_width, selection_bounds.width()); // (or |half_width - 1|)",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac8585b_c39a84c6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4744,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-11T20:02:20Z",
+      "side": 1,
+      "message": "Given that this uses int math, shouldn\u0027t this just be EXPECT_EQ(0,...)?",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
