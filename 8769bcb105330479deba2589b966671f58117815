@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e1cfc8_1df08aa3",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T18:38:33Z",
+      "side": 1,
+      "message": "nit: maybe change this to a \"StopSendingOldValuesOnMutations\", with the implication that until this message is received a client should always include old values? It\u0027s not like (with the current design) it\u0027s really possible to go from not sending old values to sending old values, and that way at least the initial state is also clear. With this API it\u0027s not clear what the client should do until it receives this call.\n(or if you prefer to keep this as a bool setter, at least document what the initial value is supposed to be)",
+      "revId": "8769bcb105330479deba2589b966671f58117815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6e208f_73af496b",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T18:38:33Z",
+      "side": 1,
+      "message": "nit: no need for {} for single-line if expressions/statements",
+      "revId": "8769bcb105330479deba2589b966671f58117815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb939bc_3866dee2",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-11T18:38:33Z",
+      "side": 1,
+      "message": "nit: here too no {}",
+      "revId": "8769bcb105330479deba2589b966671f58117815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
