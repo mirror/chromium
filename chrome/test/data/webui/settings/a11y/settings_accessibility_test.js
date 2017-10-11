@@ -11,7 +11,6 @@ var ROOT_PATH = '../../../../../../';
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/a11y/accessibility_test.js',
   ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
-  ROOT_PATH + 'third_party/axe-core/axe.js',
 ]);
 
 /**

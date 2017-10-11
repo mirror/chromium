@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/**
- * @fileoverview Accessibility Test API
- */
+/** @fileoverview Accessibility Test API */
+
+/** @const {string} Path to root from chrome/test/data/webui/a11y. */
+var ROOT_PATH = '../../../../../';
 
 GEN_INCLUDE([
   'accessibility_audit_rules.js',
+  ROOT_PATH + 'third_party/axe-core/axe.js',
 ]);
 
 /**
