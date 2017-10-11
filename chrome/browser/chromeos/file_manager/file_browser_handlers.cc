@@ -353,7 +353,7 @@ void FileBrowserHandlerExecutor::ExecuteFileActionsOnUIThread(
     }
     queue->AddPendingTask(
         profile_, extension_->id(),
-        base::Bind(
+        base::BindOnce(
             &FileBrowserHandlerExecutor::SetupPermissionsAndDispatchEvent,
             weak_ptr_factory_.GetWeakPtr(),
             base::Passed(std::move(file_definition_list)),
