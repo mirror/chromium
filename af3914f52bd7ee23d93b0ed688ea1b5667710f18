@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e512d563_9102855a",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T18:05:22Z",
+      "side": 1,
+      "message": "nit: print both modes? (maybe in IsRequestAllowed())",
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682abf9f_99d1fa8e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T18:05:22Z",
+      "side": 1,
+      "message": "Can you use switch-case for better compile-time checks?",
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0035622b_131ef4c4",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-11T18:05:22Z",
+      "side": 1,
+      "message": "Or, can we change this to void AS::Start(ArcInstanceMode mode)? (separate CL is fine.)",
+      "range": {
+        "startLine": 208,
+        "startChar": 18,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "af3914f52bd7ee23d93b0ed688ea1b5667710f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
