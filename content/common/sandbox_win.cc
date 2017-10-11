@@ -8,9 +8,7 @@
 
 #include <string>
 
-#include "base/base_switches.h"
 #include "base/command_line.h"
-#include "base/debug/activity_tracker.h"
 #include "base/debug/profiler.h"
 #include "base/feature_list.h"
 #include "base/files/file_util.h"
@@ -26,30 +24,23 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
-#include "base/trace_event/trace_event.h"
 #include "base/win/iat_patch_function.h"
 #include "base/win/scoped_handle.h"
-#include "base/win/scoped_process_information.h"
 #include "base/win/win_util.h"
 #include "base/win/windows_version.h"
-#include "content/common/content_switches_internal.h"
-#include "content/public/common/content_client.h"
-#include "content/public/common/content_features.h"
-#include "content/public/common/content_switches.h"
-#include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "sandbox/win/src/process_mitigations.h"
 #include "sandbox/win/src/sandbox.h"
 #include "sandbox/win/src/sandbox_nt_util.h"
 #include "sandbox/win/src/sandbox_policy_base.h"
 #include "sandbox/win/src/win_utils.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "services/service_manager/sandbox/switches.h"
 
 #if !defined(NACL_WIN64)
 #include "ui/gfx/win/direct_write.h" // nogncheck: unused #ifdef NACL_WIN64
 #endif  // !defined(NACL_WIN64)
 
-static sandbox::BrokerServices* g_broker_services = NULL;
+sandbox::BrokerServices* g_broker_services = NULL;
 
 namespace content {
 namespace {
@@ -291,7 +282,8 @@ bool ShouldSetJobLevel(const base::CommandLine& cmd_line) {
     // user actually wanted to avoid it.
     // TODO(pastarmovj): Remove this check and the flag altogether once we are
     // convinced that the automatic logic is good enough.
-    bool set_job = !cmd_line.HasSwitch(switches::kAllowNoSandboxJob);
+    bool set_job =
+        !cmd_line.HasSwitch(service_manager::switches::kAllowNoSandboxJob);
     UMA_HISTOGRAM_BOOLEAN("Process.Sandbox.FlagOverrodeRemoteSessionCheck",
                           !set_job);
     return set_job;
@@ -301,159 +293,6 @@ bool ShouldSetJobLevel(const base::CommandLine& cmd_line) {
   // ability of the sandbox to protect its children from spawning new processes
   // or preventing them from shutting down Windows or accessing the clipboard.
   return false;
-}
-
-// Adds the generic policy rules to a sandbox TargetPolicy.
-sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy) {
-  sandbox::ResultCode result;
-
-  // Add the policy for the client side of a pipe. It is just a file
-  // in the \pipe\ namespace. We restrict it to pipes that start with
-  // "chrome." so the sandboxed process cannot connect to system services.
-  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
-                           sandbox::TargetPolicy::FILES_ALLOW_ANY,
-                           L"\\??\\pipe\\chrome.*");
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-
-  // Add the policy for the server side of nacl pipe. It is just a file
-  // in the \pipe\ namespace. We restrict it to pipes that start with
-  // "chrome.nacl" so the sandboxed process cannot connect to
-  // system services.
-  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
-                           sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
-                           L"\\\\.\\pipe\\chrome.nacl.*");
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-
-  // Allow the server side of sync sockets, which are pipes that have
-  // the "chrome.sync" namespace and a randomly generated suffix.
-  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
-                           sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
-                           L"\\\\.\\pipe\\chrome.sync.*");
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-
-  // Add the policy for debug message only in debug
-#ifndef NDEBUG
-  base::FilePath app_dir;
-  if (!PathService::Get(base::DIR_MODULE, &app_dir))
-    return sandbox::SBOX_ERROR_GENERIC;
-
-  wchar_t long_path_buf[MAX_PATH];
-  DWORD long_path_return_value = GetLongPathName(app_dir.value().c_str(),
-                                                 long_path_buf,
-                                                 MAX_PATH);
-  if (long_path_return_value == 0 || long_path_return_value >= MAX_PATH)
-    return sandbox::SBOX_ERROR_NO_SPACE;
-
-  base::FilePath debug_message(long_path_buf);
-  debug_message = debug_message.AppendASCII("debug_message.exe");
-  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_PROCESS,
-                           sandbox::TargetPolicy::PROCESS_MIN_EXEC,
-                           debug_message.value().c_str());
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-#endif  // NDEBUG
-
-  // Add the policy for read-only PDB file access for stack traces.
-#if !defined(OFFICIAL_BUILD)
-  base::FilePath exe;
-  if (!PathService::Get(base::FILE_EXE, &exe))
-    return sandbox::SBOX_ERROR_GENERIC;
-  base::FilePath pdb_path = exe.DirName().Append(L"*.pdb");
-  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
-                           sandbox::TargetPolicy::FILES_ALLOW_READONLY,
-                           pdb_path.value().c_str());
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-#endif
-
-#if defined(SANITIZER_COVERAGE)
-  DWORD coverage_dir_size =
-      ::GetEnvironmentVariable(L"SANITIZER_COVERAGE_DIR", NULL, 0);
-  if (coverage_dir_size == 0) {
-    LOG(WARNING) << "SANITIZER_COVERAGE_DIR was not set, coverage won't work.";
-  } else {
-    std::wstring coverage_dir;
-    wchar_t* coverage_dir_str =
-        base::WriteInto(&coverage_dir, coverage_dir_size);
-    coverage_dir_size = ::GetEnvironmentVariable(
-        L"SANITIZER_COVERAGE_DIR", coverage_dir_str, coverage_dir_size);
-    CHECK(coverage_dir.size() == coverage_dir_size);
-    base::FilePath sancov_path =
-        base::FilePath(coverage_dir).Append(L"*.sancov");
-    result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
-                             sandbox::TargetPolicy::FILES_ALLOW_ANY,
-                             sancov_path.value().c_str());
-    if (result != sandbox::SBOX_ALL_OK)
-      return result;
-  }
-#endif
-
-  AddGenericDllEvictionPolicy(policy);
-  return sandbox::SBOX_ALL_OK;
-}
-
-void LogLaunchWarning(sandbox::ResultCode last_warning, DWORD last_error) {
-  UMA_HISTOGRAM_SPARSE_SLOWLY("Process.Sandbox.Launch.WarningResultCode",
-                              last_warning);
-  UMA_HISTOGRAM_SPARSE_SLOWLY("Process.Sandbox.Launch.Warning", last_error);
-}
-
-sandbox::ResultCode AddPolicyForSandboxedProcess(
-    sandbox::TargetPolicy* policy) {
-  sandbox::ResultCode result = sandbox::SBOX_ALL_OK;
-
-  // Win8+ adds a device DeviceApi that we don't need.
-  if (base::win::GetVersion() >= base::win::VERSION_WIN8)
-    result = policy->AddKernelObjectToClose(L"File", L"\\Device\\DeviceApi");
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-
-  // On 2003/Vista+ the initial token has to be restricted if the main
-  // token is restricted.
-  result = policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
-                                 sandbox::USER_LOCKDOWN);
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-  // Prevents the renderers from manipulating low-integrity processes.
-  result = policy->SetDelayedIntegrityLevel(sandbox::INTEGRITY_LEVEL_UNTRUSTED);
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-  result = policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-  policy->SetLockdownDefaultDacl();
-
-  result = policy->SetAlternateDesktop(true);
-  if (result != sandbox::SBOX_ALL_OK) {
-    // We ignore the result of setting the alternate desktop, however log
-    // a launch warning.
-    LogLaunchWarning(result, ::GetLastError());
-    DLOG(WARNING) << "Failed to apply desktop security to the renderer";
-    result = sandbox::SBOX_ALL_OK;
-  }
-
-  return result;
-}
-
-// Updates the command line arguments with debug-related flags. If debug flags
-// have been used with this process, they will be filtered and added to
-// command_line as needed.
-void ProcessDebugFlags(base::CommandLine* command_line) {
-  const base::CommandLine& current_cmd_line =
-      *base::CommandLine::ForCurrentProcess();
-  std::string type = command_line->GetSwitchValueASCII(switches::kProcessType);
-  if (current_cmd_line.HasSwitch(switches::kWaitForDebuggerChildren)) {
-    // Look to pass-on the kWaitForDebugger flag.
-    std::string value = current_cmd_line.GetSwitchValueASCII(
-        switches::kWaitForDebuggerChildren);
-    if (value.empty() || value == type) {
-      command_line->AppendSwitch(switches::kWaitForDebugger);
-    }
-    command_line->AppendSwitchASCII(switches::kWaitForDebuggerChildren, value);
-  }
 }
 
 // This code is test only, and attempts to catch unsafe uses of
@@ -567,9 +406,9 @@ bool IsAppContainerEnabled() {
       *base::CommandLine::ForCurrentProcess();
   const std::string appcontainer_group_name =
       base::FieldTrialList::FindFullName("EnableAppContainer");
-  if (command_line.HasSwitch(switches::kDisableAppContainer))
+  if (command_line.HasSwitch(service_manager::switches::kDisableAppContainer))
     return false;
-  if (command_line.HasSwitch(switches::kEnableAppContainer))
+  if (command_line.HasSwitch(service_manager::switches::kEnableAppContainer))
     return true;
   return base::StartsWith(appcontainer_group_name, "Enabled",
                           base::CompareCase::INSENSITIVE_ASCII);
@@ -585,8 +424,8 @@ sandbox::ResultCode SetJobMemoryLimit(const base::CommandLine& cmd_line,
 
   // Note that this command line flag hasn't been fetched by all
   // callers of SetJobLevel, only those in this file.
-  if (cmd_line.GetSwitchValueASCII(switches::kProcessType) ==
-      switches::kGpuProcess) {
+  if (service_manager::SandboxTypeFromCommandLine(cmd_line) ==
+      service_manager::SANDBOX_TYPE_GPU) {
     // Allow the GPU process's sandbox to access more physical memory if
     // it's available on the system.
     int64_t physical_memory = base::SysInfo::AmountOfPhysicalMemory();
@@ -604,141 +443,46 @@ sandbox::ResultCode SetJobMemoryLimit(const base::CommandLine& cmd_line,
 
 }  // namespace
 
-sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
-                                sandbox::JobLevel job_level,
-                                uint32_t ui_exceptions,
-                                sandbox::TargetPolicy* policy) {
-  if (!ShouldSetJobLevel(cmd_line))
-    return policy->SetJobLevel(sandbox::JOB_NONE, 0);
+bool InitializeSandbox(service_manager::SandboxType sandbox_type,
+                       sandbox::SandboxInterfaceInfo* sandbox_info) {
+  sandbox::BrokerServices* broker_services = sandbox_info->broker_services;
+  if (broker_services) {
+    if (!InitBrokerServices(broker_services))
+      return false;
 
-  sandbox::ResultCode ret = policy->SetJobLevel(job_level, ui_exceptions);
-  if (ret != sandbox::SBOX_ALL_OK)
-    return ret;
-
-  return SetJobMemoryLimit(cmd_line, policy);
-}
-
-// This is for finch. See also crbug.com/464430 for details.
-const base::Feature kEnableCsrssLockdownFeature{
-    "EnableCsrssLockdown", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// TODO(jschuh): Need get these restrictions applied to NaCl and Pepper.
-// Just have to figure out what needs to be warmed up first.
-sandbox::ResultCode AddBaseHandleClosePolicy(sandbox::TargetPolicy* policy) {
-  if (base::FeatureList::IsEnabled(kEnableCsrssLockdownFeature)) {
-    // Close all ALPC ports.
-    sandbox::ResultCode ret = policy->SetDisconnectCsrss();
-    if (ret != sandbox::SBOX_ALL_OK) {
-      return ret;
+    // IMPORTANT: This piece of code needs to run as early as possible in the
+    // process because it will initialize the sandbox broker, which requires the
+    // process to swap its window station. During this time all the UI will be
+    // broken. This has to run before threads and windows are created.
+    if (!service_manager::IsUnsandboxedSandboxType(sandbox_type)) {
+      // Precreate the desktop and window station used by the renderers.
+      scoped_refptr<sandbox::TargetPolicy> policy =
+          broker_services->CreatePolicy();
+      sandbox::ResultCode result = policy->CreateAlternateDesktop(true);
+      CHECK(sandbox::SBOX_ERROR_FAILED_TO_SWITCH_BACK_WINSTATION != result);
     }
+    return true;
   }
 
-  // TODO(cpu): Add back the BaseNamedObjects policy.
-  base::string16 object_path = PrependWindowsSessionPath(
-      L"\\BaseNamedObjects\\windows_shell_global_counters");
-  return policy->AddKernelObjectToClose(L"Section", object_path.data());
+  return service_manager::IsUnsandboxedSandboxType(sandbox_type) ||
+         InitTargetServices(sandbox_info->target_services);
 }
 
-sandbox::ResultCode AddAppContainerPolicy(sandbox::TargetPolicy* policy,
-                                          const wchar_t* sid) {
-  if (IsAppContainerEnabled())
-    return policy->SetLowBox(sid);
-  return sandbox::SBOX_ALL_OK;
-}
-
-sandbox::ResultCode AddWin32kLockdownPolicy(sandbox::TargetPolicy* policy,
-                                            bool enable_opm) {
-#if !defined(NACL_WIN64)
-  if (!IsWin32kLockdownEnabled())
-    return sandbox::SBOX_ALL_OK;
-
-  // Enable win32k lockdown if not already.
-  sandbox::MitigationFlags flags = policy->GetProcessMitigations();
-  if ((flags & sandbox::MITIGATION_WIN32K_DISABLE) ==
-      sandbox::MITIGATION_WIN32K_DISABLE)
-    return sandbox::SBOX_ALL_OK;
-
-  sandbox::ResultCode result =
-      policy->AddRule(sandbox::TargetPolicy::SUBSYS_WIN32K_LOCKDOWN,
-                      enable_opm ? sandbox::TargetPolicy::IMPLEMENT_OPM_APIS
-                                 : sandbox::TargetPolicy::FAKE_USER_GDI_INIT,
-                      nullptr);
-  if (result != sandbox::SBOX_ALL_OK)
-    return result;
-  if (enable_opm)
-    policy->SetEnableOPMRedirection();
-
-  flags |= sandbox::MITIGATION_WIN32K_DISABLE;
-  return policy->SetProcessMitigations(flags);
-#else
-  return sandbox::SBOX_ALL_OK;
-#endif
-}
-
-bool InitBrokerServices(sandbox::BrokerServices* broker_services) {
-  // TODO(abarth): DCHECK(CalledOnValidThread());
-  //               See <http://b/1287166>.
-  DCHECK(broker_services);
-  DCHECK(!g_broker_services);
-  sandbox::ResultCode result = broker_services->Init();
-  g_broker_services = broker_services;
-
-  // In non-official builds warn about dangerous uses of DuplicateHandle.
-#ifndef OFFICIAL_BUILD
-  BOOL is_in_job = FALSE;
-  CHECK(::IsProcessInJob(::GetCurrentProcess(), NULL, &is_in_job));
-  // In a Syzygy-profiled binary, instrumented for import profiling, this
-  // patch will end in infinite recursion on the attempted delegation to the
-  // original function.
-  if (!base::debug::IsBinaryInstrumented() &&
-      !is_in_job && !g_iat_patch_duplicate_handle.is_patched()) {
-    HMODULE module = NULL;
-    wchar_t module_name[MAX_PATH];
-    CHECK(::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
-                              reinterpret_cast<LPCWSTR>(InitBrokerServices),
-                              &module));
-    DWORD result = ::GetModuleFileNameW(module, module_name, MAX_PATH);
-    if (result && (result != MAX_PATH)) {
-      ResolveNTFunctionPtr("NtQueryObject", &g_QueryObject);
-      result = g_iat_patch_duplicate_handle.Patch(
-          module_name, "kernel32.dll", "DuplicateHandle",
-          DuplicateHandlePatch);
-      CHECK(result == 0);
-      g_iat_orig_duplicate_handle =
-          reinterpret_cast<DuplicateHandleFunctionPtr>(
-              g_iat_patch_duplicate_handle.original_function());
-    }
-  }
-#endif
-
-  return sandbox::SBOX_ALL_OK == result;
-}
-
-bool InitTargetServices(sandbox::TargetServices* target_services) {
-  DCHECK(target_services);
-  sandbox::ResultCode result = target_services->Init();
-  return sandbox::SBOX_ALL_OK == result;
-}
-
-sandbox::ResultCode StartSandboxedProcess(
+sandbox::ResultCode StartSandboxedProcessInternal(
     SandboxedProcessLauncherDelegate* delegate,
     base::CommandLine* cmd_line,
+    const std::string& type_str,
     const base::HandlesToInheritVector& handles_to_inherit,
     base::Process* process) {
-  DCHECK(delegate);
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
-  std::string type_str = cmd_line->GetSwitchValueASCII(switches::kProcessType);
-
-  TRACE_EVENT1("startup", "StartProcessWithAccess", "type", type_str);
 
   // Propagate the --allow-no-job flag if present.
-  if (browser_command_line.HasSwitch(switches::kAllowNoSandboxJob) &&
-      !cmd_line->HasSwitch(switches::kAllowNoSandboxJob)) {
-    cmd_line->AppendSwitch(switches::kAllowNoSandboxJob);
+  if (browser_command_line.HasSwitch(
+          service_manager::switches::kAllowNoSandboxJob) &&
+      !cmd_line->HasSwitch(service_manager::switches::kAllowNoSandboxJob)) {
+    cmd_line->AppendSwitch(service_manager::switches::kAllowNoSandboxJob);
   }
-
-  ProcessDebugFlags(cmd_line);
 
   if (service_manager::IsUnsandboxedSandboxType(delegate->GetSandboxType()) ||
       browser_command_line.HasSwitch(switches::kNoSandbox) ||
@@ -758,12 +502,9 @@ sandbox::ResultCode StartSandboxedProcess(
 
   // Pre-startup mitigations.
   sandbox::MitigationFlags mitigations =
-      sandbox::MITIGATION_HEAP_TERMINATE |
-      sandbox::MITIGATION_BOTTOM_UP_ASLR |
-      sandbox::MITIGATION_DEP |
-      sandbox::MITIGATION_DEP_NO_ATL_THUNK |
-      sandbox::MITIGATION_EXTENSION_POINT_DISABLE |
-      sandbox::MITIGATION_SEHOP |
+      sandbox::MITIGATION_HEAP_TERMINATE | sandbox::MITIGATION_BOTTOM_UP_ASLR |
+      sandbox::MITIGATION_DEP | sandbox::MITIGATION_DEP_NO_ATL_THUNK |
+      sandbox::MITIGATION_EXTENSION_POINT_DISABLE | sandbox::MITIGATION_SEHOP |
       sandbox::MITIGATION_NONSYSTEM_FONT_DISABLE |
       sandbox::MITIGATION_IMAGE_LOAD_NO_REMOTE |
       sandbox::MITIGATION_IMAGE_LOAD_NO_LOW_LABEL;
@@ -775,7 +516,8 @@ sandbox::ResultCode StartSandboxedProcess(
     return result;
 
 #if !defined(NACL_WIN64)
-  if (type_str == switches::kRendererProcess && IsWin32kLockdownEnabled()) {
+  if (type_str == switches::kRendererProcess &&
+      service_manager::IsWin32kLockdownEnabled()) {
     result = AddWin32kLockdownPolicy(policy.get(), false);
     if (result != sandbox::SBOX_ALL_OK)
       return result;
@@ -889,6 +631,255 @@ sandbox::ResultCode StartSandboxedProcess(
   CHECK(ResumeThread(target.thread_handle()) != static_cast<DWORD>(-1));
   *process = base::Process(target.TakeProcessHandle());
   return sandbox::SBOX_ALL_OK;
+}
+
+sandbox::ResultCode AddPolicyForSandboxedProcess(
+    sandbox::TargetPolicy* policy) {
+  sandbox::ResultCode result = sandbox::SBOX_ALL_OK;
+
+  // Win8+ adds a device DeviceApi that we don't need.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8)
+    result = policy->AddKernelObjectToClose(L"File", L"\\Device\\DeviceApi");
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+
+  // On 2003/Vista+ the initial token has to be restricted if the main
+  // token is restricted.
+  result = policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
+                                 sandbox::USER_LOCKDOWN);
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+  // Prevents the renderers from manipulating low-integrity processes.
+  result = policy->SetDelayedIntegrityLevel(sandbox::INTEGRITY_LEVEL_UNTRUSTED);
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+  result = policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+  policy->SetLockdownDefaultDacl();
+
+  result = policy->SetAlternateDesktop(true);
+  if (result != sandbox::SBOX_ALL_OK) {
+    // We ignore the result of setting the alternate desktop, however log
+    // a launch warning.
+    LogLaunchWarning(result, ::GetLastError());
+    DLOG(WARNING) << "Failed to apply desktop security to the renderer";
+    result = sandbox::SBOX_ALL_OK;
+  }
+
+  return result;
+}
+
+// Adds the generic policy rules to a sandbox TargetPolicy.
+sandbox::ResultCode AddGenericPolicy(sandbox::TargetPolicy* policy) {
+  sandbox::ResultCode result;
+
+  // Add the policy for the client side of a pipe. It is just a file
+  // in the \pipe\ namespace. We restrict it to pipes that start with
+  // "chrome." so the sandboxed process cannot connect to system services.
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
+                           sandbox::TargetPolicy::FILES_ALLOW_ANY,
+                           L"\\??\\pipe\\chrome.*");
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+
+  // Add the policy for the server side of nacl pipe. It is just a file
+  // in the \pipe\ namespace. We restrict it to pipes that start with
+  // "chrome.nacl" so the sandboxed process cannot connect to
+  // system services.
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
+                           sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
+                           L"\\\\.\\pipe\\chrome.nacl.*");
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+
+  // Allow the server side of sync sockets, which are pipes that have
+  // the "chrome.sync" namespace and a randomly generated suffix.
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_NAMED_PIPES,
+                           sandbox::TargetPolicy::NAMEDPIPES_ALLOW_ANY,
+                           L"\\\\.\\pipe\\chrome.sync.*");
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+
+// Add the policy for debug message only in debug
+#ifndef NDEBUG
+  base::FilePath app_dir;
+  if (!PathService::Get(base::DIR_MODULE, &app_dir))
+    return sandbox::SBOX_ERROR_GENERIC;
+
+  wchar_t long_path_buf[MAX_PATH];
+  DWORD long_path_return_value =
+      GetLongPathName(app_dir.value().c_str(), long_path_buf, MAX_PATH);
+  if (long_path_return_value == 0 || long_path_return_value >= MAX_PATH)
+    return sandbox::SBOX_ERROR_NO_SPACE;
+
+  base::FilePath debug_message(long_path_buf);
+  debug_message = debug_message.AppendASCII("debug_message.exe");
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_PROCESS,
+                           sandbox::TargetPolicy::PROCESS_MIN_EXEC,
+                           debug_message.value().c_str());
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+#endif  // NDEBUG
+
+// Add the policy for read-only PDB file access for stack traces.
+#if !defined(OFFICIAL_BUILD)
+  base::FilePath exe;
+  if (!PathService::Get(base::FILE_EXE, &exe))
+    return sandbox::SBOX_ERROR_GENERIC;
+  base::FilePath pdb_path = exe.DirName().Append(L"*.pdb");
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
+                           sandbox::TargetPolicy::FILES_ALLOW_READONLY,
+                           pdb_path.value().c_str());
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+#endif
+
+#if defined(SANITIZER_COVERAGE)
+  DWORD coverage_dir_size =
+      ::GetEnvironmentVariable(L"SANITIZER_COVERAGE_DIR", NULL, 0);
+  if (coverage_dir_size == 0) {
+    LOG(WARNING) << "SANITIZER_COVERAGE_DIR was not set, coverage won't work.";
+  } else {
+    std::wstring coverage_dir;
+    wchar_t* coverage_dir_str =
+        base::WriteInto(&coverage_dir, coverage_dir_size);
+    coverage_dir_size = ::GetEnvironmentVariable(
+        L"SANITIZER_COVERAGE_DIR", coverage_dir_str, coverage_dir_size);
+    CHECK(coverage_dir.size() == coverage_dir_size);
+    base::FilePath sancov_path =
+        base::FilePath(coverage_dir).Append(L"*.sancov");
+    result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
+                             sandbox::TargetPolicy::FILES_ALLOW_ANY,
+                             sancov_path.value().c_str());
+    if (result != sandbox::SBOX_ALL_OK)
+      return result;
+  }
+#endif
+
+  AddGenericDllEvictionPolicy(policy);
+  return sandbox::SBOX_ALL_OK;
+}
+
+sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
+                                sandbox::JobLevel job_level,
+                                uint32_t ui_exceptions,
+                                sandbox::TargetPolicy* policy) {
+  if (!ShouldSetJobLevel(cmd_line))
+    return policy->SetJobLevel(sandbox::JOB_NONE, 0);
+
+  sandbox::ResultCode ret = policy->SetJobLevel(job_level, ui_exceptions);
+  if (ret != sandbox::SBOX_ALL_OK)
+    return ret;
+
+  return SetJobMemoryLimit(cmd_line, policy);
+}
+
+// This is for finch. See also crbug.com/464430 for details.
+const base::Feature kEnableCsrssLockdownFeature{
+    "EnableCsrssLockdown", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// TODO(jschuh): Need get these restrictions applied to NaCl and Pepper.
+// Just have to figure out what needs to be warmed up first.
+sandbox::ResultCode AddBaseHandleClosePolicy(sandbox::TargetPolicy* policy) {
+  if (base::FeatureList::IsEnabled(kEnableCsrssLockdownFeature)) {
+    // Close all ALPC ports.
+    sandbox::ResultCode ret = policy->SetDisconnectCsrss();
+    if (ret != sandbox::SBOX_ALL_OK) {
+      return ret;
+    }
+  }
+
+  // TODO(cpu): Add back the BaseNamedObjects policy.
+  base::string16 object_path = PrependWindowsSessionPath(
+      L"\\BaseNamedObjects\\windows_shell_global_counters");
+  return policy->AddKernelObjectToClose(L"Section", object_path.data());
+}
+
+sandbox::ResultCode AddAppContainerPolicy(sandbox::TargetPolicy* policy,
+                                          const wchar_t* sid) {
+  if (IsAppContainerEnabled())
+    return policy->SetLowBox(sid);
+  return sandbox::SBOX_ALL_OK;
+}
+
+sandbox::ResultCode AddWin32kLockdownPolicy(sandbox::TargetPolicy* policy,
+                                            bool enable_opm) {
+#if !defined(NACL_WIN64)
+  if (!service_manager::IsWin32kLockdownEnabled())
+    return sandbox::SBOX_ALL_OK;
+
+  // Enable win32k lockdown if not already.
+  sandbox::MitigationFlags flags = policy->GetProcessMitigations();
+  if ((flags & sandbox::MITIGATION_WIN32K_DISABLE) ==
+      sandbox::MITIGATION_WIN32K_DISABLE)
+    return sandbox::SBOX_ALL_OK;
+
+  sandbox::ResultCode result =
+      policy->AddRule(sandbox::TargetPolicy::SUBSYS_WIN32K_LOCKDOWN,
+                      enable_opm ? sandbox::TargetPolicy::IMPLEMENT_OPM_APIS
+                                 : sandbox::TargetPolicy::FAKE_USER_GDI_INIT,
+                      nullptr);
+  if (result != sandbox::SBOX_ALL_OK)
+    return result;
+  if (enable_opm)
+    policy->SetEnableOPMRedirection();
+
+  flags |= sandbox::MITIGATION_WIN32K_DISABLE;
+  return policy->SetProcessMitigations(flags);
+#else
+  return sandbox::SBOX_ALL_OK;
+#endif
+}
+
+bool InitBrokerServices(sandbox::BrokerServices* broker_services) {
+  // TODO(abarth): DCHECK(CalledOnValidThread());
+  //               See <http://b/1287166>.
+  DCHECK(broker_services);
+  DCHECK(!g_broker_services);
+  sandbox::ResultCode result = broker_services->Init();
+  g_broker_services = broker_services;
+
+// In non-official builds warn about dangerous uses of DuplicateHandle.
+#ifndef OFFICIAL_BUILD
+  BOOL is_in_job = FALSE;
+  CHECK(::IsProcessInJob(::GetCurrentProcess(), NULL, &is_in_job));
+  // In a Syzygy-profiled binary, instrumented for import profiling, this
+  // patch will end in infinite recursion on the attempted delegation to the
+  // original function.
+  if (!base::debug::IsBinaryInstrumented() && !is_in_job &&
+      !g_iat_patch_duplicate_handle.is_patched()) {
+    HMODULE module = NULL;
+    wchar_t module_name[MAX_PATH];
+    CHECK(::GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+                              reinterpret_cast<LPCWSTR>(InitBrokerServices),
+                              &module));
+    DWORD result = ::GetModuleFileNameW(module, module_name, MAX_PATH);
+    if (result && (result != MAX_PATH)) {
+      ResolveNTFunctionPtr("NtQueryObject", &g_QueryObject);
+      result = g_iat_patch_duplicate_handle.Patch(
+          module_name, "kernel32.dll", "DuplicateHandle", DuplicateHandlePatch);
+      CHECK(result == 0);
+      g_iat_orig_duplicate_handle =
+          reinterpret_cast<DuplicateHandleFunctionPtr>(
+              g_iat_patch_duplicate_handle.original_function());
+    }
+  }
+#endif
+
+  return sandbox::SBOX_ALL_OK == result;
+}
+
+bool InitTargetServices(sandbox::TargetServices* target_services) {
+  DCHECK(target_services);
+  sandbox::ResultCode result = target_services->Init();
+  return sandbox::SBOX_ALL_OK == result;
+}
+
+void LogLaunchWarning(sandbox::ResultCode last_warning, DWORD last_error) {
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Process.Sandbox.Launch.WarningResultCode",
+                              last_warning);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Process.Sandbox.Launch.Warning", last_error);
 }
 
 }  // namespace content
