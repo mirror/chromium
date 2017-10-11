@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d077b589_575f7b8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-11T02:58:23Z",
+      "side": 1,
+      "message": "currently it is already \u003c74 characters, but good to know that, usually I would just wrap it \u003c 80 characters",
+      "parentUuid": "e740f258_0fe05d75",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7890c0b4_1514849b",
         "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
         "patchSetId": 10
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b62a5978_db9f1bc2",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-11T02:58:23Z",
+      "side": 1,
+      "message": "I commented code lines 508~512 for the test (since chrome quickly gets portal state successfully, then attempt is stopped).\n\nWhen I did \u0027iptables -I INPUT -j DROP\u0027, I saw shill connection state is still shill::kStatePortal and chrome gets NO RESPONSE pull result. That should fall into line 526.\n\nI am not quite familiar why there is line 526, maybe it is to let chrome get portal notification easier even chrome doesn\u0027t get successful pull result.\n\nI made the update by using a local boolean. Also updated unit tests.",
+      "parentUuid": "8b9c8679_d0a47f95",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0ce791e_b7843292",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -104,6 +140,24 @@
       "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ea1dc0_c6076f99",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 7819,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-11T02:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0ce791e_b7843292",
+      "revId": "a34dfea5651733306ecec945a3b4e592c185ef41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
