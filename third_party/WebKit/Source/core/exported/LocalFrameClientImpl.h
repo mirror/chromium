@@ -236,6 +236,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
                                                 WebTaskRunner*) override;
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
+  AssociatedInterfaceProvider* GetAssociatedInterfaceProvider() override;
 
   void AnnotatedRegionsChanged() override;
 
