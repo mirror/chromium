@@ -25,6 +25,8 @@ registerPaint('error', class {
 </script>
 
 <script>
+    if (typeof CSS.paintWorklet == "undefined")
+        document.getElementById('output').style.backgroundColor = 'red';
     importPaintWorkletAndTerminateTestAfterAsyncPaint(document.getElementById('code').textContent);
 </script>
 </body>
