@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb589f5f_1936956d",
+        "filename": "chrome/browser/embedded_ui_service_info_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-11T15:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f941fa21_50093f10",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 6
+      },
+      "revId": "e23a408df41f775d425c7545876058755aedff9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4727cc1_561d1b0e",
         "filename": "media/gpu/BUILD.gn",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d4ecc242_a9f6274c",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-11T15:11:05Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "c4727cc1_561d1b0e",
+      "revId": "e23a408df41f775d425c7545876058755aedff9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5cce4fc_2f6f5381",
         "filename": "services/ui/manifest.json",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-10T23:09:05Z",
       "side": 1,
       "message": "You are listing these interfaces as exported by the ui service, but they are only really exported by the ui service exposed for mushrome (in other words, they aren\u0027t available from mash or when the ui service is started standalone). You should have whoever needs these interfaces request them from chrome and not expose them from the ui service.",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "e23a408df41f775d425c7545876058755aedff9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d2ff5e_79eacbee",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-11T15:11:05Z",
+      "side": 1,
+      "message": "For cash, those interface is provided by GPU process, and those interfaces are running on the same thread of GPU. That is why I choose UI service. It is a temporary solution, when the GPU is moved to viz process, those interfaces will be moved to viz too.",
+      "parentUuid": "f5cce4fc_2f6f5381",
       "range": {
         "startLine": 13,
         "startChar": 10,
