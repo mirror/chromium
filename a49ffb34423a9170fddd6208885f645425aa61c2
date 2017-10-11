@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cef636_9e45181f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-11T19:00:39Z",
+      "side": 1,
+      "message": "actually...looks like we share this condition here and below, should we have this check at the top of the function to reduce the duplication?",
+      "range": {
+        "startLine": 1577,
+        "startChar": 25,
+        "endLine": 1577,
+        "endChar": 53
+      },
+      "revId": "a49ffb34423a9170fddd6208885f645425aa61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
