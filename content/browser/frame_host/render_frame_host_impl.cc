@@ -2677,6 +2677,9 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  if (IsCurrent())
+    frame_tree_node_->navigator()->DidStopLoading(this);
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {
