@@ -262,6 +262,9 @@ const base::Feature kNTPOfflinePagesFeature{"NTPOfflinePages",
 const base::Feature NTPShowGoogleGInOmniboxFeature{
     "NTPShowGoogleGInOmnibox", base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kOldSpiceFeature{"OldSpice",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kOmniboxSpareRenderer{"OmniboxSpareRenderer",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
 

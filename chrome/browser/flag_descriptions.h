@@ -562,6 +562,9 @@ extern const char kOfflineAutoReloadVisibleOnlyDescription[];
 extern const char kOffMainThreadFetchName[];
 extern const char kOffMainThreadFetchDescription[];
 
+extern const char kOldSpiceAndroidName[];
+extern const char kOldSpiceAndroidDescription[];
+
 extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
