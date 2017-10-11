@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "150f3f38_93dafdd2",
+        "filename": "chrome/browser/ui/views/location_bar/icon_label_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T20:27:55Z",
+      "side": 1,
+      "message": "Generally Layout is intended to just set the bounds of children (as the rest of the code is doing). Why do you need to explicitly call UpdateOpacity here? If the bounds change should trigger an update to opacity (which seems weird) then SeparatorView should handle this.\n\nPlease also update the patch description, it just documents what you are changing, not why. The \u0027why\u0027 is the key thing (which I don\u0027t entirely understand, hence the questions).",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 37
+      },
+      "revId": "73143baa1f188cd4d6ac7940712e50170377461d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
