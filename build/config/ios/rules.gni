@@ -1630,6 +1630,7 @@ template("ios_xctest_bundle") {
                                "enable_code_signing",
                                "product_type",
                                "xcode_test_application_name",
+                               "bundle_deps",
                              ])
 
       testonly = true
@@ -1939,13 +1940,16 @@ template("ios_xcuitest_test") {
 
   _xcuitest_module_output = _xcuitest_target
   ios_xctest_bundle(_xcuitest_module_target) {
-    forward_variables_from(invoker, [ "xcode_test_application_name" ])
+    forward_variables_from(invoker,
+                           [
+                             "xcode_test_application_name",
+                             "bundle_deps",
+                             "deps",
+                           ])
 
     product_type = "com.apple.product-type.bundle.ui-testing"
     host_target = _xcuitest_runner_target
     output_name = _xcuitest_module_output
-
-    deps = invoker.deps
   }
 
   _xcuitest_runner_output = _xcuitest_target + "-Runner"
