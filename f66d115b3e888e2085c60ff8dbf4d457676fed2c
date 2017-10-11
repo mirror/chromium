@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ffb777_3488123d",
+        "filename": "chrome/browser/banners/app_banner_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-11T05:47:41Z",
+      "side": 1,
+      "message": "Minor nit: reflow the comment",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 6
+      },
+      "revId": "f66d115b3e888e2085c60ff8dbf4d457676fed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
