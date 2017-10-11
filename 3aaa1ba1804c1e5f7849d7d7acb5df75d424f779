@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59786d77_9c590d2b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "nit: Remove \"That\" here and in line 11.",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63570ea_d133a230",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "nit: Add an empty line before this, and put a line break before the URL.",
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c30d56_46fce560",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "I think here you need to skip the users that don\u0027t fall under any of the four expected types. Otherwise this will DCHECK on something like a kiosk session.",
+      "range": {
+        "startLine": 953,
+        "startChar": 4,
+        "endLine": 953,
+        "endChar": 46
+      },
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47a8c00_48d623a6",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "nit: This needs to be renamed to match OnUsersSignInConstraintsChanged().",
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09021f4d_e7e6a11f",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "nit: Remove this leftover.",
+      "range": {
+        "startLine": 348,
+        "startChar": 37,
+        "endLine": 348,
+        "endChar": 45
+      },
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74a81b0_8f885dec",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-11T15:34:23Z",
+      "side": 1,
+      "message": "nit: \"Returns\"",
+      "range": {
+        "startLine": 352,
+        "startChar": 5,
+        "endLine": 352,
+        "endChar": 11
+      },
+      "revId": "3aaa1ba1804c1e5f7849d7d7acb5df75d424f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
