@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f06a3788_1fcbeeb3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T16:27:12Z",
+      "side": 1,
+      "message": "Yes, that turns out to be a lot easier. Thanks!",
+      "parentUuid": "6faf612f_52633fc3",
+      "range": {
+        "startLine": 434,
+        "startChar": 8,
+        "endLine": 435,
+        "endChar": 91
+      },
+      "revId": "7339631059a65c9130863f3eedf4c464bb0af5d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad54e1d1_02d831b6",
         "filename": "ui/android/java/src/org/chromium/ui/text/TextViewUtils.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7339631059a65c9130863f3eedf4c464bb0af5d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04727a21_fab41ab3",
+        "filename": "ui/android/java/src/org/chromium/ui/text/TextViewUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-11T16:27:12Z",
+      "side": 1,
+      "message": "Moot now, but good point! A slight hitch is that it only works with bitmaps, but compound drawables are arbitrary drawables, so that would become more complicated as well.",
+      "parentUuid": "ad54e1d1_02d831b6",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "7339631059a65c9130863f3eedf4c464bb0af5d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
