@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a838ca8_aadbae6a",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-11T19:29:23Z",
+      "side": 1,
+      "message": "Should this be |\u003d or something? Doesn\u0027t this lose the surface_damage we just set?\n\nIs there unittest for damage?",
+      "revId": "4618c834024ebc621cd8c95dd82bfe036c5ece0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
