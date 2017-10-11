@@ -1051,4 +1051,28 @@ TEST_F(WindowOcclusionTrackerTest, Clipping) {
   EXPECT_FALSE(delegate_c->is_expecting_call());
 }
 
+// Benchmark.
+TEST_F(WindowOcclusionTrackerTest, Benchmark) {
+  // Create 100 windows which all have a child window. The parent windows are
+  // all unoccluded while child windows are all occluded (except the last one).
+  // Child windows are tracked.
+  for (int i = 0; i < 100; ++i) {
+    Window* parent = CreateUntrackedWindow(gfx::Rect(i, i, 5, 5));
+    Window* child = CreateUntrackedWindow(gfx::Rect(2, 2, 2, 2), parent);
+    WindowOcclusionTracker::Track(child);
+  }
+
+  WindowOcclusionTracker* tracker = WindowOcclusionTracker::Get();
+
+  constexpr int kNumIterations = 20000;
+  base::TimeTicks start = base::TimeTicks::Now();
+  for (int i = 0; i < kNumIterations; ++i) {
+    tracker->root_windows_[root_window()].dirty = true;
+    tracker->MaybeRecomputeWindowOcclusionStates();
+  }
+  base::TimeDelta duration = base::TimeTicks::Now() - start;
+  LOG(ERROR) << "Average duration = "
+             << (duration / kNumIterations).InMicroseconds();
+}
+
 }  // namespace aura

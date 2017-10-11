@@ -7,6 +7,7 @@
 
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "ui/aura/aura_export.h"
 #include "ui/aura/window_observer.h"
@@ -55,8 +56,12 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   static void Track(Window* window);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(WindowOcclusionTrackerTest, Benchmark);
+
   WindowOcclusionTracker();
   ~WindowOcclusionTracker() override;
+
+  static WindowOcclusionTracker* Get();
 
   // Recomputes the occlusion state of tracked windows under roots marked as
   // dirty in |root_windows_| if there are no active

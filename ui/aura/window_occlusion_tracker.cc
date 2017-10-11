@@ -106,6 +106,10 @@ WindowOcclusionTracker::WindowOcclusionTracker() = default;
 
 WindowOcclusionTracker::~WindowOcclusionTracker() = default;
 
+WindowOcclusionTracker* WindowOcclusionTracker::Get() {
+  return g_tracker;
+}
+
 void WindowOcclusionTracker::MaybeRecomputeWindowOcclusionStates() {
   if (g_num_pause_occlusion_tracking)
     return;
@@ -174,7 +178,8 @@ void WindowOcclusionTracker::CleanupAnimatedWindows() {
   std::vector<Window*> non_animated_windows;
   for (Window* window : animated_windows_) {
     ui::LayerAnimator* const animator = window->layer()->GetAnimator();
-    if (!animator->IsAnimatingProperties(kSkipWindowWhenPropertiesAnimated)) {
+    if (!animator->IsAnimatingOnePropertyOf(
+            kSkipWindowWhenPropertiesAnimated)) {
       non_animated_windows.push_back(window);
       animator->RemoveObserver(this);
       auto root_window_state_it = root_windows_.find(window->GetRootWindow());
@@ -189,7 +194,7 @@ void WindowOcclusionTracker::CleanupAnimatedWindows() {
 
 void WindowOcclusionTracker::MaybeObserveAnimatedWindow(Window* window) {
   ui::LayerAnimator* const animator = window->layer()->GetAnimator();
-  if (animator->IsAnimatingProperties(kSkipWindowWhenPropertiesAnimated)) {
+  if (animator->IsAnimatingOnePropertyOf(kSkipWindowWhenPropertiesAnimated)) {
     const auto insert_result = animated_windows_.insert(window);
     if (insert_result.second)
       animator->AddObserver(this);
