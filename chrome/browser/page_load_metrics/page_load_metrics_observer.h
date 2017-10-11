@@ -400,8 +400,8 @@ class PageLoadMetricsObserver {
       const page_load_metrics::PageLoadExtraInfo& extra_info) {}
 
   // Invoked when new use counter features are observed across all frames.
-  virtual void OnFeaturesUsageObserved(
-      const mojom::PageLoadFeatures& features) {}
+  virtual void OnFeaturesUsageObserved(const mojom::PageLoadFeatures& features,
+                                       ukm::SourceId source_id) {}
 
   // Invoked when a media element starts playing.
   virtual void MediaStartedPlaying(
