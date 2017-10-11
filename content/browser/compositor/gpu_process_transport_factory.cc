@@ -540,11 +540,14 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 std::unique_ptr<viz::CompositorOverlayCandidateValidator>());
       } else if (capabilities.surfaceless) {
 #if defined(OS_MACOSX)
+        const auto& gpu_feature_info = context_provider->GetGpuFeatureInfo();
+        bool disable_overlay_ca_layers = gpu_feature_info.IsWorkaroundEnabled(
+            gpu::DISABLE_OVERLAY_CA_LAYERS);
         display_output_surface = base::MakeUnique<GpuOutputSurfaceMac>(
             compositor->widget(), context_provider, data->surface_handle,
             vsync_callback,
-            CreateOverlayCandidateValidator(
-                compositor->widget(), capabilities.disable_overlay_ca_layers),
+            CreateOverlayCandidateValidator(compositor->widget(),
+                                            disable_overlay_ca_layers),
             GetGpuMemoryBufferManager());
 #else
         auto gpu_output_surface =
