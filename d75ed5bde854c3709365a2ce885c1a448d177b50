@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba020e2_00aceaa1",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-11T01:35:13Z",
+      "side": 1,
+      "message": "So, cleverly, the bots actually use \"YES\" :(.",
+      "revId": "d75ed5bde854c3709365a2ce885c1a448d177b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
