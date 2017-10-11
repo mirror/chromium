@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dc4e629_5b6ea12b",
+        "filename": "base/files/file_path_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-11T00:28:01Z",
+      "side": 1,
+      "message": "Might be a good idea to add a test for the FILE_PATH_USES_WIN_SEPARATORS case, too.\n\nIt might also be good to document why we expect the result that we do, and not e.g. an empty FilePath object or other error signal.\n\nFor your use case in the other CL, we may need an error signal. A pathname with .. might be untrustworthy and it might not be safe to continue no using it.",
+      "revId": "af7d8f7f624736c687962395f75f7756835cba76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
