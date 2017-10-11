@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "369ea83b_20e67b75",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64502,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-11T17:18:36Z",
+      "side": 0,
+      "message": "Mark obsolete instead of deleting",
+      "range": {
+        "startLine": 64502,
+        "startChar": 77,
+        "endLine": 64502,
+        "endChar": 0
+      },
+      "revId": "1ac866601bbe6dace397d56085c33d8beafb5f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
