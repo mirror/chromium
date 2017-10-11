@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc939c9_479aed4f",
+        "filename": "chrome/browser/resources/md_extensions/extensions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-11T20:30:13Z",
+      "side": 1,
+      "message": "nit: period.",
+      "revId": "00ce73be37c240a53c9492114beb89c86c96fbf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
