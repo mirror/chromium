@@ -1,0 +1,15 @@
+; Copyright 2017 The Chromium Authors. All rights reserved.
+; Use of this source code is governed by a BSD-style license that can be
+; found in the LICENSE file.
+
+; *** The contents of common.sb are implicitly included here. ***
+
+; Allow preloading of the CDM using seatbelt extension.
+(allow file-read* (extension "com.apple.app-sandbox.read"))
+
+; Allow read framework and widevine resources files for CDM host verification
+(define framework-bundle-path "FRAMEWORK_BUNDLE_PATH")
+(allow file-read* (subpath (param framework-bundle-path)))
+
+(define widevine-resources-path "WIDEVINE_RESOURCES_PATH")
+(allow file-read* (subpath (param widevine-resources-path)))
