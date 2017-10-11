@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e0714b_c21b7298",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-11T19:51:22Z",
+      "side": 1,
+      "message": "This is failing closure compilation.  Not sure why!",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 43
+      },
+      "revId": "2d4ffe35207f070af6d73bfbe3be66a94be3f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
