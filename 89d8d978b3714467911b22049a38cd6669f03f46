@@ -134,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "e060d809_278b265a",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-11T23:09:14Z",
+      "side": 1,
+      "message": "#include \"algorithm.h\"\n\n  DCHECK(RangeIsBounded(ref.location, traits.width, size()));\n\nNote that |ref.location| and |traits.width| are both offset_t so this is fine.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2edf26a4_7deb90d1",
         "filename": "chrome/installer/zucchini/image_index.cc",
         "patchSetId": 19
@@ -150,6 +173,29 @@
         "startChar": 68,
         "endLine": 70,
         "endChar": 69
+      },
+      "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70bb431_2ccabddb",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-11T23:09:14Z",
+      "side": 1,
+      "message": "|disassembler|",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 46
       },
       "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -379,6 +425,29 @@
         "startLine": 34,
         "startChar": 7,
         "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c159217_ba25fb29",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-11T23:09:14Z",
+      "side": 1,
+      "message": "This appears to be unused?",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
         "endChar": 23
       },
       "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
@@ -730,6 +799,29 @@
         "startChar": 5,
         "endLine": 47,
         "endChar": 40
+      },
+      "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b35bd4_d22fffde",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-10-11T23:09:14Z",
+      "side": 1,
+      "message": "// Stores targets for pool in ascending order.",
+      "range": {
+        "startLine": 59,
+        "startChar": 32,
+        "endLine": 59,
+        "endChar": 33
       },
       "revId": "89d8d978b3714467911b22049a38cd6669f03f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
