@@ -16,6 +16,24 @@
       "revId": "a417532ea722608b7d7a5749e334cc959addf46b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5dd63e_61b0f256",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-11T05:42:13Z",
+      "side": 1,
+      "message": "Agreed. I filed https://crbug.com/773583 to track it.",
+      "parentUuid": "28987e00_8c982175",
+      "revId": "a417532ea722608b7d7a5749e334cc959addf46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
