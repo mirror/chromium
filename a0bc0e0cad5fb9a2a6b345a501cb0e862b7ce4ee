@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06d457a_097b3c98",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T22:40:00Z",
+      "side": 1,
+      "message": "How does this guarantee that import is not currently underway? Import happens outside any TaskQueue task and we don\u0027t keep track of existing requests.",
+      "revId": "a0bc0e0cad5fb9a2a6b345a501cb0e862b7ce4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
