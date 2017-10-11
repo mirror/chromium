@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebc204cd_8ecf96a1",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "nit: This also only takes effect when |src_files_| is empty, right?",
+      "range": {
+        "startLine": 103,
+        "startChar": 61,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "2913fdd78703dc22468c9f4c0f2b7d94d7000f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

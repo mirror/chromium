@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "804ef4ed_982d3cb0",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a96da7a0_81fc9a07",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23535d23_9f163491",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -128,6 +152,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7955152_50d5fffe",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4675d92c_f82351a4",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "dd88a90e_9606d0d0",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fbf1d18b_c26e960b",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 46
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a260fa6f_decba83a",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -272,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "4d2c50e0_76073899",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ah, right – for some reason I was thinking this was the non-IPC case.  Makes sense \u003d)",
+      "parentUuid": "845334a2_41932d6e",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 80
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edb84963_de475c49",
         "filename": "third_party/zlib/google/zip.cc",
         "patchSetId": 4
@@ -307,6 +403,30 @@
       "side": 1,
       "message": "I can, but then I do have to traverse twice (once to build the files, then to add them to the ZIP file).",
       "parentUuid": "edb84963_de475c49",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 5
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a249b1e_457349f2",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Iterating twice seems ok, unless you\u0027ve observed it to be a significant performance bottleneck.",
+      "parentUuid": "d7984adc_935da906",
       "range": {
         "startLine": 207,
         "startChar": 0,
@@ -648,6 +768,30 @@
     },
     {
       "key": {
+        "uuid": "d5126506_538e1291",
+        "filename": "third_party/zlib/google/zip.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce463151_9c55e388",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 53
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da75e783_dc6c3fd3",
         "filename": "third_party/zlib/google/zip.h",
         "patchSetId": 4
@@ -786,6 +930,30 @@
       "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1928397d_b22c49db",
+        "filename": "third_party/zlib/google/zip_internal.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-11T21:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0cad18db_03aaeee5",
+      "range": {
+        "startLine": 356,
+        "startChar": 59,
+        "endLine": 356,
+        "endChar": 64
+      },
+      "revId": "c7fdfb17c5e5d82839861c70e92775a815985375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
