@@ -11,6 +11,7 @@ namespace memory_instrumentation {
 using base::ProcessId;
 using base::trace_event::HeapProfilerSerializationState;
 using base::trace_event::MemoryAllocatorDump;
+using base::trace_event::MemoryAllocatorDumpGuid;
 using base::trace_event::MemoryDumpArgs;
 using base::trace_event::MemoryDumpLevelOfDetail;
 using base::trace_event::ProcessMemoryDump;
@@ -28,6 +29,9 @@ TEST(GraphProcessorTest, ComputeMemoryGraph) {
   auto* target = pmd.CreateAllocatorDump("target");
   pmd.AddOwnershipEdge(source->guid(), target->guid(), 10);
 
+  auto* weak =
+      pmd.CreateWeakSharedGlobalAllocatorDump(MemoryAllocatorDumpGuid(1));
+
   process_dumps.emplace(1, std::move(pmd));
 
   auto global_dump =
@@ -38,12 +42,15 @@ TEST(GraphProcessorTest, ComputeMemoryGraph) {
   auto id_to_dump_it = global_dump->process_dump_graphs().find(1);
   auto* first_child = id_to_dump_it->second->FindNode("test1");
   ASSERT_NE(first_child, nullptr);
+  ASSERT_EQ(first_child->parent(), id_to_dump_it->second->root());
 
   auto* second_child = first_child->GetChild("test2");
   ASSERT_NE(second_child, nullptr);
+  ASSERT_EQ(second_child->parent(), first_child);
 
   auto* third_child = second_child->GetChild("test3");
   ASSERT_NE(third_child, nullptr);
+  ASSERT_EQ(third_child->parent(), second_child);
 
   auto* direct = id_to_dump_it->second->FindNode("test1/test2/test3");
   ASSERT_EQ(third_child, direct);
@@ -52,6 +59,8 @@ TEST(GraphProcessorTest, ComputeMemoryGraph) {
 
   auto size = third_child->entries().find(MemoryAllocatorDump::kNameSize);
   ASSERT_EQ(10ul, size->second.value_uint64);
+
+  ASSERT_TRUE(weak->flags() & MemoryAllocatorDump::Flags::WEAK);
 
   auto& edges = global_dump->edges();
   auto edge_it = edges.begin();

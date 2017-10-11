@@ -30,14 +30,17 @@ class GlobalDumpGraph {
     ~Process();
 
     // Creates a node in the dump graph which is associated with the
-    // given |guid| and |path| and returns it.
+    // given |guid|, |path| and |weak|ness and returns it.
     GlobalDumpGraph::Node* CreateNode(
         base::trace_event::MemoryAllocatorDumpGuid guid,
-        base::StringPiece path);
+        base::StringPiece path,
+        bool weak);
 
     // Returns the node in the graph at the given |path| or nullptr
     // if no such node exists in the provided |graph|.
     GlobalDumpGraph::Node* FindNode(base::StringPiece path);
+
+    GlobalDumpGraph::Node* root() const { return root_; }
 
    private:
     GlobalDumpGraph* const global_graph_;
@@ -79,7 +82,7 @@ class GlobalDumpGraph {
       const uint64_t value_uint64;
     };
 
-    explicit Node(GlobalDumpGraph::Process* dump_graph);
+    explicit Node(GlobalDumpGraph::Process* dump_graph, Node* parent);
     ~Node();
 
     // Gets the direct child of a node for the given |subpath|.
@@ -101,17 +104,25 @@ class GlobalDumpGraph {
     // Sets the edge indicates that this node owns another node.
     void SetOwnsEdge(Edge* edge);
 
+    bool is_weak() const { return weak_; }
+    void set_weak(bool weak) { weak_ = weak; }
+    bool is_explicit() const { return explicit_; }
+    void set_explicit(bool explicit_node) { explicit_ = explicit_node; }
     GlobalDumpGraph::Edge* owns_edge() const { return owns_edge_; }
     const std::vector<GlobalDumpGraph::Edge*>& owned_by_edges() const {
       return owned_by_edges_;
     }
+    const Node* parent() const { return parent_; }
     const GlobalDumpGraph::Process* dump_graph() const { return dump_graph_; }
     const std::map<std::string, Entry>& entries() const { return entries_; }
 
    private:
     GlobalDumpGraph::Process* const dump_graph_;
+    Node* const parent_;
     std::map<std::string, Entry> entries_;
     std::map<std::string, Node*> children_;
+    bool explicit_;
+    bool weak_;
 
     GlobalDumpGraph::Edge* owns_edge_;
     std::vector<GlobalDumpGraph::Edge*> owned_by_edges_;
@@ -164,8 +175,9 @@ class GlobalDumpGraph {
 
  private:
   // Creates a node in the arena which is associated with the given
-  // |dump_graph|.
-  Node* CreateNode(GlobalDumpGraph::Process* dump_graph);
+  // |dump_graph| and for the given |parent|.
+  Node* CreateNode(GlobalDumpGraph::Process* dump_graph,
+                   GlobalDumpGraph::Node* parent);
 
   std::forward_list<Node> all_nodes_;
   std::forward_list<Edge> all_edges_;
