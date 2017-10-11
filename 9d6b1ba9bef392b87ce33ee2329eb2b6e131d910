@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1394f6a_deac913f",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T19:11:15Z",
+      "side": 1,
+      "message": "The voice search result isn\u0027t necessarily a URL right?  Why not call it \u0027result\u0027, to avoid confusion and a type mismatch with GURL/url use elsewhere?",
+      "range": {
+        "startLine": 63,
+        "startChar": 46,
+        "endLine": 63,
+        "endChar": 49
+      },
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb8654d_149d4e40",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T19:11:15Z",
+      "side": 1,
+      "message": "Please make sure the unit tests still compile. :)",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b218605_c7f76afc",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T19:11:15Z",
+      "side": 1,
+      "message": "FWIW, the scene manager already uses a microphone icon for the audio capture indicator, but I assume you still want this as a follow-on change.",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a81cb7_116109b4",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-11T19:11:15Z",
+      "side": 1,
+      "message": "Are you passing this back as a placeholder for a future population of a text search field or suggestions?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
