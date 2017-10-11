@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ca83bd9a_bad9adc0",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-11T18:06:11Z",
+      "side": 1,
+      "message": "Not done, but they need to go in //components now.",
+      "parentUuid": "bcc8cca7_6540df5c",
+      "range": {
+        "startLine": 1370,
+        "startChar": 21,
+        "endLine": 1370,
+        "endChar": 22
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424e6de4_4c2a64d7",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 3
@@ -117,6 +141,30 @@
       "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416023cf_1643da8e",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-11T18:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ed068b_8b91ce94",
+      "range": {
+        "startLine": 1371,
+        "startChar": 5,
+        "endLine": 1371,
+        "endChar": 50
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +306,30 @@
       "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9631df09_43cc6e30",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-11T18:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78e1e72a_1165e8c2",
+      "range": {
+        "startLine": 1388,
+        "startChar": 32,
+        "endLine": 1388,
+        "endChar": 33
+      },
+      "revId": "eecb18c07ca56375bf59718d50c6c52d82d5ea49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
