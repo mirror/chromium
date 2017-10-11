@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ada3e53_713e1734",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-11T18:31:07Z",
+      "side": 1,
+      "message": "Input throttling and guttering are handled differently.",
+      "parentUuid": "c578322e_fffa0cac",
+      "range": {
+        "startLine": 285,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 10
+      },
+      "revId": "c1dbb27e7c232b1539c17c0acbab2c7650afa95a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d08ca929_e8bae2db",
         "filename": "ui/compositor/compositor.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c1dbb27e7c232b1539c17c0acbab2c7650afa95a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb17696_cef8da97",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-11T18:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d08ca929_e8bae2db",
+      "range": {
+        "startLine": 215,
+        "startChar": 45,
+        "endLine": 215,
+        "endChar": 52
+      },
+      "revId": "c1dbb27e7c232b1539c17c0acbab2c7650afa95a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
