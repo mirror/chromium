@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d226a917_72d7902c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Add comment to the function description about what is that Clock for.",
+      "range": {
+        "startLine": 39,
+        "startChar": 32,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b008924c_84b920b1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "const ?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efe66dc_92dd9df6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Please, create \"SetClockForTesting\" instead.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2678277_4de0c28f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Please, fix the TODO",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 33
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf83ab2c_7b54fbda",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Looks like this import is not used.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9f3d7a_9bf5971c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Fix TODO, or update it with more appropriate message.",
+      "range": {
+        "startLine": 293,
+        "startChar": 3,
+        "endLine": 293,
+        "endChar": 19
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec82f8bc_b9d494fe",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-11T16:06:42Z",
+      "side": 1,
+      "message": "Add a comment about the Clock",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "13110c2e56df56db6ec65b2a76d68e210779c242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
