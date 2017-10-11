@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa7565c_1d47d708",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T20:19:49Z",
+      "side": 1,
+      "message": "DCHECK that the runner is null?",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a37f47_c95b298f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T20:19:49Z",
+      "side": 1,
+      "message": "Could we put the shutdown task runner here instead? It feels like a configuration option and I think it would read better at the call site.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da652602_8a7bf24c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T20:19:49Z",
+      "side": 1,
+      "message": "DCHECK that the queues are empty? Otherwise it\u0027s not a very graceful shutdown.",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f5bb80_53e85fa9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T20:19:49Z",
+      "side": 1,
+      "message": "DCHECK that the queue was actually there.",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0f7759_bddad663",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-11T20:19:49Z",
+      "side": 1,
+      "message": "How does this relate to UnregisterTaskQueue and why do we have both?",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
