@@ -46,6 +46,30 @@
       "revId": "f1f53399d7f91e4bff3e3f1a5c4f11d175373a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e273c5_12a93ef8",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-11T18:14:33Z",
+      "side": 1,
+      "message": "Ok. How come the nogncheck then? The dep you are adding in the chrome/common/BUILD.gn is unconditional.",
+      "parentUuid": "85d72f64_e02560bc",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "f1f53399d7f91e4bff3e3f1a5c4f11d175373a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
