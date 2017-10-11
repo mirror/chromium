@@ -4,6 +4,8 @@
 
 #include "net/cert/ev_root_ca_metadata.h"
 
+#include "net/der/input.h"
+
 #if defined(USE_NSS_CERTS)
 #include <cert.h>
 #include <pkcs11n.h>
@@ -18,7 +20,6 @@
 #if defined(USE_NSS_CERTS)
 #include "crypto/nss_util.h"
 #elif defined(OS_MACOSX)
-#include "net/der/input.h"
 #include "third_party/boringssl/src/include/openssl/asn1.h"
 #include "third_party/boringssl/src/include/openssl/obj.h"
 #endif
@@ -721,8 +722,30 @@ EVRootCAMetadata* EVRootCAMetadata::GetInstance() {
 }
 
 #if defined(USE_NSS_CERTS)
+
+// Converts a DER-encoded OID (without leading tag and length) to a SECOidTag.
+//
+// Returns true if it was able to find an *existing* SECOidTag (it will not
+// register one if missing).
+//
+// Since all the EV OIDs are registered during EVRootCAMetadata's constructor,
+// doing a lookup only needs to consider existing OID tags.
+static bool ConvertToSecOidTag(const der::Input& oid, SECOidTag* out) {
+  SECItem item;
+  item.data = const_cast<uint8_t*>(oid.UnsafeData());
+  item.len = oid.Length();
+  *out = SECOID_FindOIDTag(&item);
+  return *out != SEC_OID_UNKNOWN;
+}
+
 bool EVRootCAMetadata::IsEVPolicyOID(PolicyOID policy_oid) const {
   return policy_oids_.find(policy_oid) != policy_oids_.end();
+}
+
+bool EVRootCAMetadata::IsEVPolicyOIDGivenBytes(
+    const der::Input& policy_oid) const {
+  SECOidTag oid_tag;
+  return ConvertToSecOidTag(policy_oid, &oid_tag) && IsEVPolicyOID(oid_tag);
 }
 
 bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
@@ -736,6 +759,14 @@ bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
       return true;
   }
   return false;
+}
+
+bool EVRootCAMetadata::HasEVPolicyOIDGivenBytes(
+    const SHA256HashValue& fingerprint,
+    const der::Input& policy_oid) const {
+  SECOidTag oid_tag;
+  return ConvertToSecOidTag(policy_oid, &oid_tag) &&
+         HasEVPolicyOID(fingerprint, oid_tag);
 }
 
 // static
@@ -817,6 +848,12 @@ bool EVRootCAMetadata::IsEVPolicyOID(PolicyOID policy_oid) const {
   return false;
 }
 
+bool EVRootCAMetadata::IsEVPolicyOIDGivenBytes(
+    const der::Input& policy_oid) const {
+  // TODO(eroman): Implement.
+  return false;
+}
+
 bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
                                       PolicyOID policy_oid) const {
   for (size_t i = 0; i < arraysize(ev_root_ca_metadata); i++) {
@@ -833,6 +870,13 @@ bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
 
   ExtraEVCAMap::const_iterator it = extra_cas_.find(fingerprint);
   return it != extra_cas_.end() && it->second == policy_oid;
+}
+
+bool EVRootCAMetadata::HasEVPolicyOIDGivenBytes(
+    const SHA256HashValue& fingerprint,
+    PolicyOID policy_oid) const {
+  // TODO(eroman): Implement.
+  return false;
 }
 
 // static
@@ -881,6 +925,13 @@ bool EVRootCAMetadata::IsEVPolicyOID(PolicyOID policy_oid) const {
   return policy_oids_.find(policy_oid.AsString()) != policy_oids_.end();
 }
 
+bool EVRootCAMetadata::IsEVPolicyOIDGivenBytes(
+    const der::Input& policy_oid) const {
+  // The Mac implementation uses DER bytes already, so the two functions are the
+  // same.
+  return IsEVPolicyOID(policy_oid);
+}
+
 bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
                                       PolicyOID policy_oid) const {
   PolicyOIDMap::const_iterator iter = ev_policy_.find(fingerprint);
@@ -891,6 +942,14 @@ bool EVRootCAMetadata::HasEVPolicyOID(const SHA256HashValue& fingerprint,
       return true;
   }
   return false;
+}
+
+bool EVRootCAMetadata::HasEVPolicyOIDGivenBytes(
+    const SHA256HashValue& fingerprint,
+    const der::Input& policy_oid) const {
+  // The Mac implementation uses DER bytes already, so the two functions are the
+  // same.
+  return HasEVPolicyOID(fingerprint, policy_oid);
 }
 
 // static
