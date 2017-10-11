@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "757a9a11_58872438",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-request-xhr.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-11T06:52:59Z",
+      "side": 1,
+      "message": "nit: () \u003d\u003e",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 33
+      },
+      "revId": "b8a5486109c9fbc8ae3e986482a22fbc39934fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
