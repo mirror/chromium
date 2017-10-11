@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe166737_5e4ced46",
+        "filename": "chrome/android/java/res/layout/new_tab_page_layout.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-11T17:17:11Z",
+      "side": 1,
+      "message": "Is this a single line? If so, I suggest adding padding since that has consistent behavior on pre-L and L+ (where as adding line spacing does not).",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 33
+      },
+      "revId": "65d2ae27171db5ca6ffdba43f5df99a3dcdb8484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
