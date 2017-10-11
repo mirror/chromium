@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b667a8d_8c6c6425",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-11T01:09:39Z",
+      "side": 1,
+      "message": "Drop this line.",
+      "revId": "6b710d7959e33b119001fa3a8eb827386940dbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa79aad2_73e38963",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-11T01:09:39Z",
+      "side": 1,
+      "message": "And this line.",
+      "revId": "6b710d7959e33b119001fa3a8eb827386940dbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
