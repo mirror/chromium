@@ -59,7 +59,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/ignore_errors_cert_verifier.h"
+#include "content/public/browser/ignore_errors_cert_verifier_utils.h"
 #include "content/public/browser/network_quality_observer_factory.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -785,9 +785,8 @@ void IOThread::ConstructSystemRequestContext() {
 #endif
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  builder->SetCertVerifier(
-      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-          command_line, switches::kUserDataDir, std::move(cert_verifier)));
+  builder->SetCertVerifier(content::MaybeWrapCertVerifier(
+      command_line, switches::kUserDataDir, std::move(cert_verifier)));
   UMA_HISTOGRAM_BOOLEAN(
       "Net.Certificate.IgnoreCertificateErrorsSPKIListPresent",
       command_line.HasSwitch(switches::kIgnoreCertificateErrorsSPKIList));
