@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c32185b_ed660dde",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b74a873_b433937a",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97683318_1f4851a1",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4faf143_e8190d14",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97683318_1f4851a1",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07e6b1cc_f47205f0",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7a03f8_ff0257ba",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aabdf89a_02d0a76c",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba40ab6e_3a50369e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aabdf89a_02d0a76c",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02532d14_10099aa8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa39db40_e4e0da7b",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ca7e9b_f686f5cb",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e266287_4421b921",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-11T19:49:37Z",
+      "side": 1,
+      "message": "Done. I made kDefaultMaxDailyQuotaBytes public and used that in the unit tests instead.",
+      "parentUuid": "58ca7e9b_f686f5cb",
+      "revId": "f0d896d9652a1a7fd61a0862ad9f5237433b3625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
