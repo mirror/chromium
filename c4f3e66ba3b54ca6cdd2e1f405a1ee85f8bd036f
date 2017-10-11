@@ -16,6 +16,24 @@
       "revId": "c4f3e66ba3b54ca6cdd2e1f405a1ee85f8bd036f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0371063e_a632670a",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-11T20:04:26Z",
+      "side": 1,
+      "message": "This makes me lean back towards removing the class, and letting future implementations re-plumb it and rejustify (or adjust) the naming.  It has drifted into clique-speak to my ear.  A fresh round of modelling and definition might be a better thing for the project.\n\nNotwothstanding, I\u0027ve added the suggested member.",
+      "parentUuid": "65a9fd8f_c15f0a3e",
+      "revId": "c4f3e66ba3b54ca6cdd2e1f405a1ee85f8bd036f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
