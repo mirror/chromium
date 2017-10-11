@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.StringDef;
 import android.util.Log;
 
 import org.chromium.base.ContextUtils;
@@ -55,6 +56,16 @@ public final class PrefServiceBridge {
     private static final String CONTEXTUAL_SEARCH_ENABLED = "true";
 
     /**
+     * Preference names that match native preference names used in PrefService.
+     */
+    @StringDef({
+            ALLOW_DELETING_BROWSER_HISTORY, INCOGNITO_MODE_AVAILABILITY,
+    })
+    public @interface PrefName {}
+    public static final String ALLOW_DELETING_BROWSER_HISTORY = "history.deleting_enabled";
+    public static final String INCOGNITO_MODE_AVAILABILITY = "incognito.mode_availability";
+
+    /**
      * Structure that holds all the version information about the current Chrome browser.
      */
     public static class AboutVersionStrings {
@@ -101,6 +112,14 @@ public final class PrefServiceBridge {
      */
     public static boolean isInitialized() {
         return sInstance != null;
+    }
+
+    /**
+     * @param preference The name of the preference.
+     * @return Whether the specified preference is enabled.
+     */
+    public boolean getBoolean(@PrefName String preference) {
+        return nativeGetBoolean(preference);
     }
 
     /**
@@ -662,13 +681,6 @@ public final class PrefServiceBridge {
         nativeMigrateBrowsingDataPreferences();
     }
 
-    /**
-     * @return Whether browser history can be deleted by the user.
-     */
-    public boolean canDeleteBrowsingHistory() {
-        return nativeCanDeleteBrowsingHistory();
-    }
-
     public void setAllowCookiesEnabled(boolean allow) {
         nativeSetAllowCookiesEnabled(allow);
     }
@@ -957,6 +969,7 @@ public final class PrefServiceBridge {
         nativeSetSupervisedUserId(supervisedUserId);
     }
 
+    private native boolean nativeGetBoolean(String preference);
     private native boolean nativeGetAcceptCookiesEnabled();
     private native boolean nativeGetAcceptCookiesUserModifiable();
     private native boolean nativeGetAcceptCookiesManagedByCustodian();
@@ -1005,7 +1018,6 @@ public final class PrefServiceBridge {
     private native int nativeGetLastClearBrowsingDataTab();
     private native void nativeSetLastClearBrowsingDataTab(int lastTab);
     private native void nativeMigrateBrowsingDataPreferences();
-    private native boolean nativeCanDeleteBrowsingHistory();
     private native void nativeSetAutoplayEnabled(boolean allow);
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);
