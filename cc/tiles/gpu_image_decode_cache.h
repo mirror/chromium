@@ -243,13 +243,15 @@ class CC_EXPORT GpuImageDecodeCache
     ImageData(DecodedDataMode mode,
               size_t size,
               const gfx::ColorSpace& target_color_space,
-              const SkImage::DeferredTextureImageUsageParams& upload_params);
+              SkFilterQuality quality,
+              int mip_level);
 
     const DecodedDataMode mode;
     const size_t size;
     gfx::ColorSpace target_color_space;
+    SkFilterQuality quality;
+    int mip_level;
     bool is_at_raster = false;
-    SkImage::DeferredTextureImageUsageParams upload_params;
 
     // If true, this image is no longer in our |persistent_cache_| and will be
     // deleted as soon as its ref count reaches zero.
@@ -373,7 +375,7 @@ class CC_EXPORT GpuImageDecodeCache
 
   const SkColorType color_type_;
   viz::ContextProvider* context_;
-  sk_sp<GrContextThreadSafeProxy> context_threadsafe_proxy_;
+  int max_texture_size_ = 0;
 
   // All members below this point must only be accessed while holding |lock_|.
   // The exception are const members like |normal_max_cache_bytes_| that can
