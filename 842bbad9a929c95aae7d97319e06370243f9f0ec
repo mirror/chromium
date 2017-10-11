@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4429df85_a08bf15b",
+        "filename": "content/browser/ssl/ignore_errors_cert_verifier_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T22:49:44Z",
+      "side": 1,
+      "message": "If ignore_errors_cert_verifier is moved to a new location, then the tests should be moved too.",
+      "revId": "842bbad9a929c95aae7d97319e06370243f9f0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34b93a8_d0496655",
+        "filename": "content/public/browser/ignore_errors_cert_verifier_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-11T22:49:44Z",
+      "side": 1,
+      "message": "Can this be placed in content/public/network so our network service can use it, instead of duplicating code?\n\n(We could move the entire IgnoreErrorsCertVerifier there, instead of splitting it.)",
+      "revId": "842bbad9a929c95aae7d97319e06370243f9f0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
