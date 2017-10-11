@@ -629,6 +629,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       SubstitutionWriter::ApplyListToLinkerAsOutputFile(
           target_, tool, tool->outputs(), &output_files);
       std::vector<SourceFile> output_files_as_source_file;
+      output_files_as_source_file.reserve(output_files.size());
       for (const OutputFile& output_file : output_files)
         output_files_as_source_file.push_back(
             output_file.AsSourceFile(target_->settings()->build_settings()));

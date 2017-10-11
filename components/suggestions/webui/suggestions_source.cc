@@ -75,6 +75,7 @@ std::string RenderOutputHtml(
     line += "</a> Expires in ";
     line += base::UTF16ToUTF8(remaining_time_formatted);
     std::vector<std::string> providers;
+    providers.reserve(suggestion.providers_size());
     for (int p = 0; p < suggestion.providers_size(); ++p)
       providers.push_back(base::IntToString(suggestion.providers(p)));
     line += ". Provider IDs: " + base::JoinString(providers, ", ");

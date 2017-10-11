@@ -63,6 +63,7 @@ bool SuggestedArticlesObserver::GetCurrentSuggestions(
       test_articles_ ? *test_articles_
                      : content_suggestions_service_->GetSuggestionsForCategory(
                            ArticlesCategory());
+  prefetch_urls.reserve(suggestions.size());
   for (const ContentSuggestion& suggestion : suggestions) {
     prefetch_urls.push_back({suggestion.id().id_within_category(),
                              suggestion.url(), suggestion.title()});

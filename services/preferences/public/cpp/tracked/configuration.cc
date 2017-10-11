@@ -16,6 +16,7 @@ mojom::TrackedPreferenceMetadataPtr ConstructTrackedMetadata(
 std::vector<mojom::TrackedPreferenceMetadataPtr> CloneTrackedConfiguration(
     const std::vector<mojom::TrackedPreferenceMetadataPtr>& configuration) {
   std::vector<mojom::TrackedPreferenceMetadataPtr> result;
+  result.reserve(configuration.size());
   for (const auto& metadata : configuration) {
     result.push_back(metadata.Clone());
   }

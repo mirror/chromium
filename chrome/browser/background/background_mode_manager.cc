@@ -544,6 +544,7 @@ void BackgroundModeManager::OnApplicationListChanged(Profile* profile) {
   // Get the new apps (if any) and process them.
   std::set<const extensions::Extension*> new_apps = bmd->GetNewBackgroundApps();
   std::vector<base::string16> new_names;
+  new_names.reserve(new_apps.size());
   for (auto* app : new_apps)
     new_names.push_back(base::UTF8ToUTF16(app->name()));
   OnClientsChanged(profile, new_names);

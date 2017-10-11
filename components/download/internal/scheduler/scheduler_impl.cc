@@ -19,6 +19,7 @@ namespace {
 template <typename T>
 std::vector<T> ToList(const std::set<T>& set) {
   std::vector<T> list;
+  list.reserve(set.size());
   for (const auto& element : set) {
     list.push_back(element);
   }

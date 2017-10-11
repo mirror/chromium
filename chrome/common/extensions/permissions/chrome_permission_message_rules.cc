@@ -168,6 +168,7 @@ class HostListFormatter : public ChromePermissionMessageFormatter {
                      ? IDS_EXTENSION_PROMPT_WARNING_HOST_AND_SUBDOMAIN
                      : IDS_EXTENSION_PROMPT_WARNING_HOST_AND_SUBDOMAIN_LIST;
     std::vector<base::string16> messages;
+    messages.reserve(hosts.size());
     for (const base::string16& host : hosts) {
       messages.push_back(
           host[0] == '*' && host[1] == '.'

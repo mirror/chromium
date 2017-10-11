@@ -103,6 +103,7 @@ bool HasExpiredOrIncompleteResult(
   // - Favicons inserted into the history backend by sync.
   // - Favicons for imported bookmarks.
   std::vector<gfx::Size> favicon_sizes;
+  favicon_sizes.reserve(bitmap_results.size());
   for (const auto& bitmap_result : bitmap_results)
     favicon_sizes.push_back(bitmap_result.pixel_size);
 

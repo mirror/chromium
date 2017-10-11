@@ -1275,6 +1275,8 @@ void WindowTreeClient::OnClientAreaChanged(
 
   float device_scale_factor = window->GetDeviceScaleFactor();
   std::vector<gfx::Rect> new_additional_client_areas_in_dip;
+  new_additional_client_areas_in_dip.reserve(
+      new_additional_client_areas.size());
   for (const gfx::Rect& area : new_additional_client_areas) {
     new_additional_client_areas_in_dip.push_back(
         gfx::ConvertRectToDIP(device_scale_factor, area));
@@ -2156,6 +2158,7 @@ void WindowTreeClient::OnWindowTreeHostClientAreaWillChange(
   WindowMus* window = WindowMus::Get(window_tree_host->window());
   float device_scale_factor = window->GetDeviceScaleFactor();
   std::vector<gfx::Rect> additional_client_areas_in_pixel;
+  additional_client_areas_in_pixel.reserve(additional_client_areas.size());
   for (const gfx::Rect& area : additional_client_areas) {
     additional_client_areas_in_pixel.push_back(
         gfx::ConvertRectToPixel(device_scale_factor, area));

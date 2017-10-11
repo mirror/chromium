@@ -18,6 +18,7 @@ namespace {
 std::vector<blink::WebImeTextSpan> ConvertToBlinkImeTextSpan(
     const std::vector<ui::ImeTextSpan>& ui_ime_text_spans) {
   std::vector<blink::WebImeTextSpan> ime_text_spans;
+  ime_text_spans.reserve(ui_ime_text_spans.size());
   for (const auto& ime_text_span : ui_ime_text_spans) {
     ime_text_spans.emplace_back(blink::WebImeTextSpan(
         ConvertUiImeTextSpanTypeToWebType(ime_text_span.type),

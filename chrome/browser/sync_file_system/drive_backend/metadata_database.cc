@@ -1743,6 +1743,7 @@ std::unique_ptr<base::ListValue> MetadataDatabase::DumpMetadata() {
       dict->SetString("change_id", base::Int64ToString(details.change_id()));
 
       std::vector<base::StringPiece> parents;
+      parents.reserve(details.parent_folder_ids_size());
       for (int i = 0; i < details.parent_folder_ids_size(); ++i)
         parents.push_back(details.parent_folder_ids(i));
       dict->SetString("parents", base::JoinString(parents, ","));

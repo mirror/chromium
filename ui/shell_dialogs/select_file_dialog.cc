@@ -48,6 +48,7 @@ void SelectFileDialog::Listener::MultiFilesSelectedWithExtraInfo(
     const std::vector<ui::SelectedFileInfo>& files,
     void* params) {
   std::vector<base::FilePath> file_paths;
+  file_paths.reserve(files.size());
   for (const ui::SelectedFileInfo& file : files) {
     file_paths.push_back(file.local_path.empty() ? file.file_path
                                                  : file.local_path);

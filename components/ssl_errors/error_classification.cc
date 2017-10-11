@@ -450,6 +450,7 @@ bool IsCertLikelyFromSameDomain(const GURL& request_url,
   dns_names.push_back(host_name);
   std::vector<std::string> dns_names_domain;
 
+  dns_names_domain.reserve(dns_names.size());
   for (const std::string& dns_name : dns_names) {
     dns_names_domain.push_back(
         net::registry_controlled_domains::GetDomainAndRegistry(

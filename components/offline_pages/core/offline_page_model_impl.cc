@@ -977,6 +977,7 @@ void OfflinePageModelImpl::OnPagesFoundWithSameURL(
     pages_to_delete.resize(pages_to_delete.size() - pages_allowed + 1);
   }
   std::vector<int64_t> page_ids_to_delete;
+  page_ids_to_delete.reserve(pages_to_delete.size());
   for (const auto& item : pages_to_delete)
     page_ids_to_delete.push_back(item.offline_id);
   DeletePagesByOfflineId(
