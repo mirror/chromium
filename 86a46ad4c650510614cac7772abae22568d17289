@@ -227,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "16318c37_389d6c42",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-11T09:11:06Z",
+      "side": 1,
+      "message": "I\u0027m giving this more thought with kinuko@\n\nE.g. https://cs.chromium.org/chromium/src/content/child/web_url_loader_impl.cc (thought it\u0027s not a URLLoaderThrottle) is also tracking redirect chain by itself.\n\nOut of URLLoaderClient implementations, I see the following ones for example, but are not majority:\n- AppCacheURLLoaderJob\n- DownloadResponseHandler\n- NavigationURLLoaderNetworkService\n- ResourceFetcherImpl::ClientImpl\n\nAt this point, the two other URLLoaderThrottle implementations don\u0027t track it.\n\nOn the other hand, in addition to the idea that it doesn\u0027t make so much sense to have clients track redirects to figure out the final request URL, there is also an idea that we\u0027d like to avoid having two (redundant) ways to do the same thing (possibly introduce additional processing, additional engineering cost for keeping them consistent, etc.).\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/709595/1/content/child/web_url_loader_impl.cc#213 might be also an implication that tracking URL is something a consumer should do as kinuko@ wondered in\nhttps://chromium-review.googlesource.com/c/chromium/src/+/709595/1/content/network/url_loader_impl.cc#60\n\nDaniel, what\u0027s your gut impression on the approach of https://chromium-review.googlesource.com/c/chromium/src/+/709595 after authoring it?",
+      "parentUuid": "86fa4b60_a83003d5",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6124ccc_031c6b03",
         "filename": "content/public/common/url_loader_throttle.h",
         "patchSetId": 1
