@@ -22,6 +22,30 @@
       "revId": "48586db6a332c7b0b0f0c3b13e98a1e2dd533463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9662fb_3e130f3b",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-11T20:37:43Z",
+      "side": 1,
+      "message": "Media.EME.CdmInterfaceVersion is an existing UMA and we don\u0027t want to change the meaning of it. For CDM creation failure, we do plan to add another UMA for it. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d700147",
+      "parentUuid": "5f8bf91c_cee3fa11",
+      "range": {
+        "startLine": 455,
+        "startChar": 30,
+        "endLine": 455,
+        "endChar": 56
+      },
+      "revId": "48586db6a332c7b0b0f0c3b13e98a1e2dd533463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
