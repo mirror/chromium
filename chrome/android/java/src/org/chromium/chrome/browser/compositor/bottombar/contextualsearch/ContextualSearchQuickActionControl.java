@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.contextualsearch.ContextualSearchUma;
 import org.chromium.chrome.browser.contextualsearch.QuickActionCategory;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
@@ -289,8 +290,9 @@ public class ContextualSearchQuickActionControl extends ViewResourceInflater {
                 iconResId = ICON_MAP.get(mQuickActionCategory);
 
                 Resources res = mContext.getResources();
-                if (mToolbarBackgroundColor != 0
-                        && !ColorUtils.isUsingDefaultToolbarColor(res, mToolbarBackgroundColor)
+                int defaultThemeColor = ColorUtils.getDefaultThemeColor(
+                        res, FeatureUtilities.isChromeHomeEnabled(), false);
+                if (mToolbarBackgroundColor != 0 && defaultThemeColor != mToolbarBackgroundColor
                         && ColorUtils.shouldUseLightForegroundOnBackground(
                                    mToolbarBackgroundColor)) {
                     // Tint the link icon to match the custom tab toolbar.

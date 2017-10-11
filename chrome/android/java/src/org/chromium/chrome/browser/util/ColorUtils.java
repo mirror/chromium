@@ -163,16 +163,6 @@ public class ColorUtils {
     }
 
     /**
-     * Test if the toolbar is using the default color.
-     * @param resources The resources to get the toolbar primary color.
-     * @param color The color that the toolbar is using.
-     * @return If the color is the default toolbar color.
-     */
-    public static boolean isUsingDefaultToolbarColor(Resources resources, int color) {
-        return color == ApiCompatibilityUtils.getColor(resources, R.color.default_primary_color);
-    }
-
-    /**
      * Determine if a theme color is valid. A theme color is invalid if its luminance is > 0.94.
      * @param color The color to test.
      * @return True if the theme color is valid.

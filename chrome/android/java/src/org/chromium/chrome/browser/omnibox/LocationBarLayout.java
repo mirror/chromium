@@ -1342,11 +1342,13 @@ public class LocationBarLayout extends FrameLayout
             Resources resources, boolean isOmniboxOpaque) {
         ColorStateList list = null;
         int color = provider.getPrimaryColor();
+        int defaultThemeColor = ColorUtils.getDefaultThemeColor(
+                resources, FeatureUtilities.isChromeHomeEnabled(), provider.isIncognito());
         boolean needLightIcon = ColorUtils.shouldUseLightForegroundOnBackground(color);
         if (provider.isIncognito() || needLightIcon) {
             // For a dark theme color, use light icons.
             list = ApiCompatibilityUtils.getColorStateList(resources, R.color.light_mode_tint);
-        } else if (!ColorUtils.isUsingDefaultToolbarColor(resources, color) && !isOmniboxOpaque) {
+        } else if (defaultThemeColor != color && !isOmniboxOpaque) {
             // For theme colors which are not dark and are also not
             // light enough to warrant an opaque URL bar, use dark
             // icons.

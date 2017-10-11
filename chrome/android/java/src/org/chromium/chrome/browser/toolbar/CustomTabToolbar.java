@@ -428,8 +428,8 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
         mTitleBar.setTextColor(titleTextColor);
 
         if (getProgressBar() != null) {
-            if (!ColorUtils.isUsingDefaultToolbarColor(getResources(),
-                    getBackground().getColor())) {
+            if (ColorUtils.getDefaultThemeColor(getResources(), false, false)
+                    != getBackground().getColor()) {
                 getProgressBar().setThemeColor(getBackground().getColor(), false);
             } else {
                 getProgressBar().setBackgroundColor(ApiCompatibilityUtils.getColor(resources,
