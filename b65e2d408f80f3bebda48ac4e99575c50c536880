@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60ccdb5_4b9971fa",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:13:03Z",
+      "side": 1,
+      "message": "Is this a typical pattern? Wouldn\u0027t we rather always attach NoteTakingController and then store a boolean instead of overloading attach/detach with new semantics?",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab025fd5_d7140deb",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-11T21:13:03Z",
+      "side": 1,
+      "message": "!!client_?",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
