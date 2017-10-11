@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87ffe99f_f37f013c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "My fault. Been titling my commits, forgot the overall message.",
+      "parentUuid": "69d7b0cc_d97b2608",
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dacd2cea_bf38cadb",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "570c50e6bd535464792eb620ad068317b5458570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7156455a_facb1b3a",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "you right.",
+      "parentUuid": "dacd2cea_bf38cadb",
+      "range": {
+        "startLine": 790,
+        "startChar": 11,
+        "endLine": 790,
+        "endChar": 53
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "47448394_cf2f6524",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "Is it adequate to simply simply log that the error could\u0027ve been due to an error in parsing or the request failed? This does not seem like the right place to distinguish between the two cases",
+      "parentUuid": "dd588d53_948b867b",
+      "range": {
+        "startLine": 800,
+        "startChar": 21,
+        "endLine": 800,
+        "endChar": 48
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c11a70_643e64bc",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 9
@@ -85,6 +151,30 @@
       "revId": "570c50e6bd535464792eb620ad068317b5458570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533895b2_caa56d79",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "Agreed. This is not done in the other ValidateAndParse...JSON methods. Should this be done as well?",
+      "parentUuid": "83c11a70_643e64bc",
+      "range": {
+        "startLine": 1067,
+        "startChar": 41,
+        "endLine": 1067,
+        "endChar": 49
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "88865dcf_a4b0bb79",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "good call.",
+      "parentUuid": "59d9d02b_a73bfe8b",
+      "range": {
+        "startLine": 1071,
+        "startChar": 9,
+        "endLine": 1071,
+        "endChar": 12
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d28e4db3_a1151e24",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 9
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "21e76a6c_9ffd0740",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "makes sense",
+      "parentUuid": "d28e4db3_a1151e24",
+      "range": {
+        "startLine": 1085,
+        "startChar": 12,
+        "endLine": 1085,
+        "endChar": 17
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61ed4b32_a85aea77",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 9
@@ -154,6 +292,30 @@
       "revId": "570c50e6bd535464792eb620ad068317b5458570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4717fce5_81c12a20",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-11T17:27:42Z",
+      "side": 1,
+      "message": "smart. will keep an eye out for this in the future.",
+      "parentUuid": "61ed4b32_a85aea77",
+      "range": {
+        "startLine": 1093,
+        "startChar": 23,
+        "endLine": 1093,
+        "endChar": 59
+      },
+      "revId": "570c50e6bd535464792eb620ad068317b5458570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
