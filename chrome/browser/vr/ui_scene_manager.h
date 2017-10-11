@@ -62,6 +62,7 @@ struct UiInitialState;
 //       kUrlBar
 //         kLoadingIndicator
 //         kExitButton
+//         kUnderDevelopmentNotice
 //     kFullscreenToast
 //     kScreenDimmer
 //     k2dBrowsingViewportAwareRoot
@@ -105,6 +106,7 @@ class UiSceneManager {
   void SetBluetoothConnectedIndicator(bool enabled);
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
   void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
+  void SetVoiceSearchResult(const std::string& url);
 
   // UiInterface support methods.
   bool ShouldRenderWebVr();
@@ -139,6 +141,7 @@ class UiSceneManager {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateVoiceSearchButton();
 
   void ConfigureScene();
   void ConfigureExclusiveScreenToast();
@@ -150,6 +153,7 @@ class UiSceneManager {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
+  void OnVoiceSearchButtonClicked();
   ColorScheme::Mode mode() const;
 
   TransientElement* AddTransientParent(UiElementName name,
@@ -178,6 +182,7 @@ class UiSceneManager {
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
+  UiElement* voice_search_button_ = nullptr;
   UrlBar* url_bar_ = nullptr;
   TransientElement* webvr_url_toast_transient_parent_ = nullptr;
   WebVrUrlToast* webvr_url_toast_ = nullptr;
@@ -202,6 +207,7 @@ class UiSceneManager {
   bool screen_capturing_ = false;
   bool location_access_ = false;
   bool bluetooth_connected_ = false;
+  bool recognizing_speech_ = false;
   UiUnsupportedMode exit_vr_prompt_reason_ = UiUnsupportedMode::kCount;
 
   std::vector<Rect*> background_panels_;
