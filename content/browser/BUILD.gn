@@ -800,6 +800,8 @@ source_set("browser") {
     "geolocation/geolocation_service_impl.h",
     "gpu/browser_gpu_channel_host_factory.cc",
     "gpu/browser_gpu_channel_host_factory.h",
+    "gpu/browser_gpu_client.cc",
+    "gpu/browser_gpu_client.h",
     "gpu/browser_gpu_memory_buffer_manager.cc",
     "gpu/browser_gpu_memory_buffer_manager.h",
     "gpu/compositor_util.cc",
