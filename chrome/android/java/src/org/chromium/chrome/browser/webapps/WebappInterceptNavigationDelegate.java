@@ -30,7 +30,9 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
         }
 
         if (UrlUtilities.isValidForIntentFallbackNavigation(navigationParams.url)
-                && isUrlOutsideWebappScope(mActivity.mWebappInfo, navigationParams.url)) {
+                && !mActivity.scopePolicy().isUrlInScope(
+                           mActivity.mWebappInfo, navigationParams.url)
+                && mActivity.scopePolicy().openOffScopeNavsInCct()) {
             CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
             intentBuilder.setShowTitle(true);
             if (mActivity.mWebappInfo.hasValidThemeColor()) {
@@ -44,10 +46,5 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
         }
 
         return false;
-    }
-
-    // Note that WebApks override this with a rule based on web manifest scope.
-    protected boolean isUrlOutsideWebappScope(WebappInfo info, String url) {
-        return !UrlUtilities.sameDomainOrHost(info.uri().toString(), url, true);
     }
 }
