@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a62789_170c064a",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Nit: Equivalent to @private {string}",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58c0471_d46d3391",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Do we need all these getters? If we really want to keep internals of AppStateRecentDestination private such that they can\u0027t be set from the outside, how about the following shorter alternative?\n\n\nclass AppStateRecentDestination {\n  constructor(destination) {\n    // Only store |destination|. Everything else can be derived on the fly.\n    this.destination_ \u003d destination;\n  }\n\n  get id() {\n    return this.destination_.id;\n  }\n  ...\n\n  get extensionName() {\n    return this.destination_.extensionName || \u0027\u0027;\n  }\n}",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c4b943_0bb4640d",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "!Object",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2caec705_c1b4a93f",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Probably not a big deal performance-wise, but selecedDestination invokes the function above. Maybe avoid invoking it 3 times?\n\nvar selected \u003d this.selectedDestination;\nreturn !!selected \u0026\u0026 selected.id \u0026\u0026 !!selected.origin;",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dcce891_714c5a0e",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "@private missing here.",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1596f081_3aad2a65",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Nit: Maybe use arrow functions to avoid the need for the |this| parameter?",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bad64d_267fe881",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Nit:\nthis.extraPropertiesToMatch.some(p \u003d\u003e p.match(query));",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed87d58_68f7a717",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T17:37:43Z",
+      "side": 1,
+      "message": "Do these private static methods need to be static? Are we manually calling those anywhere outsie this file (or from tests)? If not, we could make them simply local functions after cr.define(\u0027print_preview\u0027) and before the 1st class definition.\n\nYou would probably need to use the following syntax to avoid \u0027use strict\u0027 restrictions:\n\nvar localizeCapabilities_ \u003d function(....) {...}\n\nAlso since we would not export those functions at the bottom of this file, we probably don\u0027t even need the \"_\" and the @private annotation anymore.",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
