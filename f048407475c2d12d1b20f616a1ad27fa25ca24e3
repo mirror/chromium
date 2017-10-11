@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5036ccb1_da51b238",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-11T15:36:38Z",
+      "side": 1,
+      "message": "This is ignoring mouse events. Also I think you should probably only \u0027unlock\u0027 on ScrollBegin for scroll/fling. You wouldn\u0027t want to end up flinging a page that wasn\u0027t scrolling.",
+      "range": {
+        "startLine": 796,
+        "startChar": 14,
+        "endLine": 796,
+        "endChar": 36
+      },
+      "revId": "f048407475c2d12d1b20f616a1ad27fa25ca24e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
