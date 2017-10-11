@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec4f5dba_704024e1",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-11T18:35:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "333e5800_f414c112",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "39797a0f93ddc67620934b56336a488e4d20bea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3e0bd6_7ed05d00",
         "filename": "components/policy/tools/generate_policy_source.py",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T18:15:13Z",
       "side": 1,
       "message": "Actually, I think this is wrong. This would expand to chrome.fuchsia, which means desktop Chrome on Fuchsia, which doesn\u0027t make sense (correct me if I\u0027m wrong). My understanding is that Fuchsia should be a sibling of Chrome OS. If so, you can just remove this expansion.",
+      "range": {
+        "startLine": 114,
+        "startChar": 53,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "39797a0f93ddc67620934b56336a488e4d20bea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020f64d9_51b698a4",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-11T18:35:19Z",
+      "side": 1,
+      "message": "It depends on what you mean by desktop Chrome. We\u0027re thinking that Chrome would be an optional, installable program that can be run on Fuchsia - does this make it desktop-like?\n\nWe\u0027d probably want to remove the \"fuchsia\" portion from line 96 because we\u0027re covering the \"chrome.fuchsia\" case here, right?",
+      "parentUuid": "4e3e0bd6_7ed05d00",
       "range": {
         "startLine": 114,
         "startChar": 53,
