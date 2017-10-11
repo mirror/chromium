@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5972d8c9_7b42ef46",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "281c4d18_5859100d",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3a9953_1c31b0ee",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8d43a5d9_84579460",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3a9953_1c31b0ee",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32303326_2390cc38",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-11T15:20:53Z",
       "side": 1,
       "message": "Could you explain to me why this is not allowed instead of not supported?",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5d8f48_31f64609",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "Not having user.icon is perfectly valid, so it gets all the way to the browser implementation and receives a \"NOT_IMPLEMENTED\" error, which currently resolves in Blink to a \"NotAllowed\" DOMException.",
+      "parentUuid": "32303326_2390cc38",
       "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f1f6eec2_88f9b1a0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "It\u0027s because the spec says that technically these aspects are \"required\"\n(https://w3c.github.io/webauthn/#dom-makepublickeycredentialoptions-user)\nbut the IDL itself doesn\u0027t mark them as required (https://w3c.github.io/webauthn/#dictdef-publickeycredentialuserentity). I filed an issue asking about this, and it seems that in the future we expect there to be different types of entities where these params may or may not be required. So, we have to enforce the checks manually in this case.",
+      "parentUuid": "29803469_0a9cfedb",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8896f2bf_43e15df2",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a697d5_54a55026",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8896f2bf_43e15df2",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9cadd1_a03a8562",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-11T17:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2ab1e4_68871c37",
+      "range": {
+        "startLine": 55,
+        "startChar": 75,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
