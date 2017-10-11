@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f77ded_ce1c94eb",
+        "filename": "components/sync/engine_impl/loopback_server/loopback_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-11T17:47:55Z",
+      "side": 1,
+      "message": "I want to call out this line right here, which I was conflicted about. If we return a nullptr from PersistentTombstoneEntity::CreateFromEntity, should we still call DeleteChildren()?\n\nCommits don\u0027t seem to be atomic. If we commit 3 items, and the 2nd has a type of UNSPECIFIED, we\u0027ll stop there. The first item will be saved, the 3rd will not, and we will return a failure to the client. So should we process as much of the 2nd item as possible, delete all the children or not?\n\nThe right answer doesn\u0027t seem obvious, I lean towards not deleting children.\n\nAlternatively, this isn\u0027t reading from the disk/network. This is coming straight from Chrome. Might be reasonable to DCHECK(entity) and keep going. While the logic within the persistent_x classes need to handle from Chrome and from storage, here we don\u0027t. Maybe DCHECK is still the right way to go. Which would imply that my if (!entity) down on line 354 should be a DCHECK instead. WDYT?",
+      "revId": "aa17e9346b3064fd1f561e7fd60e0cdec31457f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
