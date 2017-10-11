@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "b067f5ec_3af5093b",
+        "filename": "ash/system/lock_screen_action/lock_screen_action_background_state.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-11T18:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a523e16b_49d5e36b",
+      "revId": "b1a4f5c71e4e24598604ec17c0bf782472552a9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3242b505_c6cd3e87",
         "filename": "ash/system/lock_screen_action/test_lock_screen_action_background_controller.cc",
         "patchSetId": 19
