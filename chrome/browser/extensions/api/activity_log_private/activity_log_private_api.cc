@@ -212,6 +212,7 @@ ExtensionFunction::ResponseAction ActivityLogPrivateDeleteUrlsFunction::Run() {
   // Put the arguments in the right format.
   std::vector<GURL> gurls;
   const std::vector<std::string>& urls = *params->urls;
+  gurls.reserve(urls.size());
   for (const std::string& url : urls)
     gurls.push_back(GURL(url));
 

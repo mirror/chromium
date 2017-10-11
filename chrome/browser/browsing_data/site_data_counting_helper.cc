@@ -198,6 +198,7 @@ void SiteDataCountingHelper::GetSessionStorageUsageInfoCallback(
 void SiteDataCountingHelper::SitesWithFlashDataCallback(
     const std::vector<std::string>& sites) {
   std::vector<GURL> origins;
+  origins.reserve(sites.size());
   for (const std::string& site : sites) {
     origins.push_back(GURL(site));
   }

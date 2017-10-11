@@ -255,6 +255,7 @@ void SupervisedUserInternalsMessageHandler::OnTryURLResult(
     supervised_user_error_page::FilteringBehaviorReason reason,
     bool uncertain) {
   std::vector<std::string> whitelists_list;
+  whitelists_list.reserve(whitelists.size());
   for (const auto& whitelist : whitelists) {
     whitelists_list.push_back(
         base::StringPrintf("%s: %s", whitelist.first.c_str(),

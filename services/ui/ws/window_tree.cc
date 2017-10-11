@@ -2461,6 +2461,7 @@ void WindowTree::SetDisplayConfiguration(
     int64_t internal_display_id,
     const SetDisplayConfigurationCallback& callback) {
   std::vector<display::ViewportMetrics> metrics;
+  metrics.reserve(transport_metrics.size());
   for (auto& transport_ptr : transport_metrics)
     metrics.push_back(TransportMetricsToDisplayMetrics(*transport_ptr));
   callback.Run(display_manager()->SetDisplayConfiguration(

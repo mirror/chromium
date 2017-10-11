@@ -2137,6 +2137,7 @@ bool Program::CheckVaryingsPacking(
   if (combined_map.size() == 0)
     return true;
   std::vector<sh::ShaderVariable> variables;
+  variables.reserve(combined_map.size());
   for (const auto& key_value : combined_map) {
     variables.push_back(*key_value.second);
   }

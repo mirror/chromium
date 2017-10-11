@@ -96,6 +96,7 @@ bool WriteSummaryFile(const base::FilePath& filepath,
   std::vector<std::string> items;
 
   report = "[Errors]\n";
+  items.reserve(errors.size());
   for (const auto& error : errors)
     items.push_back(error.ToText());
   std::sort(items.begin(), items.end());

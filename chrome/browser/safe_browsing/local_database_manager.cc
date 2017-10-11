@@ -374,6 +374,7 @@ bool LocalSafeBrowsingDatabaseManager::CheckExtensionIDs(
   std::transform(extension_ids.begin(), extension_ids.end(),
                  std::back_inserter(extension_id_hashes), StringToSBFullHash);
   std::vector<SBPrefix> prefixes;
+  prefixes.reserve(extension_id_hashes.size());
   for (const SBFullHash& hash : extension_id_hashes)
     prefixes.push_back(hash.prefix);
 

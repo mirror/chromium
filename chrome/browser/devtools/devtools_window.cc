@@ -1310,6 +1310,7 @@ void DevToolsWindow::ShowCertificateViewer(const std::string& cert_chain) {
   }
 
   std::vector<base::StringPiece> cert_string_piece;
+  cert_string_piece.reserve(decoded.size());
   for (const auto& str : decoded)
     cert_string_piece.push_back(str);
   scoped_refptr<net::X509Certificate> cert =

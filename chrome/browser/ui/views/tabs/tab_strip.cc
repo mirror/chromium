@@ -2277,6 +2277,7 @@ Tab* TabStrip::FindTabHitByPoint(const gfx::Point& point) {
 
 std::vector<int> TabStrip::GetTabXCoordinates() {
   std::vector<int> results;
+  results.reserve(tab_count());
   for (int i = 0; i < tab_count(); ++i)
     results.push_back(ideal_bounds(i).x());
   return results;

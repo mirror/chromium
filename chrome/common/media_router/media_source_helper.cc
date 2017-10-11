@@ -68,6 +68,7 @@ MediaSource MediaSourceForPresentationUrl(const GURL& presentation_url) {
 std::vector<MediaSource> MediaSourcesForPresentationUrls(
     const std::vector<GURL>& presentation_urls) {
   std::vector<MediaSource> sources;
+  sources.reserve(presentation_urls.size());
   for (const auto& presentation_url : presentation_urls)
     sources.push_back(MediaSourceForPresentationUrl(presentation_url));
 

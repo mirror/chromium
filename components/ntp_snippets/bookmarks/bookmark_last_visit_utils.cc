@@ -261,6 +261,7 @@ std::vector<const BookmarkNode*> GetDismissedBookmarksForDebugging(
 
   // Insert into |result|.
   std::vector<const BookmarkNode*> result;
+  result.reserve(bookmarks.size());
   for (const BookmarkModel::URLAndTitle& bookmark : bookmarks) {
     result.push_back(
         bookmark_model->GetMostRecentlyAddedUserNodeForURL(bookmark.url));

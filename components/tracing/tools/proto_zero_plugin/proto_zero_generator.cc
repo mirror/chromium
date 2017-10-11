@@ -129,6 +129,7 @@ class GeneratorJob {
   void CollectDescriptors() {
     // Collect message descriptors in DFS order.
     std::vector<const Descriptor*> stack;
+    stack.reserve(source_->message_type_count());
     for (int i = 0; i < source_->message_type_count(); ++i)
       stack.push_back(source_->message_type(i));
 

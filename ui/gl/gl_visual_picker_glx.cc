@@ -157,6 +157,7 @@ GLVisualPickerGLX::GLVisualPickerGLX() : display_(gfx::GetXDisplay()) {
   gfx::XScopedPtr<XVisualInfo[]> x_visuals(
       XGetVisualInfo(display_, VisualScreenMask, &visual_template, &n_visuals));
   std::vector<XVisualInfo> visuals;
+  visuals.reserve(n_visuals);
   for (int i = 0; i < n_visuals; i++)
     visuals.push_back(x_visuals[i]);
 

@@ -906,6 +906,7 @@ void ServiceWorkerContextWrapper::DidGetAllRegistrationsForGetAllOrigins(
     usage_info.total_size_bytes += registration_info.stored_version_size_bytes;
   }
 
+  usage_infos.reserve(origins.size());
   for (const auto& origin_info_pair : origins) {
     usage_infos.push_back(origin_info_pair.second);
   }

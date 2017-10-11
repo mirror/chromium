@@ -128,6 +128,7 @@ std::vector<content::DownloadItem::ReceivedSlice> ToContentReceivedSlices(
     const std::vector<DownloadSliceInfo>& slice_infos) {
   std::vector<content::DownloadItem::ReceivedSlice> result;
 
+  result.reserve(slice_infos.size());
   for (const auto& slice_info : slice_infos)
     result.emplace_back(slice_info.offset, slice_info.received_bytes);
 

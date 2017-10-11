@@ -305,6 +305,7 @@ void BlobTransportHost::SendIPCRequests(TransportState* state,
   std::vector<BlobItemBytesRequest> byte_requests;
 
   DCHECK(!requests.empty());
+  byte_requests.reserve(requests.size());
   for (const MemoryItemRequest& request : requests) {
     byte_requests.push_back(request.message);
   }
@@ -461,6 +462,7 @@ void BlobTransportHost::SendFileRequests(
   std::vector<BlobItemBytesRequest> byte_requests;
 
   DCHECK(!requests.empty());
+  byte_requests.reserve(requests.size());
   for (const MemoryItemRequest& request : requests) {
     byte_requests.push_back(request.message);
   }

@@ -73,6 +73,7 @@ void FileEntryPicker::MultiFilesSelectedWithExtraInfo(
     const std::vector<ui::SelectedFileInfo>& files,
     void* params) {
   std::vector<base::FilePath> paths;
+  paths.reserve(files.size());
   for (const auto& file : files)
     paths.push_back(file.file_path);
   MultiFilesSelected(paths, params);

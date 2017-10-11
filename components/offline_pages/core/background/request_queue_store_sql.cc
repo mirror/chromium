@@ -265,6 +265,7 @@ void PostStoreErrorForAllRequests(
     const std::vector<SavePageRequest>& items,
     const RequestQueueStore::UpdateCallback& callback) {
   std::vector<int64_t> item_ids;
+  item_ids.reserve(items.size());
   for (const auto& item : items)
     item_ids.push_back(item.request_id());
   PostStoreUpdateResultForIds(runner, StoreState::LOADED, item_ids,

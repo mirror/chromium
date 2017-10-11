@@ -357,6 +357,7 @@ void BlobDispatcherHost::SendMemoryRequest(
     std::vector<base::File> files) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::vector<IPC::PlatformFileForTransit> file_handles;
+  file_handles.reserve(files.size());
   for (base::File& file : files) {
     file_handles.push_back(IPC::TakePlatformFileForTransit(std::move(file)));
   }

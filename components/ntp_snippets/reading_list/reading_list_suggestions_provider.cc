@@ -132,6 +132,7 @@ void ReadingListSuggestionsProvider::GetDismissedSuggestionsForDebugging(
   std::sort(entries.begin(), entries.end(), CompareEntries);
 
   std::vector<ContentSuggestion> suggestions;
+  suggestions.reserve(entries.size());
   for (const ReadingListEntry* entry : entries) {
     suggestions.emplace_back(ConvertEntry(entry));
   }
@@ -199,6 +200,7 @@ void ReadingListSuggestionsProvider::FetchReadingListInternal() {
   }
 
   std::vector<ContentSuggestion> suggestions;
+  suggestions.reserve(entries.size());
   for (const ReadingListEntry* entry : entries) {
     suggestions.emplace_back(ConvertEntry(entry));
   }
