@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b521922e_ae7df216",
+        "filename": "content/browser/gpu/browser_gpu_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-11T22:18:30Z",
+      "side": 1,
+      "message": "I don\u0027t see this being used anywhere in this CL.\nAlso, it seems to have conceptual overlap with BrowserGpuChannelHostFactory (\"the thing that establishes connections to the GPU process\").\nCould we coalesce, or at the very least have one own the other?",
+      "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
