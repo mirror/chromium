@@ -14,6 +14,8 @@
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "ash/login/ui/non_accessible_view.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
+#include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view.h"
@@ -193,6 +195,10 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
   debug_->AddChildView(
       login_layout_util::WrapViewForPreferredSize(toggle_note_action_));
 
+  toggle_caps_lock_ = CreateButton(this, "Toggle caps lock");
+  debug_->AddChildView(
+      login_layout_util::WrapViewForPreferredSize(toggle_caps_lock_));
+
   add_user_ = CreateButton(this, "Add");
   debug_->AddChildView(login_layout_util::WrapViewForPreferredSize(add_user_));
 
@@ -227,6 +233,13 @@ void LockDebugView::ButtonPressed(views::Button* sender,
 
   if (sender == toggle_note_action_) {
     debug_data_dispatcher_->ToggleLockScreenNoteButton();
+    return;
+  }
+
+  if (sender == toggle_caps_lock_) {
+    chromeos::input_method::ImeKeyboard* keyboard =
+        chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
+    keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
     return;
   }
 

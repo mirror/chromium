@@ -47,6 +47,7 @@ class LockDebugView : public views::View, public views::ButtonListener {
   views::View* debug_;
   views::View* toggle_blur_;
   views::View* toggle_note_action_;
+  views::View* toggle_caps_lock_;
   views::View* add_user_;
   views::View* remove_user_;
 
