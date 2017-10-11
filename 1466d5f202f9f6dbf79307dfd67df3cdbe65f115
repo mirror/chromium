@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ee5cca6d_28fa66b9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-11T17:53:26Z",
+      "side": 1,
+      "message": "Got it, thanks!",
+      "parentUuid": "fc5d8f48_31f64609",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29803469_0a9cfedb",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -139,6 +157,24 @@
       "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcdcaf0e_b55e6b7e",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-11T17:53:26Z",
+      "side": 1,
+      "message": "Got it. Can you please leave a comment to this effect?",
+      "parentUuid": "f1f6eec2_88f9b1a0",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
