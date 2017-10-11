@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05bb584d_cd9e05af",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-11T06:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fe8977_035327e1",
+      "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d8c464_df914002",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 17
@@ -51,6 +69,24 @@
       "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b75afdf_e1d55727",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-11T06:52:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f55bb05_a0c69afc",
+      "revId": "7bae6e7d7ebea590c428b4fa816074bd05dbc8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
