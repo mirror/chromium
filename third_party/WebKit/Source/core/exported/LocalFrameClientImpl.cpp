@@ -548,6 +548,8 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
               kCheckContentSecurityPolicy
           ? kWebContentSecurityPolicyDispositionCheck
           : kWebContentSecurityPolicyDispositionDoNotCheck;
+  navigation_info.is_delayed_subframe_request =
+      request.isDelayedSubframeRequest();
 
   // Can be null.
   LocalFrame* local_parent_frame = GetLocalParentFrame(web_frame_);
@@ -1007,6 +1009,11 @@ bool LocalFrameClientImpl::ShouldUseClientLoFiForRequest(
         WrappedResourceRequest(request));
   }
   return false;
+}
+
+void LocalFrameClientImpl::DispatchFrameVisible() {
+  if (web_frame_->Client())
+    web_frame_->Client()->DispatchFrameVisible();
 }
 
 WebDevToolsAgentImpl* LocalFrameClientImpl::DevToolsAgent() {

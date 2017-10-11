@@ -433,6 +433,11 @@ void ApplyBlinkSettings(const base::CommandLine& command_line,
   if (!command_line.HasSwitch(switches::kBlinkSettings))
     return;
 
+  if (base::FeatureList::IsEnabled(features::kLazyImageLoading) ||
+      command_line.HasSwitch(switches::kEnableLazyImageLoading)) {
+    settings->SetFromStrings("fetchImagePlaceholders", "true");
+  }
+
   std::vector<std::string> blink_settings = base::SplitString(
       command_line.GetSwitchValueASCII(switches::kBlinkSettings),
       ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
