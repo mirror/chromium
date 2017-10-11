@@ -69,6 +69,24 @@
       "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c19952_dc76b4d9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-11T23:36:24Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I think it\u0027s fine to land it as-is.\nThough I\u0027m still wondering why a simple adjustment won\u0027t work as intended? e.g.\n\n static inline LayoutPoint VisualOffsetFromPaintOffsetRoot(\n     const PaintPropertyTreeBuilderFragmentContext\u0026 context,\n     const PaintLayer* child) {\n   PaintLayer* paint_offset_root \u003d context.current.paint_offset_root;\n   LayoutPoint result \u003d child-\u003eVisualOffsetFromAncestor(paint_offset_root);\n\n   // Don\u0027t include scroll offset of paint_offset_root. Any scroll is\n   // already included in a separate transform node.\n+  if (!context.current.paint_offset_root_uses_unscrolled_box \u0026\u0026\n+      paint_offset_root-\u003eGetLayoutObject().HasOverflowClip())\n-  if (paint_offset_root-\u003eGetLayoutObject().HasOverflowClip())\n     result +\u003d paint_offset_root-\u003eGetLayoutBox()-\u003eScrolledContentOffset();\n   return result;\n }",
+      "parentUuid": "c8b2696e_8185c347",
+      "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a709775_c0948268",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-11T23:36:24Z",
+      "side": 1,
+      "message": "context.current.paint_offset_root_use_unscrolled_box \u003d false;\n\nSee explanation below.",
+      "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ae40b6_db0f5021",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-11T23:36:24Z",
+      "side": 1,
+      "message": "IMO it will be more readable to do it at line #321, because that\u0027s where paint_offset_root switched to a new reference box.",
+      "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
