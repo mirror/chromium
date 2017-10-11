@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47af3ccd_30db8c38",
+        "filename": "content/browser/download/mhtml_generation_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-10-11T07:05:54Z",
+      "side": 0,
+      "message": "It was a race:\n1. Here MHTMLExtraPartsImpl::parts() was called on DownloadTaskRunner.\n2. ~WebContents() calls on ~MHTMLExtraPartsImpl() on UI.",
+      "revId": "70ad43c340625a21d628d2b6536207667a84a864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
