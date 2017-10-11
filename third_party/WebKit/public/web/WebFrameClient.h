@@ -336,6 +336,7 @@ class BLINK_EXPORT WebFrameClient {
     WebTriggeringEventInfo triggering_event_info;
     WebFormElement form;
     bool is_cache_disabled;
+    bool is_delayed_subframe_request;
     WebSourceLocation source_location;
     WebContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy;
@@ -355,6 +356,7 @@ class BLINK_EXPORT WebFrameClient {
           is_client_redirect(false),
           triggering_event_info(WebTriggeringEventInfo::kUnknown),
           is_cache_disabled(false),
+          is_delayed_subframe_request(url_request.IsDelayedSubframeRequest()),
           should_check_main_world_content_security_policy(
               kWebContentSecurityPolicyDispositionCheck),
           archive_status(ArchiveStatus::Absent) {}
@@ -495,6 +497,8 @@ class BLINK_EXPORT WebFrameClient {
   virtual bool ShouldUseClientLoFiForRequest(const WebURLRequest&) {
     return false;
   }
+
+  virtual void DispatchFrameVisible() {}
 
   // This frame tried to navigate its top level frame to the given url without
   // ever having received a user gesture.

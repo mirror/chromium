@@ -49,6 +49,12 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
+const base::Feature kLazyImageLoading{"LazyImageLoading",
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kLazyFrameLoading{"LazyFrameLoading",
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Toggles whether the buggy RSA parser is used.
 //
 // TODO(davidben): Remove this after Chrome 61 is released to
