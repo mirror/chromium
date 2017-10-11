@@ -69,6 +69,24 @@
       "revId": "e9bc0e1fd029583a5e4a8c274af5adf6ac5442b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0013767_6ca3e6ef",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-11T20:30:33Z",
+      "side": 1,
+      "message": "I see, thanks for clarifying.",
+      "parentUuid": "b381957a_031b9667",
+      "revId": "e9bc0e1fd029583a5e4a8c274af5adf6ac5442b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
