@@ -1150,10 +1150,9 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   // policy, since it is being created as part of the navigation that will
   // commit it. (I.e., the RenderFrame needs to know the policy to use when
   // initializing the new document once it commits).
-  params->replication_state.sandbox_flags =
-      frame_tree_node()->pending_sandbox_flags();
-  params->replication_state.container_policy =
-      frame_tree_node()->pending_container_policy();
+  params->replication_state.frame_policy = {
+      frame_tree_node()->pending_sandbox_flags(),
+      frame_tree_node()->pending_container_policy()};
 
   params->frame_owner_properties =
       FrameOwnerProperties(frame_tree_node()->frame_owner_properties());

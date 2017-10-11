@@ -153,7 +153,6 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           scope,
           name,
           unique_name,
-          blink::WebSandboxFlags::kNone,
           false /* should enforce strict mixed content checking */,
           false /* is a potentially trustworthy unique origin */,
           false /* has received a user gesture */),
@@ -430,13 +429,15 @@ bool FrameTreeNode::IsLoading() const {
 
 bool FrameTreeNode::CommitPendingFramePolicy() {
   bool did_change_flags =
-      pending_sandbox_flags_ != replication_state_.sandbox_flags;
+      pending_sandbox_flags_ != replication_state_.frame_policy.sandbox_flags;
   bool did_change_container_policy =
-      pending_container_policy_ != replication_state_.container_policy;
+      pending_container_policy_ !=
+      replication_state_.frame_policy.container_policy;
   if (did_change_flags)
-    replication_state_.sandbox_flags = pending_sandbox_flags_;
+    replication_state_.frame_policy.sandbox_flags = pending_sandbox_flags_;
   if (did_change_container_policy)
-    replication_state_.container_policy = pending_container_policy_;
+    replication_state_.frame_policy.container_policy =
+        pending_container_policy_;
   return did_change_flags || did_change_container_policy;
 }
 
