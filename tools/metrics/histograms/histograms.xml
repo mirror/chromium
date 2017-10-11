@@ -82843,7 +82843,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Sync.SessionTabs" units="tabs">
   <owner>zea@chromium.org</owner>
   <summary>
-    For each Chrome window, records the number of tabs present at the time Sync
+    For each Chrome window, records the number of unused tabs at the time Sync
     associates the SESSIONS datatype.
   </summary>
 </histogram>
@@ -85009,6 +85009,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>sebmarchand@chromium.org</owner>
   <summary>
     Counts how often tab stats daily interval events were fired.
+  </summary>
+</histogram>
+
+<histogram name="Tabs.UnusedInInterval.Count" units="Tabs">
+  <owner>sebmarchand@chromium.org</owner>
+  <summary>
+    The number of tabs that haven't been interacted with or visible during a
+    given interval of time.
   </summary>
 </histogram>
 
@@ -104669,6 +104677,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Tabs.SwitchFromExitLatency"/>
   <affected-histogram name="Tabs.SwitchFromNewLatency"/>
   <affected-histogram name="Tabs.SwitchFromUserLatency"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="Tabs.UnusedInIntervalCount" separator="_">
+  <suffix name="10" label="10 seconds"/>
+  <suffix name="30" label="30 seconds"/>
+  <suffix name="60" label="1 minute"/>
+  <suffix name="600" label="10 minutes"/>
+  <suffix name="3600" label="1 hour"/>
+  <suffix name="18000" label="5 hours"/>
+  <affected-histogram name="Tabs.UnusedInInterval.Count"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="TaskSchedulerMayBlock" separator=".">

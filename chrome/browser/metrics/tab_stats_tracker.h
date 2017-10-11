@@ -5,7 +5,10 @@
 #ifndef CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 #define CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 
+#include <map>
 #include <memory>
+#include <set>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/power_monitor/power_observer.h"
@@ -47,6 +50,24 @@ class TabStatsTracker : public TabStripModelObserver,
   // The UmaStatsReportingDelegate is responsible for delivering statistics
   // reported by the TabStatsTracker via UMA.
   class UmaStatsReportingDelegate;
+
+  // Structure describing the state of a tab during an interval of time.
+  struct TabStateDuringInterval {
+    // Indicates if the tab exists at the beginning of the interval.
+    bool existed_before_interval;
+    // Indicates if the tab is still present at the end of the interval.
+    bool exists_after_interval;
+    // Whether or not the tab has been visible at any moment during the
+    // interval.
+    bool visible_during_interval;
+    // Indicates if the tab has been interacted with or became active during the
+    // interval.
+    bool interacted_during_interval;
+  };
+
+  // Maps a WebContents pointer to a TabStateDuringInterval structure.
+  typedef std::map<const content::WebContents*, TabStateDuringInterval>
+      TabsStateDuringIntervalMap;
 
   // The observer that's used by |daily_event_| to report the metrics.
   class TabStatsDailyObserver : public DailyEvent::Observer {
@@ -98,9 +119,21 @@ class TabStatsTracker : public TabStripModelObserver,
   void TabClosingAt(TabStripModel* model,
                     content::WebContents* web_contents,
                     int index) override;
+  void ActiveTabChanged(content::WebContents* old_contents,
+                        content::WebContents* new_contents,
+                        int index,
+                        int reason) override;
 
   // base::PowerObserver:
   void OnResume() override;
+
+  // Callback when an interval timer triggers, |interval_map| contains the tabs
+  // that have existed at some point during the interval.
+  void OnInterval(TabsStateDuringIntervalMap* interval_map,
+                  size_t interval_time_in_sec);
+
+  // Resets an interval map, fill it with the current set of tabs.
+  void ResetIntervalData(TabsStateDuringIntervalMap* interval_map);
 
   // The name of the histogram used to report that the daily event happened.
   static const char kTabStatsDailyEventHistogramName[];
@@ -118,6 +151,19 @@ class TabStatsTracker : public TabStripModelObserver,
   // The timer used to periodically check if the daily event should be
   // triggered.
   base::RepeatingTimer timer_;
+
+  // The timers used to analyze how tabs are used during a given interval of
+  // time.
+  std::vector<std::unique_ptr<base::RepeatingTimer>> usage_interval_timers_;
+
+  // The existing tabs.
+  std::set<const content::WebContents*> existing_tabs_;
+
+  // The current active tabs.
+  std::set<const content::WebContents*> active_tabs_;
+
+  // The interval map, one per period of time that we want to observe.
+  std::vector<std::unique_ptr<TabsStateDuringIntervalMap>> interval_maps_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -142,6 +188,11 @@ class TabStatsTracker::UmaStatsReportingDelegate {
   // The name of the histogram that records the maximum number of windows
   // opened in a day.
   static const char kMaxWindowsInADayHistogramName[];
+
+  // The name of the histogram that records how many tabs have been using during
+  // a given period of time. Will be appended with '_T' with T being the
+  // interval window (in seconds).
+  static const char kUnusedTabsInIntervalHistogramNameBase[];
 
   UmaStatsReportingDelegate() {}
   ~UmaStatsReportingDelegate() {}
