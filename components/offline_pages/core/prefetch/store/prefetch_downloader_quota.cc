@@ -3,28 +3,32 @@
 // found in the LICENSE file.
 
 #include "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.h"
-
+#include "base/strings/string_number_conversions.h"
 #include "base/time/clock.h"
 #include "base/time/time.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_time_utils.h"
+#include "components/variations/variations_associated_data.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
 
 namespace offline_pages {
 
 // static
-const int64_t PrefetchDownloaderQuota::kMaxDailyQuotaBytes =
+const char PrefetchDownloaderQuota::kMaxDailyQuotaBytesParamName[] =
+    "offline_pages_max_daily_quota_bytes";
+const int64_t PrefetchDownloaderQuota::kDefaultMaxDailyQuotaBytes =
     20LL * 1024 * 1024;  // 20 MB
 
 namespace {
 constexpr base::TimeDelta kQuotaPeriod = base::TimeDelta::FromDays(1);
 
-// Normalize quota to [0, kMaxDailyQuotaBytes].
+// Normalize quota to [0, GetMaxDailyQuotaBytes()].
 int64_t NormalizeQuota(int64_t quota) {
   if (quota < 0)
     return 0;
-  if (quota > PrefetchDownloaderQuota::kMaxDailyQuotaBytes)
-    return PrefetchDownloaderQuota::kMaxDailyQuotaBytes;
+  if (quota > PrefetchDownloaderQuota::GetMaxDailyQuotaBytes())
+    return PrefetchDownloaderQuota::GetMaxDailyQuotaBytes();
   return quota;
 }
 
@@ -39,6 +43,26 @@ PrefetchDownloaderQuota::PrefetchDownloaderQuota(sql::Connection* db,
 
 PrefetchDownloaderQuota::~PrefetchDownloaderQuota() = default;
 
+int64_t PrefetchDownloaderQuota::GetMaxDailyQuotaBytes() {
+  std::string value_as_string(variations::GetVariationParamValueByFeature(
+      offline_pages::kPrefetchingOfflinePagesFeature,
+      kMaxDailyQuotaBytesParamName));
+  int64_t value_as_int = 0;
+  if (!base::StringToInt64(value_as_string, &value_as_int) ||
+      value_as_int <= 0) {
+    if (!value_as_string.empty()) {
+      DLOG(WARNING) << "Invalid field trial param "
+                    << kMaxDailyQuotaBytesParamName << " under feature "
+                    << offline_pages::kPrefetchingOfflinePagesFeature.name
+                    << " with string value " << value_as_string
+                    << ". Falling back to default value of "
+                    << kDefaultMaxDailyQuotaBytes;
+    }
+    value_as_int = kDefaultMaxDailyQuotaBytes;
+  }
+  return value_as_int;
+}
+
 int64_t PrefetchDownloaderQuota::GetAvailableQuotaBytes() {
   static const char kSql[] =
       "SELECT update_time, available_quota FROM prefetch_downloader_quota"
@@ -52,7 +76,7 @@ int64_t PrefetchDownloaderQuota::GetAvailableQuotaBytes() {
     if (!statement.Succeeded())
       return -1LL;
 
-    return kMaxDailyQuotaBytes;
+    return GetMaxDailyQuotaBytes();
   }
 
   base::Time update_time = FromDatabaseTime(statement.ColumnInt64(0));
@@ -60,7 +84,7 @@ int64_t PrefetchDownloaderQuota::GetAvailableQuotaBytes() {
 
   int64_t remaining_quota =
       available_quota +
-      (kMaxDailyQuotaBytes * (clock_->Now() - update_time)) / kQuotaPeriod;
+      (GetMaxDailyQuotaBytes() * (clock_->Now() - update_time)) / kQuotaPeriod;
 
   if (remaining_quota < 0)
     SetAvailableQuotaBytes(0);

@@ -22,10 +22,11 @@ namespace offline_pages {
 // Handles retrieval, storage and calculation of quota for |PrefetchDownloader|.
 class PrefetchDownloaderQuota {
  public:
-  static const int64_t kMaxDailyQuotaBytes;
-
   PrefetchDownloaderQuota(sql::Connection* db, base::Clock* clock);
   ~PrefetchDownloaderQuota();
+
+  // Gets the max daily quota from Finch.
+  static int64_t GetMaxDailyQuotaBytes();
 
   // Gets the currently available quota, as read from the DB and adjusted for
   // time elapsed since quota was last updated.
@@ -36,6 +37,9 @@ class PrefetchDownloaderQuota {
   bool SetAvailableQuotaBytes(int64_t quota);
 
  private:
+  static const char kMaxDailyQuotaBytesParamName[];
+  static const int64_t kDefaultMaxDailyQuotaBytes;
+
   // DB connection. Not owned.
   sql::Connection* db_;
 
