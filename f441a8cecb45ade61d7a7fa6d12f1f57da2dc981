@@ -16,6 +16,24 @@
       "revId": "f441a8cecb45ade61d7a7fa6d12f1f57da2dc981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c87c56_2c7ef723",
+        "filename": "chrome/browser/usb/usb_chooser_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-11T19:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "035a02aa_c28d2b02",
+      "revId": "f441a8cecb45ade61d7a7fa6d12f1f57da2dc981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
