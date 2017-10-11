@@ -37,7 +37,7 @@ void RequestExtraData::CopyToResourceRequest(ResourceRequest* request) const {
   request->visibility_state = visibility_state_;
   request->render_frame_id = render_frame_id_;
   request->is_main_frame = is_main_frame_;
-
+  request->devtools_frame_token = devtools_frame_token_;
   request->allow_download = allow_download_;
   request->transition_type = transition_type_;
   request->should_replace_current_entry = should_replace_current_entry_;

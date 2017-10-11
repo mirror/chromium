@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/memory/ref_counted.h"
+#include "base/unguessable_token.h"
 #include "content/common/content_export.h"
 #include "content/common/navigation_params.h"
 #include "content/public/common/referrer.h"
@@ -28,6 +29,7 @@ struct CONTENT_EXPORT NavigationRequestInfo {
                         bool parent_is_main_frame,
                         bool are_ancestors_secure,
                         int frame_tree_node_id,
+                        const base::UnguessableToken& devtools_frame_token,
                         bool is_for_guests_only,
                         bool report_raw_headers,
                         blink::WebPageVisibilityState page_visibility_state);
@@ -48,6 +50,8 @@ struct CONTENT_EXPORT NavigationRequestInfo {
   const bool are_ancestors_secure;
 
   const int frame_tree_node_id;
+
+  const base::UnguessableToken devtools_frame_token;
 
   const bool is_for_guests_only;
 

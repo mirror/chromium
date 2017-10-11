@@ -1081,7 +1081,8 @@ class ResourceDispatcherHostTest : public testing::Test, public IPC::Sender {
       common_params.url = url;
       std::unique_ptr<NavigationRequestInfo> request_info(
           new NavigationRequestInfo(common_params, begin_params, url, true,
-                                    false, false, -1, false, false,
+                                    false, false, -1, base::UnguessableToken(),
+                                    false, false,
                                     blink::kWebPageVisibilityStateVisible));
       std::unique_ptr<NavigationURLLoader> test_loader =
           NavigationURLLoader::Create(

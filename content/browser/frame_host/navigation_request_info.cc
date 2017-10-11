@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/browser/frame_host/navigation_request_info.h"
-#include "content/common/service_worker/service_worker_types.h"
 
 namespace content {
 
@@ -15,6 +14,7 @@ NavigationRequestInfo::NavigationRequestInfo(
     bool parent_is_main_frame,
     bool are_ancestors_secure,
     int frame_tree_node_id,
+    const base::UnguessableToken& devtools_frame_token,
     bool is_for_guests_only,
     bool report_raw_headers,
     blink::WebPageVisibilityState page_visibility_state)
@@ -25,6 +25,7 @@ NavigationRequestInfo::NavigationRequestInfo(
       parent_is_main_frame(parent_is_main_frame),
       are_ancestors_secure(are_ancestors_secure),
       frame_tree_node_id(frame_tree_node_id),
+      devtools_frame_token(devtools_frame_token),
       is_for_guests_only(is_for_guests_only),
       report_raw_headers(report_raw_headers),
       page_visibility_state(page_visibility_state) {}

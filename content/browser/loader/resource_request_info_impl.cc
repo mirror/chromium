@@ -65,6 +65,7 @@ void ResourceRequestInfo::AllocateForTesting(net::URLRequest* request,
       0,                                      // request_id
       render_frame_id,                        // render_frame_id
       is_main_frame,                          // is_main_frame
+      base::UnguessableToken(),               // devtools_frame_token
       resource_type,                          // resource_type
       ui::PAGE_TRANSITION_LINK,               // transition_type
       false,                                  // should_replace_current_entry
@@ -132,6 +133,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
     int request_id,
     int render_frame_id,
     bool is_main_frame,
+    base::UnguessableToken devtools_frame_token,
     ResourceType resource_type,
     ui::PageTransition transition_type,
     bool should_replace_current_entry,
@@ -159,6 +161,7 @@ ResourceRequestInfoImpl::ResourceRequestInfoImpl(
       request_id_(request_id),
       render_frame_id_(render_frame_id),
       is_main_frame_(is_main_frame),
+      devtools_frame_token_(devtools_frame_token),
       should_replace_current_entry_(should_replace_current_entry),
       is_download_(is_download),
       is_stream_(is_stream),
@@ -314,6 +317,10 @@ NavigationUIData* ResourceRequestInfoImpl::GetNavigationUIData() const {
 
 bool ResourceRequestInfoImpl::CanceledByDevTools() const {
   return canceled_by_devtools_;
+}
+
+base::UnguessableToken ResourceRequestInfoImpl::GetDevToolsFrameToken() const {
+  return devtools_frame_token_;
 }
 
 void ResourceRequestInfoImpl::AssociateWithRequest(net::URLRequest* request) {
