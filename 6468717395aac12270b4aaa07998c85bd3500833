@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "c00581bf_a7fc1209",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "micro nit: blank line above this one",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5829cb4d_a2aa4e89",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "another client policy controller? This conflicts with the idea that one day there will be only One Client Policy Controller.  Please add a TODO if it needs to stay.\n\nAlso why unique pointer, could just be a member.",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84214469_9ee4b75f",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "prefetch_import_observed?",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81309ba2_61b47ae0",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "nit: rename to ReportOfflineUsageForOneDayToUma",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e2af4e9_7307a5a7",
         "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
         "patchSetId": 1
@@ -19,6 +87,57 @@
         "endLine": 90,
         "endChar": 0
       },
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fb84c3_60e0adbf",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "This is a really long statement.  It is more confusing than a bunch of \u003d 0 statements.",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab6142ac_e8222613",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "this is a copy_pasta bug",
+      "revId": "6468717395aac12270b4aaa07998c85bd3500833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b24ad21_1396abdb",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-11T00:11:43Z",
+      "side": 1,
+      "message": "this is a copy paste bug\n\nIndicates a need for tests :)",
       "revId": "6468717395aac12270b4aaa07998c85bd3500833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
