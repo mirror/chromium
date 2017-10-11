@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e86fc7_de1909ba",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "This is a fairly odd CSS selector. Does the class name need to be repeated twice? Can you just use the following?\n\nbutton.show-all-properties {...}",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc87388_332a3636",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why waiting is necessary. The DOM gets updated synchronously by all operations above this line.\n\nCan you explain the error you are seeing when simply calling this.setupShowAllButton() here, without setTimeout() ?",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9be70d_afbed347",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "You could use proper get/set syntax\n\nget showAll: function(...) {\n}\n\nset showAll: function(...) {\n}\n\nThen you can simply do\n\nfieldSet.showAll \u003d true; // invokes the setter\nconsole.log(fieldSet.showAll) // invokes the getter",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63569db_b1805f96",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "What is the point of making this member private, if both a setter and a getter are exposing it publicly?",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bf67ac_5d52d30a",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "What happens if value is 0 or the empty string? Previous code would still execute, whereas new code will do nothing. Is this intended? Can you make the if check more explicit (compare to undefined maybe)?",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 17
+      },
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21b3875_8f5f6c2e",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-11T19:37:36Z",
+      "side": 1,
+      "message": "if (!value \u0026\u0026 !this.showAll_)\n  return;\n\n// Do stuff here",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
