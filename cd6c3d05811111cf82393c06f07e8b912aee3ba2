@@ -52,6 +52,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d12103_d690efd4",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-11T03:56:05Z",
+      "side": 1,
+      "message": "If we need it only for //content/child we don\u0027t need to move it in WebKit/common, right?\n\nLooking into this I wonder if we should rather consider changing resource_request.request_body?  We create this in https://cs.chromium.org/chromium/src/content/child/web_url_request_util.cc?type\u003dcs\u0026q\u003dGetRequestBodyForWebHTTPBody\u0026sq\u003dpackage:chromium\u0026l\u003d329 from WebHTTPBody, which is blink::EncodedFormData, where we could just construct BlobData / get BlobPtr too, maybe?\n\nBtw depending how we work on this one I guess there could be some overlapping with crbug.com/761117",
+      "parentUuid": "0c0de3f4_db614e4c",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
