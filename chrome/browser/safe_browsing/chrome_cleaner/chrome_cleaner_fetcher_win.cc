@@ -31,6 +31,7 @@
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/version_info/version_info.h"
 #include "net/base/load_flags.h"
+#include "net/base/network_change_notifier.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -41,7 +42,12 @@
 
 namespace safe_browsing {
 
+const int kMaxCleanerDownloadAttempts = 3;
+
 namespace {
+
+constexpr char kDownloadStatusErrorCodeHistogramName[] =
+    "SoftwareReporter.Cleaner.DownloadStatusErrorCode";
 
 base::FilePath::StringType CleanerTempDirectoryPrefix() {
   // Create a temporary directory name prefix like "ChromeCleaner_4_", where
@@ -94,10 +100,20 @@ void RecordCleanerDownloadStatusHistogram(
 // Class that will attempt to download the Chrome Cleaner executable and call a
 // given callback when done. Instances of ChromeCleanerFetcher own themselves
 // and will self-delete if they encounter an error or when the network request
-// has completed.
-class ChromeCleanerFetcher : public net::URLFetcherDelegate {
+// has completed. On network errors due to connection not available, will retry
+// once connectivity is restablished.
+// NOTE: What we really want is to check if internet connectivity exists, but
+// since this information is not available, listening to network changes is
+// best we can do.
+class ChromeCleanerFetcher
+    : public net::URLFetcherDelegate,
+      public net::NetworkChangeNotifier::NetworkChangeObserver {
  public:
   explicit ChromeCleanerFetcher(ChromeCleanerFetchedCallback fetched_callback);
+
+  // NetworkChangeObserver overrides.
+  void OnNetworkChanged(
+      net::NetworkChangeNotifier::ConnectionType type) override;
 
  protected:
   ~ChromeCleanerFetcher() override;
@@ -109,6 +125,10 @@ class ChromeCleanerFetcher : public net::URLFetcherDelegate {
   void OnTemporaryDirectoryCreated(bool success);
   void PostCallbackAndDeleteSelf(base::FilePath path,
                                  ChromeCleanerFetchStatus fetch_status);
+
+  // Retries up to |kMaxCleanerDownloadAttempts| times to download the cleaner
+  // when a network error prevents the connection to succeed.
+  void MaybeRetryDownloadingCleaner(int net_error);
 
   // Sends a histogram indicating an error and invokes the fetch callback if
   // the cleaner binary can't be downloaded or saved to the disk.
@@ -134,6 +154,8 @@ class ChromeCleanerFetcher : public net::URLFetcherDelegate {
       scoped_temp_dir_;
   base::FilePath temp_file_;
 
+  int remaining_download_attempts_ = kMaxCleanerDownloadAttempts;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeCleanerFetcher);
 };
 
@@ -156,6 +178,23 @@ ChromeCleanerFetcher::ChromeCleanerFetcher(
                  base::Unretained(this)),
       base::Bind(&ChromeCleanerFetcher::OnTemporaryDirectoryCreated,
                  base::Unretained(this)));
+}
+
+void ChromeCleanerFetcher::OnNetworkChanged(
+    net::NetworkChangeNotifier::ConnectionType type) {
+  DCHECK_LT(0, remaining_download_attempts_);
+
+  // When network is reconnected, OnNetworkChanged will always be called
+  // with CONNECTION_NONE immediately prior to being called with an online
+  // state.
+  if (type == net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE)
+    return;
+
+  // Prevent from getting notified again of network changes unless needed.
+  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+
+  // Retry to download the cleaner with the same parameters as before.
+  url_fetcher_->Start();
 }
 
 ChromeCleanerFetcher::~ChromeCleanerFetcher() = default;
@@ -209,21 +248,29 @@ void ChromeCleanerFetcher::PostCallbackAndDeleteSelf(
   delete this;
 }
 
+void ChromeCleanerFetcher::MaybeRetryDownloadingCleaner(int net_error) {
+  --remaining_download_attempts_;
+  if (remaining_download_attempts_ == 0) {
+    UMA_HISTOGRAM_SPARSE_SLOWLY(kDownloadStatusErrorCodeHistogramName,
+                                net_error);
+    RecordDownloadStatusAndPostCallback(
+        CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE,
+        ChromeCleanerFetchStatus::kOtherFailure);
+  }
+
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+}
+
 void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   // Take ownership of the fetcher in this scope (source == url_fetcher_).
   DCHECK_EQ(url_fetcher_.get(), source);
   DCHECK(!source->GetStatus().is_io_pending());
   DCHECK(fetched_callback_);
 
-  constexpr char kDownloadStatusErrorCodeHistogramName[] =
-      "SoftwareReporter.Cleaner.DownloadStatusErrorCode";
-
   if (!source->GetStatus().is_success()) {
-    UMA_HISTOGRAM_SPARSE_SLOWLY(kDownloadStatusErrorCodeHistogramName,
-                                source->GetStatus().error());
-    RecordDownloadStatusAndPostCallback(
-        CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE,
-        ChromeCleanerFetchStatus::kOtherFailure);
+    // In case of network errors that prevent the connection to complete, retry
+    // to download once a connection becomes available.
+    MaybeRetryDownloadingCleaner(source->GetStatus().error());
     return;
   }
 
