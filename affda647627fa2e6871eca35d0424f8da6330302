@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850cd488_f53fa3e6",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-11T20:58:59Z",
+      "side": 1,
+      "message": "Check that suggestions are shown ?",
+      "range": {
+        "startLine": 2153,
+        "startChar": 2,
+        "endLine": 2153,
+        "endChar": 24
+      },
+      "revId": "affda647627fa2e6871eca35d0424f8da6330302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
