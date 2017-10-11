@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8554853f_4e950ee6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-11T22:35:19Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be a TBR.",
+      "revId": "4346dfd3fce5c34d5733f0801d461db86e02f51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231c72bb_7b066528",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-11T22:35:19Z",
+      "side": 1,
+      "message": "Is this still the right behavior when OnWillSendRequest is called for a cache hit?\n\nAlso local_frame_-\u003eGetDocument()-\u003eFetcher() will be the wrong ResourceFetcher when OnWillSendRequest() is called for a new navigation. OnWillSendRequest really ought to take a ResourceFetcher* parameter if it needs to be accessing this state.",
+      "revId": "4346dfd3fce5c34d5733f0801d461db86e02f51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
