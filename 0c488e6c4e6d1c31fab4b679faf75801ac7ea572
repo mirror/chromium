@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5527513a_410ab89b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-11T06:55:16Z",
+      "side": 1,
+      "message": "If the interface provide info isn\u0027t valid, does that mean Mojo will queue calls on the interface provider for as long as this ExecutionContext lives?",
+      "revId": "0c488e6c4e6d1c31fab4b679faf75801ac7ea572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
