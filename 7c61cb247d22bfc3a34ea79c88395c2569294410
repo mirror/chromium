@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "857ff679_e36b5123",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T12:51:10Z",
+      "side": 1,
+      "message": "The \"Change\" in the name confuses me. Sounds like the status can change, but that\u0027s not the case. This function is called only once, right? Maybe LogDispatchOverrideStatus()? Or LogDispatchOverrideResult (and change the enum above to \"Result\")?",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "7c61cb247d22bfc3a34ea79c88395c2569294410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cb9f66_9910d090",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T12:51:10Z",
+      "side": 1,
+      "message": "Do we expect this to happen? How often? I wonder what use we have of this lookup metric.",
+      "revId": "7c61cb247d22bfc3a34ea79c88395c2569294410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb9b62d_14122613",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6601,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T12:51:10Z",
+      "side": 1,
+      "message": "Aha, you\u0027re using \"result\" here. :)",
+      "range": {
+        "startLine": 6601,
+        "startChar": 8,
+        "endLine": 6601,
+        "endChar": 14
+      },
+      "revId": "7c61cb247d22bfc3a34ea79c88395c2569294410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a1b9633_42818ce2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30692,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-11T12:51:10Z",
+      "side": 1,
+      "message": "Fix spaces. Below too.",
+      "range": {
+        "startLine": 30692,
+        "startChar": 67,
+        "endLine": 30692,
+        "endChar": 70
+      },
+      "revId": "7c61cb247d22bfc3a34ea79c88395c2569294410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
