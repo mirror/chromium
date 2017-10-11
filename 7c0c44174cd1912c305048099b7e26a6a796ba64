@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb26bc5f_1b029a97",
+        "filename": "chromecast/media/cma/backend/fuchsia/audio_decoder_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-11T00:27:15Z",
+      "side": 1,
+      "message": "200ms is more likely to give proper behavior until this function is implemented.",
+      "parentUuid": "33e33cd7_0f7add93",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78d450a_5536abc0",
         "filename": "chromecast/media/cma/backend/fuchsia/audio_decoder_fuchsia.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-10T22:17:44Z",
       "side": 1,
       "message": "IIUC these APIs mirror those on the MediaPipelineBackendFuchsia.\n\nRather than pre-emptively define these with NOTIMPLEMENTED(), could we just have the overrides on MediaPipelineBackendFuchsia just be NOTIMPLEMENTED, and flesh out the API here based on what the real implementation needs?",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a00525e_689f7881",
+        "filename": "chromecast/media/cma/backend/fuchsia/audio_decoder_fuchsia.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-11T00:27:15Z",
+      "side": 1,
+      "message": "Most of the playback logic will be implemented in AudioDecoderFuchsia, so I think we will need these functions here, so I\u0027d prefer to keep them",
+      "parentUuid": "f78d450a_5536abc0",
       "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18f39008_166c5f47",
+        "filename": "chromecast/media/cma/backend/fuchsia/media_pipeline_backend_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-11T00:27:15Z",
+      "side": 1,
+      "message": "The only thing that may be wrong in |params| is device ID. In that case the backend will fail to initialize. Added bool result in AudioDecoderFiuchsia::Initialize() to handle this case.",
+      "parentUuid": "d3717140_fc00d333",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c0dc178_2ce72ab8",
         "filename": "chromecast/media/cma/backend/fuchsia/media_pipeline_backend_fuchsia_unittest.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-10T22:17:44Z",
       "side": 1,
       "message": "nit: This is testing that Initialize() succeeds if you *haven\u0027t* created either an audio nor a video decoder, which is actually a bit weird; I\u0027d expect it to fail in this case...",
+      "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f162c230_64919fc5",
+        "filename": "chromecast/media/cma/backend/fuchsia/media_pipeline_backend_fuchsia_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-11T00:27:15Z",
+      "side": 1,
+      "message": "Added audio decoder creation in this case.",
+      "parentUuid": "1c0dc178_2ce72ab8",
       "revId": "7c0c44174cd1912c305048099b7e26a6a796ba64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
