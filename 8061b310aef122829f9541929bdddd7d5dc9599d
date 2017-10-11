@@ -34,6 +34,24 @@
       "revId": "8061b310aef122829f9541929bdddd7d5dc9599d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c0fa87_4a03ac63",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTextControlSingleLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-11T18:15:14Z",
+      "side": 1,
+      "message": "Change IsDescendantOf to \"\u003d\u003d\" matches what we have for MultiLine (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutTextControlMultiLine.cpp?l\u003d49), I assumed these two should be similar? \n\nAlso, IsDescendantOf(InnerEditorElement()) is quite confused because it\u0027s not including InnerEditorElement itself. \n\nDo you know why we need it this way? If we cannot change the hit test here, I can talk to the spec saying we can\u0027t make it as they expected. \n\nThanks.",
+      "parentUuid": "0dc97192_accf49c5",
+      "revId": "8061b310aef122829f9541929bdddd7d5dc9599d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
