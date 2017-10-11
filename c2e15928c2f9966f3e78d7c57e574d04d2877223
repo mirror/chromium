@@ -16,6 +16,24 @@
       "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8a0324_fbea4eeb",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-11T19:27:51Z",
+      "side": 1,
+      "message": "Are we not already taking screenshots with the code below?",
+      "parentUuid": "cd8782f2_a7f5971f",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
