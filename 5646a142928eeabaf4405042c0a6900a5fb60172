@@ -16,6 +16,24 @@
       "revId": "5646a142928eeabaf4405042c0a6900a5fb60172",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2dc56d9_46b207b3",
+        "filename": "ui/base/clipboard/clipboard_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-11T17:20:58Z",
+      "side": 1,
+      "message": "Name change seems reasonable but static is not actually needed or desirable. It makes potentially sense for an expensive-to-create object like std::string, but the compiler won\u0027t even create these variables - it will optimize them away. static overrides that, so why bother?",
+      "parentUuid": "947d20ee_ec61d232",
+      "revId": "5646a142928eeabaf4405042c0a6900a5fb60172",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
