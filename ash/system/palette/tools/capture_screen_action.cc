@@ -4,9 +4,15 @@
 
 #include "ash/system/palette/tools/capture_screen_action.h"
 
+#include "ash/accelerators/accelerator_controller_delegate_classic.h"
+//#include "ash/mus/accelerators/accelerator_controller_delegate_mus.h"
+//#include "ash/mus/bridge/shell_port_mash.h"
 #include "ash/palette_delegate.h"
+#include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/screenshot_delegate.h"
 #include "ash/shell.h"
+#include "ash/shell_port_classic.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/palette/palette_ids.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -31,7 +37,22 @@ void CaptureScreenAction::OnEnable() {
 
   delegate()->DisableTool(GetToolId());
   delegate()->HidePaletteImmediately();
-  Shell::Get()->palette_delegate()->TakeScreenshot();
+
+  AcceleratorControllerDelegateClassic* accelerator_controller_delegate =
+      nullptr;
+  if (Shell::GetAshConfig() == Config::CLASSIC) {
+    accelerator_controller_delegate =
+        ShellPortClassic::Get()->accelerator_controller_delegate();
+    //  } else if (Shell::GetAshConfig() == Config::MUS) {
+    //    accelerator_controller_delegate =
+    //        mus::ShellPortMash::Get()->accelerator_controller_delegate_mus();
+  } else {
+    NOTIMPLEMENTED();
+    return;
+  }
+
+  accelerator_controller_delegate->screenshot_delegate()
+      ->HandleTakeScreenshotForAllRootWindows();
 }
 
 views::View* CaptureScreenAction::CreateView() {
