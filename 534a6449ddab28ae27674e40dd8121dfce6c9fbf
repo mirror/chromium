@@ -133,6 +133,29 @@
       "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5046352c_ae695167",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserMode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-11T17:53:57Z",
+      "side": 1,
+      "message": "Can you use \"std::numeric_limits\" to get the number of enum values?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
