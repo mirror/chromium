@@ -269,6 +269,11 @@ class NaclArchiveInstance : public pp::Instance {
         break;
       }
 
+      case request::RELEASE_COMPRESSOR: {
+        ReleaseCompressor(compressor_id);
+        break;
+      }
+
       default:
         PP_NOTREACHED();
     }
@@ -459,6 +464,15 @@ class NaclArchiveInstance : public pp::Instance {
 
     if (iterator != compressors_.end())
       iterator->second->CancelArchive(var_dict);
+  }
+
+  void ReleaseCompressor(int compressor_id) {
+    compressor_iterator iterator = compressors_.find(compressor_id);
+
+    if (iterator != compressors_.end()) {
+      delete iterator->second;
+      compressors_.erase(iterator);
+    }
   }
 
   // A map that holds for every opened archive its instance. The key is the file
