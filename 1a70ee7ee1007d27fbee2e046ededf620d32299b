@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c40c48f5_e98b13d8",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-11T17:05:02Z",
+      "side": 1,
+      "message": "snake_case()",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "1a70ee7ee1007d27fbee2e046ededf620d32299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb47752_756839ff",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-11T17:05:02Z",
+      "side": 1,
+      "message": "Which processing order? Don\u0027t delayed tasks typically run after (and in general have no ordering guarantees)?",
+      "range": {
+        "startLine": 419,
+        "startChar": 23,
+        "endLine": 419,
+        "endChar": 48
+      },
+      "revId": "1a70ee7ee1007d27fbee2e046ededf620d32299b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
