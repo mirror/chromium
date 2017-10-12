@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ed7e36_028585f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T18:37:39Z",
+      "side": 0,
+      "message": "I landed a change last night with this line removed so there may be a merge conflict",
+      "range": {
+        "startLine": 1646,
+        "startChar": 0,
+        "endLine": 1646,
+        "endChar": 89
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd05362_05687457",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T18:37:39Z",
+      "side": 0,
+      "message": "Does this mean we were previously never sending surroundings for undecided users? Or is this only used for Icing?",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
