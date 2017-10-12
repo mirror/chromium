@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c727a808_5f1f4710",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-12T18:21:21Z",
+      "side": 1,
+      "message": "on second thought, I think I\u0027m with Tommy here. If you\u0027ve got to retain a pointer (either to the WC or the WCO), it might as well be to the WCO if that suffices.\n\nThe alternative is to synchronously delete MediaPlayerRenderer when OnWebContentsDestroyed occurs. Is that an option? (I don\u0027t recall what the lifetime of this class is at all, but it seems like having media players not outlive a tab -- or better, their RFH -- would be a good thing?)",
+      "parentUuid": "33f50de2_9115e68c",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df06bc26_e4a57de0",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
