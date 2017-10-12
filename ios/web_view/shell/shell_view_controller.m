@@ -19,7 +19,8 @@ NSString* const kWebViewShellAddressFieldAccessibilityLabel = @"Address field";
 NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     @"WebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier";
 
-@interface ShellViewController ()<CWVNavigationDelegate,
+@interface ShellViewController ()<CWVAutofillControllerDelegate,
+                                  CWVNavigationDelegate,
                                   CWVUIDelegate,
                                   UITextFieldDelegate>
 // Container for |webView|.
@@ -251,6 +252,8 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   _webView.UIDelegate = self;
   _translationDelegate = [[ShellTranslationDelegate alloc] init];
   _webView.translationController.delegate = _translationDelegate;
+  _webView.autofillController.delegate = self;
+  ;
 
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
@@ -294,6 +297,49 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
   }
 
   [_field setText:[[_webView visibleURL] absoluteString]];
+}
+
+#pragma mark CWVAutofillControllerDelegate
+
+- (void)autofillController:(CWVAutofillController*)autofillController
+          showFormSuggestions:
+              (NSArray<CWVAutofillFormSuggestion*>*)formSuggestions
+    commitFormSuggestionBlock:
+        (CWVCommitFormSuggestionBlock)commitFormSuggestionBlock {
+  UIAlertController* alertController = [UIAlertController
+      alertControllerWithTitle:@"Pick a suggestion"
+                       message:nil
+                preferredStyle:UIAlertControllerStyleActionSheet];
+  [alertController
+      addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                         style:UIAlertActionStyleCancel
+                                       handler:nil]];
+
+  for (CWVAutofillFormSuggestion* formSuggestion in formSuggestions) {
+    NSString* title;
+    if (formSuggestion.type == CWVFormSuggestionTypeAutofill) {
+      title = [NSString stringWithFormat:@"%@ %@", formSuggestion.value,
+                                         formSuggestion.displayDescription];
+    } else if (formSuggestion.type == CWVFormSuggestionTypeAutofill) {
+      title = @"Clear form";
+    } else {
+      continue;
+    }
+    [alertController
+        addAction:[UIAlertAction
+                      actionWithTitle:title
+                                style:UIAlertActionStyleDefault
+                              handler:^(UIAlertAction* _Nonnull action) {
+                                commitFormSuggestionBlock(formSuggestion);
+                              }]];
+  }
+
+  [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)autofillControllerShouldHideFormSuggestions:
+    (CWVAutofillController*)autofillController {
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark CWVUIDelegate methods
