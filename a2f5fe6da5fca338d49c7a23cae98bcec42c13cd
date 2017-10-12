@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "99757b78_98d3cc0c",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-12T20:28:37Z",
+      "side": 1,
+      "message": "It\u0027s because the reporting code in //net causes a pretty big bump in binary size, so some embedders don\u0027t want to use it.",
+      "parentUuid": "e3e6fe54_5cdb643d",
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8bc21ee_561e8754",
         "filename": "content/shell/browser/shell_url_request_context_getter.cc",
         "patchSetId": 4
@@ -66,6 +84,47 @@
       "side": 1,
       "message": "Yeah I\u0027ve reduced it to 100 ms. I think that\u0027s a happy middle ground.",
       "parentUuid": "a8bc21ee_561e8754",
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab46d05_097a206f",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-12T20:28:37Z",
+      "side": 1,
+      "message": "If you want, you can file a bug against me requesting a \"send reports now for testing\" button.",
+      "parentUuid": "4ec5bd0a_3abef769",
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7559c40f_1fa00ce0",
+        "filename": "third_party/WebKit/Source/platform/weborigin/ReportingServiceProxyPtrHolder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-12T20:28:37Z",
+      "side": 1,
+      "message": "Are all of these supposed to be empty strings if unavailable?",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 55
+      },
       "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
