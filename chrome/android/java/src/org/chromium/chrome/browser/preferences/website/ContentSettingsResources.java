@@ -158,7 +158,8 @@ public class ContentSettingsResources {
             localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND,
                     new ResourceItem(R.drawable.ic_volume_up_grey600_24dp,
                             R.string.sound_permission_title, R.string.sound_permission_title,
-                            ContentSetting.ALLOW, ContentSetting.BLOCK, 0, 0));
+                            ContentSetting.ALLOW, ContentSetting.BLOCK,
+                            R.string.website_settings_category_sound_allowed, 0));
             sResourceInfo = localMap;
         }
         return sResourceInfo;
