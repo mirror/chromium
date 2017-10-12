@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acf0c969_a3e6cbe8",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-12T21:10:06Z",
+      "side": 1,
+      "message": "So this will also show in the UI as a 0x... value with zero size / count? Maybe lets include \"/tracker_instance/\" in the name, so that it\u0027s clearer what this is?",
+      "range": {
+        "startLine": 1324,
+        "startChar": 7,
+        "endLine": 1324,
+        "endChar": 20
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac32ea8_fb7d5833",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-12T21:10:06Z",
+      "side": 1,
+      "message": "We should remove value once counter drops to 0. Otherwise we\u0027re wasting memory on a dead pointer (which is bad by itself, because at some point we might end up calling something on cache pointers from block_cache_share_counts_).",
+      "range": {
+        "startLine": 1460,
+        "startChar": 4,
+        "endLine": 1460,
+        "endChar": 29
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957f208f_f3a685b0",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-12T21:10:06Z",
+      "side": 1,
+      "message": "I think it\u0027ll be more future-proof if we save whole Config instead. For example we have plans to calculate memory usage of \u0027env\u0027, which is also specified in Config.",
+      "range": {
+        "startLine": 266,
+        "startChar": 34,
+        "endLine": 266,
+        "endChar": 45
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86213c6e_e149c300",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-12T21:10:06Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that clean public API has to be modified because its (internal) client needed some additional data.\n\nHow about we move block_cache_share_counts_ into mdp_, and notify mdp_ in DatabaseOpened / DatabaseDestroyed? That way DatabaseVisitor stays clean, and we have a clean path for future modifications.",
+      "range": {
+        "startLine": 284,
+        "startChar": 39,
+        "endLine": 284,
+        "endChar": 67
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
