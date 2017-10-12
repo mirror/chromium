@@ -325,9 +325,9 @@ void ShelfLayoutManager::UpdateAutoHideForMouseEvent(ui::MouseEvent* event,
   }
 }
 
-void ShelfLayoutManager::ProcessGestureEventOnWindow(ui::GestureEvent* event,
-                                                     aura::Window* target) {
-  if (visibility_state() != SHELF_AUTO_HIDE || in_shutdown_)
+void ShelfLayoutManager::UpdateAutoHideForGestureEvent(ui::GestureEvent* event,
+                                                       aura::Window* target) {
+  if (IsVisible() || in_shutdown_)
     return;
 
   if (IsShelfWindow(target)) {
