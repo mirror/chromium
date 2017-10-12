@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e02bb6d6_9a092be1",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T21:00:35Z",
+      "side": 1,
+      "message": "Agreed, I can follow up on that separately.",
+      "parentUuid": "3bcae96c_5d83a267",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f52eb7bf_33233dab",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 9
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b84b1e58_9e786e42",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T21:00:35Z",
+      "side": 1,
+      "message": "Yes, I noticed this too and will follow up separately.  I agree it\u0027s better to use SiteInstanceImpl::ShouldAssignSiteForURL for consistency.",
+      "parentUuid": "f52eb7bf_33233dab",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f21cd2b_b837d015",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 9
@@ -94,6 +130,24 @@
       "writtenOn": "2017-10-12T20:37:38Z",
       "side": 1,
       "message": "There\u0027s a difference between ShouldLockToOrigin and DoesSiteRequireDedicatedProcess, right?  I think the latter returns true for extensions as well, even though they don\u0027t call LockToOrigin.\n\nI think you\u0027re right that we want DoesSiteRequireDedicatedProcess so that we don\u0027t have a race that breaks isolate-extensions?  Just wanted to sanity check it.",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6900a02f_43fba4b0",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T21:00:35Z",
+      "side": 1,
+      "message": "Oh, great question.  I *think* isolate-extensions shouldn\u0027t be subject to this race, since IsSuitableHost() will already disallow process reuse based on a mismatch in GetProcessPrivilege().  So for that ShouldLockToOrigin should be sufficient. \n\nI can\u0027t come up with a specific case where DoesSiteRequireDedicatedProcess would be required, so I could try changing it to ShouldLockToOrigin.  But it also doesn\u0027t hurt (we\u0027ll just skip setting the origin lock as part of SetSite), and overall it feels a bit safer to set the site for SiteInstances of dedicated processes once we know it.",
+      "parentUuid": "9f21cd2b_b837d015",
       "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
