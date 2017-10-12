@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc16002_4b0786d3",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-12T11:06:38Z",
+      "side": 1,
+      "message": "We already have references to table and grid in this.ui_.listContainer.\nHow about pass the selection handler to listContainer and handle the change event in\nlist container, or in table and grid?",
+      "revId": "12ebe9918e87129bb720718cafa4406af31d842b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8edea53_1140a463",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-12T11:06:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t do the same treatment for grid view?",
+      "revId": "12ebe9918e87129bb720718cafa4406af31d842b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
