@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b94b84a_445ad739",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T02:04:47Z",
+      "side": 1,
+      "message": "This will go away.",
+      "range": {
+        "startLine": 1994,
+        "startChar": 0,
+        "endLine": 1996,
+        "endChar": 1
+      },
+      "revId": "0ff41fb677b52a5a54e5da67db9c20f4d0af2d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad8decb_7a4085ef",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T02:04:47Z",
+      "side": 1,
+      "message": "Should this be weak?",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 72
+      },
+      "revId": "0ff41fb677b52a5a54e5da67db9c20f4d0af2d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
