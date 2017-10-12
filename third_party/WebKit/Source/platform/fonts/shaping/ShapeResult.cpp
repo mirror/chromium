@@ -443,6 +443,19 @@ void ShapeResult::ApplySpacingImpl(
 
   // Glyph bounding box is in logical space.
   glyph_bounding_box_.SetWidth(glyph_bounding_box_.Width() + total_space);
+
+  if (width_ >= 0)
+    return;
+
+  // Negative word-spacing and/or letter-spacing may cause some glyphs to
+  // overflow the left boundary and result negative measured width. Reset
+  // measured width to 0 and adjust glyph bounds accordingly to cover the
+  // overflow.
+  if (width_ < glyph_bounding_box_.X()) {
+    glyph_bounding_box_.ShiftXEdgeTo(width_);
+  }
+
+  width_ = 0;
 }
 
 void ShapeResult::ApplySpacing(ShapeResultSpacing<String>& spacing,
