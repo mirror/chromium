@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1656f919_8ee852c5",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-12T17:24:23Z",
+      "side": 1,
+      "message": "Oh, the this.info hasn\u0027t been set yet.  Let\u0027s not race against that.\n\ndpapad certainly has a better advice, but I\u0027m guessing the setup of the button event listener could simply capture a value of the current button it is executing for?  Remove the   createShowAllButtonId and setupShowAllButton methods, and instead in the ~line 182 area :\n\n      propertiesBtn.textContent \u003d \u0027Show All\u0027;\n      // don\u0027t set an .id\n      propertiesBtn.classList.add(\u0027show-all-properties\u0027);\n      propertiesBtn.addEventListener(\u0027click\u0027, () \u003d\u003e {\n        const fieldSet \u003d this.propertiesFieldSet_;\n        const button \u003d propertiesBtn;\n        if (showAll) {\n          fieldSet.showAll \u003d false;\n          button.textContent \u003d \u0027Show All\u0027;\n          fieldSet.redraw();\n        } else {\n          fieldSet.showAll \u003d true;\n          button.textContent \u003d \u0027Hide\u0027;\n          fieldSet.redraw();\n        }\n      });",
+      "parentUuid": "682f6386_b105b8f6",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9be70d_afbed347",
         "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
         "patchSetId": 12
