@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a93ea87b_16c76e6f",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "Nit: Should this file have a copyright header?",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8198b75_e34e4d38",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "Perhaps we should clarify this comment further, that this is not a CSS property, but represents an @rule? Also that things can be both a descriptor and a property.",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba2df4d_57bab25f",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "Should the valid_type of this be \"bool\", and the default false?",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275f952b_fee31baa",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s put this above is_descriptor, since it\u0027s the more common case.",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0947739a_8114be88",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "The valid_type of this should also be bool",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278f52e6_06456abd",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-12T23:17:24Z",
+      "side": 1,
+      "message": "This comment seems redundant - doesn\u0027t this whole file specify property metadata?",
+      "revId": "b9560cd71863707fe748cfba293ec0ddcbeb4eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
