@@ -77,6 +77,7 @@ DeviceService::DeviceService(
 #endif
 
 DeviceService::~DeviceService() {
+  DCHECK(false) << "I can't get this thing to run ...";
 #if !defined(OS_ANDROID)
   device::BatteryStatusService::GetInstance()->Shutdown();
 #endif
