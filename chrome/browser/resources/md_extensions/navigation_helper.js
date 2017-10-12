@@ -21,16 +21,9 @@ const Dialog = {
   OPTIONS: 'options',
 };
 
-/** @enum {number} */
-extensions.ShowingType = {
-  EXTENSIONS: 0,
-  APPS: 1,
-};
-
 /** @typedef {{page: Page,
                extensionId: (string|undefined),
-               subpage: (!Dialog|undefined),
-               type: (!extensions.ShowingType|undefined)}} */
+               subpage: (!Dialog|undefined)}} */
 let PageState;
 
 cr.define('extensions', function() {
@@ -73,10 +66,7 @@ cr.define('extensions', function() {
       if (location.pathname == '/shortcuts')
         return {page: Page.SHORTCUTS};
 
-      if (location.pathname == '/apps')
-        return {page: Page.LIST, type: extensions.ShowingType.APPS};
-
-      return {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS};
+      return {page: Page.LIST};
     }
 
     /**
@@ -116,7 +106,6 @@ cr.define('extensions', function() {
     navigateTo(newPage) {
       let currentPage = this.getCurrentPage();
       if (currentPage && currentPage.page == newPage.page &&
-          currentPage.type == newPage.type &&
           currentPage.subpage == newPage.subpage &&
           currentPage.extensionId == newPage.extensionId) {
         return;
@@ -134,9 +123,6 @@ cr.define('extensions', function() {
       let path;
       switch (entry.page) {
         case Page.LIST:
-          if (entry.type == extensions.ShowingType.APPS)
-            path = '/apps';
-          else
             path = '/';
           break;
         case Page.DETAILS:
@@ -158,8 +144,7 @@ cr.define('extensions', function() {
       const state = {url: path};
       const currentPage = this.getCurrentPage();
       const isDialogNavigation = currentPage.page == entry.page &&
-          currentPage.extensionId == entry.extensionId &&
-          currentPage.type == entry.type;
+          currentPage.extensionId == entry.extensionId;
       // Navigating to a dialog doesn't visually change pages; it just opens
       // a dialog. As such, we replace state rather than pushing a new state
       // on the stack so that hitting the back button doesn't just toggle the
