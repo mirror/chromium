@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a76797_4c19978d",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-12T23:05:30Z",
+      "side": 1,
+      "message": "Instead of more user agent CSS, couldn\u0027t we solve this in EventHandler.cpp? What\u0027s more efficient?\n\nIn EventHandler.cpp, HasEditableStyle() can tell us if a Node is \u0027read-write\u0027.\n\nIf we fix EventHandler.cpp we make these unit tests pass as well:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/715901/3/third_party/WebKit/Source/core/input/EventHandlerTest.cpp (feel free to copy them into this CL).",
+      "revId": "6eaa3493363719b6800136e754ece3a2fb35fd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
