@@ -1294,6 +1294,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Account check failed"/>
 </enum>
 
+<enum name="ArcContainerLifetimeEvent">
+  <summary>Defines ARC container lifetime events</summary>
+  <int value="0" label="Container starting"/>
+  <int value="1" label="Container failed to start"/>
+  <int value="2" label="Container crashed early"/>
+  <int value="3" label="Container crashed"/>
+</enum>
+
 <enum name="ArcIntentHandlerAction">
   <summary>Defines Arc intent handler actions</summary>
   <int value="0" label="Error"/>
