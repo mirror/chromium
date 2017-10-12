@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50f16118_0288d5df",
+        "filename": "chrome/test/data/webui/chromeos/fake_networking_private.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-12T00:01:43Z",
+      "side": 1,
+      "message": "Are these intentionally ES6-style function declarations? Asking because the file uses both styles inconsistently.",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "f182cbf6a37dd85fc28c716389763c0fe1e1c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
