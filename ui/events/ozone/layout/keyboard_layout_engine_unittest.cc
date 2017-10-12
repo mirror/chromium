@@ -193,6 +193,8 @@ void TestLookup(const char* name, KeyboardLayoutEngine* engine) {
        VKEY_A, 1},
       {DomCode::LAUNCH_ASSISTANT, EF_NONE, DomKey::LAUNCH_ASSISTANT,
        VKEY_ASSISTANT, 0},
+      {DomCode::LAUNCH_ASSISTANT_VOICE_COMMAND, EF_NONE,
+       DomKey::LAUNCH_ASSISTANT_VOICE_COMMAND, VKEY_ASSISTANT_VOICE_COMMAND, 0},
   };
 
   KeyboardLayoutEngineManager::SetKeyboardLayoutEngine(
