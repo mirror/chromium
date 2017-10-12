@@ -24,9 +24,11 @@
 #include "content/network/http_server_properties_pref_delegate.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory_impl.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/http/http_network_session.h"
@@ -131,6 +133,16 @@ void NetworkContext::HandleViewCacheRequest(const GURL& url,
 void NetworkContext::GetCookieManager(
     network::mojom::CookieManagerRequest request) {
   cookie_manager_->AddRequest(std::move(request));
+}
+
+void NetworkContext::GetRestrictedCookieManager(
+    network::mojom::RestrictedCookieManagerRequest request,
+    uint32_t render_process_id,
+    uint32_t render_frame_id) {
+  mojo::MakeStrongBinding(base::WrapUnique(new RestrictedCookieManagerImpl(
+                              url_request_context_->cookie_store(),
+                              render_process_id, render_frame_id)),
+                          std::move(request));
 }
 
 void NetworkContext::DisableQuic() {
