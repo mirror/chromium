@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "55accd8c_2e9bfa06",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-12T00:03:12Z",
+      "side": 1,
+      "message": "I think this needs to be a single { and }, not double {{ and }}. The outer { in the @typedef is for specifying the type, and the other {s are for dictionaries.",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "2d4ffe35207f070af6d73bfbe3be66a94be3f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16e0714b_c21b7298",
         "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
         "patchSetId": 5
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-11T19:51:22Z",
       "side": 1,
       "message": "This is failing closure compilation.  Not sure why!",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 43
+      },
+      "revId": "2d4ffe35207f070af6d73bfbe3be66a94be3f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8080ad5f_f37e7f08",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-12T00:03:12Z",
+      "side": 1,
+      "message": "what\u0027s the error?",
+      "parentUuid": "16e0714b_c21b7298",
       "range": {
         "startLine": 104,
         "startChar": 31,
