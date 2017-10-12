@@ -6,12 +6,15 @@
 
 #import <WebKit/WebKit.h>
 
+#include "base/strings/sys_string_conversions.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/url_formatter/elide_url.h"
 #import "ios/chrome/browser/ui/material_components/utils.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
+#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "url/gurl.h"
@@ -25,6 +28,7 @@ const CGFloat kToolbarButtonWidth = 42.0f;
 @interface CaptivePortalLoginViewController ()
 
 @property(nonatomic, strong) NSURL* landingURL;
+@property(nonatomic, strong) UILabel* landingPageURLLabel;
 @property(nonatomic, strong) WKWebView* webView;
 
 @property(nonatomic, strong) MDCAppBar* appBar;
@@ -44,6 +48,7 @@ const CGFloat kToolbarButtonWidth = 42.0f;
 
 @implementation CaptivePortalLoginViewController
 @synthesize landingURL = _landingURL;
+@synthesize landingPageURLLabel = _landingPageURLLabel;
 @synthesize delegate = _delegate;
 @synthesize webView = _webView;
 @synthesize appBar = _appBar;
@@ -56,6 +61,10 @@ const CGFloat kToolbarButtonWidth = 42.0f;
   if (self) {
     _landingURL = net::NSURLWithGURL(landingURL);
     _appBar = [[MDCAppBar alloc] init];
+
+    _landingPageURLLabel = [[UILabel alloc] init];
+    _landingPageURLLabel.text = base::SysUTF16ToNSString(
+        url_formatter::FormatUrlForSecurityDisplay(landingURL));
   }
   return self;
 }
@@ -84,8 +93,15 @@ const CGFloat kToolbarButtonWidth = 42.0f;
       [_webView scrollView];
   [_webView scrollView].delegate = [_appBar headerViewController];
 
-  // Add the app bar at the end.
+  // Add the app bar after the web view.
   [_appBar addSubviewsToParent];
+
+  _landingPageURLLabel.frame =
+      CGRectMake(0.0, 20.0, CGRectGetWidth(self.view.frame), 20.0);
+  [_landingPageURLLabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  _landingPageURLLabel.font = [MDCTypography captionFont];
+  _landingPageURLLabel.textAlignment = NSTextAlignmentCenter;
+  [self.view addSubview:_landingPageURLLabel];
 
   // Create a custom Done bar button item, as Material Navigation Bar does not
   // handle a system UIBarButtonSystemItemDone item.
