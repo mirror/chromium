@@ -11,6 +11,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
@@ -27,6 +28,7 @@
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/network/ignore_errors_cert_verifier.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/http/http_network_session.h"
@@ -210,6 +212,12 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
   } else {
     builder.set_proxy_service(net::ProxyService::CreateDirect());
   }
+
+  std::unique_ptr<net::CertVerifier> cert_verifier =
+      net::CertVerifier::CreateDefault();
+  builder.SetCertVerifier(
+      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+          *command_line, nullptr, std::move(cert_verifier)));
 
   ApplyContextParamsToBuilder(&builder, network_context_params);
 
