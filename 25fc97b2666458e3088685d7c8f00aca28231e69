@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "516acfe0_1be3a722",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-12T20:12:42Z",
+      "side": 1,
+      "message": "This is interesting. If the command is ChromeDriver only, and we didn\u0027t implement it, it doesn\u0027t seem to be very useful. Maybe delete it sometime.",
+      "range": {
+        "startLine": 481,
+        "startChar": 47,
+        "endLine": 481,
+        "endChar": 74
+      },
+      "revId": "25fc97b2666458e3088685d7c8f00aca28231e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a34bda_0f955eaf",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-10-12T20:12:42Z",
+      "side": 1,
+      "message": "This is actually not Chrome specific. It\u0027s in a proposed extension to WebDriver protocol for mobile, https://github.com/SeleniumHQ/mobile-spec/blob/master/spec-draft.md, though it is kind of dormant. Maybe another section for it.\n\nThe network_conditions command below is ChromeDriver specific, on the other hand.",
+      "range": {
+        "startLine": 502,
+        "startChar": 48,
+        "endLine": 502,
+        "endChar": 66
+      },
+      "revId": "25fc97b2666458e3088685d7c8f00aca28231e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
