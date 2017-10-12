@@ -1715,6 +1715,7 @@ enum WebFeature {
   kCrossOriginWorkerTextHtml = 2184,
   kCrossOriginWorkerTextPlain = 2185,
   kCrossOriginWorkerTextXml = 2186,
+  kHTMLMediaElementMediaPlaybackRateOutOfRange = 2187,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
