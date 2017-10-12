@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74973112_c42fda2f",
+        "filename": "components/content_settings/core/browser/website_settings_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:07:59Z",
+      "side": 1,
+      "message": "This will mean that only a very small number of content settings and website settings get registered. Is that what we want? We can always add more later.",
+      "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
