@@ -20,7 +20,7 @@ class OSExchangeData;
 // drag-drop operation as the user mouses over other drop targets on their
 // system. This object tells Windows whether or not the drag should continue,
 // and supplies the appropriate cursors.
-class UI_BASE_EXPORT DragSourceWin
+class DragSourceWin
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDropSource> {
@@ -58,6 +58,8 @@ class UI_BASE_EXPORT DragSourceWin
 
   DISALLOW_COPY_AND_ASSIGN(DragSourceWin);
 };
+
+Microsoft::WRL::ComPtr<ui::DragSourceWin> UI_BASE_EXPORT DragSourceWinFactory();
 
 }  // namespace ui
 

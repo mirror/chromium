@@ -104,6 +104,8 @@ def main():
       with open(header_file, 'wb') as f:
         f.write(''.join(header_contents))
 
+    return
+
     # mc.exe invocation and post-processing are complete, now compare the output
     # in tmp_dir to the checked-in outputs.
     diff = filecmp.dircmp(tmp_dir, source)

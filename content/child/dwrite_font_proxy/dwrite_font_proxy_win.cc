@@ -618,4 +618,13 @@ HRESULT FontFileStream::RuntimeClassInitialize(HANDLE handle) {
   return S_OK;
 }
 
+HRESULT CONTENT_EXPORT DWriteFontCollectionProxyFactory(
+  Microsoft::WRL::Details::ComPtrRef<
+        Microsoft::WRL::ComPtr<DWriteFontCollectionProxy>> ppvObject,
+  IDWriteFactory* pFactory,
+  IPC::Sender* pSender) {
+  return Microsoft::WRL::MakeAndInitialize<DWriteFontCollectionProxy>(
+      ppvObject, pFactory, pSender);
+}
+
 }  // namespace content

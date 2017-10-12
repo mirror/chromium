@@ -44,7 +44,7 @@ class FontFallbackUnitTest : public testing::Test {
         .AddFamilyName(L"en-us", L"Segoe UI Symbol")
         .AddFilePath(segoe_path);
 
-    mswr::MakeAndInitialize<DWriteFontCollectionProxy>(
+    DWriteFontCollectionProxyFactory(
         &collection_, factory_.Get(), fake_collection_->GetSender());
   }
 
@@ -56,15 +56,15 @@ class FontFallbackUnitTest : public testing::Test {
 
 TEST_F(FontFallbackUnitTest, MapCharacters) {
   mswr::ComPtr<FontFallback> fallback;
-  mswr::MakeAndInitialize<FontFallback>(&fallback, collection_.Get(),
+  FontFallbackFactory(&fallback, collection_.Get(),
                                         fake_collection_->GetSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
   float scale = 0.0;
 
-  mswr::ComPtr<gfx::win::TextAnalysisSource> text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> text;
+  gfx::win::TextAnalysisSourceFactory(
       &text, L"hello", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
   fallback->MapCharacters(text.Get(), 0, 5, nullptr, nullptr,
@@ -78,15 +78,15 @@ TEST_F(FontFallbackUnitTest, MapCharacters) {
 
 TEST_F(FontFallbackUnitTest, DuplicateCallsShouldNotRepeatIPC) {
   mswr::ComPtr<FontFallback> fallback;
-  mswr::MakeAndInitialize<FontFallback>(&fallback, collection_.Get(),
+  FontFallbackFactory(&fallback, collection_.Get(),
                                         fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
   float scale = 0.0;
 
-  mswr::ComPtr<gfx::win::TextAnalysisSource> text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> text;
+  gfx::win::TextAnalysisSourceFactory(
       &text, L"hello", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
   fallback->MapCharacters(text.Get(), 0, 5, nullptr, nullptr,
@@ -105,15 +105,15 @@ TEST_F(FontFallbackUnitTest, DuplicateCallsShouldNotRepeatIPC) {
 
 TEST_F(FontFallbackUnitTest, DifferentFamilyShouldNotReuseCache) {
   mswr::ComPtr<FontFallback> fallback;
-  mswr::MakeAndInitialize<FontFallback>(&fallback, collection_.Get(),
+  FontFallbackFactory(&fallback, collection_.Get(),
                                         fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
   float scale = 0.0;
 
-  mswr::ComPtr<gfx::win::TextAnalysisSource> text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> text;
+  gfx::win::TextAnalysisSourceFactory(
       &text, L"hello", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
   fallback->MapCharacters(text.Get(), 0, 5, nullptr, L"font1",
@@ -130,19 +130,19 @@ TEST_F(FontFallbackUnitTest, DifferentFamilyShouldNotReuseCache) {
 
 TEST_F(FontFallbackUnitTest, CacheMissShouldRepeatIPC) {
   mswr::ComPtr<FontFallback> fallback;
-  mswr::MakeAndInitialize<FontFallback>(&fallback, collection_.Get(),
+  FontFallbackFactory(&fallback, collection_.Get(),
                                         fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
   float scale = 0.0;
 
-  mswr::ComPtr<gfx::win::TextAnalysisSource> text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> text;
+  gfx::win::TextAnalysisSourceFactory(
       &text, L"hello", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
-  mswr::ComPtr<gfx::win::TextAnalysisSource> unmappable_text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> unmappable_text;
+  gfx::win::TextAnalysisSourceFactory(
       &unmappable_text, L"\uffff", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
   fallback->MapCharacters(text.Get(), 0, 5, nullptr, nullptr,
@@ -159,19 +159,19 @@ TEST_F(FontFallbackUnitTest, CacheMissShouldRepeatIPC) {
 
 TEST_F(FontFallbackUnitTest, SurrogatePairCacheHit) {
   mswr::ComPtr<FontFallback> fallback;
-  mswr::MakeAndInitialize<FontFallback>(&fallback, collection_.Get(),
+  FontFallbackFactory(&fallback, collection_.Get(),
                                         fake_collection_->GetTrackingSender());
 
   mswr::ComPtr<IDWriteFont> font;
   UINT32 mapped_length = 0;
   float scale = 0.0;
 
-  mswr::ComPtr<gfx::win::TextAnalysisSource> text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> text;
+  gfx::win::TextAnalysisSourceFactory(
       &text, L"hello", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
-  mswr::ComPtr<gfx::win::TextAnalysisSource> surrogate_pair_text;
-  mswr::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+  mswr::ComPtr<IDWriteTextAnalysisSource> surrogate_pair_text;
+  gfx::win::TextAnalysisSourceFactory(
       &surrogate_pair_text, L"\U0001d300", L"en-us", number_substitution_.Get(),
       DWRITE_READING_DIRECTION_LEFT_TO_RIGHT);
   fallback->MapCharacters(text.Get(), 0, 5, nullptr, nullptr,

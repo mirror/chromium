@@ -80,5 +80,16 @@ HRESULT TextAnalysisSource::RuntimeClassInitialize(
   return S_OK;
 }
 
+HRESULT TextAnalysisSourceFactory(
+    Microsoft::WRL::Details::ComPtrRef<
+        Microsoft::WRL::ComPtr<IDWriteTextAnalysisSource>> ppvObject,
+    const base::string16& text,
+    const base::string16& locale_name,
+    IDWriteNumberSubstitution* number_substitution,
+    DWRITE_READING_DIRECTION reading_direction) {
+  return Microsoft::WRL::MakeAndInitialize<gfx::win::TextAnalysisSource>(
+      ppvObject, text, locale_name, number_substitution, reading_direction);
+}
+
 }  // namespace win
 }  // namespace gfx
