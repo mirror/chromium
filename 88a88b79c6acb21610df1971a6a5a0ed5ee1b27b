@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d524416_f25b45d1",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-12T20:10:14Z",
+      "side": 1,
+      "message": "but you assert !mac above..",
+      "revId": "88a88b79c6acb21610df1971a6a5a0ed5ee1b27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c65cb0a_1ae61f25",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-12T20:10:14Z",
+      "side": 1,
+      "message": "Lines 30-32 are my favourite :-)",
+      "revId": "88a88b79c6acb21610df1971a6a5a0ed5ee1b27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
