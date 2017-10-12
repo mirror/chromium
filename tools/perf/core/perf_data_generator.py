@@ -604,7 +604,15 @@ def generate_isolate_script_entry(swarming_dimensions, test_args,
 # benchmark. Others are semi randomly chosen; they've failed on the waterfall
 # recently, so should be useful to upload.
 BENCHMARKS_TO_UPLOAD_TO_FLAKINESS_DASHBOARD = [
+    'cc_perftests',
+    'gpu_perftests',
+    'performance_browser_tests',
+    'battor.trivial_pages',
+    'blink_perf.owp_storage',
+    'blink_perf.layout',
+    'loading.desktop',
     'service_worker.service_worker',
+    'smoothness.top_25_smooth',
     'smoothness.tough_texture_upload_cases',
     'smoothness.tough_webgl_ad_cases',
     'system_health.common_desktop',
