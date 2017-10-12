@@ -40,6 +40,7 @@
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "ipc/ipc_message.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
@@ -71,7 +72,8 @@ struct ServiceWorkerVersionInfo;
 // running worker.
 class CONTENT_EXPORT ServiceWorkerVersion
     : public base::RefCounted<ServiceWorkerVersion>,
-      public EmbeddedWorkerInstance::Listener {
+      public EmbeddedWorkerInstance::Listener,
+      public service_manager::mojom::InterfaceProvider {
  public:
   // TODO(crbug.com/755477): LegacyStatusCallback which does not use
   // OnceCallback is deprecated and should be removed soon.
@@ -685,6 +687,10 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void CleanUpExternalRequest(const std::string& request_uuid,
                               ServiceWorkerStatusCode status);
 
+  // service_manager::mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle interface_pipe) override;
+
   const int64_t version_id_;
   const int64_t registration_id_;
   const GURL script_url_;
@@ -805,6 +811,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // version completed, or used during the lifetime of |this|. The values must
   // be from blink::UseCounter::Feature enum.
   std::set<uint32_t> used_features_;
+
+  mojo::Binding<service_manager::mojom::InterfaceProvider>
+      interface_provider_binding_;
 
   base::WeakPtrFactory<ServiceWorkerVersion> weak_factory_;
 
