@@ -10,6 +10,11 @@ gpu::SyncPointManager* ContentGpuClient::GetSyncPointManager() {
   return nullptr;
 }
 
+gpu::ProtectedGpuMemoryBufferManager*
+ContentGpuClient::GetProtectedGpuMemoryBufferManager() {
+  return nullptr;
+}
+
 const gpu::GPUInfo* ContentGpuClient::GetGPUInfo() {
   return nullptr;
 }
