@@ -64,6 +64,7 @@
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextBoundaries.h"
 
@@ -1230,7 +1231,7 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
           current_node, layout_object->CaretMinOffset() + text_start_offset);
     }
 
-    if (CanBeForwardCaretPosition(text_layout_object,
+    if (CanBeForwardCaretPosition(*current_node, text_layout_object,
                                   current_pos.OffsetInLeafNode())) {
       return current_pos.ComputePosition();
     }
@@ -1241,8 +1242,14 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
 // Returns true when both of the following hold:
 // (i)  |offset_in_node| is not the last offset in |text_layout_object|
 // (ii) |offset_in_node| and |offset_in_node + 1| are different caret positions
-static bool CanBeForwardCaretPosition(const LayoutText* text_layout_object,
+static bool CanBeForwardCaretPosition(const Node& node,
+                                      const LayoutText* text_layout_object,
                                       int offset_in_node) {
+  // When LayoutNG is enabled, check offset mapping instead.
+  if (auto mapping = GetNGOffsetMappingFor(node, offset_in_node)) {
+    return mapping->IsNonCollapsedCharacter(node, offset_in_node);
+  }
+
   const unsigned text_start_offset = text_layout_object->TextStartOffset();
   DCHECK_GE(offset_in_node, static_cast<int>(text_start_offset));
   const unsigned text_offset = offset_in_node - text_start_offset;
