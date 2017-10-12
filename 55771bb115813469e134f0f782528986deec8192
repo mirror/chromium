@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e642dee_e79b554c",
+        "filename": "components/sync/engine_impl/loopback_server/persistent_bookmark_entity.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-10-12T18:55:18Z",
+      "side": 0,
+      "message": "I\u0027ve at this point removed this DLOG_IF. It seems that we always hit this, commits to the real sync server use a version of 0 for new bookmakrs. If this log was in PersistentBookmarkEntity::CreateFromEntity it would make more sense to me. But other data types do not verify verison (in loopback logic), so I\u0027m a bit confused why bookmarks goes out of it\u0027s way to check version here. Let me know if there\u0027s context behind this that I\u0027m missing.",
+      "revId": "55771bb115813469e134f0f782528986deec8192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
