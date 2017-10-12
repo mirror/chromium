@@ -16,6 +16,24 @@
       "revId": "747f0ff535d50b23a8b200e0b0f580e18b428e81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61560419_722c10f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-10-12T01:39:39Z",
+      "side": 1,
+      "message": "Done. The callsite for VideoFrameResourceProvider has the arguments pulled out so that it can be easily reviewed. They will be collapsed down once I get the OK.",
+      "parentUuid": "633ee070_23e2c2e1",
+      "revId": "747f0ff535d50b23a8b200e0b0f580e18b428e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
