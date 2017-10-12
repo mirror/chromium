@@ -16,6 +16,24 @@
       "revId": "bf7a4645ee2a92240ff19d67c5a2b1d5af33884d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0c5500_9cd913f6",
+        "filename": "base/debug/stack_trace_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-12T17:51:30Z",
+      "side": 1,
+      "message": "I tried that, but clang-format formatted it badly (filed crbug.com/774167), so I left this the way it is for now.",
+      "parentUuid": "a4bd5d6d_b93b6b85",
+      "revId": "bf7a4645ee2a92240ff19d67c5a2b1d5af33884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
