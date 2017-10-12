@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a953a5_247cd7de",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "Can this go in the member initialization list?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a40b70e_8ac41853",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "In a follow-up CL, can you move this to a separate header file that\u0027s only built in test-support targets? It\u0027s getting a bit long to keep here.",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7a8d96_937721c4",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "You might be able to skip the PointerWatcher if you activate the bubble and then close on deactivate. Is there a particular reason to do it this way?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f839b2b_c1f2491c",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "Is this necessary? If it is, shouldn\u0027t it go before line 67?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3680f1ff_fa8b0231",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "It seems to me like this should be a per-user pref. If I use the device for a while, then give it to my son, shouldn\u0027t he see the bubble when he signs in for the first time?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0cbdf0_1a281c22",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:54:24Z",
+      "side": 1,
+      "message": "Is this needed? Shouldn\u0027t the widget close before it is destroyed?\n\nAlternately, could you do everything on destroy?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
