@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c19bad00_eab891d0",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-12T18:10:55Z",
+      "side": 1,
+      "message": "nit: move this up immediately below set_hide_horizontal_scrollbar (or below SetHasFocusIndicator)",
+      "revId": "c045ab1437d6cb25a8b91c1cd031843016b48522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d47a15_81e536ab",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-12T18:10:55Z",
+      "side": 1,
+      "message": "nit: \"draw a white separator\" and \"of the scroll view\" and \"when it overflows\", like:\n\"Whether to draw a white separator on the four sides of the scroll view when it overflows.\"\nOr consider: // Whether to draw an indicator when all contents are not currently visible.",
+      "revId": "c045ab1437d6cb25a8b91c1cd031843016b48522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
