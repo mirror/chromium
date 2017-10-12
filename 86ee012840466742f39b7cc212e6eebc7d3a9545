@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef713cd_535ce06c",
+        "filename": "base/files/file_descriptor_watcher_posix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T19:12:10Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that this is viable; the file-descriptor limit on a typical Linux system is pretty small (not sure offhand, but something like 1024 or 4096?). Under Fuchsia the fd table only has 256 entries.\n\nMy ChromeOS system\u0027s Browser process currently has 1200(!) file-descriptors, according to Task Manager.  Calling code has to watch for reads \u0026 writes independently, meaning two dup()s per-fd, i.e. 3x the fd count if every connected fd were to be watched by this mechanism. :-/\n\nPerhaps we don\u0027t actually use this implementation for many resources, though, in which case it\u0027s less of an issue?",
+      "revId": "86ee012840466742f39b7cc212e6eebc7d3a9545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
