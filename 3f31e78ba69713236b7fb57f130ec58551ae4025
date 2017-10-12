@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639bd581_b961774e",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "Nit: this isn\u0027t needed here since wait_for_worker is ignored unless has_worker is true.",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efafbda_bc4c1487",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "Nit: put this comment back where it came from.",
+      "range": {
+        "startLine": 202,
+        "startChar": 5,
+        "endLine": 202,
+        "endChar": 10
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fd8cf4_a4bcca4b",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "Minor nit: reflow the comment.",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0372859c_f8fee748",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "Minor nit: reflow the comment",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cfdd96_888bfc14",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "This can probably be put back the way it was? Or if you don\u0027t want to revert the changes in installable_task_queue.h, could you add a 2 argument constructor?",
+      "range": {
+        "startLine": 181,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39186d7_a60ea2ac",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "Nit: put this back or add a 2 arg constructor",
+      "range": {
+        "startLine": 181,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e90554_f48d4ef4",
+        "filename": "chrome/browser/installable/installable_params.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T23:38:42Z",
+      "side": 1,
+      "message": "This isn\u0027t true any more?",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 65
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
