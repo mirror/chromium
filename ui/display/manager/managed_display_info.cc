@@ -58,6 +58,43 @@ bool GetDisplayBounds(const std::string& spec,
   return false;
 }
 
+// This merges the two maps |destination| and |source| and stores the result in
+// |destination|. It follows the logic:
+//  - If a key exists in both maps, the value of the one that is non empty is
+//    retained in the result.
+//  - If a key only exists in |destination| map, it is removed from the result.
+//  - If a key only exists in |source| map, it is added along with its value to
+//    the result.
+//  - If a |skip_key| exists in |destination| we do not modify or remove it.
+void MergeTouchDeviceMap(
+    uint32_t skip_key,
+    std::map<uint32_t, TouchCalibrationData>& destination,
+    const std::map<uint32_t, TouchCalibrationData>& source) {
+  auto source_it = source.begin();
+  auto destination_it = destination.begin();
+  while (destination_it != destination.end() || source_it != source.end()) {
+    if (destination_it != destination.end() &&
+        destination_it->first == skip_key) {
+      destination_it++;
+      continue;
+    }
+    if (source_it == source.end() ||
+        (destination_it != destination.end() &&
+         source_it->first > destination_it->first)) {
+      destination_it = destination.erase(destination_it);
+    } else if (destination_it == destination.end() ||
+               source_it->first < destination_it->first) {
+      destination.emplace(source_it->first, source_it->second);
+      source_it++;
+    } else {
+      if (destination_it->second.IsEmpty() && !source_it->second.IsEmpty())
+        destination[source_it->first] = source_it->second;
+      source_it++;
+      destination_it++;
+    }
+  }
+}
+
 // Display mode list is sorted by:
 //  * the area in pixels in ascending order
 //  * refresh rate in descending order
@@ -375,7 +412,6 @@ void ManagedDisplayInfo::Copy(const ManagedDisplayInfo& native_info) {
 
   active_rotation_source_ = native_info.active_rotation_source_;
   touch_support_ = native_info.touch_support_;
-  touch_device_identifiers_ = native_info.touch_device_identifiers_;
   device_scale_factor_ = native_info.device_scale_factor_;
   DCHECK(!native_info.bounds_in_native_.IsEmpty());
   bounds_in_native_ = native_info.bounds_in_native_;
@@ -400,7 +436,18 @@ void ManagedDisplayInfo::Copy(const ManagedDisplayInfo& native_info) {
 
     rotations_ = native_info.rotations_;
     configured_ui_scale_ = native_info.configured_ui_scale_;
+  } else {
+    // Update the touch device mapping without losing the desired touch
+    // calibration data or the fallback/default calibration data. There is no
+    // way to recover the fallback data once it is lost. It will break touch on
+    // every manually calibrated kiosk stations.
+    MergeTouchDeviceMap(
+        TouchCalibrationData::GetFallbackTouchDeviceIdentifier(),
+        touch_calibration_data_map_, native_info.touch_calibration_data_map_);
   }
+  set_touch_support(touch_calibration_data_map_.size()
+                        ? Display::TOUCH_SUPPORT_AVAILABLE
+                        : Display::TOUCH_SUPPORT_UNAVAILABLE);
 }
 
 void ManagedDisplayInfo::SetBounds(const gfx::Rect& new_bounds_in_native) {
@@ -481,7 +528,7 @@ std::string ManagedDisplayInfo::ToString() const {
   std::string result = base::StringPrintf(
       "ManagedDisplayInfo[%lld] native bounds=%s, size=%s, device-scale=%g, "
       "overscan=%s, rotation=%d, ui-scale=%g, touchscreen=%s, "
-      "touch device count=[%" PRIuS "]",
+      "touch device count=[%u]",
       static_cast<long long int>(id_), bounds_in_native_.ToString().c_str(),
       size_in_pixel_.ToString().c_str(), device_scale_factor_,
       overscan_insets_in_dip_.ToString().c_str(), rotation_degree,
@@ -490,7 +537,7 @@ std::string ManagedDisplayInfo::ToString() const {
           ? "yes"
           : touch_support_ == Display::TOUCH_SUPPORT_UNAVAILABLE ? "no"
                                                                  : "unknown",
-      touch_device_identifiers_.size());
+      TouchDevicesCount());
 
   return result;
 }
@@ -515,18 +562,37 @@ bool ManagedDisplayInfo::Use125DSFForUIScaling() const {
 }
 
 void ManagedDisplayInfo::AddTouchDevice(uint32_t touch_device_identifier) {
-  touch_device_identifiers_.insert(touch_device_identifier);
+  // If this touch device is already in the map, do nothing.
+  if (touch_calibration_data_map_.count(touch_device_identifier))
+    return;
+
+  touch_calibration_data_map_.emplace(touch_device_identifier,
+                                      TouchCalibrationData());
   set_touch_support(Display::TOUCH_SUPPORT_AVAILABLE);
 }
 
+void ManagedDisplayInfo::RemoveTouchDevice(uint32_t touch_device_identifier) {
+  if (!HasTouchDevice(touch_device_identifier))
+    return;
+  touch_calibration_data_map_.erase(touch_device_identifier);
+  if (!touch_calibration_data_map_.size())
+    set_touch_support(Display::TOUCH_SUPPORT_UNAVAILABLE);
+}
+
 void ManagedDisplayInfo::ClearTouchDevices() {
-  touch_device_identifiers_.clear();
+  touch_calibration_data_map_.clear();
   set_touch_support(Display::TOUCH_SUPPORT_UNAVAILABLE);
 }
 
 bool ManagedDisplayInfo::HasTouchDevice(
     uint32_t touch_device_identifier) const {
-  return touch_device_identifiers_.count(touch_device_identifier);
+  return touch_calibration_data_map_.count(touch_device_identifier);
+}
+
+uint32_t ManagedDisplayInfo::TouchDevicesCount() const {
+  bool has_fallback_default_device = touch_calibration_data_map_.count(
+      TouchCalibrationData::GetFallbackTouchDeviceIdentifier());
+  return touch_calibration_data_map_.size() - has_fallback_default_device;
 }
 
 void ResetDisplayIdForTest() {
@@ -536,6 +602,8 @@ void ResetDisplayIdForTest() {
 void ManagedDisplayInfo::SetTouchCalibrationData(
     uint32_t touch_device_identifier,
     const TouchCalibrationData& touch_calibration_data) {
+  if (!HasTouchDevice(touch_device_identifier))
+    AddTouchDevice(touch_device_identifier);
   touch_calibration_data_map_[touch_device_identifier] = touch_calibration_data;
 }
 
@@ -543,16 +611,23 @@ const TouchCalibrationData& ManagedDisplayInfo::GetTouchCalibrationData(
     uint32_t touch_device_identifier) const {
   DCHECK(HasTouchCalibrationData(touch_device_identifier));
 
-  // If the system does not have the calibration information for the touch
-  // device identified with |touch_device_identifier|, use the fallback
-  // calibration data if availble. This also helps keep support for legacy
-  // touch calibration data which is stored in association with the fallback
-  // device identifier.
-  if (touch_calibration_data_map_.count(
-          TouchCalibrationData::GetFallbackTouchDeviceIdentifier()) &&
-      touch_calibration_data_map_.size() == 1) {
-    return touch_calibration_data_map_.at(
-        TouchCalibrationData::GetFallbackTouchDeviceIdentifier());
+  if (!touch_calibration_data_map_.count(touch_device_identifier) ||
+      touch_calibration_data_map_.at(touch_device_identifier).IsEmpty()) {
+    // If the system does not have the calibration information for the touch
+    // device identified with |touch_device_identifier|, use the fallback
+    // calibration data if availble. This also helps keep support for legacy
+    // touch calibration data which is stored in association with the fallback
+    // device identifier.
+    if (touch_calibration_data_map_.count(
+            TouchCalibrationData::GetFallbackTouchDeviceIdentifier())) {
+      return touch_calibration_data_map_.at(
+          TouchCalibrationData::GetFallbackTouchDeviceIdentifier());
+    } else {
+      NOTREACHED() << "System does not have calibration data for touch device"
+                   << " identified with: " << touch_device_identifier << ". Was"
+                   << " this function called without a HasTouchCalibrationData"
+                   << " check?";
+    }
   }
 
   return touch_calibration_data_map_.at(touch_device_identifier);
@@ -561,22 +636,30 @@ const TouchCalibrationData& ManagedDisplayInfo::GetTouchCalibrationData(
 void ManagedDisplayInfo::SetTouchCalibrationDataMap(
     const std::map<uint32_t, TouchCalibrationData>& data_map) {
   touch_calibration_data_map_ = data_map;
+
+  if (touch_calibration_data_map_.size())
+    set_touch_support(Display::TOUCH_SUPPORT_AVAILABLE);
 }
 
 bool ManagedDisplayInfo::HasTouchCalibrationData(
     uint32_t touch_device_identifier) const {
-  return touch_calibration_data_map_.count(touch_device_identifier) ||
-         touch_calibration_data_map_.count(
-             TouchCalibrationData::GetFallbackTouchDeviceIdentifier());
+  if (touch_calibration_data_map_.count(touch_device_identifier) &&
+      !touch_calibration_data_map_.at(touch_device_identifier).IsEmpty()) {
+    return true;
+  }
+  return touch_calibration_data_map_.count(
+      TouchCalibrationData::GetFallbackTouchDeviceIdentifier());
 }
 
 void ManagedDisplayInfo::ClearTouchCalibrationData(
     uint32_t touch_device_identifier) {
-  touch_calibration_data_map_.erase(touch_device_identifier);
+  DCHECK(HasTouchDevice(touch_device_identifier));
+  touch_calibration_data_map_[touch_device_identifier] = TouchCalibrationData();
 }
 
 void ManagedDisplayInfo::ClearAllTouchCalibrationData() {
-  touch_calibration_data_map_.clear();
+  for (const auto& data : touch_calibration_data_map_)
+    touch_calibration_data_map_[data.first] = TouchCalibrationData();
 }
 
 }  // namespace display
