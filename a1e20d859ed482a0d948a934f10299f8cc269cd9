@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0ddb76f_84a41cc0",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-12T18:57:57Z",
+      "side": 1,
+      "message": "Personally I would leave this as its own variable, or the inverse, e.g.\n\nbool non_default_framebuffer_bound \u003d GetFramebufferbinding(GL_DRAW_FRAMEBUFFER) !\u003d 0;\n\n(and remove the weird !! thing while we\u0027re at it)",
+      "revId": "a1e20d859ed482a0d948a934f10299f8cc269cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
