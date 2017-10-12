@@ -114,6 +114,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'fill_missing': None,
             'optimize': True,
             'results_directory': None,
+            'test_name_file': None,
             'verbose': False,
         }
         options.update(kwargs)
