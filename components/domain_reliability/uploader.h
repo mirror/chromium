@@ -72,6 +72,8 @@ class DOMAIN_RELIABILITY_EXPORT DomainReliabilityUploader {
 
   virtual void set_discard_uploads(bool discard_uploads) = 0;
 
+  virtual size_t discarded_upload_count() const = 0;
+
   static int GetURLRequestUploadDepth(const net::URLRequest& request);
 };
 
