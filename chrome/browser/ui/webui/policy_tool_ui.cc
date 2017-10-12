@@ -40,6 +40,12 @@ content::WebUIDataSource* CreatePolicyToolUIHtmlSource() {
   source->AddLocalizedString("errorFileCorrupted",
                              IDS_POLICY_TOOL_CORRUPTED_FILE);
   source->AddLocalizedString("enableEditing", IDS_POLICY_TOOL_ENABLE_EDITING);
+  source->AddLocalizedString("errorDeleteFailed",
+                             IDS_POLICY_TOOL_DELETE_FAILED);
+  source->AddLocalizedString("promptSessionNameMessage",
+                             IDS_POLICY_TOOL_PROMPT_SESSION_NAME_MESSAGE);
+  source->AddLocalizedString("promptSessionNameRetryMessage",
+                             IDS_POLICY_TOOL_PROMPT_SESSION_NAME_RETRY_MESSAGE);
   // Overwrite the title value added by PolicyUIHandler.
   source->AddLocalizedString("title", IDS_POLICY_TOOL_TITLE);
 

@@ -48,6 +48,12 @@ void PolicyToolUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "resetSession", base::Bind(&PolicyToolUIHandler::HandleResetSession,
                                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "deleteSession", base::Bind(&PolicyToolUIHandler::HandleDeleteSession,
+                                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "createSession", base::Bind(&PolicyToolUIHandler::HandleCreateSession,
+                                  base::Unretained(this)));
 }
 
 void PolicyToolUIHandler::OnJavascriptDisallowed() {
@@ -253,6 +259,70 @@ void PolicyToolUIHandler::HandleResetSession(const base::ListValue* args) {
       base::BindOnce(&PolicyToolUIHandler::DoUpdateSession,
                      base::Unretained(this), "{}"),
       base::BindOnce(&PolicyToolUIHandler::OnSessionUpdated,
+                     callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PolicyToolUIHandler::OnSessionDeleted(bool is_successful) {
+  if (!is_successful) {
+    ShowErrorMessageToUser("errorLoggingDisabled");
+  } else {
+    ImportFile();
+  }
+}
+
+void PolicyToolUIHandler::HandleDeleteSession(const base::ListValue* args) {
+  DCHECK_EQ(args->GetSize(), 1U);
+  base::FilePath::StringType name =
+      base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
+
+  if (!IsValidSessionName(name)) {
+    ShowErrorMessageToUser("errorDeleteFailed");
+    return;
+  }
+
+  // Clear the current session name to ensure that we force a reload of the
+  // active session. This is important in case the user has deleted the current
+  // active session, in which case a new one is selected.
+  session_name_.clear();
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(&base::DeleteFile, GetSessionPath(name),
+                     /*recursive=*/false),
+      base::BindOnce(&PolicyToolUIHandler::OnSessionDeleted,
+                     callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+PolicyToolUIHandler::CreateSessionResult PolicyToolUIHandler::DoCreateSession(
+    const base::FilePath::StringType& name) {
+  if (PathExists(GetSessionPath(name))) {
+    return NAME_EXISTS_ERROR;
+  }
+  int bytes_written = base::WriteFile(GetSessionPath(name), "{}", 2);
+  return bytes_written == 2 ? SUCCESS : LOGGING_DISABLED_ERROR;
+}
+
+void PolicyToolUIHandler::OnSessionCreated(
+    PolicyToolUIHandler::CreateSessionResult result) {
+  if (result == SUCCESS) {
+    session_name_.clear();
+    ImportFile();
+  } else if (result == NAME_EXISTS_ERROR) {
+    CallJavascriptFunction("policy.Page.sessionNameDialog", base::Value(false),
+                           base::Value("createSession"));
+  } else {
+    ShowErrorMessageToUser("errorLoggingDisabled");
+  }
+}
+
+void PolicyToolUIHandler::HandleCreateSession(const base::ListValue* args) {
+  DCHECK_EQ(args->GetSize(), 1U);
+  base::FilePath::StringType name =
+      base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(&PolicyToolUIHandler::DoCreateSession,
+                     base::Unretained(this), name),
+      base::BindOnce(&PolicyToolUIHandler::OnSessionCreated,
                      callback_weak_ptr_factory_.GetWeakPtr()));
 }
 
