@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "c477f03e_c4a7011d",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T19:15:49Z",
+      "side": 1,
+      "message": "Ok. Even in the long term solution we won\u0027t always wait (eg, sometimes we navigate immediately depending on what you say when using the microphone in Chrome\u0027s OmniBox), but in that case we can still head straight to navigation by way of the VR UI thread.",
+      "parentUuid": "095a780f_865d889e",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf3a95f6_383afae0",
         "filename": "chrome/browser/vr/speech_recognizer.h",
         "patchSetId": 9

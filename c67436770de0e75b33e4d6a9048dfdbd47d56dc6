@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42aee6da_d90ad551",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T19:15:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this conversion of a string16 query to a std::string by way of a url. We\u0027d need a GURL to do elision and coloring, I think. If we want the UI to have a crack at deciding what to do with the search result, it seems like we\u0027d want plumb the string16 over to the VR UI thread. Then it could render it as raw text, turn into URL (probably by posting back to the main thread?), or request that suggestions be generated as it saw fit.",
+      "revId": "c67436770de0e75b33e4d6a9048dfdbd47d56dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
