@@ -125,6 +125,11 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
   DECLARE_VIRTUAL_TRACE();
 
+ protected:
+  friend class MediaControlInputElement;
+
+  void MaybeRecordOverflowTimeToAction();
+
  private:
   // MediaControlsMediaEventListener is a component that is listening to events
   // and calling the appropriate callback on MediaControlsImpl. The object is
@@ -209,7 +214,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
   void ElementSizeChangedTimerFired(TimerBase*);
 
-  void HideAllMenus();
+  void HideAllMenus(bool was_dismissed);
 
   // Hide elements that don't fit, and show those things that we want which
   // do fit.  This requires that m_effectiveWidth and m_effectiveHeight are

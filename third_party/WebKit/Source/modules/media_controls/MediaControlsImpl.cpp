@@ -1350,11 +1350,12 @@ void MediaControlsImpl::ToggleOverflowMenu() {
   overflow_list_->SetIsWanted(!overflow_list_->IsWanted());
 }
 
-void MediaControlsImpl::HideAllMenus() {
+void MediaControlsImpl::HideAllMenus(bool was_dismissed) {
   window_event_listener_->Stop();
 
-  if (overflow_list_->IsWanted())
-    overflow_list_->SetIsWanted(false);
+  if (overflow_list_->IsWanted()) {
+    overflow_list_->SetIsWanted(false, was_dismissed);
+  }
   if (text_track_list_->IsWanted())
     text_track_list_->SetVisible(false);
 }
@@ -1379,6 +1380,11 @@ MediaDownloadInProductHelpManager* MediaControlsImpl::DownloadInProductHelp() {
 
 void MediaControlsImpl::OnWaiting() {
   UpdateCSSClassFromState();
+}
+
+void MediaControlsImpl::MaybeRecordOverflowTimeToAction() {
+  overflow_list_->MaybeRecordTimeTaken(
+      MediaControlOverflowMenuListElement::kTimeToAction);
 }
 
 DEFINE_TRACE(MediaControlsImpl) {

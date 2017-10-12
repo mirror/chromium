@@ -6,6 +6,8 @@
 #define MediaControlOverflowMenuListElement_h
 
 #include "modules/media_controls/elements/MediaControlDivElement.h"
+#include "platform/wtf/Optional.h"
+#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -18,8 +20,22 @@ class MediaControlOverflowMenuListElement final
  public:
   explicit MediaControlOverflowMenuListElement(MediaControlsImpl&);
 
+  void SetIsWanted(bool wanted);
+  void SetIsWanted(bool wanted, bool was_dismissed);
+
+ protected:
+  friend class MediaControlsImpl;
+
+  enum TimeTakenHistogram {
+    kTimeToAction,
+    kTimeToDismiss,
+  };
+  void MaybeRecordTimeTaken(TimeTakenHistogram);
+
  private:
   void DefaultEventHandler(Event*) override;
+
+  WTF::Optional<WTF::TimeTicks> time_shown_;
 };
 
 }  // namespace blink
