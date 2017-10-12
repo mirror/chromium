@@ -102,17 +102,6 @@ DeviceService::~DeviceService() {
 #if !defined(OS_ANDROID)
   device::BatteryStatusService::GetInstance()->Shutdown();
 #endif
-  // TODO(amoylan): This doesn't seem to run. I guess the MessageLoop is stopped
-  // by then. In which case we need to have the
-  // constructor/destructor/NetworkChangeNotifier parts of
-  // PublicIpAddressLocationNotifier run on the main thread. The other parts can
-  // still run on the IO thread.
-  if (public_ip_address_location_notifier_) {
-    if (io_task_runner_) {
-      io_task_runner_->DeleteSoon(
-          FROM_HERE, std::move(public_ip_address_location_notifier_));
-    }
-  }
 }
 
 void DeviceService::OnStart() {
