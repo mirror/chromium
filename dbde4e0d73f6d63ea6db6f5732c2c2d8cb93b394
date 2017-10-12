@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7a6a4f98_f8fb45bd",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T22:05:23Z",
+      "side": 1,
+      "message": "It was approved. I\u0027ll try to get more info into the crbug when I get the chance",
+      "parentUuid": "92ebe36a_99165551",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd092472_f8c2c975",
         "filename": "chrome/browser/ui/page_info/page_info.cc",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "side": 1,
       "message": "+1. I think we should also display the setting if it\u0027s in a non-default state. i.e. if someone has set the sound setting to \"mute\" I think we should always display the setting, which is consistent with the behavior of other settings (see line 173 below).",
       "parentUuid": "fd092472_f8c2c975",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc18fd04_92ebd8e1",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T22:05:23Z",
+      "side": 1,
+      "message": "Checked with Mounir and he thinks we should have the same delay as the icon in the tabstrip (I\u0027ll have to check how that one is working). Also, if the setting is in a non-default state it does always show up (it falls through to the logic below)",
+      "parentUuid": "94c3e9bf_47e00c5b",
       "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
