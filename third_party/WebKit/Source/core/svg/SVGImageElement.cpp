@@ -150,6 +150,16 @@ void SVGImageElement::SvgAttributeChanged(const QualifiedName& attr_name) {
   SVGGraphicsElement::SvgAttributeChanged(attr_name);
 }
 
+void SVGImageElement::ParseAttribute(
+    const AttributeModificationParams& params) {
+  if (params.name == SVGNames::asyncAttr &&
+      RuntimeEnabledFeatures::ImageAsyncAttributeEnabled()) {
+    decoding_mode_ = ParseImageDecodingMode(params.new_value);
+  } else {
+    SVGElement::ParseAttribute(params);
+  }
+}
+
 bool SVGImageElement::SelfHasRelativeLengths() const {
   return x_->CurrentValue()->IsRelative() || y_->CurrentValue()->IsRelative() ||
          width_->CurrentValue()->IsRelative() ||
