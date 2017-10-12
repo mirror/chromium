@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
+# Add your directory-specific  file to this list for it to be continuously
+# typechecked on the builder:
+# http://build.chromium.org/p/chromium.fyi/builders/Closure%20Compilation%20Linux
+#
+# Also, see our guide to Closure compilation in chrome:
+# https://chromium.googlesource.com/chromium/src/+/master/docs/closure_compilation.md
+
+group("webui_closure_compile") {
+  data_deps = [
+    "//chrome/browser/resources/chromeos/login:closure_compile",
+  ]
+  data = [
+    "//testing/scripts/common.py",
+    "//testing/scripts/run_webui_check.py",
+    "//testing/xvfb.py",
+  ]
+}
