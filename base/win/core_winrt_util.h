@@ -8,11 +8,21 @@
 #include <hstring.h>
 #include <inspectable.h>
 #include <windef.h>
+#include <windows.foundation.h>
+#include <windows.storage.streams.h>
 
 #include "base/base_export.h"
+#include "base/strings/string_util.h"
+#include "base/win/scoped_comptr.h"
+#include "base/win/scoped_hstring.h"
 
 namespace base {
 namespace win {
+
+using namespace ABI::Windows::Storage::Streams;
+
+using base::win::ScopedComPtr;
+using base::win::ScopedHString;
 
 // Provides access to Core WinRT functions which may not be available on
 // Windows 7. Loads functions dynamically at runtime to prevent library
@@ -29,6 +39,33 @@ BASE_EXPORT HRESULT RoGetActivationFactory(HSTRING class_id,
 
 BASE_EXPORT HRESULT RoActivateInstance(HSTRING class_id,
                                        IInspectable** instance);
+
+BASE_EXPORT HRESULT RoActivateInstance(HSTRING class_id,
+                                       IInspectable** instance);
+
+BASE_EXPORT HRESULT GetPointerToBufferData(IBuffer* buffer, uint8_t** out);
+
+BASE_EXPORT HRESULT CreateIBufferFromData(const uint8_t* data,
+                                          size_t length,
+                                          ScopedComPtr<IBuffer>* buffer);
+
+// Factory functions that activate and create WinRT components. The caller takes
+// ownership of the returning ComPtr.
+template <typename InterfaceType, base::char16 const* runtime_class_id>
+ScopedComPtr<InterfaceType> WrlStaticsFactory() {
+  ScopedComPtr<InterfaceType> com_ptr;
+
+  ScopedHString class_id_hstring = ScopedHString::Create(runtime_class_id);
+  if (!class_id_hstring.is_valid())
+    return nullptr;
+
+  HRESULT hr = base::win::RoGetActivationFactory(class_id_hstring.get(),
+                                                 IID_PPV_ARGS(&com_ptr));
+  if (FAILED(hr))
+    return nullptr;
+
+  return com_ptr;
+}
 
 }  // namespace win
 }  // namespace base
