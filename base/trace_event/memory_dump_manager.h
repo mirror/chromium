@@ -187,6 +187,7 @@ class BASE_EXPORT MemoryDumpManager {
   // ProcessMemoryDumpAsyncState.
   struct ProcessMemoryDumpAsyncState {
     ProcessMemoryDumpAsyncState(
+        UnguessableToken process_token,
         MemoryDumpRequestArgs req_args,
         const MemoryDumpProviderInfo::OrderedSet& dump_providers,
         scoped_refptr<HeapProfilerSerializationState>
@@ -286,6 +287,10 @@ class BASE_EXPORT MemoryDumpManager {
   bool can_request_global_dumps() const {
     return !request_dump_function_.is_null();
   }
+
+  // A unique token for this MemoryDumpManager which is used to derive unique
+  // GUIDs for each MemoryAllocatorDump.
+  const UnguessableToken process_token_;
 
   // An ordered set of registered MemoryDumpProviderInfo(s), sorted by task
   // runner affinity (MDPs belonging to the same task runners are adjacent).
