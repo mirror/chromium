@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4785e26_b0b6d71a",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3230,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T16:17:43Z",
+      "side": 1,
+      "message": "I just remembered Shimi, Laura, and I had discussed changing this to downloads, bookmarks, and history to match the order in the UI. Definitely non-blocking, but it\u0027d be nice to squeeze in.",
+      "range": {
+        "startLine": 3230,
+        "startChar": 17,
+        "endLine": 3230,
+        "endChar": 51
+      },
+      "revId": "009e1a3a55dfb462616ee1625b322ac93b47c388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8ad7f9_52513463",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3245,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T16:17:43Z",
+      "side": 1,
+      "message": "I think this should be the keyboard typed apostrophe rather than the copy-pasted one from Google docs.",
+      "range": {
+        "startLine": 3245,
+        "startChar": 11,
+        "endLine": 3245,
+        "endChar": 12
+      },
+      "revId": "009e1a3a55dfb462616ee1625b322ac93b47c388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
