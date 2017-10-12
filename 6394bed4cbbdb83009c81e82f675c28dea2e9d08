@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "b5f5aaa5_dbf74f9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-12T18:44:08Z",
+      "side": 0,
+      "message": "Saw that, and tried to make exactly the same change, so hopefully that will merge. :-)",
+      "parentUuid": "14ed7e36_028585f9",
+      "range": {
+        "startLine": 1646,
+        "startChar": 0,
+        "endLine": 1646,
+        "endChar": 89
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e044b20b_6846c162",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-12T18:44:08Z",
+      "side": 0,
+      "message": "I think this was supposed to check if the user had declined our opt-in, but I don\u0027t think the check is needed because we won\u0027t get gesture events when the user disables CS.  I\u0027ll double-check that now.",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fd05362_05687457",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
         "patchSetId": 3
@@ -36,6 +83,30 @@
       "writtenOn": "2017-10-12T18:37:39Z",
       "side": 0,
       "message": "Does this mean we were previously never sending surroundings for undecided users? Or is this only used for Icing?",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e38a22c_045f7c2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-12T18:44:08Z",
+      "side": 0,
+      "message": "This was only used for icing.",
+      "parentUuid": "8fd05362_05687457",
       "range": {
         "startLine": 158,
         "startChar": 8,

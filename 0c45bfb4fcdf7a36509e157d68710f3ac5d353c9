@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72a8600_17a61db4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-12T18:44:08Z",
+      "side": 1,
+      "message": "This is used for sending surroundings on tap-resolution.",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 36
+      },
+      "revId": "0c45bfb4fcdf7a36509e157d68710f3ac5d353c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
