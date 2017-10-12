@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff22f6a_bd473168",
+        "filename": "chrome/browser/resource_coordinator/browser_child_process_watcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-12T17:10:38Z",
+      "side": 1,
+      "message": "ah, I see. nice. This will also catch utility processes.",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "734ab863dd51f6d6a39b0a7ef5952b1b510253f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80f15dc_d75209de",
+        "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-12T17:10:38Z",
+      "side": 1,
+      "message": "I assume you meant to initialize this?",
+      "revId": "734ab863dd51f6d6a39b0a7ef5952b1b510253f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
