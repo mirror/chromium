@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ea27f3_e1cec34f",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-12T02:16:57Z",
+      "side": 1,
+      "message": "How about recording each step for ease of checking when our future\nchange failed.\n\nExample:\n\nselection_test(\n  [\n ... original HTML and selection at item1@0\n  ]\n  \u0027insertOrderList\u0027\n  [ ... result of item1@0 ],\n  \u0027desc...\u0027);\n\nselection_test(\n  [ ... result of item1@0 and place caret at item2@0],\n  \u0027insertOrderList\u0027\n  [ ... result of item2@0 ],\n  \u0027desc...\u0027);\n\nselection_test(\n  [ ... result of item2@0 and place caret at item3@0],\n  \u0027insertOrderList\u0027\n  [ ... result of item3@0 ],\n  \u0027desc...\u0027);",
+      "revId": "0f4e83e4aab2b0592fb8c6a6f4d19ce29eb3eb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
