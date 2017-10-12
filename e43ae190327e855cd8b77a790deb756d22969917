@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c561e5_cd70788e",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "This name implicitly indicates that it does nothing on systems with no swap - is that the intention?\n\nPerhaps add a brief comment to explain the intended use?",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0eeb39e_12c0f4ff",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the None/Moderate/Critical levels, since the names don\u0027t really give a meaningful hint as to what action should be taken - that said, of course we do have to map into something like that to drive the existing MemoryPressureListeners.\n\nMy suggestion here would be to:\n1. Have a state-based interface, so the caller can query the current level.\n2. Either have the level be a continuous value, e.g. 0 (no swapping) to 100 (maximum swapping, if there is such a thing!), or express the state in terms of things the caller should or shouldn\u0027t do (though that pushes more of the logic into the Listener implementation, of course).\n\nOr can we get away without this helper for calling code, and have things like he discardable memory manager interface to the thrashing monitor directly, so other bits of code deal with thrashing indirectly, by using thrashing-aware primitives?",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a1e5d7_ea626bde",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "Document the purpose of the SyncSwapThrashingCallback?",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5de2199_24bae616",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "This API only allows you to be notified of the system-wide thrashing level - what if we want to have an indication of which Chrome processes\u0027, if any, are contributing to thrashing?\n\ne.g. what if we exposed a \"thrashiness\" signal through each TaskGroup in TaskManager, in addition to a system-wide signal, and then if the system seems thrashy the TabManager can check the TaskGroup states to decide what, if anything, to discard?",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ec2d94_c094499e",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "Do these need to be public, versus protected/private?",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d57a5a7_00dd3ece",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "This interval seems too long to be useful in practice.",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64841f0d_a7c015af",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "This means we will only notify on Moderate or Critical, i.e. that there is no explicit notification when things are Normal - that turns out to be a major design flaw of the current memory-pressure signals, which is why the MemoryCoordinator effort instead opted for a level-based approach, in which at any given moment code can check the current level, rather than just hoping that no recent notifications means things are normal.",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef271827_57deb2b6",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T23:34:26Z",
+      "side": 1,
+      "message": "Note that that can change (albeit rarely) at run-time ;)",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
