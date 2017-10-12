@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "1442adb6_bca7da8a",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-12T18:41:44Z",
+      "side": 1,
+      "message": "As for auto-install, I think this comment is maybe good enough. Maybe we could add it to build/install-build-deps.sh by default when this becomes widely used.",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6486d38_7a617f63",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
