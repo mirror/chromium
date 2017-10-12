@@ -8519,7 +8519,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   if (IsBrowserSideNavigationEnabled()) {
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
-    EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
+    EXPECT_EQ(GURL("chrome-error://ERR_BLOCKED_BY_CLIENT"),
+              root->child_at(0)->current_url());
 
     // The page should get the title of an error page (i.e "Error") and not the
     // title of the blocked page.
@@ -8613,7 +8614,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   if (IsBrowserSideNavigationEnabled()) {
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
-    EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
+    EXPECT_EQ(GURL("chrome-error://ERR_BLOCKED_BY_CLIENT"),
+              root->child_at(0)->current_url());
 
     // The page should get the title of an error page (i.e "Error") and not the
     // title of the blocked page.
@@ -8701,7 +8703,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   if (IsBrowserSideNavigationEnabled()) {
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
-    EXPECT_EQ(blocked_url, navigating_frame->current_url());
+    EXPECT_EQ(GURL("chrome-error://ERR_BLOCKED_BY_CLIENT"),
+              navigating_frame->current_url());
 
     // The page should get the title of an error page (i.e "Error") and not the
     // title of the blocked page.

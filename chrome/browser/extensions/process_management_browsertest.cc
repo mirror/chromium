@@ -460,7 +460,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
   EXPECT_TRUE(content::ExecuteScript(new_web_contents, script));
   observer.Wait();
 
-  EXPECT_EQ(observer.last_navigation_url(), blocked_url);
+  EXPECT_EQ(observer.last_navigation_url(),
+            GURL("chrome-error://ERR_BLOCKED_BY_CLIENT"));
   EXPECT_FALSE(observer.last_navigation_succeeded());
 
   // Very subtle check for content/ internal functionality :(.

@@ -923,9 +923,11 @@ class NavigatingExtensionPopupBrowserTest : public BrowserActionApiTest {
             << " should fail in an extension pop-up";
         EXPECT_THAT(
             popup->GetLastCommittedURL(),
-            ::testing::AnyOf(::testing::Eq(popup_url),
-                             ::testing::Eq(GURL("chrome-extension://invalid")),
-                             ::testing::Eq(GURL("about:blank"))));
+            ::testing::AnyOf(
+                ::testing::Eq(popup_url),
+                ::testing::Eq(GURL("chrome-extension://invalid")),
+                ::testing::Eq(GURL("chrome-error://ERR_BLOCKED_BY_CLIENT")),
+                ::testing::Eq(GURL("about:blank"))));
       }
 
       // Close the pop-up.

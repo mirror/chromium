@@ -867,10 +867,8 @@ void NavigationRequest::OnRequestFailed(
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
   }
 
-  // The check below is not valid in case of blocked requests, because blocked
-  // requests are committed in the old process (which might not pass the
-  // CanCommitURL check, but this is okay because we will commit a
-  // chrome-error:// page).
+  // ERR_BLOCKED_BY_CLIENT will commit with a different URL (chrome-error://...)
+  // so don't run the DCHECK below for such errors.
   if (net_error != net::ERR_BLOCKED_BY_CLIENT) {
     // Don't ask the renderer to commit an URL if the browser will kill it when
     // it does.

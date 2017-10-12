@@ -6,6 +6,8 @@
 
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
+#include "chrome/browser/extensions/chrome_test_extension_loader.h"
+#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -22,6 +24,7 @@
 #include "components/safe_browsing/features.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
+#include "extensions/common/extension.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/accessibility/ax_action_data.h"
@@ -119,8 +122,25 @@ IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewBrowserTest, ChromeURL) {
 }
 
 IN_PROC_BROWSER_TEST_F(PageInfoBubbleViewBrowserTest, ChromeExtensionURL) {
-  ui_test_utils::NavigateToURL(
-      browser(), GURL("chrome-extension://extension-id/options.html"));
+  // Create a test extension.
+  extensions::TestExtensionDir extension_dir_;
+  extension_dir_.WriteManifest(R"(
+      {
+        "manifest_version": 2,
+        "name": "debugger",
+        "version": "0.1"
+      }
+  )");
+  extension_dir_.WriteFile(
+      "foo.html", "<!DOCTYPE HTML>\n<html><body>Hello world!</body></html>");
+  extensions::ChromeTestExtensionLoader loader(browser()->profile());
+  scoped_refptr<const extensions::Extension> extension =
+      loader.LoadExtension(extension_dir_.UnpackedPath());
+  ASSERT_TRUE(extension);
+
+  // Run the test.
+  GURL extension_url = extension->GetResourceURL("foo.html");
+  ui_test_utils::NavigateToURL(browser(), extension_url);
   OpenPageInfoBubble(browser());
   EXPECT_EQ(PageInfoBubbleView::BUBBLE_INTERNAL_PAGE,
             PageInfoBubbleView::GetShownBubbleType());

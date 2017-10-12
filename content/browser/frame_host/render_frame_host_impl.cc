@@ -1526,19 +1526,10 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         100);
   }
 
-  // Blocked navigations are expected to commit in the old renderer
-  // (and therefore such navigations do not go through CanCommitURL checks
-  // below).
-  bool is_blocked_navigation =
-      navigation_handle_ &&
-      navigation_handle_->GetNetErrorCode() == net::ERR_BLOCKED_BY_CLIENT;
-
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
-  if (!is_blocked_navigation && !CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
+  if (!CanCommitURL(validated_params->url)) {
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
     return;
@@ -3641,6 +3632,10 @@ bool RenderFrameHostImpl::CanCommitURL(const GURL& url) {
   // TODO(lukasza): https://crbug.com/614463: Removes this exception once
   // WebView guests support OOPIFs.
   if (GetSiteInstance()->GetSiteURL().SchemeIs(kGuestScheme))
+    return true;
+
+  // chrome-error://<net error code> pages can commit in any process.
+  if (url.SchemeIs(kChromeErrorScheme))
     return true;
 
   // Give the client a chance to disallow URLs from committing.
