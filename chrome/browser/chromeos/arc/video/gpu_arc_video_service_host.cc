@@ -24,18 +24,27 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/ash_config.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/identity.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
+#endif
+
 namespace arc {
 
 namespace {
 
-void ConnectToVideoDecodeAcceleratorOnIOThread(
-    mojom::VideoDecodeAcceleratorRequest request) {
-  content::BindInterfaceInGpuProcess(std::move(request));
-}
-
-void ConnectToVideoEncodeAcceleratorOnIOThread(
-    mojom::VideoEncodeAcceleratorRequest request) {
-  content::BindInterfaceInGpuProcess(std::move(request));
+template <typename Interface>
+void ConnectToAcceleratorOnIOThread(
+    mojo::InterfaceRequest<Interface> request,
+    std::unique_ptr<service_manager::Connector> connector) {
+  if (connector) {
+    connector->BindInterface(ui::mojom::kServiceName, std::move(request));
+  } else {
+    content::BindInterfaceInGpuProcess(std::move(request));
+  }
 }
 
 // Singleton factory for GpuArcVideoServiceHost.
@@ -65,18 +74,30 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
 
   void CreateDecodeAccelerator(
       mojom::VideoDecodeAcceleratorRequest request) override {
+    std::unique_ptr<service_manager::Connector> connector;
+    if (chromeos::GetAshConfig() != ash::Config::CLASSIC)
+      connector = content::ServiceManagerConnection::GetForProcess()
+                      ->GetConnector()
+                      ->Clone();
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ConnectToVideoDecodeAcceleratorOnIOThread,
-                       base::Passed(&request)));
+        base::BindOnce(
+            &ConnectToAcceleratorOnIOThread<mojom::VideoDecodeAccelerator>,
+            base::Passed(&request), base::Passed(&connector)));
   }
 
   void CreateEncodeAccelerator(
       mojom::VideoEncodeAcceleratorRequest request) override {
+    std::unique_ptr<service_manager::Connector> connector;
+    if (chromeos::GetAshConfig() != ash::Config::CLASSIC)
+      connector = content::ServiceManagerConnection::GetForProcess()
+                      ->GetConnector()
+                      ->Clone();
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ConnectToVideoEncodeAcceleratorOnIOThread,
-                       base::Passed(&request)));
+        base::BindOnce(
+            &ConnectToAcceleratorOnIOThread<mojom::VideoEncodeAccelerator>,
+            base::Passed(&request), base::Passed(&connector)));
   }
 
  private:

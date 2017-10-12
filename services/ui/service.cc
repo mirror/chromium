@@ -169,6 +169,10 @@ Service::~Service() {
 #endif
 }
 
+scoped_refptr<base::SingleThreadTaskRunner> Service::GetGpuThreadTaskRunner() {
+  return window_server_->gpu_host()->GetTaskRunner();
+}
+
 bool Service::InitializeResources(service_manager::Connector* connector) {
   if (is_in_process() || ui::ResourceBundle::HasSharedInstance())
     return true;
