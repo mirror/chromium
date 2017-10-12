@@ -41,7 +41,7 @@ ServiceWorkerVersionInfo::ServiceWorkerVersionInfo()
       fetch_handler_existence(
           ServiceWorkerVersion::FetchHandlerExistence::UNKNOWN),
       registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
-      version_id(kInvalidServiceWorkerVersionId),
+      version_id(blink::mojom::kInvalidServiceWorkerVersionId),
       process_id(ChildProcessHost::kInvalidUniqueID),
       thread_id(kInvalidEmbeddedWorkerThreadId),
       devtools_agent_route_id(MSG_ROUTING_NONE) {}

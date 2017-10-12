@@ -67,7 +67,8 @@ void WorkerFetchContextImpl::WillSendRequest(blink::WebURLRequest& request) {
 
 bool WorkerFetchContextImpl::IsControlledByServiceWorker() const {
   return is_controlled_by_service_worker_ ||
-         (controller_version_id_ != kInvalidServiceWorkerVersionId);
+         (controller_version_id_ !=
+          blink::mojom::kInvalidServiceWorkerVersionId);
 }
 
 void WorkerFetchContextImpl::SetDataSaverEnabled(bool enabled) {

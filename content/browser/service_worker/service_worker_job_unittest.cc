@@ -1254,33 +1254,33 @@ TEST_F(ServiceWorkerJobTest, Update_NewVersion) {
   EXPECT_FALSE(entry.mask.waiting_changed());
   EXPECT_FALSE(entry.mask.active_changed());
   EXPECT_NE(entry.info.installing_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_EQ(entry.info.waiting_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
 
   entry = update_helper->attribute_change_log_[1];
   EXPECT_TRUE(entry.mask.installing_changed());
   EXPECT_TRUE(entry.mask.waiting_changed());
   EXPECT_FALSE(entry.mask.active_changed());
   EXPECT_EQ(entry.info.installing_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.waiting_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
 
   entry = update_helper->attribute_change_log_[2];
   EXPECT_FALSE(entry.mask.installing_changed());
   EXPECT_TRUE(entry.mask.waiting_changed());
   EXPECT_TRUE(entry.mask.active_changed());
   EXPECT_EQ(entry.info.installing_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_EQ(entry.info.waiting_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
   EXPECT_NE(entry.info.active_version.version_id,
-            kInvalidServiceWorkerVersionId);
+            blink::mojom::kInvalidServiceWorkerVersionId);
 
   // expected version state transitions:
   // new.installing, new.installed,

@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "service_worker_state.mojom";
+import "url/mojo/url.mojom";
+
+const int32 kInvalidServiceWorkerHandleId = -1;
+const int64 kInvalidServiceWorkerVersionId = -1;
+
+// Represents initialization info for a WebServiceWorker object.
+struct ServiceWorkerObjectInfo {
+  int32 handle_id = kInvalidServiceWorkerHandleId;
+  url.mojom.Url url;
+  ServiceWorkerState state = ServiceWorkerState.kUnknown;
+  int64 version_id = kInvalidServiceWorkerVersionId;
+};

@@ -166,14 +166,14 @@ std::unique_ptr<ListValue> GetRegistrationListValue(
         "registration_id", base::Int64ToString(registration.registration_id));
 
     if (registration.active_version.version_id !=
-        kInvalidServiceWorkerVersionId) {
+        blink::mojom::kInvalidServiceWorkerVersionId) {
       auto active_info = base::MakeUnique<DictionaryValue>();
       UpdateVersionInfo(registration.active_version, active_info.get());
       registration_info->Set("active", std::move(active_info));
     }
 
     if (registration.waiting_version.version_id !=
-        kInvalidServiceWorkerVersionId) {
+        blink::mojom::kInvalidServiceWorkerVersionId) {
       auto waiting_info = base::MakeUnique<DictionaryValue>();
       UpdateVersionInfo(registration.waiting_version, waiting_info.get());
       registration_info->Set("waiting", std::move(waiting_info));

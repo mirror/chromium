@@ -332,13 +332,13 @@ void CountScriptResources(
   int version_id;
   size_t index = infos.size() - 1;
   if (infos[index].installing_version.version_id !=
-      kInvalidServiceWorkerVersionId)
+      blink::mojom::kInvalidServiceWorkerVersionId)
     version_id = infos[index].installing_version.version_id;
   else if (infos[index].waiting_version.version_id !=
-           kInvalidServiceWorkerVersionId)
+           blink::mojom::kInvalidServiceWorkerVersionId)
     version_id = infos[1].waiting_version.version_id;
   else if (infos[index].active_version.version_id !=
-           kInvalidServiceWorkerVersionId)
+           blink::mojom::kInvalidServiceWorkerVersionId)
     version_id = infos[index].active_version.version_id;
   else
     return;

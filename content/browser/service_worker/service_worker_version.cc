@@ -293,7 +293,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       validator_(base::MakeUnique<blink::TrialTokenValidator>(
           base::MakeUnique<TrialPolicyImpl>())),
       weak_factory_(this) {
-  DCHECK_NE(kInvalidServiceWorkerVersionId, version_id);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerVersionId, version_id);
   DCHECK(context_);
   DCHECK(registration);
   DCHECK(script_url_.is_valid());

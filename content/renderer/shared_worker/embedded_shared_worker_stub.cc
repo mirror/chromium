@@ -110,7 +110,7 @@ class WebServiceWorkerNetworkProviderForSharedWorker
   int64_t ControllerServiceWorkerID() override {
     if (provider_->context()->controller())
       return provider_->context()->controller()->version_id();
-    return kInvalidServiceWorkerVersionId;
+    return blink::mojom::kInvalidServiceWorkerVersionId;
   }
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }

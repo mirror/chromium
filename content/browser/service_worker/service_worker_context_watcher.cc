@@ -139,7 +139,7 @@ void ServiceWorkerContextWatcher::StoreRegistrationInfo(
 void ServiceWorkerContextWatcher::StoreVersionInfo(
     const ServiceWorkerVersionInfo& version_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (version_info.version_id == kInvalidServiceWorkerVersionId)
+  if (version_info.version_id == blink::mojom::kInvalidServiceWorkerVersionId)
     return;
   version_info_map_[version_info.version_id] =
       base::MakeUnique<ServiceWorkerVersionInfo>(version_info);

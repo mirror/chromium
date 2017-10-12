@@ -282,7 +282,7 @@ Response ServiceWorkerHandler::InspectWorker(const std::string& version_id) {
   if (!context_)
     return CreateContextErrorResponse();
 
-  int64_t id = kInvalidServiceWorkerVersionId;
+  int64_t id = blink::mojom::kInvalidServiceWorkerVersionId;
   if (!base::StringToInt64(version_id, &id))
     return CreateInvalidVersionIdErrorResponse();
   BrowserThread::PostTask(

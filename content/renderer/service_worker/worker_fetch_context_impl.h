@@ -99,7 +99,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
 
   // Updated when mojom::ServiceWorkerWorkerClient::SetControllerServiceWorker()
   // is called from the browser process via mojo IPC.
-  int controller_version_id_ = kInvalidServiceWorkerVersionId;
+  int controller_version_id_ = blink::mojom::kInvalidServiceWorkerVersionId;
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   std::unique_ptr<blink::WebDocumentSubresourceFilter::Builder>

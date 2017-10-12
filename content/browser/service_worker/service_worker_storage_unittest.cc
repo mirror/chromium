@@ -684,7 +684,8 @@ TEST_F(ServiceWorkerStorageTest, DisabledStorage) {
   // Next available ids should be invalid.
   EXPECT_EQ(blink::mojom::kInvalidServiceWorkerRegistrationId,
             storage()->NewRegistrationId());
-  EXPECT_EQ(kInvalidServiceWorkerVersionId, storage()->NewVersionId());
+  EXPECT_EQ(blink::mojom::kInvalidServiceWorkerVersionId,
+            storage()->NewVersionId());
   EXPECT_EQ(kInvalidServiceWorkerResourceId, storage()->NewRegistrationId());
 }
 

@@ -373,7 +373,7 @@ void ServiceWorkerRegisterJob::UpdateAndContinue() {
   context_->storage()->NotifyInstallingRegistration(registration());
 
   int64_t version_id = context_->storage()->NewVersionId();
-  if (version_id == kInvalidServiceWorkerVersionId) {
+  if (version_id == blink::mojom::kInvalidServiceWorkerVersionId) {
     Complete(SERVICE_WORKER_ERROR_ABORT);
     return;
   }

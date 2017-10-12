@@ -98,7 +98,7 @@ void DidUpdateNavigationPreloadState(
 
 ServiceWorkerStorage::InitialData::InitialData()
     : next_registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
-      next_version_id(kInvalidServiceWorkerVersionId),
+      next_version_id(blink::mojom::kInvalidServiceWorkerVersionId),
       next_resource_id(kInvalidServiceWorkerResourceId) {}
 
 ServiceWorkerStorage::InitialData::~InitialData() {
@@ -888,7 +888,7 @@ int64_t ServiceWorkerStorage::NewRegistrationId() {
 
 int64_t ServiceWorkerStorage::NewVersionId() {
   if (state_ == DISABLED)
-    return kInvalidServiceWorkerVersionId;
+    return blink::mojom::kInvalidServiceWorkerVersionId;
   DCHECK_EQ(INITIALIZED, state_);
   return next_version_id_++;
 }
@@ -958,7 +958,7 @@ ServiceWorkerStorage::ServiceWorkerStorage(
     storage::QuotaManagerProxy* quota_manager_proxy,
     storage::SpecialStoragePolicy* special_storage_policy)
     : next_registration_id_(blink::mojom::kInvalidServiceWorkerRegistrationId),
-      next_version_id_(kInvalidServiceWorkerVersionId),
+      next_version_id_(blink::mojom::kInvalidServiceWorkerVersionId),
       next_resource_id_(kInvalidServiceWorkerResourceId),
       state_(UNINITIALIZED),
       expecting_done_with_disk_on_disable_(false),

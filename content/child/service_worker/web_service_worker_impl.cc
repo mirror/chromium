@@ -48,7 +48,8 @@ WebServiceWorkerImpl::WebServiceWorkerImpl(
       state_(handle_ref_->state()),
       thread_safe_sender_(thread_safe_sender),
       proxy_(nullptr) {
-  DCHECK_NE(kInvalidServiceWorkerHandleId, handle_ref_->handle_id());
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerHandleId,
+            handle_ref_->handle_id());
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);

@@ -1516,7 +1516,10 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
     return;
   }
 
-  DCHECK(event->source.service_worker_info.IsValid());
+  DCHECK(event->source.service_worker_info.handle_id !=
+             blink::mojom::kInvalidServiceWorkerHandleId &&
+         event->source.service_worker_info.version_id !=
+             blink::mojom::kInvalidServiceWorkerVersionId);
   std::unique_ptr<ServiceWorkerHandleReference> handle =
       ServiceWorkerHandleReference::Adopt(event->source.service_worker_info,
                                           sender_.get());

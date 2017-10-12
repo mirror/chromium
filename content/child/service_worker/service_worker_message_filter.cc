@@ -21,7 +21,7 @@ namespace {
 void SendServiceWorkerObjectDestroyed(
     ThreadSafeSender* sender,
     int handle_id) {
-  if (handle_id == kInvalidServiceWorkerHandleId)
+  if (handle_id == blink::mojom::kInvalidServiceWorkerHandleId)
     return;
   sender->Send(
       new ServiceWorkerHostMsg_DecrementServiceWorkerRefCount(handle_id));

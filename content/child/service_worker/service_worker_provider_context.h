@@ -19,6 +19,7 @@
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_object.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace base {
@@ -167,7 +168,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
 
   // Implementation of mojom::ServiceWorkerContainer.
-  void SetController(const ServiceWorkerObjectInfo& controller,
+  void SetController(blink::mojom::ServiceWorkerObjectInfoPtr controller,
                      const std::vector<blink::mojom::WebFeature>& used_features,
                      bool should_notify_controllerchange) override;
 
