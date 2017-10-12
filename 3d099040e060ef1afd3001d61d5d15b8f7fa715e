@@ -16,6 +16,24 @@
       "revId": "3d099040e060ef1afd3001d61d5d15b8f7fa715e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a16ba41_76201391",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T13:02:08Z",
+      "side": 1,
+      "message": "What happens right now:\n1) The browser reload\n2) The navigation reaches the ReadyToCommit stage.\n3) The current document unload.\n4) The \"unload\" event triggers a back navigation (same-document).\n5) The back navigation reaches the ReadyToCommit stage too.\n6) The NavigationHandle of the reload is replaced.\n7) The |stream_handle_| is reset to nullptr (same-document navigation \u003d\u003e body \u003d\u003d nullptr)\n8) The reload navigation stops in the middle of the response\u0027s body.\n9) The back navigation is committed.\n\nAt the end, the user is on a half-loaded page.\n\nWhat the patch does is that it doesn\u0027t reset |stream_handle_| when it is not required, this allows the reload navigation to continue.\n\nA see several issues:\n1) Being able to use history.back() in the \"unload\" handler.\n2) The same-page navigation should not prevent the current document from loading (i.e this patch).\n3) According to me, the same-page navigation should not be able to commit in the new document.",
+      "parentUuid": "797bf379_f94c019e",
+      "revId": "3d099040e060ef1afd3001d61d5d15b8f7fa715e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
