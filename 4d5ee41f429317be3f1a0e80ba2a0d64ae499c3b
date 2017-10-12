@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0faf2b4_b3455b5a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T15:33:33Z",
+      "side": 1,
+      "message": "TBH, this condition looks very complicated to understand for me.\nSo, I still would like to request adding document about what scenario would you like to handle with this explicitly, and why this works.\n\nAlso, this is conflicting with your commit message.\nIf you\u0027re just partially reviving the code, could you write explicitly such a code? I.e.;\n\nif (IsVoiceInteraction()) {\n  // VI OOBE code. L180 - L189.\n  ...\n  return ...\n}\n\n... OLD code ...\n\nIf just reviving the OLD code does not work well,\nthen could you add why (what was changed since then) to commit message?",
+      "revId": "4d5ee41f429317be3f1a0e80ba2a0d64ae499c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
