@@ -20,6 +20,7 @@
 @implementation KeyCommandsProvider
 
 - (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
+                baseViewController:(UIViewController*)baseViewController
                         dispatcher:
                             (id<ApplicationCommands, BrowserCommands>)dispatcher
                        editingText:(BOOL)editingText {
@@ -212,7 +213,9 @@
                            modifierFlags:UIKeyModifierCommand
                                    title:nil
                                   action:^{
-                                    [weakDispatcher showSettings];
+                                    [weakDispatcher
+                                        showSettingsFromViewController:
+                                            baseViewController];
                                   }],
   ]];
 
