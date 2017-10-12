@@ -10,11 +10,7 @@
 #include <set>
 #include <utility>
 
-#include "ash/public/cpp/ash_pref_names.h"
-#include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/values.h"
-#include "chrome/browser/app_mode/app_mode_utils.h"
 #include "chrome/browser/prefs/pref_service_syncable_util.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
@@ -25,7 +21,6 @@
 #include "chrome/common/pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
-#include "components/prefs/scoped_user_pref_update.h"
 #include "components/sync/model/string_ordinal.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 
@@ -33,7 +28,7 @@ namespace {
 
 std::unique_ptr<base::DictionaryValue> CreateAppDict(
     const std::string& app_id) {
-  auto app_value = base::MakeUnique<base::DictionaryValue>();
+  auto app_value = std::make_unique<base::DictionaryValue>();
   app_value->SetString(kPinnedAppsPrefAppIDPath, app_id);
   return app_value;
 }
@@ -68,16 +63,6 @@ std::vector<std::string> GetActivitiesForPackage(
     }
   }
   return activities;
-}
-
-// If no user-set value exists at |local_path|, the value from |synced_path| is
-// copied to |local_path|.
-void PropagatePrefToLocalIfNotSet(
-    sync_preferences::PrefServiceSyncable* pref_service,
-    const char* local_path,
-    const char* synced_path) {
-  if (!pref_service->FindPreference(local_path)->HasUserSetting())
-    pref_service->SetString(local_path, pref_service->GetString(synced_path));
 }
 
 std::vector<ash::ShelfID> AppIdsToShelfIDs(
@@ -173,6 +158,7 @@ void RegisterChromeLauncherUserPrefs(
                              CreateDefaultPinnedAppsList(),
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kPolicyPinnedLauncherApps);
+  registry->RegisterStringPref("shelf_alignment", "Bottom", user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC); 
 }
 
 // Helper that extracts app list from policy preferences.
@@ -261,47 +247,6 @@ std::vector<std::string> GetPinnedAppsFromPrefsLegacy(
   // If not added yet, the chrome item will be the last item in the list.
   apps.AddApp(extension_misc::kChromeAppId);
   return apps.app_list();
-}
-
-// static
-std::unique_ptr<ChromeLauncherPrefsObserver>
-ChromeLauncherPrefsObserver::CreateIfNecessary(Profile* profile) {
-  sync_preferences::PrefServiceSyncable* prefs =
-      PrefServiceSyncableFromProfile(profile);
-  const PrefService::Preference* alignment_preference =
-      prefs->FindPreference(ash::prefs::kShelfAlignmentLocal);
-  const PrefService::Preference* auto_hide_preference =
-      prefs->FindPreference(ash::prefs::kShelfAutoHideBehaviorLocal);
-  // TODO(crbug.com/753823): Ash prefs may not yet be registered in chrome.
-  if ((alignment_preference && !alignment_preference->HasUserSetting()) ||
-      (auto_hide_preference && !auto_hide_preference->HasUserSetting())) {
-    return base::WrapUnique(new ChromeLauncherPrefsObserver(prefs));
-  }
-  return nullptr;
-}
-
-ChromeLauncherPrefsObserver::~ChromeLauncherPrefsObserver() {
-  prefs_->RemoveObserver(this);
-}
-
-ChromeLauncherPrefsObserver::ChromeLauncherPrefsObserver(
-    sync_preferences::PrefServiceSyncable* prefs)
-    : prefs_(prefs) {
-  // This causes OnIsSyncingChanged to be called when the value of
-  // PrefService::IsSyncing() changes.
-  prefs_->AddObserver(this);
-}
-
-void ChromeLauncherPrefsObserver::OnIsSyncingChanged() {
-  // If prefs have synced, copy the values from |synced_path| to |local_path|
-  // if the local values haven't already been set.
-  if (!prefs_->IsSyncing())
-    return;
-  PropagatePrefToLocalIfNotSet(prefs_, ash::prefs::kShelfAlignmentLocal,
-                               ash::prefs::kShelfAlignment);
-  PropagatePrefToLocalIfNotSet(prefs_, ash::prefs::kShelfAutoHideBehaviorLocal,
-                               ash::prefs::kShelfAutoHideBehavior);
-  prefs_->RemoveObserver(this);
 }
 
 // Helper to create pin position that stays before any synced app, even if

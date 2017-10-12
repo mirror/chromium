@@ -42,6 +42,19 @@ Shelf* GetShelfForDisplay(int64_t display_id) {
   return root_window_controller ? root_window_controller->shelf() : nullptr;
 }
 
+// Init a local pref from a synced pref, used the first time a user signs in.
+void InitLocalPref(PrefChangeRegistrar* registrar,
+                   const std::string& local_path,
+                   const std::string& synced_path) {
+  SessionController* session_controller = Shell::Get()->session_controller();
+  PrefService* prefs = session_controller->GetLastActiveUserPrefService();
+  LOG(ERROR) << "MSW InitLocalPref " << synced_path
+             << " local?" << prefs->FindPreference(local_path)->HasUserSetting() << ":" << prefs->GetString(local_path)
+             << " synced?" << prefs->FindPreference(synced_path)->HasUserSetting() << ":" << prefs->GetString(synced_path);
+  prefs->SetString(local_path, prefs->GetString(synced_path));
+  registrar->Remove(synced_path);
+}
+
 // Set each Shelf's auto-hide behavior from the per-display pref.
 void SetShelfAutoHideFromPrefs() {
   // TODO(jamescook): The session state check should not be necessary, but
@@ -123,22 +136,19 @@ ShelfController::~ShelfController() {
 
 // static
 void ShelfController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
-  // These prefs are marked PUBLIC for use by Chrome, they're currently only
-  // needed for ChromeLauncherController::ShelfBoundsChangesProbablyWithUser
-  // and ChromeLauncherPrefsObserver. See the pref names definitions for an
-  // explanation of the synced, local, and per-display behavior of these prefs.
+  // See the pref names definitions for an explanation of the synced, local, and
+  // per-display behavior of these prefs.
   registry->RegisterStringPref(
       prefs::kShelfAutoHideBehavior, kShelfAutoHideBehaviorNever,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterStringPref(prefs::kShelfAutoHideBehaviorLocal,
-                               std::string(), PrefRegistry::PUBLIC);
-  registry->RegisterStringPref(
-      prefs::kShelfAlignment, kShelfAlignmentBottom,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
-  registry->RegisterStringPref(prefs::kShelfAlignmentLocal, std::string(),
-                               PrefRegistry::PUBLIC);
-  registry->RegisterDictionaryPref(prefs::kShelfPreferences,
-                                   PrefRegistry::PUBLIC);
+                               std::string());
+  // registry->RegisterStringPref(
+  //     prefs::kShelfAlignment, kShelfAlignmentBottom,
+  //     user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterForeignPref(ash::prefs::kShelfAlignment); 
+  registry->RegisterStringPref(prefs::kShelfAlignmentLocal, std::string());
+  registry->RegisterDictionaryPref(prefs::kShelfPreferences);
 }
 
 void ShelfController::BindRequest(mojom::ShelfControllerRequest request) {
@@ -314,6 +324,23 @@ void ShelfController::OnActiveUserPrefServiceChanged(
                               base::Bind(&SetShelfAutoHideFromPrefs));
   pref_change_registrar_->Add(prefs::kShelfPreferences,
                               base::Bind(&SetShelfBehaviorsFromPrefs));
+
+  // Init local prefs from synced values the first time a user signs in.
+  LOG(ERROR) << "MSW OnActiveUserPrefServiceChanged alignment "
+             << " local?" << pref_service->FindPreference(prefs::kShelfAlignmentLocal)->HasUserSetting() << ":" << pref_service->GetString(prefs::kShelfAlignmentLocal)
+             << " synced?" << pref_service->FindPreference(prefs::kShelfAlignment)->HasUserSetting() << ":" << pref_service->GetString(prefs::kShelfAlignment);
+  if (!pref_service->FindPreference(prefs::kShelfAlignmentLocal)->HasUserSetting()) {
+    pref_change_registrar_->Add(prefs::kShelfAlignment,
+                                base::Bind(&InitLocalPref,
+                                          pref_change_registrar_.get(),
+                                          prefs::kShelfAlignmentLocal));
+  }
+  if (!pref_service->FindPreference(prefs::kShelfAutoHideBehaviorLocal)->HasUserSetting()) {
+    pref_change_registrar_->Add(prefs::kShelfAutoHideBehavior,
+                                base::Bind(&InitLocalPref,
+                                          pref_change_registrar_.get(),
+                                          prefs::kShelfAutoHideBehaviorLocal));
+  }
 }
 
 void ShelfController::OnTabletModeStarted() {
