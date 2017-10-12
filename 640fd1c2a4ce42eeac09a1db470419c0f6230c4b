@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db07a0c2_f1b0c5b6",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-12T12:59:56Z",
+      "side": 1,
+      "message": "I think that comment isn\u0027t completely true (for example \"gets called before\" and \"empty password\"). I wouldn\u0027t mind if you delete it.",
+      "range": {
+        "startLine": 1682,
+        "startChar": 0,
+        "endLine": 1687,
+        "endChar": 33
+      },
+      "revId": "640fd1c2a4ce42eeac09a1db470419c0f6230c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de582eb_e9f49699",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-12T12:59:56Z",
+      "side": 1,
+      "message": "Nit: Remove this DCHECK (there is \"if (!password_form) return;\" 4 lines above)",
+      "range": {
+        "startLine": 1714,
+        "startChar": 2,
+        "endLine": 1715,
+        "endChar": 0
+      },
+      "revId": "640fd1c2a4ce42eeac09a1db470419c0f6230c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
