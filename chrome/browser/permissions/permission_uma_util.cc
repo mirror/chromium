@@ -342,21 +342,33 @@ void PermissionUmaUtil::PermissionDismissed(
 }
 
 void PermissionUmaUtil::PermissionIgnored(
-    ContentSettingsType permission,
-    PermissionRequestGestureType gesture_type,
-    const GURL& requesting_origin,
-    Profile* profile) {
+    const std::vector<PermissionRequest*>& requests,
+    const content::WebContents* web_contents) {
+  // TODO(timloh): We should record ignore metrics for all permission types.
+  // Only PermissionRequestImpl implements GetContentSettingsType currently.
+  if (requests[0]->GetContentSettingsType() == CONTENT_SETTINGS_TYPE_DEFAULT)
+    return;
+
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
   PermissionDecisionAutoBlocker* autoblocker =
       PermissionDecisionAutoBlocker::GetForProfile(profile);
-  RecordPermissionAction(permission, PermissionAction::IGNORED,
-                         PermissionSourceUI::PROMPT, gesture_type,
-                         requesting_origin, profile);
-  RecordPermissionPromptPriorCount(
-      permission, kPermissionsPromptIgnoredPriorDismissCountPrefix,
-      autoblocker->GetDismissCount(requesting_origin, permission));
-  RecordPermissionPromptPriorCount(
-      permission, kPermissionsPromptIgnoredPriorIgnoreCountPrefix,
-      autoblocker->GetIgnoreCount(requesting_origin, permission));
+
+  for (PermissionRequest* request : requests) {
+    ContentSettingsType permission = request->GetContentSettingsType();
+    PermissionRequestGestureType gesture_type = request->GetGestureType();
+    const GURL& requesting_origin = request->GetOrigin();
+
+    RecordPermissionAction(permission, PermissionAction::IGNORED,
+                           PermissionSourceUI::PROMPT, gesture_type,
+                           requesting_origin, profile);
+    RecordPermissionPromptPriorCount(
+        permission, kPermissionsPromptIgnoredPriorDismissCountPrefix,
+        autoblocker->GetDismissCount(requesting_origin, permission));
+    RecordPermissionPromptPriorCount(
+        permission, kPermissionsPromptIgnoredPriorIgnoreCountPrefix,
+        autoblocker->GetIgnoreCount(requesting_origin, permission));
+  }
 }
 
 void PermissionUmaUtil::PermissionRevoked(ContentSettingsType permission,
@@ -468,6 +480,7 @@ void PermissionUmaUtil::PermissionPromptResolved(
       break;
     case PermissionAction::IGNORED:
       RecordEngagementMetric(requests, web_contents, "Ignored");
+      PermissionIgnored(requests, web_contents);
       break;
     default:
       NOTREACHED();

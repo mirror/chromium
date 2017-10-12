@@ -11,8 +11,10 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "build/build_config.h"
+#include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
@@ -31,7 +33,8 @@ class CancelledRequest : public PermissionRequest {
 #endif
         message_fragment_(cancelled->GetMessageTextFragment()),
         origin_(cancelled->GetOrigin()),
-        request_type_(cancelled->GetPermissionRequestType()) {
+        request_type_(cancelled->GetPermissionRequestType()),
+        content_settings_type_(cancelled->GetContentSettingsType()) {
   }
   ~CancelledRequest() override {}
 
@@ -55,6 +58,10 @@ class CancelledRequest : public PermissionRequest {
     return request_type_;
   }
 
+  ContentSettingsType GetContentSettingsType() const override {
+    return content_settings_type_;
+  }
+
  private:
   IconId icon_;
 #if defined(OS_ANDROID)
@@ -63,6 +70,7 @@ class CancelledRequest : public PermissionRequest {
   base::string16 message_fragment_;
   GURL origin_;
   PermissionRequestType request_type_;
+  ContentSettingsType content_settings_type_;
 };
 
 bool IsMessageTextEqual(PermissionRequest* a,
@@ -422,6 +430,26 @@ void PermissionRequestManager::FinalizeBubble(
 
   PermissionUmaUtil::PermissionPromptResolved(requests_, web_contents(),
                                               permission_action);
+
+  // TODO(timloh): We should support ignore embargo for all permission types.
+  // Only PermissionRequestImpl implements GetContentSettingsType currently.
+  if (permission_action == PermissionAction::IGNORED &&
+      requests_[0]->GetContentSettingsType() != CONTENT_SETTINGS_TYPE_DEFAULT) {
+    Profile* profile =
+        Profile::FromBrowserContext(web_contents()->GetBrowserContext());
+    PermissionDecisionAutoBlocker* autoblocker =
+        PermissionDecisionAutoBlocker::GetForProfile(profile);
+
+    for (PermissionRequest* request : requests_) {
+      PermissionEmbargoStatus embargo_status =
+          PermissionEmbargoStatus::NOT_EMBARGOED;
+      if (autoblocker->RecordIgnoreAndEmbargo(
+              request->GetOrigin(), request->GetContentSettingsType())) {
+        embargo_status = PermissionEmbargoStatus::REPEATED_IGNORES;
+      }
+      PermissionUmaUtil::RecordEmbargoStatus(embargo_status);
+    }
+  }
 
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
