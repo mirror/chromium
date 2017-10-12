@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608de1ec_2e7e0cdc",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "I think what you want is BackgroundWith1PxBorder::kLocationBarBorderThicknessDip.",
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea95f620_95feeb03",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "I think your approach here is okay, but this function is now incorrectly documented. It\u0027s not really describing the \"content area\" any more, since we\u0027re cutting off the right side to align with the location bar.",
+      "range": {
+        "startLine": 200,
+        "startChar": 29,
+        "endLine": 200,
+        "endChar": 50
+      },
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da78e7b7_ce5ed1f8",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "Revert the comment change, since we don\u0027t overlap the location bar here. I\u0027d actually rather the has_location_bar case didn\u0027t enter into this branch, and there was a comment elsewhere explaining that we want to abut the bottom of the location bar.\n\nNow that I think about it, in the popup case we probably want to eliminate the overlap too, to be visually consistent. That might make the logic here simpler.",
+      "range": {
+        "startLine": 231,
+        "startChar": 54,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1486231a_5cf6ce5d",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "const int",
+      "range": {
+        "startLine": 243,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 5
+      },
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a4d39e_023dccdb",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "Put this comment on |right_padding|",
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54223282_c02ebb21",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T00:43:17Z",
+      "side": 1,
+      "message": "It took me a while to figure out why this math works. I\u0027m hoping if you update the function-level documentation it\u0027ll be clearer, but here specifically it would help to say explicitly that we\u0027re aligning the right of the find bar with the right of the location bar.",
+      "range": {
+        "startLine": 248,
+        "startChar": 30,
+        "endLine": 248,
+        "endChar": 42
+      },
+      "revId": "bae1d4d2f1699642bec769c4c54ae48c812ce842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
