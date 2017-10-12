@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74a4b1df_6412dd9d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 3052,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T16:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31650fcd_db76c3da",
+      "range": {
+        "startLine": 3052,
+        "startChar": 25,
+        "endLine": 3052,
+        "endChar": 55
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb450c8b_8ee81f70",
         "filename": "content/network/network_context.cc",
         "patchSetId": 44
@@ -45,6 +69,30 @@
       "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5aa792f_b2e596e5",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T16:42:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb450c8b_8ee81f70",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 33
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "37519e22_501f1e96",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T16:42:49Z",
+      "side": 1,
+      "message": "I need the members referenced somewhere so the Windows build doesn\u0027t break. I added a comment explaining the situation. Sorry for the confusion!",
+      "parentUuid": "c24187e5_87c95478",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429da287_c2b3f19c",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 44
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "40c26d1c_bcff57dc",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T16:42:49Z",
+      "side": 1,
+      "message": "Removed. Thanks for catching!",
+      "parentUuid": "429da287_c2b3f19c",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "554a95fb_dcc585d1",
         "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
         "patchSetId": 44
@@ -114,6 +210,30 @@
       "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b043b3_8b14268b",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 44
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T16:42:49Z",
+      "side": 1,
+      "message": "Here is the explainer: https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#using-the-async-cookies-api\n\nI think we should figure out the merging after we have a good idea of what the renderer\u0027s needs are. I think I\u0027ll get there after making more progress on the Async Cookies API (especially on the service workers aspect), as it\u0027s a superset of document.cookie. I definitely want to help with the merge when the time comes.",
+      "parentUuid": "554a95fb_dcc585d1",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
