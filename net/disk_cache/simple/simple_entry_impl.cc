@@ -200,7 +200,7 @@ SimpleEntryImpl::SimpleEntryImpl(
       last_modified_(last_used_),
       sparse_data_size_(0),
       open_count_(0),
-      doomed_(false),
+      doom_state_(DOOM_NONE),
       state_(STATE_UNINITIALIZED),
       synchronous_entry_(NULL),
       net_log_(
@@ -300,12 +300,12 @@ int SimpleEntryImpl::CreateEntry(Entry** out_entry,
 }
 
 int SimpleEntryImpl::DoomEntry(const CompletionCallback& callback) {
-  if (doomed_)
+  if (doom_state_ != DOOM_NONE)
     return net::OK;
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_CALL);
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_BEGIN);
 
-  MarkAsDoomed();
+  MarkAsDoomed(DOOM_QUEUED);
   if (backend_.get())
     backend_->OnDoomStart(entry_hash_);
   pending_operations_.push(SimpleEntryOperation::DoomOperation(this, callback));
@@ -611,8 +611,9 @@ void SimpleEntryImpl::ReturnEntryToCaller(Entry** out_entry) {
   *out_entry = this;
 }
 
-void SimpleEntryImpl::MarkAsDoomed() {
-  doomed_ = true;
+void SimpleEntryImpl::MarkAsDoomed(DoomState new_state) {
+  DCHECK_NE(new_state, DOOM_NONE);
+  doom_state_ = new_state;
   if (!backend_.get())
     return;
   backend_->index()->Remove(entry_hash_);
@@ -878,7 +879,7 @@ int SimpleEntryImpl::ReadDataInternal(bool sync_possible,
   }
 
   state_ = STATE_IO_PENDING;
-  if (!doomed_ && backend_.get())
+  if (doom_state_ == DOOM_NONE && backend_.get())
     backend_->index()->UseIfExists(entry_hash_);
 
   // Figure out if we should be computing the checksum for this read,
@@ -966,7 +967,7 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
     }
   }
   state_ = STATE_IO_PENDING;
-  if (!doomed_ && backend_.get())
+  if (doom_state_ == DOOM_NONE && backend_.get())
     backend_->index()->UseIfExists(entry_hash_);
 
   // Any stream 1 write invalidates the prefetched data.
@@ -1000,10 +1001,12 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
   // Retain a reference to |buf| in |reply| instead of |task|, so that we can
   // reduce cross thread malloc/free pairs. The cross thread malloc/free pair
   // increases the apparent memory usage due to the thread cached free list.
+  // ### I think we want to just remove the doom argument, since with renaming
+  // rather than delete, creating new stream 2 of doomed entry will just work.
   Closure task = base::Bind(
       &SimpleSynchronousEntry::WriteData, base::Unretained(synchronous_entry_),
-      SimpleSynchronousEntry::EntryOperationData(stream_index, offset, buf_len,
-                                                 truncate, doomed_),
+      SimpleSynchronousEntry::EntryOperationData(
+          stream_index, offset, buf_len, truncate, doom_state_ != DOOM_NONE),
       base::Unretained(buf), entry_stat.get(), result.get());
   Closure reply = base::Bind(&SimpleEntryImpl::WriteOperationComplete, this,
                              stream_index, callback, base::Passed(&entry_stat),
@@ -1150,14 +1153,28 @@ void SimpleEntryImpl::GetAvailableRangeInternal(
 }
 
 void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
+  if (doom_state_ == DOOM_COMPLETED) {
+    // In between the time we were sitting on a queue, some operation failed
+    // and cleaned our files up, so we don't have to do anything. This isn't
+    // just avoiding useless work: it's possible for a doom to sneak into
+    // our queue after a close if it's done via a backend method, in which case
+    // we don't have the doom_generation number anymore (since the
+    // SimpleSynchronousEntry object is gone), and so would risk touching the
+    // wrong thing.
+    // ### testcase?
+    return;
+  }
+
   if (!backend_) {
     // If there's no backend, we want to truncate the files rather than delete
-    // them. Removing files will update the entry directory's mtime, which will
-    // likely force a full index rebuild on the next startup; this is clearly an
-    // undesirable cost. Instead, the lesser evil is to set the entry files to
-    // length zero, leaving the invalid entry in the index. On the next attempt
-    // to open the entry, it will fail asynchronously (since the magic numbers
-    // will not be found), and the files will actually be removed.
+    // or rename them. Either op will update the entry directory's mtime, which
+    // will likely force a full index rebuild on the next startup; this is
+    // clearly an undesirable cost. Instead, the lesser evil is to set the entry
+    // files to length zero, leaving the invalid entry in the index. On the next
+    // attempt to open the entry, it will fail asynchronously (since the magic
+    // numbers will not be found), and the files will actually be removed.
+    // Since there is no backend, new entries to conflict with us also can't be
+    // created.
     PostTaskAndReplyWithResult(
         worker_pool_.get(), FROM_HERE,
         base::Bind(&SimpleSynchronousEntry::TruncateEntryFiles, path_,
@@ -1169,12 +1186,25 @@ void SimpleEntryImpl::DoomEntryInternal(const CompletionCallback& callback) {
     state_ = STATE_IO_PENDING;
     return;
   }
-  PostTaskAndReplyWithResult(
-      worker_pool_.get(),
-      FROM_HERE,
-      base::Bind(&SimpleSynchronousEntry::DoomEntry, path_, entry_hash_),
-      base::Bind(
-          &SimpleEntryImpl::DoomOperationComplete, this, callback, state_));
+
+  if (synchronous_entry_) {
+    // If there is a backing object, we have to go through its instance methods,
+    // so that it can rename itself and keep track of the unlinked name.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::Doom,
+                   base::Unretained(synchronous_entry_)),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  } else {
+    // If nothing is open, we can just nuke the files.
+    PostTaskAndReplyWithResult(
+        worker_pool_.get(), FROM_HERE,
+        base::Bind(&SimpleSynchronousEntry::DeleteEntryFiles, path_,
+                   entry_hash_),
+        base::Bind(&SimpleEntryImpl::DoomOperationComplete, this, callback,
+                   state_));
+  }
   state_ = STATE_IO_PENDING;
 }
 
@@ -1193,7 +1223,7 @@ void SimpleEntryImpl::CreationOperationComplete(
                    in_results->result == net::OK);
   if (in_results->result != net::OK) {
     if (in_results->result != net::ERR_FILE_EXISTS)
-      MarkAsDoomed();
+      MarkAsDoomed(DOOM_COMPLETED);
 
     net_log_.AddEventWithNetErrorCode(end_event_type, net::ERR_FAILED);
     PostClientCallback(completion_callback, net::ERR_FAILED);
@@ -1255,7 +1285,7 @@ void SimpleEntryImpl::EntryOperationComplete(
   DCHECK(result);
   if (*result < 0) {
     state_ = STATE_FAILURE;
-    MarkAsDoomed();
+    MarkAsDoomed(DOOM_COMPLETED);
   } else {
     state_ = STATE_READY;
     UpdateDataFromEntryStat(entry_stat);
@@ -1433,7 +1463,7 @@ void SimpleEntryImpl::UpdateDataFromEntryStat(
     data_size_[i] = entry_stat.data_size(i);
   }
   sparse_data_size_ = entry_stat.sparse_data_size();
-  if (!doomed_ && backend_.get()) {
+  if (doom_state_ == DOOM_NONE && backend_.get()) {
     backend_->index()->UpdateEntrySize(
         entry_hash_, base::checked_cast<uint32_t>(GetDiskUsage()));
   }

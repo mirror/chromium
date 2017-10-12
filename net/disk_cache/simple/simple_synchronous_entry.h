@@ -176,10 +176,14 @@ class SimpleSynchronousEntry {
                           SimpleFileTracker* file_tracker,
                           SimpleEntryCreationResults* out_results);
 
-  // Deletes an entry from the file system without affecting the state of the
-  // corresponding instance, if any (allowing operations to continue to be
-  // executed through that instance). Returns a net error code.
-  static int DoomEntry(const base::FilePath& path, uint64_t entry_hash);
+  // Deletes an entry from the file system.  This variant should only be used
+  // if there is no actual open instance around.
+  static int DeleteEntryFiles(const base::FilePath& path, uint64_t entry_hash);
+
+  // Renames the entry in file system, making it no longer possible to open it
+  // again, but allowing operations to continue to be executed through that
+  // instance. Returns a net error code.
+  int Doom();
 
   // Like |DoomEntry()| above, except that it truncates the entry files rather
   // than deleting them. Used when dooming entries after the backend has
@@ -364,8 +368,6 @@ class SimpleSynchronousEntry {
                            const SimpleFileEOF& eof_record,
                            SimpleStreamPrefetchData* out);
 
-  void Doom() const;
-
   // Opens the sparse data file and scans it if it exists.
   bool OpenSparseFileIfExists(int32_t* out_sparse_data_size);
 
@@ -430,6 +432,7 @@ class SimpleSynchronousEntry {
 
   bool have_open_files_;
   bool initialized_;
+  bool doomed_;
 
   // Normally false. This is set to true when an entry is opened without
   // checking the file headers. Any subsequent read will perform the check
