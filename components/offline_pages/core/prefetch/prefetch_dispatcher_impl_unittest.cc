@@ -387,4 +387,12 @@ TEST_F(PrefetchDispatcherTest, SuspendRemovedAfterNewBackgroundTask) {
   EXPECT_TRUE(dispatcher_task_queue()->HasPendingTasks());
 }
 
+TEST_F(PrefetchDispatcherTest, OneTimeRunningOfSomeReconciliationTasks) {
+  BeginBackgroundTask();
+
+  // This should trigger suspend.
+  // Some reconcile and action tasks should be created.
+  EXPECT_TRUE(dispatcher_task_queue()->HasPendingTasks());
+}
+
 }  // namespace offline_pages

@@ -55,10 +55,6 @@ bool PrefetchDownloaderImpl::IsDownloadServiceUnavailable() const {
 }
 
 void PrefetchDownloaderImpl::CleanupDownloadsWhenReady() {
-  // Do nothing if downloads were already cleaned up.
-  if (did_download_cleanup_)
-    return;
-
   // Trigger the download cleanup if the download service has already started.
   if (download_service_status_ == DownloadServiceStatus::STARTED) {
     CleanupDownloads(outstanding_download_ids_, success_downloads_);
@@ -203,8 +199,6 @@ void PrefetchDownloaderImpl::CleanupDownloads(
     const std::set<std::string>& outstanding_download_ids,
     const std::map<std::string, std::pair<base::FilePath, int64_t>>&
         success_downloads) {
-  // Prevent future cleanup by marking |did_download_cleanup_|.
-  did_download_cleanup_ = true;
   cleanup_downloads_when_service_starts_ = false;
 
   PrefetchDispatcher* dispatcher = prefetch_service_->GetPrefetchDispatcher();

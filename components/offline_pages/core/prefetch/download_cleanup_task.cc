@@ -161,6 +161,7 @@ DownloadCleanupTask::DownloadCleanupTask(
 DownloadCleanupTask::~DownloadCleanupTask() {}
 
 void DownloadCleanupTask::Run() {
+  LOG(ERROR) << "@@DownloadCleanupTask";
   prefetch_store_->Execute(
       base::BindOnce(&CleanupDownloadsSync, kMaxDownloadAttempts,
                      outstanding_download_ids_, success_downloads_),

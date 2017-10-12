@@ -53,9 +53,7 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
     download_service_.set_client(download_client_.get());
     prefetch_service_taco_->SetPrefetchDownloader(std::move(downloader));
     prefetch_service_taco_->CreatePrefetchService();
-  }
 
-  void OnDownloadServiceReady() {
     prefetch_downloader()->OnDownloadServiceReady(
         std::set<std::string>(),
         std::map<std::string, std::pair<base::FilePath, int64_t>>());
@@ -100,7 +98,6 @@ class PrefetchDownloaderImplTest : public PrefetchRequestTestBase {
 };
 
 TEST_F(PrefetchDownloaderImplTest, DownloadParams) {
-  OnDownloadServiceReady();
   base::Time epoch = base::Time();
   clock()->SetNow(epoch);
 
@@ -126,7 +123,6 @@ TEST_F(PrefetchDownloaderImplTest, DownloadParams) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, ExperimentHeaderInDownloadParams) {
-  OnDownloadServiceReady();
   SetUpExperimentOption();
 
   StartDownload(kDownloadId, kDownloadLocation);
@@ -140,7 +136,6 @@ TEST_F(PrefetchDownloaderImplTest, ExperimentHeaderInDownloadParams) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, DownloadSucceeded) {
-  OnDownloadServiceReady();
   StartDownload(kDownloadId, kDownloadLocation);
   StartDownload(kDownloadId2, kDownloadLocation2);
   RunUntilIdle();
@@ -152,37 +147,11 @@ TEST_F(PrefetchDownloaderImplTest, DownloadSucceeded) {
 }
 
 TEST_F(PrefetchDownloaderImplTest, DownloadFailed) {
-  OnDownloadServiceReady();
   StartDownload(kFailedDownloadId, kDownloadLocation);
   RunUntilIdle();
   ASSERT_EQ(1u, completed_downloads().size());
   EXPECT_EQ(kFailedDownloadId, completed_downloads()[0].download_id);
   EXPECT_FALSE(completed_downloads()[0].success);
-}
-
-TEST_F(PrefetchDownloaderImplTest, DoNotCleanupTwiceIfServiceStartsFirst) {
-  OnDownloadServiceReady();
-  EXPECT_EQ(0, prefetch_dispatcher()->cleanup_downloads_count);
-
-  prefetch_downloader()->CleanupDownloadsWhenReady();
-  EXPECT_EQ(1, prefetch_dispatcher()->cleanup_downloads_count);
-
-  // We should not cleanup again.
-  prefetch_downloader()->CleanupDownloadsWhenReady();
-  EXPECT_EQ(1, prefetch_dispatcher()->cleanup_downloads_count);
-}
-
-TEST_F(PrefetchDownloaderImplTest, DoNotCleanupTwiceIfDispatcherStartsFirst) {
-  prefetch_downloader()->CleanupDownloadsWhenReady();
-  EXPECT_EQ(0, prefetch_dispatcher()->cleanup_downloads_count);
-  // One unknown download is sent to the downloader when the service is ready.
-  std::set<std::string> download_ids_before = {kDownloadId2};
-  prefetch_downloader()->OnDownloadServiceReady(download_ids_before, {});
-  EXPECT_EQ(1, prefetch_dispatcher()->cleanup_downloads_count);
-
-  // We should not cleanup again.
-  prefetch_downloader()->CleanupDownloadsWhenReady();
-  EXPECT_EQ(1, prefetch_dispatcher()->cleanup_downloads_count);
 }
 
 }  // namespace offline_pages
