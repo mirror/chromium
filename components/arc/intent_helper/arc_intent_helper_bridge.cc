@@ -47,6 +47,8 @@ class ArcIntentHelperBridgeFactory
 // static
 const char ArcIntentHelperBridge::kArcIntentHelperPackageName[] =
     "org.chromium.arc.intent_helper";
+// static
+constexpr char kMultideviceSettingsUrl[] = "chrome://settings/multidevice";
 
 // static
 ArcIntentHelperBridge* ArcIntentHelperBridge::GetForBrowserContext(
@@ -105,6 +107,14 @@ void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   // TODO(mash): Support this functionality without ash::Shell access in Chrome.
   if (ash::Shell::HasInstance())
     ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
+}
+
+void ArcIntentHelperBridge::OnOpenChromeSettingsMultideviceUrl() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(
+        GURL(kMultideviceSettingsUrl));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
