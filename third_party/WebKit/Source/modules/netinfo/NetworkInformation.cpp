@@ -119,6 +119,9 @@ void NetworkInformation::ConnectionChange(
     const Optional<TimeDelta>& http_rtt,
     const Optional<TimeDelta>& transport_rtt,
     const Optional<double>& downlink_mbps) {
+  if (!GetExecutionContext())
+    return;
+
   DCHECK(GetExecutionContext()->IsContextThread());
 
   unsigned long new_http_rtt_msec = RoundRtt(http_rtt);
