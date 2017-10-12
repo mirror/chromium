@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f6a3ce3_a3e7734b",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-12T20:57:49Z",
+      "side": 1,
+      "message": "The \u0027scanout\u0027 term might not be the best as how do we really know that this buffer will be scanned out directly by HW? If I understand this correctly it\u0027s more like texture metadata that can be used for presentation when compositing of the texture is delegated to the system (E.g. HW overlays on Chrome OS or system compositor on Mac). \n\nMaybe name this CHROMIUM_color_space_metadata?",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b182ac16_51398adc",
         "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
         "patchSetId": 5
@@ -47,6 +70,23 @@
       "writtenOn": "2017-10-12T20:19:22Z",
       "side": 1,
       "message": "Consider merging into a common method with GLImageIOSurface.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cb2b99_789cae99",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-12T20:57:49Z",
+      "side": 1,
+      "message": "Maybe just SetColorSpace and make it clear that it doesn\u0027t affect the GL and when image is bound to a texture? As \u0027scanout\u0027 is a very HW specific concept that can really only be fully controlled on Chrome OS. I guess we should do the same for GMB in this case too then.",
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
