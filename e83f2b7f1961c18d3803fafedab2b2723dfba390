@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b4c1b76_e3eddcf7",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-12T21:51:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26509c2d_2b74189f",
+      "range": {
+        "startLine": 179,
+        "startChar": 22,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "e83f2b7f1961c18d3803fafedab2b2723dfba390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1c80d3_921cd346",
         "filename": "third_party/zlib/google/zip_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T21:02:46Z",
       "side": 1,
       "message": "Mebbe LOG the file contents as well?",
+      "range": {
+        "startLine": 215,
+        "startChar": 78,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "e83f2b7f1961c18d3803fafedab2b2723dfba390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb29691f_33a75341",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-12T21:51:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary. From the current bots log we are comparing the file against the directory (my guess is we fail to get the relative_path above).",
+      "parentUuid": "fa1c80d3_921cd346",
       "range": {
         "startLine": 215,
         "startChar": 78,
