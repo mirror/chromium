@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b4c5e4_7f31f510",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T06:38:29Z",
+      "side": 1,
+      "message": "(I\u0027m excited we can use constexpr for SkColor now \\o/)",
+      "revId": "2453896329592f80ee59271ee4b32886002aee30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
