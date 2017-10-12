@@ -22,6 +22,30 @@
       "revId": "bc330b56b210229675be4ab21c4bc9bbab12cc86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f257699_cfb0cfde",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 4713,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T21:59:34Z",
+      "side": 1,
+      "message": "Whoops!  Did that locally, but forgot to upload.  Sorry about that!  Removed.",
+      "parentUuid": "930ff148_7383e46a",
+      "range": {
+        "startLine": 4713,
+        "startChar": 6,
+        "endLine": 4713,
+        "endChar": 37
+      },
+      "revId": "bc330b56b210229675be4ab21c4bc9bbab12cc86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
