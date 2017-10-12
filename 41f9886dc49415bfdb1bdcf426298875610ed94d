@@ -384,6 +384,24 @@
     },
     {
       "key": {
+        "uuid": "86b83c81_4f1ddf90",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-12T17:15:03Z",
+      "side": 1,
+      "message": "Oh, silly me :), what could be confusing about that? Fixed!",
+      "parentUuid": "170fb6f8_5b0b2d4d",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8236fca4_776704bb",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
         "patchSetId": 4
