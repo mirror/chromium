@@ -78,6 +78,10 @@
 // Shows the Report an Issue UI.
 - (void)showReportAnIssue;
 
+// Shows the Report an Issue UI from a specified |presentingViewController|.
+- (void)showReportAnIssueFromViewController:
+    (UIViewController*)presentingViewController;
+
 // Opens the |command| URL.
 - (void)openURL:(OpenUrlCommand*)command;
 

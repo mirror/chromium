@@ -1959,7 +1959,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       _toolbarCoordinator.webToolbarController;
 
   _sadTabCoordinator = [[SadTabLegacyCoordinator alloc] init];
-  _sadTabCoordinator.dispatcher = _dispatcher;
+  _sadTabCoordinator.presentingViewController = self;
+  _sadTabCoordinator.dispatcher = self.dispatcher;
 
   _pageInfoCoordinator =
       [[PageInfoLegacyCoordinator alloc] initWithBaseViewController:self];
