@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5d0335d_8e8cfac5",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T02:33:25Z",
+      "side": 1,
+      "message": "We used to not have hook conditions, so the hook used to run (and in webrtc pdfium etc still does) on all platforms. So it needs to early-exit if the current OS isn\u0027t Windows. But now we sometimes do want to run it on non-windows, so --force skips the \"if not on win, exit\" logic.",
+      "parentUuid": "3eb17aef_7047f5b4",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6486d38_7a617f63",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "I think you need to fix line 44, then. Update() is also called from main(), where it does the right thing.",
       "parentUuid": "9edbf932_697808ce",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ae2e93_c5f0401c",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T02:33:25Z",
+      "side": 1,
+      "message": "What Dirk said -- I think line 44 should throw then, since it incorrectly ignores the result of Update() atm.\n\nI can make that change as part of this Cl.\n\nI did test that things work locally when running `gclient runhooks` with and without ciopfs installed.\n\nDirk: I probably told you that. I talked to Microsoft folks (probably a year ago by now, or longer) and they change some things, but atm things are very much not fixed:\n\nthakis@thakis:~/src/chrome/src$ ack windows.h third_party/depot_tools/win_toolchain/vs_files/9bc7ccbf9f4bd50d4a3bd185e8ca94ff1618de0b/win_sdk/ | wc -l\n843\nthakis@thakis:~/src/chrome/src$ find third_party/depot_tools/win_toolchain/vs_files/9bc7ccbf9f4bd50d4a3bd185e8ca94ff1618de0b/ -iname windows.h\nthird_party/depot_tools/win_toolchain/vs_files/9bc7ccbf9f4bd50d4a3bd185e8ca94ff1618de0b/win_sdk/Include/10.0.15063.0/um/Windows.h\n\n\nNote that this is a user-space mount where nobody needs to enter a root password or anything -- you just say \"target_os\u003d[\u0027win\u0027]\", sync, and things Just Work. I actually think this is a pretty nice way to go about things. (The SDK using correct case in includes would be even nicer of course, but we don\u0027t have that much control over that.)",
+      "parentUuid": "dff7a360_ba495a19",
       "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
