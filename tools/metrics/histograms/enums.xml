@@ -23443,6 +23443,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1262152606" label="disable-lock-screen-apps"/>
   <int value="-1254070521" label="enable-slimming-paint-invalidation"/>
   <int value="-1251411236" label="disable-new-md-input-view"/>
+  <int value="-1248478422" label="enable-zip-archiver-packer"/>
   <int value="-1246840031" label="OptInImeMenu:disabled"/>
   <int value="-1241747717" label="enable-android-password-link"/>
   <int value="-1235586511" label="enable-datasaver-prompt"/>
@@ -23633,6 +23634,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-684900739" label="disable-merge-key-char-events"/>
   <int value="-684223908" label="enable-android-wallpapers-app"/>
   <int value="-680589442" label="MacRTL:disabled"/>
+  <int value="-670188266" label="enable-zip-archiver-unpacker"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
   <int value="-666508951" label="CrOSContainer:enabled"/>
   <int value="-663476391" label="enable-pixel-canvas-recording:enabled"/>
@@ -24067,7 +24069,6 @@ from previous Chrome versions.
   <int value="659086147" label="OverlayScrollbarFlashWhenMouseEnter:enabled"/>
   <int value="679931272" label="DcheckIsFatal:enabled"/>
   <int value="684806628" label="TranslateLanguageByULP:disabled"/>
-  <int value="685916283" label="enable-zip-archiver-on-file-manager"/>
   <int value="687838135" label="ThirdPartyDoodles:disabled"/>
   <int value="689489984" label="disable-zero-suggest"/>
   <int value="690185633" label="NonValidatingReloadOnNormalReload:disabled"/>
