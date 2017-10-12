@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6bb619_9d921bde",
+        "filename": "chrome/browser/prerender/prerender_nostate_prefetch_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-10-12T11:16:13Z",
+      "side": 1,
+      "message": "Since run_loop can potentially quit for other reasons, it would be easier to read for me if there is an explicit boolean that is set in the callback and then EXPECT\u0027ed upon. Please do.",
+      "range": {
+        "startLine": 604,
+        "startChar": 2,
+        "endLine": 604,
+        "endChar": 17
+      },
+      "revId": "abeeda4ee977817a2c91963a3615d8247a229c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
