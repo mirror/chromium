@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68bd033a_cde612b5",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T02:09:42Z",
+      "side": 1,
+      "message": "Hmm.  I\u0027m worried about regressing some intentional behavior from https://codereview.chromium.org/2161393002/, since it looks like I included this behavior of checking the current frame tree on purpose.\n\nFrom my notes at the time, it looks like it might have been related to fast/history/same-document-iframes-changing-pushstate.html layout test, which tried to ensure that iframe2 didn\u0027t show up in the output.\n\nDoes your CL pass that layout test?  It does seem related to how you\u0027re clearing the missing items, though there\u0027s some tradeoffs there (as mentioned above).\n\nOn a related note, what about the other call to CloneAndReplace in RendererDidNavigateNewSubframe?  If we went this route, I wonder if that should behave the same way, and if we should just change the parameters and behavior of CloneAndReplace.",
+      "revId": "284ab3bf8a02e27c998e33755e72ffe8f63e5d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
