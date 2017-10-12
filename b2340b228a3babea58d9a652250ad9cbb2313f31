@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0a28fd_cfdca9bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T17:12:45Z",
+      "side": 1,
+      "message": "nit: Insert a space after \"1.\" to make it look like bullet 2 and 3.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec4a717_2b444604",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T17:12:45Z",
+      "side": 1,
+      "message": "I know the intention of this change is to make dragging work in auto hide mode. But why do we need it?\n\nWhen the shelf is shown in auto hide mode, ShelfView should be visible and receive gesture events directly without the need of code here to forward the events. Would ShelfView::OnGestureEvent not get called?",
+      "range": {
+        "startLine": 330,
+        "startChar": 6,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb775db_deef29ea",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T17:12:45Z",
+      "side": 1,
+      "message": "Side question: Do we need to make CanStartFullscreenAppListDrag() be more friendly for dragging a shelf item? It seems to me that this could make start dragging an item a bit difficult.",
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1c0cdf_4c51dd99",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T17:12:45Z",
+      "side": 1,
+      "message": "Think the old name better reflects what the function does. Unlike UpdateAutoHideForMouseEvent above, this method does not change auto hide state directly.",
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
