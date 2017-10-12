@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0088bbce_0d5c6234",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-12T15:05:29Z",
+      "side": 1,
+      "message": "ArcInstanceLifetimeEvent? Do we also want to record clean shutdowns?",
+      "parentUuid": "e2f6681a_71790e14",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7231814_338dfbcf",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -123,6 +147,23 @@
       "writtenOn": "2017-10-12T07:55:29Z",
       "side": 1,
       "message": "nit: Can this be closer to L309?",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08e9bb4_78d4d9de",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-12T15:05:29Z",
+      "side": 1,
+      "message": "Is this guaranteed to be called always? IIRC at some point there were cases in which this function was not called for clean shutdowns due to us needing to wait for the D-Bus callback but the messageloop was sometimes stopped before that was delivered.",
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
