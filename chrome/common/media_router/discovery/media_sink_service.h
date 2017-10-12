@@ -39,6 +39,11 @@ class MediaSinkService {
   // Stops sink discovery. No-ops if already stopped.
   virtual void Stop() = 0;
 
+  // Signals that a user gesture has occurred (e.g. Media Router dialog has been
+  // opened). Implementations may override this to perform actions (such as
+  // forcing a discovery cycle to happen right away) to be more responsive.
+  virtual void OnUserGesture() {}
+
  protected:
   OnSinksDiscoveredCallback sink_discovery_callback_;
 

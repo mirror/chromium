@@ -49,6 +49,7 @@ class DialMediaSinkServiceImpl : public MediaSinkServiceBase,
   // MediaSinkService implementation
   void Start() override;
   void Stop() override;
+  void OnUserGesture() override;
 
  protected:
   // Returns instance of device description service. Create a new one if none
