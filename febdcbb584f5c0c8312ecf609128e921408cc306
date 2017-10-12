@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "3f73bc06_3837b09e",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:39:36Z",
+      "side": 1,
+      "message": "You need to also set_can_activate(true) on line 37. Then the bubble should automatically close itself on click outside its bounds and you shouldn\u0027t need the pointer watcher.\n\n(System tray acts like a menu, so it tries not to deactivate the active browser window. You don\u0027t need that here -- this bubble has the user\u0027s attention.)",
+      "parentUuid": "1e70cc70_0068cfdb",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f839b2b_c1f2491c",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 8

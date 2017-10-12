@@ -16,6 +16,58 @@
       "revId": "5abcd70988cc9a301a80223b41557bb3356ee0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be2d856_26314afd",
+        "filename": "ash/shell.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:39:36Z",
+      "side": 1,
+      "message": "No, what you have is better. (I think Vlad might have alphabetized them in a separate CL, watch out for conflicts.)",
+      "parentUuid": "c0caa599_a6cf33a4",
+      "revId": "5abcd70988cc9a301a80223b41557bb3356ee0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a9b07f_cc303110",
+        "filename": "ash/system/palette/palette_welcome_bubble_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:39:36Z",
+      "side": 1,
+      "message": "Do you need these because the Close() is async? Would CloseNow() work? Then you probably wouldn\u0027t need these (but I don\u0027t know if that messes up closing animations or not.)\n\nOr maybe stick with OnWindowClosing() instead of Destroying().\n\nIf you have to keep them, document why you need them.",
+      "revId": "5abcd70988cc9a301a80223b41557bb3356ee0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c3e0d0_204bd40c",
+        "filename": "ash/system/palette/palette_welcome_bubble_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:39:36Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you need this one.",
+      "revId": "5abcd70988cc9a301a80223b41557bb3356ee0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
