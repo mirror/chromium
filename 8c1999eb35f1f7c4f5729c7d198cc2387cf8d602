@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbcb0a3_2f40cb0b",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-10-12T01:41:01Z",
+      "side": 1,
+      "message": "nick@ to confirm: I don\u0027t think we can ever get a null web_contents here. The only reason why it would be null is if the RenderFrameHostDelegate is a InterstitialPageImpl, and I don\u0027t think a MediaPlayerRenderer would ever get created in that case (but are mojo services still exposed for frames owned by insterstitial pages?).",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f8ff11_5286b182",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-10-12T01:41:01Z",
+      "side": 1,
+      "message": "Assuming that WebContents is never null (above comment), you could call MediaPlayerRendererWebContentsObserver::FromWebContents(web_contents)-\u003eAddMediaPlayerRenderer(this) directly here",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07327bf6_6c0b6a6b",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-10-12T01:41:01Z",
+      "side": 1,
+      "message": "If you get the WCO by using MediaPlayerRendererWebContentsObserver::FromWebContents(web_contents) again here, you don\u0027t have to keep |web_contents_observer_| or MediaPlayerRenderer::OnWebContentsDestroyed() (because FromWebContents() will return nullptr if the WC has already been destroyed).",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71099716_c91dd7e1",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-10-12T01:41:01Z",
+      "side": 1,
+      "message": "I am not sure what the guidance is for std::set vs base::flat_set. Someone else to chime in?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
