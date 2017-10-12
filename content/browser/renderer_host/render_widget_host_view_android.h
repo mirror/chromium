@@ -57,6 +57,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class SyntheticGestureTargetConnector;
 class TextSuggestionHostAndroid;
 class TouchSelectionControllerClientManagerAndroid;
 class WebContentsAccessibilityAndroid;
@@ -165,8 +166,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void DidStopFlinging() override;
   void ShowDisambiguationPopup(const gfx::Rect& rect_pixels,
                                const SkBitmap& zoomed_bitmap) override;
-  std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
-      override;
+  void InjectSyntheticTouchEvent(const blink::WebTouchEvent& web_touch,
+                                 const ui::LatencyInfo& latency_info) override;
+  void InjectSyntheticMouseWheelEvent(
+      const blink::WebMouseWheelEvent& web_wheel,
+      const ui::LatencyInfo& latency_info) override;
+  void InjectSyntheticMouseEvent(const blink::WebMouseEvent& web_mouse,
+                                 const ui::LatencyInfo& latency_info) override;
   void OnDidNavigateMainFrameToNewPage() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
   viz::FrameSinkId GetFrameSinkId() override;
@@ -232,6 +238,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnSelectionEvent(ui::SelectionEventType event) override;
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override;
   void DidScroll() override;
+
+  // SyntheticGestureTarget implementation.
+  SyntheticGestureParams::GestureSourceType
+  GetDefaultSyntheticGestureSourceType() const override;
+  float GetTouchSlopInDips() const override;
+  float GetMinScalingSpanInDips() const override;
 
   // DelegatedFrameHostAndroid::Client implementation.
   void SetBeginFrameSource(viz::BeginFrameSource* begin_frame_source) override;
@@ -387,6 +399,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnFocusInternal();
   void LostFocusInternal();
 
+  SyntheticGestureTargetConnector* GetSyntheticGestureTargetConnector();
+
   // The model object.
   RenderWidgetHostImpl* host_;
 
@@ -483,6 +497,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   base::ObserverList<DestructionObserver> destruction_observers_;
 
   MouseWheelPhaseHandler mouse_wheel_phase_handler_;
+
+  std::unique_ptr<SyntheticGestureTargetConnector>
+      synthetic_gesture_target_connector_;
 
   base::WeakPtrFactory<RenderWidgetHostViewAndroid> weak_ptr_factory_;
 
