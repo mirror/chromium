@@ -35,6 +35,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/blob/BlobData.h"
 #include "platform/blob/BlobURL.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/URLSecurityOriginMap.h"
 #include "platform/wtf/Assertions.h"
@@ -44,11 +45,15 @@
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebBlobData.h"
 #include "public/platform/WebBlobRegistry.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebTraceLocation.h"
+
+using storage::mojom::blink::BlobRegistryPtr;
+using storage::mojom::blink::BlobURLHandlePtr;
 
 namespace blink {
 
@@ -70,6 +75,12 @@ static ThreadSpecific<BlobURLOriginMap>& OriginMap() {
   (void)cache;  // BlobOriginMap's constructor does the interesting work.
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<BlobURLOriginMap>, map, ());
+  return map;
+}
+
+typedef HashMap<String, BlobURLHandlePtr> BlobURLHandleMap;
+static ThreadSpecific<BlobURLHandleMap>& URLHandleMap() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<BlobURLHandleMap>, map, ());
   return map;
 }
 
@@ -105,12 +116,28 @@ void BlobRegistry::RegisterPublicBlobURL(SecurityOrigin* origin,
                                          const KURL& url,
                                          RefPtr<BlobDataHandle> handle) {
   SaveToOriginMap(origin, url);
-  GetBlobRegistry()->RegisterPublicBlobURL(url, handle->Uuid());
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    // TODO(mek): We should be using a more specific InterfaceProvider, but
+    // that requires a more invasive refactoring of BlobURLs. So for now just
+    // get the global InterfaceProvider for each request.
+    BlobRegistryPtr registry;
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        MakeRequest(&registry));
+    BlobURLHandlePtr url_handle;
+    registry->RegisterURL(handle->CloneBlobPtr(), url, &url_handle);
+    URLHandleMap()->insert(url.GetString(), std::move(url_handle));
+  } else {
+    GetBlobRegistry()->RegisterPublicBlobURL(url, handle->Uuid());
+  }
 }
 
 void BlobRegistry::RevokePublicBlobURL(const KURL& url) {
   RemoveFromOriginMap(url);
-  GetBlobRegistry()->RevokePublicBlobURL(url);
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    URLHandleMap()->erase(url.GetString());
+  } else {
+    GetBlobRegistry()->RevokePublicBlobURL(url);
+  }
 }
 
 BlobOriginMap::BlobOriginMap() {

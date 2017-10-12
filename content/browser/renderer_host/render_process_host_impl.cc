@@ -1711,9 +1711,11 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       GetID(), storage_partition_impl_->GetURLRequestContext(),
       storage_partition_impl_->GetFileSystemContext(),
       blob_storage_context.get()));
-  AddFilter(new BlobDispatcherHost(
-      GetID(), blob_storage_context,
-      base::WrapRefCounted(storage_partition_impl_->GetFileSystemContext())));
+  if (!features::IsMojoBlobsEnabled()) {
+    AddFilter(new BlobDispatcherHost(
+        GetID(), blob_storage_context,
+        base::WrapRefCounted(storage_partition_impl_->GetFileSystemContext())));
+  }
 #if defined(OS_MACOSX)
   AddFilter(new TextInputClientMessageFilter());
 #elif defined(OS_WIN)
