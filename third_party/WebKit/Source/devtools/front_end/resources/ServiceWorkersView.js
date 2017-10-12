@@ -199,8 +199,8 @@ Resources.ServiceWorkersView.Section = class {
     /** @type {?symbol} */
     this._fingerprint = null;
     this._pushNotificationDataSetting =
-        Common.settings.createLocalSetting('pushData', Common.UIString('Test push message from DevTools.'));
-    this._syncTagNameSetting = Common.settings.createLocalSetting('syncTagName', 'test-tag-from-devtools');
+        Common.settings.createLocalSetting('resources.sw.push-data', Common.UIString(''));
+    this._syncTagNameSetting = Common.settings.createLocalSetting('resources.sw.sync-tag-name', '');
 
     this._toolbar = section.createToolbar();
     this._toolbar.renderAsLinks();
