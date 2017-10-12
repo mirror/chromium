@@ -1,0 +1,21 @@
+<html>
+<body>
+<iframe></iframe>
+<script>
+  function getBoundingClientRectString(element) {
+     var rect = element.getBoundingClientRect();
+     return [rect.x, rect.y, rect.width, rect.height].join(',');
+  }
+
+  function sendBoundingClientRect(element) {
+    var rect = element.getBoundingClientRect();
+    window.domAutomationController.send(
+        [rect.x, rect.y, rect.width, rect.height].join(','));
+  }
+
+  function setMargin(element, left, top) {
+    element.style.margin = left + ' ' + top;
+  }
+</script>
+</body>
+</html>

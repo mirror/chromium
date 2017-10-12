@@ -26,6 +26,8 @@
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/pattern.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_timeouts.h"
@@ -1601,6 +1603,99 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     rwhv_nested->ProcessMouseWheelEvent(scroll_event, ui::LatencyInfo());
     scroll_observer->Wait();
   }
+}
+
+// This test verifies that scrolling an element to view will scroll its parent
+// frames when necessary.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ScrollElementIntoView) {
+  GURL url_domain_a(
+      embedded_test_server()->GetURL("a.com", "/bounding_rect_for_frame.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), url_domain_a));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+
+  GURL url_domain_b(
+      embedded_test_server()->GetURL("b.com", "/bounding_rect_for_frame.html"));
+  NavigateFrameToURL(root->child_at(0), url_domain_b);
+
+  GURL url_domain_c(embedded_test_server()->GetURL("c.com", "/title1.html"));
+  NavigateFrameToURL(root->child_at(0)->child_at(0), url_domain_c);
+
+  RenderFrameHost* main_frame = root->current_frame_host();
+  RenderFrameHost* child_frame_b = root->child_at(0)->current_frame_host();
+  RenderFrameHost* child_frame_c =
+      root->child_at(0)->child_at(0)->current_frame_host();
+
+  // Helper method to get the bounding client rect of an element.
+  auto get_bounds_for_element = [](RenderFrameHost* rfh,
+                                   const std::string& element) {
+    const std::string script =
+        base::StringPrintf("sendBoundingClientRect(%s)", element.c_str());
+    std::string result;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(rfh, script, &result));
+    std::vector<std::string> items = base::SplitString(
+        result, "\",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+    EXPECT_EQ(4U, items.size());
+    int left = 0, top = 0, width = 0, height = 0;
+    EXPECT_TRUE(base::StringToInt(items[0], &left));
+    EXPECT_TRUE(base::StringToInt(items[1], &top));
+    EXPECT_TRUE(base::StringToInt(items[2], &width));
+    EXPECT_TRUE(base::StringToInt(items[3], &height));
+    return gfx::Rect(left, top, width, height);
+
+  };
+
+  // Setup a margin for nested frames such that all frames are outside of their
+  // parents viewport.
+  gfx::Rect main_frame_body_bounds =
+      get_bounds_for_element(main_frame, "document.body");
+  int kIframeTop = main_frame_body_bounds.width() * 2 + 100;
+  int kIframeLeft = main_frame_body_bounds.height() * 2 + 100;
+  const std::string iframe_set_up_script =
+      base::StringPrintf("setMargin(document.querySelector('iframe'),%d, %d);",
+                         kIframeTop, kIframeLeft);
+
+  EXPECT_TRUE(ExecuteScript(main_frame, iframe_set_up_script));
+  gfx::Rect child_frame_b_bounds_before_scroll =
+      get_bounds_for_element(main_frame, "document.querySelector('iframe')");
+  EXPECT_GE(child_frame_b_bounds_before_scroll.x(), kIframeLeft);
+  EXPECT_GE(child_frame_b_bounds_before_scroll.y(), kIframeTop);
+
+  // Repeat the same for the nested OOPIF.
+  EXPECT_TRUE(ExecuteScript(child_frame_b, iframe_set_up_script));
+  gfx::Rect child_frame_c_bounds_before_scroll =
+      get_bounds_for_element(child_frame_b, "document.querySelector('iframe')");
+  EXPECT_GE(child_frame_c_bounds_before_scroll.x(), kIframeLeft);
+  EXPECT_GE(child_frame_c_bounds_before_scroll.y(), kIframeTop);
+
+  // Now scroll the inner most frame's body into view.
+  EXPECT_TRUE(ExecuteScript(child_frame_c, "document.body.scrollIntoView();"));
+
+  // Now wait until the bounds of the <iframe> in root frame changes.
+  gfx::Rect child_frame_b_bounds_after_scroll =
+      get_bounds_for_element(main_frame, "document.querySelector('iframe')");
+  while (child_frame_b_bounds_before_scroll ==
+         child_frame_b_bounds_after_scroll) {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
+    run_loop.Run();
+    child_frame_b_bounds_after_scroll =
+        get_bounds_for_element(main_frame, "document.querySelector('iframe')");
+  }
+
+  // Now verify that each <iframe>'s bounding rect's top-left point is within
+  // the viewport of parent.
+  EXPECT_LE(child_frame_b_bounds_after_scroll.origin().x(),
+            main_frame_body_bounds.width());
+  EXPECT_LE(child_frame_b_bounds_after_scroll.origin().y(),
+            main_frame_body_bounds.height());
+
+  gfx::Rect child_frame_c_bounds_after_scroll =
+      get_bounds_for_element(child_frame_b, "document.querySelector('iframe')");
+  EXPECT_LE(child_frame_c_bounds_after_scroll.origin().x(),
+            child_frame_b_bounds_after_scroll.width());
+  EXPECT_LE(child_frame_c_bounds_after_scroll.origin().y(),
+            child_frame_b_bounds_after_scroll.height());
 }
 
 #if defined(USE_AURA) || defined(OS_ANDROID)
