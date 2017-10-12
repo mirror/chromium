@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "683d10b7_e8671e0c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-12T13:53:21Z",
+      "side": 1,
+      "message": "Given our discussion about removals being more rare than mutations let\u0027s keep it as is for now.",
+      "parentUuid": "60f6a548_bd464ee6",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e3c4da5_ce0b2b16",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 20
