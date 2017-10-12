@@ -34,6 +34,41 @@
       "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732e4325_7f46892c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:17:39Z",
+      "side": 1,
+      "message": "Would it make sense to have `::UpdateDisplayType()` do this instead? Implementations of `UpdateDisplayType` could then call the base class implementation which will automatically call the overflow element code. WDYT?",
+      "parentUuid": "327a2bf8_91e5bc89",
+      "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b21423b_0181484c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:17:39Z",
+      "side": 1,
+      "message": "Should this be `override` and the base class method be virtual? (I realise that there are similar issues with `UpdateDisplayType`).",
+      "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
