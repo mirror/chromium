@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "1a131a1a_b3cdf6fa",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "That\u0027s right.",
+      "parentUuid": "a650d68e_7f5c75bd",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9052693a_77231b60",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 10
@@ -141,6 +165,30 @@
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d263376_c0dff1d4",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "9052693a_77231b60",
+      "range": {
+        "startLine": 899,
+        "startChar": 0,
+        "endLine": 900,
+        "endChar": 23
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "925570b7_cbefe06d",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "530b1126_4ec2fc56",
+      "range": {
+        "startLine": 1076,
+        "startChar": 4,
+        "endLine": 1076,
+        "endChar": 27
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc18979_4341a800",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 10
@@ -187,6 +259,30 @@
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb2cede_4c642ee6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "Comment applies to the if block and not to the dcheck . Moving it down.",
+      "parentUuid": "7cc18979_4341a800",
+      "range": {
+        "startLine": 409,
+        "startChar": 25,
+        "endLine": 409,
+        "endChar": 30
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "2e52c341_50f2cf53",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "For all waiting_for_read_ transactions we are always returning the async Read call via the IO callback. Not sure if I understand the concern here.",
+      "parentUuid": "d45b96a2_48e7911d",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ea77f7_4f2ca045",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 10
@@ -233,6 +353,30 @@
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20008621_1cdacdce",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T17:14:45Z",
+      "side": 1,
+      "message": "That was a bug . Fixed in a later patch.",
+      "parentUuid": "74ea77f7_4f2ca045",
+      "range": {
+        "startLine": 234,
+        "startChar": 50,
+        "endLine": 234,
+        "endChar": 53
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
