@@ -397,13 +397,7 @@ Sources.NavigatorView = class extends UI.VBox {
     if (!path.length) {
       if (target)
         return this._domainNode(uiSourceCode, project, target, frame, projectOrigin);
-      var fileSystemNode = this._rootNode.child(project.id());
-      if (!fileSystemNode) {
-        fileSystemNode = new Sources.NavigatorGroupTreeNode(
-            this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
-        this._rootNode.appendChild(fileSystemNode);
-      }
-      return fileSystemNode;
+      return this.fileSystemRootFolder(project);
     }
 
     var parentNode =
@@ -417,6 +411,21 @@ Sources.NavigatorView = class extends UI.VBox {
     this._subfolderNodes.set(folderId, folderNode);
     parentNode.appendChild(folderNode);
     return folderNode;
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   * @protected
+   * @return {!Sources.NavigatorTreeNode}
+   */
+  fileSystemRootFolder(project) {
+    var fileSystemNode = this._rootNode.child(project.id());
+    if (!fileSystemNode) {
+      fileSystemNode = new Sources.NavigatorGroupTreeNode(
+          this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
+      this._rootNode.appendChild(fileSystemNode);
+    }
+    return fileSystemNode;
   }
 
   /**
@@ -585,6 +594,10 @@ Sources.NavigatorView = class extends UI.VBox {
     while (node) {
       parentNode = node.parent;
       if (!parentNode || !node.isEmpty())
+        break;
+      var fileSystemProjectExists =
+          project.type() === Workspace.projectTypes.FileSystem && this._workspace.project(project.id());
+      if (parentNode === this._rootNode && fileSystemProjectExists)
         break;
       if (!(node instanceof Sources.NavigatorGroupTreeNode || node instanceof Sources.NavigatorFolderTreeNode))
         break;
