@@ -11,6 +11,7 @@
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
 #include "ui/aura/aura_export.h"
+#include "ui/aura/mus/window_tree_client.h"
 #include "ui/base/dragdrop/os_exchange_data_provider_factory.h"
 #include "ui/events/event_handler.h"
 #include "ui/events/event_target.h"
@@ -28,6 +29,7 @@ class ClientNativePixmapFactory;
 namespace ui {
 class ContextFactory;
 class ContextFactoryPrivate;
+class Gpu;
 class PlatformEventSource;
 }
 namespace aura {
@@ -41,7 +43,6 @@ class InputStateLookup;
 class MusMouseLocationUpdater;
 class Window;
 class WindowPort;
-class WindowTreeClient;
 class WindowTreeHost;
 
 // A singleton object that tracks general state within Aura.
@@ -113,6 +114,8 @@ class AURA_EXPORT Env : public ui::EventTarget,
   // See CreateInstance() for description.
   void SetWindowTreeClient(WindowTreeClient* window_tree_client);
   bool HasWindowTreeClient() const { return window_tree_client_ != nullptr; }
+
+  ui::Gpu* gpu() { return window_tree_client_->gpu(); }
 
  private:
   friend class test::EnvTestHelper;
