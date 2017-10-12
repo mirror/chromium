@@ -21,7 +21,7 @@ PrinterQuery::PrinterQuery(int render_process_id, int render_frame_id)
       is_print_dialog_box_shown_(false),
       cookie_(PrintSettings::NewCookie()),
       last_status_(PrintingContext::FAILED) {
-  DCHECK(base::MessageLoopForIO::IsCurrent());
+  //  DCHECK(base::MessageLoopForIO::IsCurrent());
 }
 
 PrinterQuery::~PrinterQuery() {

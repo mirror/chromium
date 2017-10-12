@@ -13,11 +13,13 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
 #include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
+#include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -71,8 +73,11 @@ void FetchCapabilities(std::unique_ptr<chromeos::Printer> printer,
 
 }  // namespace
 
-LocalPrinterHandlerChromeos::LocalPrinterHandlerChromeos(Profile* profile)
-    : printers_manager_(CupsPrintersManager::Create(profile)),
+LocalPrinterHandlerChromeos::LocalPrinterHandlerChromeos(
+    Profile* profile,
+    content::WebContents* preview_web_contents)
+    : preview_web_contents_(preview_web_contents),
+      printers_manager_(CupsPrintersManager::Create(profile)),
       printer_configurer_(chromeos::PrinterConfigurer::Create(profile)),
       weak_factory_(this) {
   // Construct the CupsPrintJobManager to listen for printing events.
@@ -200,4 +205,16 @@ void LocalPrinterHandlerChromeos::HandlePrinterSetup(
 
   // TODO(skau): Open printer settings if this is resolvable.
   cb.Run(nullptr);
+}
+
+void LocalPrinterHandlerChromeos::StartPrint(
+    const std::string& destination_id,
+    const std::string& capability,
+    const base::string16& job_title,
+    const std::string& ticket_json,
+    const gfx::Size& page_size,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    const PrintCallback& callback) {
+  printing::StartLocalPrint(callback, ticket_json, print_data,
+                            preview_web_contents_);
 }

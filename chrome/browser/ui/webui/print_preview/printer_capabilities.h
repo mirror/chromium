@@ -13,6 +13,10 @@
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "printing/backend/print_backend.h"
 
+namespace content {
+class WebContents;
+}
+
 namespace printing {
 
 struct PrinterBasicInfo;
@@ -35,6 +39,13 @@ void ConvertPrinterListForCallback(
     const PrinterHandler::AddedPrintersCallback& callback,
     const PrinterHandler::GetPrintersDoneCallback& done_callback,
     const printing::PrinterList& printer_list);
+
+// Starts a local print of |print_data| with print settings dictionary
+// |ticket_json|. Runs |callback| on failure or success.
+void StartLocalPrint(const PrinterHandler::PrintCallback& callback,
+                     const std::string& ticket_json,
+                     const scoped_refptr<base::RefCountedBytes>& print_data,
+                     content::WebContents* preview_web_contents);
 }  // namespace printing
 
 #endif  // CHROME_BROWSER_UI_WEBUI_PRINT_PREVIEW_PRINTER_CAPABILITIES_H_

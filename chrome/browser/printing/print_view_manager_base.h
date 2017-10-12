@@ -20,6 +20,10 @@
 
 struct PrintHostMsg_DidPrintPage_Params;
 
+namespace base {
+class RefCountedBytes;
+}
+
 namespace content {
 class RenderFrameHost;
 }
@@ -30,6 +34,7 @@ class JobEventDetails;
 class PrintJob;
 class PrintJobWorkerOwner;
 class PrintQueriesQueue;
+class PrinterQuery;
 
 // Base class for managing the print commands for a WebContents.
 class PrintViewManagerBase : public content::NotificationObserver,
@@ -44,6 +49,19 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // this function. Returns false if printing is impossible at the moment.
   virtual bool PrintNow(content::RenderFrameHost* rfh);
 #endif  // ENABLE_BASIC_PRINTING
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  void PrintForPrintPreview(
+      const base::Callback<void(bool success, const base::Value& error)>&
+          callback,
+      std::unique_ptr<base::DictionaryValue> job_settings,
+      int page_count,
+      const scoped_refptr<base::RefCountedBytes>& print_data,
+      content::RenderFrameHost* rfh,
+      content::RenderProcessHost* rph,
+      const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+          get_page_callback);
+#endif
 
   // Whether printing is enabled or not.
   void UpdatePrintingEnabled();
@@ -89,6 +107,27 @@ class PrintViewManagerBase : public content::NotificationObserver,
   void OnPrintingFailed(int cookie) override;
   void OnShowInvalidPrinterSettingsError();
 
+// Helpers for PrintForPrintPreview.
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  void OnPrintSettingsDone(
+      const base::Callback<void(bool success, const base::Value& error)>&
+          callback,
+      int page_count,
+      const scoped_refptr<base::RefCountedBytes>& print_data,
+      scoped_refptr<printing::PrinterQuery> printer_query,
+      const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+          get_page_callback);
+
+  void StartLocalPrintJob(
+      const base::Callback<void(bool success, const base::Value& error)>&
+          callback,
+      int page_count,
+      const scoped_refptr<base::RefCountedBytes>& print_data,
+      scoped_refptr<printing::PrinterQuery> printer_query,
+      const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+          get_page_callback);
+#endif
+
   // Processes a NOTIFY_PRINT_JOB_EVENT notification.
   void OnNotifyPrintJobEvent(const JobEventDetails& event_details);
 
@@ -96,6 +135,37 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // No-op if no print job is pending. Returns true if at least one page has
   // been requested to the renderer.
   bool RenderAllMissingPagesNow();
+
+  // Checks that synchronization is correct and a print query exists for
+  // |cookie|.
+  bool CheckCookie(int cookie);
+
+  // Whether the metafile handle must be valid.
+  bool MetafileMustBeValid();
+
+#if defined(OS_MACOSX)
+  // Callback that runs when the next page of print data has been obtained
+  // from the printer handler.
+  void OnGotPrintData(
+      const base::Callback<void(bool success, const base::Value& error)>&
+          callback,
+      const base::Callback<scoped_refptr<base::RefCountedBytes>(int page)>&
+          get_page_callback,
+      const std::vector<int>& page_nums,
+      int index,
+      scoped_refptr<printing::PrinterQuery> printer_query,
+      const gfx::Size& page_size,
+      const gfx::Rect& content_area,
+      const gfx::Point& offsets,
+      scoped_refptr<base::RefCountedBytes> print_data);
+#endif
+
+  bool PrintPage(int page_num,
+                 const gfx::Size& page_size,
+                 const gfx::Rect& content_area,
+                 const gfx::Point& offsets,
+                 const scoped_refptr<base::RefCountedBytes>& print_data,
+                 bool metafile_must_be_valid);
 
   // Quits the current message loop if these conditions hold true: a document is
   // loaded and is complete and waiting_for_pages_to_be_rendered_ is true. This
