@@ -60,6 +60,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/domain_reliability/clear_mode.h"
+#include "components/domain_reliability/context.h"
 #include "components/domain_reliability/monitor.h"
 #include "components/domain_reliability/service.h"
 #include "components/favicon/core/favicon_service.h"
@@ -448,6 +449,7 @@ class MockDomainReliabilityService : public DomainReliabilityService {
   ~MockDomainReliabilityService() override {}
 
   std::unique_ptr<DomainReliabilityMonitor> CreateMonitor(
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> network_task_runner)
       override {
     NOTREACHED();
