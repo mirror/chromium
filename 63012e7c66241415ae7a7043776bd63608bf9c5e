@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ebe851b_a0cd41a2",
+        "filename": "components/viz/common/frame_sinks/copy_output_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-10-12T18:08:37Z",
+      "side": 1,
+      "message": "I don\u0027t quite get this. In this example, originally left is 3 and right is 9. After downscaling left is 1 and right is 4. Isn\u0027t the width still 3?",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 68
+      },
+      "revId": "63012e7c66241415ae7a7043776bd63608bf9c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
