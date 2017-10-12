@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69983f8f_dc59d9cb",
+        "filename": "extensions/browser/value_store/testing_value_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T01:48:25Z",
+      "side": 1,
+      "message": "nit: auto settings \u003d std::make_unique\u003cbase::DictionaryValue\u003e();",
+      "revId": "7c6af7a931ad44836c21cc141936602db72ad45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e210497e_a27b82f3",
+        "filename": "extensions/browser/value_store/value_store.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T01:48:25Z",
+      "side": 1,
+      "message": "Do we need a copy constructor?",
+      "revId": "7c6af7a931ad44836c21cc141936602db72ad45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
