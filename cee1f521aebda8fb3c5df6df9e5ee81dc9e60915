@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be17afee_581547fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T11:45:20Z",
+      "side": 1,
+      "message": "nit: can you add a one line summary before the detailed description, maybe \"fix folder name editing\"",
+      "revId": "cee1f521aebda8fb3c5df6df9e5ee81dc9e60915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4d7759_16c6cea0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T11:45:20Z",
+      "side": 1,
+      "message": "Maybe reference 695749 (since you are removing a TODO with that bug #).",
+      "revId": "cee1f521aebda8fb3c5df6df9e5ee81dc9e60915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
