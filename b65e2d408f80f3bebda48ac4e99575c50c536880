@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "98f94696_fd9711e4",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:29:47Z",
+      "side": 1,
+      "message": "\u003e The client disconnect situation needs to be handled anyway, so why have an extra boolean?\n\nI prefer to not overload semantics, but if this is an existing pattern sg.",
+      "parentUuid": "ffb9e355_c5fdd346",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab025fd5_d7140deb",
         "filename": "ash/note_taking_controller.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9234549_1945f3a9",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:29:47Z",
+      "side": 1,
+      "message": "Ack, I wonder why.",
+      "parentUuid": "4cfc46db_8d7906dc",
+      "revId": "b65e2d408f80f3bebda48ac4e99575c50c536880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
