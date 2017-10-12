@@ -11,7 +11,14 @@
 #include "base/callback.h"
 #include "base/gtest_prod_util.h"
 
-using InstallableTask = std::pair<InstallableParams, InstallableCallback>;
+struct InstallableTask {
+  InstallableTask();
+  InstallableTask(const InstallableTask& other);
+  ~InstallableTask();
+
+  InstallableParams params;
+  InstallableCallback callback;
+};
 
 // InstallableTaskQueue keeps track of pending tasks.
 class InstallableTaskQueue {
