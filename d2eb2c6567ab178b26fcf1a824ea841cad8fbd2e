@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5380573a_490b70ee",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-12T03:00:21Z",
+      "side": 1,
+      "message": "Done, it was by mistake, thank you for finding this!",
+      "parentUuid": "2a41e89f_6653d5aa",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "d2eb2c6567ab178b26fcf1a824ea841cad8fbd2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95de8ed0_970285f3",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset_rect.h",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "d2eb2c6567ab178b26fcf1a824ea841cad8fbd2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f62108_05385f43",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_physical_offset_rect.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-12T03:00:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95de8ed0_970285f3",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "d2eb2c6567ab178b26fcf1a824ea841cad8fbd2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
