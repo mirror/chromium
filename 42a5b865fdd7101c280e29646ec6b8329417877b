@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8879082e_6ea1254e",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T01:04:02Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know it[1]. I\u0027ll fix this when I touch this file again.\n\n[1] https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Do-not-use-auto-to-deduce-a-raw-pointer",
+      "parentUuid": "18374756_00ac6de3",
+      "revId": "42a5b865fdd7101c280e29646ec6b8329417877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f77f2d9b_cf3c9efb",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerTest.cpp",
         "patchSetId": 8
