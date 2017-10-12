@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a34e17_b7d36b99",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-12T17:40:38Z",
+      "side": 1,
+      "message": "can this be combined with LogPreviewsEligibilityReason() above to avoid repeated duplicate calls below? It seems there should be no case where we want to log histogram data but not the data on UI service.\n\nMay be move the code from LogPreviewsEligibilityReason() to this method, and rm LogPreviewsEligibilityReason()?",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 44
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c65989f_dfb2c3da",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-12T17:40:38Z",
+      "side": 1,
+      "message": "Can we instead call ShouldAllowPreviewAtECT()?",
+      "range": {
+        "startLine": 555,
+        "startChar": 13,
+        "endLine": 555,
+        "endChar": 36
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d24112_00424acd",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-12T17:40:38Z",
+      "side": 1,
+      "message": "can we instead read log_messages() from the logger?",
+      "range": {
+        "startLine": 558,
+        "startChar": 12,
+        "endLine": 558,
+        "endChar": 18
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b60cc0_5618201b",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-12T17:40:38Z",
+      "side": 1,
+      "message": "Why is this not 5?",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
