@@ -34,6 +34,24 @@
       "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9953b620_619afaa5",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-12T04:50:53Z",
+      "side": 1,
+      "message": "I think we need to delay the decrement, since we trigger onload synchronously (which is a bug).\nI\u0027d like to wait for LayoutTest.",
+      "parentUuid": "a5128b0a_efbfaa57",
+      "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
