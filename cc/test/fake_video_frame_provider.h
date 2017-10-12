@@ -6,6 +6,7 @@
 #define CC_TEST_FAKE_VIDEO_FRAME_PROVIDER_H_
 
 #include "cc/layers/video_frame_provider.h"
+#include "media/base/fake_single_thread_task_runner.h"
 #include "media/base/video_frame.h"
 
 namespace cc {
@@ -22,6 +23,7 @@ class FakeVideoFrameProvider : public VideoFrameProvider {
   bool HasCurrentFrame() override;
   scoped_refptr<media::VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner() override;
 
   Client* client() { return client_; }
 
@@ -33,6 +35,7 @@ class FakeVideoFrameProvider : public VideoFrameProvider {
 
  private:
   scoped_refptr<media::VideoFrame> frame_;
+  scoped_refptr<media::FakeSingleThreadTaskRunner> task_runner_;
   Client* client_;
   int put_current_frame_count_;
 };
