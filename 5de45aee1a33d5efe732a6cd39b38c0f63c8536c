@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ce6276_31aa0117",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8248,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-12T18:50:13Z",
+      "side": 1,
+      "message": "Please put this in a namespace.  Something.Something.",
+      "revId": "5de45aee1a33d5efe732a6cd39b38c0f63c8536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb551f2_4376fd99",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8251,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-12T18:50:13Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\nPlease clearly state when this is recorded.  On page load?  When the image enters the viewport?  On all images or only images of certain types?  On first fetching the image from a remote server, or also images that are fetched from local cache?  etc.",
+      "revId": "5de45aee1a33d5efe732a6cd39b38c0f63c8536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a158ee_91b54a13",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 8252,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-12T18:50:13Z",
+      "side": 1,
+      "message": "I don\u0027t see a check in the code \"for a performance gain\".  How do you know that\u0027s true?  Or is it merely expected?  (And what kind of performance do you mean?  Latency?)  If it\u0027s merely expected, say so later like:  \"Checkerable images are very likely to be rendered faster.\"",
+      "revId": "5de45aee1a33d5efe732a6cd39b38c0f63c8536c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
