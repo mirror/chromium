@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbe1ec1b_02725612",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-12T05:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b96df8a_0f0db8b2",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "510183ec_d1ba974e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
         "patchSetId": 8
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "FWIW, there will be fewer buckets on the server this way, but I still partly agree: It\u0027s probably appropriate either to use a sparse histogram (recordSparseSlowlyHistogram) or to skip the rounding if using recordPercentageHistogram.",
       "parentUuid": "510183ec_d1ba974e",
+      "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3032d6_2c07aa2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-12T05:02:34Z",
+      "side": 1,
+      "message": "Skipping the rounding now.",
+      "parentUuid": "53c3c5b2_b9d6e74e",
       "revId": "6e01db2b4549db304dc2a6037cac5430c59dc0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

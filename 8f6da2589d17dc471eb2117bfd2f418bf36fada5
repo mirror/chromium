@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e2c0f4ba_b4ee8308",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-12T05:02:34Z",
+      "side": 1,
+      "message": "Other checks are gone, keeping early-return on zero denominator.",
+      "parentUuid": "936b42e6_7072f55b",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "8f6da2589d17dc471eb2117bfd2f418bf36fada5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8d0034d_c59ba9b9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
