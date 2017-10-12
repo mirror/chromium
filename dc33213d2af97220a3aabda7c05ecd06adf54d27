@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5f0e1f1e_46a533a2",
+        "filename": "content/common/sandbox_mac.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-12T01:33:31Z",
+      "side": 1,
+      "message": "Actually this is causing failure in the browser_test and content_unittest. Basically Widevine Resources.bundle is generated in chrome/, so the path doesn\u0027t exist in content/, and GetCanonicalSandboxPath() fails because of this. And I don\u0027t see a way to inject content-embedder-specific rules in the mac sandbox.\n\nI noticed that in renderer_v2.sb we are allowing renderer process to read all content of the bundle (kSandboxBundlePath), would it make sense to allow the CDM process to read the bundle content as well?\nhttps://cs.chromium.org/chromium/src/services/service_manager/sandbox/mac/renderer_v2.sb?rcl\u003de2923d5a10c0234c2eea99db7553b114b0f0cd34\u0026l\u003d67",
+      "parentUuid": "e074b5ac_77b0e9a3",
+      "revId": "dc33213d2af97220a3aabda7c05ecd06adf54d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06c6d36_5819f4d4",
         "filename": "content/zygote/zygote_main_linux.cc",
         "patchSetId": 21
