@@ -54,6 +54,7 @@ class CastMediaSinkServiceImpl
   // MediaSinkService implementation
   void Start() override;
   void Stop() override;
+  void OnUserGesture() override;
 
   // MediaSinkServiceBase implementation
   // Called when the discovery loop timer expires.

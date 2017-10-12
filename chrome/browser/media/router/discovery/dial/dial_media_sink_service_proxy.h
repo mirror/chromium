@@ -51,6 +51,9 @@ class DialMediaSinkServiceProxy
   // Start() is cleared.
   void Stop() override;
 
+  // MediaSinkService implementation.
+  void OnUserGesture() override;
+
   // Does not take ownership of |observer|. Caller should make sure |observer|
   // object outlives |this|.
   void SetObserver(DialMediaSinkServiceObserver* observer);
@@ -75,6 +78,8 @@ class DialMediaSinkServiceProxy
 
   // Stops DIAL discovery.
   void StopOnIOThread();
+
+  void OnUserGestureOnIOThread();
 
   // Callback passed to |dial_media_sink_service_| ctor. When invoked, post task
   // to UI thread and invoke |sink_discovery_callback_|.

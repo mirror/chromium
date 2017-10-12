@@ -155,14 +155,7 @@ void CastMediaSinkService::Stop() {
   cast_media_sink_service_impl_.reset();
 }
 
-void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
-  DCHECK(!dns_sd_registry_);
-  dns_sd_registry_ = registry;
-  dns_sd_registry_->AddObserver(this);
-  dns_sd_registry_->RegisterDnsSdListener(kCastServiceType);
-}
-
-void CastMediaSinkService::ForceDiscovery() {
+void CastMediaSinkService::OnUserGesture() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (dns_sd_registry_)
     dns_sd_registry_->ForceDiscovery();
@@ -170,11 +163,18 @@ void CastMediaSinkService::ForceDiscovery() {
   if (!cast_media_sink_service_impl_)
     return;
 
-  DVLOG(2) << "ForceDiscovery on " << cast_sinks_.size() << " sinks";
+  DVLOG(2) << "AttemptConnection on " << cast_sinks_.size() << " devices";
   task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&CastMediaSinkServiceImpl::AttemptConnection,
                      cast_media_sink_service_impl_->AsWeakPtr(), cast_sinks_));
+}
+
+void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
+  DCHECK(!dns_sd_registry_);
+  dns_sd_registry_ = registry;
+  dns_sd_registry_->AddObserver(this);
+  dns_sd_registry_->RegisterDnsSdListener(kCastServiceType);
 }
 
 void CastMediaSinkService::OnDnsSdEvent(
@@ -196,7 +196,7 @@ void CastMediaSinkService::OnDnsSdEvent(
       continue;
     }
 
-    cast_sinks_.push_back(std::move(cast_sink));
+    cast_sinks_.push_back(cast_sink);
   }
 
   task_runner_->PostTask(

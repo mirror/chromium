@@ -245,6 +245,11 @@ void CastMediaSinkServiceImpl::Stop() {
   MediaSinkServiceBase::StopTimer();
 }
 
+void CastMediaSinkServiceImpl::OnUserGesture() {
+  // |CastMediaSinkservice::OnUserGesture()| calls |AttemptConnection()|
+  // instead.
+}
+
 void CastMediaSinkServiceImpl::OnFetchCompleted() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   current_sinks_.clear();

@@ -39,6 +39,15 @@ void DialMediaSinkServiceProxy::Stop() {
       base::BindOnce(&DialMediaSinkServiceProxy::StopOnIOThread, this));
 }
 
+void DialMediaSinkServiceProxy::OnUserGesture() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DialMediaSinkServiceProxy::OnUserGestureOnIOThread,
+                     this));
+}
+
 void DialMediaSinkServiceProxy::SetObserver(
     DialMediaSinkServiceObserver* observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -79,6 +88,11 @@ void DialMediaSinkServiceProxy::StopOnIOThread() {
   dial_media_sink_service_->Stop();
   dial_media_sink_service_->ClearObserver(observer_);
   dial_media_sink_service_.reset();
+}
+
+void DialMediaSinkServiceProxy::OnUserGestureOnIOThread() {
+  if (dial_media_sink_service_)
+    dial_media_sink_service_->OnUserGesture();
 }
 
 void DialMediaSinkServiceProxy::OnSinksDiscoveredOnIOThread(
