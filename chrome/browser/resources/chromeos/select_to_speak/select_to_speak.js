@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 var AutomationEvent = chrome.automation.AutomationEvent;
-var AutomationNode = chrome.automation.AutomationNode;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
 
@@ -170,6 +169,9 @@ var SelectToSpeak = function() {
   /** @private { ?AutomationNode } */
   this.currentNode_ = null;
 
+  /** @private { number } */
+  this.currentParagraphNodeIndex_ = -1;
+
   /**
    * The interval ID from a call to setInterval, which is set whenever
    * speech is in progress.
@@ -190,6 +192,9 @@ SelectToSpeak.CONTROL_KEY_CODE = 17;
 
 /** @const {number} */
 SelectToSpeak.NODE_STATE_TEST_INTERVAL_MS = 1000;
+
+/** @const {boolean} */
+SelectToSpeak.VERBOSE_LOGGING = false;
 
 SelectToSpeak.prototype = {
   /**
@@ -437,26 +442,52 @@ SelectToSpeak.prototype = {
         this.testCurrentNode_.bind(this),
         SelectToSpeak.NODE_STATE_TEST_INTERVAL_MS);
     for (var i = 0; i < nodes.length; i++) {
-      var node = nodes[i];
-      var isLast = (i == nodes.length - 1);
+      let node = nodes[i];
+      let textToSpeak = '';
+      let paragraph = null;
+      // If we have a paragraph with more than 1 node, construct it into
+      // something that isn't broken up.
+      if (inSameParagraph(node, nodes[i + 1])) {
+        // Process the whole paragraph as a group.
+        paragraph = buildParagraph(nodes, i);
+        i = paragraph.endIndex;
+        textToSpeak = paragraph.text;
+      } else {
+        textToSpeak = node.name;
+      }
+      let isLast = (i == nodes.length - 1);
 
-      var options = {
+      let options = {
         rate: this.speechRate_,
         'enqueue': true,
         onEvent:
-            (function(node, isLast, event) {
+            (function(node, isLast, paragraph, event) {
               if (event.type == 'start') {
                 this.currentNode_ = node;
                 this.testCurrentNode_();
+                this.currentParagraphNodeIndex_ = 0;
               } else if (
                   event.type == 'interrupted' || event.type == 'cancelled') {
                 this.clearFocusRingAndNode_();
               } else if (event.type == 'end') {
                 if (isLast) {
                   this.clearFocusRingAndNode_();
+                  this.currentParagraphNodeIndex_ = -1;
+                }
+              } else if (event.type == 'word' && paragraph != null) {
+                let next = paragraph.nodes[this.currentParagraphNodeIndex_ + 1];
+                // Check if we've reached this next node yet using the character
+                // index of the event. Add 1 for the space character between
+                // words, and another to make it to the start of the next node
+                // name.
+                if (next != null && event.charIndex + 2 >= next.startChar) {
+                  // Highlight the next node.
+                  this.currentParagraphNodeIndex_ += 1;
+                  this.currentNode_ = next.node;
+                  this.testCurrentNode_();
                 }
               }
-            }).bind(this, node, isLast)
+            }).bind(this, node, isLast, paragraph)
       };
 
       // Pick the voice name from prefs first, or the one that matches
@@ -464,15 +495,19 @@ SelectToSpeak.prototype = {
       // loaded. If no voices are found, leave the voiceName option
       // unset to let the browser try to route the speech request
       // anyway if possible.
-      console.log('Pref: ' + this.voiceNameFromPrefs_);
-      console.log('Locale: ' + this.voiceNameFromLocale_);
+      if (SelectToSpeak.VERBOSE_LOGGING) {
+        console.log('Pref: ' + this.voiceNameFromPrefs_);
+        console.log('Locale: ' + this.voiceNameFromLocale_);
+      }
       var valid = '';
       this.validVoiceNames_.forEach(function(voiceName) {
         if (valid)
           valid += ',';
         valid += voiceName;
       });
-      console.log('Valid: ' + valid);
+      if (SelectToSpeak.VERBOSE_LOGGING) {
+        console.log('Valid: ' + valid);
+      }
       if (this.voiceNameFromPrefs_ &&
           this.validVoiceNames_.has(this.voiceNameFromPrefs_)) {
         options['voiceName'] = this.voiceNameFromPrefs_;
@@ -482,7 +517,7 @@ SelectToSpeak.prototype = {
         options['voiceName'] = this.voiceNameFromLocale_;
       }
 
-      chrome.tts.speak(node.name || '', options);
+      chrome.tts.speak(textToSpeak || '', options);
     }
   },
 
@@ -526,7 +561,9 @@ SelectToSpeak.prototype = {
 
     chrome.tts.getVoices(
         (function(voices) {
-          console.log('updateDefaultVoice_ voices: ' + voices.length);
+          if (SelectToSpeak.VERBOSE_LOGGING) {
+            console.log('updateDefaultVoice_ voices: ' + voices.length);
+          }
           this.validVoiceNames_ = new Set();
 
           if (voices.length == 0)
