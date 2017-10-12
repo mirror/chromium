@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83609e06_cc589521",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-10-12T18:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0929938_b2e3a285",
+      "revId": "262d5ffabf2081959c56f889495c0e42720c8211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "017e18e8_6b8c18b2",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 2

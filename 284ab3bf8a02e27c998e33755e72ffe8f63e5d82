@@ -16,6 +16,24 @@
       "revId": "284ab3bf8a02e27c998e33755e72ffe8f63e5d82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf37ffd1_70040682",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-10-12T18:04:12Z",
+      "side": 1,
+      "message": "Well, iframe2 does not show in the output at all if the missing items are cleared on load stop. In the beginning it is present in the first NavigationEntry (as without the CL), but is removed after finishing the back navigation. If I remove the \"clear missing items on load stop\" part, iframe2 is inevitably present in both NavigationEntries, but the rest of tested conditions hold true, i.e. same-document navigations still take place and iframe2 is not re-added to DOM and/or frame tree.\n\nAs for RendererDidNavigateNewSubframe, I managed to create a test that reproduces a similar (buggy) behavior using that path. So yes, it looks like in this case we should keep all entries as well.",
+      "parentUuid": "68bd033a_cde612b5",
+      "revId": "284ab3bf8a02e27c998e33755e72ffe8f63e5d82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
