@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de9e7040_6f39d2eb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T10:18:32Z",
+      "side": 1,
+      "message": "Sounds good, although I have had to add an overload to SetIsWanted to pass the was_dismissed state.",
+      "parentUuid": "20f4b64d_bfd945a5",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "382a7608_b36723ff",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a58087fe_c958542b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T10:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382a7608_b36723ff",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaaa815b_48ec2700",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24946798_94d27f18",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T10:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaaa815b_48ec2700",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
