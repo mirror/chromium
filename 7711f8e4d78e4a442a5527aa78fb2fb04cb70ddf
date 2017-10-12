@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e8c0f6b7_9da4f749",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-12T20:18:36Z",
+      "side": 1,
+      "message": "Protected buffers implemented in software like this only makes sense on Chrome OS (ozone DRM) where we have full control of the OS. On platforms such as Linux, Android, Windows or MacOS we would have to rely on a protected buffer mechanism that is provided by the platform and is likely HW assisted. I don\u0027t see how any of the software protected buffer logic that this CL implements will make sense there.\n\nAlso, it\u0027s standard policy in chromium to not generalize and create unnecessary abstractions until needed. If the day comes when we need to support protected buffers on other platforms then we can look at how to support that.\n\nI made a copy of this CL (https://chromium-review.googlesource.com/c/chromium/src/+/716958) and uploaded some changes that would remove the use of GMB in an attempt to provide a more concrete example. See diff between patch set 1 and 4. It doesn\u0027t have to be done exactly like that of course and gpu process init order might be wrong but it should give you an idea of what I\u0027m thinking. It would be really nice to take that one step further and move it all into ozone-DRM where I think it belongs but depending on how urgent it is to land this that might too much work.",
+      "parentUuid": "d4d31c81_bcd44a47",
+      "revId": "7711f8e4d78e4a442a5527aa78fb2fb04cb70ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b09dd482_659e8d60",
         "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
         "patchSetId": 6
