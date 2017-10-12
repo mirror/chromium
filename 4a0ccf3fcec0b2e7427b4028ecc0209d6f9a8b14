@@ -46,6 +46,30 @@
       "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387a9944_e7f23d87",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T22:00:37Z",
+      "side": 1,
+      "message": "It makes the test case less contained, as you need to know gmock, as opposed to just C++ and gtest.  Gmock may be well documented (Though I\u0027d disagree), but the syntax is far from straightforward, and tests are much more difficult to debug when half the logic is buried in gmock.\n\nMoreover, it adds a significant burden to starting hacking on Chrome.",
+      "parentUuid": "ca79ae6c_c6899f3f",
+      "range": {
+        "startLine": 802,
+        "startChar": 6,
+        "endLine": 802,
+        "endChar": 19
+      },
+      "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
