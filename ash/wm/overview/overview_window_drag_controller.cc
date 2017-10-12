@@ -57,7 +57,7 @@ void OverviewWindowDragController::InitiateDrag(
   item_ = item;
 
   window_selector_->SetSplitViewOverviewOverlayIndicatorType(
-      wm::GetWindowState(item_->GetWindow())->CanSnap()
+      split_view_controller_->CanSnap(item->GetWindow())
           ? IndicatorType::DRAG_AREA
           : IndicatorType::CANNOT_SNAP,
       location_in_screen);
@@ -104,10 +104,12 @@ void OverviewWindowDragController::CompleteDrag(
     SplitViewController::State split_state = split_view_controller_->state();
     if (split_state == SplitViewController::NO_SNAP) {
       window_selector_->SelectWindow(item_);
-    } else {
+    } else if (split_view_controller_->CanSnap(item_->GetWindow())) {
       SnapWindow(split_state == SplitViewController::LEFT_SNAPPED
                      ? SplitViewController::RIGHT
                      : SplitViewController::LEFT);
+    } else {
+      window_selector_->PositionWindows(false /* animate */);
     }
   } else {
     did_move_ = false;
@@ -128,8 +130,11 @@ void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
     const gfx::Point& location_in_screen) {
   // Attempt to show phantom window and move window grid only if the window is
   // snappable.
-  if (!SplitViewController::CanSnap(item_->GetWindow()))
+  if (!split_view_controller_->CanSnap(item_->GetWindow())) {
+    snap_position_ = SplitViewController::NONE;
+    phantom_window_controller_.reset();
     return;
+  }
 
   SplitViewController::SnapPosition last_snap_position = snap_position_;
   snap_position_ = GetSnapPosition(location_in_screen);
@@ -148,14 +153,6 @@ void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
     phantom_window_controller_.reset();
     if (snap_position_ == SplitViewController::NONE)
       return;
-  }
-
-  const bool can_snap = snap_position_ != SplitViewController::NONE &&
-                        wm::GetWindowState(item_->GetWindow())->CanSnap();
-  if (!can_snap) {
-    snap_position_ = SplitViewController::NONE;
-    phantom_window_controller_.reset();
-    return;
   }
 
   aura::Window* target_window = item_->GetWindow();
