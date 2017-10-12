@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6677dea7_b200e409",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "This is fine for 63. I worry, though, that it\u0027s going to hide failures in subresources/widgets from developers. Like, say Disqus was using these kinds of certs; it would be unfortunate if developers only found out there was a problem when they visited `disqus.com`, which I imagine no one does. :)\n\nThat\u0027s an argument for a more robust implementation as part of the security panel or something (as I can imagine that this isn\u0027t the last time we\u0027ll be warning about this kind of thing), but it\u0027s not a reason to skip this short-term solution.",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6b0afb_9bbbdab6",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest making this a `String`, and doing the WebString conversion when passing it into `AddConsoleMessage` at the bottom.",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a18d48_1dbf1d7f",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "s/warinngs/warnings/",
+      "range": {
+        "startLine": 715,
+        "startChar": 62,
+        "endLine": 715,
+        "endChar": 70
+      },
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef843188_4d925b19",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "Did you consider sending one message per resource origin instead? You could hold a hash map or something of origin strings, and comparing against that rather than locking yourself to 5 messages total, each of which is probably from the same host.\n\nThat is, the message could be along the lines of \"The server at [origin] presented a certificate which will be distrusted in the future. Once distrusted, users will be prevented from loading resources like [url]. For more information, see ...\".",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac66c9f2_765a58a1",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest shifting this to use `String::Format` to insert the URL rather than concating twice. Not a big deal, but a nicer pattern.",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca63bfe_a7bbed71",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T11:05:03Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure what the lifetime is here. I think it\u0027s tied to the frame, so you should be safe. If the tests pass, you\u0027re golden. ;)",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
