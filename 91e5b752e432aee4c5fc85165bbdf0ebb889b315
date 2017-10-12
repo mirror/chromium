@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f4b64d_bfd945a5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:26:55Z",
+      "side": 1,
+      "message": "Would it work to have something like this is `SetIsWanted` for the overflow menu:\n\n```\nif (wanted) {\n  time_shown_ \u003d Time::Now();\n} else if (time_shown_) {\n  MaybeRecordTimeTaken(kTimeToDismiss);\n}\n```\n\nIt sounds that we could simplify the logic here and avoid missing some edge cases. WDYT?",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382a7608_b36723ff",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:26:55Z",
+      "side": 1,
+      "message": "Should this be called GetOverflowElementForTests() because it\u0027s only used in tests?",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaaa815b_48ec2700",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:26:55Z",
+      "side": 1,
+      "message": "Should you add `final` here?",
+      "revId": "91e5b752e432aee4c5fc85165bbdf0ebb889b315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
