@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f34c7e0_1429658b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-12T02:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdff56e_8f9c5b94",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a678019_fb5019cd",
         "filename": "chrome/browser/media/router/discovery/media_sink_service_base.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa637e59_b5d936e6",
+        "filename": "chrome/browser/media/router/discovery/media_sink_service_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-12T02:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a678019_fb5019cd",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9888d7a_2fe4927f",
+        "filename": "chrome/browser/media/router/discovery/media_sink_service_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-12T02:34:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777b018b_f35c2748",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959e1bfe_d575b0c8",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T00:53:17Z",
       "side": 1,
       "message": "Seems ProvideSinks should be in MediaRouterDesktop, and also not part of MediaRouter interface?",
+      "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3634057_28084d5c",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-12T02:34:48Z",
+      "side": 1,
+      "message": "Will do it in a separate patch.",
+      "parentUuid": "959e1bfe_d575b0c8",
       "revId": "f780d20b5f3bd671bf71caadb5c55d223e74c826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
