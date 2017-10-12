@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d49b5a78_7fbee3ea",
+        "filename": "components/viz/common/quads/surface_draw_quad.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-12T22:36:24Z",
+      "side": 1,
+      "message": "nit: add copy-assign operator (rule-of-3)",
+      "revId": "e888b4effa0c5febfc35c5507491862b182e984d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812500af_d34cc8b3",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-12T22:36:24Z",
+      "side": 1,
+      "message": "Does this work on a DSF transition? E.g. tab moved from monitor with DSF\u003d2 to other monitor with DSF\u003d1. Old (fallback) surface is 200x200 in pixels, or 100x100 in DIP. UI resized tab (i.e. surface quad) to 100x100 DIP/pixels. If we need to fallback, we would want to scale down the fallback surface.\nSo I think we need to do this logic in DIP (or in physical pixels after rescaling the fallback).",
+      "revId": "e888b4effa0c5febfc35c5507491862b182e984d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
