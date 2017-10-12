@@ -29,9 +29,12 @@ enum class PreviewsType {
   // AMP version of the page is shown as a preview.
   AMP_REDIRECTION = 4,
 
+  // Preview that disables JavaScript for the navigation.
+  NOSCRIPT = 5,
+
   // Insert new enum values here. Keep values sequential to allow looping from
   // NONE+1 to LAST-1. Also add the enum to Previews.Types histogram suffix.
-  LAST = 5,
+  LAST = 6,
 };
 
 typedef std::vector<std::pair<PreviewsType, int>> PreviewsTypeList;
@@ -100,6 +103,10 @@ std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial();
 bool IsAMPRedirectionPreviewEnabled();
 
 int AMPRedirectionPreviewsVersion();
+
+bool IsNoScriptPreviewsEnabled();
+
+int NoScriptPreviewsVersion();
 
 }  // namespace params
 
