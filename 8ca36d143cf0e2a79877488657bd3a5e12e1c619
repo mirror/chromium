@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7901a64_d263a574",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T17:04:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ef2fea_8e528c5b",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77265506_e548d020",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3b1df5_99df31cd",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T17:04:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77265506_e548d020",
+      "range": {
+        "startLine": 134,
+        "startChar": 10,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8fcc2bb_531575e1",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T17:04:15Z",
+      "side": 1,
+      "message": "Oops.... I guess I needed another coffee.",
+      "parentUuid": "d4641e16_ab3e3e5c",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 29
+      },
+      "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d51acb_e0f663a0",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c93f6395_abc46493",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T17:04:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d51acb_e0f663a0",
+      "range": {
+        "startLine": 611,
+        "startChar": 23,
+        "endLine": 611,
+        "endChar": 29
+      },
+      "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5165a86_ba4b93f1",
         "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515a8eae_4ca718b1",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T17:04:15Z",
+      "side": 1,
+      "message": "ACK. Discussed in person.\nGetSafeBrowsingPreferencesList() is more for boolean type of preferences.",
+      "parentUuid": "a5165a86_ba4b93f1",
+      "range": {
+        "startLine": 160,
+        "startChar": 11,
+        "endLine": 160,
+        "endChar": 54
+      },
+      "revId": "8ca36d143cf0e2a79877488657bd3a5e12e1c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
