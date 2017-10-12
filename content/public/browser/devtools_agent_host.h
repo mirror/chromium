@@ -120,6 +120,9 @@ class CONTENT_EXPORT DevToolsAgentHost
   // Stops remote debugging.
   static void StopRemoteDebuggingServer();
 
+  // Starts remote debugging for browser target for the given pipe |handle|.
+  static void StartRemoteDebuggingPipeHandler(int handle);
+
   // Observer is notified about changes in DevToolsAgentHosts.
   static void AddObserver(DevToolsAgentHostObserver*);
   static void RemoveObserver(DevToolsAgentHostObserver*);
