@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec652c99_4dba59aa",
+        "filename": "services/device/public/interfaces/public_ip_address_geolocator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-12T19:55:47Z",
+      "side": 1,
+      "message": "Hmm, I am a little wary of defining a different interface which looks just like the existing Geolocation interface. Perhaps we could instead expect clients to acquire the IP-based Geolocation interface from a different provider (i.e. not GeolocationService).\n\n  interface PublicIpGeolocationProvider {\n    GetGeolocation(Geolocation\u0026 request);\n  };\n\nThat way we can still hide PublicIpGeolocationProvider behind its own special manifest capability (encouraging more careful review), but general-purpose client code doesn\u0027t need to change based on what type of Geolocation impl is on the other end. WDYT?",
+      "revId": "19089bb9575608e358f9452b52a2fb791a94a8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
