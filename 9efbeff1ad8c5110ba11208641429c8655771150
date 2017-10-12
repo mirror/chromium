@@ -279,6 +279,30 @@
     },
     {
       "key": {
+        "uuid": "b5d28d5f_460961f7",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-12T00:16:16Z",
+      "side": 1,
+      "message": "i\u0027m okay with keeping it like this.",
+      "parentUuid": "7b0a38e8_b496af83",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 42
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad83ab6_e364238a",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 1
