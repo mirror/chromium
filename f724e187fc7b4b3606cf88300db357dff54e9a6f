@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "24f0dfa7_2ffb0ec8",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Good naming idea, done.\n\nRe shutdown, recording the number of OnSessionStopped(SHUTDOWN) calls is trivial, but as you know, on shutdown, we call OnSessionStopped(SHUTDOWN) synchronously without waiting for the dbus reply. So I\u0027m not really sure counting OnSessionStopped(SHUTDOWN) calls makes sense. For now, I\u0027d just focus on crash events.",
+      "parentUuid": "0088bbce_0d5c6234",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7231814_338dfbcf",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -102,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "40f83ca4_67dfd0f0",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Switched to Container and added some comments. Done.",
+      "parentUuid": "37205217_23a94675",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "813d78e2_3b2bec0d",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -116,6 +158,24 @@
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5a15b9_78263094",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813d78e2_3b2bec0d",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "e91a2ce7_cb94c9e6",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3269229_cf3dbfaf",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c40364e_46b46857",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -186,6 +264,24 @@
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d3c7b5_49e56654",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c40364e_46b46857",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +317,42 @@
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdb205a_bed501e0",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "It is called always. On shutdown, this function is called without waiting for the D-Bus reply.",
+      "parentUuid": "b08e9bb4_78d4d9de",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef47fd3_3eee0c31",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T21:41:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58a8faf9_b6dd3e26",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
