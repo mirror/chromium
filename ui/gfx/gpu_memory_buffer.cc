@@ -4,6 +4,7 @@
 
 #include "ui/gfx/gpu_memory_buffer.h"
 
+#include "base/files/scoped_file.h"
 #include "ui/gfx/generic_shared_memory_id.h"
 
 namespace gfx {
