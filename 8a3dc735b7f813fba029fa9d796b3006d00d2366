@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c547fe6_122f84c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426482ff_ed54606c",
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30e7b6b3_b77598a5",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "37ad3c28_ef4f7d6f",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30e7b6b3_b77598a5",
+      "range": {
+        "startLine": 761,
+        "startChar": 43,
+        "endLine": 761,
+        "endChar": 51
+      },
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f97834_8a547feb",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-12T02:33:50Z",
       "side": 1,
       "message": "Drop \"Before\"?",
+      "range": {
+        "startLine": 765,
+        "startChar": 25,
+        "endLine": 765,
+        "endChar": 31
+      },
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df833ef_2690e3fc",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Yes sorry. I was happy to find a way to reproduce the issue and I uploaded this change a bit quickly before leaving the office.",
+      "parentUuid": "46f97834_8a547feb",
       "range": {
         "startLine": 765,
         "startChar": 25,
@@ -128,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5ef37de8_4cea15ff",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Yes, issue 773683 is a way to reproduce issue 769645. I hope too that it will be fixed. I don\u0027t think we want to maintain this behavior.",
+      "parentUuid": "1b60420e_9d0eab10",
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d823ed66_a99fc0bb",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4
@@ -151,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "e40a250b_0189a8a9",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d823ed66_a99fc0bb",
+      "range": {
+        "startLine": 821,
+        "startChar": 37,
+        "endLine": 821,
+        "endChar": 43
+      },
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b00208e7_a243aae7",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4
@@ -171,6 +279,30 @@
       "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fe52d9_57cde547",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-12T10:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00208e7_a243aae7",
+      "range": {
+        "startLine": 824,
+        "startChar": 16,
+        "endLine": 824,
+        "endChar": 20
+      },
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
