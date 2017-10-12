@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61acf20a_c695240d",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:33:07Z",
+      "side": 1,
+      "message": "I meant put this in ash/public/cpp/ash_switches.h -- it\u0027s a UI feature. And switch chrome/browser/chromeos/login/lock/screen_locker.cc to use it too.",
+      "revId": "a836db364f7c16e45a1cbec150db60b3c5b981c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
