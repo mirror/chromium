@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a667786a_daaeb7b2",
+        "filename": "chrome/common/extensions/api/_manifest_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "We shouldn\u0027t launch this to stable just yet. :) let\u0027s restrict it to trunk while in development.",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c64b5ad_fd4dc9d1",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "not 2012 :)",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c18a436_1e25cbd3",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "It\u0027d be nice to avoid the duplication here.  For now, could we have this reference browserAction.ColorArray?",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698ccefd_f108e1ee",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c12e51_d2c63ef7",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "I assume this is predominantly copy-paste from browser_action.json?",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764da30f_8c3660b0",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "This and disable don\u0027t make it clear that this could apply either to a tab or to the action as a whole.",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4c1bba_6c464352",
+        "filename": "chrome/common/extensions/api/extension_action.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "This isn\u0027t a public API on browserAction.  For now, let\u0027s go ahead and omit this.",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5163cdd_cff522a9",
+        "filename": "chrome/common/extensions/manifest_handlers/extension_action_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "This won\u0027t handle new keys to extension actions, like the default state.",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a6be4f_21093eae",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1848,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T14:35:11Z",
+      "side": 1,
+      "message": "File missing?",
+      "revId": "feeada47515d9b07e06ae1299f848dc30cef6e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
