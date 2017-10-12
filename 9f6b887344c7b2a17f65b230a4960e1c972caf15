@@ -16,6 +16,24 @@
       "revId": "9f6b887344c7b2a17f65b230a4960e1c972caf15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc00f00_9765a784",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-12T17:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc3b347_9e60294a",
+      "revId": "9f6b887344c7b2a17f65b230a4960e1c972caf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
