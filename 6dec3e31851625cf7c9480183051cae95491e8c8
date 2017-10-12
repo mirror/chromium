@@ -298,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "a9e59b56_96d57146",
+        "filename": "components/ntp_tiles/metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-12T13:58:01Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestions.",
+      "parentUuid": "2d85d2c9_3a2ea1d5",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6dec3e31851625cf7c9480183051cae95491e8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63340335_9e94746e",
         "filename": "components/ntp_tiles/metrics.cc",
         "patchSetId": 8
