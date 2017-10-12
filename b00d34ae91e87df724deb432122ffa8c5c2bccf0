@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e6bfe3_44f8f965",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-12T23:12:05Z",
+      "side": 1,
+      "message": "nit: Can you put brackets around here to show the BODMAS order of operations?",
+      "revId": "b00d34ae91e87df724deb432122ffa8c5c2bccf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
