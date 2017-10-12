@@ -152,10 +152,11 @@ size_t GIFImageDecoder::ClearCacheExceptFrame(size_t index) {
   size_t index2 = kNotFound;
   if (index < frame_buffer_cache_.size()) {
     const ImageFrame& frame = frame_buffer_cache_[index];
-    if (frame.RequiredPreviousFrameIndex() != kNotFound &&
+    size_t viable_reference_frame_index = GetViableReferenceFrameIndex(index);
+    if (viable_reference_frame_index != kNotFound &&
         (!FrameStatusSufficientForSuccessors(index) ||
          frame.GetDisposalMethod() == ImageFrame::kDisposeOverwritePrevious)) {
-      index2 = GetViableReferenceFrameIndex(index);
+      index2 = viable_reference_frame_index;
     }
   }
 
@@ -219,18 +220,20 @@ void GIFImageDecoder::Decode(size_t index) {
   UpdateAggressivePurging(index);
 
   ImageFrame& frame = frame_buffer_cache_[index];
+  DCHECK_NE(frame.GetStatus(), ImageFrame::kFrameComplete);
+
+  size_t viable_reference_frame_index = GetViableReferenceFrameIndex(index);
   if (frame.GetStatus() == ImageFrame::kFrameEmpty) {
-    size_t required_previous_frame_index = frame.RequiredPreviousFrameIndex();
-    if (required_previous_frame_index == kNotFound) {
+    if (viable_reference_frame_index == kNotFound) {
       frame.AllocatePixelData(Size().Width(), Size().Height(),
                               ColorSpaceForSkImages());
       frame.ZeroFillPixelData();
       prior_frame_ = SkCodec::kNone;
     } else {
-      size_t previous_frame_index = GetViableReferenceFrameIndex(index);
-      if (previous_frame_index == kNotFound) {
-        previous_frame_index = required_previous_frame_index;
-        Decode(previous_frame_index);
+      if (viable_reference_frame_index != kNotFound &&
+          frame_buffer_cache_[viable_reference_frame_index].GetStatus() !=
+              ImageFrame::kFrameComplete) {
+        Decode(viable_reference_frame_index);
         if (Failed()) {
           return;
         }
@@ -240,14 +243,15 @@ void GIFImageDecoder::Decode(size_t index) {
       // If CanReusePreviousFrameBuffer returns false, we must copy the data
       // since |previous_frame| is necessary to decode this or later frames.
       // In that case copy the data instead.
-      ImageFrame& previous_frame = frame_buffer_cache_[previous_frame_index];
+      ImageFrame& previous_frame =
+          frame_buffer_cache_[viable_reference_frame_index];
       if ((!CanReusePreviousFrameBuffer(index) ||
            !frame.TakeBitmapDataIfWritable(&previous_frame)) &&
           !frame.CopyBitmapData(previous_frame)) {
         SetFailed();
         return;
       }
-      prior_frame_ = previous_frame_index;
+      prior_frame_ = viable_reference_frame_index;
     }
   }
 
@@ -258,20 +262,18 @@ void GIFImageDecoder::Decode(size_t index) {
 
     SkCodec::Options options;
     options.fFrameIndex = index;
-    options.fPriorFrame = prior_frame_;
+    options.fPriorFrame = viable_reference_frame_index;
+    if (viable_reference_frame_index == kNotFound)
+      options.fPriorFrame = SkCodec::kNone;
     options.fZeroInitialized = SkCodec::kNo_ZeroInitialized;
 
     SkCodec::Result start_incremental_decode_result =
         codec_->startIncrementalDecode(image_info, frame.Bitmap().getPixels(),
                                        frame.Bitmap().rowBytes(), &options);
-    switch (start_incremental_decode_result) {
-      case SkCodec::kSuccess:
-        break;
-      case SkCodec::kIncompleteInput:
-        return;
-      default:
-        SetFailed();
-        return;
+    DCHECK_NE(start_incremental_decode_result, SkCodec::kIncompleteInput);
+    if (start_incremental_decode_result != SkCodec::kSuccess) {
+      SetFailed();
+      return;
     }
     frame.SetStatus(ImageFrame::kFramePartial);
   }
@@ -312,16 +314,18 @@ size_t GIFImageDecoder::GetViableReferenceFrameIndex(
 
   size_t required_previous_frame_index =
       frame_buffer_cache_[dependent_index].RequiredPreviousFrameIndex();
+  if (required_previous_frame_index == kNotFound)
+    return kNotFound;
 
   // Any frame in the range [|required_previous_frame_index|, |dependent_index|)
-  // which has a disposal method other than kRestorePrevious can be provided as
-  // the prior frame to SkCodec.
+  // which has a disposal method other than kDisposeOverwritePrevious can be
+  // provided as the prior frame to SkCodec.
   //
   // SkCodec sets SkCodec::FrameInfo::fRequiredFrame to the earliest frame which
   // can be used. This might come up when several frames update the same
   // subregion. If that same subregion is about to be overwritten, it doesn't
   // matter which frame in that chain is provided.
-  DCHECK_NE(required_previous_frame_index, kNotFound);
+
   // Loop backwards because the frames most likely to be in cache are the most
   // recent.
   for (size_t i = dependent_index - 1; i != required_previous_frame_index;
@@ -336,7 +340,10 @@ size_t GIFImageDecoder::GetViableReferenceFrameIndex(
     }
   }
 
-  return kNotFound;
+  DCHECK_NE(
+      frame_buffer_cache_[required_previous_frame_index].GetDisposalMethod(),
+      ImageFrame::kDisposeOverwritePrevious);
+  return required_previous_frame_index;
 }
 
 }  // namespace blink
