@@ -6,6 +6,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/pref_service_factory.h"
@@ -56,6 +57,7 @@ class IOSChromeIOThreadTest : public PlatformTest {
   base::MessageLoop loop_;
   web::TestWebThread ui_thread_;
   web::TestWebThread io_thread_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 TEST_F(IOSChromeIOThreadTest, AssertNoUrlRequests) {
