@@ -925,8 +925,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenCached) {
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("Chromium"));
-  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>("https://www.chromium.org/"));
+  // TODO(sfiera): check href by clicking on button.
   EXPECT_THAT(console_observer.message(), IsEmpty());
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
@@ -1000,8 +999,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   EXPECT_THAT(GetComputedOpacity(active_tab, "logo-doodle"), Eq(1.0));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("Chromium"));
-  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>("https://www.chromium.org/"));
+  // TODO(sfiera): check href by clicking on button.
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
   histograms.ExpectBucketCount("NewTabPage.LogoShown", kLogoImpressionStatic,
@@ -1047,8 +1045,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
               Eq<std::string>("data:image/png;base64,fresh+++"));
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("fresh alt text"));
-  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>("https://www.chromium.org/fresh"));
+  // TODO(sfiera): check href by clicking on button.
 
   // LogoShown is recorded for both cached and fresh Doodle, but LogoShownTime2
   // is only recorded once per NTP.
@@ -1095,8 +1092,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldUpdateMetadataWhenChanged) {
 
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("fresh alt text"));
-  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>("https://www.chromium.org/fresh"));
+  // TODO(sfiera): check href by clicking on button.
 
   // Metadata update does not count as a new impression.
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
@@ -1136,17 +1132,13 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldAnimateLogoWhenClicked) {
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "title"),
               Eq<std::string>("alt text"));
 
-  ASSERT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>(""));  // No href, just onclick handler.
-
   // Click image, swapping out for animated URL.
   ASSERT_TRUE(content::ExecuteScript(
-      active_tab, "document.getElementById('logo-doodle-link').click();"));
+      active_tab, "document.getElementById('logo-doodle-button').click();"));
 
   EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-image", "src"),
               Eq(cached_logo.metadata.animated_url.spec()));
-  EXPECT_THAT(GetElementProperty(active_tab, "logo-doodle-link", "href"),
-              Eq<std::string>("https://www.chromium.org/"));
+  // TODO(sfiera): check href by clicking on button.
 
   histograms.ExpectTotalCount("NewTabPage.LogoShown", 1);
   histograms.ExpectBucketCount("NewTabPage.LogoShown", kLogoImpressionCta, 1);
