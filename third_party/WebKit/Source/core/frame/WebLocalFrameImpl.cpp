@@ -2135,6 +2135,12 @@ bool WebLocalFrameImpl::IsLoading() const {
          !GetFrame()->GetDocument()->LoadEventFinished();
 }
 
+bool WebLocalFrameImpl::HasFinishedParsing() const {
+  if (!GetFrame() || !GetFrame()->GetDocument())
+    return false;
+  return GetFrame()->GetDocument()->HasFinishedParsing();
+}
+
 bool WebLocalFrameImpl::IsNavigationScheduledWithin(
     double interval_in_seconds) const {
   return GetFrame() &&

@@ -275,6 +275,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   void ReportContentSecurityPolicyViolation(
       const blink::WebContentSecurityPolicyViolation&) override;
   bool IsLoading() const override;
+  bool HasFinishedParsing() const override;
   bool IsNavigationScheduledWithin(double interval) const override;
   void SetCommittedFirstRealLoad() override;
   void SetHasReceivedUserGesture() override;
