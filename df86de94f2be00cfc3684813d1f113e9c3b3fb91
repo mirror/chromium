@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b21d8f3b_a49e7219",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T22:08:50Z",
+      "side": 1,
+      "message": "Excellent question: because v8webrtcpdfium call this script unconditionally and still rely on the early exit. Once conditionals are used everywhere, we can remove the logic, but not yet.",
+      "parentUuid": "ce9364b1_86b4b8ca",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1442adb6_bca7da8a",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
