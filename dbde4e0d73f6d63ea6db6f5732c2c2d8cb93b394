@@ -50,6 +50,24 @@
       "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c3e9bf_47e00c5b",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T21:59:59Z",
+      "side": 1,
+      "message": "+1. I think we should also display the setting if it\u0027s in a non-default state. i.e. if someone has set the sound setting to \"mute\" I think we should always display the setting, which is consistent with the behavior of other settings (see line 173 below).",
+      "parentUuid": "fd092472_f8c2c975",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
