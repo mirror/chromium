@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af704cbe_17df4750",
+        "filename": "services/data_decoder/image_decoder_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-12T21:25:59Z",
+      "side": 1,
+      "message": "please use static_cast\u003c\u003e",
+      "revId": "540207050e6e214a19932edf73f2525117356db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
