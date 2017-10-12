@@ -180,6 +180,24 @@
     },
     {
       "key": {
+        "uuid": "d8b78330_ff15f1d7",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-12T15:19:54Z",
+      "side": 1,
+      "message": "I will eliminate the blocking solution because we can\u0027t make any guarantee that network service will start up successfully. \n\nWe can\u0027t instantiate an NCN in the NCT because all //net APIs are going through mojo. There won\u0027t be a C++ API, so no NCN in the future once the servicification is done.\n\nLet me make NCT::GetConnectionType() async.",
+      "parentUuid": "65c54fce_6494cd1b",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce32e905_a9d2d726",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 20
