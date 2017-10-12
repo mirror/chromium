@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aee94a0_6f741e6b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 89261,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T14:31:21Z",
+      "side": 1,
+      "message": "I\u0027m finding the description strange - the number of times it hasn\u0027t been through the FRE? From what I can tell this is only emitted once so it\u0027s a strange way to describe it.",
+      "revId": "6f0f257861cfbb8c6d1f669bcf55262e7f005559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb7c3f4_f3508b7d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 104732,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T14:31:21Z",
+      "side": 1,
+      "message": "this label for Browser appears off since it\u0027s describing the metric itself. I\u0027d mention what is specific just about Browser type",
+      "revId": "6f0f257861cfbb8c6d1f669bcf55262e7f005559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
