@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6f5303_2e56623d",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/resources/composited-scroll.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-12T17:51:59Z",
+      "side": 1,
+      "message": "Technically this is checking if the element or any descendant element is using composited scrolling, right?\n\nMaybe elementSubtreeHasScrollLayers is a better name?",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "1b174435e31e48f92822311cbde911f9390c3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
