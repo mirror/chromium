@@ -106,6 +106,20 @@ void Gpu::CreateVideoEncodeAcceleratorProvider(
   gpu_->CreateVideoEncodeAcceleratorProvider(std::move(vea_provider_request));
 }
 
+void Gpu::RequestCompleteGpuInfo(RequestCompleteGpuInfoCallback callback) {
+  DCHECK(IsMainThread());
+
+  const bool gpu_info_request_ongoing = !request_info_callbacks_.empty();
+  request_info_callbacks_.push_back(std::move(callback));
+  if (gpu_info_request_ongoing)
+    return;
+
+  if (!gpu_ || !gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->RequestCompleteGpuInfo(
+      base::Bind(&Gpu::OnRequestCompleteGpuInfo, base::Unretained(this)));
+}
+
 void Gpu::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
   DCHECK(IsMainThread());
@@ -161,6 +175,16 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
     gpu_channel_ = nullptr;
   }
   return gpu_channel_;
+}
+
+void Gpu::OnRequestCompleteGpuInfo(const gpu::GPUInfo& gpu_info) {
+  DCHECK(IsMainThread());
+  DCHECK(gpu_.get());
+
+  auto callbacks = std::move(request_info_callbacks_);
+  request_info_callbacks_.clear();
+  for (auto&& callback : callbacks)
+    std::move(callback).Run(gpu_info);
 }
 
 void Gpu::OnEstablishedGpuChannel(int client_id,

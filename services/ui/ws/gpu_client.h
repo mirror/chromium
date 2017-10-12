@@ -40,10 +40,14 @@ class GpuClient : public mojom::Gpu {
  private:
   friend class test::GpuHostTest;
 
-  // EstablishGpuChannelCallback:
+  void OnRequestCompleteGpuInfo(const RequestCompleteGpuInfoCallback& callback,
+                                const gpu::GPUInfo& gpu_info);
+
   void OnGpuChannelEstablished(const EstablishGpuChannelCallback& callback,
                                mojo::ScopedMessagePipeHandle channel_handle);
   // mojom::Gpu overrides:
+  void RequestCompleteGpuInfo(
+      const RequestCompleteGpuInfoCallback& callback) override;
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override;
   void CreateJpegDecodeAccelerator(
