@@ -58,6 +58,7 @@ source_set("main") {
     ":standalone_service",
     "//base",
     "//base:i18n",
+    "//mojo/edk/embedder:headers",
     "//services/service_manager/runner:init",
   ]
 }
