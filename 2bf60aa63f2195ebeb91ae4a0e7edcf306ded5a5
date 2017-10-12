@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6ff2365_dfcfc2be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Hm.. I took this name just to be consistent with the naming from desktop, but I agree JavascriptTabModalDialog is more explicit. I think JavascriptAppModalDialog should still live because AppModal is used for onbeforeunload dialog.",
+      "parentUuid": "7ee576be_d688aef8",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61e8f55b_338ee2ac",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d608b5ce_1ef8e530",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61e8f55b_338ee2ac",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a12d0b3_bd25f6b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done. btw, how are the settings in prepare able to mutate the layout so that mPromptTextView would be affected?",
+      "parentUuid": "26dddd76_c2731061",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "361d4a70_04c0745e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b0351b79_bc4f4228",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361d4a70_04c0745e",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 47
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2bfa239_adfab3ed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-11T23:00:38Z",
       "side": 1,
       "message": "is there a way to pull out the javascript dialog UI from this controller class?  I wonder if we could share this with the app modal one w/ some abstractions that allow different underlying native calls.\n\nLonger term, I think it would be good to have the UI code separate from the native logic anyway as we could potentially add smaller UI instrumentation tests for it.",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 31
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65a2056_ac0edf41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavaScriptDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "As discussed offline, in long term we should separate the dialog UI from JavascriptAppModalDialog and JavascriptTabModalDialog. This can be a followup CL since the \"Tab Modal\" Dialog UI hasn\u0027t been implemetented yet. Ideally we will have a JsDialog class that handles both AppModal and TabModal UI.",
+      "parentUuid": "b2bfa239_adfab3ed",
       "range": {
         "startLine": 125,
         "startChar": 19,
@@ -140,6 +260,54 @@
     },
     {
       "key": {
+        "uuid": "622bdd0d_e24fdeb6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb01881_9b838d1c",
+      "range": {
+        "startLine": 1954,
+        "startChar": 13,
+        "endLine": 1954,
+        "endChar": 21
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d0210e_f1e9ec5c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb01881_9b838d1c",
+      "range": {
+        "startLine": 1954,
+        "startChar": 13,
+        "endLine": 1954,
+        "endChar": 21
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dd70a8f_2840a004",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 1
@@ -163,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4f6c9174_5b856f8e",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd70a8f_2840a004",
+      "range": {
+        "startLine": 258,
+        "startChar": 38,
+        "endLine": 258,
+        "endChar": 46
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e58f9acb_986d81ee",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 1
@@ -174,6 +366,30 @@
       "writtenOn": "2017-10-11T23:00:38Z",
       "side": 1,
       "message": "Why do we need this?  Wondering why the contents of this shouldn\u0027t be inlined in JavaScriptDialog::Create above.",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 62
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796090b4_59bb1a85",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "I was following the implementation for desktop. We can get rid of this method, but that we need to add another method to get WeakPtr, and make JavaScriptDialogAndroid\u0027s constructor public. Not sure which one is better...\n\n@avi: More generally, is there a way to refactor a bit so that we don\u0027t have JavaScriptDialog(), ~JavaScriptDialog(), and possibly JavaScriptDialog::Create defined for each platform?",
+      "parentUuid": "e58f9acb_986d81ee",
       "range": {
         "startLine": 79,
         "startChar": 39,
@@ -209,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "967fdff5_91789fcc",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d947a8_9a7ca2f2",
+      "range": {
+        "startLine": 94,
+        "startChar": 26,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a904bc8_a0cd559d",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 1
@@ -232,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "d792808b_b72d46b1",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a904bc8_a0cd559d",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 37
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b902441a_6dedb795",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 1
@@ -252,6 +516,30 @@
       "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daaf467_b014fb58",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b902441a_6dedb795",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -313,6 +601,30 @@
       "writtenOn": "2017-10-11T23:00:38Z",
       "side": 1,
       "message": "this, OnBrowserSetLastActive, and the import of browser_list_observer should be excluded on android.  I\u0027m actually scared that this compiled because those classes are definitely things that should already be excluded from the android build.",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff011f6_876ddd57",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-12T21:59:23Z",
+      "side": 1,
+      "message": "This is very strange. The BUILD file is configured to exclude this header file, but I found that ProfileManager can also include this header file successfully. I wonder why...\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_manager.h",
+      "parentUuid": "a84a9261_cf2d5b63",
       "range": {
         "startLine": 34,
         "startChar": 21,
