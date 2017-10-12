@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e39d8dc_ea229285",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T13:59:25Z",
+      "side": 1,
+      "message": "nit: I thought these need indenting?",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7f7f0b_44ade30a",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T13:59:25Z",
+      "side": 1,
+      "message": "Will this lead to removing ContentSubresourceFilterDriverFactory::ShouldDisallowNewWindow ?",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27557fd_3f5bc365",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-12T13:59:25Z",
+      "side": 1,
+      "message": "nit: newline before.",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
