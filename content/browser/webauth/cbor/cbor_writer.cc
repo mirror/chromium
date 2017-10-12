@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Informative references:
+//   [1] https://fidoalliance.org/specs/fido-v2.0-rd-20170927/
+//          fido-client-to-authenticator-protocol-v2.0-rd-20170927.html
+
 #include "content/browser/webauth/cbor/cbor_writer.h"
 
 #include "base/numerics/safe_conversions.h"
@@ -68,9 +72,37 @@ void CBORWriter::EncodeCBOR(const CBORValue& node) {
     case CBORValue::Type::MAP: {
       const CBORValue::MapValue& map = node.GetMap();
       StartItem(CborMajorType::kMap, map.size());
-      for (const auto& value : map) {
-        EncodeCBOR(CBORValue(value.first));
-        EncodeCBOR(value.second);
+
+      // [1] section 6 says “The keys in every map must be sorted lowest value
+      // to highest”.
+      std::vector<std::string> sorted_keys;
+      sorted_keys.reserve(map.size());
+
+      for (const auto& i : map) {
+        sorted_keys.push_back(i.first);
+      }
+
+      // The sort order defined in CTAP is:
+      //   • If the major types are different, the one with the lower value in
+      //     numerical order sorts earlier. (Moot in this code because all keys
+      //     are strings.)
+      //   • If two keys have different lengths, the shorter one sorts earlier
+      //   • If two keys have the same length, the one with the lower value in
+      //     (byte-wise) lexical order sorts earlier.
+      std::sort(sorted_keys.begin(), sorted_keys.end(),
+                [](const std::string& a, const std::string& b) {
+                  if (a.size() < b.size()) {
+                    return true;
+                  }
+                  if (a.size() > b.size()) {
+                    return false;
+                  }
+                  return a.compare(b) < 0;
+                });
+
+      for (const auto& key : sorted_keys) {
+        EncodeCBOR(CBORValue(key));
+        EncodeCBOR(map.find(key)->second);
       }
       return;
     }
