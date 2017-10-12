@@ -251,11 +251,23 @@ ICCProfile::AnalyzeResult ICCProfile::ExtractColorSpaces(
     return kICCFailedToExtractMatrix;
   }
 
+  // Try to extract a named numerical transfer function.
+  if (sk_icc_color_space->gammaCloseToSRGB()) {
+    *parametric_color_space = ColorSpace::CreateCustom(
+        to_XYZD50_matrix, ColorSpace::TransferID::IEC61966_2_1);
+    return kICCExtractedMatrixAndAnalyticTrFn;
+  }
+  if (sk_icc_color_space->gammaIsLinear()) {
+    *parametric_color_space = ColorSpace::CreateCustom(
+        to_XYZD50_matrix, ColorSpace::TransferID::LINEAR);
+    return kICCExtractedMatrixAndAnalyticTrFn;
+  }
+
   // Try to directly extract a numerical transfer function.
   SkColorSpaceTransferFn exact_tr_fn;
   if (sk_icc->isNumericalTransferFn(&exact_tr_fn)) {
     *parametric_color_space =
-        gfx::ColorSpace::CreateCustom(to_XYZD50_matrix, exact_tr_fn);
+        ColorSpace::CreateCustom(to_XYZD50_matrix, exact_tr_fn);
     return kICCExtractedMatrixAndAnalyticTrFn;
   }
 
