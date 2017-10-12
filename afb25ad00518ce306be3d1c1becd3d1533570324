@@ -16,6 +16,24 @@
       "revId": "afb25ad00518ce306be3d1c1becd3d1533570324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92640ec8_f6dab789",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-12T18:18:08Z",
+      "side": 1,
+      "message": "Good point, thanks. I tested by adding multiple accounts (public + corp) into Chrome and ARC could be signed up with primary profile. So we can drop this cookies isolation.",
+      "parentUuid": "e25c2c96_cf3fea7b",
+      "revId": "afb25ad00518ce306be3d1c1becd3d1533570324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
