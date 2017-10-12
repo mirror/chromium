@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84ea70e5_9778a640",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "TBH, I have no idea. I switched to passing in base:Unretained(this), and doing all the work in the anonymous function.\n\nOther AddInterface calls above use base::Unretained(this) in their base::Bind() calls, so I think it\u0027s safe to assume that the registry will be torn down before the RenderFrameHostImpl.",
+      "parentUuid": "6cc0d2b9_da54fb51",
+      "range": {
+        "startLine": 3060,
+        "startChar": 10,
+        "endLine": 3060,
+        "endChar": 25
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38faedc9_16dbdf9d",
         "filename": "content/network/network_context.cc",
         "patchSetId": 41
@@ -45,6 +69,30 @@
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c60a16_318e0575",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38faedc9_16dbdf9d",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "565b090e_5d3e8983",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this!",
+      "parentUuid": "4c8cd504_e24238a2",
+      "range": {
+        "startLine": 111,
+        "startChar": 64,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0a8e509_f717b0e0",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 41
@@ -85,6 +157,24 @@
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae78f4c_2a206c41",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0a8e509_f717b0e0",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "00b4e905_a1cab99e",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 41
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea6deea_49e8fa7b",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cfd87e1_c23bc8d4",
         "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
         "patchSetId": 41
@@ -125,6 +239,24 @@
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b6ecbe_5b29f4e0",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 41
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cfd87e1_c23bc8d4",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "49bec955_252412ab",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aeb1392_c376ddd7",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1e526b4_fe19c7a6",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 41
@@ -159,6 +309,24 @@
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287f751a_10f3ebff",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for pointing this out! I expected the C++11 API, didn\u0027t realize we\u0027re implementing the C++17 one.",
+      "parentUuid": "b1e526b4_fe19c7a6",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "4a1d3f3b_f474ef13",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb839d31_8d109ebe",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06de832e_2b49f129",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
         "patchSetId": 41
@@ -199,6 +391,24 @@
       "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b874d940_2ba853ee",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for pointing this out!",
+      "parentUuid": "06de832e_2b49f129",
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

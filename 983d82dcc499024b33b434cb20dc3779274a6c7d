@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "06046578_b438336a",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "I added a TODO.\n\nThis seems reasonable, but I\u0027ll need to add logic for tracking RestrictedCookieManagerImpl instances. As you mentioned in the previous comment, I\u0027m guessing I\u0027ll need an instance per (render_process_id, render_frame_id), so I think I\u0027ll need a map and a way to remove an instance from the map when it doesn\u0027t have any more client connections. This seems like the perfect candidate for an isolate follow-up CL, if you\u0027re OK with that.",
+      "parentUuid": "12edc057_52698ae8",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542d2918_53af21c6",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -433,6 +457,30 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6eb91c6_c4d0be91",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-12T09:52:22Z",
+      "side": 1,
+      "message": "The separate Create() method is gone now.",
+      "parentUuid": "9848fa7f_b5d23f64",
+      "range": {
+        "startLine": 64,
+        "startChar": 37,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
