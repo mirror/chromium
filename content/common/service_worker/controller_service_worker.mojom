@@ -40,4 +40,7 @@ interface ControllerServiceWorker {
           mojo.common.mojom.Time dispatch_event_time);
 
   // TODO(kinuko): Add DispatchExtendableMessageEvent() as well.
+
+  // Connects a new pipe to this controller instance.
+  Clone(ControllerServiceWorker& controller);
 };
