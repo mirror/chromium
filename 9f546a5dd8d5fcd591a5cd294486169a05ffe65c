@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2835c737_4c4a7d92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Could you add that this was already implemented before this CL?",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91a40c8_9b8ac511",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "(i.e. possibly shown on previously opened NTPs).",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa126977_0c980e26",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Could you make this a list?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 2,
+        "endLine": 1205,
+        "endChar": 73
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd4e678_4ca35eef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Please say explicitly that this is not about database and about already opened NTPs.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 48,
+        "endLine": 1205,
+        "endChar": 72
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a456664f_6dcced51",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "I feel like naive linear check is\n1) simpler to read\n2) won\u0027t do anything if |suggestions| is empty\n3) generally cheaper\n\nThus, I suggest\n\n  base::EraseIf(\n      suggestions,\n      [\u0026content](const std::unique_ptr\u003cRemoteSuggestion\u003e\u0026 suggestion) {\n        const std::vector\u003cstring\u003e\u0026 ids \u003d suggestion-\u003eGetAllIDs();\n        for (const auto\u0026 archived_suggestion : archived_suggestion) {\n          if (base::ContainsValue(ids.begin(), ids.end(), archived_suggestion.id()) {\n            return true;\n          }\n        }\n        return false;\n       });",
+      "range": {
+        "startLine": 1209,
+        "startChar": 0,
+        "endLine": 1219,
+        "endChar": 9
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324628ac_acc246c3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Could you also add a test for an incomplete suggestions (e.g. without title)?",
+      "range": {
+        "startLine": 3330,
+        "startChar": 7,
+        "endLine": 3330,
+        "endChar": 51
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c079e0f_3765f8c3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "fetched_categories.clear();\n\nUsing fetched_categories after std::move is undefined behavior.\n\nUPD: I see clear() below, but having it after std::move is nicer :)",
+      "range": {
+        "startLine": 3352,
+        "startChar": 73,
+        "endLine": 3352,
+        "endChar": 74
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854f5d76_d63600c8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3357,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Could you do this earlier and use this builder above in the fetch as well?\n\nUPD: but if you are going to have different fetch times (see line 3366), it is fine to have them separate :)",
+      "range": {
+        "startLine": 3357,
+        "startChar": 2,
+        "endLine": 3357,
+        "endChar": 52
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1914063f_bfc34b9c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3364,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "\"The prepended suggestion should be ignored, because it was fetched previously and is shown on NTP already.\"",
+      "range": {
+        "startLine": 3364,
+        "startChar": 5,
+        "endLine": 3364,
+        "endChar": 38
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a28a62f_878d829d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3366,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Can you set different fetch time for suggestions above and check here fetch time instead?\n\nNow the test would fail if the old suggestion was replaced with new suggestion.",
+      "range": {
+        "startLine": 3366,
+        "startChar": 13,
+        "endLine": 3366,
+        "endChar": 23
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bd1009_65ee53da",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3373,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "Rather \"newly_fetched.com\".",
+      "range": {
+        "startLine": 3373,
+        "startChar": 54,
+        "endLine": 3373,
+        "endChar": 64
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63937893_79297d09",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3377,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "the original",
+      "range": {
+        "startLine": 3377,
+        "startChar": 13,
+        "endLine": 3377,
+        "endChar": 15
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08136c59_df07c09e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3380,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "The prepended suggestion should be ignored again, because it was fetched previously and may be shown on older NTPs",
+      "range": {
+        "startLine": 3380,
+        "startChar": 2,
+        "endLine": 3380,
+        "endChar": 38
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3384bfdc_53760b17",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3382,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-12T15:56:24Z",
+      "side": 1,
+      "message": "I would check URL here.",
+      "range": {
+        "startLine": 3382,
+        "startChar": 14,
+        "endLine": 3382,
+        "endChar": 23
+      },
+      "revId": "9f546a5dd8d5fcd591a5cd294486169a05ffe65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
