@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c5d3b2_a6a4a7fb",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T23:11:07Z",
+      "side": 1,
+      "message": "Ok for now.  We can update the test next.",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e976b8_0b75a543",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T23:11:07Z",
+      "side": 1,
+      "message": "This is pretty interesting, actually.  It means that downloads and 204s on isolated origins will mark a renderer process as used, even though they won\u0027t be sent to the renderer?  Even more interesting, because the |render_frame_host| check you added to OnResponseStarted means we\u0027re not calling SetIsUsed() when response_should_be_rendered_ is false.\n\nI guess that means the RFHM::DetermineSiteInstanceForURL change is to blame?  That makes me question whether it\u0027s the right way to handle it.\n\nThen again, I suppose what\u0027s happening is that we\u0027re trying to create the speculative RFH / process for the navigation, which does require the process to spin up.  If we don\u0027t want some non-isolated origin to grab that process before we use it at commit time, then I guess we need to lock it (well before we know whether it\u0027s a 204 or not).\n\nJust to check, what\u0027s the downside of not locking the speculative process until OnResponseStarted?  For example, what if we did the SetSite call in the same block you\u0027re adding to OnResponseStarted?\n\nOn the plus side, that would avoid locking a process for a download/204 when we don\u0027t need it, and would probably leave this test unchanged.  On the minus side, it means a non-isolated site could steal the speculative process for the isolated site when we\u0027re over the limit, causing us to have to create a new one at commit time.  Sound right?\n\nOn reflection, I think your approach is probably right.  It\u0027s probably worse to lose the speculative RFH during a race when over the process limit, since that\u0027s a lot more common than reusing a process after a download/204.  (I\u0027m not even sure if we can hit that in practice unless you disable the NTP.)",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33111b41_9e308184",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T23:11:07Z",
+      "side": 1,
+      "message": "I\u0027m ok with this for now, but maybe we should change this to be something like DoesSiteRequireDedicatedProcess for the 204 URL from line 1268?  That would be more robust as we try out various isolation policies.",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
