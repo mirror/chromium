@@ -107,6 +107,14 @@ void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
     ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
 }
 
+void ArcIntentHelperBridge::OnOpenChromeSettingsMultideviceUrl(
+    const std::string& url) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // TODO(mash): Support this functionality without ash::Shell access in Chrome.
+  if (ash::Shell::HasInstance())
+    ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
+}
+
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // TODO(mash): Support this functionality without ash::Shell access in Chrome.
