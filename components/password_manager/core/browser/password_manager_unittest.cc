@@ -490,6 +490,36 @@ TEST_F(PasswordManagerTest, AnyMatchFormToManager) {
             form_manager_to_save->submitted_form()->form_data.name);
 }
 
+// Tests that a credential wouldn't be saved if it is already in the store.
+TEST_F(PasswordManagerTest, DontSaveAlreadySavedCredential) {
+  EXPECT_CALL(client_, IsSavingAndFillingEnabledForCurrentPage())
+      .WillRepeatedly(Return(true));
+
+  std::vector<PasswordForm> observed;
+  PasswordForm form(MakeSimpleForm());
+  observed.push_back(form);
+  EXPECT_CALL(*store_, GetLogins(_, _))
+      .WillOnce(WithArg<1>(InvokeConsumer(form)));
+  EXPECT_CALL(driver_, FillPasswordForm(_)).Times(2);
+  manager()->OnPasswordFormsParsed(&driver_, observed);
+  manager()->OnPasswordFormsRendered(&driver_, observed, true);
+
+  // The user typed a credential manually, but the credential is already saved.
+  // The fallback will be requested by the rendered, but will not show up in the
+  // omnibox.
+  EXPECT_CALL(client_, ShowManualFallbackForSavingPtr(_, false, true)).Times(0);
+  manager()->ShowManualFallbackForSaving(&driver_, form);
+
+  // The user submits the form. No prompt should pop up. The credential is
+  // updated in background.
+  OnPasswordFormSubmitted(form);
+  EXPECT_CALL(client_, PromptUserToSaveOrUpdatePasswordPtr(_)).Times(0);
+  EXPECT_CALL(*store_, UpdateLogin(_));
+  observed.clear();
+  manager()->OnPasswordFormsParsed(&driver_, observed);
+  manager()->OnPasswordFormsRendered(&driver_, observed, true);
+}
+
 TEST_F(PasswordManagerTest, FormSeenThenLeftPage) {
   std::vector<PasswordForm> observed;
   PasswordForm form(MakeSimpleForm());
