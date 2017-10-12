@@ -16,6 +16,24 @@
       "revId": "a2a70107a1020620b498be48eb206461650e9f6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea865ea8_52d62c0f",
+        "filename": "device/gamepad/xbox_data_fetcher_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-10-12T21:37:16Z",
+      "side": 1,
+      "message": "I tested it with an older Xbox One gamepad. It didn\u0027t work, because that gamepad was ALSO not recognized. We were previously only checking for the 2013 Xbox One gamepad (045e:02d1) but not the 2015 version (045e:02dd). We\u0027re also missing the Xbox One Elite (045e:02e3) but I don\u0027t have one to test with yet.\n\nOnce I added the 2015 controller the initialization worked fine. I noticed that 360Controller (an unofficial third party Xbox gamepad driver for Mac) uses slightly different data in the initialization packet, and sends another packet before it:\n\nhttps://github.com/360Controller/360Controller/blob/master/360Controller/_60Controller.cpp#L527\n\nI think this extra packet has to do with initialization of the Xbox One Elite. I\u0027ve ordered one, once it comes in I\u0027ll investigate this further.",
+      "parentUuid": "25e8da87_319cfe30",
+      "revId": "a2a70107a1020620b498be48eb206461650e9f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
