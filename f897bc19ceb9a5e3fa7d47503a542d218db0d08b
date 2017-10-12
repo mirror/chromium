@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "23d94849_f353a1b0",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:03:52Z",
+      "side": 1,
+      "message": "It\u0027s an unusual for loop, which is more confusing to read. The while loop keeps this explicit. If you\u0027re going to keep the for loop, add a comment calling out that device_it++ is iterated inside the loop.",
+      "parentUuid": "9abb8d37_a75ded85",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a7a243e_b3356594",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -188,6 +206,24 @@
       "writtenOn": "2017-10-10T21:30:32Z",
       "side": 1,
       "message": "local lambda will probably increase readability here, ie,\n\n  auto try_find_display_in_preferences \u003d [](){ ... }\n\nthat will return nullptr if the display is not present.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd6cb51_a589aa96",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:03:52Z",
+      "side": 1,
+      "message": "?",
+      "parentUuid": "1a7a243e_b3356594",
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -386,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "e20799a9_1cc93dd4",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:03:52Z",
+      "side": 1,
+      "message": "?",
+      "parentUuid": "1a4813fd_1146f4ec",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5457c39d_c989873c",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -397,6 +451,24 @@
       "writtenOn": "2017-10-10T21:30:32Z",
       "side": 1,
       "message": "Don\u0027t use temporary variable",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961ecaea_50581770",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:03:52Z",
+      "side": 1,
+      "message": "?",
+      "parentUuid": "5457c39d_c989873c",
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
