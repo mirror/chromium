@@ -16,6 +16,24 @@
       "revId": "99659a4e2f6b173f221dea1940b0719238263320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6fb0e9_7c939087",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-12T00:46:52Z",
+      "side": 1,
+      "message": "Ahh, quite involved! Great comment :).\n\nMight be able to use shutil.copyfile() rather than chmod() (just guessing from the docs though). Either way need to comment so happy if you just leave it.",
+      "parentUuid": "0d90e8c5_f7722dc4",
+      "revId": "99659a4e2f6b173f221dea1940b0719238263320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
