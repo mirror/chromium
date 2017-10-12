@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c604005b_08b929f7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-12T20:11:08Z",
+      "side": 1,
+      "message": "Would you mind adding a link to the relevant spec section here?",
+      "revId": "b27096bd5e9b0260f3f26d5692680c233ce8aebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
