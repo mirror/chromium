@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e49c94e_1e32a5b0",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-12T20:02:06Z",
+      "side": 1,
+      "message": "can you just do:\n\nstd::array\u003cPrefetchItemState\u003e expirable_states \u003d {\n // bucket 1.\n ...\n};\n?",
+      "revId": "52c073f606b9b531c990462951b10fc6d437e8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
