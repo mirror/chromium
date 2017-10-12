@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1714e63_921b5fd5",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-12T22:57:00Z",
+      "side": 1,
+      "message": "nit: maybe put GetManifest as the last entry? I can\u0027t imagine it to be the most popular among these -\u003e one less loop statement to run in the most frequent case in line 233 below.",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "b922318a1e4298b5d8c96c38a3ebe63da210d5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f943717c_e9772f88",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-12T22:57:00Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "b922318a1e4298b5d8c96c38a3ebe63da210d5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
