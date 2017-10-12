@@ -27,6 +27,9 @@ class NullExecutionContext
 
   void SetURL(const KURL& url) { url_ = url; }
 
+  const KURL& Url() const override { return url_; }
+  KURL CompleteURL(const String&) const override { return url_; }
+
   void DisableEval(const String&) override {}
   String UserAgent() const override { return String(); }
 
@@ -56,10 +59,6 @@ class NullExecutionContext
     SecurityContext::Trace(visitor);
     ExecutionContext::Trace(visitor);
   }
-
- protected:
-  const KURL& VirtualURL() const override { return url_; }
-  KURL VirtualCompleteURL(const String&) const override { return url_; }
 
  private:
   bool tasks_need_suspension_;
