@@ -69,6 +69,24 @@
       "revId": "6994c9004610af431143e44c6af552318536e0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad703ed8_2409c116",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T16:48:15Z",
+      "side": 1,
+      "message": "What Justin refers is the prevalent style used in Chrome for simple text constants. While both styles are used, the style of pulling them up in the file into anonymous namespace is used more often: https://cs.chromium.org/search/?q\u003d%22const+char%22+file:.%5C.cc\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nkSql deserves special case because it has \"?\" placeholders and it is much easier to ensure that they match to a sequence of binding statements in the same function if they are close.",
+      "parentUuid": "9dd57227_d859ec45",
+      "revId": "6994c9004610af431143e44c6af552318536e0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
