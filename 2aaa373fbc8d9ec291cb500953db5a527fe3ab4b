@@ -22,6 +22,30 @@
       "revId": "2aaa373fbc8d9ec291cb500953db5a527fe3ab4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83312422_1ad4f129",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-12T22:05:00Z",
+      "side": 1,
+      "message": "I moved the sanity check to calculateThemeColor which seems like the appropriate starting point. Done.",
+      "parentUuid": "6fef8dc9_d05cef33",
+      "range": {
+        "startLine": 1451,
+        "startChar": 24,
+        "endLine": 1451,
+        "endChar": 41
+      },
+      "revId": "2aaa373fbc8d9ec291cb500953db5a527fe3ab4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
