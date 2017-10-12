@@ -22,6 +22,30 @@
       "revId": "65a6a0f7a0a563476cc2f357bd6f7740a101f756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b49d8f_d748c69b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 38600,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-10-12T08:35:29Z",
+      "side": 1,
+      "message": "That\u0027s just the verbatim output of tpm-manager get_version_info. Removed now.",
+      "parentUuid": "457dc220_25e4d296",
+      "range": {
+        "startLine": 38600,
+        "startChar": 18,
+        "endLine": 38600,
+        "endChar": 19
+      },
+      "revId": "65a6a0f7a0a563476cc2f357bd6f7740a101f756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
