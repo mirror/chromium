@@ -133,6 +133,13 @@ class CONTENT_EXPORT BlinkPlatformImpl : public blink::Platform {
   std::unique_ptr<blink::WebFeaturePolicy> DuplicateFeaturePolicyWithOrigin(
       const blink::WebFeaturePolicy& policy,
       const blink::WebSecurityOrigin& new_origin) override;
+  bool IsFeatureEnabledForOrigin(
+      blink::WebFeaturePolicyFeature feature,
+      const blink::WebSecurityOrigin& origin,
+      const blink::WebFeaturePolicy* policy) const override;
+  blink::WebVector<blink::WebString> GetOriginsForFeature(
+      blink::WebFeaturePolicyFeature,
+      const blink::WebFeaturePolicy* policy) const override;
 
  private:
   void InternalInit();
