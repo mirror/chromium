@@ -23,6 +23,10 @@ class WindowSelectorItem;
 // and shows/hides the phantom window accordingly.
 class ASH_EXPORT OverviewWindowDragController {
  public:
+  // Snapping distance between the dragged window with the screen edge. It's
+  // useful especially for touch events.
+  static constexpr int kScreenEdgeInsetForDrag = 200;
+
   explicit OverviewWindowDragController(WindowSelector* window_selector);
   ~OverviewWindowDragController();
 
@@ -39,9 +43,13 @@ class ASH_EXPORT OverviewWindowDragController {
 
   WindowSelectorItem* item() { return item_; }
 
+  bool PhantomWindowShowing() { return phantom_window_controller_ != nullptr; }
+
  private:
-  // Updates visuals for the user while dragging items around.
-  void UpdatePhantomWindowAndWindowGrid(const gfx::Point& location_in_screen);
+  // Updates visuals for the user while dragging items around. Returns true if
+  // the phantom window is shown, so that the splitview indicator overlay can
+  // sync up with the phantom window.
+  bool UpdatePhantomWindowAndWindowGrid(const gfx::Point& location_in_screen);
 
   SplitViewController::SnapPosition GetSnapPosition(
       const gfx::Point& location_in_screen) const;
