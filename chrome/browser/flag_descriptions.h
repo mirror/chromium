@@ -1465,8 +1465,11 @@ extern const char kEnableExternalDriveRenameDescription[];
 extern const char kEnableImeMenuName[];
 extern const char kEnableImeMenuDescription[];
 
-extern const char kEnableZipArchiverOnFileManagerName[];
-extern const char kEnableZipArchiverOnFileManagerDescription[];
+extern const char kEnableZipArchiverPackerName[];
+extern const char kEnableZipArchiverPackerDescription[];
+
+extern const char kEnableZipArchiverUnpackerName[];
+extern const char kEnableZipArchiverUnpackerDescription[];
 
 extern const char kEolNotificationName[];
 extern const char kEolNotificationDescription[];

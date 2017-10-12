@@ -2385,9 +2385,13 @@ const char kEnableImeMenuName[] = "Enable opt-in IME menu";
 const char kEnableImeMenuDescription[] =
     "Enable access to the new IME menu in the Language Settings page.";
 
-const char kEnableZipArchiverOnFileManagerName[] = "ZIP archiver for Drive";
-const char kEnableZipArchiverOnFileManagerDescription[] =
-    "Enable the ability to archive and unpack files on Drive in the Files app";
+const char kEnableZipArchiverPackerName[] = "ZIP archiver - Packer";
+const char kEnableZipArchiverPackerDescription[] =
+    "Enable the ability to archive files on Drive in the Files app";
+
+const char kEnableZipArchiverUnpackerName[] = "ZIP archiver - Unpacker";
+const char kEnableZipArchiverUnpackerDescription[] =
+    "Enable the ability to unpack archives in incognito mode";
 
 const char kEolNotificationName[] = "Disable Device End of Life notification.";
 const char kEolNotificationDescription[] =
