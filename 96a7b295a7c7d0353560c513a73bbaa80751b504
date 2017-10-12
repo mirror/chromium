@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d4aa97b_ad1aa729",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T15:54:47Z",
+      "side": 1,
+      "message": "Most of the other checks for ChromeFeatureList.CHROME_HOME_PROMO come after checks for a null bottom sheet with the exception of the NTP and FeatureUtilities#cacheChromeHomeEnabled().\n\nThe check on the NTP will only be hit if Chrome Home isn\u0027t enabled (either by field trial or because the user opted-out): https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java?type\u003dcs\u0026q\u003dChromeFeatureList.CHROME_HOME_PROMO\u0026sq\u003dpackage:chromium\u0026l\u003d418\n\n#cacheChromeHomeEnabled() could be updated to check #isChromeHomeUserPreferenceSet before checking if the feature is enabled: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java?type\u003dcs\u0026q\u003dChromeFeatureList.CHROME_HOME_PROMO\u0026sq\u003dpackage:chromium\u0026l\u003d266",
+      "parentUuid": "9c66c477_988678ee",
+      "range": {
+        "startLine": 360,
+        "startChar": 28,
+        "endLine": 360,
+        "endChar": 57
+      },
+      "revId": "96a7b295a7c7d0353560c513a73bbaa80751b504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe026363_93cce1b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 6
