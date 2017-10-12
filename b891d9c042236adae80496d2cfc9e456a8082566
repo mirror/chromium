@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d235fc8_b4379687",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T10:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc5e5c8_e209b241",
+      "range": {
+        "startLine": 125,
+        "startChar": 77,
+        "endLine": 125,
+        "endChar": 78
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a625b268_c2defc0e",
         "filename": "sandbox/win/src/sid.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c43849ad_d3feac27",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T10:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a625b268_c2defc0e",
+      "range": {
+        "startLine": 137,
+        "startChar": 29,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ad76e5_b25e06c8",
         "filename": "sandbox/win/src/sid.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-11T15:08:43Z",
       "side": 1,
       "message": "very localized use of LocalFreeDeleter! :)",
+      "range": {
+        "startLine": 154,
+        "startChar": 24,
+        "endLine": 154,
+        "endChar": 40
+      },
+      "revId": "b891d9c042236adae80496d2cfc9e456a8082566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17f389d_208065a3",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T10:36:24Z",
+      "side": 1,
+      "message": "It seems stupid but this for \"exception safe\" programming. In theory the assignment to sddl_string could fail with an exception and the sid would never be freed. Of course we don\u0027t typically have exceptions enabled, but still probably should try and be safe.",
+      "parentUuid": "87ad76e5_b25e06c8",
       "range": {
         "startLine": 154,
         "startChar": 24,
