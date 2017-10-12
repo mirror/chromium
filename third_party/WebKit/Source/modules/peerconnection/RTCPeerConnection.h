@@ -252,8 +252,6 @@ class MODULES_EXPORT RTCPeerConnection final
   void ScheduleDispatchEvent(Event*, BoolFunction);
   void DispatchScheduledEvent();
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack&) const;
-  RTCRtpReceiver* GetOrCreateRTCRtpReceiver(
-      std::unique_ptr<WebRTCRtpReceiver> web_rtp_receiver);
 
   // The "Change" methods set the state asynchronously and fire the
   // corresponding event immediately after changing the state (if it was really
@@ -296,7 +294,6 @@ class MODULES_EXPORT RTCPeerConnection final
   ICEConnectionState ice_connection_state_;
 
   MediaStreamVector local_streams_;
-  MediaStreamVector remote_streams_;
   // A map containing any track that is in use by the peer connection. This
   // includes tracks of |local_streams_|, |remote_streams_|, |rtp_senders_| and
   // |rtp_receivers_|.
