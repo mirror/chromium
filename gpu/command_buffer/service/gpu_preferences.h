@@ -6,6 +6,7 @@
 #define GPU_COMMAND_BUFFER_SERVICE_GPU_PREFERENCES_H_
 
 #include <stddef.h>
+#include <string>
 
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -144,6 +145,13 @@ struct GPU_EXPORT GpuPreferences {
   // Use the Pass-through command decoder, skipping all validation and state
   // tracking.
   bool use_passthrough_cmd_decoder = false;
+
+  // Encode struct into a string so it can be passed as a commandline switch.
+  std::string ToString() const;
+
+  // Decode the encoded string back to GpuPrefences struct.
+  // If return false, |output_prefs| won't be touched.
+  static bool FromString(const std::string& data, GpuPreferences* output_prefs);
 };
 
 }  // namespace gpu
