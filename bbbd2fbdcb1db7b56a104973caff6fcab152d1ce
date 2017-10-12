@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d1d477ab_704aca47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-12T15:32:38Z",
+      "side": 1,
+      "message": "This one move to a local scrollbar_theme now. The one toggle overlay scrollbar/mock scrollbar on test body is MockScrollableArea::GetPageScrollbarTheme. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scroll/ScrollableAreaTest.cpp?type\u003dcs\u0026l\u003d280\n\nAlready remove this in the latest commit message.",
+      "parentUuid": "8b4d626a_136ebca3",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171fc0d9_eb0ee809",
         "filename": "third_party/WebKit/Source/core/frame/RootFrameViewport.cpp",
         "patchSetId": 7
@@ -438,6 +462,30 @@
       "side": 1,
       "message": "I misspoke above, OOPIFs will have their own Page. But, since you\u0027ve confirmed the main frame is local, I believe they must share a page.",
       "parentUuid": "3a36493a_62a62afa",
+      "range": {
+        "startLine": 716,
+        "startChar": 4,
+        "endLine": 716,
+        "endChar": 71
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "899ef7ec_8f4e41d2",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-10-12T15:32:38Z",
+      "side": 1,
+      "message": "Just tried apply changes 646727 to Page::GetScrollbarTheme and it works. We can just use page no need to get it from main frame.",
+      "parentUuid": "c142f534_e93b7f9f",
       "range": {
         "startLine": 716,
         "startChar": 4,
