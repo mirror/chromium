@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a8d33ad3_c4b0fa7b",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-12T17:36:39Z",
+      "side": 1,
+      "message": "I agree that when shelf is shown in auto-hide mode, the gesture events should be received by corresponding view. The old logic here use visibility_state() !\u003d SHELF_AUTO_HIDE which is false when shelf is shown in auto-hide mode (the visibility_state is SHELF_AUTO_HIDE but shelf is visible). This is the reason why shelf icons can not be dragged when shelf is auto-hide, since ShelfButton will not received the scroll gesture events in this case.\n\nI think the reason that we should keep Shelf::AutoHideEventHandler::OnGestureEvent to help transfer gesture events to ShelfLayoutManager is for the case when shelf is hidden in auto-hide mode. We need to make sure swipe up on the hidden shelf can change its visibility. (I tried to delete Shelf::AutoHideEventHandler::OnGestureEvent, then the tests https://codesearch.chromium.org/chromium/src/ash/shelf/shelf_layout_manager_unittest.cc?q\u003dshelf_layout_manager_unit\u0026sq\u003dpackage:chromium\u0026l\u003d473 will fail).",
+      "parentUuid": "cec4a717_2b444604",
+      "range": {
+        "startLine": 330,
+        "startChar": 6,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb775db_deef29ea",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 4
@@ -59,6 +83,24 @@
       "writtenOn": "2017-10-12T17:12:45Z",
       "side": 1,
       "message": "Side question: Do we need to make CanStartFullscreenAppListDrag() be more friendly for dragging a shelf item? It seems to me that this could make start dragging an item a bit difficult.",
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f523d97_8f990383",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-12T17:36:39Z",
+      "side": 1,
+      "message": "Sorry I am not quite understand the question here. I think CanStartFullscreenAppListDrag is about whether we can start dragging to show the app list, otherwise we should drag the shelf?",
+      "parentUuid": "2eb775db_deef29ea",
       "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
