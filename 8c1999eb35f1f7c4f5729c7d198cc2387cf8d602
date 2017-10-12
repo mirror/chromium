@@ -71,6 +71,57 @@
     },
     {
       "key": {
+        "uuid": "df06bc26_e4a57de0",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T08:44:28Z",
+      "side": 1,
+      "message": "style: no { } when the body is a one-liner (applies to other places)",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3452179c_08ed1d2f",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T08:44:28Z",
+      "side": 1,
+      "message": "Would it make sense to have a `UpdateVolume()` method that will call `SetVolume()` on the `media_player_` based on `volume_` and `web_contents_muted_`? It sounds a bit weird to call `SetVolume(volume_)` otherwise.",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360ac7e1_9326b572",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T08:44:28Z",
+      "side": 1,
+      "message": "FWIW, even if it is slightly slower, I would add an explicit `find()` call in a DCHECK instead of getting the returned value as the DCHECK() would only be compiled in debug builds but we would have to trust the compiler to not create the `insert_result` object.",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10efb37f_3a2fb07b",
         "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
         "patchSetId": 4
