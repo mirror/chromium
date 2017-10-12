@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12852d01_70804461",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T12:40:19Z",
+      "side": 1,
+      "message": "It look like this is a private method, so what about adding two extra parameters, capturing them in the block and not adding member variables:\n\n  - (void)dismissBookmarkBrowserAnimated:(BOOL)animated\n                              urlsToOpen:(const std::vector\u003cGURL\u003e\u0026)urlsToOpen\n                             inIncognito:(BOOL)inIncognito\n                                  newTab:(BOOL)newTab {\n    if (!self.bookmarkBrowser)\n      return;\n\n    [self.bookmarkBrowser dismissModals];\n\n    // If trying to open urls with tab mode changed, we need to postpone openUrls\n    // until the dismissal of Bookmarks is done.  This is to prevent the race\n    // condition between the dismissal of bookmarks and switch of BVC.\n    const BOOL openUrlsAfterDismissal \u003d\n        !urlsToOpen.empty() \u0026\u0026\n        ((!!inIncognito) !\u003d _currentBrowserState-\u003eIsOffTheRecord());\n\n    // Block should not capture references, so create a copy of the vector if needed.\n    std::vector\u003cGURL\u003e urlsToOpenAfterDismissal;\n    if (openUrlsAfterDismissal) {\n      urlsToOpenAfterDismissal \u003d urlsToOpen;\n    }\n\n    [_parentController dismissViewControllerAnimated:animated\n                                        completion:^{\n        self.bookmarkBrowser.homeDelegate \u003d nil;\n        self.bookmarkBrowser \u003d nil;\n\n        if (openUrlsAfterDismissal)\n          return;\n\n        // URLs are open in new tab because tab mode has been changed.\n        [self openUrls:urlsToOpenAfterDismissal\n           inIncognito:inIncognito\n                newTab:YES];\n    }];\n\n    if (!openUrlsAfterDismissal \u0026\u0026 !urlsToOpen.empty()) {\n      [self openUrls:urlsToOpen inIncognito:inIncognito newTab:newTab];\n    }\n  }",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "374915f62acd661c956dec7411a47b814356aa6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207a252a_726671de",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T12:40:19Z",
+      "side": 1,
+      "message": "Then you would change this method to the following:\n\n  - (void)bookmarkHomeViewControllerWantsDismissal:\n              (BookmarkHomeViewController*)controller\n                                  navigationToUrls:(const std::vector\u003cGURL\u003e\u0026)urls\n                                       inIncognito:(BOOL)inIncognito\n                                            newTab:(BOOL)newTab {\n    [self dismissBookmarkBrowserAnimated:YES\n                              urlsToOpen:urls\n                             inIncognito:inIncognito\n                                  newTab:newTab];\n  }",
+      "revId": "374915f62acd661c956dec7411a47b814356aa6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
