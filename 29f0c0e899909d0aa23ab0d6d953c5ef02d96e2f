@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "8e4a0130_9b875aa7",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T22:46:57Z",
+      "side": 1,
+      "message": "Sorry. When I found out the recent destinations changes broke things I reverted everything in this file, and forgot to re-do these changes afterward.",
+      "parentUuid": "c471d838_dcaa8026",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2caec705_c1b4a93f",
         "filename": "chrome/browser/resources/print_preview/data/app_state.js",
         "patchSetId": 2
