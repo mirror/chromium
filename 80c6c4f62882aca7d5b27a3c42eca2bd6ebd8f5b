@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "817d0f84_47d2fabc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35e9665e_499a31fc",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "458e6cbe_d4cb4f5e",
         "filename": "ui/display/manager/fake_display_snapshot.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T18:28:28Z",
       "side": 1,
       "message": "You really like braces around one line statements.",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc96d9fb_7349ceb7",
+        "filename": "ui/display/manager/fake_display_snapshot.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "If either the body (or the condition (*)) have \u003e 1 lines\nwe should have {}. Not enforced but cleans up and\nsince I was touching the file...\n\nhttps://google.github.io/styleguide/cppguide.html#Conditionals\n\n(*) this doesn\u0027t seem to be stated in the style guide,\nI must have made it up or picked up from somebody.",
+      "parentUuid": "458e6cbe_d4cb4f5e",
       "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a232a22d_b4aa9578",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "Of course! :-)\nI moved it to the public declarations of this file .",
+      "parentUuid": "0e35b2f1_7cbc728f",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cab3382c_5ee5d050",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 7
@@ -84,6 +138,24 @@
       "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e7035f_78503c5d",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "After offline discussion: yes! Done.",
+      "parentUuid": "cab3382c_5ee5d050",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "f5a1fd88_9995c487",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "Hmm I see. I wanted to say that |edid| may or may not\nhave gamma value, and depending on that we should fill\nthe coefficients or not. Changed the somewhat arbitrary\nchoice of GAMMA22 for INVALID, letting upper layers \ndecide what to do.",
+      "parentUuid": "979f4ed1_c0e1fa26",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97607c1_10f3a855",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 7
@@ -118,6 +208,47 @@
       "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6772c3b_b187d058",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "It\u0027s just @ the definition of SkColorSpaceTransferFn:\n\nhttps://cs.chromium.org/chromium/src/third_party/skia/include/core/SkColorSpace.h?type\u003dcs\u0026q\u003dSkColorSpaceTransferFn\u0026sq\u003dpackage:chromium\u0026l\u003d43",
+      "parentUuid": "f97607c1_10f3a855",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c64d5270_12af4ab8",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-12T21:52:24Z",
+      "side": 1,
+      "message": "This was a mistake: it should have been |gamma|.",
+      "range": {
+        "startLine": 233,
+        "startChar": 30,
+        "endLine": 233,
+        "endChar": 42
+      },
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
