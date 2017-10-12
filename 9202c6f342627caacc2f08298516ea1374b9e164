@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26dea2ad_777a5f35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-12T11:51:42Z",
+      "side": 1,
+      "message": "Oops, I copied the method name (BuildDistributedNodesForSlot)\nto make that part and forgot to uncapitalize it :-D \n\nDone!",
+      "parentUuid": "d866c0d9_0a0dda54",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "958ce697_e4488063",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a0c6cc80_24016611",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-12T11:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "958ce697_e4488063",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17dc0f9_4a41d7de",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01b5684_4d6ad881",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-10-12T11:51:42Z",
+      "side": 1,
+      "message": "Done. Thank you for the inputs :-D",
+      "parentUuid": "b17dc0f9_4a41d7de",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
