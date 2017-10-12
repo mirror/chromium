@@ -159,6 +159,24 @@
       "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78cb720_18f33a01",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T18:25:32Z",
+      "side": 1,
+      "message": "\u003e I can make that change as part of this Cl.\n\nOn 2nd thought, I\u0027ll do it in a separate CL: It could make the script fail even in win-on-win builds; maybe we currently already ignore some error from Update() without knowing about it. So I\u0027d prefer to do that in a separate change, that can be reverted separately.",
+      "parentUuid": "40ae2e93_c5f0401c",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
