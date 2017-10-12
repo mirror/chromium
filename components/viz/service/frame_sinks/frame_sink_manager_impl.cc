@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
@@ -37,6 +38,8 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
       surface_manager_(lifetime_type),
       hit_test_manager_(this),
       binding_(this) {
+  LOG(ERROR) << "Create FrameSinkManagerImpl on "
+             << base::MessageLoop::current()->GetThreadName();
   surface_manager_.AddObserver(&hit_test_manager_);
   surface_manager_.AddObserver(this);
 }
@@ -73,6 +76,8 @@ void FrameSinkManagerImpl::SetLocalClient(
 
 void FrameSinkManagerImpl::RegisterFrameSinkId(
     const FrameSinkId& frame_sink_id) {
+  LOG(ERROR) << "FSMI::RegisterFrameSinkId " << frame_sink_id;
+
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_manager_.RegisterFrameSinkId(frame_sink_id);
 }
@@ -97,6 +102,8 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
     mojom::CompositorFrameSinkAssociatedRequest request,
     mojom::CompositorFrameSinkClientPtr client,
     mojom::DisplayPrivateAssociatedRequest display_private_request) {
+  LOG(ERROR) << "FSMI::CreateRootCompositorFrameSink " << frame_sink_id;
+
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(surface_handle, gpu::kNullSurfaceHandle);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
@@ -117,6 +124,7 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     mojom::CompositorFrameSinkRequest request,
     mojom::CompositorFrameSinkClientPtr client) {
+  LOG(ERROR) << "FSMI::CreateCompositorFrameSink " << frame_sink_id;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
 
@@ -128,6 +136,8 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
 void FrameSinkManagerImpl::RegisterFrameSinkHierarchy(
     const FrameSinkId& parent_frame_sink_id,
     const FrameSinkId& child_frame_sink_id) {
+  LOG(ERROR) << "FSMI::RegisterFrameSinkHierarchy parent="
+             << parent_frame_sink_id << ", child=" << child_frame_sink_id;
   // If it's possible to reach the parent through the child's descendant chain,
   // then this will create an infinite loop.  Might as well just crash here.
   CHECK(!ChildContains(child_frame_sink_id, parent_frame_sink_id));
