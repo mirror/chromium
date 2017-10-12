@@ -178,6 +178,8 @@ const struct NonPrintableCodeEntry {
     {DomCode::LAUNCH_APP1, DomKey::LAUNCH_MY_COMPUTER},
     {DomCode::LAUNCH_APP2, DomKey::LAUNCH_CALCULATOR},
     {DomCode::LAUNCH_ASSISTANT, DomKey::LAUNCH_ASSISTANT},
+    {DomCode::LAUNCH_ASSISTANT_VOICE_COMMAND,
+     DomKey::LAUNCH_ASSISTANT_VOICE_COMMAND},
     {DomCode::LAUNCH_AUDIO_BROWSER, DomKey::LAUNCH_MUSIC_PLAYER},
     {DomCode::LAUNCH_CALENDAR, DomKey::LAUNCH_CALENDAR},
     {DomCode::LAUNCH_CONTACTS, DomKey::LAUNCH_CONTACTS},
@@ -310,6 +312,8 @@ const struct DomKeyToKeyboardCodeEntry {
     // http://www.w3.org/TR/DOM-Level-3-Events-key/#keys-device
 #if defined(OS_POSIX)
     {DomKey::LAUNCH_ASSISTANT, VKEY_ASSISTANT},
+    {DomKey::LAUNCH_ASSISTANT_VOICE_COMMAND,
+     VKEY_ASSISTANT_VOICE_COMMAND},
     {DomKey::BRIGHTNESS_DOWN, VKEY_BRIGHTNESS_DOWN},
     {DomKey::BRIGHTNESS_UP, VKEY_BRIGHTNESS_UP},
     {DomKey::POWER, VKEY_POWER},
@@ -419,6 +423,8 @@ const struct DomCodeToKeyboardCodeEntry {
 #if defined(OS_POSIX)
     {DomCode::LAUNCH_ASSISTANT,
      VKEY_ASSISTANT},                          // 0x000017 Launch Assistant
+    {DomCode::LAUNCH_ASSISTANT_VOICE_COMMAND,  // 0x000018 Launch Assistant in
+     VKEY_ASSISTANT_VOICE_COMMAND},            // voice command mode.
 #endif
     {DomCode::SLEEP, VKEY_SLEEP},               // 0x010082 Sleep
     // DomCode::WAKE_UP                            0x010083 WakeUp

@@ -100,6 +100,8 @@ USB_KEYMAP_DECLARATION {
   // AL Context-aware desktop assistant, not in HID specification (yet?)
   USB_KEYMAP(0x000017, 0x0247, 0x024f, 0x0000, 0xffff, "LaunchAssistant",
              LAUNCH_ASSISTANT),
+  USB_KEYMAP(0x000018, 0x0246, 0x024e, 0x0000, 0xffff, "LaunchAssistantVoiceCommand", 
+             LAUNCH_ASSISTANT_VOICE_COMMAND),
 
   // =========================================
   // USB Usage Page 0x01: Generic Desktop Page
