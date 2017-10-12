@@ -72,10 +72,11 @@ void FormSaverImpl::WipeOutdatedCopies(
     std::map<base::string16, const PasswordForm*>* best_matches,
     const PasswordForm** preferred_match) {
   DCHECK(preferred_match);  // Note: *preferred_match may still be null.
-  DCHECK(url::Origin(GURL(pending.signon_realm))
-             .IsSameOriginWith(
-                 url::Origin(GaiaUrls::GetInstance()->gaia_url().GetOrigin())))
-      << pending.signon_realm << " is not a GAIA origin";
+  if (!url::Origin(GURL(pending.signon_realm))
+           .IsSameOriginWith(
+               url::Origin(GaiaUrls::GetInstance()->gaia_url().GetOrigin()))) {
+    return;
+  }
 
   for (auto it = best_matches->begin(); it != best_matches->end();
        /* increment inside the for loop */) {

@@ -13,6 +13,12 @@
 using autofill::PasswordForm;
 using url::Origin;
 
+namespace {
+
+const char kGoogleChangePasswordSignonRealm[] = "https://myaccount.google.com/";
+
+}  // namespace
+
 namespace password_manager {
 namespace sync_util {
 
@@ -35,7 +41,8 @@ bool IsSyncAccountCredential(const autofill::PasswordForm& form,
                              const syncer::SyncService* sync_service,
                              const SigninManagerBase* signin_manager) {
   const Origin gaia_origin(GaiaUrls::GetInstance()->gaia_url().GetOrigin());
-  if (!Origin(GURL(form.signon_realm)).IsSameOriginWith(gaia_origin)) {
+  if (!Origin(GURL(form.signon_realm)).IsSameOriginWith(gaia_origin) &&
+      form.signon_realm != kGoogleChangePasswordSignonRealm) {
     return false;
   }
 
