@@ -40,6 +40,8 @@ void IntersectionObserverController::PostTaskToDeliverObservations() {
 
 void IntersectionObserverController::ScheduleIntersectionObserverForDelivery(
     IntersectionObserver& observer) {
+  if (!GetExecutionContext())
+    return;
   pending_intersection_observers_.insert(&observer);
   PostTaskToDeliverObservations();
 }
