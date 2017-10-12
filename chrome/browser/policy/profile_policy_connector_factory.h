@@ -41,6 +41,11 @@ class ProfilePolicyConnectorFactory : public BrowserContextKeyedBaseFactory {
   static ProfilePolicyConnector* GetForBrowserContext(
       content::BrowserContext* context);
 
+  // Returns the ProfilePolicyConnector associated with |context|. This is only
+  // valid before |context| is shut down.
+  static const ProfilePolicyConnector* GetForBrowserContext(
+      const content::BrowserContext* context);
+
   // Creates a new ProfilePolicyConnector for |context|, which must be managed
   // by the caller. Subsequent calls to GetForBrowserContext() will return the
   // instance created, as long as it lives.
@@ -69,6 +74,8 @@ class ProfilePolicyConnectorFactory : public BrowserContextKeyedBaseFactory {
 
   ProfilePolicyConnector* GetForBrowserContextInternal(
       content::BrowserContext* context);
+  const ProfilePolicyConnector* GetForBrowserContextInternal(
+      const content::BrowserContext* context);
 
   std::unique_ptr<ProfilePolicyConnector> CreateForBrowserContextInternal(
       content::BrowserContext* context,
@@ -81,7 +88,7 @@ class ProfilePolicyConnectorFactory : public BrowserContextKeyedBaseFactory {
   bool HasTestingFactory(content::BrowserContext* context) override;
   void CreateServiceNow(content::BrowserContext* context) override;
 
-  typedef std::map<content::BrowserContext*, ProfilePolicyConnector*>
+  typedef std::map<const content::BrowserContext*, ProfilePolicyConnector*>
       ConnectorMap;
   ConnectorMap connectors_;
   std::list<ConfigurationPolicyProvider*> test_providers_;
