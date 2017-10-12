@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "4e2f9743_cd524f52",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 3722,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:57:18Z",
+      "side": 0,
+      "message": "Can you figure out why this test is timing out? It does try to test some behaviors.\nThe WPT dtmf test currently does not give us test coverage for this, because we fail all tests due to \"RTCDTMFSender is not defined\"\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCDTMFSender-insertDTMF.https-expected.txt\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCDTMFSender-ontonechange-long.https-expected.txt\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCDTMFSender-ontonechange.https-expected.txt",
+      "revId": "8c29eb6132b1c8c0aa6fa4fbaff76f794eb5ce1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f71ba1b_c371759d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 3724,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:57:18Z",
+      "side": 0,
+      "message": "Can you figure out why these two are timing out, if what they are doing make any sense with real behavior, and if the WPT coverage for the equivalent is something we are able to run?",
+      "revId": "8c29eb6132b1c8c0aa6fa4fbaff76f794eb5ce1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3085c29b_52e843fe",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 3726,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:57:18Z",
+      "side": 0,
+      "message": "See other comment. We currently do not get test coverage for this because this test is using broken mock and WPT test use transceiver/etc.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-ontrack.https-expected.txt?q\u003dRTCPeerConnection-ontrack.https\u0026sq\u003dpackage:chromium\u0026dr",
+      "revId": "8c29eb6132b1c8c0aa6fa4fbaff76f794eb5ce1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf18b67_fca3482b",
         "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
         "patchSetId": 1
@@ -22,6 +73,30 @@
       "revId": "8c29eb6132b1c8c0aa6fa4fbaff76f794eb5ce1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e9ccdd_471757d2",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:57:18Z",
+      "side": 0,
+      "message": "We are unable to run the wpt RTCPeerConnection-ontrack[.https].html because it uses transceivers, etc. I didn\u0027t realize how poor our test coverage is without these tests (only one browser test even uses ontrack), and this one is currently timing out because its relying on mock behavior.\n\nI\u0027m currently writing WPT for ontrack and other events related to adding/removing remote tracks. I can take on writing the equivalent tests to these there too.\n\nIn the meantime they\u0027re broken and can be removed, because it\u0027s not worth reverting mock-removal over.\n\nhttps://crbug.com/774303",
+      "parentUuid": "edf18b67_fca3482b",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "8c29eb6132b1c8c0aa6fa4fbaff76f794eb5ce1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

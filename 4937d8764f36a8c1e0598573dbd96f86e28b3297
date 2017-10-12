@@ -22,6 +22,23 @@
       "revId": "4937d8764f36a8c1e0598573dbd96f86e28b3297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e888adcd_707853e5",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-lifetime.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:57:18Z",
+      "side": 1,
+      "message": "Do you know what makes this test terminate? Making sure we don\u0027t have a race. The connect_pcs() does not return a promise, and I\u0027m not sure about the order between setRemoteDescription being resolved and onicecandidate events firing.",
+      "revId": "4937d8764f36a8c1e0598573dbd96f86e28b3297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
