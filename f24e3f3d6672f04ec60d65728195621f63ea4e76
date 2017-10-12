@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e9d716c_011e0d6d",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b539e7c7_bcfa9f79",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c265ca71_f5b4e113",
         "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1719b059_c5a15568",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:44:29Z",
+      "side": 1,
+      "message": "Removed. The confusion this comment was trying to avoid for future readers was \"should we change this to ready?\". No runtime error would be thrown, but the element would behave oddly.",
+      "parentUuid": "c265ca71_f5b4e113",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a072e99_985db89c",
         "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-12T22:57:18Z",
       "side": 1,
       "message": "Is there a guarantee that \u0027pointermove\u0027 will be called before each \u0027tap\u0027?",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd55f59_8333ceba",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:44:29Z",
+      "side": 1,
+      "message": "The possible event sequence is \n\n1 x pointerdown -\u003e N x pointermove -\u003e 1 x pointerup -\u003e M x tap\n\nwhere N can be [0, infinity], M can be [0,1].\n\nIn the case where no pointermove fires, handledInPointerMove_ is always false (it is always reset in pointerdown), which intentionally causes the line at 149 to execute.",
+      "parentUuid": "6a072e99_985db89c",
       "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
