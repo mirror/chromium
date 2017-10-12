@@ -75,15 +75,29 @@ class NET_EXPORT HostCache {
   // Stores the latest address list that was looked up for a hostname.
   class NET_EXPORT Entry {
    public:
-    Entry(int error, const AddressList& addresses, base::TimeDelta ttl);
+    enum Source : int {
+      // Address list was obtained from an unknown source.
+      SOURCE_UNKNOWN,
+      // Address list was obtained via a DNS lookup.
+      SOURCE_DNS,
+      // Address list was obtained by searching a HOSTS file.
+      SOURCE_HOSTS,
+    };
+
+    Entry(Source source,
+          int error,
+          const AddressList& addresses,
+          base::TimeDelta ttl);
     // Use when |ttl| is unknown.
-    Entry(int error, const AddressList& addresses);
+    Entry(Source source, int error, const AddressList& addresses);
+    Entry(Entry&& entry);
     ~Entry();
 
     int error() const { return error_; }
     const AddressList& addresses() const { return addresses_; }
     bool has_ttl() const { return ttl_ >= base::TimeDelta(); }
     base::TimeDelta ttl() const { return ttl_; }
+    Source source() const { return source_; }
 
     base::TimeTicks expires() const { return expires_; }
 
@@ -98,7 +112,8 @@ class NET_EXPORT HostCache {
           base::TimeDelta ttl,
           int network_changes);
 
-    Entry(int error,
+    Entry(Source source,
+          int error,
           const AddressList& addresses,
           base::TimeTicks expires,
           int network_changes);
@@ -115,6 +130,8 @@ class NET_EXPORT HostCache {
     // The resolve results for this entry.
     int error_;
     AddressList addresses_;
+    // Where addresses_ were obtained (e.g. DNS lookup, hosts file, etc).
+    Source source_;
     // TTL obtained from the nameserver. Negative if unknown.
     base::TimeDelta ttl_;
 
@@ -230,7 +247,7 @@ class NET_EXPORT HostCache {
 
   void EvictOneEntry(base::TimeTicks now);
   // Helper to insert an Entry into the cache.
-  void AddEntry(const Key& key, const Entry& entry);
+  void AddEntry(const Key& key, Entry&& entry);
 
   // Map from hostname (presumably in lowercase canonicalized format) to
   // a resolved result entry.

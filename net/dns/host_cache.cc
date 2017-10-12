@@ -39,6 +39,7 @@ const char kTtlKey[] = "ttl";
 const char kNetworkChangesKey[] = "network_changes";
 const char kErrorKey[] = "error";
 const char kAddressesKey[] = "addresses";
+const char kSourceKey[] = "source";
 
 bool AddressListFromListValue(const base::ListValue* value, AddressList* list) {
   list->clear();
@@ -82,19 +83,23 @@ enum HostCache::EraseReason : int {
   MAX_ERASE_REASON
 };
 
-HostCache::Entry::Entry(int error,
+HostCache::Entry::Entry(Source source,
+                        int error,
                         const AddressList& addresses,
                         base::TimeDelta ttl)
-    : error_(error), addresses_(addresses), ttl_(ttl) {
+    : error_(error), addresses_(addresses), source_(source), ttl_(ttl) {
   DCHECK(ttl >= base::TimeDelta());
 }
 
-HostCache::Entry::Entry(int error, const AddressList& addresses)
+HostCache::Entry::Entry(Source source, int error, const AddressList& addresses)
     : error_(error),
       addresses_(addresses),
+      source_(source),
       ttl_(base::TimeDelta::FromSeconds(-1)) {}
 
 HostCache::Entry::~Entry() {}
+
+HostCache::Entry::Entry(HostCache::Entry&& entry) = default;
 
 HostCache::Entry::Entry(const HostCache::Entry& entry,
                         base::TimeTicks now,
@@ -102,18 +107,21 @@ HostCache::Entry::Entry(const HostCache::Entry& entry,
                         int network_changes)
     : error_(entry.error()),
       addresses_(entry.addresses()),
+      source_(entry.source()),
       ttl_(entry.ttl()),
       expires_(now + ttl),
       network_changes_(network_changes),
       total_hits_(0),
       stale_hits_(0) {}
 
-HostCache::Entry::Entry(int error,
+HostCache::Entry::Entry(Source source,
+                        int error,
                         const AddressList& addresses,
                         base::TimeTicks expires,
                         int network_changes)
     : error_(error),
       addresses_(addresses),
+      source_(source),
       ttl_(base::TimeDelta::FromSeconds(-1)),
       expires_(expires),
       network_changes_(network_changes),
@@ -239,10 +247,10 @@ void HostCache::Set(const Key& key,
     delegate_->ScheduleWrite();
 }
 
-void HostCache::AddEntry(const Key& key, const Entry& entry) {
+void HostCache::AddEntry(const Key& key, Entry&& entry) {
   DCHECK_GT(max_entries_, size());
   DCHECK_EQ(0u, entries_.count(key));
-  entries_.insert(std::make_pair(key, entry));
+  entries_.emplace(key, std::move(entry));
   DCHECK_GE(max_entries_, size());
 }
 
@@ -340,6 +348,7 @@ void HostCache::GetAsListValue(base::ListValue* entry_list,
       entry_dict->SetList(kAddressesKey, std::move(addresses_value));
     }
 
+    entry_dict->SetInteger(kSourceKey, entry.source());
     entry_list->Append(std::move(entry_dict));
   }
 }
@@ -372,6 +381,11 @@ bool HostCache::RestoreFromListValue(const base::ListValue& old_cache) {
       return false;
     }
 
+    int source = Entry::SOURCE_UNKNOWN;
+    // If this isn't present, it's fine to stick with the default value of
+    // UNKNOWN.
+    entry_dict->GetInteger(kSourceKey, &source);
+
     int64_t time_internal;
     if (!base::StringToInt64(expiration, &time_internal))
       return false;
@@ -391,8 +405,8 @@ bool HostCache::RestoreFromListValue(const base::ListValue& old_cache) {
     // prioritizing what to evict, just stop restoring.
     auto found = entries_.find(key);
     if (found == entries_.end() && size() < max_entries_) {
-      AddEntry(key, Entry(error, address_list, expiration_time,
-                          network_changes_ - 1));
+      AddEntry(key, Entry(static_cast<Entry::Source>(source), error,
+                          address_list, expiration_time, network_changes_ - 1));
     }
   }
   restore_size_ = old_cache.GetSize();
