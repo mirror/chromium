@@ -34,6 +34,24 @@
       "revId": "a425373819964c172521e5c786834e764619a2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5e67d3_7b1f3bd6",
+        "filename": "components/viz/service/surfaces/surface_hittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-12T15:31:52Z",
+      "side": 1,
+      "message": "Oh of course, didn\u0027t realize this had a chain of CL\u0027s, thanks.",
+      "parentUuid": "3c90226b_cd9975eb",
+      "revId": "a425373819964c172521e5c786834e764619a2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
