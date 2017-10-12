@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b8d8682_db1bff31",
+        "filename": "third_party/WebKit/Source/core/paint/SVGImagePainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-12T18:45:55Z",
+      "side": 1,
+      "message": "Not needed - GetImage always returns something non-null and on top of that the caller checks for the existence of an image.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "cbcf565bc67e074ea7d96a0bdb13be8e0300aee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
