@@ -16,6 +16,24 @@
       "revId": "01eb7ca25f3c3f0717747179469a8e8a8029d59b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df163a09_3ef8f40c",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T18:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3073bcfd_9a48b7f3",
+      "revId": "01eb7ca25f3c3f0717747179469a8e8a8029d59b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
