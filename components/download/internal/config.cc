@@ -32,40 +32,41 @@ const uint32_t kDefaultMaxResumptionCount = 15;
 
 // Default value for file keep alive time, keep the file alive for 12 hours by
 // default.
-const base::TimeDelta kDefaultFileKeepAliveTime =
+constexpr base::TimeDelta kDefaultFileKeepAliveTime =
     base::TimeDelta::FromHours(12);
 
 // Default value for maximum duration that the file can be kept alive time,
 // default is 7 days.
-const base::TimeDelta kDefaultMaxFileKeepAliveTime =
+constexpr base::TimeDelta kDefaultMaxFileKeepAliveTime =
     base::TimeDelta::FromDays(7);
 
 // Default value for file cleanup window, the system will schedule a cleanup
 // task within this window.
-const base::TimeDelta kDefaultFileCleanupWindow =
+constexpr base::TimeDelta kDefaultFileCleanupWindow =
     base::TimeDelta::FromHours(24);
 
 // Default value for the start window time for OS to schedule background task.
-const base::TimeDelta kDefaultWindowStartTime = base::TimeDelta::FromMinutes(5);
+constexpr base::TimeDelta kDefaultWindowStartTime =
+    base::TimeDelta::FromMinutes(5);
 
 // Default value for the end window time for OS to schedule background task.
-const base::TimeDelta kDefaultWindowEndTime = base::TimeDelta::FromHours(8);
+constexpr base::TimeDelta kDefaultWindowEndTime = base::TimeDelta::FromHours(8);
 
 // The default delay to notify the observer when network changes from
 // disconnected to connected.
-const base::TimeDelta kDefaultNetworkChangeDelay =
+constexpr base::TimeDelta kDefaultNetworkChangeDelay =
     base::TimeDelta::FromSeconds(5);
 
 // The default delay to notify the observer after a navigation completes.
-const base::TimeDelta kDefaultNavigationCompletionDelay =
+constexpr base::TimeDelta kDefaultNavigationCompletionDelay =
     base::TimeDelta::FromSeconds(30);
 
 // The default timeout for a navigation.
-const base::TimeDelta kDefaultNavigationTimeoutDelay =
+constexpr base::TimeDelta kDefaultNavigationTimeoutDelay =
     base::TimeDelta::FromSeconds(300);
 
 // The default value of download retry delay when the download is failed.
-const base::TimeDelta kDefaultDownloadRetryDelay =
+constexpr base::TimeDelta kDefaultDownloadRetryDelay =
     base::TimeDelta::FromSeconds(20);
 
 // Helper routine to get Finch experiment parameter. If no Finch seed was found,
