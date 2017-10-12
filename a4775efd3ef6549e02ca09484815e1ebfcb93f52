@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "665fc108_3e48d50d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T17:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca74ca3_4d9354c2",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 41
+      },
+      "revId": "a4775efd3ef6549e02ca09484815e1ebfcb93f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b92ef7b_bff8e44d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2935a075_98e49069",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T17:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b92ef7b_bff8e44d",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "a4775efd3ef6549e02ca09484815e1ebfcb93f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8c73c01_a3d56483",
         "filename": "sandbox/win/src/restricted_token_utils.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-12T16:56:11Z",
       "side": 1,
       "message": "decided not to go with your scoped freer here?",
+      "range": {
+        "startLine": 376,
+        "startChar": 4,
+        "endLine": 376,
+        "endChar": 13
+      },
+      "revId": "a4775efd3ef6549e02ca09484815e1ebfcb93f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2036fb_fc7ebb13",
+        "filename": "sandbox/win/src/restricted_token_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T17:57:11Z",
+      "side": 1,
+      "message": "This was a copy\u0026paste from the original code. Will change it.",
+      "parentUuid": "b8c73c01_a3d56483",
       "range": {
         "startLine": 376,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7dd5a13c_f696e672",
+        "filename": "sandbox/win/src/security_capabilities.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T17:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4a5039_29a52626",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "a4775efd3ef6549e02ca09484815e1ebfcb93f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7272e1c_c316396c",
         "filename": "sandbox/win/src/security_capabilities.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-12T16:56:11Z",
       "side": 1,
       "message": "hmm this sort of breaks the scoping model, if the object can go out of scope but you could still hold an (invalid) ptr to SECURITY_CAPABILITIES... I\u0027m not sure how best to handle this though, perhaps you need accessors for each part of the SECURITY_CAPABILITIES structure, or does that just add too much complexity?",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "a4775efd3ef6549e02ca09484815e1ebfcb93f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6517fe10_b68d9e31",
+        "filename": "sandbox/win/src/security_capabilities.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-10-12T17:57:11Z",
+      "side": 1,
+      "message": "This ultimate goal is for this to be passed directly to CreateProcess so having accessors doesn\u0027t really work. I could allocate a copy of the structure but that seems wasteful. What I might do instead is ensure that top level functions always take const SecurityCapabilities\u0026 and the call to get() should only ever be in the limited scope where we\u0027re actually using it. So I\u0027ll change CreateLowBoxToken for example.",
+      "parentUuid": "e7272e1c_c316396c",
       "range": {
         "startLine": 23,
         "startChar": 5,
