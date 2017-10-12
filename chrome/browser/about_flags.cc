@@ -3123,10 +3123,14 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // defined(USE_ASH)
 
 #if defined(OS_CHROMEOS)
-    {"enable-zip-archiver-on-file-manager",
-     flag_descriptions::kEnableZipArchiverOnFileManagerName,
-     flag_descriptions::kEnableZipArchiverOnFileManagerDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kEnableZipArchiverOnFileManager)},
+    {"enable-zip-archiver-packer",
+     flag_descriptions::kEnableZipArchiverPackerName,
+     flag_descriptions::kEnableZipArchiverPackerDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableZipArchiverPacker)},
+    {"enable-zip-archiver-unpacker",
+     flag_descriptions::kEnableZipArchiverUnpackerName,
+     flag_descriptions::kEnableZipArchiverUnpackerDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableZipArchiverUnpacker)},
 #endif  // OS_CHROMEOS
 
 #if defined(OS_ANDROID)
