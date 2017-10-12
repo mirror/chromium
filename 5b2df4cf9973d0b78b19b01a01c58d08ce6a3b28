@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64694c90_43726013",
+        "filename": "components/password_manager/core/browser/form_saver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:25:02Z",
+      "side": 1,
+      "message": "The original idea of the DCHECK was to ensure that this is not called for non-google credentials. I would expect the DCHECK to be extended to allow both accounts.google.com and myaccount.google.com, not to be removed altogether. I believe we should still wipe the old GAIA password copies from accounts.google.com if we see the user changing the password on myaccounts.google.com.\n\nIn any case, please ensure that the comment at FormSaver::WipeOutdatedCopies is updated and that the new change in behaviour is tested.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 3
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ecb6ce_8b413d64",
+        "filename": "components/password_manager/sync/browser/password_sync_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:25:02Z",
+      "side": 1,
+      "message": "optional: constexpr instead of const?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4301b23c_b8ab0f15",
+        "filename": "components/password_manager/sync/browser/password_sync_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:25:02Z",
+      "side": 1,
+      "message": "Can we (unit-)test this change?",
+      "range": {
+        "startLine": 44,
+        "startChar": 69,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
