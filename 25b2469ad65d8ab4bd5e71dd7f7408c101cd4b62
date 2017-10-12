@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c3c932f_b3ee24ac",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-12T22:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb33f17_e6f20735",
+      "range": {
+        "startLine": 61,
+        "startChar": 43,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "25b2469ad65d8ab4bd5e71dd7f7408c101cd4b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6cb2a10_41b50f74",
         "filename": "media/mojo/interfaces/video_frame_struct_traits.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T22:28:18Z",
       "side": 1,
       "message": "I\u0027m not entirely sure why this needs its own sequence?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 68
+      },
+      "revId": "25b2469ad65d8ab4bd5e71dd7f7408c101cd4b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6a5a30_7bb11a56",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-12T22:48:17Z",
+      "side": 1,
+      "message": "Technically it just needs to be on *some* sequence, but even if we know for sure that we are on some sequence *now*, there is no guarantee that it will still exist when a release message comes in. (And this is of particular consequence to us because the Mojo media service factory destroys its thread when inactive.)\n\nWe would have a few more options in an explicit converter, but from a StructTrait this seems to be the best way to fulfill that requirement.",
+      "parentUuid": "b6cb2a10_41b50f74",
       "range": {
         "startLine": 78,
         "startChar": 0,
