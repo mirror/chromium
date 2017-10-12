@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40d8a8e6_31274b85",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T13:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4ab00ca_cdcda09e",
+      "revId": "943718ed78f0b157b41666de32cc3cdf5d069184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c4a6003_16c12173",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "943718ed78f0b157b41666de32cc3cdf5d069184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb82dde6_b80b8229",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T13:27:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c4a6003_16c12173",
+      "revId": "943718ed78f0b157b41666de32cc3cdf5d069184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
