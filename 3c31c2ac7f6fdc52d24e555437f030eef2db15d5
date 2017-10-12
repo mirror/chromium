@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55975405_443db907",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/inline-breakpoint-with-sourcemap.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-10-12T18:22:37Z",
+      "side": 1,
+      "message": "let\u0027s add a comment with this sourcemap contents",
+      "revId": "3c31c2ac7f6fdc52d24e555437f030eef2db15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
