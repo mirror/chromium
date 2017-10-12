@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13336f85_436c5954",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-12T20:12:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like it would fix 773986.\n\nWhy is this behind touchpad and latching flags?",
+      "range": {
+        "startLine": 401,
+        "startChar": 8,
+        "endLine": 401,
+        "endChar": 42
+      },
+      "revId": "1e1c69dcf0da44529bf1385649020bf7731cd0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
