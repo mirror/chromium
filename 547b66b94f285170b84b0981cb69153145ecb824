@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81e8796c_2e91ff2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-12T20:48:24Z",
+      "side": 1,
+      "message": "How does this announce now? I\u0027m wondering if this is something that we should do for compact infobars in general. Otherwise it seems like we are adding another snowflake.",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "547b66b94f285170b84b0981cb69153145ecb824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
