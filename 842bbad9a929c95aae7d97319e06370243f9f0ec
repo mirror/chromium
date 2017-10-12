@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d8e20a8_c4247620",
+        "filename": "content/browser/ssl/ignore_errors_cert_verifier_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T18:32:04Z",
+      "side": 1,
+      "message": "The ignore_errors_cert_verifier.h/cc and their corresponding test code have been moved to //content/public/network.",
+      "parentUuid": "4429df85_a08bf15b",
+      "revId": "842bbad9a929c95aae7d97319e06370243f9f0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f34b93a8_d0496655",
         "filename": "content/public/browser/ignore_errors_cert_verifier_utils.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T22:49:44Z",
       "side": 1,
       "message": "Can this be placed in content/public/network so our network service can use it, instead of duplicating code?\n\n(We could move the entire IgnoreErrorsCertVerifier there, instead of splitting it.)",
+      "revId": "842bbad9a929c95aae7d97319e06370243f9f0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8453679d_437216cf",
+        "filename": "content/public/browser/ignore_errors_cert_verifier_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T18:32:04Z",
+      "side": 1,
+      "message": "Thanks for the comment! Moving them to //content/public/network does seem to be a better choice.\n\nDone.",
+      "parentUuid": "f34b93a8_d0496655",
       "revId": "842bbad9a929c95aae7d97319e06370243f9f0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
