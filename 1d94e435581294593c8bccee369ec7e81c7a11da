@@ -70,6 +70,30 @@
       "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23d8a3e2_53ae4ca6",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T18:04:42Z",
+      "side": 1,
+      "message": "Still doesn\u0027t work:\n\n../../extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc:22:29: error: no type named \u0027kMaxReadersPerSource\u0027 in \u0027extensions::LogSourceAccessManager\u0027\n    LogSourceAccessManager::kMaxReadersPerSource;\n    ~~~~~~~~~~~~~~~~~~~~~~~~^",
+      "parentUuid": "0314c073_d619f8d8",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
