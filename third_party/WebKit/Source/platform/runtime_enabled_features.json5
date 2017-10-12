@@ -937,6 +937,10 @@
       name: "SignatureBasedIntegrity",
       status: "experimental",
     },
+    // http://crbug.com/696617.
+    {
+      name: "SimpleUserActivation",
+    },
     {
       name: "SkipCompositingSmallScrollers",
     },

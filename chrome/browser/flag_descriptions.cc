@@ -1884,6 +1884,11 @@ const char kNtpCondensedTileLayoutName[] = "Condensed NTP tile layout";
 const char kNtpCondensedTileLayoutDescription[] =
     "Show a condensed tile layout on the New Tab Page.";
 
+const char kSimpleUserActivationName[] = "Simple User Activation";
+const char kSimpleUserActivationDescription[] =
+    "Enable simple user activation for APIs that are otherwise controlled by "
+    "user gesture tokens.";
+
 const char kSiteExplorationUiName[] = "Site Exploration UI";
 const char kSiteExplorationUiDescription[] =
     "Show site suggestions in the Exploration UI";
