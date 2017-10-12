@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a9394672_020a651f",
+        "filename": "content/child/web_url_request_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-12T07:09:05Z",
+      "side": 1,
+      "message": "As we chatted offline, if we always do this we\u0027ll break the regular network loading path unless we do:\n* Add support to get a data pipe from a Blob and pass it instead (or temporarily allow broken dependency from network -\u003e storage), and\n* Add support to create net::UploadDataStream from a given data pipe\n\nIf we both of these the entire code will be really cleaner, I believe.\n\nAlternative (hacky) approach we talked is to take this path only for ServiceWorkerSubresourceLoader cases, which can be done by:\n* Get a mojom::Blob from request.HttpBody and attach the blob to the request (WebURLRequest) as a extra data field in WebServiceWorkerNetworkProvider::CreateURLLoader\n* Go through this path (i.e. attach the request_body as a blob) only when we have the extra data field here",
+      "revId": "840c727e8438bf14d409303f819210a7bf47db6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c72a71d8_ec6fbfe2",
         "filename": "content/public/common/resource_request_body.h",
         "patchSetId": 2
