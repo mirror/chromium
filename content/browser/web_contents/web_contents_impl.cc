@@ -700,6 +700,10 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     }
   }
 
+  // Apply any required sandbox flags supplied by CreateParams.
+  new_root->SetPendingSandboxFlags(new_root->pending_sandbox_flags() |
+                                   params.force_sandbox_flags);
+
   // This may be true even when opener is null, such as when opening blocked
   // popups.
   if (params.created_with_opener)
@@ -713,6 +717,7 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     // bit to true.
     new_contents->is_subframe_ = true;
   }
+
   new_contents->Init(params);
   return new_contents;
 }

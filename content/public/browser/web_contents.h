@@ -28,6 +28,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/stop_find_action.h"
+#include "third_party/WebKit/public/web/WebSandboxFlags.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_tree_update.h"
 #include "ui/base/window_open_disposition.h"
@@ -170,6 +171,12 @@ class WebContents : public PageNavigator,
     // Note that the pre-created renderer process may not be used if the first
     // navigation requires a dedicated or privileged process, such as a WebUI.
     bool initialize_renderer;
+
+    // The set of sandbox flags that should be applied to the main RenderFrame.
+    // This is currently used by the Presentation API to sandbox documents
+    // opened as presentations.  See:
+    // https://w3c.github.io/presentation-api/#creating-a-receiving-browsing-context
+    blink::WebSandboxFlags force_sandbox_flags;
   };
 
   // Creates a new WebContents.
