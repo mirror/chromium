@@ -319,6 +319,7 @@ content::WebContents* FullscreenTestBrowserWindow::GetActiveWebContents() {
 
 TEST_F(BrowserCommandControllerFullscreenTest,
        UpdateCommandsForFullscreenMode) {
+  // clang-format off
   struct {
     int command_id;
     // Whether the command is enabled in tab mode.
@@ -339,7 +340,7 @@ TEST_F(BrowserCommandControllerFullscreenTest,
     //                           | enabled | reserved | enabled  | reserved |
     { IDC_OPEN_CURRENT_URL,        true,     false,     false,     false    },
     { IDC_FOCUS_TOOLBAR,           true,     false,     false,     false    },
-    { IDC_FOCUS_LOCATION,          true,     false,     false,     false    },
+    { IDC_FOCUS_LOCATION,          true,     false,     true,      false    },
     { IDC_FOCUS_SEARCH,            true,     false,     false,     false    },
     { IDC_FOCUS_MENU_BAR,          true,     false,     false,     false    },
     { IDC_FOCUS_NEXT_PANE,         true,     false,     false,     false    },
@@ -366,6 +367,7 @@ TEST_F(BrowserCommandControllerFullscreenTest,
     { IDC_EXIT,                    true,     true,      true,      true     },
     { IDC_SHOW_AS_TAB,             false,    false,     false,     false    },
   };
+  // clang-format on
   const content::NativeWebKeyboardEvent key_event(
       blink::WebInputEvent::kTypeFirst, 0, 0);
   // Defaults for a tabbed browser.

@@ -767,6 +767,7 @@ void BrowserCommandController::InitCommandState() {
 #endif
 
   // Page-related commands
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, /*enabled=*/true);
   command_updater_.UpdateCommandEnabled(IDC_EMAIL_PAGE_LOCATION, true);
   command_updater_.UpdateCommandEnabled(IDC_MANAGE_PASSWORDS_FOR_PAGE, true);
 
@@ -1030,7 +1031,6 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
 
   // Focus various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, show_main_ui);
-  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, show_main_ui);
   command_updater_.UpdateCommandEnabled(
       IDC_FOCUS_MENU_BAR, main_not_fullscreen);
