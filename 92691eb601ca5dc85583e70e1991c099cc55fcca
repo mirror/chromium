@@ -50,6 +50,23 @@
       "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bee934_ef5f7879",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T21:49:09Z",
+      "side": 1,
+      "message": "Maybe we should add a TODO here: now that we pass an interface provider down (and once we hook up the plumbing), maybe the worker can just populate the content settings interface ptr itself rather than requiring it be plumbed across like this.",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
