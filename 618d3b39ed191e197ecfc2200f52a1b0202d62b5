@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f54f39_f035e296",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "Nit: prefer base::MakeUnique",
+      "range": {
+        "startLine": 145,
+        "startChar": 26,
+        "endLine": 145,
+        "endChar": 74
+      },
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bee7032_1076cd07",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "When this is implemented, please use a mojo TypeConverter template: this helps us track places where we\u0027re doing non-Mojo \u003c-\u003e Mojo conversions.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 3
+      },
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139b9cc7_e1f5f071",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 46
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "Routing IDs are signed.",
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e326d0_b0e29797",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "Use a type converter for this please (followup is fine)",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15516d26_8844d419",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "Similar comment about using type converter for conversions here: followup is fine for this one.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566e98ba_87a6e3ba",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "If Document can\u0027t be null, please pass by mutable reference.",
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9564e3c_213f87d5",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 46
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:16:56Z",
+      "side": 1,
+      "message": "However, I think it might be possible for InterfaceProvider to return null here. Can you check what happens if you access this property from an iframe that removes itself from the DOM?",
+      "revId": "618d3b39ed191e197ecfc2200f52a1b0202d62b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
