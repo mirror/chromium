@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.chromium.base.VisibleForTesting;
-import org.chromium.content.browser.RenderCoordinates;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.ViewAndroidDelegate;
 import org.chromium.ui.display.DisplayAndroid;
 
@@ -37,7 +37,7 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
     private final Map<View, Position> mAnchorViews = new LinkedHashMap<>();
 
     private final AwContentsClient mContentsClient;
-    private final RenderCoordinates mRenderCoordinates;
+    private final WebContents mWebContents;
 
     /**
      * Represents the position of an anchor view.
@@ -63,11 +63,11 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
     }
 
     @VisibleForTesting
-    public AwViewAndroidDelegate(ViewGroup containerView, AwContentsClient contentsClient,
-            RenderCoordinates renderCoordinates) {
+    public AwViewAndroidDelegate(
+            ViewGroup containerView, AwContentsClient contentsClient, WebContents webContents) {
         mContainerView = containerView;
         mContentsClient = contentsClient;
-        mRenderCoordinates = renderCoordinates;
+        mWebContents = webContents;
     }
 
     @Override
@@ -131,8 +131,8 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
         // TODO(sgurun) fix this to use mContainerViewAtCreation.getScroll[X/Y]()
         // as it naturally accounts for scroll differences between
         // these models.
-        leftMargin += mRenderCoordinates.getScrollXPixInt();
-        topMargin += mRenderCoordinates.getScrollYPixInt();
+        leftMargin += mWebContents.getScrollXPixInt();
+        topMargin += mWebContents.getScrollYPixInt();
 
         int scaledWidth = Math.round(width * scale);
         int scaledHeight = Math.round(height * scale);

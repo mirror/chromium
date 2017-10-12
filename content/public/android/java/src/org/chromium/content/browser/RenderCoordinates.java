@@ -9,8 +9,6 @@ import android.util.TypedValue;
 
 import org.chromium.base.VisibleForTesting;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Cached copy of all positions and scales (CSS-to-DIP-to-physical pixels)
  * reported from the renderer.
@@ -20,6 +18,10 @@ import java.lang.ref.WeakReference;
  * Unless stated otherwise, all coordinates are in CSS (document) coordinate space.
  */
 public class RenderCoordinates {
+    /**
+     * Read-only RenderCoordinates instance that contains a default set of values.
+     */
+    public static final DummyRenderCoordinates DEFAULT = new DummyRenderCoordinates();
 
     // Scroll offset from the native in CSS.
     private float mScrollXCss;
@@ -50,7 +52,7 @@ public class RenderCoordinates {
     private boolean mHasFrameInfo;
 
     // Internally-visible set of update methods (used by ContentViewCore).
-    void reset() {
+    public void reset() {
         mScrollXCss = mScrollYCss = 0;
         mPageScaleFactor = 1.0f;
         mHasFrameInfo = false;
@@ -61,14 +63,13 @@ public class RenderCoordinates {
         mContentHeightCss = contentHeightCss;
     }
 
-    void setDeviceScaleFactor(float dipScale, WeakReference<Context> displayContext) {
+    public void setDeviceScaleFactor(float dipScale, Context context) {
         mDeviceScaleFactor = dipScale;
 
         // The wheel scroll factor depends on the theme in the context.
         // This code assumes that the theme won't change between this call and
         // getWheelScrollFactor().
 
-        Context context = displayContext.get();
         TypedValue outValue = new TypedValue();
         // This is the same attribute used by Android Views to scale wheel
         // event motion into scroll deltas.
@@ -81,7 +82,7 @@ public class RenderCoordinates {
         }
     }
 
-    void updateFrameInfo(float scrollXCss, float scrollYCss, float contentWidthCss,
+    public void updateFrameInfo(float scrollXCss, float scrollYCss, float contentWidthCss,
             float contentHeightCss, float viewportWidthCss, float viewportHeightCss,
             float pageScaleFactor, float minPageScaleFactor, float maxPageScaleFactor,
             float contentOffsetYPix) {
@@ -424,5 +425,23 @@ public class RenderCoordinates {
      */
     public float fromLocalCssToPix(float css) {
         return css * mPageScaleFactor * mDeviceScaleFactor;
+    }
+
+    private static class DummyRenderCoordinates extends RenderCoordinates {
+        public DummyRenderCoordinates() {
+            reset();
+        }
+
+        @Override
+        public void updateContentSizeCss(float contentWidthCss, float contentHeightCss) {}
+
+        @Override
+        public void setDeviceScaleFactor(float dipScale, Context context) {}
+
+        @Override
+        public void updateFrameInfo(float scrollXCss, float scrollYCss, float contentWidthCss,
+                float contentHeightCss, float viewportWidthCss, float viewportHeightCss,
+                float pageScaleFactor, float minPageScaleFactor, float maxPageScaleFactor,
+                float contentOffsetYPix) {}
     }
 }

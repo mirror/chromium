@@ -359,16 +359,25 @@ void ContentViewCore::UpdateFrameInfo(
   if (obj.is_null() || !GetWindowAndroid())
     return;
 
-  GetViewAndroid()->UpdateFrameInfo({
+  auto* view_android = GetViewAndroid();
+  view_android->UpdateFrameInfo({
       viewport_size, page_scale_factor, content_offset,
   });
 
+  // Adjust content size to be always at least as big as the actual
+  // viewport (as set by onSizeChanged).
+  gfx::SizeF view_size(view_android->GetSize());
+  view_size.Scale(1.f / page_scale_factor);
+  float content_width = std::max(content_size.width(), view_size.width());
+  float content_height = std::max(content_size.height(), view_size.height());
+
   Java_ContentViewCore_updateFrameInfo(
       env, obj, scroll_offset.x(), scroll_offset.y(), page_scale_factor,
-      page_scale_factor_limits.x(), page_scale_factor_limits.y(),
-      content_size.width(), content_size.height(), viewport_size.width(),
-      viewport_size.height(), top_shown_pix, top_changed,
-      is_mobile_optimized_hint);
+      page_scale_factor_limits.x(), page_scale_factor_limits.y(), content_width,
+      content_height, top_shown_pix, top_changed, is_mobile_optimized_hint);
+  web_contents_->UpdateFrameInfo(scroll_offset, content_width, content_height,
+                                 viewport_size, page_scale_factor,
+                                 page_scale_factor_limits, top_shown_pix);
 }
 
 void ContentViewCore::ShowSelectPopupMenu(RenderFrameHost* frame,

@@ -43,8 +43,8 @@ public class TextSuggestionHost {
                 mContentViewCore.getContainerView(), mContentViewCore);
 
         mSpellCheckPopupWindow.show(caretXPx,
-                caretYPx + mContentViewCore.getRenderCoordinates().getContentOffsetYPix(),
-                markedText, suggestions);
+                caretYPx + mContentViewCore.getWebContents().getContentOffsetYPix(), markedText,
+                suggestions);
     }
 
     @CalledByNative
@@ -62,8 +62,8 @@ public class TextSuggestionHost {
                 this, mContentViewCore.getContainerView(), mContentViewCore);
 
         mTextSuggestionsPopupWindow.show(caretXPx,
-                caretYPx + mContentViewCore.getRenderCoordinates().getContentOffsetYPix(),
-                markedText, suggestions);
+                caretYPx + mContentViewCore.getWebContents().getContentOffsetYPix(), markedText,
+                suggestions);
     }
 
     /**

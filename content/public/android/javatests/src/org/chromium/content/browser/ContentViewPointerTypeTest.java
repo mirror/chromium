@@ -72,12 +72,10 @@ public class ContentViewPointerTypeTest {
         mActivityTestRule.runOnUiThreadForTestCommon(new Runnable() {
             @Override
             public void run() {
-                float x = mActivityTestRule.getContentViewCore()
-                                  .getRenderCoordinates()
-                                  .fromLocalCssToPix((float) (rect.left + rect.right) / 2.0f);
-                float y = mActivityTestRule.getContentViewCore()
-                                  .getRenderCoordinates()
-                                  .fromLocalCssToPix((float) (rect.top + rect.bottom) / 2.0f);
+                float x = mActivityTestRule.getWebContents().fromLocalCssToPix(
+                        (float) (rect.left + rect.right) / 2.0f);
+                float y = mActivityTestRule.getWebContents().fromLocalCssToPix(
+                        (float) (rect.top + rect.bottom) / 2.0f);
                 moveCursor(x, y);
             }
         });

@@ -5613,6 +5613,19 @@ service_manager::InterfaceProvider* WebContentsImpl::GetJavaInterfaces() {
   return java_interfaces_.get();
 }
 
+void WebContentsImpl::UpdateFrameInfo(
+    const gfx::Vector2dF& scroll_offset,
+    float content_width,
+    float content_height,
+    const gfx::SizeF& viewport_size,
+    float page_scale_factor,
+    const gfx::Vector2dF& page_scale_factor_limits,
+    const float top_shown_pix) {
+  GetWebContentsAndroid()->UpdateFrameInfo(
+      scroll_offset, content_width, content_height, viewport_size,
+      page_scale_factor, page_scale_factor_limits, top_shown_pix);
+}
+
 #elif defined(OS_MACOSX)
 
 void WebContentsImpl::SetAllowOtherViews(bool allow) {
