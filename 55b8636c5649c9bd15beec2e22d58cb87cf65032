@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c3dea9_3b619ab2",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_characteristics_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-12T21:37:22Z",
+      "side": 1,
+      "message": "nit: Move this check before your comment.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "55b8636c5649c9bd15beec2e22d58cb87cf65032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b081225a_e7be4767",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_characteristics_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-12T21:37:22Z",
+      "side": 1,
+      "message": "nit: Move this line to before you call the callback. It could be possible that the error callback results in this function being called again, resulting in the error callback being invoked, eventually leading to an infinite loop. Currently, the code does not behave this way, but it is better to code defensively in case the client of this class changes at some point.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 42
+      },
+      "revId": "55b8636c5649c9bd15beec2e22d58cb87cf65032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052c2e68_a7747d2c",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_characteristics_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-12T21:37:22Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call this function OnCharacteristicDiscoveryEnded().",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "55b8636c5649c9bd15beec2e22d58cb87cf65032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88762fe_b16bbcc2",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_characteristics_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-12T21:37:22Z",
+      "side": 1,
+      "message": "Please remove the |adapter| parameter since it is never used by the function.",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 67
+      },
+      "revId": "55b8636c5649c9bd15beec2e22d58cb87cf65032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
