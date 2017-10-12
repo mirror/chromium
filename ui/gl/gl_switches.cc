@@ -113,24 +113,21 @@ const char kDisableDirectCompositionLayers[] =
 // tracking.
 const char kUsePassthroughCmdDecoder[] = "use-passthrough-cmd-decoder";
 
+// TEST
+const char kEnableDecodeBurstMode[] = "enable-decode-burst-mode";
+
 // This is the list of switches passed from this file that are passed from the
 // GpuProcessHost to the GPU Process. Add your switch to this list if you need
 // to read it in the GPU process, else don't add it.
 const char* const kGLSwitchesCopiedFromGpuProcessHost[] = {
-    kDisableGpuVsync,
-    kDisableD3D11,
-    kDisableES3GLContext,
-    kEnableGPUServiceLogging,
-    kEnableGPUServiceTracing,
-    kEnableSgiVideoSync,
-    kGpuNoContextLost,
-    kDisableGLDrawingForTests,
-    kOverrideUseSoftwareGLForTests,
-    kUseANGLE,
-    kEnableSwapBuffersWithBounds,
-    kEnableDirectCompositionLayers,
-    kDisableDirectCompositionLayers,
+    kDisableGpuVsync, kDisableD3D11, kDisableES3GLContext,
+    kEnableGPUServiceLogging, kEnableGPUServiceTracing, kEnableSgiVideoSync,
+    kGpuNoContextLost, kDisableGLDrawingForTests,
+    kOverrideUseSoftwareGLForTests, kUseANGLE, kEnableSwapBuffersWithBounds,
+    kEnableDirectCompositionLayers, kDisableDirectCompositionLayers,
     kUsePassthroughCmdDecoder,
+    // TEST
+    kEnableDecodeBurstMode,
 };
 const int kGLSwitchesCopiedFromGpuProcessHostNumSwitches =
     arraysize(kGLSwitchesCopiedFromGpuProcessHost);

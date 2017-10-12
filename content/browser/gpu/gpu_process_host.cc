@@ -111,14 +111,10 @@ namespace {
 
 // Command-line switches to propagate to the GPU process.
 static const char* const kSwitchNames[] = {
-    switches::kDisableAcceleratedVideoDecode,
-    switches::kDisableBreakpad,
-    switches::kDisableGpuRasterization,
-    switches::kDisableGpuSandbox,
-    switches::kDisableGpuWatchdog,
-    switches::kDisableGLExtensions,
-    switches::kDisableLogging,
-    switches::kDisableSeccompFilterSandbox,
+    switches::kDisableAcceleratedVideoDecode, switches::kDisableBreakpad,
+    switches::kDisableGpuRasterization, switches::kDisableGpuSandbox,
+    switches::kDisableGpuWatchdog, switches::kDisableGLExtensions,
+    switches::kDisableLogging, switches::kDisableSeccompFilterSandbox,
     switches::kDisableShaderNameHashing,
 #if BUILDFLAG(ENABLE_WEBRTC)
     switches::kDisableWebRtcHWEncoding,
@@ -126,34 +122,22 @@ static const char* const kSwitchNames[] = {
 #if defined(OS_WIN)
     switches::kEnableAcceleratedVpxDecode,
 #endif
-    switches::kEnableGpuRasterization,
-    switches::kEnableHeapProfiling,
-    switches::kEnableLogging,
-    switches::kEnableOOPRasterization,
+    switches::kEnableGpuRasterization, switches::kEnableHeapProfiling,
+    switches::kEnableLogging, switches::kEnableOOPRasterization,
 #if defined(OS_CHROMEOS)
     switches::kDisableVaapiAcceleratedVideoEncode,
 #endif
-    switches::kGpuStartupDialog,
-    switches::kGpuSandboxAllowSysVShm,
-    switches::kGpuSandboxFailuresFatal,
-    switches::kGpuSandboxStartEarly,
-    switches::kHeadless,
-    switches::kLoggingLevel,
-    switches::kEnableLowEndDeviceMode,
-    switches::kDisableLowEndDeviceMode,
-    switches::kNoSandbox,
-    switches::kTestGLLib,
-    switches::kTraceConfigFile,
-    switches::kTraceStartup,
-    switches::kTraceToConsole,
-    switches::kUseFakeJpegDecodeAccelerator,
-    switches::kUseGpuInTests,
-    switches::kV,
-    switches::kVModule,
+    switches::kGpuStartupDialog, switches::kGpuSandboxAllowSysVShm,
+    switches::kGpuSandboxFailuresFatal, switches::kGpuSandboxStartEarly,
+    switches::kHeadless, switches::kLoggingLevel,
+    switches::kEnableLowEndDeviceMode, switches::kDisableLowEndDeviceMode,
+    switches::kNoSandbox, switches::kTestGLLib, switches::kTraceConfigFile,
+    switches::kTraceStartup, switches::kTraceToConsole,
+    switches::kUseFakeJpegDecodeAccelerator, switches::kUseGpuInTests,
+    switches::kV, switches::kVModule,
 #if defined(OS_MACOSX)
     switches::kDisableAVFoundationOverlays,
-    switches::kDisableRemoteCoreAnimation,
-    switches::kEnableSandboxLogging,
+    switches::kDisableRemoteCoreAnimation, switches::kEnableSandboxLogging,
     switches::kShowMacOverlayBorders,
 #endif
 #if defined(USE_OZONE)
@@ -162,13 +146,12 @@ static const char* const kSwitchNames[] = {
 #if defined(USE_X11)
     switches::kX11Display,
 #endif
-    switches::kGpuTestingGLVendor,
-    switches::kGpuTestingGLRenderer,
-    switches::kGpuTestingGLVersion,
-    switches::kDisableGpuDriverBugWorkarounds,
-    switches::kUsePassthroughCmdDecoder,
-    switches::kIgnoreGpuBlacklist,
+    switches::kGpuTestingGLVendor, switches::kGpuTestingGLRenderer,
+    switches::kGpuTestingGLVersion, switches::kDisableGpuDriverBugWorkarounds,
+    switches::kUsePassthroughCmdDecoder, switches::kIgnoreGpuBlacklist,
     switches::kForceVideoOverlays,
+    // TEST
+    switches::kEnableDecodeBurstMode,
 };
 
 enum GPUProcessLifetimeEvent {

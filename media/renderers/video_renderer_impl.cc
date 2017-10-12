@@ -140,7 +140,7 @@ VideoRendererImpl::VideoRendererImpl(
       last_frame_opaque_(false),
       painted_first_frame_(false),
       min_buffered_frames_(limits::kMaxVideoFrames),
-      max_buffered_frames_(min_buffered_frames_),
+      max_buffered_frames_(min_buffered_frames_ * 2),
       read_durations_(VideoRendererAlgorithm::kMovingAverageSamples),
       has_playback_met_watch_time_duration_requirement_(false),
       use_complexity_based_buffering_(
@@ -200,7 +200,8 @@ void VideoRendererImpl::Flush(const base::Closure& callback) {
   painted_first_frame_ = false;
 
   // Reset preroll capacity so seek time is not penalized.
-  min_buffered_frames_ = max_buffered_frames_ = limits::kMaxVideoFrames;
+  min_buffered_frames_ = limits::kMaxVideoFrames;
+  max_buffered_frames_ = min_buffered_frames_ * 2;
   read_durations_.Reset();
 }
 

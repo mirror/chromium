@@ -58,6 +58,9 @@ GL_EXPORT extern const char kUsePassthroughCmdDecoder[];
 GL_EXPORT extern const char kDisableGLDrawingForTests[];
 GL_EXPORT extern const char kOverrideUseSoftwareGLForTests[];
 
+// TEST
+GL_EXPORT extern const char kEnableDecodeBurstMode[];
+
 GL_EXPORT extern const char* const kGLSwitchesCopiedFromGpuProcessHost[];
 GL_EXPORT extern const int kGLSwitchesCopiedFromGpuProcessHostNumSwitches;
 
