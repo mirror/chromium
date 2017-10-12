@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1333c6_73313d66",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-10-12T01:41:10Z",
+      "side": 1,
+      "message": "this will add cast_shell to chromecast_branding \u003d\u003d internal android builds.\n\nShould this just be in a separate if (!is_android) block?",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "6139ac0314557c35c7fd8e4ad208b4c2e03ae76e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
