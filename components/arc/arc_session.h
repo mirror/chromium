@@ -27,6 +27,9 @@ class ArcSession {
   // Observer to notify events corresponding to one ARC session run.
   class Observer {
    public:
+    // Called when the D-Bus IPC for staring ARC instance is sent.
+    virtual void OnSessionStarting() = 0;
+
     // Called when ARC instance is stopped. This is called exactly once
     // per instance which is Start()ed.
     // |was_running| is true, if the stopped instance was fully set up

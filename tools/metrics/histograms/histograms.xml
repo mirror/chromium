@@ -2136,6 +2136,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Arc.ContainerCrash" enum="ArcContainerCrashEvent">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>yusukes@google.com</owner>
+  <summary>The number of ARC container crashes.</summary>
+</histogram>
+
+<histogram name="Arc.ContainerRestartAfterCrashCount">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>yusukes@google.com</owner>
+  <summary>
+    The number of times ARC container crashes and is automatically restarted.
+  </summary>
+</histogram>
+
 <histogram name="Arc.CumulativeUseTime" units="seconds">
   <owner>elijahtaylor@google.com</owner>
   <owner>mitsuji@google.com</owner>
