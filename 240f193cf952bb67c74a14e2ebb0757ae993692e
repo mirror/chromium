@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dca83501_0697ffe5",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-12T01:20:09Z",
+      "side": 1,
+      "message": "Generating an expectation sounds like estimation, so maybe\nTabManager.BackgroundTabOpening.ForegroundTab.TaskQueueingDurationEstimated?\n\nUp to you though.",
+      "range": {
+        "startLine": 1368,
+        "startChar": 56,
+        "endLine": 1368,
+        "endChar": 93
+      },
+      "revId": "240f193cf952bb67c74a14e2ebb0757ae993692e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b318fa8_317d6605",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-12T01:20:09Z",
+      "side": 1,
+      "message": "*foreground",
+      "range": {
+        "startLine": 1426,
+        "startChar": 39,
+        "endLine": 1426,
+        "endChar": 48
+      },
+      "revId": "240f193cf952bb67c74a14e2ebb0757ae993692e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
