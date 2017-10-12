@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2775b1a0_010be904",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T00:05:11Z",
+      "side": 1,
+      "message": "nit: The Chrome extensions system",
+      "revId": "f423412f9ea45ffae62ab2ee36bf5fc524d6689d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70349713_e830aa41",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T00:05:11Z",
+      "side": 1,
+      "message": "Does it ever not?\n\nMaybe rephrase to \"Event listeners are registered in JavaScript in the renderer process.\"?",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "f423412f9ea45ffae62ab2ee36bf5fc524d6689d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
