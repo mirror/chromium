@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfcb03df_4a3d04a0",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-12T13:18:42Z",
+      "side": 1,
+      "message": "process_launched_ means that Launch was called. Launch itself is asynchronous. is it possible that destruction (i.e., this dtor) happens after Launch() but before either OnProcessLaunched() or OnProcessLaunchFailed() is called?",
+      "revId": "a14628013711891a600348b52153d9b36c2ba067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
