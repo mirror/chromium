@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3dd236c1_d4ba9559",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-12T18:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19bad00_eab891d0",
+      "revId": "c045ab1437d6cb25a8b91c1cd031843016b48522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d47a15_81e536ab",
         "filename": "ui/views/controls/scroll_view.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T18:10:55Z",
       "side": 1,
       "message": "nit: \"draw a white separator\" and \"of the scroll view\" and \"when it overflows\", like:\n\"Whether to draw a white separator on the four sides of the scroll view when it overflows.\"\nOr consider: // Whether to draw an indicator when all contents are not currently visible.",
+      "revId": "c045ab1437d6cb25a8b91c1cd031843016b48522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1efa981_6c536d3d",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-12T18:18:45Z",
+      "side": 1,
+      "message": "That\u0027s better, thanks.",
+      "parentUuid": "37d47a15_81e536ab",
       "revId": "c045ab1437d6cb25a8b91c1cd031843016b48522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
