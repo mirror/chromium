@@ -16,6 +16,24 @@
       "revId": "a0bc0e0cad5fb9a2a6b345a501cb0e862b7ce4ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6819f772_aee2fceb",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-12T00:19:21Z",
+      "side": 1,
+      "message": "Good catch. Since we did the similar thing for download cleanup task, I introduced a logic in PrefetchDispatcherImpl to prevent some reconciliation tasks not being run twice.",
+      "parentUuid": "a06d457a_097b3c98",
+      "revId": "a0bc0e0cad5fb9a2a6b345a501cb0e862b7ce4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
