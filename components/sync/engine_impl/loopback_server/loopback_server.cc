@@ -351,6 +351,10 @@ string LoopbackServer::CommitEntity(
     entity = PersistentUniqueClientEntity::CreateFromEntity(client_entity);
   }
 
+  if (!entity) {
+    return string();
+  }
+
   const std::string id = entity->GetId();
   SaveEntity(std::move(entity));
   BuildEntryResponseForSuccessfulCommit(id, entry_response);
@@ -586,10 +590,15 @@ bool LoopbackServer::DeSerializeState(
   for (int i = 0; i < proto.keystore_keys_size(); ++i)
     keystore_keys_.push_back(proto.keystore_keys(i));
   for (int i = 0; i < proto.entities_size(); ++i) {
-    entities_[proto.entities(i).entity().id_string()] =
+    std::unique_ptr<LoopbackServerEntity> entity =
         LoopbackServerEntity::CreateEntityFromProto(proto.entities(i));
+    // Silently drop entities that cannot be successfully deserialized.
+    if (entity) {
+      entities_[proto.entities(i).entity().id_string()] = std::move(entity);
+    }
   }
 
+  // Report success regardless of if some entities were dropped.
   return true;
 }
 
@@ -615,8 +624,7 @@ bool LoopbackServer::LoadStateFromFile(const base::FilePath& filename) {
     if (base::ReadFileToString(filename, &serialized)) {
       sync_pb::LoopbackServerProto proto;
       if (serialized.length() > 0 && proto.ParseFromString(serialized)) {
-        DeSerializeState(proto);
-        return true;
+        return DeSerializeState(proto);
       } else {
         LOG(ERROR) << "Loopback sync can not parse the persistent state file.";
         return false;
