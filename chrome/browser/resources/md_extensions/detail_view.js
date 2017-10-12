@@ -84,6 +84,14 @@ cr.define('extensions', function() {
      * @return {string}
      * @private
      */
+    computeEnabledStyle_: function() {
+      return this.isEnabled_() ? 'enabled-text' : 'disabled-text';
+    },
+
+    /**
+     * @return {string}
+     * @private
+     */
     computeEnabledText_: function() {
       // TODO(devlin): Get the full spectrum of these strings from bettes.
       return this.isEnabled_() ? this.i18n('itemOn') : this.i18n('itemOff');
