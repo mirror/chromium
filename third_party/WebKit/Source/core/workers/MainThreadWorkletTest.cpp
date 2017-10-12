@@ -43,18 +43,16 @@ class MainThreadWorkletTest : public ::testing::Test {
   void SetUp() override {
     KURL url(kParsedURLString, "https://example.com/");
     page_ = DummyPageHolder::Create();
-    security_origin_ = SecurityOrigin::Create(url);
     reporting_proxy_ = WTF::MakeUnique<MainThreadWorkletReportingProxyForTest>(
         page_->GetFrame().GetDocument());
     global_scope_ = new MainThreadWorkletGlobalScope(
-        &page_->GetFrame(), url, "fake user agent", security_origin_.get(),
+        &page_->GetFrame(), url, "fake user agent",
         ToIsolate(page_->GetFrame().GetDocument()), *reporting_proxy_);
   }
 
   void TearDown() override { global_scope_->Terminate(); }
 
  protected:
-  RefPtr<SecurityOrigin> security_origin_;
   std::unique_ptr<DummyPageHolder> page_;
   std::unique_ptr<MainThreadWorkletReportingProxyForTest> reporting_proxy_;
   Persistent<MainThreadWorkletGlobalScope> global_scope_;
