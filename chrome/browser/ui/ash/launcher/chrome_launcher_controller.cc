@@ -289,8 +289,6 @@ void ChromeLauncherController::Init() {
   // TODO(sky): update unit test so that this test isn't necessary.
   if (ash::Shell::HasInstance())
     SetVirtualKeyboardBehaviorFromPrefs();
-
-  prefs_observer_ = ChromeLauncherPrefsObserver::CreateIfNecessary(profile());
 }
 
 ash::ShelfID ChromeLauncherController::CreateAppLauncherItem(
