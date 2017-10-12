@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c94299d4_d54528df",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-12T18:24:20Z",
+      "side": 1,
+      "message": "nit: trailing period.",
+      "revId": "e42fa300705ba956cc1f69fe09e6eb55dbf69a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
