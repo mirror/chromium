@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "766bbc44_c5927595",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-12T14:11:13Z",
+      "side": 1,
+      "message": "In all namespaces or just fwd decl ones? I think if you see places where people are doing this it is against the style guide.\n\nhttps://google.github.io/styleguide/cppguide.html#Namespace_Formatting",
+      "parentUuid": "4e39d8dc_ea229285",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c7f7f0b_44ade30a",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6563af94_63d7b25e",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-12T14:11:13Z",
+      "side": 1,
+      "message": "Yes, eventually it will replace that method once this work is completed.",
+      "parentUuid": "0c7f7f0b_44ade30a",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a27557fd_3f5bc365",
         "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26abb6da_bf9b759f",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-12T14:11:13Z",
+      "side": 1,
+      "message": "This pattern is following the Chromium (not google) C++ styleguide:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting\n\n\"When you derive from a base class, group any overriding functions in your header file in one labeled section. Use the override specifier on all these functions.\"",
+      "parentUuid": "a27557fd_3f5bc365",
+      "revId": "e429d5a53b874a8f0395ca2839242eea593d2465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
