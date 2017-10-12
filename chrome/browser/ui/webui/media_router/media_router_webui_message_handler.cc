@@ -72,6 +72,7 @@ const char kSeekCurrentMedia[] = "seekCurrentMedia";
 const char kSelectLocalMediaFile[] = "selectLocalMediaFile";
 const char kSetCurrentMediaMute[] = "setCurrentMediaMute";
 const char kSetCurrentMediaVolume[] = "setCurrentMediaVolume";
+const char kSetIntellicastOption[] = "setIntellicastOption";
 const char kHangoutsSetLocalPresent[] = "hangouts.setLocalPresent";
 
 // JS function names.
@@ -360,6 +361,14 @@ void MediaRouterWebUIMessageHandler::UpdateMediaRouteStatus(
     status_value.SetDictionary("hangoutsExtraData",
                                std::move(hangouts_extra_data));
   }
+  if (status.mirroring_extra_data) {
+    auto mirroring_extra_data = base::MakeUnique<base::DictionaryValue>();
+    mirroring_extra_data->SetInteger(
+        "intellicastOption",
+        static_cast<int>(status.mirroring_extra_data->intellicast_option));
+    status_value.SetDictionary("mirroringExtraData",
+                               std::move(mirroring_extra_data));
+  }
 
   web_ui()->CallJavascriptFunctionUnsafe(kUpdateRouteStatus,
                                          std::move(status_value));
@@ -491,6 +500,10 @@ void MediaRouterWebUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       kSetCurrentMediaVolume,
       base::Bind(&MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kSetIntellicastOption,
+      base::Bind(&MediaRouterWebUIMessageHandler::OnSetIntellicastOption,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       kHangoutsSetLocalPresent,
@@ -982,6 +995,23 @@ void MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume(
       media_router_ui_->GetMediaRouteController();
   if (route_controller && volume >= 0 && volume <= 1)
     route_controller->SetVolume(volume);
+}
+
+void MediaRouterWebUIMessageHandler::OnSetIntellicastOption(
+    const base::ListValue* args) {
+  const base::DictionaryValue* args_dict = nullptr;
+  int option;
+  if (!args->GetDictionary(0, &args_dict) ||
+      !args_dict->GetInteger("option", &option)) {
+    DVLOG(1) << "Unable to extract option";
+    return;
+  }
+  MediaRouteController* route_controller =
+      media_router_ui_->GetMediaRouteController();
+  if (route_controller && option >= 0 && option <= 2) {
+    route_controller->SetIntellicastOption(
+        static_cast<IntellicastOption>(option));
+  }
 }
 
 void MediaRouterWebUIMessageHandler::OnSetHangoutsLocalPresent(

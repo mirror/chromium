@@ -228,6 +228,7 @@ class MockMediaController : public mojom::MediaController,
   MOCK_METHOD1(SetMute, void(bool mute));
   MOCK_METHOD1(SetVolume, void(float volume));
   MOCK_METHOD1(Seek, void(base::TimeDelta time));
+  MOCK_METHOD1(SetIntellicastOption, void(IntellicastOption option));
   void ConnectHangoutsMediaRouteController(
       mojom::HangoutsMediaRouteControllerRequest controller_request) override {
     hangouts_binding_.Bind(std::move(controller_request));

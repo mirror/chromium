@@ -29,6 +29,9 @@ interface MediaController {
   // media. Is a no-op if not supported by the media.
   SetVolume(float volume);
 
+  // Sets the intellicast option for Media Remoting.
+  SetIntellicastOption(IntellicastOption option);
+
   // Sets the current playback position. |time| must be less than or equal to
   // the duration of the media. Is a no-op if the media doesn't support seeking.
   Seek(mojo.common.mojom.TimeDelta time);
