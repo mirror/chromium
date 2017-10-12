@@ -56,6 +56,7 @@ class IOSChromeIOThreadTest : public PlatformTest {
   base::MessageLoop loop_;
   web::TestWebThread ui_thread_;
   web::TestWebThread io_thread_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 TEST_F(IOSChromeIOThreadTest, AssertNoUrlRequests) {
