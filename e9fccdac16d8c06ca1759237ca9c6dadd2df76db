@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f79e8b5_86c434f8",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b18e93_49ed150e",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9085718a_f6ad7278",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3b92c7e3_25eaa362",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9085718a_f6ad7278",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ccfd115_af34b700",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-11T22:27:11Z",
       "side": 1,
       "message": "Does wrapping this line in rAf result in an observable difference? My expectation is that clearing the DOM is pretty fast and this would not be necessary.",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23d6434_456e98b3",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Ordering in the queue may (on rare occasion) make an observable difference. It\u0027s not done for the performance optimization.",
+      "parentUuid": "4ccfd115_af34b700",
       "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2a066c03_0997c462",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a33385a_d8566b45",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b0bd9b_4d09fe81",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 15
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bf630fc5_c6a06c42",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b0bd9b_4d09fe81",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91b991e_0524e2eb",
         "filename": "chrome/browser/resources/settings/site_settings/site_data_details_subpage.js",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669f5882_41196e06",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data_details_subpage.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91b991e_0524e2eb",
+      "revId": "e9fccdac16d8c06ca1759237ca9c6dadd2df76db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

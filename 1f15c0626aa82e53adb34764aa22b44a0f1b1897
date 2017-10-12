@@ -16,6 +16,24 @@
       "revId": "1f15c0626aa82e53adb34764aa22b44a0f1b1897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea755c9_29fa17b6",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T03:26:04Z",
+      "side": 0,
+      "message": "IDS_SETTINGS_COOKIES_SINGLE_COOKIE is used in settings_cookies_view_handler.cc",
+      "parentUuid": "f8fafd1e_99277f61",
+      "revId": "1f15c0626aa82e53adb34764aa22b44a0f1b1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
