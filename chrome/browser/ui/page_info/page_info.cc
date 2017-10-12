@@ -136,7 +136,8 @@ bool IsPermissionFactoryDefault(HostContentSettingsMap* content_settings,
 // applies to permissions listed in |kPermissionType|.
 bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
                           const GURL& site_url,
-                          HostContentSettingsMap* content_settings) {
+                          HostContentSettingsMap* content_settings,
+                          content::WebContents* web_contents) {
   // Note |CONTENT_SETTINGS_TYPE_ADS| will show up regardless of its default
   // value when it has been activated on the current origin.
   if (info.type == CONTENT_SETTINGS_TYPE_ADS) {
@@ -150,6 +151,16 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
     return content_settings->GetWebsiteSetting(
                site_url, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA, std::string(),
                nullptr) != nullptr;
+  }
+
+  if (info.type == CONTENT_SETTINGS_TYPE_SOUND) {
+    if (!base::FeatureList::IsEnabled(features::kSoundContentSetting))
+      return false;
+
+    // The sound content setting should show always show up when the tab is
+    // playing audio.
+    if (web_contents && web_contents->IsCurrentlyAudible())
+      return true;
   }
 
 #if defined(OS_ANDROID)
@@ -821,8 +832,10 @@ void PageInfo::PresentSitePermissions() {
         permission_info.setting = permission_result.content_setting;
     }
 
-    if (ShouldShowPermission(permission_info, site_url_, content_settings_))
+    if (ShouldShowPermission(permission_info, site_url_, content_settings_,
+                             web_contents())) {
       permission_info_list.push_back(permission_info);
+    }
   }
 
   for (const ChooserUIInfo& ui_info : kChooserUIInfo) {
