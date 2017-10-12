@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9469cfe9_c2e077f5",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T00:40:01Z",
+      "side": 1,
+      "message": "I am assuming this is temporary just to invoke the compilation, right? This would only happen on the closure_compilation bot normally. Can you confirm?",
+      "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
