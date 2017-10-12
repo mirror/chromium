@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96f318a4_cc34723f",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:44:39Z",
+      "side": 1,
+      "message": "I think so. The fast paths only parse CSS values like \"0px\" or \"translate(0px, 0px, 0px)\". I think 128 should be enough to cover the whole function.",
+      "parentUuid": "bd0b481b_d587943f",
+      "range": {
+        "startLine": 1755,
+        "startChar": 33,
+        "endLine": 1755,
+        "endChar": 36
+      },
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8195c89f_60444e99",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a319a7b_b4a3e88f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:44:39Z",
+      "side": 1,
+      "message": "Ooo good catch :P Done",
+      "parentUuid": "8195c89f_60444e99",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +125,24 @@
       "side": 1,
       "message": "Cool, the protobuf thing looks interesting, I\u0027ll take a look.",
       "parentUuid": "829742de_4eec38f4",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e53b0bb_36d56701",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:44:39Z",
+      "side": 1,
+      "message": "Ok based on the new comments in this patch I might just stick with what I have?",
+      "parentUuid": "7c4263e8_5a76ce87",
       "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -154,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "fd6950cf_67a9f7d3",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:44:39Z",
+      "side": 1,
+      "message": "No worries mate! Yeah looping over parser modes doesn\u0027t seem to sacrifice too much speed. However, looping over the property IDs makes it extremely slow so that\u0027s why I did the hash thing instead.",
+      "parentUuid": "c60d0b21_9ddb196a",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5046352c_ae695167",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserMode.h",
         "patchSetId": 1
@@ -165,6 +249,30 @@
       "writtenOn": "2017-10-11T17:53:57Z",
       "side": 1,
       "message": "Can you use \"std::numeric_limits\" to get the number of enum values?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b524580_c84997c6",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserMode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:44:39Z",
+      "side": 1,
+      "message": "I don\u0027t think so; std::numeric_limits would give me the values for an int or something.",
+      "parentUuid": "5046352c_ae695167",
       "range": {
         "startLine": 50,
         "startChar": 2,
