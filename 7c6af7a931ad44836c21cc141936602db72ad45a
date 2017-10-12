@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d65513ea_d06d260a",
+        "filename": "extensions/browser/value_store/testing_value_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-12T17:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69983f8f_dc59d9cb",
+      "revId": "7c6af7a931ad44836c21cc141936602db72ad45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e210497e_a27b82f3",
         "filename": "extensions/browser/value_store/value_store.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T01:48:25Z",
       "side": 1,
       "message": "Do we need a copy constructor?",
+      "revId": "7c6af7a931ad44836c21cc141936602db72ad45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac8bcc2_fde528c2",
+        "filename": "extensions/browser/value_store/value_store.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-12T17:04:58Z",
+      "side": 1,
+      "message": "It was implicitly created before, but the addition of the move constructor made it a requirement to be explicit. It\u0027s only used by the ReadResult and WriteResult constructors. Most of the callers to those constructors could move their status object, but some of them were const references. I\u0027ll upload a patch set for you to look at. In order to handle the non moveable cases I created a CreateStatusCopy() method for testing_value_store.cc, and added a ReadResult::PassStatus() method. Let me know which version you prefer.",
+      "parentUuid": "e210497e_a27b82f3",
       "revId": "7c6af7a931ad44836c21cc141936602db72ad45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
