@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99aeaa25_db114064",
+        "filename": "services/viz/privileged/cpp/context_lost_reason_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-12T17:17:00Z",
+      "side": 1,
+      "message": "Why did this move from \"interfaces\" to \"cpp\" which is the client library, but it wasn\u0027t there before?",
+      "revId": "eed17a4c72de30374ce40186931ec961409fe57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
