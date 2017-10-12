@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35835a7d_fe53cb44",
+        "filename": "components/omnibox/browser/shortcuts_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a878b734_a4168709",
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d616ccb0_bc195e18",
         "filename": "components/omnibox/browser/shortcuts_provider.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1cf822d9_9aaf38e7",
+        "filename": "components/omnibox/browser/shortcuts_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:54:04Z",
+      "side": 1,
+      "message": "Changed the comments to account for the issue you raised in the cc file.",
+      "parentUuid": "d616ccb0_bc195e18",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "219801b7_d055c819",
         "filename": "components/omnibox/browser/shortcuts_provider.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8231d16a_a3a57d83",
+        "filename": "components/omnibox/browser/shortcuts_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "219801b7_d055c819",
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
