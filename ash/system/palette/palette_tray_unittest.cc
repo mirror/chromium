@@ -17,6 +17,7 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/palette/palette_utils.h"
+#include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/palette/test_palette_delegate.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/status_area_widget_test_helper.h"
@@ -30,8 +31,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/session_manager_types.h"
 #include "ui/events/base_event_utils.h"
-#include "ui/events/devices/device_data_manager.h"
-#include "ui/events/devices/touchscreen_device.h"
 #include "ui/events/event.h"
 #include "ui/events/test/device_data_manager_test_api.h"
 #include "ui/events/test/event_generator.h"
@@ -69,6 +68,14 @@ class PaletteTrayTest : public AshTestBase {
     ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
                          ui::GestureEventDetails(ui::ET_GESTURE_TAP));
     palette_tray_->PerformAction(tap);
+  }
+
+  // Fake a stylus ejection. Note: this will fail in mus or mash because
+  // DeviceDataManager is not created. See crbug.com/734812.
+  void EjectStylus() {
+    ui::test::DeviceDataManagerTestAPI devices_test_api;
+    devices_test_api.NotifyObserversStylusStateChanged(
+        ui::StylusState::REMOVED);
   }
 
  protected:
@@ -553,6 +560,41 @@ TEST_F(PaletteTrayTestWithInternalStylus, ToolDeactivatesWhenOpeningBubble) {
   palette_tray_->ShowBubble(false /* show_by_click */);
   EXPECT_TRUE(test_api_->GetTrayBubbleWrapper());
   EXPECT_FALSE(manager->IsToolActive(PaletteToolId::LASER_POINTER));
+}
+
+// Verify the palette welcome bubble is shown the first time the stylus is
+// removed.
+TEST_F(PaletteTrayTestWithInternalStylus, WelcomeBubbleShownOnEject) {
+  test_palette_delegate()->set_should_show_palette(true);
+  ASSERT_FALSE(pref_service()->GetBoolean(prefs::kShownPaletteWelcomeBubble));
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  EjectStylus();
+  EXPECT_TRUE(test_api_->GetWelcomeBubble()->BubbleShown());
+}
+
+// Verify if the pref which tracks if the welcome bubble has been shown before
+// is true, the welcome bubble is not shown when the stylus is removed.
+TEST_F(PaletteTrayTestWithInternalStylus, WelcomeBubbleNotShownIfShownBefore) {
+  test_palette_delegate()->set_should_show_palette(true);
+  pref_service()->SetBoolean(prefs::kShownPaletteWelcomeBubble, true);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  EjectStylus();
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+}
+
+// Verify that the bubble does not get shown if the auto open palette setting is
+// true.
+TEST_F(PaletteTrayTestWithInternalStylus,
+       WelcomeBubbleNotShownIfAutoOpenPaletteTrue) {
+  test_palette_delegate()->set_should_show_palette(true);
+  test_palette_delegate()->set_should_auto_open_palette(true);
+  pref_service()->SetBoolean(prefs::kShownPaletteWelcomeBubble, false);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  EjectStylus();
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
 }
 
 }  // namespace ash
