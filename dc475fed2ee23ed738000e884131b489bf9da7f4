@@ -386,6 +386,30 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "224486a0_8feef314",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T17:22:55Z",
+      "side": 1,
+      "message": "Test is still failing due to use-after-free access. The fix is easy (instead of two passes in ~TaskQueueManager do one and split active_queues into two sets) and I\u0027ll do it first thing tomorrow morning. Please take a look at the rest of the code in the meantime.",
+      "parentUuid": "1fe8bb30_8bd93de5",
+      "range": {
+        "startLine": 3182,
+        "startChar": 29,
+        "endLine": 3182,
+        "endChar": 68
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
