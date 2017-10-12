@@ -8,6 +8,7 @@
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -470,6 +471,67 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, ProcessLimit) {
   EXPECT_NE(isolated_foo_process,
             new_shell->web_contents()->GetMainFrame()->GetProcess());
   EXPECT_NE(isolated_bar_process,
+            new_shell->web_contents()->GetMainFrame()->GetProcess());
+}
+
+// Verify that a navigation to an isolated origin cannot reuse a process from a
+// pending navigation to a non-isolated origin.  See https://crbug.com/738634.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, ProcessReuseWithPendingNavigation) {
+  // Set the process limit to 1.
+  RenderProcessHost::SetMaxRendererProcessCount(1);
+
+  // Start, but don't commit a navigation to an unisolated foo.com URL.
+  GURL slow_url(embedded_test_server()->GetURL("www.foo.com", "/title1.html"));
+  NavigationController::LoadURLParams load_params(slow_url);
+  TestNavigationManager load_delayer(shell()->web_contents(), slow_url);
+  shell()->web_contents()->GetController().LoadURL(
+      slow_url, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+  EXPECT_TRUE(load_delayer.WaitForRequestStart());
+
+  // Open a new, unrelated tab and navigate it to isolated.foo.com.
+  Shell* new_shell = CreateBrowser();
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/title2.html"));
+  TestNavigationManager isolated_url_manager(new_shell->web_contents(),
+                                             isolated_url);
+  new_shell->web_contents()->GetController().LoadURL(
+      isolated_url, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+  EXPECT_TRUE(isolated_url_manager.WaitForRequestStart());
+
+  // Check that the two pending navigations don't use the same process.
+  FrameTreeNode* first_root = web_contents()->GetFrameTree()->root();
+  FrameTreeNode* second_root =
+      static_cast<WebContentsImpl*>(new_shell->web_contents())
+          ->GetFrameTree()
+          ->root();
+  RenderFrameHost* first_rfh =
+      IsBrowserSideNavigationEnabled()
+          ? first_root->render_manager()->speculative_frame_host()
+          : first_root->render_manager()->pending_frame_host();
+  if (!first_rfh)
+    first_rfh = shell()->web_contents()->GetMainFrame();
+
+  RenderFrameHost* second_rfh =
+      IsBrowserSideNavigationEnabled()
+          ? second_root->render_manager()->speculative_frame_host()
+          : second_root->render_manager()->pending_frame_host();
+  if (!second_rfh)
+    second_rfh = new_shell->web_contents()->GetMainFrame();
+
+  EXPECT_NE(first_rfh->GetProcess(), second_rfh->GetProcess());
+
+  // Wait for response from the isolated origin.  This is the point at which
+  // PlzNavigate will do the final check on whether the process picked for
+  // this navigation is suitable.
+  EXPECT_TRUE(isolated_url_manager.WaitForResponse());
+
+  // Commit the non-isolated URL first, then the isolated origin second.
+  load_delayer.WaitForNavigationFinished();
+  isolated_url_manager.WaitForNavigationFinished();
+
+  // Ensure that the isolated origin did not share a process with the first
+  // tab.
+  EXPECT_NE(web_contents()->GetMainFrame()->GetProcess(),
             new_shell->web_contents()->GetMainFrame()->GetProcess());
 }
 

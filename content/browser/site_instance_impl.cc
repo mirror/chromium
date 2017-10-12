@@ -517,9 +517,9 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
 
     switch (lock_state) {
       case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK: {
-        // TODO(alexmos): Turn this into a CHECK once https://crbug.com/738634
-        // is fixed.
-        DCHECK(was_unused);
+        CHECK(was_unused)
+            << "Trying to lock a process to " << site_
+            << " but the process is already hosting other content.";
 
         // TODO(nick): When all sites are isolated, this operation provides
         // strong protection. If only some sites are isolated, we need
@@ -532,7 +532,9 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
           HAS_WRONG_LOCK:
         // We should never attempt to reassign a different origin lock to a
         // process.
-        CHECK(false);
+        CHECK(false) << "Trying to lock a process to " << site_
+                     << " but the process is already locked to "
+                     << policy->GetOriginLock(process_->GetID());
         break;
       case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::
           HAS_EQUAL_LOCK:
@@ -547,7 +549,9 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
     // process, make sure we aren't putting it in a process for a site that
     // does.
     CHECK_EQ(lock_state,
-             ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK);
+             ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK)
+        << "Trying to commit non-isolated site " << site_
+        << " in process locked to " << policy->GetOriginLock(process_->GetID());
   }
 }
 
