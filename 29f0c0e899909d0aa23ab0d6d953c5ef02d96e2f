@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb2fbfba_ae741ee6",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6a62789_170c064a",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b58c0471_d46d3391",
         "filename": "chrome/browser/resources/print_preview/data/app_state.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T17:37:43Z",
       "side": 1,
       "message": "Do we need all these getters? If we really want to keep internals of AppStateRecentDestination private such that they can\u0027t be set from the outside, how about the following shorter alternative?\n\n\nclass AppStateRecentDestination {\n  constructor(destination) {\n    // Only store |destination|. Everything else can be derived on the fly.\n    this.destination_ \u003d destination;\n  }\n\n  get id() {\n    return this.destination_.id;\n  }\n  ...\n\n  get extensionName() {\n    return this.destination_.extensionName || \u0027\u0027;\n  }\n}",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8791da5b_fd1d8db6",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Realized that making this a class broke the recent destinations feature, possibly due to issues with it getting turned into a string? Made it a typedef and added a local function to convert destinations to AppStateRecentDestinations. Let me know if this works.",
+      "parentUuid": "b58c0471_d46d3391",
       "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b696738_79543bcd",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c4b943_0bb4640d",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2caec705_c1b4a93f",
         "filename": "chrome/browser/resources/print_preview/data/app_state.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75643fef_08ec6d2e",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2caec705_c1b4a93f",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7effb033_a4404baa",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dcce891_714c5a0e",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1596f081_3aad2a65",
         "filename": "chrome/browser/resources/print_preview/data/destination.js",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd13cb6_17e4c873",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1596f081_3aad2a65",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9313d7ec_5ebddadc",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78bad64d_267fe881",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eed87d58_68f7a717",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc94c20_7b331eef",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-12T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed87d58_68f7a717",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
