@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1d05f33c_9665f193",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 3060,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:13:12Z",
+      "side": 1,
+      "message": "Good point--this is consistent with surrounding code.  I think that\u0027s all I\u0027ll require of you--I presume if there are problems an rfhi.cc OWNER will catch them.  \n\n(I\u0027ll point out that the registration two up uses weak_ptr_factory_.GetWeakPointer(), so the existing code isn\u0027t completely consistent.)",
+      "parentUuid": "84ea70e5_9778a640",
+      "range": {
+        "startLine": 3060,
+        "startChar": 10,
+        "endLine": 3060,
+        "endChar": 25
+      },
+      "revId": "ae6f9bfccb128ca647e578e7e9441f629fe786f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38faedc9_16dbdf9d",
         "filename": "content/network/network_context.cc",
         "patchSetId": 41
