@@ -1058,6 +1058,13 @@ FileManager.prototype = /** @struct */ {
         this.selectionHandler_.onFileSelectionChanged.bind(
             this.selectionHandler_));
 
+    var dom = this.dialogDom_;
+    assert(dom);
+    var table = queryRequiredElement('.detail-table', dom);
+    this.selectionHandler_.addEventListener(
+        FileSelectionHandler.EventType.CHANGE,
+        table.handleOnChange.bind(table));
+
     // TODO(mtomasz, yoshiki): Create navigation list earlier, and here just
     // attach the directory model.
     this.initDirectoryTree_();

@@ -488,6 +488,26 @@ FileTable.decorate = function(
 };
 
 /**
+ * Updates checkmark icons based on the selection status of the listitems.
+ *
+ * @param {!Event} ce Event with optional change info from the selection model.
+ */
+FileTable.prototype.handleOnChange = function(ce) {
+  if (!ce.changes) {
+    return;
+  }
+  ce.changes.forEach(function(change) {
+    var listItem = this.getListItemByIndex(change.index);
+    if (!listItem)
+      return;
+    var checkmark = /** @type {!HTMLDivElement} */
+        (listItem.querySelector('.detail-checkmark'));
+    if (checkmark)
+      checkmark.setAttribute('aria-checked', change.selected);
+  }.bind(this));
+};
+
+/**
  * Updates high priority range of list thumbnail loader based on current
  * viewport.
  *
@@ -1034,6 +1054,8 @@ FileTable.prototype.renderCheckmark_ = function() {
   var checkmark = /** @type {!HTMLDivElement} */
       (this.ownerDocument.createElement('div'));
   checkmark.className = 'detail-checkmark';
+  checkmark.setAttribute('role', 'checkbox');
+  checkmark.setAttribute('aria-checked', 'false');
   return checkmark;
 };
 
