@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d0ac48_580bb584",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-12T18:34:17Z",
+      "side": 1,
+      "message": "Avoid this extra container if possible. I wonder if just calling security_details_label_-\u003eSizeToFit(0); and InvalidateLayout(); in SetDetails is sufficient to fix the bug? (and as an aside, I wonder if we could replace the GridLayout with a simpler BoxLayout)",
+      "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
