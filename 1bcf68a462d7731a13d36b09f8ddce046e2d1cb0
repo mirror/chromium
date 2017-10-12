@@ -22,6 +22,30 @@
       "revId": "1bcf68a462d7731a13d36b09f8ddce046e2d1cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1b195e_61d951da",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-12T18:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7da293_0b9088fd",
+      "range": {
+        "startLine": 95,
+        "startChar": 68,
+        "endLine": 95,
+        "endChar": 69
+      },
+      "revId": "1bcf68a462d7731a13d36b09f8ddce046e2d1cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
