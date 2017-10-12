@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a9811cb0_f5312423",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T07:20:03Z",
+      "side": 1,
+      "message": "Setting the default to false is good enough for me. I still think callers should be forced to think about whether they care if a service worker will ever be installed at a later time, because it\u0027s nonobvious that this case exists. I guess that can be thought about by OWNERs during review?",
+      "parentUuid": "14c02f46_ef09e6a5",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1142338_fcf3e8f1",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Was this done?",
       "parentUuid": "cbd25f06_625a4ba2",
+      "range": {
+        "startLine": 239,
+        "startChar": 1,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d12f2956_4c1cd632",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T07:20:03Z",
+      "side": 1,
+      "message": "Wups, bad rebase against eligibility.",
+      "parentUuid": "ddc8e21b_ac0e3157",
       "range": {
         "startLine": 239,
         "startChar": 1,
@@ -212,6 +260,30 @@
       "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fc1c33_6879a16d",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T07:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b5918af3_da2aa8bb",
+      "range": {
+        "startLine": 307,
+        "startChar": 34,
+        "endLine": 307,
+        "endChar": 56
+      },
+      "revId": "19602f01c7ed0d2f1302ca82ef9b958784acd3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
