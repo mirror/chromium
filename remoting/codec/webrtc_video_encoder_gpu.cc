@@ -221,14 +221,8 @@ void WebrtcVideoEncoderGpu::RunAnyPendingEncode() {
 std::unique_ptr<WebrtcVideoEncoderGpu> WebrtcVideoEncoderGpu::CreateForH264() {
   DVLOG(3) << __func__;
 
-  // MediaFoundationVideoEncodeAccelerator supports only baseline profile.
-  // TODO(zijiehe): H264 encoder on Windows supports more input formats and
-  // profiles than the limitation in MediaFoundationVideoEncodeAccelerator.
-  // https://msdn.microsoft.com/en-us/library/windows/desktop/dd797816(v=vs.85).aspx
-  // Loosen the limitation in MediaFoundationVideoEncodeAccelerator and use a
-  // profile with higher quality here.
   return base::WrapUnique(new WebrtcVideoEncoderGpu(
-      media::VideoCodecProfile::H264PROFILE_BASELINE));
+      media::VideoCodecProfile::H264PROFILE_HIGH));
 }
 
 }  // namespace remoting
