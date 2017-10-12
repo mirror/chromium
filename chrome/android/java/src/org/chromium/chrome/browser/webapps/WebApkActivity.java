@@ -17,7 +17,6 @@ import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
 import org.chromium.chrome.browser.metrics.WebApkUma;
-import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
@@ -135,6 +134,11 @@ public class WebApkActivity extends WebappActivity {
     }
 
     @Override
+    protected boolean isUrlInScope(WebappInfo info, String url) {
+        return UrlUtilities.isUrlWithinScope(url, info.scopeUri().toString());
+    }
+
+    @Override
     protected WebappSplashScreenController createWebappSplashScreenController() {
         return new WebApkSplashScreenController();
     }
@@ -180,12 +184,6 @@ public class WebApkActivity extends WebappActivity {
                 // A WebAPK can display a page outside of its WebAPK scope if a page within the
                 // WebAPK scope navigates via JavaScript while the WebAPK is in the background.
                 return false;
-            }
-
-            @Override
-            public BrowserControlsVisibilityDelegate createBrowserControlsVisibilityDelegate(
-                    Tab tab) {
-                return new WebApkBrowserControlsDelegate(WebApkActivity.this, tab);
             }
         };
     }
