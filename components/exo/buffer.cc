@@ -256,8 +256,8 @@ gpu::SyncToken Buffer::Texture::BindTexImage() {
     // BindTexImage2DCHROMIUM call is processed before issuing any commands
     // that will read from the texture on a different context.
     uint64_t fence_sync = gles2->InsertFenceSyncCHROMIUM();
-    gles2->OrderingBarrierCHROMIUM();
-    gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+    gles2->ShallowFlushCHROMIUM();
+    gles2->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
     TRACE_EVENT_ASYNC_STEP_INTO0("exo", "BufferInUse", gpu_memory_buffer_,
                                  "bound");
   }
@@ -311,8 +311,8 @@ gpu::SyncToken Buffer::Texture::CopyTexImage(Texture* destination,
     // CopyTextureCHROMIUM call is processed before issuing any commands
     // that will read from the target texture on a different context.
     uint64_t fence_sync = gles2->InsertFenceSyncCHROMIUM();
-    gles2->OrderingBarrierCHROMIUM();
-    gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+    gles2->ShallowFlushCHROMIUM();
+    gles2->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   }
   return sync_token;
 }
