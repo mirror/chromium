@@ -364,6 +364,8 @@ void FrameLoader::DidExplicitOpen() {
     if ((parent->IsLocalFrame() &&
          ToLocalFrame(parent)->GetDocument()->LoadEventStillNeeded()) ||
         (parent->IsRemoteFrame() && parent->IsLoading())) {
+      if (document_loader_->SentDidFinishLoad())
+        document_loader_->MarkAsCommitted();
       progress_tracker_->ProgressStarted(document_loader_->LoadType());
     }
   }
@@ -966,6 +968,7 @@ void FrameLoader::StopAllLoaders() {
     document_loader_->LoadFailed(
         ResourceError::CancelledError(document_loader_->Url()));
   }
+  DCHECK(!frame_->IsLoading() || protect_provisional_loader_);
 
   in_stop_all_loaders_ = false;
 
