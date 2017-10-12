@@ -22,6 +22,30 @@
       "revId": "fb46142f46f0f2aba867c4c624af84696ec4c5bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b333090_010b0710",
+        "filename": "net/spdy/platform/api/spdy_mem_slice.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-10-12T15:51:22Z",
+      "side": 1,
+      "message": "Ooh, nice tool! Thanks for the catch!",
+      "parentUuid": "8da051a8_b814c71c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fb46142f46f0f2aba867c4c624af84696ec4c5bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
