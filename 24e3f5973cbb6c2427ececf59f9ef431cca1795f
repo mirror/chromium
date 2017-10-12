@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85eb8388_4929e252",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10aea836_f4e4b515",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbb3683_4633bbfc",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3793d70_f9292677",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dbb3683_4633bbfc",
+      "range": {
+        "startLine": 177,
+        "startChar": 22,
+        "endLine": 177,
+        "endChar": 23
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1530aa1c_6a5bf332",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T14:38:21Z",
+      "side": 1,
+      "message": "Actually no. I had renamed SourceAndExtension to LogSourceHandle when I modified it to also include the resource ID. But I have since changed it back to its original definition, so the name should remain as SourceAndExtension.",
+      "parentUuid": "29ffa1ea_7feffb7a",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c0cf1a_9047d3ee",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "474ecc48_a3a97dc9",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T14:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c0cf1a_9047d3ee",
+      "range": {
+        "startLine": 41,
+        "startChar": 25,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2439e4_c9e8a162",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-11T23:44:05Z",
       "side": 1,
       "message": "That\u0027s not very informative if this fails.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "24e3f5973cbb6c2427ececf59f9ef431cca1795f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16573d3f_2ad75468",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T14:38:21Z",
+      "side": 1,
+      "message": "What other information should be reported here?",
+      "parentUuid": "da2439e4_c9e8a162",
       "range": {
         "startLine": 44,
         "startChar": 11,
