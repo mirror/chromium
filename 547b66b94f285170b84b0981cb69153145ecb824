@@ -22,6 +22,30 @@
       "revId": "547b66b94f285170b84b0981cb69153145ecb824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e785663b_336c4a0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-12T23:35:22Z",
+      "side": 1,
+      "message": "Before this change, it would announce \"simplify page\". With this CL, it\u0027s \"simplify page button\". There\u0027s another feature in TalkBack 6.1 that have special treatment to buttons, but it\u0027s not released yet.\n\nThis should apply to the Infobar elements that work like buttons, but not all compact infobars in general. I had a glace of all compact infobars, the clickable text in SurveyInfoBar and FramebustBlockInfoBar might be applicable, but I guess I\u0027ll need to see how these infobars work first.",
+      "parentUuid": "81e8796c_2e91ff2d",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "547b66b94f285170b84b0981cb69153145ecb824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
