@@ -60,6 +60,7 @@ ASH_PUBLIC_EXPORT extern const char kSpuriousPowerButtonLidAngleChange[];
 ASH_PUBLIC_EXPORT extern const char kUseIMEService[];
 
 ASH_PUBLIC_EXPORT bool IsNightLightEnabled();
+ASH_PUBLIC_EXPORT bool IsUsingMdLogin();
 
 }  // namespace switches
 }  // namespace ash
