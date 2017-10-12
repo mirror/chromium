@@ -37,6 +37,7 @@ import java.util.Set;
 public class WebApkUtils {
     public static final String SHARED_PREF_RUNTIME_HOST = "runtime_host";
 
+    private static final int MINMUM_REQUIRED_CHROME_VERSION = 57;
     private static final String TAG = "cr_WebApkUtils";
 
     /**
@@ -346,5 +347,14 @@ public class WebApkUtils {
         if (!file.delete()) {
             Log.e(TAG, "Failed to delete : " + file.getAbsolutePath());
         }
+    }
+
+    /** Returns whether the WebAPKs need to be launched in a Tab. See crbug.com/772398. */
+    public static boolean shouldLaunchInTab(String versionName) {
+        boolean hasSeparator = versionName.contains(".");
+        if (!hasSeparator) return false;
+
+        int version = Integer.parseInt(versionName.substring(0, versionName.indexOf(".")));
+        return  version < MINMUM_REQUIRED_CHROME_VERSION;
     }
 }

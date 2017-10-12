@@ -9,6 +9,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -134,6 +136,19 @@ public class MainActivity extends Activity {
     }
 
     private void launchInHostBrowser(String runtimeHost) {
+        PackageInfo info;
+        try {
+            info = getPackageManager().getPackageInfo(runtimeHost, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Unable to get the host browser's package info.");
+            return;
+        }
+
+        if (WebApkUtils.shouldLaunchInTab(info.versionName)) {
+            launchInTab(runtimeHost);
+            return;
+        }
+
         boolean forceNavigation = false;
         int source = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
         if (mOverrideUrl != null) {
@@ -159,6 +174,21 @@ public class MainActivity extends Activity {
         } catch (ActivityNotFoundException e) {
             Log.w(TAG, "Unable to launch browser in WebAPK mode.");
             e.printStackTrace();
+        }
+    }
+
+    /** Launches a WebAPK in the runtime host browser as a tab. */
+    private void launchInTab(String runtimeHost) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mStartUrl));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setPackage(runtimeHost);
+        int source =
+                getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, Intent.URI_INTENT_SCHEME);
+        intent.putExtra(REUSE_URL_MATCHING_TAB_ELSE_NEW_TAB, true)
+                .putExtra(WebApkConstants.EXTRA_SOURCE, source);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
         }
     }
 

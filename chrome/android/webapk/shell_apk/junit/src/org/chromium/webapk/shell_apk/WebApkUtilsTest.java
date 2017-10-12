@@ -229,6 +229,23 @@ public class WebApkUtilsTest {
     }
 
     /**
+     * Tests that {@link WebApkUtils#shouldLaunchInTab(String)} returns true when the Chrome's
+     * version number is lower than {@link WebApkUtils#MINMUM_REQUIRED_CHROME_VERSION}. Always
+     * returns false for developer build whose version name doesn't contains a number.
+     */
+    @Test
+    public void testShouldLaunchInTab() {
+        String versionName = "56.0.0000.0";
+        Assert.assertTrue(WebApkUtils.shouldLaunchInTab(versionName));
+
+        versionName = "57.0.0000.0";
+        Assert.assertFalse(WebApkUtils.shouldLaunchInTab(versionName));
+
+        versionName = "Developer Build";
+        Assert.assertFalse(WebApkUtils.shouldLaunchInTab(versionName));
+    }
+
+    /**
      * Uninstall a browser. Note: this function only works for uninstalling the non default browser.
      */
     private void uninstallBrowser(String packageName) {
