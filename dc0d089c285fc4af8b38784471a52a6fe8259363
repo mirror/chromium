@@ -16,6 +16,24 @@
       "revId": "dc0d089c285fc4af8b38784471a52a6fe8259363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c752e4_297c8ea5",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T22:07:57Z",
+      "side": 1,
+      "message": "Yes, it is needed. It is used at:\nhttps://cs.chromium.org/chromium/src/content/renderer/renderer_blink_platform_impl.cc?l\u003d184\nhttps://cs.chromium.org/chromium/src/content/renderer/renderer_blink_platform_impl.cc?l\u003d1182\n\nI think what happens is that this file includes\n\"content/renderer/device_sensors/device_motion_event_pump.h\"\nand it used to include\n\"device/sensors/public/cpp/motion_data.h\"\n\nBut in this CL, the above include is removed from\n\"content/renderer/device_sensors/device_motion_event_pump.h\"\nsince device::MotionData is changed to forward declaration in device_motion_event_pump.h and motion_data.h is included in device_motion_event_pump.cpp.\n\nSo in this file it needs to explicitly include\n\"device/sensors/public/cpp/motion_data.h\"\n\nOtherwise it will generate compile error.",
+      "parentUuid": "a8a960d7_28e97f32",
+      "revId": "dc0d089c285fc4af8b38784471a52a6fe8259363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

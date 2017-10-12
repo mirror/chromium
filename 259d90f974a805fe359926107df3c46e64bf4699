@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "29626709_379f37fd",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T22:07:57Z",
+      "side": 1,
+      "message": "Issue created:\nhttps://crbug.com/774183\nand was added to the TODO.\n\nDone.",
+      "parentUuid": "f8b6378a_1d5c3574",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "614e6e67_f2f6f175",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -248,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "4c02cd01_09ee09e8",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T22:07:57Z",
+      "side": 1,
+      "message": "Moved this assignment to an else block inside GetDataFromSharedMemory.\n\nDone.",
+      "parentUuid": "076b63e6_d9b1ca6e",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "460e1cf3_8b9f9ccb",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
@@ -295,6 +331,24 @@
       "side": 1,
       "message": "Right, well still finding it a bit hard to read, in particular because it\u0027s not clear if it is possible for the method to do nothing? I was thinking it should either call DeviceSensorEventPump::DidStartIfPossible() or fallback?\n\nwould something like: {\nif (!absolute_ \u0026\u0026 !relative_orientation_sensor_.sensor \u0026\u0026 fall_back_to_absolute_orientation_sensor_) {\n    // fallback\n    return;\n  }\n  DeviceSensorEventPump::DidStartIfPossible();\n}\n\nwork?",
       "parentUuid": "6a12a601_3271decf",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363124f1_2842112e",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-12T22:07:57Z",
+      "side": 1,
+      "message": "\u003e Right, well still finding it a bit hard to read, in particular because it\u0027s not clear if it\n\u003e is possible for the method to do nothing?\n\nI agree, it is not obvious from the code if it is possible for the method to do nothing.\n\n\u003e I was thinking it should either call DeviceSensorEventPump::DidStartIfPossible() or \n\u003e fallback?\n\nYes, it should either call DeviceSensorEventPump::DidStartIfPossible() or fallback.\n\n\u003e would something like: {\n\u003e if (!absolute_ \u0026\u0026 !relative_orientation_sensor_.sensor \u0026\u0026\n\u003e fall_back_to_absolute_orientation_sensor_) {\n\u003e    // fallback\n\u003e    return;\n\u003e  }\n\u003e  DeviceSensorEventPump::DidStartIfPossible();\n\u003e }\n\u003e \n\u003e work?\n\nI think it works. I changed it to use the above code structure. Thanks!\n\nDone.",
+      "parentUuid": "b07ef9c5_8dd67f8f",
       "revId": "259d90f974a805fe359926107df3c46e64bf4699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
