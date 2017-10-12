@@ -6,9 +6,13 @@
 #define CONTENT_NETWORK_NETWORK_SERVICE_IMPL_H_
 
 #include <memory>
+#include <set>
+#include <string>
 
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "content/common/content_export.h"
+#include "content/network/network_change_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -18,6 +22,9 @@
 namespace net {
 class URLRequestContext;
 class URLRequestContextBuilder;
+#if defined(OS_ANDROID)
+class NetworkChangeNotifierFactoryAndroid;
+#endif
 }  // namespace net
 
 namespace content {
@@ -51,6 +58,9 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void DisableQuic() override;
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
 
+  void GetNetworkChangeManager(
+      mojom::NetworkChangeManagerRequest request) override;
+
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
 
@@ -69,6 +79,12 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void Create(mojom::NetworkServiceRequest request);
 
   std::unique_ptr<MojoNetLog> net_log_;
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
+      network_change_notifier_factory_;
+#endif
+  std::unique_ptr<NetworkChangeManagerImpl> network_change_manager_;
 
   std::unique_ptr<service_manager::BinderRegistry> registry_;
 
