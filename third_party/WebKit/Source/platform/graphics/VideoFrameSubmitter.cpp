@@ -4,7 +4,9 @@
 
 #include "platform/graphics/VideoFrameSubmitter.h"
 
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "cc/base/filter_operations.h"
+#include "cc/resources/video_resource_updater.h"
 #include "cc/scheduler/video_frame_controller.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "media/base/video_frame.h"
@@ -17,10 +19,14 @@ namespace blink {
 
 VideoFrameSubmitter::VideoFrameSubmitter(
     cc::VideoFrameProvider* provider,
-    WebContextProviderCallback context_provider_callback)
+    WebContextProviderCallback context_provider_callback,
+    viz::SharedBitmapManager* shared_bitmap_manager,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager)
     : provider_(provider),
       binding_(this),
       context_provider_callback_(std::move(context_provider_callback)),
+      shared_bitmap_manager_(shared_bitmap_manager),
+      gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
       is_rendering_(false) {
   current_local_surface_id_ = local_surface_id_allocator_.GenerateId();
 }
@@ -35,18 +41,34 @@ void VideoFrameSubmitter::StopUsingProvider() {
 
 void VideoFrameSubmitter::StopRendering() {
   DCHECK(is_rendering_);
+  if (!provider_)
+    return;
   viz::BeginFrameAck current_begin_frame_ack =
       viz::BeginFrameAck::CreateManualAckWithDamage();
-  SubmitFrame(current_begin_frame_ack);
+  viz::CompositorFrame compositor_frame;
+  scoped_refptr<media::VideoFrame> video_frame = provider_->GetCurrentFrame();
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&VideoFrameSubmitter::SubmitFrameInternal,
+                                base::Unretained(this), current_begin_frame_ack,
+                                video_frame));
   is_rendering_ = false;
   compositor_frame_sink_->SetNeedsBeginFrame(false);
+  provider_->PutCurrentFrame();
 }
 
 void VideoFrameSubmitter::DidReceiveFrame() {
+  if (!provider_)
+    return;
   if (!is_rendering_) {
     viz::BeginFrameAck current_begin_frame_ack =
         viz::BeginFrameAck::CreateManualAckWithDamage();
-    SubmitFrame(current_begin_frame_ack);
+    viz::CompositorFrame compositor_frame;
+    scoped_refptr<media::VideoFrame> video_frame = provider_->GetCurrentFrame();
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(&VideoFrameSubmitter::SubmitFrameInternal,
+                                  base::Unretained(this),
+                                  current_begin_frame_ack, video_frame));
+    provider_->PutCurrentFrame();
   }
 }
 
@@ -59,8 +81,9 @@ void VideoFrameSubmitter::StartRendering() {
 void VideoFrameSubmitter::StartSubmitting(const viz::FrameSinkId& id) {
   DCHECK(id.is_valid());
 
-  resource_provider_ =
-      std::make_unique<VideoFrameResourceProvider>(context_provider_callback_);
+  resource_provider_ = std::make_unique<VideoFrameResourceProvider>(
+      context_provider_callback_, shared_bitmap_manager_,
+      gpu_memory_buffer_manager_);
 
   // Class to be renamed.
   mojom::blink::OffscreenCanvasProviderPtr canvas_provider;
@@ -74,30 +97,40 @@ void VideoFrameSubmitter::StartSubmitting(const viz::FrameSinkId& id) {
 }
 
 void VideoFrameSubmitter::SubmitFrame(viz::BeginFrameAck begin_frame_ack) {
-  DCHECK(compositor_frame_sink_);
   if (!provider_)
     return;
 
-  viz::CompositorFrame compositor_frame;
   scoped_refptr<media::VideoFrame> video_frame = provider_->GetCurrentFrame();
 
+  SubmitFrameInternal(begin_frame_ack, video_frame);
+
+  provider_->PutCurrentFrame();
+}
+
+void VideoFrameSubmitter::SubmitFrameInternal(
+    viz::BeginFrameAck begin_frame_ack,
+    scoped_refptr<media::VideoFrame> video_frame) {
+  DCHECK(compositor_frame_sink_);
+
+  viz::CompositorFrame compositor_frame;
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
 
   // TODO(lethalantidote): Replace with true size. Current is just for test.
-  gfx::Size viewport_size(10000, 10000);
-  render_pass->SetNew(50, gfx::Rect(viewport_size), gfx::Rect(viewport_size),
-                      gfx::Transform());
+  render_pass->SetNew(1, gfx::Rect(video_frame->coded_size()),
+                      gfx::Rect(video_frame->coded_size()), gfx::Transform());
   render_pass->filters = cc::FilterOperations();
-  resource_provider_->AppendQuads(*render_pass);
-  compositor_frame.render_pass_list.push_back(std::move(render_pass));
+  resource_provider_->AppendQuads(render_pass.get());
   compositor_frame.metadata.begin_frame_ack = begin_frame_ack;
   compositor_frame.metadata.device_scale_factor = 1;
   compositor_frame.metadata.may_contain_video = true;
 
+  cc::ResourceProvider::ResourceIdArray resources;
+
+  compositor_frame.render_pass_list.push_back(std::move(render_pass));
+
   // TODO(lethalantidote): Address third/fourth arg in SubmitCompositorFrame.
   compositor_frame_sink_->SubmitCompositorFrame(
       current_local_surface_id_, std::move(compositor_frame), nullptr, 0);
-  provider_->PutCurrentFrame();
 }
 
 void VideoFrameSubmitter::OnBeginFrame(const viz::BeginFrameArgs& args) {
