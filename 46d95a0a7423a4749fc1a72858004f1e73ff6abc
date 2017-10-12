@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e44708b_057c41a0",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-12T20:53:59Z",
+      "side": 1,
+      "message": "I am little surprised that we don\u0027t have this test coverage at the very beginning when crbug.com/684761 was being fixed. Otherwise, we would catch the brokenness when the refactoring code was being landed. Sigh...\n\nThanks for fixing this!",
+      "revId": "46d95a0a7423a4749fc1a72858004f1e73ff6abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
