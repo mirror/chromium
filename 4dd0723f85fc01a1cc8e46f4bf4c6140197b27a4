@@ -16,6 +16,24 @@
       "revId": "4dd0723f85fc01a1cc8e46f4bf4c6140197b27a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd9e915_82f0d7b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-12T08:33:57Z",
+      "side": 1,
+      "message": "Yes - it\u0027s just more encapsulated now, so we\u0027ll be able to swap in changes (e.g. new heuristics, eventually maybe ML) easily.",
+      "parentUuid": "aa1ff804_2910ffac",
+      "revId": "4dd0723f85fc01a1cc8e46f4bf4c6140197b27a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
