@@ -210,6 +210,11 @@ gfx::Transform TouchTransformController::GetTouchTransform(
       touch_area.IsEmpty() || touchscreen.id == ui::InputDevice::kInvalidId)
     return ctm;
 
+  // If the device is currently under calibration, then do not return any
+  // transform as we want to use the raw native touch input data for calibration
+  if (is_calibrating_)
+    return ctm;
+
   // Translate the touch so that it falls within the display bounds. This
   // should not be performed if the displays are mirrored.
   if (display.id() == touch_display.id()) {
@@ -217,12 +222,9 @@ gfx::Transform TouchTransformController::GetTouchTransform(
                   display.bounds_in_native().y());
   }
 
-  // If the device is currently under calibration, then do not return any
-  // transform as we want to use the raw native touch input data for calibration
-  if (is_calibrating_)
-    return ctm;
   uint32_t touch_device_identifier =
       TouchCalibrationData::GenerateTouchDeviceIdentifier(touchscreen);
+
   // If touch calibration data is unavailable, use naive approach.
   if (!touch_display.HasTouchCalibrationData(touch_device_identifier)) {
     return GetUncalibratedTransform(ctm, display, touch_display, touch_area,
@@ -230,6 +232,7 @@ gfx::Transform TouchTransformController::GetTouchTransform(
   }
   const TouchCalibrationData& calibration_data =
       touch_display.GetTouchCalibrationData(touch_device_identifier);
+
   // The resolution at which the touch calibration was performed.
   gfx::SizeF touch_calib_size(calibration_data.bounds);
 
@@ -270,10 +273,6 @@ gfx::Transform TouchTransformController::GetTouchTransform(
     // storing the calibration associated data. This will allow us to explicitly
     // inform the user with proper UX.
 
-    // Clear stored calibration data as it does not produce a valid calibration.
-    display_manager_->ClearTouchCalibrationData(touch_display.id(),
-                                                touch_device_identifier);
-
     // Return uncalibrated transform.
     return GetUncalibratedTransform(ctm, display, touch_display, touch_area,
                                     touch_native_size);
@@ -302,7 +301,8 @@ void TouchTransformController::UpdateTouchTransforms() const {
 void TouchTransformController::UpdateTouchRadius(
     const ManagedDisplayInfo& display,
     UpdateData* update_data) const {
-  for (const auto& identifier : display.touch_device_identifiers()) {
+  for (const auto& it : display.touch_calibration_data_map()) {
+    uint32_t identifier = it.first;
     DCHECK_EQ(0u, update_data->device_to_scale.count(identifier));
     update_data->device_to_scale.emplace(
         identifier, GetTouchResolutionScale(
@@ -317,7 +317,8 @@ void TouchTransformController::UpdateTouchTransform(
     UpdateData* update_data) const {
   ui::TouchDeviceTransform touch_device_transform;
   touch_device_transform.display_id = target_display_id;
-  for (const auto& identifier : touch_display.touch_device_identifiers()) {
+  for (const auto& it : touch_display.touch_calibration_data_map()) {
+    uint32_t identifier = it.first;
     ui::TouchscreenDevice device = FindTouchscreenByIdentifier(identifier);
     touch_device_transform.device_id = device.id;
     touch_device_transform.transform =

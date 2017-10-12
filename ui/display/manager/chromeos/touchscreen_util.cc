@@ -9,13 +9,15 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "ui/display/manager/display_manager.h"
 #include "ui/events/devices/input_device.h"
+#include "ui/events/devices/input_device_manager.h"
 
 namespace display {
 
 namespace {
 
-using DisplayInfoList = std::vector<ManagedDisplayInfo*>;
+using DisplayInfoPointerList = std::vector<ManagedDisplayInfo*>;
 using DeviceList = std::vector<const ui::TouchscreenDevice*>;
 
 // Helper method to associate |display| and |device|.
@@ -85,11 +87,12 @@ const ui::TouchscreenDevice* GuessBestUdlDevice(
   return best_device;
 }
 
-void AssociateUdlDevices(DisplayInfoList* displays, DeviceList* devices) {
+void AssociateUdlDevices(DisplayInfoPointerList* displays,
+                         DeviceList* devices) {
   VLOG(2) << "Trying to match udl devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
 
-  DisplayInfoList::iterator display_it = displays->begin();
+  DisplayInfoPointerList::iterator display_it = displays->begin();
   while (display_it != displays->end()) {
     ManagedDisplayInfo* display = *display_it;
     const ui::TouchscreenDevice* device = GuessBestUdlDevice(display, *devices);
@@ -100,10 +103,7 @@ void AssociateUdlDevices(DisplayInfoList* displays, DeviceList* devices) {
               << " (score=" << GetUdlAssociationScore(display, device) << ")";
       Associate(display, device);
 
-      display_it = displays->erase(display_it);
       devices->erase(std::find(devices->begin(), devices->end(), device));
-
-      continue;
     }
 
     ++display_it;
@@ -120,24 +120,32 @@ bool IsInternalDevice(const ui::TouchscreenDevice* device) {
   return device->type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL;
 }
 
-void AssociateSingleDisplayAndSingleDevice(DisplayInfoList* displays,
+ManagedDisplayInfo* GetInternalDisplay(DisplayInfoPointerList* displays) {
+  auto it =
+      std::find_if(displays->begin(), displays->end(), &IsInternalDisplay);
+  if (it != displays->end())
+    return *it;
+  return nullptr;
+}
+
+void AssociateSingleDisplayAndSingleDevice(DisplayInfoPointerList* displays,
                                            DeviceList* devices) {
   if (displays->size() != 1 || devices->size() != 1)
     return;
   // If there is only one display and only one touch device, just associate
   // them. This fixes the issue that usb tablet input device doesn't work
   // with chromebook.
-  DisplayInfoList::iterator display_it = displays->begin();
+  DisplayInfoPointerList::iterator display_it = displays->begin();
   DeviceList::iterator device_it = devices->begin();
   Associate(*display_it, *device_it);
   VLOG(2) << "=> Matched single device " << (*device_it)->name
           << " to single display " << (*display_it)->name();
-  displays->erase(display_it);
   devices->erase(device_it);
   return;
 }
 
-void AssociateInternalDevices(DisplayInfoList* displays, DeviceList* devices) {
+void AssociateInternalDevices(DisplayInfoPointerList* displays,
+                              DeviceList* devices) {
   VLOG(2) << "Trying to match internal devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
 
@@ -150,13 +158,7 @@ void AssociateInternalDevices(DisplayInfoList* displays, DeviceList* devices) {
   //   associated with an external device.
 
   // Capture the internal display reference as we remove it from |displays|.
-  ManagedDisplayInfo* internal_display = nullptr;
-  DisplayInfoList::iterator display_it =
-      std::find_if(displays->begin(), displays->end(), &IsInternalDisplay);
-  if (display_it != displays->end()) {
-    internal_display = *display_it;
-    displays->erase(display_it);
-  }
+  ManagedDisplayInfo* internal_display = GetInternalDisplay(displays);
 
   bool matched = false;
 
@@ -188,12 +190,54 @@ void AssociateInternalDevices(DisplayInfoList* displays, DeviceList* devices) {
     VLOG(2) << "=> Removing internal display " << internal_display->name();
 }
 
-void AssociateSameSizeDevices(DisplayInfoList* displays, DeviceList* devices) {
+void AssociateFromDisplayPreferences(DisplayInfoPointerList* displays,
+                                     DeviceList* devices,
+                                     const DisplayManager* display_manager) {
+  if (!displays->size() || !devices->size())
+    return;
+
+  VLOG(2) << "Trying to match " << displays->size() << " displays and "
+          << devices->size() << " devices using display preference data.";
+
+  std::map<uint32_t, int> touch_device_identifiers;
+
+  // A function that associates a touch device identified with the id
+  // |touch_device_identifier| to a display based on stored display preferences.
+  // Returns the next iteration for |it|.
+  auto associate_fn = [&](const ui::TouchscreenDevice* device) -> bool {
+    uint32_t touch_device_identifier =
+        TouchCalibrationData::GenerateTouchDeviceIdentifier(*device);
+    for (auto* new_display_info : *displays) {
+      // During tests the display ids may be invalid.
+      if (!display_manager->IsDisplayIdValid(new_display_info->id()))
+        continue;
+
+      // The existing ManagedDisplayInfo has the display preferences stored
+      // with it.
+      const ManagedDisplayInfo& info =
+          display_manager->GetDisplayInfo(new_display_info->id());
+
+      if (info.HasTouchDevice(touch_device_identifier)) {
+        Associate(new_display_info, device);
+        VLOG(2) << "=> Matched device " << device->name << " to display "
+                << new_display_info->name();
+        return true;
+      }
+    }
+    return false;
+  };
+
+  auto last_it = std::remove_if(devices->begin(), devices->end(), associate_fn);
+  devices->erase(last_it, devices->end());
+}
+
+void AssociateSameSizeDevices(DisplayInfoPointerList* displays,
+                              DeviceList* devices) {
   // Associate screens/displays with the same size.
   VLOG(2) << "Trying to match same-size devices (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
 
-  DisplayInfoList::iterator display_it = displays->begin();
+  DisplayInfoPointerList::iterator display_it = displays->begin();
   while (display_it != displays->end()) {
     ManagedDisplayInfo* display = *display_it;
     const gfx::Size native_size = display->GetNativeModeSize();
@@ -218,9 +262,7 @@ void AssociateSameSizeDevices(DisplayInfoList* displays, DeviceList* devices) {
               << ", device_size: " << device->size.ToString() << ")";
       Associate(display, device);
 
-      display_it = displays->erase(display_it);
       device_it = devices->erase(device_it);
-      continue;
     }
 
     // Didn't find an input device. Skip this display.
@@ -228,47 +270,85 @@ void AssociateSameSizeDevices(DisplayInfoList* displays, DeviceList* devices) {
   }
 }
 
-void AssociateToSingleDisplay(DisplayInfoList* displays, DeviceList* devices) {
+void AssociateToSingleDisplay(DisplayInfoPointerList* displays,
+                              DeviceList* devices) {
   // If there is only one display left, then we should associate all input
   // devices with it.
 
   VLOG(2) << "Trying to match to single display (" << displays->size()
           << " displays and " << devices->size() << " devices to match)";
 
+  std::size_t num_displays_excluding_internal = displays->size();
+  ManagedDisplayInfo* internal_display = GetInternalDisplay(displays);
+  if (internal_display)
+    num_displays_excluding_internal--;
+
   // We only associate to one display.
-  if (displays->size() != 1 || devices->empty())
+  if (num_displays_excluding_internal != 1 || devices->empty())
     return;
 
+  // Pick the non internal display.
   ManagedDisplayInfo* display = *displays->begin();
+  if (display == internal_display)
+    display = (*displays)[1];
+
   for (const ui::TouchscreenDevice* device : *devices) {
     VLOG(2) << "=> Matched device " << device->name << " to display "
             << display->name();
     Associate(display, device);
   }
-
-  displays->clear();
   devices->clear();
+}
+
+void AssociateRemainingDevicesToInternalOrFallbackDisplay(
+    DisplayInfoPointerList* displays,
+    DeviceList* devices) {
+  if (!displays->size() || !devices->size())
+    return;
+
+  ManagedDisplayInfo* internal_display = GetInternalDisplay(displays);
+  if (!internal_display) {
+    // If no internal displays were found, then associate the devices to any of
+    // the other displays.
+    internal_display = *(displays->begin());
+
+    VLOG(2) << "Could not find any internal display. Matching all devices to a "
+            << "random non internal display.";
+  }
+  VLOG(2) << "Matching " << devices->size() << " touch devices to "
+          << internal_display->name() << "[" << internal_display->id() << "]";
+
+  // device_it is iterated within the loop.
+  for (auto device_it = devices->begin(); device_it != devices->end();) {
+    // We do not want to associate an internal touch device with anything other
+    // than internal display.
+    if ((*device_it)->type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL) {
+      device_it++;
+      continue;
+    }
+
+    VLOG(2) << "Matching " << (*device_it)->name << " to "
+            << internal_display->name();
+    Associate(internal_display, *device_it);
+    device_it = devices->erase(device_it);
+  }
 }
 
 }  // namespace
 
 void AssociateTouchscreens(
     std::vector<ManagedDisplayInfo>* all_displays,
-    const std::vector<ui::TouchscreenDevice>& all_devices) {
+    const std::vector<ui::TouchscreenDevice>& all_devices,
+    const DisplayManager* display_manager) {
   // |displays| and |devices| contain pointers directly to the values stored
   // inside of |all_displays| and |all_devices|. When a display or input device
-  // has been associated, it is removed from the |displays| or |devices| list.
+  // has been associated, it is removed from the |devices| list. When a display
+  // is associated, it is *not* removed from |displays|.
 
   // Construct our initial set of display/devices that we will process.
-  DisplayInfoList displays;
+  DisplayInfoPointerList displays;
   for (ManagedDisplayInfo& display : *all_displays) {
     display.ClearTouchDevices();
-
-    if (display.GetNativeModeSize().IsEmpty()) {
-      VLOG(2) << "Will not match display " << display.id()
-              << " since it doesn't have a native mode";
-      continue;
-    }
     displays.push_back(&display);
   }
 
@@ -290,14 +370,37 @@ void AssociateTouchscreens(
 
   AssociateSingleDisplayAndSingleDevice(&displays, &devices);
   AssociateInternalDevices(&displays, &devices);
+  AssociateFromDisplayPreferences(&displays, &devices, display_manager);
   AssociateUdlDevices(&displays, &devices);
   AssociateSameSizeDevices(&displays, &devices);
   AssociateToSingleDisplay(&displays, &devices);
 
-  for (const ManagedDisplayInfo* display : displays)
-    VLOG(2) << "Unmatched display " << display->name();
   for (const ui::TouchscreenDevice* device : devices)
     LOG(WARNING) << "Unmatched device " << device->name;
+
+  AssociateRemainingDevicesToInternalOrFallbackDisplay(&displays, &devices);
+}
+
+bool IsInternalTouchscreenDevice(uint32_t touch_device_identifier) {
+  for (const auto& device :
+       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
+    if (device.type == ui::InputDeviceType::INPUT_DEVICE_EXTERNAL)
+      continue;
+    if (TouchCalibrationData::GenerateTouchDeviceIdentifier(device) ==
+        touch_device_identifier) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool HasExternalTouchscreenDevice() {
+  for (const auto& device :
+       ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
+    if (device.type == ui::InputDeviceType::INPUT_DEVICE_EXTERNAL)
+      return true;
+  }
+  return false;
 }
 
 }  // namespace display
