@@ -69,6 +69,24 @@
       "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e95ac8f_e19fc563",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T15:26:33Z",
+      "side": 1,
+      "message": "It is for both mash and classic ash. Classic ash also uses the mojo preferences service (so we can be sure the behavior today is similar to what we ship with mash).",
+      "parentUuid": "816dd76f_05a917e3",
+      "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
