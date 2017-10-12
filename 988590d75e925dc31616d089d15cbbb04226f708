@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29cfdb59_09332434",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "add \"shown\"",
+      "range": {
+        "startLine": 1617,
+        "startChar": 93,
+        "endLine": 1617,
+        "endChar": 94
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f521a8_b82b0f1e",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "if",
+      "range": {
+        "startLine": 1617,
+        "startChar": 150,
+        "endLine": 1617,
+        "endChar": 154
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6638848_261a33ec",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "complete the sentence :)",
+      "range": {
+        "startLine": 1623,
+        "startChar": 102,
+        "endLine": 1623,
+        "endChar": 104
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09955893_aae5287f",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "Error message shown in the network configuration dialog when network configuration encounters unknown, or unexpected error.",
+      "range": {
+        "startLine": 1626,
+        "startChar": 52,
+        "endLine": 1626,
+        "endChar": 101
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50a1028_a3c69575",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "None is missing - stripping it would be a breaking change to the API (considering None is currently a valid value here).\n\nI assume this is due to conflict with auto-generated SOURCE_TYPE_NONE enum in extensions/common/api/networking_private.h :/\n\nI\u0027d rather keep this a DOMString for now, and maybe change the code generated values for unset enum vars (maybe something like SOURCE_TYPE_NULL/SOURCE_TYPE_UNDEFINED).",
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff77f60_00017bd6",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T22:29:13Z",
+      "side": 1,
+      "message": "if (!error) {\n  this.close_();\n  return;\n}\n\nif (error !\u003d \u0027connection\u0027 \u0026\u0026 error !\u003d \u0027connected\u0027 \u0026\u0026 error !\u003d \u0027connect-canceled\u0027) {\n  this.error_ \u003d error;\n  console.error(...)\n}",
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
