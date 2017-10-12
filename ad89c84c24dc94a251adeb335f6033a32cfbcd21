@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71aa2139_a7046c2c",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T23:54:54Z",
+      "side": 1,
+      "message": "Gone now",
+      "parentUuid": "b7c5d3b2_a6a4a7fb",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56e976b8_0b75a543",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7a6c2bf8_905c294d",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T23:54:54Z",
+      "side": 1,
+      "message": "I really like the suggestion to move the SetSite for dedicated site to OnResponseStarted.  It will still solve the second race from the CL description, and I don\u0027t think it introduces any new races -- if an isolated origin\u0027s process is reused by some other origin before it reaches OnResponseStarted, HasWrongProcessForURL will still catch it in OnResponseStarted for whichever origin reaches it second.\n\nI also like that this is less risky, and it also lets us keep lazily assigning site URLs for isolated origins in more cases, in particular cross-site redirects.  So a redirect to accounts.google.com and another redirect to google.com wouldn\u0027t need to spin up an unneeded intermediate process for accounts, whereas previously it might have.  I think that outweighs the downside of potentially spinning up another process at commit time in the event of a race, which we avoided by setting the site URL earlier in DetermineSiteInstanceForURL.\n\nAlso, all the tests that were broken by the previous approach are now working, which is great!\n I\u0027ve undone those fixes.\n\nI gave this a try in PS12, and if the trybots don\u0027t reveal anything else, I think this approach is better than the previous one.  Thanks so much for this suggestion!",
+      "parentUuid": "56e976b8_0b75a543",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33111b41_9e308184",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-12T23:11:07Z",
       "side": 1,
       "message": "I\u0027m ok with this for now, but maybe we should change this to be something like DoesSiteRequireDedicatedProcess for the 204 URL from line 1268?  That would be more robust as we try out various isolation policies.",
+      "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7e3309_f2149c0c",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T23:54:54Z",
+      "side": 1,
+      "message": "Gone now.",
+      "parentUuid": "33111b41_9e308184",
       "revId": "ad89c84c24dc94a251adeb335f6033a32cfbcd21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
