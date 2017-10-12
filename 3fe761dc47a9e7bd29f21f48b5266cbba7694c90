@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c9ebc24_92463654",
+        "filename": "docs/user_handle_mapping.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-12T08:36:15Z",
+      "side": 1,
+      "message": "The top of this file says \"For Chromium contributors that have different nicks on other domains\". You have the same nick everywhere, you don\u0027t need to update this right? Or am I missing something?",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 57
+      },
+      "revId": "3fe761dc47a9e7bd29f21f48b5266cbba7694c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
