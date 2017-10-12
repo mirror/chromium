@@ -46,6 +46,7 @@ namespace blink {
 class WebDevToolsAgentImpl;
 class WebLocalFrameImpl;
 class WebSpellCheckPanelHostClient;
+struct WebRemoteScrollProperties;
 
 class LocalFrameClientImpl final : public LocalFrameClient {
  public:
@@ -244,6 +245,10 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidBlockFramebust(const KURL&) override;
 
   String GetDevToolsFrameToken() override;
+
+  void ScrollRectToVisibleInParentFrame(
+      const WebRect&,
+      const WebRemoteScrollProperties&) override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
