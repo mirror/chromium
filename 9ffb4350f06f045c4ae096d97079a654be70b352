@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dae5dca_7b1ace10",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/selection/invalidation-rect-includes-newline-for-vertical-lr-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-12T00:01:22Z",
+      "side": 0,
+      "message": "General comment, happening to comment while reading this text expectation -- when we paint an extra rect to show a newline, will we still invalidate that with this patch?\n\nI want to make sure that removing the invalidation of the containing div/box does not cause us to lose invalidation of the wrapped newline highlight we sometimes show.\n\nI think we are ok because of this:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutText.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1852",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
