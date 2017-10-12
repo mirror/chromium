@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89d60c50_da0e73d1",
+        "filename": "content/utility/utility_main.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-12T14:48:39Z",
+      "side": 1,
+      "message": "hmm this global is strange, I\u0027m not sure it\u0027s actually needed. you can call sandbox::SandboxFactory::GetTargetServices from anywhere in content",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "948881f9ddab788902c0c97d0d0ef523bb3efbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac65a3f0_e0f49290",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-12T14:48:39Z",
+      "side": 1,
+      "message": "this should work, avoiding need for a global:\n\nauto* target_services \u003d sandbox::SandboxFactory::GetTargetServices();\nif (target_services)\n  target_services-\u003eLowerToken();",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "948881f9ddab788902c0c97d0d0ef523bb3efbc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
