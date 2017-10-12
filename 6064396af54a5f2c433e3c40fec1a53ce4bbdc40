@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06184330_0826e685",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T20:02:51Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary.",
+      "revId": "6064396af54a5f2c433e3c40fec1a53ce4bbdc40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef8da5e_a0f6e81e",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T20:02:51Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6064396af54a5f2c433e3c40fec1a53ce4bbdc40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
