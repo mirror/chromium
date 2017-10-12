@@ -94,6 +94,8 @@ source_set("cronet_sources") {
   if (!use_platform_icu_alternatives) {
     deps += [ "//base:i18n" ]
   }
+
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("cronet_sources_with_global_state") {
