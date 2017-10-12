@@ -13,6 +13,7 @@
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/stylus_utils.h"
 #include "ash/public/cpp/voice_interaction_state.h"
+#include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
@@ -31,6 +32,7 @@
 #include "components/session_manager/session_manager_types.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/devices/device_data_manager.h"
+#include "ui/events/devices/stylus_state.h"
 #include "ui/events/devices/touchscreen_device.h"
 #include "ui/events/event.h"
 #include "ui/events/test/device_data_manager_test_api.h"
@@ -58,10 +60,6 @@ class PaletteTrayTest : public AshTestBase {
     // Set the test palette delegate here, since this requires an instance of
     // shell to be available.
     ShellTestApi().SetPaletteDelegate(std::make_unique<TestPaletteDelegate>());
-    // Initialize the palette tray again since this test requires information
-    // from the palette delegate. (It was initialized without the delegate in
-    // AshTestBase::SetUp()).
-    palette_tray_->Initialize();
   }
 
   // Performs a tap on the palette tray button.
@@ -72,12 +70,12 @@ class PaletteTrayTest : public AshTestBase {
   }
 
  protected:
-  TestPaletteDelegate* test_palette_delegate() {
-    return static_cast<TestPaletteDelegate*>(Shell::Get()->palette_delegate());
+  PrefService* local_state() {
+    return Shell::Get()->GetLocalStatePrefService();
   }
 
-  PrefService* pref_service() {
-    return Shell::Get()->GetLocalStatePrefService();
+  PrefService* user_prefs() {
+    return Shell::Get()->session_controller()->GetLastActiveUserPrefService();
   }
 
   PaletteTray* palette_tray_ = nullptr;  // not owned
@@ -106,7 +104,7 @@ TEST_F(PaletteTrayTest, PaletteTrayStylusWatcherAlive) {
 // should become visible after seeing a stylus event.
 TEST_F(PaletteTrayTest, PaletteTrayVisibleAfterStylusSeen) {
   ASSERT_FALSE(palette_tray_->visible());
-  ASSERT_FALSE(pref_service()->GetBoolean(prefs::kHasSeenStylus));
+  ASSERT_FALSE(local_state()->GetBoolean(prefs::kHasSeenStylus));
   ASSERT_TRUE(test_api_->IsStylusWatcherActive());
 
   // Send a stylus event.
@@ -125,7 +123,7 @@ TEST_F(PaletteTrayTest, PaletteTrayVisibleAfterStylusSeen) {
 // visible.
 TEST_F(PaletteTrayTest, StylusSeenPrefInitiallySet) {
   ASSERT_FALSE(palette_tray_->visible());
-  pref_service()->SetBoolean(prefs::kHasSeenStylus, true);
+  local_state()->SetBoolean(prefs::kHasSeenStylus, true);
 
   EXPECT_TRUE(palette_tray_->visible());
   EXPECT_FALSE(test_api_->IsStylusWatcherActive());
@@ -200,6 +198,69 @@ TEST_F(PaletteTrayTest, ModeToolDeactivatedAutomatically) {
 TEST_F(PaletteTrayTest, NoMetalayerToolViewCreated) {
   EXPECT_FALSE(
       test_api_->GetPaletteToolManager()->HasTool(PaletteToolId::METALAYER));
+}
+
+TEST_F(PaletteTrayTest, EnableStylusPref) {
+  local_state()->SetBoolean(prefs::kHasSeenStylus, true);
+
+  // kEnableStylusTools is true by default
+  EXPECT_TRUE(user_prefs()->GetBoolean(prefs::kEnableStylusTools));
+  EXPECT_TRUE(palette_tray_->visible());
+
+  // Resetting the pref hides the palette tray.
+  user_prefs()->SetBoolean(prefs::kEnableStylusTools, false);
+  EXPECT_FALSE(palette_tray_->visible());
+
+  // Setting the pref again shows the palette tray.
+  user_prefs()->SetBoolean(prefs::kEnableStylusTools, true);
+  EXPECT_TRUE(palette_tray_->visible());
+}
+
+TEST_F(PaletteTrayTest, StylusEjectEvent) {
+  // DeviceDataManager is nullptr when the config is not classic.
+  // TODO(kaznacheev): Make this work for mash.
+  if (Shell::GetAshConfig() != Config::CLASSIC)
+    return;
+
+  ui::test::DeviceDataManagerTestAPI devices_test_api;
+
+  // kLaunchPaletteOnEjectEvent is true by default
+  EXPECT_TRUE(user_prefs()->GetBoolean(prefs::kLaunchPaletteOnEjectEvent));
+
+  // Removing the stylus shows the bubble.
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_TRUE(palette_tray_->GetBubbleView());
+
+  // Inserting the stylus hides the bubble.
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
+  EXPECT_FALSE(palette_tray_->GetBubbleView());
+
+  // Removing the stylus while kLaunchPaletteOnEjectEvent==false does nothing.
+  user_prefs()->SetBoolean(prefs::kLaunchPaletteOnEjectEvent, false);
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_FALSE(palette_tray_->GetBubbleView());
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
+
+  // Removing the stylus while kEnableStylusTools==false does nothing.
+  user_prefs()->SetBoolean(prefs::kLaunchPaletteOnEjectEvent, true);
+  user_prefs()->SetBoolean(prefs::kEnableStylusTools, false);
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_FALSE(palette_tray_->GetBubbleView());
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
+
+  // Set both prefs to true, removing should work again.
+  user_prefs()->SetBoolean(prefs::kEnableStylusTools, true);
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_TRUE(palette_tray_->GetBubbleView());
+
+  // Inserting the stylus should disable a currently selected tool.
+  test_api_->GetPaletteToolManager()->ActivateTool(
+      PaletteToolId::LASER_POINTER);
+  EXPECT_TRUE(test_api_->GetPaletteToolManager()->IsToolActive(
+      PaletteToolId::LASER_POINTER));
+  devices_test_api.NotifyObserversStylusStateChanged(ui::StylusState::INSERTED);
+  EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
+      PaletteToolId::LASER_POINTER));
 }
 
 // Base class for tests that rely on voice interaction enabled.
