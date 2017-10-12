@@ -106,6 +106,10 @@ void MockUploader::set_discard_uploads(bool discard_uploads) {
   discard_uploads_ = discard_uploads;
 }
 
+size_t MockUploader::discarded_upload_count() const {
+  return 0u;
+}
+
 MockTime::MockTime()
     : now_(base::Time::Now()),
       now_ticks_(base::TimeTicks::Now()),
