@@ -16,6 +16,24 @@
       "revId": "488a160ce0d8f8705415c124d4f785eb70043a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a9998c_8d077935",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-12T22:17:07Z",
+      "side": 1,
+      "message": "Removed this. Somehow this is required for Telemetry test to work on Linux Perf dbg but not current Linux bot. Seems mysterious but probably should be addressed in some other CL.",
+      "parentUuid": "bc745315_8a02ab51",
+      "revId": "488a160ce0d8f8705415c124d4f785eb70043a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
