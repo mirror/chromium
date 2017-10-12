@@ -16,6 +16,24 @@
       "revId": "f579ba89f6fa5883d635892e465f6b9cd94da155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7361c305_e7adf075",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-12T18:20:18Z",
+      "side": 1,
+      "message": "I don\u0027t think EXPECT_FLOAT_EQ would work properly here. SetVolume() may convert the value to int, e.g. in [0..100] range, and I don\u0027t think we want to disallow that behavior with this test.",
+      "parentUuid": "dc4745b4_becc868d",
+      "revId": "f579ba89f6fa5883d635892e465f6b9cd94da155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
