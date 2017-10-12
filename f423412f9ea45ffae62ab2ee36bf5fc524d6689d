@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddc087b0_876cf60a",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-12T00:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2775b1a0_010be904",
+      "revId": "f423412f9ea45ffae62ab2ee36bf5fc524d6689d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70349713_e830aa41",
         "filename": "extensions/docs/events.md",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-12T00:05:11Z",
       "side": 1,
       "message": "Does it ever not?\n\nMaybe rephrase to \"Event listeners are registered in JavaScript in the renderer process.\"?",
+      "range": {
+        "startLine": 45,
+        "startChar": 31,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "f423412f9ea45ffae62ab2ee36bf5fc524d6689d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb2a57a_b63472c7",
+        "filename": "extensions/docs/events.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-12T00:29:03Z",
+      "side": 1,
+      "message": "SG.\nI was thinking about DispatchEventWithLazyListener, but we can ignore that here I suppose.",
+      "parentUuid": "70349713_e830aa41",
       "range": {
         "startLine": 45,
         "startChar": 31,
