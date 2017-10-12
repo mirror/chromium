@@ -352,7 +352,7 @@ class CORE_EXPORT InlineBox : public DisplayItemClient {
            GetLineLayoutItem().Parent().IsBox();
   }
   EVerticalAlign VerticalAlign() const {
-    return IsAnonymousInline() ? ComputedStyle::InitialVerticalAlign()
+    return IsAnonymousInline() ? ComputedStyleInitialFunctions::InitialVerticalAlign()
                                : GetLineLayoutItem()
                                      .Style(bitfields_.FirstLine())
                                      ->VerticalAlign();

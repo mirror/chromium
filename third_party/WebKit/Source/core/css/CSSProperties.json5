@@ -707,7 +707,7 @@
       field_template: "external",
       type_name: "StyleFilterData",
       field_group: "*",
-      default_value: "StyleFilterData::Create()",
+      default_value: "ComputedStyleInitialFunctions::InitialFilterInternal()",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/StyleFilterData.h"],
       computed_style_custom_functions: ["getter","setter"],
@@ -1330,6 +1330,8 @@
       svg: true,
       type_name: "WindRule",
     },
+    // TODO! This generates an InitialFilter method that we don't need, and
+    // conflicts with separate generation of initial methods.
     {
       name: "filter",
       api_class: true,
@@ -1339,7 +1341,7 @@
       field_template: "external",
       type_name : "StyleFilterData",
       field_group: "*",
-      default_value: "StyleFilterData::Create()",
+      default_value: "ComputedStyleInitialFunctions::InitialFilterInternal()",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/StyleFilterData.h"],
       computed_style_custom_functions: ["getter", "setter"],

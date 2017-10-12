@@ -71,7 +71,7 @@ void LayoutReplaced::StyleDidChange(StyleDifference diff,
 
   bool had_style = (old_style != 0);
   float old_zoom =
-      had_style ? old_style->EffectiveZoom() : ComputedStyle::InitialZoom();
+      had_style ? old_style->EffectiveZoom() : ComputedStyleInitialFunctions::InitialZoom();
   if (Style() && Style()->EffectiveZoom() != old_zoom)
     IntrinsicSizeChanged();
 }
@@ -585,7 +585,7 @@ LayoutRect LayoutReplaced::ComputeObjectFit(
   EObjectFit object_fit = Style()->GetObjectFit();
 
   if (object_fit == EObjectFit::kFill &&
-      Style()->ObjectPosition() == ComputedStyle::InitialObjectPosition()) {
+      Style()->ObjectPosition() == ComputedStyleInitialFunctions::InitialObjectPosition()) {
     return content_rect;
   }
 

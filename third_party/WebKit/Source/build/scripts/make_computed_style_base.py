@@ -342,39 +342,22 @@ def _create_property_field(property_, alias_dictionary):
             if field != 'name':
                 property_[field] = alias_dictionary[alias_template][field]
 
+    type_name = property_['type_name']
     if property_['field_template'] == 'keyword':
-        type_name = property_['type_name']
-        default_value = type_name + '::' + enum_value_name(property_['default_value'])
         assert property_['field_size'] is None, \
             ("'" + property_['name'] + "' is a keyword field, "
              "so it should not specify a field_size")
         size = int(math.ceil(math.log(len(property_['keywords']), 2)))
     elif property_['field_template'] == 'multi_keyword':
-        type_name = property_['type_name']
-        default_value = type_name + '::' + enum_value_name(property_['default_value'])
         size = len(property_['keywords']) - 1  # Subtract 1 for 'none' keyword
     elif property_['field_template'] == 'external':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
         size = None
     elif property_['field_template'] == 'primitive':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
         size = 1 if type_name == 'bool' else property_["field_size"]  # pack bools with 1 bit.
     elif property_['field_template'] == 'pointer':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
         size = None
     else:
         assert property_['field_template'] == 'monotonic_flag', "Please put a valid value for field_template"
-        type_name = 'bool'
-        default_value = 'false'
-        size = 1
-
-    if property_['wrapper_pointer_name']:
-        assert property_['field_template'] in ['pointer', 'external']
-        if property_['field_template'] == 'external':
-            type_name = '{}<{}>'.format(property_['wrapper_pointer_name'], type_name)
 
     return Field(
         'property',
@@ -382,11 +365,11 @@ def _create_property_field(property_, alias_dictionary):
         property_name=property_['name'],
         inherited=property_['inherited'],
         independent=property_['independent'],
-        type_name=type_name,
+        type_name=property_['type_name'],
         wrapper_pointer_name=property_['wrapper_pointer_name'],
         field_template=property_['field_template'],
         size=size,
-        default_value=default_value,
+        default_value=property_['default_value'],
         custom_copy=property_['custom_copy'],
         custom_compare=property_['custom_compare'],
         mutable=property_['mutable'],
@@ -616,7 +599,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             if property_['mutable']:
                 assert property_['field_template'] == 'monotonic_flag', \
                     'mutable keyword only implemented for monotonic_flag'
-            make_style_builder.apply_property_naming_defaults(property_)
+            self.expand_parameters(property_)
 
         all_properties = css_properties + extra_fields
 

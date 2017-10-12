@@ -71,7 +71,7 @@ void LayoutImage::StyleDidChange(StyleDifference diff,
 
   bool old_orientation = old_style
                              ? old_style->RespectImageOrientation()
-                             : ComputedStyle::InitialRespectImageOrientation();
+                             : ComputedStyleInitialFunctions::InitialRespectImageOrientation();
   if (Style() && Style()->RespectImageOrientation() != old_orientation)
     IntrinsicSizeChanged();
 }
@@ -236,7 +236,7 @@ bool LayoutImage::ForegroundIsKnownToBeOpaqueInRect(
     return false;
   // Object-position may leave parts of the content box empty, regardless of the
   // value of object-fit.
-  if (Style()->ObjectPosition() != ComputedStyle::InitialObjectPosition())
+  if (Style()->ObjectPosition() != ComputedStyleInitialFunctions::InitialObjectPosition())
     return false;
   // Object-fit may leave parts of the content box empty.
   EObjectFit object_fit = Style()->GetObjectFit();

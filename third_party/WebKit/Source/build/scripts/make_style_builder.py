@@ -36,30 +36,7 @@ from name_utilities import lower_first, upper_camel_case
 import template_expander
 
 
-def apply_property_naming_defaults(property_):
-    def set_if_none(property_, key, value):
-        if property_[key] is None:
-            property_[key] = value
-
-    # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
-    upper_camel = upper_camel_case(property_['name'])
-    set_if_none(
-        property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
-    name = property_['name_for_methods']
-    simple_type_name = str(property_['type_name']).split('::')[-1]
-    set_if_none(property_, 'type_name', 'E' + name)
-    set_if_none(
-        property_, 'getter', name if simple_type_name != name else 'Get' + name)
-    set_if_none(property_, 'setter', 'Set' + name)
-    set_if_none(property_, 'inherited', False)
-    set_if_none(property_, 'initial', 'Initial' + name)
-
-    if property_['custom_all']:
-        property_['custom_initial'] = True
-        property_['custom_inherit'] = True
-        property_['custom_value'] = True
-    if property_['inherited']:
-        property_['is_inherited_setter'] = 'Set' + name + 'IsInherited'
+def calculate_functions_to_declare(property_):
     property_['should_declare_functions'] = \
         not property_['use_handlers_for'] \
         and not property_['longhands'] \
@@ -90,8 +67,8 @@ class StyleBuilderWriter(css_properties.CSSProperties):
                          ('StyleBuilder.cpp'): self.generate_style_builder,
                         }
 
-        for property in self._properties.values():
-            apply_property_naming_defaults(property)
+        for property_ in self._properties.values():
+            calculate_functions_to_declare(property_)
 
     @template_expander.use_jinja('templates/StyleBuilderFunctions.h.tmpl',
                                  filters=filters)
