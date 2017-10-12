@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2579e624_aab5a7b8",
+        "filename": "chrome/browser/ui/views/location_bar/icon_label_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T17:14:24Z",
+      "side": 1,
+      "message": "Please add a comment here.",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 35
+      },
+      "revId": "6f8464971b4c70b368ce401a3c1d67df86e7a779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
