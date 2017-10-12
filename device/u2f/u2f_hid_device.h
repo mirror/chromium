@@ -6,6 +6,10 @@
 #define DEVICE_U2F_U2F_HID_DEVICE_H_
 
 #include <list>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "base/cancelable_callback.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
@@ -28,7 +32,9 @@ class U2fHidDevice : public U2fDevice {
   // Send a wink command if supported
   void TryWink(const WinkCallback& callback) final;
   // Use a string identifier to compare to other devices
-  std::string GetId() final;
+  static std::string GetIdForDevice(
+      const device::mojom::HidDeviceInfo& device_info);
+  std::string GetId() const final;
   // Command line flag to enable tests on actual U2f HID hardware
   static bool IsTestEnabled();
 
