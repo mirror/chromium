@@ -956,7 +956,9 @@ TEST_F(PaintOpBufferOffsetsTest,
 
 TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorEmptyList) {
   std::vector<size_t> offsets = Select({});
-  PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
+  PlaybackParams params;
+  SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+  PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas, params);
   EXPECT_FALSE(iter);
 }
 
@@ -967,12 +969,32 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorNoRecords) {
   push_op<DrawColorOp>(3u, SkBlendMode::kClear);
   push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
+  PlaybackParams params;
+
   // all ops
   {
     size_t op_count = 0;
     std::vector<size_t> offsets = Select({0, 1, 2, 3, 4});
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
+      PaintOp* base_op = *iter;
+      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
+      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+      EXPECT_EQ(op_count, op->color);
+      ++op_count;
+    }
+    EXPECT_EQ(5u, op_count);
+  }
+
+  // all ops, no offsets
+  {
+    size_t op_count = 0;
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, nullptr, &canvas,
+                                                params);
+         iter; ++iter) {
       PaintOp* base_op = *iter;
       ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
       DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
@@ -987,8 +1009,10 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorNoRecords) {
     size_t op_count = 0;
     size_t expected_color = 0;
     std::vector<size_t> offsets = Select({0, 2, 4});
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
       PaintOp* base_op = *iter;
       ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
       DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
@@ -1002,7 +1026,8 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorNoRecords) {
   // no ops
   {
     std::vector<size_t> offsets = Select({});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas, params);
     EXPECT_FALSE(iter);
   }
 }
@@ -1043,96 +1068,155 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorMultipleUnnestedRecords) {
 
   EXPECT_EQ(9u, buffer_.size());
 
+  std::vector<PaintOpType> types({
+      PaintOpType::Save,      PaintOpType::DrawColor, PaintOpType::Restore,
+      PaintOpType::DrawColor, PaintOpType::Save,      PaintOpType::DrawColor,
+      PaintOpType::DrawColor, PaintOpType::DrawColor, PaintOpType::Restore,
+      PaintOpType::Save,      PaintOpType::DrawColor, PaintOpType::DrawColor,
+      PaintOpType::Restore,   PaintOpType::DrawColor, PaintOpType::Save,
+      PaintOpType::Restore,   PaintOpType::Save,      PaintOpType::Restore,
+      PaintOpType::DrawColor, PaintOpType::Save,      PaintOpType::DrawColor,
+      PaintOpType::DrawColor, PaintOpType::DrawColor, PaintOpType::DrawColor,
+      PaintOpType::DrawColor, PaintOpType::Restore,
+  });
+
+  PlaybackParams params;
+
   // all ops
   {
     size_t op_count = 0;
+    size_t color_count = 0;
     std::vector<size_t> offsets = Select({0, 1, 2, 3, 4, 5, 6, 7, 8});
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
       PaintOp* base_op = *iter;
-      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
-      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
-      EXPECT_EQ(op_count, op->color);
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(color_count, op->color);
+        ++color_count;
+      }
       ++op_count;
     }
-    EXPECT_EQ(14u, op_count);
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(14u, color_count);
+  }
+
+  // all ops, no offests
+  {
+    size_t op_count = 0;
+    size_t color_count = 0;
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, nullptr, &canvas,
+                                                params);
+         iter; ++iter) {
+      PaintOp* base_op = *iter;
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(color_count, op->color);
+        ++color_count;
+      }
+      ++op_count;
+    }
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(14u, color_count);
   }
 
   // some ops
   {
     size_t op_count = 0;
+    size_t color_count = 0;
     std::vector<size_t> offsets = Select({2, 4, 5, 6, 8});
     std::vector<size_t> expected_colors = {2, 3, 4, 7, 9, 10, 11, 12, 13};
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    std::vector<size_t> skip_ops = {0, 1, 2, 3, 9, 10, 11, 12, 18};
+
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
+      // Adjust op count for skipped ops to use the same op count and types
+      // array as previous sub-tests.
+      for (size_t i = 0; i < skip_ops.size(); ++i) {
+        if (skip_ops[i] == op_count)
+          ++op_count;
+      }
+
       PaintOp* base_op = *iter;
-      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
-      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
-      ASSERT_LT(op_count, expected_colors.size());
-      EXPECT_EQ(expected_colors[op_count], op->color);
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(expected_colors[color_count], op->color);
+        ++color_count;
+      }
       ++op_count;
     }
-    EXPECT_EQ(expected_colors.size(), op_count);
+
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(expected_colors.size(), color_count);
   }
 
   // no ops
   {
     std::vector<size_t> offsets = Select({});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
-    EXPECT_FALSE(iter);
-  }
-}
-
-TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorManyNestedRecordsAllEmpty) {
-  auto empty_record = sk_make_sp<PaintOpBuffer>();
-
-  auto outer_record = sk_make_sp<PaintOpBuffer>();
-  auto record_chain = sk_make_sp<PaintOpBuffer>();
-  for (size_t i = 0; i < 5; ++i) {
-    outer_record->push<DrawRecordOp>(empty_record);
-    record_chain->push<DrawRecordOp>(empty_record);
-  }
-  for (size_t i = 0; i < 5; ++i) {
-    auto next_parent = sk_make_sp<PaintOpBuffer>();
-    next_parent->push<DrawRecordOp>(record_chain);
-    record_chain = next_parent;
-  }
-  outer_record->push<DrawRecordOp>(record_chain);
-  push_op<DrawRecordOp>(outer_record);
-
-  // Test a single top level draw record op.
-  {
-    std::vector<size_t> offsets = Select({0});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
-    EXPECT_FALSE(iter);
-  }
-
-  // Test multiple top level draw record ops.
-  push_op<DrawRecordOp>(outer_record);
-  push_op<DrawRecordOp>(outer_record);
-  {
-    std::vector<size_t> offsets = Select({0, 1, 2});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
-    EXPECT_FALSE(iter);
-  }
-
-  // Test multiple top level draw record ops, but only some offsets.
-  {
-    std::vector<size_t> offsets = Select({1});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
-    EXPECT_FALSE(iter);
-  }
-
-  // No offsets.
-  {
-    std::vector<size_t> offsets = Select({});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas, params);
     EXPECT_FALSE(iter);
   }
 }
 
 TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorManyNestedRecords) {
   static constexpr SkBlendMode mode = SkBlendMode::kClear;
+
+  // (0) draw color 0
+  // (1) save (0)
+  //   save (00)
+  //     save (000)
+  //       draw color 1
+  //     restore (000)
+  //     save (001)
+  //       draw color 2
+  //       draw color 3
+  //     restore (001)
+  //   restore (00)
+  // (1) restore (0)
+  // (2) draw color 4
+  // (3) save (chain)
+  //   save
+  //     save
+  //       save
+  //         save
+  //           save
+  //             draw color (5)
+  //             draw color (6)
+  //             draw color (7)
+  //           restore
+  //         restore
+  //       restore
+  //     restore
+  //   restore
+  // (3) restore (chain)
+
+  std::vector<PaintOpType> types({
+      PaintOpType::DrawColor, PaintOpType::Save,      PaintOpType::Save,
+      PaintOpType::Save,      PaintOpType::DrawColor, PaintOpType::Restore,
+      PaintOpType::Save,      PaintOpType::DrawColor, PaintOpType::DrawColor,
+      PaintOpType::Restore,   PaintOpType::Restore,   PaintOpType::Restore,
+      PaintOpType::DrawColor, PaintOpType::Save,      PaintOpType::Save,
+      PaintOpType::Save,      PaintOpType::Save,      PaintOpType::Save,
+      PaintOpType::Save,      PaintOpType::DrawColor, PaintOpType::DrawColor,
+      PaintOpType::DrawColor, PaintOpType::Restore,   PaintOpType::Restore,
+      PaintOpType::Restore,   PaintOpType::Restore,   PaintOpType::Restore,
+      PaintOpType::Restore,
+  });
 
   push_op<DrawColorOp>(0u, mode);
   auto internal0 = sk_make_sp<PaintOpBuffer>();
@@ -1161,42 +1245,95 @@ TEST_F(PaintOpBufferOffsetsTest, FlatteningIteratorManyNestedRecords) {
 
   EXPECT_EQ(4u, buffer_.size());
 
+  PlaybackParams params;
+
   // all ops
   {
     size_t op_count = 0;
+    size_t color_count = 0;
     std::vector<size_t> offsets = Select({0, 1, 2, 3});
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
       PaintOp* base_op = *iter;
-      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
-      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
-      EXPECT_EQ(op_count, op->color);
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(color_count, op->color);
+        ++color_count;
+      }
       ++op_count;
     }
-    EXPECT_EQ(8u, op_count);
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(8u, color_count);
+  }
+
+  // all ops, no offsets
+  {
+    size_t op_count = 0;
+    size_t color_count = 0;
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, nullptr, &canvas,
+                                                params);
+         iter; ++iter) {
+      PaintOp* base_op = *iter;
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(color_count, op->color);
+        ++color_count;
+      }
+      ++op_count;
+    }
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(8u, color_count);
   }
 
   // some ops
   {
     size_t op_count = 0;
+    size_t color_count = 0;
     std::vector<size_t> offsets = Select({1, 3});
     std::vector<size_t> expected_colors = {1, 2, 3, 5, 6, 7};
-    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets); iter;
-         ++iter) {
+    std::vector<size_t> skip_ops = {0, 12};
+
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    for (PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas,
+                                                params);
+         iter; ++iter) {
+      // Adjust op count for skipped ops to use the same op count and types
+      // array as previous sub-tests.
+      for (size_t i = 0; i < skip_ops.size(); ++i) {
+        if (skip_ops[i] == op_count)
+          ++op_count;
+      }
+
       PaintOp* base_op = *iter;
-      ASSERT_EQ(base_op->GetType(), PaintOpType::DrawColor);
-      DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
-      ASSERT_LT(op_count, expected_colors.size());
-      EXPECT_EQ(expected_colors[op_count], op->color);
+      ASSERT_EQ(base_op->GetType(), types[op_count]);
+      iter.Raster();
+
+      if (base_op->GetType() == PaintOpType::DrawColor) {
+        DrawColorOp* op = static_cast<DrawColorOp*>(base_op);
+        EXPECT_EQ(expected_colors[color_count], op->color);
+        ++color_count;
+      }
       ++op_count;
     }
-    EXPECT_EQ(expected_colors.size(), op_count);
+
+    EXPECT_EQ(types.size(), op_count);
+    EXPECT_EQ(expected_colors.size(), color_count);
   }
 
   // no ops
   {
     std::vector<size_t> offsets = Select({});
-    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets);
+    SkNoDrawCanvas canvas(SkIRect::MakeWH(1000, 1000));
+    PaintOpBuffer::FlatteningIterator iter(&buffer_, &offsets, &canvas, params);
     EXPECT_FALSE(iter);
   }
 }
