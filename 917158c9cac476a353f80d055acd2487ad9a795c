@@ -34,6 +34,24 @@
       "revId": "917158c9cac476a353f80d055acd2487ad9a795c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87331808_3f7c00db",
+        "filename": "gpu/command_buffer/service/service_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-12T21:40:43Z",
+      "side": 1,
+      "message": "Oh, I see, it was forwarded twice before then? LGTM for now then.\n\nNote, we will be removing flags from the GPU process, and favoring GpuPreferences everywhere, with crbug.com/774157 , so we will want to revisit this.",
+      "parentUuid": "16b9e941_9d0f9dcb",
+      "revId": "917158c9cac476a353f80d055acd2487ad9a795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
