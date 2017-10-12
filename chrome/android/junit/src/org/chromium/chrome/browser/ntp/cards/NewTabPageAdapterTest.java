@@ -127,7 +127,6 @@ public class NewTabPageAdapterTest {
         public boolean mViewAllButton;
         public boolean mFetchButton;
         public boolean mProgressItem;
-        public boolean mPlaceholder;
 
         public SectionDescriptor() {}
 
@@ -173,11 +172,6 @@ public class NewTabPageAdapterTest {
             mStatusCard = true;
             return this;
         }
-
-        public SectionDescriptor withPlaceholder() {
-            mPlaceholder = true;
-            return this;
-        }
     }
 
     /**
@@ -218,10 +212,6 @@ public class NewTabPageAdapterTest {
 
             if (descriptor.mHeader) {
                 mInOrder.verify(mVisitor, mVerification).visitHeader();
-            }
-
-            if (descriptor.mPlaceholder) {
-                mInOrder.verify(mVisitor, mVerification).visitPlaceholderItem();
             }
 
             for (SnippetArticle suggestion : descriptor.mSuggestions) {
@@ -983,7 +973,7 @@ public class NewTabPageAdapterTest {
         reloadNtp();
 
         // Special case of the modern layout: the signin promo comes before the content suggestions.
-        assertItemsFor(signinPromo(), emptySection().withPlaceholder().withProgress());
+        assertItemsFor(signinPromo(), emptySection().withProgress());
     }
 
     @Test
@@ -1166,41 +1156,6 @@ public class NewTabPageAdapterTest {
         }
 
         assertItemsForEmptyChromeHome(emptySection().withoutHeader());
-    }
-
-    /** Tests whether a section stays visible if empty, if required. */
-    @Test
-    @Feature({"Ntp"})
-    @Features(@Features.Register(ChromeFeatureList.CHROME_HOME))
-    public void testPlaceholderModern() {
-        // Need to use ARTICLES for Home features to work properly, e.g. All Dismissed visibility.
-        int category = KnownCategories.ARTICLES;
-        mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.NOT_PROVIDED);
-        mSource.setInfoForCategory(
-                category, new CategoryInfoBuilder(category).showIfEmpty().build());
-        mSource.setStatusForCategory(category, CategoryStatus.INITIALIZING);
-        reloadNtp();
-
-        // By default we have an initializing section. It should show a placeholder in modern.
-        assertItemsForChromeHome(emptySection().withoutHeader().withPlaceholder().withProgress());
-
-        // We stop loading (timeout?), we should remove the placeholder.
-        mSource.setStatusForCategory(category, CategoryStatus.AVAILABLE);
-        assertItemsForEmptyChromeHome(emptySection().withoutHeader());
-
-        // Loading suggestions show a placeholder when they are empty
-        mSource.setStatusForCategory(category, CategoryStatus.AVAILABLE_LOADING);
-        assertItemsForChromeHome(emptySection().withoutHeader().withPlaceholder().withProgress());
-
-        // Simulating an update from the component (timeout or success), we are notified about a
-        // status changes and that we should fetch the new suggestions.
-        mSource.setStatusForCategory(category, CategoryStatus.AVAILABLE);
-        List<SnippetArticle> suggestions = mSource.createAndSetSuggestions(2, category);
-        assertItemsForChromeHome(section(suggestions).withoutHeader());
-
-        // Loading suggestions should not show a placeholder when they are not empty
-        mSource.setStatusForCategory(category, CategoryStatus.AVAILABLE_LOADING);
-        assertItemsForChromeHome(section(suggestions).withoutHeader().withProgress());
     }
 
     /**
