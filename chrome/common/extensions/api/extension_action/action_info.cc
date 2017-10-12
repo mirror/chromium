@@ -22,6 +22,9 @@ namespace keys = manifest_keys;
 
 namespace {
 
+const char kEnabled[] = "enabled";
+const char kDisabled[] = "disabled";
+
 // The manifest data container for the ActionInfos for BrowserActions,
 // PageActions and SystemIndicators.
 struct ActionInfoData : public Extension::ManifestData {
@@ -177,6 +180,16 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
     }
   }
 
+  std::string default_state = kEnabled;
+  if (dict->HasKey(keys::kActionDefaultState)) {
+    if (!dict->GetString(keys::kActionDefaultState, &default_state) ||
+        !(default_state == kEnabled || default_state == kDisabled)) {
+      *error = base::ASCIIToUTF16(errors::kInvalidActionDefaultState);
+      return std::unique_ptr<ActionInfo>();
+    }
+  }
+  result->default_state = default_state;
+
   return result;
 }
 
@@ -193,6 +206,13 @@ const ActionInfo* ActionInfo::GetPageActionInfo(const Extension* extension) {
 const ActionInfo* ActionInfo::GetSystemIndicatorInfo(
     const Extension* extension) {
   return GetActionInfo(extension, keys::kSystemIndicator);
+}
+
+// static
+void ActionInfo::SetExtensionActionActionInfo(Extension* extension,
+                                              ActionInfo* info) {
+  extension->SetManifestData(keys::kAction,
+                             base::MakeUnique<ActionInfoData>(info));
 }
 
 // static

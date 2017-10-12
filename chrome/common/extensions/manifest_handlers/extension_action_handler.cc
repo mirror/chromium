@@ -28,14 +28,24 @@ bool ExtensionActionHandler::Parse(Extension* extension,
                                    base::string16* error) {
   const char* key = NULL;
   const char* error_key = NULL;
+  if (extension->manifest()->HasKey(manifest_keys::kAction)) {
+    key = manifest_keys::kAction;
+    error_key = manifest_errors::kInvalidAction;
+  }
+
   if (extension->manifest()->HasKey(manifest_keys::kPageAction)) {
+    if (key != NULL) {
+      // An extension can only have one action.
+      *error = base::ASCIIToUTF16(manifest_errors::kOneUISurfaceOnly);
+      return false;
+    }
     key = manifest_keys::kPageAction;
     error_key = manifest_errors::kInvalidPageAction;
   }
 
   if (extension->manifest()->HasKey(manifest_keys::kBrowserAction)) {
     if (key != NULL) {
-      // An extension cannot have both browser and page actions.
+      // An extension can only have one action.
       *error = base::ASCIIToUTF16(manifest_errors::kOneUISurfaceOnly);
       return false;
     }
@@ -55,7 +65,10 @@ bool ExtensionActionHandler::Parse(Extension* extension,
     if (!action_info)
       return false;  // Failed to parse extension action definition.
 
-    if (key == manifest_keys::kPageAction)
+    if (key == manifest_keys::kAction)
+      ActionInfo::SetExtensionActionActionInfo(extension,
+                                               action_info.release());
+    else if (key == manifest_keys::kPageAction)
       ActionInfo::SetPageActionInfo(extension, action_info.release());
     else
       ActionInfo::SetBrowserActionInfo(extension, action_info.release());

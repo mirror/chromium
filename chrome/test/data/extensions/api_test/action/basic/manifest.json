@@ -1,0 +1,12 @@
+{
+  "name": "Action Test",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_title": "title",
+    "default_state": "enabled"
+  }
+}

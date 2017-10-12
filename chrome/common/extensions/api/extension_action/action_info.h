@@ -47,6 +47,10 @@ struct ActionInfo {
   // Returns the extension's system indicator, if any.
   static const ActionInfo* GetSystemIndicatorInfo(const Extension* extension);
 
+  // Sets the extension's action. |extension| takes ownership of |info|.
+  static void SetExtensionActionActionInfo(Extension* extension,
+                                           ActionInfo* info);
+
   // Sets the extension's browser action. |extension| takes ownership of |info|.
   static void SetBrowserActionInfo(Extension* extension, ActionInfo* info);
 
@@ -65,6 +69,9 @@ struct ActionInfo {
   ExtensionIconSet default_icon;
   std::string default_title;
   GURL default_popup_url;
+  // Specifies if the action applies to all web pages ("enabled") or
+  // only specific pages ("disabled").
+  std::string default_state;
   // action id -- only used with legacy page actions API.
   std::string id;
   // Whether or not this action was synthesized to force visibility.
