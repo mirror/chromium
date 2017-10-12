@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d2cf40d3_13583a60",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-10-12T18:40:52Z",
+      "side": 1,
+      "message": "My bad, you are absolutely right Tommy! I don\u0027t know why I thought it was implemented as a map\u003cWebContents*, UserData\u003e.\n\nYes, we can delete the MPR here. The only thing I am worried about is the MPR\u0027s normal deletion being reported as an error in WMPI. When the WebContents destroyed event is raised, will the frames in the Renderer process already have been destroyed? Otherwise, there might be a small window of time where the MPRClient in WMPI might run into a \"Mojo connection error\", report an error and skew our UMAs.",
+      "parentUuid": "c727a808_5f1f4710",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df06bc26_e4a57de0",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
