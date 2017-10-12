@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5116984b_7233bbe3",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T21:59:17Z",
+      "side": 1,
+      "message": "Nit: Each test case should be in a separate function\n\ne.g.\ntestShouldLaunchInTabTooLowVersion() {}\ntestShouldNotLaunchInTabNewVersion() {}\ntestShouldNotLaunchInTabDevBuild() {}",
+      "revId": "25c058c076f4dbfc1e973f9449413e82fa135d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3342e5a7_417dc31a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T21:59:17Z",
+      "side": 1,
+      "message": "Should:\n1) the source be passed as a parameter?\n2) the source be computed in launchInHostBrowser() prior to calling shouldLaunchInTab()?",
+      "revId": "25c058c076f4dbfc1e973f9449413e82fa135d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd368472_c8165f6d",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T21:59:17Z",
+      "side": 1,
+      "message": "Can you instead do:\n\nint dotIndex \u003d versionName.indexOf(\".\");\nif (dotIndex \u003d\u003d -1) return false;\n\n...\n\nI think that this is slightly more compact",
+      "revId": "25c058c076f4dbfc1e973f9449413e82fa135d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
