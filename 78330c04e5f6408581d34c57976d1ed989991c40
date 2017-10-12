@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dfffdfe_552c08a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "8aaf6860_0548da0f",
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63aa5c9b_7d7069ae",
         "filename": "content/browser/DEPS",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bf444296_8544aa07",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63aa5c9b_7d7069ae",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 2
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e27673f_76276985",
         "filename": "content/browser/frame_host/render_frame_proxy_host.h",
         "patchSetId": 10
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-11T21:13:29Z",
       "side": 1,
       "message": "I think the first sentence might be a bit unclear here - what does \"parent process\" refer to, which frame?  Maybe you could say something like \"Scroll |rect_to_scroll| into view, starting from this proxy\u0027s FrameOwner element in this frame\u0027s parent.  Calling this continues a scroll started in this frame\u0027s current process.\"?",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 29
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4c0a88_986390f4",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Done.",
+      "parentUuid": "7e27673f_76276985",
       "range": {
         "startLine": 121,
         "startChar": 14,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "3b362b2c_8f509a2d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "7fb1a764_22b91b74",
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac74c4ab_fc80a4fc",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 10
@@ -93,6 +177,30 @@
       "writtenOn": "2017-10-11T21:13:29Z",
       "side": 1,
       "message": "This seems like a weak check compared to the previous one -- the value of x() could end up equal to kIframeLeft in both cases, and both checks would pass.  Is it correct that at this point, x() should be less than or equal to main_frame_body_bounds.width() (i.e., within currently visible region)?  If so, can we check that instead?  And same for y() \u003c\u003d main_frame_body_bounds.height().  Same for the nested frame.",
+      "range": {
+        "startLine": 1689,
+        "startChar": 0,
+        "endLine": 1689,
+        "endChar": 73
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a34da5_d62385c1",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "\u003e This seems like a weak check compared to the previous one -- the value of x() could end up equal to kIframeLeft in both cases, and both checks would pass.  Is it correct that at this point, x() should be less than or equal to main_frame_body_bounds.width() (i.e., within currently visible region)?  If so, can we check that instead?  And same for y() \u003c\u003d main_frame_body_bounds.height().  Same for the nested frame.\n\nYes. This seems to be a mistake (I originally used the main frame\u0027s width and length for the margin but then changed it). This one specifically should compare against main frame and the one for child_c against child_b.",
+      "parentUuid": "ac74c4ab_fc80a4fc",
       "range": {
         "startLine": 1689,
         "startChar": 0,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "37662efc_afea2183",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "466a53a7_35015d05",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce85171b_1d5719cd",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 10
@@ -148,6 +280,30 @@
       "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67191cea_f49c5127",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce85171b_1d5719cd",
+      "range": {
+        "startLine": 98,
+        "startChar": 64,
+        "endLine": 98,
+        "endChar": 76
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d90b62bf_b2c2a144",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccca8134_cca4ec80",
+      "range": {
+        "startLine": 101,
+        "startChar": 64,
+        "endLine": 101,
+        "endChar": 74
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a8881f_dec61cda",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 10
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "7dbfb9f8_a2bc629a",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a8881f_dec61cda",
+      "range": {
+        "startLine": 104,
+        "startChar": 64,
+        "endLine": 104,
+        "endChar": 71
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66964541_cf4cdc77",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 10
@@ -211,6 +415,24 @@
       "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c380528c_9e96cea4",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66964541_cf4cdc77",
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "cd7827cb_8e8a915a",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f6db903_a8c1cb53",
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b177335_6c318fd0",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 10
@@ -242,6 +482,30 @@
       "writtenOn": "2017-10-11T21:13:29Z",
       "side": 1,
       "message": "Not for this CL, but is this scrollIntoView API supposed to work for elements inside a \u003cwebview\u003e?  I would hope not? :)",
+      "range": {
+        "startLine": 4529,
+        "startChar": 0,
+        "endLine": 4529,
+        "endChar": 60
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4055b3_b3f5bf24",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 4529,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "I\u0027d assume the element.scrollIntoView() should not, but the recursive scrolling should still work for find in page I believe.\n\nThat being said recursive scrolling does not work for \u003cwebview\u003e right now. The reason is that I do not send the recursive scroll IPC from a LocalRoot which is MainFrame (please take a look at LocalFrameView.cpp changes).\n\nFor a \u003cwebview\u003e, the LocalFrame is considered a main frame.\n\nAll this being said, to support recursive scrolling for \u003cwebview\u003e we need to know we are in a guest process which might be a questionable proposal in itself.",
+      "parentUuid": "2b177335_6c318fd0",
       "range": {
         "startLine": 4529,
         "startChar": 0,
@@ -274,6 +538,30 @@
       "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7369bbe_4a56a35c",
+        "filename": "third_party/WebKit/public/platform/WebRemoteScrollProperties.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-12T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48ee60c_3c4382fb",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "78330c04e5f6408581d34c57976d1ed989991c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
