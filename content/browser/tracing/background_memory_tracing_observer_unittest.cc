@@ -104,9 +104,8 @@ TEST_F(BackgroundMemoryTracingObserverTest, OnlyBackgroundDumpConfig) {
             AllocationContextTracker::capture_mode());
 }
 
-// TODO(ssid): Fix these tests to work with builds without allocator shim
-// (asan).
-TEST_F(BackgroundMemoryTracingObserverTest, DISABLED_HeapProfilingConfig) {
+#if defined(HEAP_PROFILING_SUPPORTED)
+TEST_F(BackgroundMemoryTracingObserverTest, HeapProfilingConfig) {
   auto* observer = BackgroundMemoryTracingObserver::GetInstance();
   auto config = ReadFromJSONString(
       "{\"mode\":\"REACTIVE_TRACING_MODE\", \"configs\": [{\"category\": "
@@ -129,9 +128,7 @@ TEST_F(BackgroundMemoryTracingObserverTest, DISABLED_HeapProfilingConfig) {
             AllocationContextTracker::capture_mode());
 }
 
-// TODO(ssid): Fix these tests to work with builds without allocator shim
-// (asan).
-TEST_F(BackgroundMemoryTracingObserverTest, DISABLED_HeapProfilingWithFilters) {
+TEST_F(BackgroundMemoryTracingObserverTest, HeapProfilingWithFilters) {
   auto* observer = BackgroundMemoryTracingObserver::GetInstance();
   auto config = ReadFromJSONString(
       "{\"mode\":\"REACTIVE_TRACING_MODE\", \"configs\": [{\"category\": "
@@ -163,5 +160,6 @@ TEST_F(BackgroundMemoryTracingObserverTest, DISABLED_HeapProfilingWithFilters) {
   EXPECT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
 }
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
 
 }  // namespace content

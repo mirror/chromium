@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <utility>
 
-#include "base/allocator/features.h"
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/debug/alias.h"
@@ -109,7 +108,7 @@ inline bool ShouldEnableMDPAllocatorHooks(HeapProfilingMode mode) {
          (mode == kHeapProfilingModeBackground);
 }
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
 inline bool IsHeapProfilingModeEnabled(HeapProfilingMode mode) {
   return mode != kHeapProfilingModeDisabled &&
          mode != kHeapProfilingModeInvalid;
@@ -141,7 +140,7 @@ void EnableFilteringForPseudoStackProfiling() {
   TraceLog::GetInstance()->SetEnabled(filtering_trace_config,
                                       TraceLog::FILTERING_MODE);
 }
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
 
 }  // namespace
 
@@ -210,7 +209,7 @@ HeapProfilingMode MemoryDumpManager::GetHeapProfilingModeFromCommandLine() {
           switches::kEnableHeapProfiling)) {
     return kHeapProfilingModeDisabled;
   }
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
   std::string profiling_mode =
       CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kEnableHeapProfiling);
@@ -220,12 +219,12 @@ HeapProfilingMode MemoryDumpManager::GetHeapProfilingModeFromCommandLine() {
     return kHeapProfilingModePseudo;
   if (profiling_mode == switches::kEnableHeapProfilingModeNative)
     return kHeapProfilingModeNative;
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
   return kHeapProfilingModeInvalid;
 }
 
 void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
   HeapProfilingMode profiling_mode = GetHeapProfilingModeFromCommandLine();
   if (IsHeapProfilingModeEnabled(profiling_mode)) {
     EnableHeapProfiling(profiling_mode);
@@ -238,12 +237,12 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
 #else
   // Heap profiling is unsupported, disable it permanently.
   EnableHeapProfiling(kHeapProfilingModeDisabled);
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
 }
 
 bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
   AutoLock lock(lock_);
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
   bool notify_mdps = true;
 
   if (heap_profiling_mode_ == kHeapProfilingModeInvalid)
@@ -313,7 +312,7 @@ bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
 #else
   heap_profiling_mode_ = kHeapProfilingModeInvalid;
   return false;
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
 }
 
 HeapProfilingMode MemoryDumpManager::GetHeapProfilingMode() {

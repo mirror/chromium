@@ -4,7 +4,6 @@
 
 #include "chrome/test/base/tracing.h"
 
-#include "base/allocator/features.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/run_loop.h"
@@ -140,7 +139,7 @@ IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestBackgroundMemoryInfra) {
       base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND, &json_events);
 }
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
 IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestHeapProfilingPseudo) {
   should_test_memory_dump_success_ = true;
   // TODO(ssid): Enable heap profiling on all processes once the
@@ -182,6 +181,6 @@ IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestHeapProfilingNoStack) {
   EXPECT_NE(std::string::npos, json_events.find("content/browser"));
   EXPECT_NE(std::string::npos, json_events.find("\"malloc\":{\"entries\""));
 }
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  // defined(HEAP_PROFILING_SUPPORTED)
 
 }  // namespace

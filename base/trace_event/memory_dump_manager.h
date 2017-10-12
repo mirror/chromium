@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include "base/allocator/features.h"
 #include "base/atomicops.h"
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
@@ -23,6 +24,11 @@
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
+#include "build/build_config.h"
+
+#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#define HEAP_PROFILING_SUPPORTED
+#endif
 
 namespace base {
 

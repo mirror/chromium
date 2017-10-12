@@ -9,7 +9,6 @@
 #include <memory>
 #include <vector>
 
-#include "base/allocator/features.h"
 #include "base/base_switches.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -836,7 +835,7 @@ TEST_F(MemoryDumpManagerTest, UnregisterAndDeleteDumpProviderSoonDuringDump) {
   DisableTracing();
 }
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingPseudoStack) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
   MockMemoryDumpProvider mdp1;
@@ -973,7 +972,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingDisableDisabled) {
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeDisabled));
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
 }
-#endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  //  defined(HEAP_PROFILING_SUPPORTED)
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
@@ -990,7 +989,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
   testing::InSequence sequence;
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(true)).Times(1);
   EXPECT_CALL(mdp1, OnHeapProfilingEnabled(false)).Times(1);
@@ -1008,13 +1007,13 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeeded) {
   EXPECT_FALSE(mdm_->EnableHeapProfiling(kHeapProfilingModeBackground));
   ASSERT_EQ(AllocationContextTracker::CaptureMode::DISABLED,
             AllocationContextTracker::capture_mode());
-#endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  //  defined(HEAP_PROFILING_SUPPORTED)
 }
 
 TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeededUnsupported) {
   InitializeMemoryDumpManagerForInProcessTesting(false /* is_coordinator */);
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#if defined(HEAP_PROFILING_SUPPORTED)
   ASSERT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeDisabled);
   CommandLine* cmdline = CommandLine::ForCurrentProcess();
   cmdline->AppendSwitchASCII(switches::kEnableHeapProfiling, "unsupported");
@@ -1023,7 +1022,7 @@ TEST_F(MemoryDumpManagerTest, EnableHeapProfilingIfNeededUnsupported) {
 #else
   mdm_->EnableHeapProfilingIfNeeded();
   EXPECT_EQ(mdm_->GetHeapProfilingMode(), kHeapProfilingModeInvalid);
-#endif  //  BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
+#endif  //  defined(HEAP_PROFILING_SUPPORTED)
 }
 
 }  // namespace trace_event
