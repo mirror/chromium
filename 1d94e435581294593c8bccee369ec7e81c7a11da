@@ -46,6 +46,30 @@
       "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0314c073_d619f8d8",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:02:17Z",
+      "side": 1,
+      "message": "Hmmm,\n\nWould it work if you use `using kFoo \u003d LogSourceAccessManager::kMaxReadersPerSource;`?",
+      "parentUuid": "738582d8_1088b19e",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
