@@ -56,14 +56,15 @@ constexpr net::BackoffEntry::Policy kRetryBackoffPolicy = {
     false,
 };
 
+constexpr char kStorageId[] = "arc_support";
+
 }  // namespace
 
 ArcAuthContext::ArcAuthContext(Profile* profile)
     : retry_backoff_(&kRetryBackoffPolicy) {
   // Reuse storage used in ARC OptIn platform app.
-  const std::string site_url =
-      base::StringPrintf("%s://%s/persist?%s", content::kGuestScheme,
-                         kPlayStoreAppId, ArcSupportHost::kStorageId);
+  const std::string site_url = base::StringPrintf(
+      "%s://%s/persist?%s", content::kGuestScheme, kPlayStoreAppId, kStorageId);
   storage_partition_ = content::BrowserContext::GetStoragePartitionForSite(
       profile, GURL(site_url));
   CHECK(storage_partition_);
