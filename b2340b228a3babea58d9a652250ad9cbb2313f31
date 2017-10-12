@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a0f3498_7879b6ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-12T21:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0a28fd_cfdca9bc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 6
+      },
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cec4a717_2b444604",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 4
@@ -163,6 +187,24 @@
       "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891c4b92_183872d7",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-10-12T21:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1c0cdf_4c51dd99",
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
