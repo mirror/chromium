@@ -1,0 +1,61 @@
+Name
+
+    CHROMIUM_scanout_color_space
+
+Name Strings
+
+    GL_CHROMIUM_scanout_color_space
+
+Contributors
+
+    John Bauman, Google
+    Sunny Sachanandani, Google
+
+Contact
+
+    Sunny Sachanandani, Google (sunnyps 'at' google.com)
+
+Status
+
+    In Progress
+
+Version
+
+    Last Modified Date: October 6, 2017
+    Version:            1
+
+Number
+
+    OpenGL ES Extension #???
+
+Dependencies
+
+    This extension is written against the OpenGL ES 2.0 Specification.
+
+Overview
+
+    This allows clients to specify the color space used for scanout from
+    textures.
+
+New Tokens
+
+
+New Procedures and Functions
+
+    The command
+
+        void SetColorSpaceForScanout(GLuint texture_id, ColorSpace color_space)
+
+    specifies the color space used for scanout from the given texture.
+
+Errors
+
+    A context lost will result when this call fails, either because of an
+    invalid parameter value or because of a runtime error such as an out of
+    memory condition.
+
+Revision History
+
+    Rev.    Date      Author     Changes
+    ----  ----------- ---------  ----------------------------------------
+      1   06 Oct 2017 sunnyps    Initial revision

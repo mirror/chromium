@@ -119,14 +119,12 @@ void GpuMemoryBufferImplIOSurface::SetColorSpaceForScanout(
   if (color_space == color_space_)
     return;
   color_space_ = color_space;
-
   // Retrieve the ICC profile data.
   std::vector<char> icc_profile_data;
-  if (!color_space_.GetAsFullRangeRGB().GetICCProfileData(&icc_profile_data)) {
+  if (!color_space.GetAsFullRangeRGB().GetICCProfileData(&icc_profile_data)) {
     DLOG(ERROR) << "Failed to set color space for scanout: no ICC profile.";
     return;
   }
-
   // Package it as a CFDataRef and send it to the IOSurface.
   base::ScopedCFTypeRef<CFDataRef> cf_data_icc_profile(CFDataCreate(
       nullptr, reinterpret_cast<const UInt8*>(icc_profile_data.data()),
