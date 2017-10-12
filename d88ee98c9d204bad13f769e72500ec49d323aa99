@@ -52,6 +52,24 @@
       "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "854680cb_671122d0",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-10-12T21:11:44Z",
+      "side": 0,
+      "message": "Oh, I didn\u0027t know about it. I\u0027m fine either way, do you want me to remove the guard (and use --skip-checks) or to keep it? Keeping it has the advantage of signaling to other developers in the future that we want to intentionally maintain this formatting.",
+      "parentUuid": "7abdc34c_32be7909",
+      "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
