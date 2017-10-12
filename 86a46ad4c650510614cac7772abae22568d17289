@@ -245,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "92c8beb6_33f3134d",
+        "filename": "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-12T07:30:12Z",
+      "side": 1,
+      "message": "Should we chat about this? It seems to me that if several clients are doing a thing, and that thing seems reasonable to do, then we should support it in the underlying framework rather than relying on each client to reimplement. There must be some (marginal) performance cost to hooking the request and redirect handlers here, and we could avoid that cost, as well as the code complexity, by just handing the throttle the right data in the first place.",
+      "parentUuid": "16318c37_389d6c42",
+      "revId": "86a46ad4c650510614cac7772abae22568d17289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6124ccc_031c6b03",
         "filename": "content/public/common/url_loader_throttle.h",
         "patchSetId": 1
