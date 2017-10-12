@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ public class AppMenuHandler {
 
     private final AppMenuPropertiesDelegate mDelegate;
     private final Activity mActivity;
+    private final Handler mHandler = new Handler();
 
     /**
      * The resource id of the menu item to highlight when the menu next opens. A value of
@@ -43,6 +45,7 @@ public class AppMenuHandler {
      * opened.
      */
     private Integer mHighlightMenuId;
+    private boolean mAppMenuIsShowing;
 
     /**
      * Constructs an AppMenuHandler object.
@@ -105,6 +108,7 @@ public class AppMenuHandler {
     public boolean showAppMenu(View anchorView, boolean startDragging) {
         if (!mDelegate.shouldShowAppMenu() || isAppMenuShowing()) return false;
         boolean isByPermanentButton = false;
+        mAppMenuIsShowing = true;
 
         int rotation = mActivity.getWindowManager().getDefaultDisplay().getRotation();
         if (anchorView == null) {
@@ -187,6 +191,16 @@ public class AppMenuHandler {
     }
 
     /**
+     * Whether the App Menu is showing or the animations are still not finished. Should only be used
+     * by IPH system to avoid overlap with TextBubble which causes screen to freeze on Android N
+     * (crbug/765038).
+     * @return True if app menu could be showing or hasn't finished animation.
+     */
+    public boolean maybeAppMenuIsShowing() {
+        return mAppMenuIsShowing;
+    }
+
+    /**
      * @return The App Menu that the menu handler is interacting with.
      */
     public AppMenu getAppMenu() {
@@ -202,6 +216,10 @@ public class AppMenuHandler {
      */
     public void hideAppMenu() {
         if (mAppMenu != null && mAppMenu.isShowing()) mAppMenu.dismiss();
+
+        // A huge delay is used here to ensure that the animations have finished.
+        // See {@code maybeAppMenuIsShowing} for more details.
+        mHandler.postDelayed(() -> { mAppMenuIsShowing = false; }, 2000);
     }
 
     /**
