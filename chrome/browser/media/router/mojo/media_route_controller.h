@@ -11,6 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "chrome/common/media_router/media_route.h"
+#include "chrome/common/media_router/media_status.h"
 #include "chrome/common/media_router/mojo/media_controller.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -95,6 +96,7 @@ class MediaRouteController
   virtual void Seek(base::TimeDelta time);
   virtual void SetMute(bool mute);
   virtual void SetVolume(float volume);
+  virtual void SetIntellicastOption(IntellicastOption option);
 
   // mojom::MediaStatusObserver:
   // Notifies |observers_| of a status update.

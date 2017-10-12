@@ -6,6 +6,13 @@ module media_router.mojom;
 
 import "mojo/common/time.mojom";
 
+// Possible intellicast option value for Media Remoting.
+enum IntellicastOption {
+  NEVER,
+  AUTO,
+  ALWAYS
+};
+
 // Represents the current state of a media content. This struct should be kept
 // free of details specific to Media Router, so that it can be moved to the
 // media namespace and be reused for other features in the future.
@@ -59,11 +66,19 @@ struct MediaStatus {
 
   // Only set for Hangouts routes.
   HangoutsMediaStatusExtraData? hangouts_extra_data;
+
+  // Only set for Mirroring routes.
+  MirroringStatusExtraData? mirroring_extra_data;
 };
 
 struct HangoutsMediaStatusExtraData {
   // Whether local present mode (aka "smooth motion") is on.
   bool local_present;
+};
+
+struct MirroringStatusExtraData {
+  // Intellicast option value for Media Remoting.
+  IntellicastOption intellicast_option;
 };
 
 // Interface for being notified whenever the MediaStatus of a media changes.

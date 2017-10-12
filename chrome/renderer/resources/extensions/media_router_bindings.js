@@ -292,6 +292,7 @@ define('media_router_bindings', [
           mediaStatusMojom.HangoutsMediaStatusExtraData,
       IPAddress: ipAddressMojom.IPAddress,
       IPEndpoint: ipEndpointMojom.IPEndpoint,
+      IntellicastOption: mediaStatusMojom.IntellicastOption,
       InterfacePtrController: bindings.InterfacePtrController,
       InterfaceRequest: bindings.InterfaceRequest,
       MediaController: mediaControllerMojom.MediaController,

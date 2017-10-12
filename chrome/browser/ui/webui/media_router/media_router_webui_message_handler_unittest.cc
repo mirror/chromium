@@ -11,6 +11,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/media_router/media_router_ui.h"
 #include "chrome/browser/ui/webui/media_router/media_router_web_ui_test.h"
+#include "chrome/common/media_router/media_status.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/test/test_web_ui.h"
 #include "extensions/common/constants.h"
@@ -416,6 +417,8 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
   status.duration = base::TimeDelta::FromSeconds(90);
   status.current_time = base::TimeDelta::FromSeconds(80);
   status.volume = 0.9;
+  MirroringStatusExtraData mirroring_extra_data = {IntellicastOption::ALWAYS};
+  status.mirroring_extra_data = mirroring_extra_data;
 
   handler_->UpdateMediaRouteStatus(status);
   const base::DictionaryValue* status_value =
@@ -437,6 +440,9 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateMediaRouteStatus) {
   EXPECT_EQ(status.current_time.InSeconds(),
             GetIntegerFromDict(status_value, "currentTime"));
   EXPECT_EQ(status.volume, GetDoubleFromDict(status_value, "volume"));
+  EXPECT_EQ(
+      static_cast<int>(status.mirroring_extra_data->intellicast_option),
+      GetIntegerFromDict(status_value, "mirroringExtraData.intellicastOption"));
 }
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, OnCreateRouteResponseReceived) {

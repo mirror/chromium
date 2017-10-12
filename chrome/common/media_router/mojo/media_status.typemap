@@ -9,4 +9,7 @@ traits_headers =
 sources = [
   "//chrome/common/media_router/mojo/media_status_struct_traits.cc",
 ]
-type_mappings = [ "media_router.mojom.MediaStatus=media_router::MediaStatus" ]
+type_mappings = [
+  "media_router.mojom.MediaStatus=media_router::MediaStatus",
+  "media_router.mojom.IntellicastOption=media_router::IntellicastOption",
+]

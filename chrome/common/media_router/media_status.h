@@ -18,6 +18,21 @@ struct HangoutsMediaStatusExtraData {
   bool local_present = false;
 };
 
+// Possible intellicast option value for Media Remoting.
+enum class IntellicastOption {
+  // Never activates Media Remoting
+  NEVER = 0,
+  // Automatically decides when to activate Media Remoting.
+  AUTO,
+  // Always activates Media Remoting.
+  ALWAYS
+};
+
+struct MirroringStatusExtraData {
+  // Intellicast option value for Media Remoting.
+  IntellicastOption intellicast_option = IntellicastOption::AUTO;
+};
+
 // Represents the current state of a media content.
 struct MediaStatus {
  public:
@@ -68,6 +83,9 @@ struct MediaStatus {
 
   // Only set for Hangouts routes.
   base::Optional<HangoutsMediaStatusExtraData> hangouts_extra_data;
+
+  // Only set for Cast routes.
+  base::Optional<MirroringStatusExtraData> mirroring_extra_data;
 };
 
 }  // namespace media_router

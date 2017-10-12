@@ -110,6 +110,9 @@ TEST_F(MediaRouteControllerTest, ForwardControllerCommands) {
   GetController()->SetVolume(volume);
   EXPECT_CALL(mock_media_controller_, Seek(time));
   GetController()->Seek(time);
+  EXPECT_CALL(mock_media_controller_,
+              SetIntellicastOption(IntellicastOption::ALWAYS));
+  GetController()->SetIntellicastOption(IntellicastOption::ALWAYS);
 
   base::RunLoop().RunUntilIdle();
 }
