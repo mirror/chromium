@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/logging.h"
 #include "base/macros.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/views/layout/layout_manager.h"
@@ -57,8 +58,13 @@
 // GridLayout allows you to force columns to have the same width. This is
 // done using the LinkColumnSizes method.
 //
-// AddView takes care of adding the View to the View the GridLayout was
+// AddView() takes care of adding the View to the View the GridLayout was
 // created with.
+//
+// If the host View is sized smaller than the preferred width GridLayout may
+// use the minimum size. The minimum size is considered only for Views whose
+// preferred width was not explicitly specified and the containing columns
+// are resizable (resize_percent > 0) and don't have a fixed width.
 namespace views {
 
 class Column;
@@ -343,12 +349,25 @@ class VIEWS_EXPORT ColumnSet {
   // NOTE: this doesn't include the insets.
   void ResetColumnXCoordinates();
 
+  enum SizeCalculationType {
+    PREFERRED,
+    MINIMUM,
+  };
+
   // Calculate the preferred width of each view in this column set, as well
   // as updating the remaining_width.
-  void CalculateSize();
+  void CalculateSize(SizeCalculationType type);
 
   // Distributes delta among the resizable columns.
   void Resize(int delta);
+
+  // Used when GridLayout is given a size smaller than the preferred width.
+  // |total_delta| is negative and the difference between the preferred width
+  // and the target width.
+  void ResizeUsingMin(int total_delta);
+
+  // Only use the minimum size if all the columns the view is in are resizable.
+  bool CanUseMinimum(const ViewState& view_state) const;
 
   // ID for this columnset.
   const int id_;
@@ -367,6 +386,10 @@ class VIEWS_EXPORT ColumnSet {
   // The master column of those columns that are linked. See Column
   // for a description of what the master column is.
   std::vector<Column*> master_columns_;
+
+#if DCHECK_IS_ON()
+  SizeCalculationType last_calculation_type_ = SizeCalculationType::PREFERRED;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ColumnSet);
 };
