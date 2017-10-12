@@ -98,8 +98,6 @@ GpuServiceImpl::GpuServiceImpl(
     : main_runner_(base::ThreadTaskRunnerHandle::Get()),
       io_runner_(std::move(io_runner)),
       watchdog_thread_(std::move(watchdog_thread)),
-      gpu_memory_buffer_factory_(
-          gpu::GpuMemoryBufferFactory::CreateNativeType()),
       gpu_info_(gpu_info),
       gpu_feature_info_(gpu_feature_info),
       bindings_(base::MakeUnique<mojo::BindingSet<mojom::GpuService>>()),
@@ -156,6 +154,7 @@ void GpuServiceImpl::InitializeWithHost(
     ui::mojom::GpuHostPtr gpu_host,
     gpu::GpuProcessActivityFlags activity_flags,
     gpu::SyncPointManager* sync_point_manager,
+    gpu::ProtectedGpuMemoryBufferManager* protected_buffer_manager,
     base::WaitableEvent* shutdown_event) {
   DCHECK(main_runner_->BelongsToCurrentThread());
   gpu_host->DidInitialize(gpu_info_, gpu_feature_info_);
@@ -188,6 +187,8 @@ void GpuServiceImpl::InitializeWithHost(
     scheduler_ = base::MakeUnique<gpu::Scheduler>(
         base::ThreadTaskRunnerHandle::Get(), sync_point_manager_);
   }
+
+  gpu_memory_buffer_factory_ = gpu::GpuMemoryBufferFactory::CreateNativeType();
 
   // Defer creation of the render thread. This is to prevent it from handling
   // IPC messages before the sandbox has been enabled and all other necessary

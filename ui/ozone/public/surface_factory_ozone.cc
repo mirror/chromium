@@ -52,4 +52,8 @@ SurfaceFactoryOzone::CreateNativePixmapFromHandle(
   return nullptr;
 }
 
+void SurfaceFactoryOzone::SetNativePixmapPlanesFromHandleDelegate(
+    const NativePixmapPlanesFromHandleCallback&
+        native_pixmap_planes_from_handle_callback) {}
+
 }  // namespace ui

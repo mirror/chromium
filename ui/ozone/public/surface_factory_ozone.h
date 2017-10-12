@@ -99,6 +99,18 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
       gfx::BufferFormat format,
       const gfx::NativePixmapHandle& handle);
 
+  // Temporary solution that allows protected pixmap management to be
+  // handled outside the Ozone platform.
+  // TODO(posciak): Remove this by moving protected pixmap managment
+  // into the the DRM implementation.
+  using NativePixmapPlanesFromHandleCallback =
+      base::Callback<void(const gfx::NativePixmapHandle&,
+                          std::vector<base::ScopedFD>*,
+                          std::vector<gfx::NativePixmapPlane>*)>;
+  virtual void SetNativePixmapPlanesFromHandleDelegate(
+      const NativePixmapPlanesFromHandleCallback&
+          native_pixmap_planes_from_handle_callback);
+
  protected:
   SurfaceFactoryOzone();
   virtual ~SurfaceFactoryOzone();

@@ -170,15 +170,17 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
       (handle.fds.size() != 1 && handle.fds.size() != num_planes)) {
     return nullptr;
   }
+
   std::vector<base::ScopedFD> scoped_fds;
-  for (auto& fd : handle.fds) {
-    scoped_fds.emplace_back(fd.fd);
-  }
-
   std::vector<gfx::NativePixmapPlane> planes;
-
-  for (const auto& plane : handle.planes) {
-    planes.push_back(plane);
+  if (native_pixmap_planes_from_handle_callback_.is_null()) {
+    for (auto& fd : handle.fds)
+      scoped_fds.emplace_back(fd.fd);
+    for (const auto& plane : handle.planes)
+      planes.push_back(plane);
+  } else {
+    native_pixmap_planes_from_handle_callback_.Run(handle, &scoped_fds,
+                                                   &planes);
   }
 
   scoped_refptr<GbmBuffer> buffer = drm_thread_proxy_->CreateBufferFromFds(
@@ -186,6 +188,13 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
   if (!buffer)
     return nullptr;
   return base::MakeRefCounted<GbmPixmap>(this, buffer);
+}
+
+void GbmSurfaceFactory::SetNativePixmapPlanesFromHandleDelegate(
+    const NativePixmapPlanesFromHandleCallback&
+        native_pixmap_planes_from_handle_callback) {
+  native_pixmap_planes_from_handle_callback_ =
+      native_pixmap_planes_from_handle_callback;
 }
 
 }  // namespace ui
