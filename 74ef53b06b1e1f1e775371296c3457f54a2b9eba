@@ -22,6 +22,30 @@
       "revId": "74ef53b06b1e1f1e775371296c3457f54a2b9eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a3fd99_1e0a6d3c",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-12T13:56:12Z",
+      "side": 1,
+      "message": "I think ShouldShowIBeamForNode is only used for \"cursor:auto\". \n\nThe spec says: auto: The UA determines the cursor to display based on the current context, specifically: auto behaves as text over text, and default otherwise.\nWhich means when cursor set to auto, it should show I beam when hovering text link. (eg this test https://test.csswg.org/harness/test/css-ui-3_dev/single/cursor-auto-002/format/html5/)\n\nAnd Hovering a link show Hand pointer should achieve by UA stylesheet.",
+      "parentUuid": "e4bd0004_11efab2d",
+      "range": {
+        "startLine": 458,
+        "startChar": 9,
+        "endLine": 458,
+        "endChar": 13
+      },
+      "revId": "74ef53b06b1e1f1e775371296c3457f54a2b9eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
