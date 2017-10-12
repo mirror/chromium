@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12379df2_de2c0c00",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1227910
+      },
+      "writtenOn": "2017-10-12T16:44:41Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "b96cc893_e5b36f0e",
+      "range": {
+        "startLine": 474,
+        "startChar": 12,
+        "endLine": 474,
+        "endChar": 49
+      },
+      "revId": "0ff2919fcb2141e223a899cb395479f773959acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9186894_d0af6cc6",
         "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T13:00:55Z",
       "side": 1,
       "message": "Note that SkJpegCodec also does this for JCS_YCCK. I assume for those images we want to accept CMYK color profiles rather than RGB?\n\nAlso, what about Gray?",
+      "range": {
+        "startLine": 475,
+        "startChar": 16,
+        "endLine": 475,
+        "endChar": 49
+      },
+      "revId": "0ff2919fcb2141e223a899cb395479f773959acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38738864_cc1b3e21",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1227910
+      },
+      "writtenOn": "2017-10-12T16:44:41Z",
+      "side": 1,
+      "message": "ok I will update as per the comments",
+      "parentUuid": "a9186894_d0af6cc6",
       "range": {
         "startLine": 475,
         "startChar": 16,
