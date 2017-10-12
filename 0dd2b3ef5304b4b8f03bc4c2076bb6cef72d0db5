@@ -328,6 +328,30 @@
       "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "620f18bf_1a417114",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:49:08Z",
+      "side": 1,
+      "message": "The DCHECK is likely because you are using a constrained window. If you don\u0027t need the modal (which to me it seems like you don\u0027t) then you shouldn\u0027t use a constrained dialog, rather a normal dialog.",
+      "parentUuid": "92005294_5c4d0bbc",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
