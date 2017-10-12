@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf034f5b_d84288d7",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-12T19:31:15Z",
+      "side": 1,
+      "message": "Here I\u0027m basicalling moving the getItemListType code to here, since this will now be the only place doing type selections, there\u0027s no need to have a separate helper function for that.",
+      "revId": "f801f69596ba8d2f3998b2ed083bb11c13a7743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

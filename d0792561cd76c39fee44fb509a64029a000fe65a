@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622ee3f0_4b5a2224",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-12T19:31:15Z",
+      "side": 0,
+      "message": "We can move these following codes back to sidebar.js now that we don\u0027t need to determine item types to decide what to highlight.",
+      "revId": "d0792561cd76c39fee44fb509a64029a000fe65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
