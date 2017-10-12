@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0049675_e73fe97b",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T23:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733203af_83a00ea8",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83d14626_be05d01d",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bf2fd3_3b723ae3",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T23:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d14626_be05d01d",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ce7d2d0_3ba7b88f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T23:13:46Z",
+      "side": 1,
+      "message": "It will elide.",
+      "parentUuid": "4d87ff59_b3c8057e",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "481530f4_ded30293",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "20920d55_54390cd9",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T23:13:46Z",
+      "side": 1,
+      "message": "That\u0027s because cocoa code is only used in Mac, and we know for sure that the \"cancel\" button should go first. \nAnd for the view code, button order should change based on OS convention.",
+      "parentUuid": "481530f4_ded30293",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8edf3fc4_5ab91046",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e052af_8b02b02b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T23:13:46Z",
+      "side": 1,
+      "message": "ACK.\nI guess for both. I didn\u0027t change this line in my CL. Can I investigate this line later?",
+      "parentUuid": "8edf3fc4_5ab91046",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
