@@ -130,6 +130,11 @@ declare_args() {
   # separate flags.
   is_official_build = false
 
+  # Set to true for a build with developer-friendly features that compromises
+  # security measures like sandboxing or ASLR.
+  # IMPORTANT: Unsafe developer builds should never be distributed to end users.
+  is_unsafe_developer_build = !is_official_build
+
   # Whether we're a traditional desktop unix.
   is_desktop_linux = current_os == "linux"
 
