@@ -7205,15 +7205,8 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, HistoryBackInUnLoadCancelsReload) {
       shell(), "domAutomationController.send(document.body.textContent)",
       &html_content));
 
-  // TODO(arthursonzogni): The PlzNavigate case needs to be fixed.
-  // See http://crbug.com/773683.
-  if (IsBrowserSideNavigationEnabled() &&
-      !base::FeatureList::IsEnabled(features::kNetworkService)) {
-    EXPECT_EQ("First part of the response...", html_content);
-  } else {
-    EXPECT_EQ("First part of the response... ...and the second part!",
-              html_content);
-  }
+  EXPECT_EQ("First part of the response... ...and the second part!",
+            html_content);
 }
 
 }  // namespace content
