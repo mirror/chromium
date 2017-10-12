@@ -31,7 +31,10 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
         }
 
         if (UrlUtilities.isValidForIntentFallbackNavigation(navigationParams.url)
-                && isUrlOutsideWebappScope(mActivity.mWebappInfo, navigationParams.url)) {
+                && isUrlOutsideWebappScope(mActivity.mWebappInfo, navigationParams.url)
+                // Only use CCT for off-origin navigation in WebAPKs, crbug.com/771418
+                // This is temporary. TODO(piotrs): clean up this instanceof.
+                && mActivity instanceof WebApkActivity) {
             CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
             intentBuilder.setShowTitle(true);
             if (mActivity.mWebappInfo.hasValidThemeColor()) {
