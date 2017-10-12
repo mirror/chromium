@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "06a5f1ae_e67edf55",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000970
+      },
+      "writtenOn": "2017-10-12T15:26:39Z",
+      "side": 1,
+      "message": "This file is reverted in the current patch.",
+      "parentUuid": "bde103a9_8df23080",
+      "range": {
+        "startLine": 214,
+        "startChar": 32,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa31b3c_19272e65",
         "filename": "ui/base/win/tablet.h",
         "patchSetId": 11
