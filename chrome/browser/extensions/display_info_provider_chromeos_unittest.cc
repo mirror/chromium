@@ -24,6 +24,8 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/test/display_manager_test_api.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/events/devices/device_data_manager.h"
+#include "ui/events/test/device_data_manager_test_api.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace extensions {
@@ -35,6 +37,16 @@ using DisplayLayoutList = DisplayInfoProvider::DisplayLayoutList;
 void EnableTabletMode(bool enable) {
   ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
       enable);
+}
+
+void InitExternalTouchDevices() {
+  ui::DeviceDataManager::CreateInstance();
+  ui::TouchscreenDevice touchdevice(
+      123, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL,
+      std::string("test external touch device"), gfx::Size(1000, 1000), 1);
+
+  ui::test::DeviceDataManagerTestAPI devices_test_api;
+  devices_test_api.SetTouchscreenDevices({touchdevice});
 }
 
 class DisplayInfoProviderChromeosTest : public ash::AshTestBase {
@@ -1324,6 +1336,8 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInternal) {
       display::test::DisplayManagerTestApi(ash::Shell::Get()->display_manager())
           .SetFirstDisplayAsInternalDisplay();
 
+  InitExternalTouchDevices();
+
   std::string id = base::Int64ToString(internal_display_id);
 
   std::string error;
@@ -1369,19 +1383,28 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNonTouchDisplay) {
                                  ? display_id_list[1]
                                  : display_id_list[0];
 
-  display::test::DisplayManagerTestApi(ash::Shell::Get()->display_manager())
-      .SetTouchSupport(display_id, display::Display::TOUCH_SUPPORT_UNAVAILABLE);
+  ui::DeviceDataManager::CreateInstance();
+  ui::test::DeviceDataManagerTestAPI devices_test_api;
+  devices_test_api.SetTouchscreenDevices({});
 
   std::string id = base::Int64ToString(display_id);
 
   std::string error;
-  std::string expected_err = "Display Id(" + id + ") does not support touch.";
-
+  std::string expected_err =
+      DisplayInfoProviderChromeOS::kNoExternalTouchDevicePresent;
   bool success = DisplayInfoProvider::Get()->StartCustomTouchCalibration(
       id, &error);
 
-  ASSERT_FALSE(success);
-  EXPECT_EQ(expected_err, error);
+  // Since no external touch devices are present, the calibration would fail.
+  EXPECT_FALSE(success);
+  EXPECT_EQ(error, expected_err);
+
+  InitExternalTouchDevices();
+  error.clear();
+
+  success = DisplayInfoProvider::Get()->StartCustomTouchCalibration(id, &error);
+  // If an external touch device is present, the calibration should proceed.
+  EXPECT_TRUE(success);
 }
 
 TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
@@ -1399,8 +1422,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationNegativeBounds) {
                                  ? display_id_list[1]
                                  : display_id_list[0];
 
-  display::test::DisplayManagerTestApi(display_manager())
-      .SetTouchSupport(display_id, display::Display::TOUCH_SUPPORT_AVAILABLE);
+  InitExternalTouchDevices();
 
   std::string id = base::Int64ToString(display_id);
 
@@ -1447,8 +1469,7 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInvalidPoints) {
                                  ? display_id_list[1]
                                  : display_id_list[0];
 
-  display::test::DisplayManagerTestApi(display_manager())
-      .SetTouchSupport(display_id, display::Display::TOUCH_SUPPORT_AVAILABLE);
+  InitExternalTouchDevices();
 
   std::string id = base::Int64ToString(display_id);
 
@@ -1480,6 +1501,32 @@ TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationInvalidPoints) {
       pairs, bounds, &error);
   ASSERT_FALSE(success);
   EXPECT_EQ(expected_err, error);
+}
+
+TEST_F(DisplayInfoProviderChromeosTest, CustomTouchCalibrationSuccess) {
+  UpdateDisplay("1200x600,600x1000*2");
+
+  const int64_t internal_display_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+
+  display::DisplayIdList display_id_list =
+      display_manager()->GetCurrentDisplayIdList();
+
+  // Pick the non internal display Id.
+  const int64_t display_id = display_id_list[0] == internal_display_id
+                                 ? display_id_list[1]
+                                 : display_id_list[0];
+
+  InitExternalTouchDevices();
+  display::test::DisplayManagerTestApi(display_manager())
+      .AddTouchDevice(display_id, 1234);
+
+  std::string error;
+  bool success = DisplayInfoProvider::Get()->StartCustomTouchCalibration(
+      base::Int64ToString(display_id), &error);
+
+  EXPECT_TRUE(success);
 }
 
 class DisplayInfoProviderChromeosTouchviewTest

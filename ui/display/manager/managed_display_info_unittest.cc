@@ -125,26 +125,107 @@ TEST_F(DisplayInfoTest, ManagedDisplayModeGetSizeForExternal4K) {
   EXPECT_EQ("3840x2160", GetModeSizeInDIP(size, 1.0f, 1.0f, false));
 }
 
+TEST_F(DisplayInfoTest, CopyTouchCalibrationMap) {
+  constexpr int64_t kDisplayId = 10;
+  constexpr uint32_t kTouchDeviceIdentifier1 = 123;
+  constexpr uint32_t kTouchDeviceIdentifier2 = 234;
+  constexpr uint32_t kTouchDeviceIdentifier3 = 345;
+  constexpr uint32_t kTouchDeviceIdentifier4 = 456;
+
+  TouchCalibrationData::CalibrationPointPairQuad points = {
+      {std::make_pair(gfx::Point(10, 10), gfx::Point(11, 12)),
+       std::make_pair(gfx::Point(190, 10), gfx::Point(195, 8)),
+       std::make_pair(gfx::Point(10, 90), gfx::Point(12, 94)),
+       std::make_pair(gfx::Point(190, 90), gfx::Point(189, 88))}};
+  constexpr gfx::Size size(200, 100);
+  TouchCalibrationData calibration_data(points, size);
+
+  ManagedDisplayInfo original =
+      ManagedDisplayInfo::CreateFromSpecWithID("200x100", kDisplayId);
+  ManagedDisplayInfo other =
+      ManagedDisplayInfo::CreateFromSpecWithID("200x100", kDisplayId);
+
+  EXPECT_FALSE(original.TouchDevicesCount());
+
+  original.AddTouchDevice(kTouchDeviceIdentifier1);
+  original.SetTouchCalibrationData(kTouchDeviceIdentifier2, calibration_data);
+  original.AddTouchDevice(kTouchDeviceIdentifier3);
+  EXPECT_EQ(original.TouchDevicesCount(), 3UL);
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier1));
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier2));
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier3));
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier4));
+
+  EXPECT_FALSE(original.HasTouchCalibrationData(kTouchDeviceIdentifier1));
+  EXPECT_TRUE(original.HasTouchCalibrationData(kTouchDeviceIdentifier2));
+  EXPECT_FALSE(original.HasTouchCalibrationData(kTouchDeviceIdentifier3));
+  EXPECT_FALSE(original.HasTouchCalibrationData(kTouchDeviceIdentifier4));
+
+  other.set_native(true);
+  other.AddTouchDevice(kTouchDeviceIdentifier2);
+  other.SetTouchCalibrationData(kTouchDeviceIdentifier3, calibration_data);
+  other.AddTouchDevice(kTouchDeviceIdentifier4);
+  EXPECT_EQ(other.TouchDevicesCount(), 3UL);
+  EXPECT_TRUE(other.HasTouchDevice(kTouchDeviceIdentifier2));
+  EXPECT_TRUE(other.HasTouchDevice(kTouchDeviceIdentifier3));
+  EXPECT_TRUE(other.HasTouchCalibrationData(kTouchDeviceIdentifier3));
+  EXPECT_TRUE(other.HasTouchDevice(kTouchDeviceIdentifier4));
+
+  original.Copy(other);
+
+  EXPECT_EQ(original.TouchDevicesCount(), 3UL);
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier1));
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier2));
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier3));
+  EXPECT_TRUE(original.HasTouchDevice(kTouchDeviceIdentifier4));
+
+  EXPECT_FALSE(original.HasTouchCalibrationData(kTouchDeviceIdentifier1));
+  EXPECT_TRUE(original.HasTouchCalibrationData(kTouchDeviceIdentifier2));
+  EXPECT_TRUE(original.HasTouchCalibrationData(kTouchDeviceIdentifier3));
+  EXPECT_FALSE(original.HasTouchCalibrationData(kTouchDeviceIdentifier4));
+
+  EXPECT_EQ(calibration_data,
+            original.GetTouchCalibrationData(kTouchDeviceIdentifier2));
+  EXPECT_EQ(calibration_data,
+            original.GetTouchCalibrationData(kTouchDeviceIdentifier3));
+
+  other.ClearTouchDevices();
+  EXPECT_FALSE(other.TouchDevicesCount());
+  EXPECT_FALSE(other.HasTouchDevice(kTouchDeviceIdentifier1));
+  EXPECT_FALSE(other.HasTouchDevice(kTouchDeviceIdentifier2));
+  EXPECT_FALSE(other.HasTouchDevice(kTouchDeviceIdentifier3));
+  EXPECT_FALSE(other.HasTouchDevice(kTouchDeviceIdentifier4));
+
+  original.Copy(other);
+  EXPECT_FALSE(original.TouchDevicesCount());
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier1));
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier2));
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier3));
+  EXPECT_FALSE(original.HasTouchDevice(kTouchDeviceIdentifier4));
+}
+
 TEST_F(DisplayInfoTest, TouchDevicesTest) {
   ManagedDisplayInfo info =
       ManagedDisplayInfo::CreateFromSpecWithID("200x100", 10);
 
-  EXPECT_EQ(0u, info.touch_device_identifiers().size());
+  EXPECT_EQ(0u, info.TouchDevicesCount());
 
   info.AddTouchDevice(10u);
-  EXPECT_EQ(1u, info.touch_device_identifiers().size());
+  EXPECT_EQ(1u, info.TouchDevicesCount());
   EXPECT_TRUE(info.HasTouchDevice(10u));
+  EXPECT_FALSE(info.HasTouchCalibrationData(10u));
   info.AddTouchDevice(11u);
-  EXPECT_EQ(2u, info.touch_device_identifiers().size());
+  EXPECT_EQ(2u, info.TouchDevicesCount());
   EXPECT_TRUE(info.HasTouchDevice(10u));
   EXPECT_TRUE(info.HasTouchDevice(11u));
+  EXPECT_FALSE(info.HasTouchCalibrationData(11u));
 
   ManagedDisplayInfo copy_info =
       ManagedDisplayInfo::CreateFromSpecWithID("200x100", 10);
   copy_info.Copy(info);
-  EXPECT_EQ(2u, copy_info.touch_device_identifiers().size());
+  EXPECT_EQ(2u, copy_info.TouchDevicesCount());
   copy_info.ClearTouchDevices();
-  EXPECT_EQ(0u, copy_info.touch_device_identifiers().size());
+  EXPECT_EQ(0u, copy_info.TouchDevicesCount());
 }
 
 TEST_F(DisplayInfoTest, TouchCalibrationTest) {
@@ -164,27 +245,47 @@ TEST_F(DisplayInfoTest, TouchCalibrationTest) {
   TouchCalibrationData expected_data(points, size);
   uint32_t touch_device_identifier = 1234;
 
+  EXPECT_FALSE(info.HasTouchDevice(touch_device_identifier));
+
   // Add touch data for the display.
   info.SetTouchCalibrationData(touch_device_identifier, expected_data);
 
   EXPECT_TRUE(info.touch_calibration_data_map().size());
+
+  // Add a calibration data will also associate the display with the touch
+  // device if they were not already associated.
+  EXPECT_TRUE(info.HasTouchDevice(touch_device_identifier));
+
+  EXPECT_TRUE(info.HasTouchCalibrationData(touch_device_identifier));
   EXPECT_EQ(expected_data,
             info.GetTouchCalibrationData(touch_device_identifier));
 
   info.SetTouchCalibrationData(touch_device_identifier + 1, expected_data);
+  EXPECT_TRUE(info.HasTouchDevice(touch_device_identifier + 1));
+  EXPECT_TRUE(info.HasTouchCalibrationData(touch_device_identifier + 1));
   EXPECT_EQ(info.touch_calibration_data_map().size(), 2UL);
+  EXPECT_EQ(expected_data,
+            info.GetTouchCalibrationData(touch_device_identifier + 1));
 
   // Clear touch calibration data for touch device associated with the given
   // touch identifier.
   info.ClearTouchCalibrationData(touch_device_identifier);
   EXPECT_TRUE(info.touch_calibration_data_map().size());
 
+  // Removing the calibration data should not remove the touch device associsted
+  // with the display.
+  EXPECT_TRUE(info.HasTouchDevice(touch_device_identifier));
+
   // Add another touch device calibration data.
   info.SetTouchCalibrationData(touch_device_identifier, expected_data);
   info.ClearAllTouchCalibrationData();
 
+  EXPECT_TRUE(info.HasTouchDevice(touch_device_identifier));
+  EXPECT_TRUE(info.HasTouchDevice(touch_device_identifier + 1));
+
   // There should be no touch device data associated with this display.
-  EXPECT_FALSE(info.touch_calibration_data_map().size());
+  EXPECT_FALSE(info.HasTouchCalibrationData(touch_device_identifier));
+  EXPECT_FALSE(info.HasTouchCalibrationData(touch_device_identifier + 1));
 }
 
 }  // namespace display

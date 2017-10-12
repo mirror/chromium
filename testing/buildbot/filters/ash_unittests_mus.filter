@@ -2,7 +2,13 @@
 # http://crbug.com/734812.
 -TouchCalibratorControllerTest.CustomCalibration
 -TouchCalibratorControllerTest.CustomCalibrationInvalidTouchId
+-TouchCalibratorControllerTest.HighDPIMonitorsCalibration
+-TouchCalibratorControllerTest.IgnoreInternalTouchDevices
+-TouchCalibratorControllerTest.KeyEventIntercept
+-TouchCalibratorControllerTest.RotatedHighDPIMonitorsCalibration
+-TouchCalibratorControllerTest.StartCalibration
 -TouchCalibratorControllerTest.TouchDeviceIdIsSet
+-TouchCalibratorControllerTest.TouchThreshold
 -TrayIMETest.HidesOnA11yEnabled
 -TrayIMETest.PerformActionOnDetailedView
 -VirtualKeyboardControllerAlwaysEnabledTest.DoesNotSuppressKeyboard
