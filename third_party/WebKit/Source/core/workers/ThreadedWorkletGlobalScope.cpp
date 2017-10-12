@@ -10,7 +10,6 @@
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/weborigin/KURL.h"
-#include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/Platform.h"
@@ -20,13 +19,11 @@ namespace blink {
 ThreadedWorkletGlobalScope::ThreadedWorkletGlobalScope(
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerThread* thread,
     WorkerClients* worker_clients)
     : WorkletGlobalScope(url,
                          user_agent,
-                         std::move(security_origin),
                          isolate,
                          worker_clients,
                          thread->GetWorkerReportingProxy()),

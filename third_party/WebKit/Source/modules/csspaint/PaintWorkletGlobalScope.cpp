@@ -171,14 +171,12 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry,
     size_t global_scope_number) {
   PaintWorkletGlobalScope* paint_worklet_global_scope =
-      new PaintWorkletGlobalScope(frame, url, user_agent,
-                                  std::move(security_origin), isolate,
+      new PaintWorkletGlobalScope(frame, url, user_agent, isolate,
                                   reporting_proxy, pending_generator_registry);
   String context_name("PaintWorklet #");
   context_name.append(String::Number(global_scope_number));
@@ -195,14 +193,12 @@ PaintWorkletGlobalScope::PaintWorkletGlobalScope(
     LocalFrame* frame,
     const KURL& url,
     const String& user_agent,
-    RefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry)
     : MainThreadWorkletGlobalScope(frame,
                                    url,
                                    user_agent,
-                                   std::move(security_origin),
                                    isolate,
                                    reporting_proxy),
       pending_generator_registry_(pending_generator_registry) {}

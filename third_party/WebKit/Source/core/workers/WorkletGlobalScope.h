@@ -103,11 +103,13 @@ class CORE_EXPORT WorkletGlobalScope
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
-  // The url, userAgent and securityOrigin arguments are inherited from the
-  // parent ExecutionContext for Worklets.
+  // Partial implemention of the "set up a worklet environment settings object"
+  // algorithm:
+  // https://drafts.css-houdini.org/worklets/#script-settings-for-worklets
+  //
+  // The url and user_agent arguments are inherited from the parent Document.
   WorkletGlobalScope(const KURL&,
                      const String& user_agent,
-                     RefPtr<SecurityOrigin>,
                      v8::Isolate*,
                      WorkerClients*,
                      WorkerReportingProxy&);

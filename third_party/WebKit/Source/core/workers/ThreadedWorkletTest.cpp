@@ -16,7 +16,6 @@
 #include "core/workers/WorkletThreadHolder.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "platform/weborigin/SecurityOrigin.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -113,12 +112,9 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
  private:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams> creation_params) final {
-    RefPtr<SecurityOrigin> security_origin =
-        SecurityOrigin::Create(creation_params->script_url);
     return new ThreadedWorkletGlobalScope(
         creation_params->script_url, creation_params->user_agent,
-        std::move(security_origin), this->GetIsolate(), this,
-        creation_params->worker_clients);
+        GetIsolate(), this, creation_params->worker_clients);
   }
 
   bool IsOwningBackingThread() const final { return false; }
@@ -141,7 +137,6 @@ class ThreadedWorkletMessagingProxyForTest
     std::unique_ptr<Vector<char>> cached_meta_data = nullptr;
     Vector<CSPHeaderAndType> content_security_policy_headers;
     String referrer_policy = "";
-    security_origin_ = SecurityOrigin::Create(script_url);
     WorkerClients* worker_clients = nullptr;
     Vector<String> origin_trial_tokens;
     std::unique_ptr<WorkerSettings> worker_settings = nullptr;
@@ -150,9 +145,9 @@ class ThreadedWorkletMessagingProxyForTest
             script_url, "fake user agent", "// fake source code",
             std::move(cached_meta_data), kDontPauseWorkerGlobalScopeOnStart,
             &content_security_policy_headers, referrer_policy,
-            security_origin_.get(), worker_clients, kWebAddressSpaceLocal,
-            &origin_trial_tokens, std::move(worker_settings),
-            kV8CacheOptionsDefault),
+            nullptr /* security_origin */, worker_clients,
+            kWebAddressSpaceLocal, &origin_trial_tokens,
+            std::move(worker_settings), kV8CacheOptionsDefault),
         WTF::nullopt, script_url);
   }
 
@@ -162,8 +157,6 @@ class ThreadedWorkletMessagingProxyForTest
   std::unique_ptr<WorkerThread> CreateWorkerThread() final {
     return WTF::MakeUnique<ThreadedWorkletThreadForTest>(WorkletObjectProxy());
   }
-
-  RefPtr<SecurityOrigin> security_origin_;
 };
 
 class ThreadedWorkletTest : public ::testing::Test {
