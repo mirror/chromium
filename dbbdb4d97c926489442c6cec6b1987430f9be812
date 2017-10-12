@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0495288a_66916835",
+        "filename": "services/metrics/public/cpp/delegating_ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T14:52:50Z",
+      "side": 1,
+      "message": "nit, its",
+      "revId": "dbbdb4d97c926489442c6cec6b1987430f9be812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2e7404_156c60c4",
+        "filename": "services/metrics/public/cpp/ukm_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T14:52:50Z",
+      "side": 1,
+      "message": "Since this is a primary means for clients to use UKM, I think they\u0027ll find this a bit confusing since we don\u0027t explain here what a DelegatingUKMRecorder is.\n\nCan this give more explaination on how to use it - I\u0027m not sure we need to explain it is a DelegatingUKMRecorder here at all - or at least it should be a sub-explaination",
+      "revId": "dbbdb4d97c926489442c6cec6b1987430f9be812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
