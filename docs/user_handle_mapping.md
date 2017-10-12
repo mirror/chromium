@@ -90,6 +90,7 @@ For Chromium contributors that have different nicks on other domains.
 | satish            | satish\_        | satish          |
 | scheglov          |                 | scheglov        |
 | scottbyer         | sbyer           | scottbyer       |
+| sdefresne         | sdefresne       | sdefresne       |
 | sdy               | sdy, sidney, Sidnicious | sdy     |
 | shans             |                 | shanestephens   |
 | shrike            | shrike          | shrike          |
