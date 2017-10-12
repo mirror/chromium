@@ -34,6 +34,24 @@
       "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5abe52_f31c26c6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T22:34:50Z",
+      "side": 1,
+      "message": "Just tried replacing GridLayout with BoxLayout for BubbleHeaderView, and called security_details_label_-\u003eSizeToFit(0) and InvalidateLayout(), \"site settings\" link at the bottom is still missing. \n\nSo far the only working solution is to add security_details_label_container_ with BoxLayout.\n\nMichael, should I proceed with this change?",
+      "parentUuid": "a44c20d5_2e7addc5",
+      "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
