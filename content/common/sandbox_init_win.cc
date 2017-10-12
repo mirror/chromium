@@ -4,37 +4,62 @@
 
 #include "content/public/common/sandbox_init.h"
 
+#include "base/base_switches.h"
+#include "base/bind.h"
 #include "base/logging.h"
+#include "base/metrics/field_trial.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/trace_event/trace_event.h"
+#include "base/win/scoped_process_information.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/sandbox_win.h"
+#include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
+#include "content/public/common/sandbox_init.h"
+#include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "sandbox/win/src/sandbox.h"
 #include "sandbox/win/src/sandbox_types.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "services/service_manager/sandbox/switches.h"
 
 namespace content {
 
-bool InitializeSandbox(service_manager::SandboxType sandbox_type,
-                       sandbox::SandboxInterfaceInfo* sandbox_info) {
-  sandbox::BrokerServices* broker_services = sandbox_info->broker_services;
-  if (broker_services) {
-    if (!InitBrokerServices(broker_services))
-      return false;
+// Updates the command line arguments with debug-related flags. If debug flags
+// have been used with this process, they will be filtered and added to
+// command_line as needed.
+void ProcessDebugFlags(base::CommandLine* command_line) {
+  const base::CommandLine& current_cmd_line =
+      *base::CommandLine::ForCurrentProcess();
+  std::string type = command_line->GetSwitchValueASCII(switches::kProcessType);
+  if (current_cmd_line.HasSwitch(switches::kWaitForDebuggerChildren)) {
+    // Look to pass-on the kWaitForDebugger flag.
+    std::string value = current_cmd_line.GetSwitchValueASCII(
+        switches::kWaitForDebuggerChildren);
+    if (value.empty() || value == type)
+      command_line->AppendSwitch(switches::kWaitForDebugger);
 
-    // IMPORTANT: This piece of code needs to run as early as possible in the
-    // process because it will initialize the sandbox broker, which requires the
-    // process to swap its window station. During this time all the UI will be
-    // broken. This has to run before threads and windows are created.
-    if (!service_manager::IsUnsandboxedSandboxType(sandbox_type)) {
-      // Precreate the desktop and window station used by the renderers.
-      scoped_refptr<sandbox::TargetPolicy> policy =
-          broker_services->CreatePolicy();
-      sandbox::ResultCode result = policy->CreateAlternateDesktop(true);
-      CHECK(sandbox::SBOX_ERROR_FAILED_TO_SWITCH_BACK_WINSTATION != result);
-    }
-    return true;
+    command_line->AppendSwitchASCII(switches::kWaitForDebuggerChildren, value);
   }
+}
 
-  return service_manager::IsUnsandboxedSandboxType(sandbox_type) ||
-         InitTargetServices(sandbox_info->target_services);
+sandbox::ResultCode StartSandboxedProcess(
+    SandboxedProcessLauncherDelegate* delegate,
+    base::CommandLine* cmd_line,
+    const base::HandlesToInheritVector& handles_to_inherit,
+    base::Process* process) {
+  std::string type_str = cmd_line->GetSwitchValueASCII(switches::kProcessType);
+  TRACE_EVENT1("startup", "StartProcessWithAccess", "type", type_str);
+
+  ProcessDebugFlags(cmd_line);
+  return StartSandboxedProcessInternal(
+      cmd_line, type_str, delegate->GetSandboxType(),
+      delegate->DisableDefaultPolicy(), handles_to_inherit,
+      base::Bind(&SandboxedProcessLauncherDelegate::PreSpawnTarget,
+                 base::Unretained(delegate)),
+      base::Bind(&SandboxedProcessLauncherDelegate::PostSpawnTarget,
+                 base::Unretained(delegate)),
+      process);
 }
 
 }  // namespace content
