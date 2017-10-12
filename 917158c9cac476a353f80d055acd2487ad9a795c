@@ -52,6 +52,24 @@
       "revId": "917158c9cac476a353f80d055acd2487ad9a795c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ebb93b_fed2385b",
+        "filename": "gpu/command_buffer/service/service_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-12T22:22:03Z",
+      "side": 1,
+      "message": "Hmm, I think it was forwarded through two mechanisms.  Right now the only place in the gpu process that uses the switch is the info collection to show on the about:gpu page, there is a bool for the command decoder in GpuPreferences too.",
+      "parentUuid": "87331808_3f7c00db",
+      "revId": "917158c9cac476a353f80d055acd2487ad9a795c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
