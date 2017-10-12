@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87028eba_5e25de6f",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1394f6a_deac913f",
+      "range": {
+        "startLine": 63,
+        "startChar": 46,
+        "endLine": 63,
+        "endChar": 49
+      },
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb8654d_149d4e40",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-11T19:11:15Z",
       "side": 1,
       "message": "Please make sure the unit tests still compile. :)",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c627dd02_68895b4a",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "I did compile locally and it seems all unit tests still pass.",
+      "parentUuid": "cfb8654d_149d4e40",
       "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1f396137_3925b81d",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Talked offline. timer also could serve our needs here.",
+      "parentUuid": "1ba26311_a9367d5d",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fe847b4_e25dfa5f",
         "filename": "chrome/browser/vr/speech_recognizer.cc",
         "patchSetId": 9
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d9c68d07_0a57ab19",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe847b4_e25dfa5f",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a35011_34b0dadd",
         "filename": "chrome/browser/vr/speech_recognizer.cc",
         "patchSetId": 9
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-12T12:50:45Z",
       "side": 1,
       "message": "Along the lines of my earlier comment, can we initiate a navigation right here and send \"voice search done\" signal to the UI? This would pass no URL parameter and the UI would send no response back to the browser process.",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06be3623_faf46750",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "We can do that through delegation (navigation needs vr_shell which we can\u0027t access from here). But I think this is more align with long term design.",
+      "parentUuid": "a0a35011_34b0dadd",
       "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "70a8423e_f0d1c6ea",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "I think so. I have changed level to be a float.",
+      "parentUuid": "bd5a00bb_6bbeee59",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "746f4e33_acb8e9a6",
         "filename": "chrome/browser/vr/speech_recognizer.cc",
         "patchSetId": 9
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-12T12:50:45Z",
       "side": 1,
       "message": "What do the auth scope and token do and what will change when this TODO is addressed?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230d6650_838ff176",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "I think it related to audio history. Audio might be saved in a profile if user choose to. And if they are not provided, audio won\u0027t be saved. Updated the TODO",
+      "parentUuid": "746f4e33_acb8e9a6",
       "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "095a780f_865d889e",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "I originally did the navigation on browser thread when we get speech result here. But then I think in the long term, we would still need to wait for result from UI thread. We would need to wait for user select the suggestion on UI thread before navigation. So I structured it this way.",
+      "parentUuid": "21660e33_7ed3c32a",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf3a95f6_383afae0",
         "filename": "chrome/browser/vr/speech_recognizer.h",
         "patchSetId": 9
@@ -155,6 +305,24 @@
       "writtenOn": "2017-10-12T12:50:45Z",
       "side": 1,
       "message": "Any thoughts on how we could test this class? In particular, I\u0027m wondering about timing stuff. Eg, checking that we\u0027re robust if we exit VR in the middle of recognition with an outstanding timeout.\n\nWill SpeechRecognizerOnIO need to be exposed for tests, or do you think that SpeechRecognizer\u0027s API is sufficient?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74eb197_90b43741",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Good point. For testing timeout, we probably need to expose SpeechRecognizerOnIO.\nThe test for this class is not very trivial. We need to fake a few things as well as creating a fake IO thread. It will probably take some time to hook up everything. I will add test once these new classes and interfaces are looking good.",
+      "parentUuid": "cf3a95f6_383afae0",
       "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "a6968a1c_f2c41db9",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Hah. Good to know. Although, it doesn\u0027t look like very trivial to adapt button to use system indicator texture. So I would do it in a follow up CL once we have UX design.",
+      "parentUuid": "6b218605_c7f76afc",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4a81cb7_116109b4",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 9
@@ -189,6 +375,24 @@
       "writtenOn": "2017-10-11T19:11:15Z",
       "side": 1,
       "message": "Are you passing this back as a placeholder for a future population of a text search field or suggestions?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14621def_aaed62bd",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-10-12T18:18:37Z",
+      "side": 1,
+      "message": "Correct. Currently, we don\u0027t need to show the result in any UI. But we definitely need it if we want to use for text search field and such.",
+      "parentUuid": "a4a81cb7_116109b4",
       "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
