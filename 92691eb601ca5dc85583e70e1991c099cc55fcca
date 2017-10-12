@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b280081_3a2fa54d",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T08:50:24Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::UI);",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695bb6d0_3ccc048e",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T08:50:24Z",
+      "side": 1,
+      "message": "Which thread is this called? Can you add a thread check?",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89255c4_0a79031f",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T08:50:24Z",
+      "side": 1,
+      "message": "I wonder if we\u0027re already on the UI thread.",
+      "revId": "92691eb601ca5dc85583e70e1991c099cc55fcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
