@@ -120,6 +120,11 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
                          bool is_page,
                          bool is_positive) override;
 
+  // Set custom border of scroll view. The function overwrites border set in
+  // UpdateBorder() and prevents being overwritten by setting
+  // |custom_border_enabled| to true.
+  void SetCustomBorder(std::unique_ptr<Border> border);
+
  private:
   friend class test::ScrollViewTestApi;
 
@@ -243,6 +248,8 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Set to true if the scroll with layers feature is enabled.
   const bool scroll_with_layers_enabled_;
+
+  bool custom_border_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScrollView);
 };

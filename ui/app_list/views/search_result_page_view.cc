@@ -185,7 +185,7 @@ SearchResultPageView::SearchResultPageView()
   views::ScrollView* const scroller = new views::ScrollView;
   if (is_fullscreen_app_list_enabled_) {
     // Leaves a placeholder area for the search box and the separator below it.
-    scroller->SetBorder(views::CreateEmptyBorder(
+    scroller->SetCustomBorder(views::CreateEmptyBorder(
         gfx::Insets(kSearchBoxHeight + kSeparatorThickness, 0, 0, 0)));
   }
   scroller->SetContents(contents_view_);

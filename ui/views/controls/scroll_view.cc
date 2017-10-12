@@ -638,6 +638,11 @@ int ScrollView::GetScrollIncrement(ScrollBar* source, bool is_page,
                          contents_viewport_->height() / 5;
 }
 
+void ScrollView::SetCustomBorder(std::unique_ptr<Border> border) {
+  custom_border_enabled_ = true;
+  SetBorder(std::move(border));
+}
+
 bool ScrollView::DoesViewportOrScrollViewHaveLayer() const {
   return layer() || contents_viewport_->layer();
 }
@@ -842,7 +847,7 @@ void ScrollView::AddBorder() {
 }
 
 void ScrollView::UpdateBorder() {
-  if (!draw_border_ || !GetWidget())
+  if (!draw_border_ || !GetWidget() || custom_border_enabled_)
     return;
 
   SetBorder(CreateSolidBorder(
@@ -891,18 +896,19 @@ void ScrollView::PositionOverflowIndicators() {
 
 void ScrollView::UpdateOverflowIndicatorVisibility(
     const gfx::ScrollOffset& offset) {
+  bool border_exist = draw_border_ || custom_border_enabled_;
   SetControlVisibility(more_content_top_.get(),
-                       !draw_border_ && !header_ && vert_sb_->visible() &&
+                       !border_exist && !header_ && vert_sb_->visible() &&
                            offset.y() > vert_sb_->GetMinPosition());
   SetControlVisibility(more_content_bottom_.get(),
-                       !draw_border_ && vert_sb_->visible() &&
+                       !border_exist && vert_sb_->visible() &&
                            !horiz_sb_->visible() &&
                            offset.y() < vert_sb_->GetMaxPosition());
   SetControlVisibility(more_content_left_.get(),
-                       !draw_border_ && horiz_sb_->visible() &&
+                       !border_exist && horiz_sb_->visible() &&
                            offset.x() > horiz_sb_->GetMinPosition());
   SetControlVisibility(more_content_right_.get(),
-                       !draw_border_ && horiz_sb_->visible() &&
+                       !border_exist && horiz_sb_->visible() &&
                            !vert_sb_->visible() &&
                            offset.x() < horiz_sb_->GetMaxPosition());
 }
