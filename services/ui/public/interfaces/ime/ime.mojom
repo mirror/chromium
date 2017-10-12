@@ -133,6 +133,7 @@ struct StartSessionDetails {
   mojo.common.mojom.TextDirection text_direction;
   int32 text_input_flags;
   gfx.mojom.Rect caret_bounds;
+  gfx.mojom.Range text_range;
 };
 
 // A service which provides the IMEDriver interface is responsible for doing
@@ -197,9 +198,20 @@ interface TextInputClient {
   // Dispatch a key event skipping IME. Returns true if event was consumed.
   DispatchKeyEventPostIME(ui.mojom.Event event) => (bool stopped_propagation);
 
-  // TODO(moshayedi): Add functions corresponding to ui::TextInputClient for:
-  // - Input context information
-  // - Document content operations
-  // - Miscellaneous functions
-  // crbug.com/631527.
+  // Called whenever current keyboard layout or input method is changed,
+  // especially the change of input locale and text direction.
+  OnInputMethodChanged();
+
+  // Ensure the caret is not in |rect|.  |rect| is in screen coordinates in
+  // DIP (Density Independent Pixel) and may extend beyond the bounds of this
+  // TextInputClient.
+  EnsureCaretNotInRect(gfx.mojom.Rect rect);
+
+  // Retrieves the UTF-16 based character range containing accessible text in
+  // the View. It must cover the composition and selection range.
+  // Returns false if the information cannot be retrieved right now.
+  GetTextRange(gfx.mojom.Range text_range);
+
+  // Returns true if there is composition text.
+  HasCompositionText() => (bool has_composition_text);
 };
