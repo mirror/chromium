@@ -28,14 +28,21 @@ namespace blink {
 // frame.
 class PLATFORM_EXPORT VideoFrameResourceProvider {
  public:
-  explicit VideoFrameResourceProvider(WebContextProviderCallback,
-                                      viz::SharedBitmapManager*,
-                                      gpu::GpuMemoryBufferManager*);
+  VideoFrameResourceProvider(WebContextProviderCallback,
+                             viz::SharedBitmapManager*,
+                             gpu::GpuMemoryBufferManager*);
 
   virtual ~VideoFrameResourceProvider() = default;
 
   virtual void Initialize(viz::ContextProvider*);
-  virtual void AppendQuads(viz::RenderPass*);
+  virtual void AppendQuads(viz::RenderPass*, scoped_refptr<media::VideoFrame>);
+  virtual void DidDraw();
+
+  virtual void PrepareSendToParent(
+      const cc::LayerTreeResourceProvider::ResourceIdArray& resource_ids,
+      std::vector<viz::TransferableResource>* transferable_resources);
+  virtual void ReceiveReturnsFromParent(
+      const std::vector<viz::ReturnedResource>& transferable_resources);
 
  private:
   WebContextProviderCallback context_provider_callback_;

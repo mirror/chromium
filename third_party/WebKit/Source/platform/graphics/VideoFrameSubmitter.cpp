@@ -119,18 +119,27 @@ void VideoFrameSubmitter::SubmitFrameInternal(
   render_pass->SetNew(1, gfx::Rect(video_frame->coded_size()),
                       gfx::Rect(video_frame->coded_size()), gfx::Transform());
   render_pass->filters = cc::FilterOperations();
-  resource_provider_->AppendQuads(render_pass.get());
+  resource_provider_->AppendQuads(render_pass.get(), video_frame);
   compositor_frame.metadata.begin_frame_ack = begin_frame_ack;
   compositor_frame.metadata.device_scale_factor = 1;
   compositor_frame.metadata.may_contain_video = true;
 
   cc::ResourceProvider::ResourceIdArray resources;
 
+  for (auto* quad : render_pass->quad_list) {
+    for (viz::ResourceId resource_id : quad->resources) {
+      resources.push_back(resource_id);
+    }
+  }
+
+  resource_provider_->PrepareSendToParent(resources,
+                                          &compositor_frame.resource_list);
   compositor_frame.render_pass_list.push_back(std::move(render_pass));
 
   // TODO(lethalantidote): Address third/fourth arg in SubmitCompositorFrame.
   compositor_frame_sink_->SubmitCompositorFrame(
       current_local_surface_id_, std::move(compositor_frame), nullptr, 0);
+  resource_provider_->DidDraw();
 }
 
 void VideoFrameSubmitter::OnBeginFrame(const viz::BeginFrameArgs& args) {
@@ -155,6 +164,15 @@ void VideoFrameSubmitter::OnBeginFrame(const viz::BeginFrameArgs& args) {
 }
 
 void VideoFrameSubmitter::DidReceiveCompositorFrameAck(
-    const WTF::Vector<viz::ReturnedResource>& resources) {}
+    const WTF::Vector<viz::ReturnedResource>& resources) {
+  std::vector<viz::ReturnedResource> std_resources;
+  for (auto resource : resources) {
+    std_resources.push_back(resource);
+  }
+  provider_->task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&VideoFrameResourceProvider::ReceiveReturnsFromParent,
+                 base::Unretained(resource_provider_.get()), std_resources));
+}
 
 }  // namespace blink
