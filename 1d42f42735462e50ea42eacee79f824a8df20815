@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "136e98e5_58e1bf44",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T09:51:45Z",
+      "side": 1,
+      "message": "Sounds good, updated.",
+      "parentUuid": "732e4325_7f46892c",
+      "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b21423b_0181484c",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86895d7d_07d2ab93",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-12T09:51:45Z",
+      "side": 1,
+      "message": "Removed as per comment 2.",
+      "parentUuid": "9b21423b_0181484c",
+      "revId": "1d42f42735462e50ea42eacee79f824a8df20815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
