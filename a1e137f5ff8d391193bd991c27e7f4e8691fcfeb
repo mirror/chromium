@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb6cde4_7913916d",
+        "filename": "build/android/pylib/local/device/local_device_perf_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-12T15:43:13Z",
+      "side": 0,
+      "message": "Also, looks like this never actually worked. flaky_steps here is supposed to be a path to a JSON file :-/",
+      "revId": "a1e137f5ff8d391193bd991c27e7f4e8691fcfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4658a2_5d4060f5",
+        "filename": "build/android/pylib/local/device/local_device_perf_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-10-12T15:43:13Z",
+      "side": 0,
+      "message": "https://cs.chromium.org/search/?q\u003dactual_exit_code shows nothing is actually using this.",
+      "revId": "a1e137f5ff8d391193bd991c27e7f4e8691fcfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
