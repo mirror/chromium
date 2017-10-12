@@ -42,6 +42,125 @@
     },
     {
       "key": {
+        "uuid": "1ba26311_a9367d5d",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "Do we want a CancelableCallback here similar to this one in VrShellGl?\nhttps://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_shell_gl.h?rcl\u003d6c90e47f1ae26976aaf6d47ca86d6d71ed58be5c\u0026l\u003d286",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe847b4_e25dfa5f",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "It looks to me that this is being sent to the UI for UI purposes. If that\u0027s the case, can sound_level remain a float on the range [0, 1]?\n\nIf we do need to map onto the range [0, INT16_MAX], can you use std::numeric_limits\u003cint16_t\u003e::max()?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a35011_34b0dadd",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "Along the lines of my earlier comment, can we initiate a navigation right here and send \"voice search done\" signal to the UI? This would pass no URL parameter and the UI would send no response back to the browser process.",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5a00bb_6bbeee59",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "Is this what drives the voice input animation?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746f4e33_acb8e9a6",
+        "filename": "chrome/browser/vr/speech_recognizer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "What do the auth scope and token do and what will change when this TODO is addressed?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21660e33_7ed3c32a",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "IIUC, nothing actually happens at this point in the timing diagram. We post over to the VR UI thread, then turn around and post back to the browser main thread. It makes sense to me that we\u0027d have to tell the UI that recognition has ended (so it can hide the UI), but we probably don\u0027t need to wait for a response on the browser thread, right?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3a95f6_383afae0",
+        "filename": "chrome/browser/vr/speech_recognizer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-12T12:50:45Z",
+      "side": 1,
+      "message": "Any thoughts on how we could test this class? In particular, I\u0027m wondering about timing stuff. Eg, checking that we\u0027re robust if we exit VR in the middle of recognition with an outstanding timeout.\n\nWill SpeechRecognizerOnIO need to be exposed for tests, or do you think that SpeechRecognizer\u0027s API is sufficient?",
+      "revId": "9d6b1ba9bef392b87ce33ee2329eb2b6e131d910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b218605_c7f76afc",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 9
