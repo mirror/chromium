@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca4a3d7_fb84ca44",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T18:37:21Z",
+      "side": 1,
+      "message": "Actually, here is my preferred suggestion\n\npropertiesBtn.addEventListener(\u0027click\u0027, () \u003d\u003e {\n  this.propertiesFieldSet_.showAll \u003d !this.propertiesFieldSet_.showAll;\n  properties.textContent \u003d this.propertiesFieldSet_.showAll ? \u0027Hide\u0027 : \u0027Show all\u0027;\n  this.propertiesFieldSet_.redraw();\n});\n\nand remove setupShowAllButton, this.showAllBtn_.",
+      "revId": "947907e711a534bed9221a4b76fca004175c6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
