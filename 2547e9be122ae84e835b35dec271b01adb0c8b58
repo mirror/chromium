@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "d07a9599_3e755d24",
+        "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-12T18:31:06Z",
+      "side": 1,
+      "message": "I\u0027m not really sure how your build is structured. In general, if a build does not depend on the target that defines the macro, then `#if defined(...)` will simply be false. This can lead to different parts of the codebase being compiled with different values for the same definition.",
+      "parentUuid": "9cc75d0e_6714db3d",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "2547e9be122ae84e835b35dec271b01adb0c8b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8b0770_3a3adf0d",
         "filename": "remoting/protocol/webrtc_dummy_video_encoder.cc",
         "patchSetId": 19
