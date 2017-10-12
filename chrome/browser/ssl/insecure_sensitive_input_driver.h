@@ -12,8 +12,9 @@ namespace content {
 class RenderFrameHost;
 }
 
-// The InsecureSensitiveInputDriver watches for InsecureInputService calls from
-// renderers, and surfaces notifications through VisiblePasswordObservers.
+// The InsecureSensitiveInputDriver watches for calls from renderers and the
+// autofill component and updates associated input event flags in the
+// SSLStatusInputEventData for the frame.
 //
 // There is one InsecureSensitiveInputDriver per RenderFrameHost.
 // The lifetime is managed by the InsecureSensitiveInputDriverFactory.
@@ -25,6 +26,11 @@ class InsecureSensitiveInputDriver : public blink::mojom::InsecureInputService {
 
   void BindInsecureInputServiceRequest(
       blink::mojom::InsecureInputServiceRequest request);
+
+  // The user interacted with a credit card field in an insecure context.
+  // Unlike the other notifications (sent from the renderer via Mojo), this
+  // event is raised by Chrome's autofill component.
+  void DidEditCreditCardFieldInInsecureContext();
 
   // blink::mojom::InsecureInputService:
   void PasswordFieldVisibleInInsecureContext() override;
