@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0521d56_5848cff6",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "should this be 0.0?",
+      "range": {
+        "startLine": 274,
+        "startChar": 45,
+        "endLine": 274,
+        "endChar": 46
+      },
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284bcc25_de516a3e",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "same comment here, 0.0?",
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd377e2_17593eee",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "use std::make_unique, as example below",
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd7a9b3_cbb26db8",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "request_ \u003d std::make_unique\u003cFullCardRequest\u003e(\u0026autofill_client_, ...)",
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a507b3_36374a99",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "Can this be a straight member?\n\nTestAutofillClient autofill_client_;",
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de9328e_67c43ece",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T19:26:38Z",
+      "side": 1,
+      "message": "Please make straight members as much as possible in this file.\n\nTestingPrefServiceSimple pref_service_;\n\nAudit the others please.",
+      "revId": "796eb2a72f94cf702113aea401778185a334700b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
