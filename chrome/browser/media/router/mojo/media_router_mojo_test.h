@@ -295,7 +295,6 @@ class MediaRouterMojoTest : public ::testing::Test {
   void TestSendRouteBinaryMessage();
   void TestDetachRoute();
   void TestSearchSinks();
-  void TestProvideSinks();
   void TestCreateMediaRouteController();
 
   const std::string& extension_id() const { return extension_->id(); }
