@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0205dee6_d2948deb",
+        "filename": "third_party/WebKit/Source/platform/blob/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T09:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3bead94_b075043c",
+      "revId": "cbc1aa0e1fa0857d2bfb8fe38b4447ecf48ac8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be238505_a661ab3a",
         "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "cbc1aa0e1fa0857d2bfb8fe38b4447ecf48ac8e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be8774e_e9a59dc8",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T09:24:29Z",
+      "side": 1,
+      "message": "Done.\n\nThe reason why we do not use \"blink_core_sources\" is here is out of core/ (core/ and platform/ have different build configurations). Probably we want to have a similar template defined in platform/platform.gni.\n\nWhen I introduced platform/loader/BUILD.gn, there are only two sub BUILD.gn files including the lodaer/BUILD.gn. But today, we have 10 BUILD.gn files under platform. So, we may want to consider to have a similar thing.",
+      "parentUuid": "be238505_a661ab3a",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "cbc1aa0e1fa0857d2bfb8fe38b4447ecf48ac8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
