@@ -1,0 +1,35 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x80
+  LayoutBlockFlow {HTML} at (0,0) size 800x80
+    LayoutBlockFlow {BODY} at (8,16) size 784x56
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 249x19
+          text run at (0,0) width 249: "A media control should have a focus ring."
+      LayoutBlockFlow (anonymous) at (0,36) size 784x20
+layer at (8,67) size 0x0
+  LayoutMedia {AUDIO} at (0,15) size 0x0
+layer at (8,67) size 240x0 scrollHeight 16
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 240x0 [bgcolor=#F1F3F4]
+    LayoutFlexibleBox {DIV} at (0,-16) size 240x32
+layer at (8,51) size 240x32 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox {DIV} at (0,0) size 240x32
+    LayoutButton {INPUT} at (10,0) size 32x32
+    LayoutSlider {INPUT} at (131,15) size 83x2 [color=#C4C4C4]
+      LayoutFlexibleBox {DIV} at (0,0) size 83x2
+layer at (55,59) size 28x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (47,8) size 28x16
+    LayoutText {#text} at (0,0) size 28x16
+      text run at (0,0) width 28: "0:00"
+layer at (87,59) size 36x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (79,8) size 36x16
+    LayoutText {#text} at (0,0) size 36x16
+      text run at (0,0) width 36: "/ 0:00"
+layer at (139,66) size 83x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 83x2 [bgcolor=#00000033]
+layer at (139,66) size 83x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 83x0
+layer at (139,66) size 0x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 0x2 [bgcolor=#0000008A]
+layer at (139,66) size 0x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 0x2 [bgcolor=#000000DE]

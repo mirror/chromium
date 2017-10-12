@@ -1,0 +1,97 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x584
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 717x18
+          text run at (0,0) width 626: "This tests that in a html document with inline audio content, the media element repaints correctly "
+          text run at (625,0) width 92: "while playing."
+      LayoutBlockFlow (anonymous) at (0,34) size 784x79
+        LayoutBR {BR} at (0,0) size 0x0
+        LayoutBR {BR} at (0,25) size 0x0
+        LayoutBR {BR} at (0,79) size 0x0
+layer at (8,42) size 0x0
+  LayoutMedia {AUDIO} at (0,0) size 0x0
+layer at (8,42) size 240x0 scrollHeight 16
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 240x0 [bgcolor=#F1F3F4]
+    LayoutFlexibleBox {DIV} at (0,-16) size 240x32
+layer at (8,26) size 240x32 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox {DIV} at (0,0) size 240x32
+    LayoutButton {INPUT} at (10,0) size 32x32
+    LayoutSlider {INPUT} at (129.28,15) size 52.72x2 [color=#909090]
+      LayoutFlexibleBox {DIV} at (0,0) size 52.72x2
+    LayoutButton {INPUT} at (198,0) size 32x32
+layer at (55,34) size 27x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (47,8) size 27.25x16
+    LayoutText {#text} at (0,0) size 28x16
+      text run at (0,0) width 28: "0:00"
+layer at (86,34) size 35x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (78.25,8) size 35.03x16
+    LayoutText {#text} at (0,0) size 36x16
+      text run at (0,0) width 36: "/ 0:01"
+layer at (137,41) size 53x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 52.72x2 [bgcolor=#00000033]
+    LayoutBlockFlow {DIV} at (21.34,-4) size 10x10 [bgcolor=#000000DE]
+layer at (137,41) size 53x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 52.72x0
+layer at (163,41) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (26,0) size 26x2 [bgcolor=#0000008A]
+layer at (137,41) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 26x2 [bgcolor=#000000DE]
+layer at (8,42) size 0x0
+  LayoutMedia {AUDIO} at (0,0) size 0x0
+layer at (8,42) size 240x0 scrollHeight 16
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 240x0 [bgcolor=#F1F3F4]
+    LayoutFlexibleBox {DIV} at (0,-16) size 240x32
+layer at (8,26) size 240x32 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox {DIV} at (0,0) size 240x32
+    LayoutButton {INPUT} at (10,0) size 32x32
+    LayoutSlider {INPUT} at (129.28,15) size 52.72x2 [color=#909090]
+      LayoutFlexibleBox {DIV} at (0,0) size 52.72x2
+    LayoutButton {INPUT} at (198,0) size 32x32
+layer at (55,34) size 27x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (47,8) size 27.25x16
+    LayoutText {#text} at (0,0) size 28x16
+      text run at (0,0) width 28: "0:00"
+layer at (86,34) size 35x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (78.25,8) size 35.03x16
+    LayoutText {#text} at (0,0) size 36x16
+      text run at (0,0) width 36: "/ 0:01"
+layer at (137,41) size 53x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 52.72x2 [bgcolor=#00000033]
+    LayoutBlockFlow {DIV} at (21.34,-4) size 10x10 [bgcolor=#000000DE]
+layer at (137,41) size 53x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 52.72x0
+layer at (163,41) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (26,0) size 26x2 [bgcolor=#0000008A]
+layer at (137,41) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 26x2 [bgcolor=#000000DE]
+layer at (8,94) size 0x0
+  LayoutMedia {AUDIO} at (0,52) size 0x0
+layer at (8,94) size 240x0 scrollHeight 16
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 240x0 [bgcolor=#F1F3F4]
+    LayoutFlexibleBox {DIV} at (0,-16) size 240x32
+layer at (8,78) size 240x32 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutFlexibleBox {DIV} at (0,0) size 240x32
+    LayoutButton {INPUT} at (10,0) size 32x32
+    LayoutSlider {INPUT} at (129.28,15) size 52.72x2 [color=#909090]
+      LayoutFlexibleBox {DIV} at (0,0) size 52.72x2
+    LayoutButton {INPUT} at (198,0) size 32x32
+layer at (55,86) size 27x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (47,8) size 27.25x16
+    LayoutText {#text} at (0,0) size 28x16
+      text run at (0,0) width 28: "0:00"
+layer at (86,86) size 35x16 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0 transparent
+  LayoutBlockFlow {DIV} at (78.25,8) size 35.03x16
+    LayoutText {#text} at (0,0) size 36x16
+      text run at (0,0) width 36: "/ 0:01"
+layer at (137,93) size 53x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 52.72x2 [bgcolor=#00000033]
+    LayoutBlockFlow {DIV} at (21.34,-4) size 10x10 [bgcolor=#000000DE]
+layer at (137,93) size 53x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 52.72x0
+layer at (163,93) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (26,0) size 26x2 [bgcolor=#0000008A]
+layer at (137,93) size 26x2 backgroundClip at (0,0) size 0x0 clip at (0,0) size 0x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 26x2 [bgcolor=#000000DE]

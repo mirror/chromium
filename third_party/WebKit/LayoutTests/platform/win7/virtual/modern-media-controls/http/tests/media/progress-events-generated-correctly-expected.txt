@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test that progress events are generated during loading of media resource. assert_greater_than: at least one progress event was fired expected a number greater than 0 but got 0
+Harness: the test ran to completion.
+

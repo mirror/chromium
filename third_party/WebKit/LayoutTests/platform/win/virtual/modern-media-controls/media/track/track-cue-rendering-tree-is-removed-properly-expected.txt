@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Tests that the cue display tree has been removed properly and no crash happens. assert_throws: function "function () { textTrackDisplayElement(video); }" did not throw
+Harness: the test ran to completion.
+

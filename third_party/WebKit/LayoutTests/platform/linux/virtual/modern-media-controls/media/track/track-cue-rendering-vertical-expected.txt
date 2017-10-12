@@ -1,0 +1,42 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x261
+  LayoutBlockFlow {HTML} at (0,0) size 800x261
+    LayoutBlockFlow {BODY} at (8,8) size 784x245
+      LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 320x240
+  LayoutVideo {VIDEO} at (0,0) size 320x240
+    LayoutBlockFlow {DIV} at (0,0) size 320x240
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 1: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 2: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 3: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 4: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 5: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (0,0) size 16x600
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 16x600
+    LayoutBlockFlow {DIV} at (0,0) size 16x600
+      LayoutText {#text} at (0,247) size 15x106
+        text run at (0,247) width 106: "Cue 6: \x{79C1}\x{306F}\x{7ACB}\x{6D3E}\x{306A}\x{4EBA}"
+layer at (8,8) size 320x240
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 320x240
+    LayoutFlexibleBox {DIV} at (0,0) size 320x240

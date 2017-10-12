@@ -1,0 +1,42 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x260
+  LayoutBlockFlow {HTML} at (0,0) size 800x260
+    LayoutBlockFlow {BODY} at (8,8) size 784x244
+      LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 320x240
+  LayoutVideo {VIDEO} at (0,0) size 320x240
+    LayoutBlockFlow {DIV} at (0,0) size 320x240
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (277,0) size 246x14
+        text run at (277,0) width 246: "Cue 1: should be positioned at the top of the video."
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (268,0) size 264x14
+        text run at (268,0) width 264: "Cue 2: should be the second cue and not overlap cue 1."
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (265,0) size 270x14
+        text run at (265,0) width 270: "Cue 3: should become the third line from top to bottom."
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (272,0) size 256x14
+        text run at (272,0) width 256: "Cue 4: should be fixed positioned around the middle."
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (270,0) size 260x14
+        text run at (270,0) width 260: "Cue 5: should be displayed at the bottom of the video."
+layer at (0,0) size 800x14
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 800x14
+    LayoutBlockFlow {DIV} at (0,0) size 800x14
+      LayoutText {#text} at (275,0) size 250x14
+        text run at (275,0) width 250: "Cue 6: should be on top of bottom positioned cue 5."
+layer at (8,8) size 320x240
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 320x240
+    LayoutFlexibleBox {DIV} at (0,0) size 320x240

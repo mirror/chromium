@@ -1,0 +1,80 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x302
+  LayoutBlockFlow {HTML} at (0,0) size 800x302
+    LayoutBlockFlow {BODY} at (8,16) size 784x278
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 475x18
+          text run at (0,0) width 475: "The look of the controls should not change when styled under strict mode."
+      LayoutBlockFlow (anonymous) at (0,34) size 784x244
+        LayoutText {#text} at (320,226) size 4x18
+          text run at (320,226) width 4: " "
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,50) size 320x240
+  LayoutVideo {VIDEO} at (0,0) size 320x240 [color=#FF0000]
+layer at (332,50) size 320x240
+  LayoutVideo {VIDEO} at (324,0) size 320x240
+layer at (8,50) size 320x240
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 320x240 [color=#000000]
+    LayoutFlexibleBox {DIV} at (0,0) size 320x240
+layer at (8,50) size 320x240
+  LayoutFlexibleBox {DIV} at (0,0) size 320x240
+    LayoutSlider {INPUT} at (16,221) size 288x2 [color=#909090]
+      LayoutFlexibleBox {DIV} at (0,0) size 288x2
+layer at (8,50) size 320x224 clip at (9,51) size 318x222
+  LayoutButton {INPUT} at (0,0) size 320x224 [border: (1px solid #D8D8D8) (1px solid #D1D1D1) (1px solid #BABABA) (1px solid #D1D1D1)]
+    LayoutFlexibleBox (anonymous) at (8,83.50) size 304x56
+      LayoutBlockFlow {DIV} at (124,0) size 56x56 [bgcolor=#FFFFFFE6]
+layer at (8,234) size 320x32
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,184) size 320x32
+    LayoutButton {INPUT} at (246,0) size 32x32
+    LayoutButton {INPUT} at (278,0) size 32x32
+layer at (24,236) size 27x30 transparent
+  LayoutBlockFlow {DIV} at (16,2) size 27.25x30
+    LayoutText {#text} at (0,7) size 28x16
+      text run at (0,7) width 28: "0:00"
+layer at (55,236) size 199x30 transparent
+  LayoutBlockFlow {DIV} at (47.25,2) size 198.75x30
+    LayoutText {#text} at (0,7) size 36x16
+      text run at (0,7) width 36: "/ 0:06"
+layer at (24,271) size 288x2
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 288x2 [bgcolor=#00000033]
+    LayoutBlockFlow {DIV} at (0,-4) size 10x10 [bgcolor=#000000DE]
+layer at (24,271) size 288x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 288x0
+layer at (24,271) size 288x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 288x2 [bgcolor=#0000008A]
+layer at (24,271) size 0x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 0x2 [bgcolor=#000000DE]
+layer at (332,50) size 320x240
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 320x240
+    LayoutFlexibleBox {DIV} at (0,0) size 320x240
+layer at (332,50) size 320x240
+  LayoutFlexibleBox {DIV} at (0,0) size 320x240
+    LayoutSlider {INPUT} at (16,221) size 288x2 [color=#909090]
+      LayoutFlexibleBox {DIV} at (0,0) size 288x2
+layer at (332,50) size 320x224 clip at (333,51) size 318x222
+  LayoutButton {INPUT} at (0,0) size 320x224 [border: (1px solid #D8D8D8) (1px solid #D1D1D1) (1px solid #BABABA) (1px solid #D1D1D1)]
+    LayoutFlexibleBox (anonymous) at (8,83.50) size 304x56
+      LayoutBlockFlow {DIV} at (124,0) size 56x56 [bgcolor=#FFFFFFE6]
+layer at (332,234) size 320x32
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,184) size 320x32
+    LayoutButton {INPUT} at (246,0) size 32x32
+    LayoutButton {INPUT} at (278,0) size 32x32
+layer at (348,236) size 27x30 transparent
+  LayoutBlockFlow {DIV} at (16,2) size 27.25x30
+    LayoutText {#text} at (0,7) size 28x16
+      text run at (0,7) width 28: "0:00"
+layer at (379,236) size 199x30 transparent
+  LayoutBlockFlow {DIV} at (47.25,2) size 198.75x30
+    LayoutText {#text} at (0,7) size 36x16
+      text run at (0,7) width 36: "/ 0:06"
+layer at (348,271) size 288x2
+  LayoutBlockFlow (relative positioned) {DIV} at (0,0) size 288x2 [bgcolor=#00000033]
+    LayoutBlockFlow {DIV} at (0,-4) size 10x10 [bgcolor=#000000DE]
+layer at (348,271) size 288x0
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 288x0
+layer at (348,271) size 288x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 288x2 [bgcolor=#0000008A]
+layer at (348,271) size 0x2
+  LayoutBlockFlow (positioned) {DIV} at (0,0) size 0x2 [bgcolor=#000000DE]
