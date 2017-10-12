@@ -44,11 +44,18 @@ class BaseParallelResourceThrottle : public content::ResourceThrottle {
   virtual void CancelResourceLoad();
 
  private:
+  void ResumeResourceLoad();
+  void MayDeferCancelResourceLoad();
+
   class URLLoaderThrottleHolder;
 
   const net::URLRequest* const request_;
   const content::ResourceType resource_type_;
   NetEventLogger net_event_logger_;
+  // The throttle is either inside a ResourceThrottle notification call or is
+  // responsible for deferring the request.
+  bool throttle_in_band_ = false;
+  bool should_cancel_on_notification_ = false;
 
   std::unique_ptr<URLLoaderThrottleHolder> url_loader_throttle_holder_;
 
