@@ -1075,4 +1075,11 @@ String LocalFrameClientImpl::GetDevToolsFrameToken() {
   return web_frame_->Client()->GetDevToolsFrameToken();
 }
 
+void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
+    const WebRect& rect_to_scroll,
+    const WebRemoteScrollProperties& properties) {
+  web_frame_->Client()->ScrollRectToVisibleInParentFrame(rect_to_scroll,
+                                                         properties);
+}
+
 }  // namespace blink

@@ -99,6 +99,7 @@ class WebServiceWorkerProvider;
 class WebSpellCheckPanelHostClient;
 class WebTaskRunner;
 class WebURLLoader;
+struct WebRemoteScrollProperties;
 
 class CORE_EXPORT LocalFrameClient : public FrameClient {
  public:
@@ -362,6 +363,12 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidBlockFramebust(const KURL&) {}
 
   virtual String GetDevToolsFrameToken() = 0;
+
+  // Called when the corresponding frame should be scrolled in a remote parent
+  // frame.
+  virtual void ScrollRectToVisibleInParentFrame(
+      const WebRect&,
+      const WebRemoteScrollProperties&) {}
 };
 
 }  // namespace blink
