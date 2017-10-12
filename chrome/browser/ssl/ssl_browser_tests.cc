@@ -6262,6 +6262,22 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, Subresource) {
                                  "*The SSL certificate used to load*"));
 }
 
+// Tests that the Symantec console message caps out with a generic message after
+// many subresource laods.
+IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, ManySubresources) {
+  ASSERT_NO_FATAL_FAILURE(
+      SetUpCertVerifier(false /* use Chrome 66 distrust date */));
+  ASSERT_TRUE(https_server()->Start());
+  GURL url(https_server()->GetURL("/ssl/page_with_many_subresources.html"));
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  content::ConsoleObserverDelegate console_observer(tab, "*SSL certificates*");
+  tab->SetDelegate(&console_observer);
+  ui_test_utils::NavigateToURL(browser(), url);
+  console_observer.Wait();
+  EXPECT_TRUE(base::MatchPattern(console_observer.message(),
+                                 "*Additional resources on this page*"));
+}
+
 // TODO(jcampan): more tests to do below.
 
 // Visit a page over https that contains a frame with a redirect.
