@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25734c94_12f98033",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-12T13:57:51Z",
+      "side": 1,
+      "message": "Probably worth always recording the error codes",
+      "revId": "0db74e4f290f178390ecdc40a2ae20e2c1ad83cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cb1f19_023dfba3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-12T13:57:51Z",
+      "side": 1,
+      "message": "I think you\u0027re missing a return statement here",
+      "revId": "0db74e4f290f178390ecdc40a2ae20e2c1ad83cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a626da66_52a4c520",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-12T13:57:51Z",
+      "side": 1,
+      "message": "Maybe worth adding a histogram tracking how much time passed from the first attempt to the final attempt (maybe just for attempts that end in failure, but maybe successfully case could also benefit)",
+      "revId": "0db74e4f290f178390ecdc40a2ae20e2c1ad83cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38278a05_72d6f364",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-12T13:57:51Z",
+      "side": 1,
+      "message": "I think it might be worth adding a new histogram showing how many attempts were required before successfully downloading the cleaner",
+      "revId": "0db74e4f290f178390ecdc40a2ae20e2c1ad83cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
