@@ -251,6 +251,8 @@ HeadlessDevToolsManagerDelegate::HeadlessDevToolsManagerDelegate(
   command_map_["Target.disposeBrowserContext"] =
       base::Bind(&HeadlessDevToolsManagerDelegate::DisposeBrowserContext,
                  base::Unretained(this));
+  command_map_["Browser.close"] = base::Bind(
+      &HeadlessDevToolsManagerDelegate::Close, base::Unretained(this));
   command_map_["Browser.getWindowForTarget"] =
       base::Bind(&HeadlessDevToolsManagerDelegate::GetWindowForTarget,
                  base::Unretained(this));
@@ -568,6 +570,15 @@ HeadlessDevToolsManagerDelegate::GetWindowForTarget(
   result->SetInteger("windowId", web_contents->window_id());
   result->Set("bounds", CreateBoundsDict(web_contents));
   return CreateSuccessResponse(command_id, std::move(result));
+}
+
+std::unique_ptr<base::DictionaryValue> HeadlessDevToolsManagerDelegate::Close(
+    content::DevToolsAgentHost* agent_host,
+    int session_id,
+    int command_id,
+    const base::DictionaryValue* params) {
+  browser_->Shutdown();
+  return CreateSuccessResponse(command_id, nullptr);
 }
 
 std::unique_ptr<base::DictionaryValue>

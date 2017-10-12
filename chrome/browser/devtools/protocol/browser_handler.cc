@@ -4,6 +4,7 @@
 
 #include "chrome/browser/devtools/protocol/browser_handler.h"
 
+#include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
@@ -88,6 +89,11 @@ protocol::Response BrowserHandler::GetWindowBounds(
     return protocol::Response::Error("Browser window not found");
 
   *out_bounds = GetBrowserWindowBounds(window);
+  return protocol::Response::OK();
+}
+
+protocol::Response BrowserHandler::Close() {
+  chrome::AttemptExit();
   return protocol::Response::OK();
 }
 
