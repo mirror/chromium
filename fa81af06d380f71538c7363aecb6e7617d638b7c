@@ -22,6 +22,30 @@
       "revId": "fa81af06d380f71538c7363aecb6e7617d638b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b021fdd0_3c9e3c59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/OmniboxSuggestion.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-12T20:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f57b0f4_6a0abfdb",
+      "range": {
+        "startLine": 223,
+        "startChar": 15,
+        "endLine": 223,
+        "endChar": 21
+      },
+      "revId": "fa81af06d380f71538c7363aecb6e7617d638b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
