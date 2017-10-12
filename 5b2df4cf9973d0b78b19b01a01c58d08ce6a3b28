@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fed3db6a_af26ac51",
+        "filename": "components/password_manager/core/browser/form_saver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-12T13:56:10Z",
+      "side": 1,
+      "message": "This patch is just fixing of some aspects of processing of GAIA change password form. For example accounts.google.com and myaccount.google.com credentials would be still treated separately, that\u0027s mean that calling this method for myaccount.google.com wouldn\u0027t wipe out old credentials for accounts.google.com , so it\u0027s kind of useless to call it for myaccount.google.com.\n\nMy feeling that the comment for WipeOutdatedCopies is correct even with this change WDYT?",
+      "parentUuid": "64694c90_43726013",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 3
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ecb6ce_8b413d64",
         "filename": "components/password_manager/sync/browser/password_sync_util.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bb27a54e_bf633efd",
+        "filename": "components/password_manager/sync/browser/password_sync_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-12T13:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ecb6ce_8b413d64",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4301b23c_b8ab0f15",
         "filename": "components/password_manager/sync/browser/password_sync_util.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56766b5c_167575fb",
+        "filename": "components/password_manager/sync/browser/password_sync_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-12T13:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4301b23c_b8ab0f15",
+      "range": {
+        "startLine": 44,
+        "startChar": 69,
+        "endLine": 45,
+        "endChar": 59
+      },
+      "revId": "5b2df4cf9973d0b78b19b01a01c58d08ce6a3b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
