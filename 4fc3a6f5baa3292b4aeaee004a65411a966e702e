@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454eb59e_35840e49",
+        "filename": "ui/base/ime/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-12T20:09:13Z",
+      "side": 1,
+      "message": "Can we prune entries from this list too? There are several people on this list who no longer work on Chromium (e.g. nona@).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "4fc3a6f5baa3292b4aeaee004a65411a966e702e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
