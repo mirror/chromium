@@ -177,6 +177,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87f2d6c_3398aa07",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T14:59:54Z",
+      "side": 1,
+      "message": "The Point-version of this function should have a concrete implementation that uses the PointF version (i.e. the impl you have duplicated in the ash and wm versions should just live here)",
+      "parentUuid": "3993c26f_342e731a",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
