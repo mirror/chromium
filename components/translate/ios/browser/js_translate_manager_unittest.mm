@@ -50,22 +50,26 @@ class JsTranslateManagerTest : public PlatformTest {
   JsTranslateManager* manager_;
 };
 
-// TODO(crbug.com/658619#c47): Test reported as flaky.
-TEST_F(JsTranslateManagerTest, DISABLED_PerformancePlaceholder) {
+// Checks that performance.now() returns "correct" time. As the javascript is
+// executed in a separate process, and -sleepForTimeInterval: only guarantee
+// to return after at least timeout, it is only possible to check that the
+// elapsed time is greater or equal to the interval the process has slept.
+TEST_F(JsTranslateManagerTest, PerformancePlaceholder) {
   [manager_ inject];
   EXPECT_TRUE(IsDefined(@"performance"));
   EXPECT_TRUE(IsDefined(@"performance.now"));
 
-  // Check that performance.now returns correct values.
   NSTimeInterval intervalInSeconds = 0.3;
-  double startTime = [manager_ performanceNow];
+  const double startTimeInMilliSeconds = [manager_ performanceNow];
   [NSThread sleepForTimeInterval:intervalInSeconds];
-  double endTime = [manager_ performanceNow];
-  double timeElapsed = endTime - startTime;
-  // The tolerance is high to avoid flake.
-  EXPECT_NEAR(timeElapsed, intervalInSeconds * 1000, 100);
+  const double timeElapsedInSeconds =
+      ([manager_ performanceNow] - startTimeInMilliSeconds) / 1000;
+
+  EXPECT_GE(timeElapsedInSeconds, intervalInSeconds);
 }
 
+// Checks that cr.googleTranslate.libReady is available after the code has
+// been injected in the page.
 TEST_F(JsTranslateManagerTest, Inject) {
   [manager_ inject];
   EXPECT_TRUE([manager_ hasBeenInjected]);
