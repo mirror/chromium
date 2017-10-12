@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22d5f8c_876c0c61",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-10-12T19:23:01Z",
+      "side": 1,
+      "message": "we may need to lower that number OR we might have to remove backlog from this builder once the outage is over.",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 34
+      },
+      "revId": "52e2d7d553fe330bfc31e328d133ccd42c9a3c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
