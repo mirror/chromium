@@ -259,7 +259,7 @@ TaskController.prototype.changeDefaultTask_ = function(selection, task) {
               console.error(error.stack || error);
           });
     }
-    this.selectionHandler_.onFileSelectionChanged();
+    this.selectionHandler_.onFileSelectionChanged(null);
   }.bind(this));
 };
 

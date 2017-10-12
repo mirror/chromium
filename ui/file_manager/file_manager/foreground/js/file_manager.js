@@ -1049,6 +1049,15 @@ FileManager.prototype = /** @struct */ {
     this.folderShortcutsModel_ = new FolderShortcutsDataModel(
         this.volumeManager_);
 
+    this.ui_.listContainer.listThumbnailLoader = new ListThumbnailLoader(
+        this.directoryModel_, assert(this.thumbnailModel_),
+        this.volumeManager_);
+    this.ui_.listContainer.dataModel = this.directoryModel_.getFileList();
+    this.ui_.listContainer.emptyDataModel =
+        this.directoryModel_.getEmptyFileList();
+    this.ui_.listContainer.selectionModel =
+        this.directoryModel_.getFileListSelection();
+
     this.selectionHandler_ = new FileSelectionHandler(
         assert(this.directoryModel_), assert(this.fileOperationManager_),
         assert(this.ui_.listContainer), assert(this.metadataModel_),
@@ -1058,19 +1067,16 @@ FileManager.prototype = /** @struct */ {
         this.selectionHandler_.onFileSelectionChanged.bind(
             this.selectionHandler_));
 
+    var dom = this.dialogDom_;
+    assert(dom);
+    var table = queryRequiredElement('.detail-table', dom);
+    this.selectionHandler_.addEventListener(
+        FileSelectionHandler.EventType.CHANGE,
+        table.handleOnChange.bind(table));
+
     // TODO(mtomasz, yoshiki): Create navigation list earlier, and here just
     // attach the directory model.
     this.initDirectoryTree_();
-
-    this.ui_.listContainer.listThumbnailLoader = new ListThumbnailLoader(
-        this.directoryModel_,
-        assert(this.thumbnailModel_),
-        this.volumeManager_);
-    this.ui_.listContainer.dataModel = this.directoryModel_.getFileList();
-    this.ui_.listContainer.emptyDataModel =
-        this.directoryModel_.getEmptyFileList();
-    this.ui_.listContainer.selectionModel =
-        this.directoryModel_.getFileListSelection();
 
     this.appStateController_.initialize(this.ui_, this.directoryModel_);
 
