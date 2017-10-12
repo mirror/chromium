@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c235b2e_a849f3fa",
+        "filename": "content/public/network/ignore_errors_cert_verifier.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-12T23:35:17Z",
+      "side": 1,
+      "message": "You also need to update the comments to reflect the change.",
+      "revId": "96a9271cfd879f8abbf0a2624de7702024aef023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
