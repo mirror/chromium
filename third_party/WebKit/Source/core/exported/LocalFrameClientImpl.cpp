@@ -101,6 +101,10 @@ namespace blink {
 
 namespace {
 
+// Print up to |kMaxCertificateWarningMessages| console messages per frame
+// about certificates that will be distrusted in future.
+const uint32_t kMaxCertificateWarningMessages = 5;
+
 // Convenience helper for frame tree helpers in FrameClient to reduce the amount
 // of null-checking boilerplate code. Since the frame tree is maintained in the
 // web/ layer, the frame tree helpers often have to deal with null WebFrames:
@@ -139,7 +143,7 @@ bool IsBackForwardNavigationInProgress(LocalFrame* local_frame) {
 }  // namespace
 
 LocalFrameClientImpl::LocalFrameClientImpl(WebLocalFrameImpl* frame)
-    : web_frame_(frame) {}
+    : web_frame_(frame), num_certificate_warning_messages_(0) {}
 
 LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
   return new LocalFrameClientImpl(frame);
@@ -701,9 +705,33 @@ void LocalFrameClientImpl::DidRunContentWithCertificateErrors(const KURL& url) {
 
 void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
                                                     Time cert_validity_start) {
+  // To avoid spamming the console, log from the main frame only.
+  if (web_frame_->Parent())
+    return;
+
   WebString console_message;
-  if (!web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
-          url, cert_validity_start, &console_message)) {
+
+  // After |kMaxCertificateWarningMessages| warnings, stop printing messages to
+  // the console. At exactly |kMaxCertificateWarningMessages| warinngs, print a
+  // message that additional resources on the page use legacy certificates
+  // without specifying which exact resources. Before
+  // |kMaxCertificateWarningMessages| messages, print the exact resource URL in
+  // the message to help the developer pinpoint the problematic resources.
+
+  if (num_certificate_warning_messages_ > kMaxCertificateWarningMessages)
+    return;
+
+  if (num_certificate_warning_messages_ == kMaxCertificateWarningMessages) {
+    console_message =
+        WebString(String("Additional resources on this page were loaded with "
+                         "SSL certificates that will be "
+                         "distrusted in the future. "
+                         "Once distrusted, users will be prevented from "
+                         "loading these resources. See"
+                         "https://g.co/chrome/symantecpkicerts for "
+                         "more information."));
+  } else if (!web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
+                 url, cert_validity_start, &console_message)) {
     console_message =
         WebString(String("The SSL certificate used to load " + url.GetString() +
                          " will be "
@@ -713,6 +741,7 @@ void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
                          "https://g.co/chrome/symantecpkicerts for "
                          "more information."));
   }
+  num_certificate_warning_messages_++;
   web_frame_->GetFrame()->GetDocument()->AddConsoleMessage(
       ConsoleMessage::Create(kSecurityMessageSource, kWarningMessageLevel,
                              console_message));
