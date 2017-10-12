@@ -48,6 +48,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/network_change_notifier.h"
 #include "net/http/http_status_code.h"
+#include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/external_estimate_provider.h"
@@ -222,7 +223,11 @@ class DataReductionProxyConfigTest : public testing::Test {
   std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier_;
 
   base::MessageLoopForIO message_loop_;
+
+ protected:
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
+
+ private:
   std::unique_ptr<TestDataReductionProxyParams> expected_params_;
 };
 
@@ -330,9 +335,10 @@ TEST_F(DataReductionProxyConfigTest, TestOnIPAddressChanged) {
 TEST_F(DataReductionProxyConfigTest, WarmupURL) {
   const net::URLRequestStatus kSuccess(net::URLRequestStatus::SUCCESS, net::OK);
   const net::ProxyServer kHttpsProxy = net::ProxyServer::FromURI(
-      "https://secure_origin.net:443", net::ProxyServer::SCHEME_HTTP);
+      "proxy.googlezip.net:443", net::ProxyServer::SCHEME_HTTPS);
   const net::ProxyServer kHttpProxy = net::ProxyServer::FromURI(
-      "insecure_origin.net:80", net::ProxyServer::SCHEME_HTTP);
+      "compress.googlezip.net:80", net::ProxyServer::SCHEME_HTTP);
+  ASSERT_TRUE(kHttpsProxy.is_valid() && kHttpProxy.is_valid());
 
   // Set up the embedded test server from where the warm up URL will be fetched.
   net::EmbeddedTestServer embedded_test_server;
@@ -345,18 +351,26 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
   const struct {
     bool data_reduction_proxy_enabled;
     bool enabled_via_field_trial;
+    bool mark_all_proxies_as_bad;
+    bool mark_one_proxy_as_bad;
   } tests[] = {
       {
-          false, false,
+          false, false, false, false,
       },
       {
-          false, true,
+          false, true, false, false,
       },
       {
-          true, false,
+          true, false, false, false,
       },
       {
-          true, true,
+          true, true, false, false,
+      },
+      {
+          true, true, false, true,
+      },
+      {
+          true, true, true, false,
       },
   };
   for (const auto& test : tests) {
@@ -365,7 +379,6 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
     ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
         switches::kDisableDataReductionProxyWarmupURLFetch));
 
-    ResetSettings();
 
     variations::testing::ClearAllVariationParams();
     std::map<std::string, std::string> variation_params;
@@ -386,6 +399,34 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
 
     scoped_refptr<net::URLRequestContextGetter> request_context_getter_ =
         new net::TestURLRequestContextGetter(task_runner());
+
+    if (test.mark_all_proxies_as_bad || test.mark_one_proxy_as_bad) {
+      net::ProxyList proxy_list;
+      std::vector<net::ProxyServer> additional_bad_proxies;
+      std::vector<net::ProxyServer> data_reduction_proxies;
+
+      data_reduction_proxies.push_back(kHttpsProxy);
+      if (test.mark_all_proxies_as_bad)
+        data_reduction_proxies.push_back(kHttpProxy);
+      for (const net::ProxyServer& proxy_server : data_reduction_proxies) {
+        DCHECK(proxy_server.is_valid());
+        proxy_list.AddProxyServer(proxy_server);
+        additional_bad_proxies.push_back(proxy_server);
+      }
+      proxy_list.AddProxyServer(net::ProxyServer::Direct());
+
+      net::ProxyInfo proxy_info;
+      proxy_info.UseProxyList(proxy_list);
+      net::ProxyService* proxy_service =
+          request_context_getter_->GetURLRequestContext()->proxy_service();
+      ASSERT_TRUE(proxy_service->proxy_retry_info().empty());
+      proxy_service->MarkProxiesAsBadUntil(
+          proxy_info, base::TimeDelta::FromSeconds(60) /* bypass_duration */,
+          additional_bad_proxies, net::NetLogWithSource());
+      ASSERT_EQ(data_reduction_proxies.size(),
+                proxy_service->proxy_retry_info().size());
+    }
+
     config.InitializeOnIOThread(request_context_getter_.get(),
                                 request_context_getter_.get());
 
@@ -393,8 +434,9 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
     // the test device does not have connectivity.
     config.connection_type_ = net::NetworkChangeNotifier::CONNECTION_WIFI;
     config.SetProxyConfig(test.data_reduction_proxy_enabled, true);
-    bool warmup_url_enabled =
-        test.data_reduction_proxy_enabled && test.enabled_via_field_trial;
+    bool warmup_url_enabled = test.data_reduction_proxy_enabled &&
+                              test.enabled_via_field_trial &&
+                              !test.mark_all_proxies_as_bad;
     ASSERT_EQ(test.enabled_via_field_trial, params::FetchWarmupURLEnabled());
 
     if (warmup_url_enabled) {

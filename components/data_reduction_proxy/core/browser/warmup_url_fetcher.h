@@ -33,6 +33,13 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
   // Creates and starts a URLFetcher that fetches the warmup URL.
   void FetchWarmupURL();
 
+  // Returns the net::URLRequestContextGetter that will be used for fetching the
+  // warmup URL.
+  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter()
+      const {
+    return url_request_context_getter_.get();
+  }
+
  protected:
   // Sets |warmup_url_with_query_params| to the warmup URL. Attaches random
   // query params to the warmup URL.

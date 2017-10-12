@@ -487,6 +487,23 @@ void DataReductionProxyConfig::FetchWarmupURL() {
   if (connection_type_ == net::NetworkChangeNotifier::CONNECTION_NONE)
     return;
 
+  // Return if there is no valid data saver proxy in use since the purpose of
+  // the warm up URL is to warm up the connection to the data saver proxy.
+  net::ProxyService* proxy_service =
+      warmup_url_fetcher_->url_request_context_getter()
+          ->GetURLRequestContext()
+          ->proxy_service();
+
+  if (proxy_service == nullptr)
+    return;
+
+  if (AreProxiesBypassed(proxy_service->proxy_retry_info(),
+                         configurator_->GetProxyConfig().proxy_rules(),
+                         false /* is_https */, nullptr /* min_retry_delay */)) {
+    // Return since all data reduction proxies are bypassed.
+    return;
+  }
+
   warmup_url_fetcher_->FetchWarmupURL();
 }
 

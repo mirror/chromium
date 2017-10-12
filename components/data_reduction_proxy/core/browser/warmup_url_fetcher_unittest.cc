@@ -45,6 +45,9 @@ TEST(WarmupURLFetcherTest, TestGetWarmupURLWithQueryParam) {
       new net::TestURLRequestContextGetter(message_loop.task_runner());
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
 
+  EXPECT_EQ(request_context_getter,
+            warmup_url_fetcher.url_request_context_getter());
+
   GURL gurl_original;
   warmup_url_fetcher.GetWarmupURLWithQueryParam(&gurl_original);
   EXPECT_FALSE(gurl_original.query().empty());
