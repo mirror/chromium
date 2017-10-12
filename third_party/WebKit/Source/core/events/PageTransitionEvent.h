@@ -28,6 +28,7 @@
 
 #include "core/dom/events/Event.h"
 #include "core/events/PageTransitionEventInit.h"
+#include "core/page/PageLifecycleState.h"
 
 namespace blink {
 
@@ -39,6 +40,19 @@ class PageTransitionEvent final : public Event {
   static PageTransitionEvent* Create(const AtomicString& type, bool persisted) {
     return new PageTransitionEvent(type, persisted);
   }
+
+  static PageTransitionEvent* CreatePageHide(bool persisted,
+                                             PageLifecycleState endreason) {
+    return new PageTransitionEvent(EventTypeNames::pagehide, persisted,
+                                   endreason, kPageLifecycleStateUnknown);
+  }
+
+  static PageTransitionEvent* CreatePageShow(bool persisted,
+                                             PageLifecycleState lastendstate) {
+    return new PageTransitionEvent(EventTypeNames::pageshow, persisted,
+                                   kPageLifecycleStateUnknown, lastendstate);
+  }
+
   static PageTransitionEvent* Create(
       const AtomicString& type,
       const PageTransitionEventInit& initializer) {
@@ -51,14 +65,23 @@ class PageTransitionEvent final : public Event {
 
   bool persisted() const { return persisted_; }
 
+  AtomicString endReason() const;
+  AtomicString lastEndState() const;
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
   PageTransitionEvent();
   PageTransitionEvent(const AtomicString& type, bool persisted);
+  PageTransitionEvent(const AtomicString& type,
+                      bool persisted,
+                      PageLifecycleState endreason,
+                      PageLifecycleState lastendstate);
   PageTransitionEvent(const AtomicString&, const PageTransitionEventInit&);
 
   bool persisted_;
+  PageLifecycleState endreason_ = kPageLifecycleStateUnknown;
+  PageLifecycleState lastendstate_ = kPageLifecycleStateUnknown;
 };
 
 }  // namespace blink

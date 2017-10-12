@@ -138,6 +138,8 @@ Page::Page(PageClients& page_clients)
       paused_(false),
       device_scale_factor_(1),
       visibility_state_(kPageVisibilityStateVisible),
+      page_lifecycle_state_(kPageLifecycleStateUnknown),
+      last_page_lifecycle_end_state_(kPageLifecycleStateUnknown),
       is_cursor_visible_(true),
       subframe_count_(0) {
   DCHECK(editor_client_);
@@ -448,6 +450,16 @@ bool Page::IsPageVisible() const {
 
 bool Page::IsCursorVisible() const {
   return is_cursor_visible_;
+}
+
+void Page::SetPageLifecycleState(PageLifecycleState state) {
+  if (state == page_lifecycle_state_)
+    return;
+  page_lifecycle_state_ = state;
+}
+
+PageLifecycleState Page::GetPageLifecycleState() const {
+  return page_lifecycle_state_;
 }
 
 #if DCHECK_IS_ON()

@@ -30,8 +30,13 @@ namespace blink {
 PageTransitionEvent::PageTransitionEvent() : persisted_(false) {}
 
 PageTransitionEvent::PageTransitionEvent(const AtomicString& type,
-                                         bool persisted)
-    : Event(type, true, true), persisted_(persisted) {}
+                                         bool persisted,
+                                         PageLifecycleState endreason,
+                                         PageLifecycleState lastendstate)
+    : Event(type, true, true),
+      persisted_(persisted),
+      endreason_(endreason),
+      lastendstate_(lastendstate) {}
 
 PageTransitionEvent::PageTransitionEvent(
     const AtomicString& type,
@@ -45,6 +50,14 @@ PageTransitionEvent::~PageTransitionEvent() {}
 
 const AtomicString& PageTransitionEvent::InterfaceName() const {
   return EventNames::PageTransitionEvent;
+}
+
+AtomicString PageTransitionEvent::endReason() const {
+  return PageLifecycleStateString(endreason_);
+}
+
+AtomicString PageTransitionEvent::lastEndState() const {
+  return PageLifecycleStateString(lastendstate_);
 }
 
 DEFINE_TRACE(PageTransitionEvent) {
