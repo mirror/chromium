@@ -11,6 +11,8 @@ import tempfile
 
 REPOSITORY_ROOT = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', '..', '..'))
+DOCLAVA_DIR = os.path.join(REPOSITORY_ROOT, 'buildtools', 'android', 'doclava')
+SDK_DIR = os.path.join(REPOSITORY_ROOT, 'third_party', 'android_tools', 'sdk')
 
 sys.path.append(os.path.join(REPOSITORY_ROOT, 'build/android/gyp/util'))
 sys.path.append(os.path.join(REPOSITORY_ROOT, 'net/tools/net_docs'))
@@ -33,15 +35,31 @@ class CronetExtension(Extension):
 
 def GenerateJavadoc(options, src_dir):
   output_dir = os.path.abspath(os.path.join(options.output_dir, 'javadoc'))
-  working_dir = os.path.join(options.input_dir, 'android/api')
+  working_dir = os.path.join(options.input_dir, 'android', 'api')
   overview_file = os.path.abspath(options.overview_file)
-  lib_java_dir = os.path.abspath(options.lib_java_dir)
 
   build_utils.DeleteDirectory(output_dir)
   build_utils.MakeDirectory(output_dir)
-  javadoc_cmd = ['ant', '-Dsource.dir=' + src_dir , '-Ddoc.dir=' + output_dir,
-             '-Dlib.java.dir=' + lib_java_dir, '-Doverview=' + overview_file,
-             'doc']
+  javadoc_cmd = [
+    'javadoc',
+    '-d', output_dir,
+    '-overview', overview_file,
+    '-doclet', 'com.google.doclava.Doclava',
+    '-docletpath',
+    '%s:%s' % (os.path.join(DOCLAVA_DIR, 'jsilver.jar'),
+               os.path.join(DOCLAVA_DIR, 'doclava.jar')),
+    '-title', 'Cronet API',
+    '-federate', 'Android', 'https://developer.android.com/',
+    '-federationapi', 'Android', os.path.join(DOCLAVA_DIR, 'current.txt'),
+    '-bootclasspath',
+    '%s:%s' % (os.path.join(SDK_DIR, 'platforms', 'android-26', 'android.jar'),
+               os.path.join(SDK_DIR, 'extras', 'android', 'support',
+                            'annotations', 'android-support-annotations.jar')),
+  ]
+  for subdir, _, files in os.walk(src_dir):
+    for filename in files:
+      if filename.endswith(".java"):
+        javadoc_cmd += [ os.path.join(subdir, filename) ]
   stdout = build_utils.CheckOutput(javadoc_cmd, cwd=working_dir)
   for line in stdout.splitlines():
     if " error: " in line or "javadoc: error " in line:
@@ -62,7 +80,6 @@ def main():
   parser.add_option('--input-src-jar', help='Cronet api source jar')
   parser.add_option('--overview-file', help='Path of the overview page')
   parser.add_option('--readme-file', help='Path of the README.md')
-  parser.add_option('--lib-java-dir', help='Directory containing java libs')
   parser.add_option('--stamp', help='Path to touch on success.')
 
   options, _ = parser.parse_args()
