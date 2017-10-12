@@ -199,6 +199,17 @@ CompleteProviderHostPreparation(
   return info;
 }
 
+void GetInterfaceImpl(const std::string& interface_name,
+                      mojo::ScopedMessagePipeHandle interface_pipe,
+                      const url::Origin& origin,
+                      int process_id) {
+  auto* process = RenderProcessHost::FromID(process_id);
+  if (!process)
+    return;
+
+  // TODO(sammc): Dispatch interface requests.
+}
+
 }  // namespace
 
 constexpr base::TimeDelta ServiceWorkerVersion::kTimeoutTimerDelay;
@@ -292,6 +303,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       ping_controller_(new PingController(this)),
       validator_(base::MakeUnique<blink::TrialTokenValidator>(
           base::MakeUnique<TrialPolicyImpl>())),
+      interface_provider_binding_(this),
       weak_factory_(this) {
   DCHECK_NE(kInvalidServiceWorkerVersionId, version_id);
   DCHECK(context_);
@@ -1558,13 +1570,16 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   CHECK(event_dispatcher_.is_bound());
   CHECK(event_dispatcher_request.is_pending());
 
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  interface_provider_binding_.Bind(mojo::MakeRequest(&interface_provider));
   embedded_worker_->Start(
       std::move(params),
       // Unretained is used here because the callback will be owned by
       // |embedded_worker_| whose owner is |this|.
       base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
                      std::move(pending_provider_host), context()),
-      mojo::MakeRequest(&event_dispatcher_), std::move(installed_scripts_info),
+      std::move(event_dispatcher_request), std::move(installed_scripts_info),
+      std::move(interface_provider),
       base::BindOnce(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                      weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::BindOnce(
@@ -1882,6 +1897,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
     protect = this;
 
   event_recorder_.reset();
+  interface_provider_binding_.Close();
 
   // |start_callbacks_| can be non-empty if a start worker request arrived while
   // the worker was stopping. The worker must be restarted to fulfill the
@@ -1958,6 +1974,16 @@ void ServiceWorkerVersion::CleanUpExternalRequest(
   if (status == SERVICE_WORKER_OK)
     return;
   external_request_uuid_to_request_id_.erase(request_uuid);
+}
+
+void ServiceWorkerVersion::GetInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetInterfaceImpl, interface_name,
+                     std::move(interface_pipe), url::Origin(script_url()),
+                     embedded_worker_->process_id()));
 }
 
 }  // namespace content
