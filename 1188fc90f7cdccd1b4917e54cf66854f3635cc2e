@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108437e2_931c559e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T11:08:34Z",
+      "side": 1,
+      "message": "Do you need to throw this?",
+      "range": {
+        "startLine": 94,
+        "startChar": 39,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "1188fc90f7cdccd1b4917e54cf66854f3635cc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb26423_cc56f8bd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T11:08:34Z",
+      "side": 1,
+      "message": "Can this go on the previous line, like in line 121?",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "1188fc90f7cdccd1b4917e54cf66854f3635cc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
