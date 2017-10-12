@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3224d6_43bd3d2b",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_eula.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T00:06:20Z",
+      "side": 1,
+      "message": "This does seem much safer!  We\u0027re fetching the contents of URL and putting them in a data URL, and then loading the data URL into the \u003cwebview\u003e  That means we\u0027ll never try to load chrome://terms into the \u003cwebview\u003e, which eliminates some questions about how it will behave.\n\nCan you update the comment on this function to clarify this is intentional?",
+      "revId": "7f8e61a1c3dc530b70b3181d9ddf50cf02ec57ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
