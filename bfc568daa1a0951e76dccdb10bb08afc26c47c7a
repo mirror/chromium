@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9f6cb1_5caa8c5c",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T13:47:03Z",
+      "side": 1,
+      "message": "I think instead of mixing tracing and instrumentation here we should just switch the level-of-detail in the tests below to be BACKGROUND. I think that should remove the need to have tracing on.",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "bfc568daa1a0951e76dccdb10bb08afc26c47c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
