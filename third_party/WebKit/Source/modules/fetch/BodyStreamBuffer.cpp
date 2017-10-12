@@ -201,8 +201,26 @@ void BodyStreamBuffer::Tee(BodyStreamBuffer** branch1,
   BytesConsumer* dest2 = nullptr;
   BytesConsumer::Tee(ExecutionContext::From(script_state_.get()),
                      ReleaseHandle(), &dest1, &dest2);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kMemoryPressureGC);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kConservativeGC);
   *branch1 = new BodyStreamBuffer(script_state_.get(), dest1);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kMemoryPressureGC);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kConservativeGC);
   *branch2 = new BodyStreamBuffer(script_state_.get(), dest2);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kMemoryPressureGC);
+  ThreadState::Current()->CollectGarbage(
+      BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
+      BlinkGC::kConservativeGC);
 }
 
 ScriptPromise BodyStreamBuffer::pull(ScriptState* script_state) {

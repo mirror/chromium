@@ -448,6 +448,26 @@ promise_test(function(t) {
       .then(function(text) { assert_not_equals(text, ''); });
   }, 'Fetch a URL already in Blink cache');
 
+promise_test(function(t) {
+    return fetch('../resources/fetch-test-helpers.js')
+      .then(res => res.clone())
+      .then(res => res.clone())
+      .then(res => res.clone())
+      .then(function(res) { return res.text(); })
+      .then(function(text) { assert_not_equals(text, ''); });
+  }, 'e');
+
+promise_test(function(t) {
+    return fetch('../resources/progressive.php')
+      .then(res => res.clone())
+      .then(res => res.clone())
+      .then(res => res.clone())
+      .then(function(res) { return res.text(); })
+      .then(function(text) { assert_not_equals(text, ''); });
+  }, 'f');
+
+
+
 test(function(t) {
     function runInfiniteFetchLoop() {
       fetch('dummy.html')
