@@ -17,9 +17,9 @@ namespace predictors {
 
 namespace {
 
-const base::TimeDelta kMinDelayBetweenPreresolveRequests =
+constexpr base::TimeDelta kMinDelayBetweenPreresolveRequests =
     base::TimeDelta::FromSeconds(60);
-const base::TimeDelta kMinDelayBetweenPreconnectRequests =
+constexpr base::TimeDelta kMinDelayBetweenPreconnectRequests =
     base::TimeDelta::FromSeconds(10);
 
 }  // namespace
