@@ -31,6 +31,7 @@ source_set("app_shell_lib") {
   # //content/shell:content_shell_lib. See http://crbug.com/438283
   testonly = true
   deps = [
+    ":licenses",
     ":resources",
     ":version_header",
     "//apps",
@@ -240,6 +241,23 @@ source_set("app_shell_lib") {
       }
     }
   }
+}
+
+action("licenses") {
+  _license_path = "$target_gen_dir/LICENSE"
+
+  script = "//tools/licenses.py"
+  outputs = [
+    _license_path,
+  ]
+  args = [
+    "license_file",
+    rebase_path(_license_path, root_build_dir),
+    "--gn-target",
+    "//extensions/shell:app_shell",
+    "--gn-out-dir",
+    ".",
+  ]
 }
 
 if (is_mac) {
