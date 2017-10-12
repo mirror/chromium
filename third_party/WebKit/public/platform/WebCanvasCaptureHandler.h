@@ -7,6 +7,8 @@
 
 #include "WebCommon.h"
 
+#include "third_party/skia/include/core/SkRefCnt.h"
+
 class SkImage;
 
 namespace blink {
@@ -15,7 +17,7 @@ namespace blink {
 class BLINK_PLATFORM_EXPORT WebCanvasCaptureHandler {
  public:
   virtual ~WebCanvasCaptureHandler() = default;
-  virtual void SendNewFrame(const SkImage*) {}
+  virtual void SendNewFrame(sk_sp<SkImage>) {}
   virtual bool NeedsNewFrame() const { return false; }
 };
 
