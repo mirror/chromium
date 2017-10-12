@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f8c3a8a_739df17b",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-12T20:16:54Z",
+      "side": 1,
+      "message": "If \u003cWin8, we would already fail at CreateHardwareEncoderMFT() step since the APIs used for controlling bitrate are missing. I don\u0027t think this is necessary.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 62
+      },
+      "revId": "b2835de87d5776d3cdb1af993dfe3b4c7177e4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d74e111_ee467a1b",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-12T20:16:54Z",
+      "side": 1,
+      "message": "Have you tested out this change? I know that YV12 is the actual format that we are using, but I remember earlier Intel HW would have these two somehow switched. That\u0027s why it landed this way.",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 45
+      },
+      "revId": "b2835de87d5776d3cdb1af993dfe3b4c7177e4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
