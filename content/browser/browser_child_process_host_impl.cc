@@ -47,6 +47,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/service_manager/embedder/switches.h"
 
 #if defined(OS_MACOSX)

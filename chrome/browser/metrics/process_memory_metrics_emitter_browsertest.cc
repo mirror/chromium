@@ -232,7 +232,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
         // creating a new one.
         CheckUkmRendererSource(source_id, metric_count);
       } else if (ProcessHasTypeForSource(source_id, ProcessType::GPU)) {
-        // Not checked yet.
+        CheckUkmGPUSource(source_id, 1);
       } else {
         // This must be Total2.
         CheckMemoryMetricWithName(
@@ -270,10 +270,11 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
     CheckMemoryMetricWithName(source_id, UkmEntry::kPartitionAllocName, true,
                               metric_count);
     CheckMemoryMetricWithName(source_id, UkmEntry::kV8Name, true, metric_count);
-    CheckMemoryMetricWithName(source_id, UkmEntry::kUptimeName, true,
-                              metric_count);
     CheckMemoryMetricWithName(source_id, UkmEntry::kNumberOfExtensionsName,
                               true, metric_count);
+    // Check that process uptime is between 0 and 4000 seconds.
+    CheckMemoryMetricWithName(source_id, UkmEntry::kUptimeName, true,
+                              metric_count);
   }
 
   void CheckUkmBrowserSource(ukm::SourceId source_id,
@@ -286,6 +287,16 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
 #endif
     CheckMemoryMetricWithName(source_id, UkmEntry::kPrivateMemoryFootprintName,
                               false, metric_count);
+
+    // Check that process uptime is between 0 and 4000 seconds.
+    CheckMemoryMetricWithName(source_id, UkmEntry::kUptimeName, true,
+                              metric_count);
+  }
+
+  void CheckUkmGPUSource(ukm::SourceId source_id, size_t metric_count = 1u) {
+    // Check that process uptime is between 0 and 4000 seconds.
+    CheckMemoryMetricWithName(source_id, UkmEntry::kUptimeName, true,
+                              metric_count);
   }
 
   bool ProcessHasTypeForSource(ukm::SourceId source_id,
