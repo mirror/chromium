@@ -58,7 +58,10 @@ SynchronousCompositorHost::SynchronousCompositorHost(
       renderer_param_version_(0u),
       need_animate_scroll_(false),
       need_invalidate_count_(0u),
-      did_activate_pending_tree_count_(0u) {
+      did_activate_pending_tree_count_(0u),
+      viewport_size_(*(new gfx::Size())),
+      viewport_rect_for_tile_priority_(*(new gfx::Rect())),
+      transform_for_tile_priority_(*(new gfx::Transform())) {
   client_->DidInitializeCompositor(this, process_id_, routing_id_);
 }
 
@@ -116,6 +119,17 @@ SynchronousCompositor::Frame SynchronousCompositorHost::DemandDrawHw(
     const gfx::Size& viewport_size,
     const gfx::Rect& viewport_rect_for_tile_priority,
     const gfx::Transform& transform_for_tile_priority) {
+  viewport_size_ = viewport_size;
+  viewport_rect_for_tile_priority_ = viewport_rect_for_tile_priority;
+  transform_for_tile_priority_ = transform_for_tile_priority;
+
+  return std::move(frame_);
+
+  /*if (use_frame_) {
+    use_frame_ = false;
+    return std::move(frame_);
+  }
+
   SyncCompositorDemandDrawHwParams params(viewport_size,
                                           viewport_rect_for_tile_priority,
                                           transform_for_tile_priority);
@@ -142,7 +156,7 @@ SynchronousCompositor::Frame SynchronousCompositorHost::DemandDrawHw(
   frame.layer_tree_frame_sink_id = layer_tree_frame_sink_id;
   *frame.frame = std::move(*compositor_frame);
   UpdateFrameMetaData(frame.frame->metadata.Clone());
-  return frame;
+  return frame;*/
 }
 
 void SynchronousCompositorHost::UpdateFrameMetaData(
@@ -373,6 +387,37 @@ void SynchronousCompositorHost::DidOverscroll(
 
 void SynchronousCompositorHost::DidSendBeginFrame(
     ui::WindowAndroid* window_android) {
+  // BEGINNING what used to be DemandDrawHw
+  SyncCompositorDemandDrawHwParams params(viewport_size_,
+                                          viewport_rect_for_tile_priority_,
+                                          transform_for_tile_priority_);
+  uint32_t layer_tree_frame_sink_id;
+  base::Optional<viz::CompositorFrame> compositor_frame;
+  SyncCompositorCommonRendererParams common_renderer_params;
+
+  {
+    //base:: ThreadRestrictions:: ScopedAllowWait wait;
+    if (!sender_->Send(new SyncCompositorMsg_DemandDrawHw(
+            routing_id_, params, &common_renderer_params,
+            &layer_tree_frame_sink_id, &compositor_frame))) {
+      frame_ = SynchronousCompositor::Frame();
+    }
+  }
+
+  ProcessCommonParams(common_renderer_params);
+
+  if (!compositor_frame) {
+    frame_ = SynchronousCompositor::Frame();
+  } else {
+    SynchronousCompositor::Frame frame;
+    frame.frame.reset(new viz::CompositorFrame);
+    frame.layer_tree_frame_sink_id = layer_tree_frame_sink_id;
+    *frame.frame = std::move(*compositor_frame);
+    UpdateFrameMetaData(frame.frame->metadata.Clone());
+    frame_ = std::move(frame);
+  }
+  // END what used to be DemandDrawHw
+
   compute_scroll_needs_synchronous_draw_ = false;
   if (SynchronousCompositorBrowserFilter* filter = GetFilter())
     filter->SyncStateAfterVSync(window_android, this);
@@ -396,7 +441,7 @@ void SynchronousCompositorHost::ProcessCommonParams(
   need_animate_scroll_ = params.need_animate_scroll;
   root_scroll_offset_ = params.total_scroll_offset;
 
-  if (need_invalidate_count_ != params.need_invalidate_count) {
+  if (frame_.frame) {
     need_invalidate_count_ = params.need_invalidate_count;
     client_->PostInvalidate(this);
   }

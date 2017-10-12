@@ -114,6 +114,14 @@ class SynchronousCompositorHost : public SynchronousCompositor {
   uint32_t did_activate_pending_tree_count_;
 
   DISALLOW_COPY_AND_ASSIGN(SynchronousCompositorHost);
+
+  bool use_frame_ = false;
+  SynchronousCompositor::Frame frame_;
+
+  bool use_params_ = false;
+  gfx::Size& viewport_size_;
+  gfx::Rect& viewport_rect_for_tile_priority_;
+  gfx::Transform& transform_for_tile_priority_;
 };
 
 }  // namespace content

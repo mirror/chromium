@@ -236,7 +236,8 @@ bool BrowserViewRenderer::OnDrawHardware() {
 
   scoped_refptr<content::SynchronousCompositor::FrameFuture> future; // Async.
   content::SynchronousCompositor::Frame frame; // Sync.
-  bool async = !sync_on_draw_hardware_ && allow_async_draw_;
+  // bool async = !sync_on_draw_hardware_ && allow_async_draw_;
+  bool async = false;
   if (async) {
     future = compositor_->DemandDrawHwAsync(
         size_, viewport_rect_for_tile_priority, transform_for_tile_priority);
