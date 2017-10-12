@@ -58,4 +58,22 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
   }
 }
 
+void TextInputClientImpl::OnInputMethodChanged() {
+  text_input_client_->OnInputMethodChanged();
+}
+
+void TextInputClientImpl::EnsureCaretNotInRect(const gfx::Rect& rect) {
+  text_input_client_->EnsureCaretNotInRect(rect);
+}
+
+void TextInputClientImpl::GetTextRange(const gfx::Range& range) {
+  text_input_client_->GetTextRange(const_cast<gfx::Range*>(&range));
+}
+
+void TextInputClientImpl::HasCompositionText(
+    HasCompositionTextCallback callback) {
+  if (callback && !callback.is_null())
+    std::move(callback).Run(text_input_client_->HasCompositionText());
+}
+
 }  // namespace aura
