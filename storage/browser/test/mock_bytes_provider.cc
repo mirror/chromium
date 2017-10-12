@@ -4,11 +4,39 @@
 
 #include "storage/browser/test/mock_bytes_provider.h"
 
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "mojo/common/data_pipe_utils.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace storage {
+
+namespace {
+
+void BindBytesProvider(std::unique_ptr<MockBytesProvider> impl,
+                       mojom::BytesProviderRequest request) {
+  mojo::MakeStrongBinding(std::move(impl), std::move(request));
+}
+
+}  // namespace
+
+// static
+mojom::BytesProviderPtr MockBytesProvider::Create(std::vector<uint8_t> data) {
+  mojom::BytesProviderPtr result;
+  auto provider = base::MakeUnique<MockBytesProvider>(std::move(data));
+  base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::WithBaseSyncPrimitives()})
+      ->PostTask(FROM_HERE,
+                 base::BindOnce(&BindBytesProvider, std::move(provider),
+                                MakeRequest(&result)));
+  return result;
+}
+
+// static
+mojom::BytesProviderPtr MockBytesProvider::Create(const std::string& data) {
+  return Create(std::vector<uint8_t>(data.begin(), data.end()));
+}
 
 MockBytesProvider::MockBytesProvider(
     std::vector<uint8_t> data,
