@@ -16,6 +16,24 @@
       "revId": "3c31c2ac7f6fdc52d24e555437f030eef2db15d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac85ebe_8d35080f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/inline-breakpoint-with-sourcemap.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-12T18:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55975405_443db907",
+      "revId": "3c31c2ac7f6fdc52d24e555437f030eef2db15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
