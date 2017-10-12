@@ -55,9 +55,8 @@ class MachPortRelay : public base::PortProvider::Observer {
   // this intermediate port and the message is modified to refer to the name of
   // the intermediate port. The Mach port received over the intermediate port in
   // the child is referred to as the final Mach port.
-  // Returns |false| on failure and |message| may contain a mix of actual Mach
-  // ports and names.
-  bool SendPortsToProcess(Channel::Message* message,
+  // Ports that cannot be brokered are replaced with MACH_PORT_NULL.
+  void SendPortsToProcess(Channel::Message* message,
                           base::ProcessHandle process);
 
   // Extracts the Mach ports attached to |message| from |process|.

@@ -819,11 +819,7 @@ void NodeChannel::ProcessPendingMessagesWithMachPorts() {
   while (!pending_writes.empty()) {
     Channel::MessagePtr message = std::move(pending_writes.front());
     pending_writes.pop();
-    if (!relay->SendPortsToProcess(message.get(), remote_process_handle)) {
-      LOG(ERROR) << "Error on sending mach ports. Remote process is likely "
-                 << "gone. Dropping message.";
-      return;
-    }
+    relay->SendPortsToProcess(message.get(), remote_process_handle);
 
     base::AutoLock lock(channel_lock_);
     if (!channel_) {
@@ -899,11 +895,7 @@ void NodeChannel::WriteChannelMessage(Channel::MessagePtr message) {
         }
       }
 
-      if (!relay->SendPortsToProcess(message.get(), remote_process_handle)) {
-        LOG(ERROR) << "Error on sending mach ports. Remote process is likely "
-                   << "gone. Dropping message.";
-        return;
-      }
+      relay->SendPortsToProcess(message.get(), remote_process_handle);
     }
   }
 #endif
