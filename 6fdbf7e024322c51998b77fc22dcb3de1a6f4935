@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52d1b24_53844846",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-12T23:40:03Z",
+      "side": 1,
+      "message": "Let\u0027s rename instances like these to TetherComponent?",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "6fdbf7e024322c51998b77fc22dcb3de1a6f4935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d63d4dc_73df1b70",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-12T23:40:03Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 161,
+        "startChar": 38,
+        "endLine": 161,
+        "endChar": 47
+      },
+      "revId": "6fdbf7e024322c51998b77fc22dcb3de1a6f4935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6098d051_52473102",
+        "filename": "chromeos/components/tether/tether_component_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-12T23:40:03Z",
+      "side": 1,
+      "message": "Be sure to remove this TODO either in this CL or your subsequent one.",
+      "range": {
+        "startLine": 143,
+        "startChar": 20,
+        "endLine": 143,
+        "endChar": 28
+      },
+      "revId": "6fdbf7e024322c51998b77fc22dcb3de1a6f4935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
