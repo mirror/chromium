@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df1ce15_094e1754",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-12T12:36:21Z",
+      "side": 1,
+      "message": "Return?",
+      "revId": "253882df4e830866f29c6094d2be010107d442a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b01095f_6b7855e9",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-12T12:36:21Z",
+      "side": 1,
+      "message": "Explain why it doesn\u0027t make sense for navigation?\n(because the connection would follow shortly, right?)",
+      "revId": "253882df4e830866f29c6094d2be010107d442a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefa3f59_31f15f9e",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_tables.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-12T12:36:21Z",
+      "side": 1,
+      "message": "nit: if found in |data|.",
+      "revId": "253882df4e830866f29c6094d2be010107d442a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
