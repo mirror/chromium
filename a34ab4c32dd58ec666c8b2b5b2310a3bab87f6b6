@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19af972f_4b85394a",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-12T16:16:22Z",
+      "side": 1,
+      "message": "Will this task runner be used elsewhere? If not, pass it to ConnectHostFSM() instead and move it to pass here, and don\u0027t keep it as a member?",
+      "revId": "a34ab4c32dd58ec666c8b2b5b2310a3bab87f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbae35e6_8391c5c6",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-12T16:16:22Z",
+      "side": 1,
+      "message": "nit: if you make this SequencedTaskRunner you reduce the dependencies on thread affinity",
+      "revId": "a34ab4c32dd58ec666c8b2b5b2310a3bab87f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
