@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e1f4a7_2930e9ca",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-12T18:31:25Z",
+      "side": 1,
+      "message": "This method does not appear to be used outside of the test for it and is equivalent to SetDelegate(nullptr).",
+      "revId": "bf6d98801af59eab03464978c170d458caeb0349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7024b1a_3b912992",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-12T18:31:25Z",
+      "side": 1,
+      "message": "The style guide recommends grouping static functions separately from member functions.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "bf6d98801af59eab03464978c170d458caeb0349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
