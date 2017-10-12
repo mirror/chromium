@@ -9,11 +9,10 @@
 
 namespace content {
 
-BackgroundFetchRegistrationNotifier::BackgroundFetchRegistrationNotifier() =
-    default;
+BackgroundFetchRegistrationNotifier::BackgroundFetchRegistrationNotifier()
+    : weak_factory_(this) {}
 
-BackgroundFetchRegistrationNotifier::~BackgroundFetchRegistrationNotifier() =
-    default;
+BackgroundFetchRegistrationNotifier::~BackgroundFetchRegistrationNotifier() {}
 
 void BackgroundFetchRegistrationNotifier::AddObserver(
     const std::string& unique_id,

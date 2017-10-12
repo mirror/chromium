@@ -231,7 +231,7 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
       const BackgroundFetchRegistrationId& registration_id,
       const std::vector<ServiceWorkerFetchRequest>& requests,
       const BackgroundFetchOptions& options,
-      BackgroundFetchDataManager::CreateRegistrationCallback callback)
+      blink::mojom::BackgroundFetchService::FetchCallback callback)
       : DatabaseTask(data_manager),
         registration_id_(registration_id),
         requests_(requests),
@@ -261,12 +261,14 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
         // registration with the same |developer_id|. It must be deactivated
         // (completed/failed/aborted) first.
         std::move(callback_).Run(
-            blink::mojom::BackgroundFetchError::DUPLICATED_DEVELOPER_ID);
+            blink::mojom::BackgroundFetchError::DUPLICATED_DEVELOPER_ID,
+            base::nullopt /* registration */);
         Finished();  // Destroys |this|.
         return;
       case DatabaseStatus::kFailed:
         std::move(callback_).Run(
-            blink::mojom::BackgroundFetchError::STORAGE_ERROR);
+            blink::mojom::BackgroundFetchError::STORAGE_ERROR,
+            base::nullopt /* registration */);
         Finished();  // Destroys |this|.
         return;
     }
@@ -279,8 +281,12 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
     std::vector<std::pair<std::string, std::string>> entries;
     entries.reserve(requests_.size() * 2 + 1);
 
+    for (const ServiceWorkerFetchRequest& fetch_request : requests_)
+      upload_total_ += fetch_request.blob_size;
+
     // First serialize per-registration (as opposed to per-request) data.
-    // TODO(crbug.com/757760): Serialize BackgroundFetchOptions as part of this.
+    // TODO(crbug.com/757760): Serialize BackgroundFetchOptions and
+    // |upload_total_| as part of this.
     proto::BackgroundFetchRegistration registration_proto;
     registration_proto.set_creation_microseconds_since_unix_epoch(
         registration_creation_microseconds_since_unix_epoch);
@@ -288,7 +294,8 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
     if (!registration_proto.SerializeToString(&serialized_registration_proto)) {
       // TODO(johnme): Log failures to UMA.
       std::move(callback_).Run(
-          blink::mojom::BackgroundFetchError::STORAGE_ERROR);
+          blink::mojom::BackgroundFetchError::STORAGE_ERROR,
+          base::nullopt /* registration */);
       Finished();  // Destroys |this|.
       return;
     }
@@ -319,22 +326,36 @@ class CreateRegistrationTask : public BackgroundFetchDataManager::DatabaseTask {
   void DidStoreRegistration(ServiceWorkerStatusCode status) {
     switch (ToDatabaseStatus(status)) {
       case DatabaseStatus::kOk:
-        std::move(callback_).Run(blink::mojom::BackgroundFetchError::NONE);
-        Finished();  // Destroys |this|.
-        return;
+        break;
       case DatabaseStatus::kFailed:
       case DatabaseStatus::kNotFound:
         std::move(callback_).Run(
-            blink::mojom::BackgroundFetchError::STORAGE_ERROR);
+            blink::mojom::BackgroundFetchError::STORAGE_ERROR,
+            base::nullopt /* registration */);
         Finished();  // Destroys |this|.
         return;
     }
+
+    BackgroundFetchRegistration registration;
+    registration.developer_id = registration_id_.developer_id();
+    registration.unique_id = registration_id_.unique_id();
+    registration.icons = options_.icons;
+    registration.title = options_.title;
+    registration.upload_total = upload_total_;
+    registration.uploaded = 0;
+    registration.download_total = options_.download_total;
+    registration.downloaded = 0;
+
+    std::move(callback_).Run(blink::mojom::BackgroundFetchError::NONE,
+                             std::move(registration));
+    Finished();  // Destroys |this|.
   }
 
   BackgroundFetchRegistrationId registration_id_;
   std::vector<ServiceWorkerFetchRequest> requests_;
   BackgroundFetchOptions options_;
-  BackgroundFetchDataManager::CreateRegistrationCallback callback_;
+  uint64_t upload_total_ = 0;
+  blink::mojom::BackgroundFetchService::FetchCallback callback_;
 
   base::WeakPtrFactory<CreateRegistrationTask> weak_factory_;  // Keep as last.
 
@@ -428,10 +449,10 @@ class BackgroundFetchDataManager::RegistrationData {
 
     // Convert the given |requests| to BackgroundFetchRequestInfo objects.
     for (const ServiceWorkerFetchRequest& fetch_request : requests) {
-      scoped_refptr<BackgroundFetchRequestInfo> request =
-          new BackgroundFetchRequestInfo(request_index++, fetch_request);
+      pending_requests_.push(base::MakeRefCounted<BackgroundFetchRequestInfo>(
+          request_index++, fetch_request));
 
-      pending_requests_.push(std::move(request));
+      upload_total_ += fetch_request.blob_size;
     }
   }
 
@@ -466,6 +487,11 @@ class BackgroundFetchDataManager::RegistrationData {
 
     // The |request| must have been consumed from this RegistrationData.
     DCHECK(iter != active_requests_.end());
+
+    // This shouldn't double-count when retries happen, since requests with
+    // non-empty bodies cannot be retried (unless
+    // https://github.com/WICG/background-fetch/issues/58 is implemented).
+    uploaded_ += request->fetch_request().blob_size;
   }
 
   // Marks the |request| as having completed. Verifies that the |request| is
@@ -483,6 +509,8 @@ class BackgroundFetchDataManager::RegistrationData {
     completed_requests_.push_back(*iter);
     active_requests_.erase(iter);
 
+    downloaded_by_complete_requests_ += request->GetFileSize();
+
     bool has_pending_or_active_requests =
         !pending_requests_.empty() || !active_requests_.empty();
     return has_pending_or_active_requests;
@@ -498,8 +526,18 @@ class BackgroundFetchDataManager::RegistrationData {
 
   const BackgroundFetchOptions& options() const { return options_; }
 
+  uint64_t Downloaded(Controller* controller) {
+    return downloaded_by_complete_requests_ +
+           (controller ? controller->GetInProgressDownloadedBytes() : 0);
+  }
+  uint64_t upload_total() const { return upload_total_; }
+  uint64_t uploaded() const { return uploaded_; }
+
  private:
   BackgroundFetchOptions options_;
+  uint64_t downloaded_by_complete_requests_ = 0;
+  uint64_t upload_total_ = 0;
+  uint64_t uploaded_ = 0;
 
   base::queue<scoped_refptr<BackgroundFetchRequestInfo>> pending_requests_;
   std::vector<scoped_refptr<BackgroundFetchRequestInfo>> active_requests_;
@@ -533,15 +571,15 @@ BackgroundFetchDataManager::~BackgroundFetchDataManager() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
-void BackgroundFetchDataManager::SetListener(
+void BackgroundFetchDataManager::SetController(
     const BackgroundFetchRegistrationId& registration_id,
-    RegistrationListener* listener) {
-  if (listener) {
-    DCHECK_EQ(0u, listeners_.count(registration_id.unique_id()));
-    listeners_.emplace(registration_id.unique_id(), listener);
+    Controller* controller) {
+  if (controller) {
+    DCHECK_EQ(0u, controllers_.count(registration_id.unique_id()));
+    controllers_.emplace(registration_id.unique_id(), controller);
   } else {
-    DCHECK_EQ(1u, listeners_.count(registration_id.unique_id()));
-    listeners_.erase(registration_id.unique_id());
+    DCHECK_EQ(1u, controllers_.count(registration_id.unique_id()));
+    controllers_.erase(registration_id.unique_id());
   }
 }
 
@@ -549,7 +587,7 @@ void BackgroundFetchDataManager::CreateRegistration(
     const BackgroundFetchRegistrationId& registration_id,
     const std::vector<ServiceWorkerFetchRequest>& requests,
     const BackgroundFetchOptions& options,
-    CreateRegistrationCallback callback) {
+    blink::mojom::BackgroundFetchService::FetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -568,7 +606,8 @@ void BackgroundFetchDataManager::CreateRegistration(
 
   if (active_unique_ids_.count(developer_id_tuple)) {
     std::move(callback).Run(
-        blink::mojom::BackgroundFetchError::DUPLICATED_DEVELOPER_ID);
+        blink::mojom::BackgroundFetchError::DUPLICATED_DEVELOPER_ID,
+        base::nullopt);
     return;
   }
 
@@ -581,8 +620,14 @@ void BackgroundFetchDataManager::CreateRegistration(
   registrations_.emplace(registration_id.unique_id(),
                          std::make_unique<RegistrationData>(requests, options));
 
-  // Inform the |callback| of the newly created registration.
-  std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE);
+  // Re-use GetRegistration to compile the BackgroundFetchRegistration object.
+  // WARNING: GetRegistration doesn't use the |unique_id| when looking up the
+  // registration data. That's fine here, since we are calling it synchronously
+  // immediately after writing the |unique_id| to |active_unique_ids_|. But if
+  // GetRegistation becomes async, it will no longer be safe to do this.
+  GetRegistration(registration_id.service_worker_registration_id(),
+                  registration_id.origin(), registration_id.developer_id(),
+                  std::move(callback));
 }
 
 void BackgroundFetchDataManager::GetRegistration(
@@ -605,16 +650,24 @@ void BackgroundFetchDataManager::GetRegistration(
   const std::string& unique_id = iter->second;
 
   DCHECK_EQ(1u, registrations_.count(unique_id));
-  const BackgroundFetchOptions& options = registrations_[unique_id]->options();
+  RegistrationData* data = registrations_[unique_id].get();
 
-  // Compile the BackgroundFetchRegistration object that will be given to the
-  // developer, representing the data associated with the |controller|.
+  auto controllers_iter = controllers_.find(unique_id);
+  Controller* controller = controllers_iter != controllers_.end()
+                               ? controllers_iter->second
+                               : nullptr;
+
+  // Compile the BackgroundFetchRegistration object for the developer.
   BackgroundFetchRegistration registration;
   registration.developer_id = developer_id;
   registration.unique_id = unique_id;
-  registration.icons = options.icons;
-  registration.title = options.title;
-  registration.download_total = options.download_total;
+  registration.icons = data->options().icons;
+  registration.title = data->options().title;
+
+  registration.upload_total = data->upload_total();
+  registration.uploaded = data->uploaded();
+  registration.download_total = data->options().download_total;
+  registration.downloaded = data->Downloaded(controller);
 
   std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE,
                           registration);
@@ -636,9 +689,9 @@ void BackgroundFetchDataManager::UpdateRegistrationUI(
   registrations_iter->second->SetTitle(title);
 
   // Update any active JobController that cached this data for notifications.
-  auto listeners_iter = listeners_.find(unique_id);
-  if (listeners_iter != listeners_.end())
-    listeners_iter->second->UpdateUI(title);
+  auto controllers_iter = controllers_.find(unique_id);
+  if (controllers_iter != controllers_.end())
+    controllers_iter->second->UpdateUI(title);
 
   std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE);
 }

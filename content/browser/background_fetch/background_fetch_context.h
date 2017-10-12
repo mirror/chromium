@@ -78,14 +78,16 @@ class CONTENT_EXPORT BackgroundFetchContext
   // Creates a new Job Controller for the given |registration_id| and |options|,
   // which will start fetching the files that are part of the registration.
   void CreateController(const BackgroundFetchRegistrationId& registration_id,
-                        const BackgroundFetchOptions& options);
+                        const BackgroundFetchOptions& options,
+                        const BackgroundFetchRegistration& registration);
 
   // Called when a new registration has been created by the data manager.
   void DidCreateRegistration(
       const BackgroundFetchRegistrationId& registration_id,
       const BackgroundFetchOptions& options,
       blink::mojom::BackgroundFetchService::FetchCallback callback,
-      blink::mojom::BackgroundFetchError error);
+      blink::mojom::BackgroundFetchError error,
+      const base::Optional<BackgroundFetchRegistration>& registration);
 
   // Called when the given |controller| has finished processing its job.
   void DidCompleteJob(BackgroundFetchJobController* controller);
