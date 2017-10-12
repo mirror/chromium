@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea441ebd_9c12fa62",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-12T18:11:56Z",
+      "side": 1,
+      "message": "Interstitial pages are the only case where this would happen.\n\nMaking video work in an interstitial page is only important if we need it to. I don\u0027t think we do (maybe you could cause this to happen via devtools, if you can figure out a way to inspect the interstitial page ...). Checking for null is fine here, it prevents a browser crash in that case.",
+      "parentUuid": "1fbcb0a3_2f40cb0b",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1f8ff11_5286b182",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "I\u0027m a bit skeptical of this, since if I send a ptr to a deleted WebContents to ::FromWebContents, I\u0027m pretty sure it\u0027s going to deref it: https://cs.chromium.org/chromium/src/content/public/browser/web_contents_user_data.h?type\u003dcs\u0026q\u003dFromWebContents\u0026l\u003d45",
       "parentUuid": "07327bf6_6c0b6a6b",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f50de2_9115e68c",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-12T18:11:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow the scenario here, but if you have a pointer to a deleted WebContents, you\u0027ve already lost.\n\nwouldn\u0027t you just null out the web_contents pointer in OnWebContentsDestroyed?",
+      "parentUuid": "f717d20c_da469f55",
       "range": {
         "startLine": 58,
         "startChar": 2,
