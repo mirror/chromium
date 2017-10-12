@@ -4,6 +4,8 @@
 
 package org.chromium.components.feature_engagement.internal;
 
+import android.os.Build;
+
 import org.chromium.base.Callback;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -38,6 +40,12 @@ public class TrackerImpl implements Tracker {
 
     @Override
     public boolean shouldTriggerHelpUI(String feature) {
+        // Disable IPH for android N until crbug/765038 is resolved.
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N
+                || Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
+            return false;
+        }
+
         assert mNativePtr != 0;
         return nativeShouldTriggerHelpUI(mNativePtr, feature);
     }
