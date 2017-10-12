@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb96eccb_df512a14",
+        "filename": "content/gpu/gpu_child_thread.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "I would rather land this first, so moving this to components/viz/ can happen in parallel to the other viz work that depends on this CL.",
+      "parentUuid": "e2057bc3_7ce6a5a9",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22965595_789ed819",
         "filename": "services/ui/gpu/gpu_main.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T19:14:48Z",
       "side": 1,
       "message": "Side note as I\u0027m going through this code, why isn\u0027t the compositor thread a default message loop on all platforms? The GPU thread is the one that talks to X11, I\u0027m not sure having 2 threads that do makes sense (and this won\u0027t work with the sandbox).",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4163f2d_57e3fc8e",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "Good point. I have put up https://chromium-review.googlesource.com/c/chromium/src/+/714244 to use the default message-loop on all platforms.",
+      "parentUuid": "22965595_789ed819",
       "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f069f85b_2be6ccad",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "I have changed this so io_thread_/compositor_thread_ are created after initialising GpuInit.",
+      "parentUuid": "849f9e56_ccfe101e",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d27650_4befad2c",
         "filename": "services/ui/gpu/gpu_main.cc",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T19:17:26Z",
       "side": 1,
       "message": "Why can\u0027t we use the delegate with mus?",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdb328e_d9a25b3e",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "We can have a delegate with mus, but it won\u0027t do anything right now (you will see the impl in GpuChildThread is very content-y).",
+      "parentUuid": "18d27650_4befad2c",
       "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0dded883_851be2c7",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "This can be a DCHECK, sure.",
+      "parentUuid": "9ec9e147_322b3412",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e1e49cd_237e50f4",
         "filename": "services/ui/gpu/gpu_main.h",
         "patchSetId": 14
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "68c2617c_aa791a6c",
+        "filename": "services/ui/gpu/gpu_main.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1e49cd_237e50f4",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e147dccb_b863d630",
         "filename": "services/ui/gpu/gpu_main.h",
         "patchSetId": 14
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-11T19:17:26Z",
       "side": 1,
       "message": "Why does GpuInit work so different in content vs mus?",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48023f5_32bd6d53",
+        "filename": "services/ui/gpu/gpu_main.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "The order of initialisation in content is pretty different from how it is in mus (e.g. when/how we enter the sandbox, when the IO thread is created, etc.), especially so until crbug.com/611505 is done.",
+      "parentUuid": "e147dccb_b863d630",
       "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d2779de5_16ac9dc3",
+        "filename": "services/ui/gpu/gpu_main.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "chrome:gpu shows the log messages generated in the gpu process. Once gpu initialization is complete, these log messages are sent from GpuServiceImpl. However, before the initialization of GpuServiceImpl is complete, we need to store these log messages, so that we can send them once set up is complete (see use of [2]). These are those logs.\n\n[1] https://cs.chromium.org/chromium/src/components/viz/service/gl/gpu_service_impl.cc?l\u003d170\n[2] https://cs.chromium.org/chromium/src/content/gpu/gpu_main.cc?l\u003d109",
+      "parentUuid": "a0b038b9_ff0672be",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e864ba0d_942c3cbc",
         "filename": "services/ui/gpu/gpu_main.h",
         "patchSetId": 14
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-11T19:17:26Z",
       "side": 1,
       "message": "Oh no more of this pattern :(",
+      "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc05e5f_406cd5fa",
+        "filename": "services/ui/gpu/gpu_main.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T03:24:04Z",
+      "side": 1,
+      "message": "Yeah, It may be useful to find a cleaner pattern for code like this.",
+      "parentUuid": "e864ba0d_942c3cbc",
       "revId": "ad9fe35dea788e8b17c754eb80872b2e4a0d5cd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
