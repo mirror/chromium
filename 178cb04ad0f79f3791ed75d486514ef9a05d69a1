@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f309466f_027e3ab6",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-12T21:52:05Z",
+      "side": 1,
+      "message": "No TODO needed. This code will be removed with the deprecation of PVer3.",
+      "parentUuid": "98ced1dd_84b467e5",
+      "revId": "178cb04ad0f79f3791ed75d486514ef9a05d69a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e349bd6_ea804734",
         "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "178cb04ad0f79f3791ed75d486514ef9a05d69a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2e3dcb_ba8048e4",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-12T21:52:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e349bd6_ea804734",
+      "revId": "178cb04ad0f79f3791ed75d486514ef9a05d69a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
