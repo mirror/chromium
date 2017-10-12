@@ -101,8 +101,7 @@ public class MediaNotificationManagerNotificationTest extends MediaNotificationM
         Notification notification = updateNotificationBuilderAndBuild(info);
 
         if (hasNApis()) {
-            assertTrue(largeIcon.sameAs(iconToBitmap(
-                    notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON))));
+            assertTrue(largeIcon.sameAs(iconToBitmap(notification.getLargeIcon())));
         }
     }
 
@@ -114,7 +113,7 @@ public class MediaNotificationManagerNotificationTest extends MediaNotificationM
         Notification notification = updateNotificationBuilderAndBuild(info);
 
         if (hasNApis()) {
-            assertNull(notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+            assertNull(notification.getLargeIcon());
         }
         assertNull(getManager().mDefaultNotificationLargeIcon);
     }
@@ -131,8 +130,8 @@ public class MediaNotificationManagerNotificationTest extends MediaNotificationM
 
         assertNotNull(getManager().mDefaultNotificationLargeIcon);
         if (hasNApis()) {
-            assertTrue(getManager().mDefaultNotificationLargeIcon.sameAs(iconToBitmap(
-                    notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON))));
+            assertTrue(getManager().mDefaultNotificationLargeIcon.sameAs(
+                    iconToBitmap(notification.getLargeIcon())));
         }
     }
 
@@ -145,7 +144,7 @@ public class MediaNotificationManagerNotificationTest extends MediaNotificationM
         Notification notification = updateNotificationBuilderAndBuild(info);
 
         if (hasNApis()) {
-            assertNull(notification.extras.getParcelable(Notification.EXTRA_LARGE_ICON));
+            assertNull(notification.getLargeIcon());
         }
     }
 

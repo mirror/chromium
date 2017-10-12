@@ -53,7 +53,7 @@ chromium/third_party/objenesis version:2.4
 chromium/third_party/ow2_asm version:5.0.1
 
 @Subdir third_party/robolectric
-chromium/third_party/robolectric version:3.2
+chromium/third_party/robolectric version:3.4.2
 
 @Subdir third_party/sqlite4java
 chromium/third_party/sqlite4java version:0.282
