@@ -35,7 +35,7 @@ BluetoothLowEnergyCharacteristicsFinder::
       success_callback_(success_callback),
       error_callback_(error_callback) {
   if (!adapter_) {
-    error_callback_.Run(to_peripheral_char_, from_peripheral_char_);
+    CallErrorCallback(to_peripheral_char_, from_peripheral_char_);
     return;
   }
 
@@ -77,7 +77,22 @@ void BluetoothLowEnergyCharacteristicsFinder::GattDiscoveryCompleteForService(
   if (!to_peripheral_char_.id.empty() && !from_peripheral_char_.id.empty())
     return;
 
-  error_callback_.Run(to_peripheral_char_, from_peripheral_char_);
+  CallErrorCallback(to_peripheral_char_, from_peripheral_char_);
+}
+
+void BluetoothLowEnergyCharacteristicsFinder::GattServicesDiscovered(
+    BluetoothAdapter* adapter,
+    BluetoothDevice* device) {
+  // Ignore events about other devices.
+  if (device != bluetooth_device_)
+    return;
+
+  if (!to_peripheral_char_.id.empty() && !from_peripheral_char_.id.empty())
+    return;
+
+  // If all GATT services have been discovered and we haven't found the
+  // characteristics we are looking for, call the error callback.
+  CallErrorCallback(to_peripheral_char_, from_peripheral_char_);
 }
 
 void BluetoothLowEnergyCharacteristicsFinder::ScanRemoteCharacteristics(
@@ -129,6 +144,16 @@ void BluetoothLowEnergyCharacteristicsFinder::UpdateCharacteristicsStatus(
   BluetoothRemoteGattService* service = characteristic->GetService();
   if (service)
     remote_service_.id = service->GetIdentifier();
+}
+
+// Calls the error callback, making sure it's not called more than once.
+void BluetoothLowEnergyCharacteristicsFinder::CallErrorCallback(
+    const RemoteAttribute& to_peripheral_char,
+    const RemoteAttribute& from_peripheral_char) {
+  if (!is_error_callback_called_) {
+    error_callback_.Run(to_peripheral_char, from_peripheral_char);
+    is_error_callback_called_ = true;
+  }
 }
 
 }  // namespace cryptauth
