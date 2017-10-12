@@ -16,6 +16,24 @@
       "revId": "04037ff7eb66e985a40240353f09cff8029373ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe991110_6486076e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-12T10:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7df8b2e2_38ddb89e",
+      "revId": "04037ff7eb66e985a40240353f09cff8029373ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
