@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a5c4cd0_66442b54",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27add588_9cfc8a4c",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d2657cd_d3ed4944",
         "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e442a5c7_283f0634",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d2657cd_d3ed4944",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0be2ee81_c10fe2b0",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSS.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0613462_91762fb6",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60ba1783_8ab4e84b",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
         "patchSetId": 6
@@ -91,6 +163,54 @@
       "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3086c3_57edbddd",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ba1783_8ab4e84b",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b95778a2_7d6c1255",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60ba1783_8ab4e84b",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "eb52053a_07274e34",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbde512_cf2d5e9b",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 51
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1067f4f3_9bf976d0",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
         "patchSetId": 6
@@ -128,6 +272,30 @@
       "writtenOn": "2017-10-11T18:09:51Z",
       "side": 1,
       "message": "Do you really need this array? I guess you can use \"std::numeric_limits\" to get max value for \"blink::CSSParserMode\" enum, and then select the mode by % max_enum_value.",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec04e6d_79f79764",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this functionality and I wasn\u0027t able to find good examples online. I\u0027ll look into this more if I actually commit this file.",
+      "parentUuid": "1067f4f3_9bf976d0",
       "range": {
         "startLine": 31,
         "startChar": 30,
@@ -163,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "f3fb5928_57d676bd",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "You\u0027re correct that I messed up here and that hashing would probably be preferable. However, I already have a corpus and I\u0027m not sure if I will commit this file so I\u0027ll leave it for now but I will change it if it actually gets committed.",
+      "parentUuid": "4e6170f4_3be0f006",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7664f166_c5c4d1ea",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
         "patchSetId": 6
@@ -186,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "33f697b8_87e8c3aa",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7664f166_c5c4d1ea",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8252b210_2a7b11f5",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
         "patchSetId": 6
@@ -206,6 +422,30 @@
       "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1ab2d0_d2622387",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserProtoFuzzer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8252b210_2a7b11f5",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "be621bfed3659e941e8a59070beb5809b669efb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
