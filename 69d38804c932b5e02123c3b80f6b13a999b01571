@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d346a704_846ab504",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:49:06Z",
+      "side": 1,
+      "message": "nit: no need for import_archives_task; just create the task inside the AddTask call. That is also more robust when things are copy/pasted (as past experience shows).",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 55
+      },
+      "revId": "69d38804c932b5e02123c3b80f6b13a999b01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65289bc5_cc78045d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:49:06Z",
+      "side": 1,
+      "message": "nit: a comment is needed here to explain why it is safe to run this even if we\u0027re not in our background task and are unsure of current connectivity type (NOW requirements).",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 57
+      },
+      "revId": "69d38804c932b5e02123c3b80f6b13a999b01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399cb5b0_fdc0e91e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:49:06Z",
+      "side": 1,
+      "message": "nit: unmetered WiFi",
+      "range": {
+        "startLine": 176,
+        "startChar": 26,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "69d38804c932b5e02123c3b80f6b13a999b01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4057e594_5bdfe575",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:49:06Z",
+      "side": 1,
+      "message": "nit: add comment on why these two tasks queued here.",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 70
+      },
+      "revId": "69d38804c932b5e02123c3b80f6b13a999b01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534c9306_2e646809",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:49:06Z",
+      "side": 1,
+      "message": "nit: we should also add a test to confirm that an entry in the DOWNLOADED state is properly processed when the appropriate external events are handled.",
+      "revId": "69d38804c932b5e02123c3b80f6b13a999b01571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
