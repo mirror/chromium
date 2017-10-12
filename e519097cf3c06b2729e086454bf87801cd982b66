@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f81b9c3b_ad1e3617",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-12T22:35:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t receiving longtask here be a failure i.e. not expected to happen OR are you getting a longtask from the test framework ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 45,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "e519097cf3c06b2729e086454bf87801cd982b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8738a4c7_3f5dc469",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
         "patchSetId": 9
