@@ -227,29 +227,32 @@ function hasReceiverWithTrack(trackId) {
   returnToTest('ok-receiver-with-track-not-found');
 }
 
+// TODO(hbos): Make this a web platform test instead. https://crbug.com/773472
 function createReceiverWithSetRemoteDescription() {
   var pc = new RTCPeerConnection();
   var receivers = null;
-  pc.setRemoteDescription(createOffer("stream", "track1")).then(() => {
-      receivers = pc.getReceivers();
-      if (receivers.length != 1)
-        throw failTest('getReceivers() should return 1 receiver: ' +
-                       receivers.length)
-      if (!receivers[0].track)
-        throw failTest('getReceivers()[0].track should have a value')
-      returnToTest('ok');
-    });
+  pc.setRemoteDescription(createOffer([ssrc(1, 'stream', 'track1')]))
+      .then(() => {
+        receivers = pc.getReceivers();
+        if (receivers.length != 1)
+          throw failTest('getReceivers() should return 1 receiver: ' +
+                         receivers.length)
+        if (!receivers[0].track)
+          throw failTest('getReceivers()[0].track should have a value')
+        returnToTest('ok');
+      });
   receivers = pc.getReceivers();
   if (receivers.length != 0)
     throw failTest('getReceivers() should return 0 receivers: ' +
                    receivers.length)
 }
 
+// TODO(hbos): Make this a web platform test instead. https://crbug.com/773472
 function switchRemoteStreamAndBackAgain() {
   let pc1 = new RTCPeerConnection();
   let firstStream0 = null;
   let firstTrack0 = null;
-  pc1.setRemoteDescription(createOffer('stream0', 'track0'))
+  pc1.setRemoteDescription(createOffer([ssrc(1, 'stream0', 'track0')]))
     .then(() => {
       firstStream0 = pc1.getRemoteStreams()[0];
       firstTrack0 = firstStream0.getTracks()[0];
@@ -257,9 +260,11 @@ function switchRemoteStreamAndBackAgain() {
         throw failTest('Unexpected firstStream0.id');
       if (firstTrack0.id != 'track0')
         throw failTest('Unexpected firstTrack0.id');
-      return pc1.setRemoteDescription(createOffer('stream1', 'track1'));
+      return pc1.setRemoteDescription(
+          createOffer([ssrc(1, 'stream1', 'track1')]));
     }).then(() => {
-      return pc1.setRemoteDescription(createOffer('stream0', 'track0'));
+      return pc1.setRemoteDescription(
+          createOffer([ssrc(2, 'stream0', 'track0')]));
     }).then(() => {
       let secondStream0 = pc1.getRemoteStreams()[0];
       let secondTrack0 = secondStream0.getTracks()[0];
@@ -275,6 +280,7 @@ function switchRemoteStreamAndBackAgain() {
     });
 }
 
+// TODO(hbos): Make this a web platform test instead. https://crbug.com/773472
 function switchRemoteStreamWithoutWaitingForPromisesToResolve() {
   let pc = new RTCPeerConnection();
   let trackEventsFired = 0;
@@ -331,13 +337,80 @@ function switchRemoteStreamWithoutWaitingForPromisesToResolve() {
         throw failTest('Unexpected track id in second stream event.');
     }
   };
-  pc.setRemoteDescription(createOffer('stream0', 'track0'));
-  pc.setRemoteDescription(createOffer('stream1', 'track1'));
+  pc.setRemoteDescription(createOffer([ssrc(1, 'stream0', 'track0')]));
+  pc.setRemoteDescription(createOffer([ssrc(1, 'stream1', 'track1')]));
 }
 
-// TODO(hbos): Also try switching back again for the case where IDs do match
-// but the objects are in fact different. Verify that they are different objects
-// like in the |switchRemoteStreamAndBackAgain| test.
+// TODO(hbos): Make this a web platform test instead. https://crbug.com/773472
+function trackSwitchingStream() {
+  let pc = new RTCPeerConnection();
+  let track1 = null;
+  let stream1 = null;
+  let stream2 = null;
+  pc.ontrack = (e) => {
+    track1 = e.track;
+    stream1 = e.streams[0];
+    if (stream1.getTracks()[0] != track1)
+      throw failTest('stream1 does not contain track1.');
+    pc.ontrack = (e) => {
+      let originalTrack1 = track1;
+      track1 = e.track;
+      stream2 = e.streams[0];
+      // TODO(hbos): A new track should not be created, track1 should simply
+      // move. Fix this and update assertion. https://crbug.com/webrtc/8377
+      if (track1 == originalTrack1)
+        throw failTest('A new track was not created.');
+      // TODO(hbos): stream1 should now be empty and track1 muted. Fix this and
+      // update assertions. https://crbug.com/773523
+      if (stream1.getTracks()[0] != originalTrack1)
+        throw failTest('stream1 does not still contain the original track1.');
+      if (track1.muted)
+        throw failTest('The original track1 has been muted.');
+      if (stream2.getTracks()[0] != track1)
+        throw failTest('stream2 does not contain track1.');
+      returnToTest('ok');
+    };
+    // This should update the associated set of streams for the existing
+    // receiver for ssrc:1 / track1.
+    pc.setRemoteDescription(createOffer([ssrc(1, 'stream2', 'track1')]));
+  };
+  pc.setRemoteDescription(createOffer([ssrc(1, 'stream1', 'track1')]));
+}
+
+// TODO(hbos): Make this a web platform test instead. https://crbug.com/773472
+function trackAddedToSecondStream() {
+  let pc = new RTCPeerConnection();
+  let track1 = null;
+  let track2 = null;
+  let stream1 = null;
+  let stream2 = null;
+  pc.ontrack = (e) => {
+    track1 = e.track;
+    stream1 = e.streams[0];
+    if (stream1.getTracks()[0] != track1)
+      throw failTest('stream1 does not contain track1.');
+    pc.ontrack = (e) => {
+      let originalTrack1 = track1;
+      track1 = e.track;
+      stream2 = e.streams[0];
+      // TODO(hbos): A new track should not be created, track1 should be added
+      // to both streams. Fix this and update assertion.
+      // https://crbug.com/webrtc/8377
+      if (track1 == originalTrack1)
+        throw failTest('A new track was not created.');
+      if (stream2.getTracks()[0] != track1)
+        throw failTest('stream2 does not contain track1.');
+      returnToTest('ok');
+    };
+    pc.setRemoteDescription(createOffer([
+        ssrc(1, 'stream1', 'track1'), ssrc(1, 'stream2', 'track1')
+    ]));
+  };
+  pc.setRemoteDescription(createOffer([ssrc(1, 'stream1', 'track1')]));
+}
+
+// TODO(hbos): Add a test that verifies a track that is added to two streams can
+// be removed from just one of them. https://crbug.com/webrtc/8377
 
 /**
  * Invokes the GC and returns "ok-gc".
@@ -349,23 +422,36 @@ function collectGarbage() {
 
 // Internals.
 
-function createOffer(streamId, trackId) {
+function ssrc(ssrc, stream, track) {
   return {
-    type: "offer",
-    sdp: "v=0\n" +
-      "o=- 0 1 IN IP4 0.0.0.0\n" +
-      "s=-\n" +
-      "t=0 0\n" +
-      "a=ice-ufrag:0000\n" +
-      "a=ice-pwd:0000000000000000000000\n" +
-      "a=fingerprint:sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:" +
-      "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00\n" +
-      "m=audio 9 UDP/TLS/RTP/SAVPF 0\n" +
-      "c=IN IP4 0.0.0.0\n" +
-      "a=sendonly\n" +
-      "a=rtcp-mux\n" +
-      "a=ssrc:1 cname:0\n" +
-      "a=ssrc:1 msid:" + streamId + " " + trackId + "\n"
+    ssrc: ssrc,
+    stream: stream,
+    track: track
+  };
+}
+
+function createOffer(ssrcs) {
+  let ssrcLines = '';
+  for (let i = 0; i < ssrcs.length; ++i) {
+    ssrcLines += 'a=ssrc:' + ssrcs[i].ssrc + ' cname:' + ssrcs[i].ssrc + '\n' +
+                 'a=ssrc:' + ssrcs[i].ssrc + ' msid:' + ssrcs[i].stream + ' ' +
+                 ssrcs[i].track + '\n';
+  }
+  return {
+    type: 'offer',
+    sdp: 'v=0\n' +
+         'o=- 0 1 IN IP4 0.0.0.0\n' +
+         's=-\n' +
+         't=0 0\n' +
+         'a=ice-ufrag:0000\n' +
+         'a=ice-pwd:0000000000000000000000\n' +
+         'a=fingerprint:sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:' +
+         '00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00\n' +
+         'm=audio 9 UDP/TLS/RTP/SAVPF 0\n' +
+         'c=IN IP4 0.0.0.0\n' +
+         'a=sendonly\n' +
+         'a=rtcp-mux\n' +
+         ssrcLines
   };
 }
 
