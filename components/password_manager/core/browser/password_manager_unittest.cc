@@ -2033,6 +2033,24 @@ TEST_F(PasswordManagerTest, ManualFallbackForSaving_GeneratedPassword) {
   manager()->HideManualFallbackForSaving();
 }
 
+TEST_F(PasswordManagerTest,
+       ManualFallbackForSaving_DontSaveAlreadySavedCredential) {
+  EXPECT_CALL(client_, IsSavingAndFillingEnabledForCurrentPage())
+      .WillRepeatedly(Return(true));
+
+  std::vector<PasswordForm> observed;
+  PasswordForm form(MakeSimpleForm());
+  observed.push_back(form);
+  EXPECT_CALL(*store_, GetLogins(_, _))
+      .WillOnce(WithArg<1>(InvokeConsumer(form)));
+  EXPECT_CALL(driver_, FillPasswordForm(_)).Times(2);
+  manager()->OnPasswordFormsParsed(&driver_, observed);
+  manager()->OnPasswordFormsRendered(&driver_, observed, true);
+
+  EXPECT_CALL(client_, ShowManualFallbackForSavingPtr(_, false, true)).Times(0);
+  manager()->ShowManualFallbackForSaving(&driver_, form);
+}
+
 // Tests that Autofill predictions are processed correctly. If at least one of
 // these predictions can be converted to a |PasswordFormFieldPredictionMap|, the
 // predictions map is updated accordingly.
