@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd6e306_0d541aff",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-12T20:34:45Z",
+      "side": 1,
+      "message": "This is the bot that\u0027s going to run the tests. It\u0027s a linux machine.",
+      "revId": "a607ac28c921a17576945879c229f962a88d4732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
