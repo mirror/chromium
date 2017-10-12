@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "2e9787c4_2d1fea24",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T00:31:39Z",
+      "side": 1,
+      "message": "Yes, they should not be taken at face value. But even so it is useful as is as we\u0027ve seen today when we were able to identify issues based on the relative sample counts between buckets.\n\nSo what I mean to warn about is that the next time we look at it we shouldn\u0027t immediately associate an increase in those numbers with another issue.",
+      "parentUuid": "3c20882c_95cf63f5",
+      "range": {
+        "startLine": 97,
+        "startChar": 23,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b0aa63_9b63e148",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 1
