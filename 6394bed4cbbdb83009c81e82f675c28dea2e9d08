@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2477b396_2a9406e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T18:47:49Z",
+      "side": 0,
+      "message": "isPromoAvailable() returns isUserUndecided().. I think removing this line is correct.",
+      "parentUuid": "e044b20b_6846c162",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd05362_05687457",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
         "patchSetId": 3
@@ -107,6 +131,30 @@
       "side": 0,
       "message": "This was only used for icing.",
       "parentUuid": "8fd05362_05687457",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "6394bed4cbbdb83009c81e82f675c28dea2e9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d9bef8c_4ec38a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchPolicy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T18:47:49Z",
+      "side": 0,
+      "message": "I see. I guess that\u0027s the \"other systems\" part.. I find the naming a bit confusing, but I\u0027m happy to know that the bug impact was limited!",
+      "parentUuid": "2e38a22c_045f7c2e",
       "range": {
         "startLine": 158,
         "startChar": 8,
