@@ -16,6 +16,24 @@
       "revId": "1de06d9c3aea2f1abd838481ecd4624997927669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39c92fd_bad55952",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-12T15:33:01Z",
+      "side": 1,
+      "message": "It can be either opt-in or out (there is a toggle on the promo). Showing the promo when the feature is enabled served to notify the user about the state of the world and give them the chance to revert to normal chrome.",
+      "parentUuid": "575495f4_284dcc21",
+      "revId": "1de06d9c3aea2f1abd838481ecd4624997927669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
