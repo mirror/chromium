@@ -381,9 +381,18 @@ HistoryURLProvider::VisitClassifier::VisitClassifier(
        !input.parts().path.is_nonempty()))
     return;
 
-  if (db_->GetRowForURL(url, &url_row_)) {
-    type_ = VISITED;
-    return;
+  const URLPrefixes& url_prefixes = URLPrefix::GetURLPrefixes();
+  const std::string& desired_tld = input.desired_tld();
+  for (auto prefix_it = url_prefixes.rbegin(); prefix_it != url_prefixes.rend();
+       ++prefix_it) {
+    if (db_->GetRowForURL(
+            url_formatter::FixupURL(
+                base::UTF16ToUTF8(prefix_it->prefix + input.text()),
+                desired_tld),
+            &url_row_)) {
+      type_ = VISITED;
+      return;
+    }
   }
 
   if (provider_->CanFindIntranetURL(db_, input)) {
@@ -882,6 +891,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
     const VisitClassifier& classifier,
     HistoryURLProviderParams* params) const {
   MatchType type = INLINE_AUTOCOMPLETE;
+
   switch (classifier.type()) {
     case VisitClassifier::INVALID:
       return false;
@@ -893,6 +903,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
       // We have data for this match, use it.
       params->what_you_typed_match.deletable = true;
       params->what_you_typed_match.description = classifier.url_row().title();
+      params->what_you_typed_match.destination_url = classifier.url_row().url();
       RecordAdditionalInfoFromUrlRow(classifier.url_row(),
                                      &params->what_you_typed_match);
       params->what_you_typed_match.description_class = ClassifyDescription(
@@ -968,11 +979,22 @@ bool HistoryURLProvider::CanFindIntranetURL(
     return false;
   const std::string host(base::UTF16ToUTF8(
       input.text().substr(input.parts().host.begin, input.parts().host.len)));
-  const bool has_registry_domain =
-      net::registry_controlled_domains::HostHasRegistryControlledDomain(
+
+  // Check if the host has registry domain.
+  if (net::registry_controlled_domains::HostHasRegistryControlledDomain(
           host, net::registry_controlled_domains::EXCLUDE_UNKNOWN_REGISTRIES,
-          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES);
-  return !has_registry_domain && db->IsTypedHost(host);
+          net::registry_controlled_domains::EXCLUDE_PRIVATE_REGISTRIES))
+    return false;
+
+  // Check if the host of the canonical URL can be found in the database.
+  if (db->IsTypedHost(host))
+    return true;
+
+  // Check if appending "www." to the canonicalized URL generates a url found in
+  // the database.
+  return !base::StartsWith(host, "www.",
+                           base::CompareCase::INSENSITIVE_ASCII) &&
+         db->IsTypedHost("www." + host);
 }
 
 bool HistoryURLProvider::PromoteOrCreateShorterSuggestion(
