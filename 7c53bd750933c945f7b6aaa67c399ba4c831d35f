@@ -16,6 +16,24 @@
       "revId": "7c53bd750933c945f7b6aaa67c399ba4c831d35f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253255bb_8b1c659e",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-12T16:11:38Z",
+      "side": 1,
+      "message": "I\u0027m not completely opposed to doing it that way, but lukasza@ asked me to use existing types where possible. It\u0027s a tradeoff between the risk of\n1) Upstream changes causing our duplicate definitions to be out of date\n2) Upstream changes breaking serialization without causing a test failure\n\nWhich do you think is worse? 2) seems to have worse overall impact, but is less likely than 1), which happens silently.",
+      "parentUuid": "8f96162c_55cf037b",
+      "revId": "7c53bd750933c945f7b6aaa67c399ba4c831d35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
