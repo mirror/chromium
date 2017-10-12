@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80597bd6_285b1628",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:27:33Z",
+      "side": 1,
+      "message": "Hmm, where is GetGestureType called? I think it\u0027s only for the PermissionUmaUtil::PermissionPromptResolved call above?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053f2a59_0da8e825",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:27:33Z",
+      "side": 1,
+      "message": "Should we check GetContentSettingsType here instead?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7c0c54_b6db247f",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:27:33Z",
+      "side": 1,
+      "message": "nit: please add // static here. Also we should probably update the function order.",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c4b55b_4337bbb8",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:27:33Z",
+      "side": 1,
+      "message": "Should we check GetContentSettingsType here?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7116261_eda54456",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T23:27:33Z",
+      "side": 1,
+      "message": "Hmm, one thing to consider is that this is going to record 2 ignores for mic+camera whereas it looks like for accepted/denied/shown we only display 1 for mic+camera?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
