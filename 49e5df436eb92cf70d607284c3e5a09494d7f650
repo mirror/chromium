@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b3b375_325e54ca",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-12T19:48:17Z",
+      "side": 1,
+      "message": "It seems so wrong that we can\u0027t have a client that doesn\u0027t belong to a mutator to unittest, but there we are.",
+      "revId": "49e5df436eb92cf70d607284c3e5a09494d7f650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "213255de_5236c636",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-12T19:48:17Z",
+      "side": 1,
+      "message": "Similarly to above, there is not if (client_) guard on following the client.",
+      "revId": "49e5df436eb92cf70d607284c3e5a09494d7f650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
