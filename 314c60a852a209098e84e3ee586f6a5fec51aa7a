@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c05a8d_13035896",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3556,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-12T16:04:37Z",
+      "side": 1,
+      "message": "nit: This might warrant a comment mentioning that the function returns only if the new guest\u0027s surface is successfully embedded within the root surface.",
+      "revId": "314c60a852a209098e84e3ee586f6a5fec51aa7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
