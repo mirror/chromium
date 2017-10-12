@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "dfc825ae_df81d3e5",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T22:24:00Z",
+      "side": 1,
+      "message": "Per offline discussion, this broke because ES6 getters are not automatically included in the final outcome of JSON.stringify(), minimal example https://jsfiddle.net/4oxgvedh/1/, where the toJSON() method is fixing the problem.\n\nLet\u0027s re-think how to make persist_() implementation more robust in a follow up CL.",
+      "parentUuid": "8791da5b_fd1d8db6",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67c4b943_0bb4640d",
         "filename": "chrome/browser/resources/print_preview/data/app_state.js",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "c471d838_dcaa8026",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T22:24:00Z",
+      "side": 1,
+      "message": "Maybe you forgot to upload latest patch? I don\u0027t see it in patch 3.",
+      "parentUuid": "4b696738_79543bcd",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2caec705_c1b4a93f",
         "filename": "chrome/browser/resources/print_preview/data/app_state.js",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "2caec705_c1b4a93f",
+      "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07c1d0d8_e0b38760",
+        "filename": "chrome/browser/resources/print_preview/data/app_state.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T22:24:00Z",
+      "side": 1,
+      "message": "Same here, I don\u0027t see it in patch 3.",
+      "parentUuid": "75643fef_08ec6d2e",
       "revId": "29f0c0e899909d0aa23ab0d6d953c5ef02d96e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
