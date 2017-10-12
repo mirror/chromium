@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650fcdb2_aa6e6baa",
+        "filename": "ash/system/palette/tools/capture_region_mode.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T01:14:54Z",
+      "side": 1,
+      "message": "nit: How about if (GetAshConfig() !\u003d CLASSIC) and early return?",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf06950_56eb1e56",
+        "filename": "ash/system/palette/tools/capture_screen_action.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T01:14:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec25669a_d9ed7db4",
+        "filename": "ash/system/palette/tools/capture_screen_action.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T01:14:54Z",
+      "side": 1,
+      "message": "Aside: It\u0027s pretty weird that AcceleratorControllerDelegate owns the ScreenshotDelegate. I wonder if the ScreenshotDelegate should be directly owned by Shell or ShellPort. Not an issue for this CL, of course.",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b6d17e_a48cf1ed",
+        "filename": "ash/utility/screenshot_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T01:14:54Z",
+      "side": 1,
+      "message": "Nice cleanup.",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
