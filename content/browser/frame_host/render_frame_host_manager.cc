@@ -1371,6 +1371,17 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
       current_instance_impl->SetSite(dest_url);
     }
 
+    // For sites that require a dedicated process, set the site URL now.  This
+    // will lock the process to that site as soon as the process is created,
+    // which will prevent other sites from incorrectly reusing this process.
+    // See https://crbug.com/738634.
+    if (SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
+                                                          dest_url) &&
+        !current_instance_impl->HasSite() &&
+        SiteInstanceImpl::ShouldAssignSiteForURL(dest_url)) {
+      current_instance_impl->SetSite(dest_url);
+    }
+
     return SiteInstanceDescriptor(current_instance_impl);
   }
 

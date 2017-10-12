@@ -1291,10 +1291,15 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest, ClickLinkAfter204Error) {
   EXPECT_EQ("/title2.html",
             shell()->web_contents()->GetLastCommittedURL().path());
 
-  // Should have the same SiteInstance.
+  // Should have the same SiteInstance, unless we are in --site-per-process
+  // mode, where the cross-site /nocontent URL will swap processes and use a
+  // new SiteInstance.
   scoped_refptr<SiteInstance> new_site_instance(
       shell()->web_contents()->GetSiteInstance());
-  EXPECT_EQ(orig_site_instance, new_site_instance);
+  if (AreAllSitesIsolatedForTesting())
+    EXPECT_NE(orig_site_instance, new_site_instance);
+  else
+    EXPECT_EQ(orig_site_instance, new_site_instance);
 }
 
 // A collection of tests to prevent URL spoofs when showing pending URLs above

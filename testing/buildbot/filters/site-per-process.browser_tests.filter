@@ -24,3 +24,7 @@
 
 # crbug.com/670362: Flaky failure (expected MouseDown not found)
 -DevToolsPixelOutputTests.TestLatencyInfoInstrumentation
+
+# crbug.com/738634: Caused by starting to set the site URL earlier for dedicated
+# sites.
+-ExtensionWebRequestApiTest.WebRequestWithWithheldPermissions

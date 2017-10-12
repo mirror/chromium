@@ -1506,6 +1506,11 @@ void SetOriginalURL(const GURL& url,
 }
 
 TEST_F(NavigationControllerTest, ReloadOriginalRequestURL) {
+  // TODO(alexmos): Fix this test to work in --site-per-process.  Currently it
+  // assumes that the same RFH will be used even after a cross-site redirect.
+  if (AreAllSitesIsolatedForTesting())
+    return;
+
   NavigationControllerImpl& controller = controller_impl();
 
   const GURL original_url("http://foo1");

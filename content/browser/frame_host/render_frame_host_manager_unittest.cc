@@ -927,8 +927,12 @@ TEST_F(RenderFrameHostManagerTest, Navigate) {
   // Commit to SiteInstance should be delayed until RenderFrame commit.
   EXPECT_TRUE(host == manager->current_frame_host());
   ASSERT_TRUE(host);
-  EXPECT_FALSE(host->GetSiteInstance()->HasSite());
-  host->GetSiteInstance()->SetSite(kUrl1);
+
+  // In --site-per-process mode, the site will have already been set.
+  if (!AreAllSitesIsolatedForTesting()) {
+    EXPECT_FALSE(host->GetSiteInstance()->HasSite());
+    host->GetSiteInstance()->SetSite(kUrl1);
+  }
 
   manager->GetRenderWidgetHostView()->SetBackgroundColor(SK_ColorRED);
 
@@ -1685,8 +1689,12 @@ TEST_F(RenderFrameHostManagerTest, NavigateWithEarlyClose) {
 
   // Commit to SiteInstance should be delayed until RenderFrame commits.
   EXPECT_EQ(host, manager->current_frame_host());
-  EXPECT_FALSE(host->GetSiteInstance()->HasSite());
-  host->GetSiteInstance()->SetSite(kUrl1);
+
+  // In --site-per-process mode, the site will have already been set.
+  if (!AreAllSitesIsolatedForTesting()) {
+    EXPECT_FALSE(host->GetSiteInstance()->HasSite());
+    host->GetSiteInstance()->SetSite(kUrl1);
+  }
 
   // 2) Cross-site navigate to next site. -------------------------
   const GURL kUrl2("http://www.example.com");
