@@ -257,6 +257,9 @@ static CSSValue* ValueForPositionOffset(const ComputedStyle& style,
       return ZoomAdjustedPixelValueForLength(opposite, style);
     }
 
+    if (layout_object->IsFixedPositioned() && offset.IsAuto())
+      return CSSIdentifierValue::Create(CSSValueAuto);
+
     if (layout_object->IsOutOfFlowPositioned() && layout_object->IsBox()) {
       // For fixed and absolute positioned elements, the top, left, bottom, and
       // right are defined relative to the corresponding sides of the containing
