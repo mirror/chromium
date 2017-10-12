@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0540c91_6d17d0d7",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-12T23:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf0c969_a3e6cbe8",
+      "range": {
+        "startLine": 1324,
+        "startChar": 7,
+        "endLine": 1324,
+        "endChar": 20
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac32ea8_fb7d5833",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "408360b2720b356522d079233ea175dd08c69c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4b94b2_4a1469cf",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-12T23:17:28Z",
+      "side": 1,
+      "message": "There are supposed to be only 2 caches and they are singletons. But, yes it might change in future.",
+      "parentUuid": "2ac32ea8_fb7d5833",
+      "range": {
+        "startLine": 1460,
+        "startChar": 4,
+        "endLine": 1460,
+        "endChar": 29
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "546ef962_e278eef2",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-12T23:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957f208f_f3a685b0",
+      "range": {
+        "startLine": 266,
+        "startChar": 34,
+        "endLine": 266,
+        "endChar": 45
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86213c6e_e149c300",
         "filename": "third_party/leveldatabase/env_chromium.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-12T21:10:06Z",
       "side": 1,
       "message": "It\u0027s unfortunate that clean public API has to be modified because its (internal) client needed some additional data.\n\nHow about we move block_cache_share_counts_ into mdp_, and notify mdp_ in DatabaseOpened / DatabaseDestroyed? That way DatabaseVisitor stays clean, and we have a clean path for future modifications.",
+      "range": {
+        "startLine": 284,
+        "startChar": 39,
+        "endLine": 284,
+        "endChar": 67
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc93282_b33d0160",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-12T23:17:28Z",
+      "side": 1,
+      "message": "hm doesn\u0027t really work. this has to be in sync with the visitor in the same locked block.\n\nIt would cause a race where the counts are updated in other thread, but the visitor is called in some other thread. OnMemoryDump cannot read the counts without lock. Introducing different lock in MDP also does not work since it would cause variation in count in the dump. It seems cleaner to keep the members accessed under lock in the same place.",
+      "parentUuid": "86213c6e_e149c300",
       "range": {
         "startLine": 284,
         "startChar": 39,
