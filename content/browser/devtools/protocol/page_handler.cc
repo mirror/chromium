@@ -702,8 +702,9 @@ void PageHandler::InnerSwapCompositorFrame() {
   // http://crbug.com/73362
   viz::CompositorFrameMetadata& metadata = last_compositor_frame_metadata_;
 
-  gfx::SizeF viewport_size_dip = gfx::ScaleSize(
-      metadata.scrollable_viewport_size, metadata.page_scale_factor);
+  gfx::SizeF viewport_size_dip =
+      gfx::ScaleSize(metadata.scrollable_viewport_size,
+                     metadata.page_scale_factor / metadata.device_scale_factor);
   gfx::SizeF screen_size_dip =
       gfx::ScaleSize(gfx::SizeF(view->GetPhysicalBackingSize()),
                      1 / metadata.device_scale_factor);
