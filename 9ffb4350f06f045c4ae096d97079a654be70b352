@@ -22,6 +22,30 @@
       "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6099ab_2ca3eaae",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/selection/invalidation-rect-includes-newline-for-vertical-lr-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-10-12T01:49:18Z",
+      "side": 0,
+      "message": "We make sure newline highlight is painted using paint result:\nplatform/win/paint/invalidation/selection/invalidation-rect-includes-newline-for-vertical-lr-expected.png and so on.",
+      "parentUuid": "2dae5dca_7b1ace10",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 53
+      },
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
