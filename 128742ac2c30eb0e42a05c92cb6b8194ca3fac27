@@ -244,6 +244,24 @@
       "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88177555_213c39d6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4744,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T11:40:32Z",
+      "side": 1,
+      "message": "Looks like windows and linux still need that 1px leniency (mac and ChromeOS do not). But I can tighten the width check above by 1 pixel.",
+      "parentUuid": "bcfd8e0d_5ab4ff38",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
