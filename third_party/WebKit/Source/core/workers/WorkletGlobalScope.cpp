@@ -137,11 +137,6 @@ void WorkletGlobalScope::SetModulator(Modulator* modulator) {
 }
 
 KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
-  // Always return a null URL when passed a null string.
-  // TODO(ikilpatrick): Should we change the KURL constructor to have this
-  // behavior?
-  if (url.IsNull())
-    return KURL();
   // Always use UTF-8 in Worklets.
   return KURL(url_, url);
 }
