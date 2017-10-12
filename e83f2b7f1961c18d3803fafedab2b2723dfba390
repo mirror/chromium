@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26509c2d_2b74189f",
+        "filename": "third_party/zlib/google/zip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-12T21:02:46Z",
+      "side": 1,
+      "message": "nit: Please move this down closer to where it is used, especially given the shadowing on line 204.",
+      "range": {
+        "startLine": 179,
+        "startChar": 22,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "e83f2b7f1961c18d3803fafedab2b2723dfba390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1c80d3_921cd346",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-12T21:02:46Z",
+      "side": 1,
+      "message": "Mebbe LOG the file contents as well?",
+      "range": {
+        "startLine": 215,
+        "startChar": 78,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "e83f2b7f1961c18d3803fafedab2b2723dfba390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e49ae9_900054af",
+        "filename": "third_party/zlib/google/zip_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-12T21:02:46Z",
+      "side": 1,
+      "message": "nit: file",
+      "range": {
+        "startLine": 218,
+        "startChar": 32,
+        "endLine": 218,
+        "endChar": 37
+      },
+      "revId": "e83f2b7f1961c18d3803fafedab2b2723dfba390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
