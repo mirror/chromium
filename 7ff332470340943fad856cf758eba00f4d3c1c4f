@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72163da2_79376466",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-12T20:45:29Z",
+      "side": 0,
+      "message": "I think this means that we will no longer be using FrameNavigationDisabler during provisoinal loader detach. That might be exploitable.",
+      "revId": "7ff332470340943fad856cf758eba00f4d3c1c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
