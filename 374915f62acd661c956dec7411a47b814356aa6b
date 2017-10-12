@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73e6d6a7_2fc89e0d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T12:41:36Z",
+      "side": 1,
+      "message": "BTW, I\u0027m wondering whether we could always call -openUrls:inIncognito:newTab: in the completion block, but this should probably be investigated in a followup CL.",
+      "parentUuid": "12852d01_70804461",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "374915f62acd661c956dec7411a47b814356aa6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "207a252a_726671de",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
