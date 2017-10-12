@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31650fcd_db76c3da",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 3052,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:06:55Z",
+      "side": 1,
+      "message": "nit, suggestion: To me, this is complicated enough to put into a separate helper method.  But up to you.",
+      "range": {
+        "startLine": 3052,
+        "startChar": 25,
+        "endLine": 3052,
+        "endChar": 55
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb450c8b_8ee81f70",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:06:55Z",
+      "side": 1,
+      "message": "nit: Could you add \" ... and NetworkContext own the RestrictedCookieManagerImpl.\"?  (Long-term, of course, it\u0027ll be URLLoaderFactory, and I\u0027m wondering if we\u0027ll just have a 1-1 relationship between RCMI and URLLF, though that may be too simple to hope for.)",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 33
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24187e5_87c95478",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:06:55Z",
+      "side": 1,
+      "message": "nit, suggestion: The void castings feel like they don\u0027t even have documentation value.  Maybe remove them?",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429da287_c2b3f19c",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:06:55Z",
+      "side": 1,
+      "message": "Vestigial comment?",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554a95fb_dcc585d1",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 44
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T15:06:55Z",
+      "side": 1,
+      "message": "Just FMI: What interface is this in support of?  I might want to fold it into the basic CM interface.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "3da46962da2cff4f9fb9b5fdc247f92ef893c9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
