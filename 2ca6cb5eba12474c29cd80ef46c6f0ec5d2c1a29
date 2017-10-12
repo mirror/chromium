@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7af2e6d_a7ab7cb8",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T08:54:24Z",
+      "side": 0,
+      "message": "Removed the logging from this class. Defer it to dbus::ObjectProxy::CallMethod()\u0027s.",
+      "revId": "2ca6cb5eba12474c29cd80ef46c6f0ec5d2c1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be9f991_5742a646",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T08:54:24Z",
+      "side": 0,
+      "message": "Made sure that all callers pass non-null |callback|.",
+      "revId": "2ca6cb5eba12474c29cd80ef46c6f0ec5d2c1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
