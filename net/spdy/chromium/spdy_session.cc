@@ -636,11 +636,8 @@ SpdySession::UnclaimedPushedStreamContainer::iterator
 SpdySession::UnclaimedPushedStreamContainer::erase(const_iterator it) {
   DCHECK(spdy_session_->pool_);
   DCHECK(it != end());
-  // Only allow cross-origin push for secure resources.
-  if (it->first.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->UnregisterUnclaimedPushedStream(
-        it->first, spdy_session_);
-  }
+  spdy_session_->pool_->push_promise_index()->UnregisterUnclaimedPushedStream(
+      it->first, spdy_session_);
   return streams_.erase(it);
 }
 
@@ -649,11 +646,8 @@ bool SpdySession::UnclaimedPushedStreamContainer::insert(
     SpdyStreamId stream_id,
     const base::TimeTicks& creation_time) {
   DCHECK(spdy_session_->pool_);
-  // Only allow cross-origin push for https resources.
-  if (url.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->RegisterUnclaimedPushedStream(
-        url, spdy_session_->GetWeakPtr());
-  }
+  spdy_session_->pool_->push_promise_index()->RegisterUnclaimedPushedStream(
+      url, spdy_session_->GetWeakPtr());
   auto result = streams_.insert(std::make_pair(
       url, SpdySession::UnclaimedPushedStreamContainer::PushedStreamInfo(
                stream_id, creation_time)));

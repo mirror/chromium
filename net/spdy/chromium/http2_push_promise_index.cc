@@ -25,7 +25,6 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     return base::WeakPtr<SpdySession>();
   }
 
-  DCHECK(url.SchemeIsCryptographic());
   for (WeakSessionList::iterator it = url_it->second.begin();
        it != url_it->second.end();) {
     base::WeakPtr<SpdySession> spdy_session = *it;
@@ -36,15 +35,23 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     }
     ++it;
     const SpdySessionKey& spdy_session_key = spdy_session->spdy_session_key();
-    if (spdy_session_key.proxy_server() != key.proxy_server() ||
-        spdy_session_key.privacy_mode() != key.privacy_mode()) {
-      continue;
+    if (url.SchemeIsCryptographic()) {
+      // Cross-origin push is allowed for secure resources
+      // as long as proxy and privacy mode matches.
+      if (spdy_session_key.proxy_server() != key.proxy_server() ||
+          spdy_session_key.privacy_mode() != key.privacy_mode()) {
+        continue;
+      }
+      if (spdy_session->VerifyDomainAuthentication(
+              key.host_port_pair().host())) {
+        return spdy_session;
+      }
+    } else {
+      // Origin must match for insecure resources.
+      if (spdy_session_key.Equals(key)) {
+        return spdy_session;
+      }
     }
-    if (!spdy_session->VerifyDomainAuthentication(
-            key.host_port_pair().host())) {
-      continue;
-    }
-    return spdy_session;
   }
   if (url_it->second.empty()) {
     unclaimed_pushed_streams_.erase(url_it);
@@ -57,7 +64,6 @@ void Http2PushPromiseIndex::RegisterUnclaimedPushedStream(
     const GURL& url,
     base::WeakPtr<SpdySession> spdy_session) {
   DCHECK(!url.is_empty());
-  DCHECK(url.SchemeIsCryptographic());
 
   // Use lower_bound() so that if key does not exists, then insertion can use
   // its return value as a hint.
@@ -77,7 +83,6 @@ void Http2PushPromiseIndex::UnregisterUnclaimedPushedStream(
     const GURL& url,
     SpdySession* spdy_session) {
   DCHECK(!url.is_empty());
-  DCHECK(url.SchemeIsCryptographic());
 
   UnclaimedPushedStreamMap::iterator url_it =
       unclaimed_pushed_streams_.find(url);
