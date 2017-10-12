@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65c5f356_91ca95ef",
+        "filename": "device/hid/hid_connection.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-12T02:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f3cfce_d62db67c",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "5149bad5b502738c6d743492da85310bf93540b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b42133e7_4bb94c03",
         "filename": "device/hid/hid_connection.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "5149bad5b502738c6d743492da85310bf93540b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517df0b6_2d3b037f",
+        "filename": "device/hid/hid_connection.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-12T02:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42133e7_4bb94c03",
+      "range": {
+        "startLine": 176,
+        "startChar": 23,
+        "endLine": 176,
+        "endChar": 48
+      },
+      "revId": "5149bad5b502738c6d743492da85310bf93540b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "857b7f6b_ecbd53e0",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-12T02:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c56228_e6fdcf7f",
+      "range": {
+        "startLine": 294,
+        "startChar": 31,
+        "endLine": 294,
+        "endChar": 51
+      },
+      "revId": "5149bad5b502738c6d743492da85310bf93540b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6eb5d6_ba17e8d4",
         "filename": "extensions/browser/api/hid/hid_device_manager.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ddf16897_fab7fefa",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-12T02:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6eb5d6_ba17e8d4",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 48
+      },
+      "revId": "5149bad5b502738c6d743492da85310bf93540b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccdc08f1_59adcf35",
         "filename": "extensions/browser/api/hid/hid_device_manager.cc",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "5149bad5b502738c6d743492da85310bf93540b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbd213c_3ff1e4f8",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-12T02:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccdc08f1_59adcf35",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "5149bad5b502738c6d743492da85310bf93540b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
