@@ -115,6 +115,9 @@ public class ViewResourceAdapter implements DynamicResource, OnLayoutChangeListe
         } else {
             mDirtyRect.union(dirtyRect);
         }
+        if (mDirtyRect.width() >= mView.getWidth() && mDirtyRect.height() >= mView.getHeight()) {
+            mBitmap = null;
+        }
     }
 
     /**
