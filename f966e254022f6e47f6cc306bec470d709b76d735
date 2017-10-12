@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb3dcd8f_3317c33f",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T08:13:15Z",
+      "side": 1,
+      "message": "I think this sentence is now misleading? The second paragraph says it outlives WebServiceWorkerRegistration::Handle.",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fecdf33_36d00742",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T08:13:15Z",
+      "side": 1,
+      "message": "The second paragraph is seems to say we\u0027re owned by ServiceWorkerRegistrationHandle, while this paragraph is says we try to keep the handle alive?",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f22948_cbfb8091",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T08:13:15Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to do with this patch but can you just delete this `using`? It seems to be only used once and adds unnecessary indirection.",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
