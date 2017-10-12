@@ -22,6 +22,30 @@
       "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca79ae6c_c6899f3f",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-12T21:47:05Z",
+      "side": 1,
+      "message": "Doesn\u0027t it do the opposite? It makes the test code more self-contained, because each unit test fully encapsulates the behavior of the mocked object, as opposed to the current test code where you need to look at the top of the file to see what \"FakeQOSCreateHandle\" does and what assertions it makes.\n\nAlso, it\u0027s reasonable to expect chromium developers to be familiar with GMock/GTest, and it\u0027s well-documented, so I don\u0027t see this as making the code less accessible.",
+      "parentUuid": "ba5d0177_e79aeb4e",
+      "range": {
+        "startLine": 802,
+        "startChar": 6,
+        "endLine": 802,
+        "endChar": 19
+      },
+      "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
