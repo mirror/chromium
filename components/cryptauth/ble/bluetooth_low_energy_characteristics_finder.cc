@@ -34,15 +34,8 @@ BluetoothLowEnergyCharacteristicsFinder::
       from_peripheral_char_(from_peripheral_char),
       success_callback_(success_callback),
       error_callback_(error_callback) {
-  if (!adapter_) {
-    error_callback_.Run(to_peripheral_char_, from_peripheral_char_);
-    return;
-  }
-
   adapter_->AddObserver(this);
   ScanRemoteCharacteristics(device, remote_service_.uuid);
-
-  // TODO(sacomoto): implement a timeout for characteristic discovery.
 }
 
 BluetoothLowEnergyCharacteristicsFinder::
@@ -70,14 +63,31 @@ void BluetoothLowEnergyCharacteristicsFinder::GattDiscoveryCompleteForService(
   if (!service || service->GetUUID() != remote_service_.uuid)
     return;
 
+  EndCharacteristicDiscovery(adapter, service->GetDevice());
+}
+
+void BluetoothLowEnergyCharacteristicsFinder::GattServicesDiscovered(
+    BluetoothAdapter* adapter,
+    BluetoothDevice* device) {
+  EndCharacteristicDiscovery(adapter, device);
+}
+
+void BluetoothLowEnergyCharacteristicsFinder::EndCharacteristicDiscovery(
+    BluetoothAdapter* adapter,
+    BluetoothDevice* device) {
   // Ignore events about other devices.
-  if (service->GetDevice() != bluetooth_device_)
+  if (device != bluetooth_device_)
     return;
 
   if (!to_peripheral_char_.id.empty() && !from_peripheral_char_.id.empty())
     return;
 
+  // If all GATT services have been discovered and we haven't found the
+  // characteristics we are looking for, call the error callback.
+  if (has_error_callback_been_invoked_)
+    return;
   error_callback_.Run(to_peripheral_char_, from_peripheral_char_);
+  has_error_callback_been_invoked_ = true;
 }
 
 void BluetoothLowEnergyCharacteristicsFinder::ScanRemoteCharacteristics(
