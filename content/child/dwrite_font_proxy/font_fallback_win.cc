@@ -226,4 +226,13 @@ void FontFallback::AddCachedFamily(
     family_list.pop_back();
 }
 
+HRESULT CONTENT_EXPORT FontFallbackFactory(
+    Microsoft::WRL::Details::ComPtrRef<Microsoft::WRL::ComPtr<FontFallback>>
+        ppvObject,
+    DWriteFontCollectionProxy* pCollection,
+    IPC::Sender* pSender) {
+  return Microsoft::WRL::MakeAndInitialize<FontFallback>(ppvObject, pCollection,
+                                                         pSender);
+}
+
 }  // namespace content
