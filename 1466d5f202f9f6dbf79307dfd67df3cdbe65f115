@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "9bb1c17f_f1bae0bb",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-10-12T17:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcdcaf0e_b55e6b7e",
+      "revId": "1466d5f202f9f6dbf79307dfd67df3cdbe65f115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8896f2bf_43e15df2",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
