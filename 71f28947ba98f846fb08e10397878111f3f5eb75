@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35bf64db_ead21372",
+        "filename": "net/quic/core/quic_packet_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-10-12T21:58:35Z",
+      "side": 1,
+      "message": "Since we want to probe a new path, I *think* we need it to be fully padded to our current max packet size?",
+      "range": {
+        "startLine": 128,
+        "startChar": 56,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "71f28947ba98f846fb08e10397878111f3f5eb75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
