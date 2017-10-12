@@ -1,0 +1,33 @@
+{
+  "name": "Constant Context",
+  "description" : "Autofinds words on every page using a content script",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+   "16": "cc16.png",
+   "48": "cc48.png",
+  "128": "cc128.png"
+},
+  "permissions": [
+    "activeTab",
+    "<all_urls>",
+    "storage"
+],
+  "manifest_version": 2,
+  "web_accessible_resources": [ "style.css"	],
+  "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+              "jquery-3.2.1.min.js",
+              "content_script.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}
