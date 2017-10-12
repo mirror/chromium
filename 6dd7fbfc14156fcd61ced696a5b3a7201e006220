@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "44bb44d8_c1249de2",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "IMO, you should move the UMA code from LogPreviewsEligibilityReason into this method now. Or at least call LogPreviewsEligibilityReason from here. I don\u0027t think it makes sense to call both methods in every place they are called.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbfe33a_79bd4ce0",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you should re-use these variables like this. Maybe you should do \"decision_url_\" and \"navigation_url_\". Also can you add a comment for each of the types of variables:\n\n// navigation stuff comment\nGURL navigation_url_;\nbool navigation_opt_out_;\nPreviewsType navigation_type_;\nbase::Time navigation_time_;\n\n// some decision comments\nPreviewsEligibilityReason decision_reason_;\nGURL decision_url_;\nbool decision_opt_out_;\nPreviewsType decision_type_;\nbase::Time decision_time_;",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c65989f_dfb2c3da",
         "filename": "components/previews/core/previews_io_data_unittest.cc",
         "patchSetId": 5
@@ -71,6 +105,182 @@
     },
     {
       "key": {
+        "uuid": "344281e6_9042196b",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "Not in this CL, but at some point I think this might look better on the page (in the shared log) as:\n\nEvent Type        | Intervention    | Event Description      | Time | URL          |     \n\nPreview Decision  | LoFi preview    | Black list unavailable | xxxx | cnn.com/blah |\nNavigation Result | Offline preview | User opted out         | xxxx | facebook.com |\nNavigation Result | Offline preview | User did not opt out   | xxxx | cats.com     |\n\nI think this is a little more readable as each individual column is a specific piece of information that can vary and that each intervention should have.\n\nThat being said, we\u0027d need to modify the page and the mojo stuff to support each of these.\n\nOpen a bug if you agree.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d0f5c_66453d8d",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "maybe name it GetDescriptionForPreviewsDecision instead.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8f5bbd_6159f360",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "\"Blacklist failed to be created\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d4a801_1fe34f7b",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "I\u0027m going to suggest more human-understandable strings below.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09030c0d_83db3969",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "\"Blacklist not loaded from disk yet.\"",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd84881_747aab10",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "All previews are blacklisted",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5758ae_9bbfc9a3",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "All previews on this host are blacklisted",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb98265_e603dd41",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "Page reloads do not show preivews for this type",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766b7323_9c3d8807",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "Host blacklisted by server rules.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee14389_aa61076d",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "Instead of adding an if here, can you move the log_messages_ stuff into  LogPreviewNavigation",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b60cc0_5618201b",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 5
@@ -88,6 +298,40 @@
         "endLine": 79,
         "endChar": 32
       },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc00fa_b2ddd74f",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "same comment as other test about splitting these vars into the methods they are for.",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036c93ad_13103f40",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-12T17:49:39Z",
+      "side": 1,
+      "message": "Since you will have a lot of variables, feel free to make them protected so you can read directly from the test.",
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
