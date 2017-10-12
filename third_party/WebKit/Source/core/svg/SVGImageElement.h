@@ -77,6 +77,7 @@ class CORE_EXPORT SVGImageElement final
                                             MutableStylePropertySet*) override;
 
   void SvgAttributeChanged(const QualifiedName&) override;
+  void ParseAttribute(const AttributeModificationParams&) override;
 
   void AttachLayoutTree(AttachContext&) override;
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;

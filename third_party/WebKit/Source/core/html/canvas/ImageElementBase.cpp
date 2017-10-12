@@ -14,6 +14,20 @@
 
 namespace blink {
 
+// static
+Image::ImageDecodingMode ImageElementBase::ParseImageDecodingMode(
+    const AtomicString& async_attr_value) {
+  if (async_attr_value.IsNull())
+    return Image::kUnspecifiedDecode;
+
+  const auto& value = async_attr_value.LowerASCII();
+  if (value == "" || value == "on")
+    return Image::kAsyncDecode;
+  if (value == "off")
+    return Image::kSyncDecode;
+  return Image::kUnspecifiedDecode;
+}
+
 ImageResourceContent* ImageElementBase::CachedImage() const {
   return GetImageLoader().GetImage();
 }
@@ -177,6 +191,17 @@ ScriptPromise ImageElementBase::CreateImageBitmap(
       script_state, ImageBitmap::Create(
                         this, crop_rect,
                         event_target.ToLocalDOMWindow()->document(), options));
+}
+
+Image::ImageDecodingMode ImageElementBase::GetDecodingMode(PaintImage::Id new_id) {
+  const bool content_transitioned = last_painted_image_id_ != PaintImage::kInvalidId
+      && new_id != PaintImage::kInvalidId &&
+      last_painted_image_id_ != new_id;
+  last_painted_image_id_ = new_id;
+
+  if (content_transitioned && decoding_mode_ == Image::ImageDecodingMode::kUnspecifiedDecode)
+    return Image::ImageDecodingMode::kContentTransitionSyncDecode;
+  return decoding_mode_;
 }
 
 }  // namespace blink

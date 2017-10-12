@@ -174,6 +174,26 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   virtual RefPtr<Image> ImageForDefaultFrame();
 
+  enum ImageDecodingMode { kUnspecifiedDecode, kSyncDecode,
+    kContentTransitionSyncDecode, kAsyncDecode };
+
+  static PaintImage::DecodingMode ToPaintImageDecodingMode(
+      ImageDecodingMode mode) {
+    switch (mode) {
+      case kUnspecifiedDecode:
+        return PaintImage::DecodingMode::kUnspecified;
+      case kSyncDecode:
+        return PaintImage::DecodingMode::kSync;
+      case kContentTransitionSyncDecode:
+        return PaintImage::DecodingMode::kContentTransitionSync;
+      case kAsyncDecode:
+        return PaintImage::DecodingMode::kAsync;
+    }
+
+    NOTREACHED();
+    return PaintImage::DecodingMode::kUnspecified;
+  }
+
   virtual PaintImage PaintImageForCurrentFrame() = 0;
 
   enum ImageClampingMode {
@@ -186,7 +206,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                     const FloatRect& dst_rect,
                     const FloatRect& src_rect,
                     RespectImageOrientationEnum,
-                    ImageClampingMode) = 0;
+                    ImageClampingMode,
+                    ImageDecodingMode) = 0;
 
   virtual bool ApplyShader(PaintFlags&, const SkMatrix& local_matrix);
 
@@ -235,6 +256,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
       const HighContrastClassification high_contrast_classification) {
     high_contrast_classification_ = high_contrast_classification;
   }
+
+  PaintImage::Id paint_image_id() const { return stable_image_id_; }
 
  protected:
   Image(ImageObserver* = 0, bool is_multipart = false);
