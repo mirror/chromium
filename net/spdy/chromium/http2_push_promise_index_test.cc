@@ -129,9 +129,10 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
 
   index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
 
-  // Note that Find() only uses its SpdySessionKey argument to verify proxy and
-  // privacy mode.  Cross-origin pooling is supported, therefore HostPortPair of
-  // SpdySessionKey does not matter.
+  // Note that for secure schemes like https, Find() only uses its
+  // SpdySessionKey argument to verify proxy and privacy mode.  Cross-origin
+  // pooling is supported, therefore HostPortPair of SpdySessionKey does not
+  // matter.
   EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
   EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
   EXPECT_FALSE(index_.Find(key1_, url2_));
@@ -168,6 +169,40 @@ TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
   EXPECT_TRUE(data1.AllWriteDataConsumed());
   EXPECT_TRUE(data2.AllReadDataConsumed());
   EXPECT_TRUE(data2.AllWriteDataConsumed());
+}
+
+TEST_F(Http2PushPromiseIndexTest, InsecureSchemeOnlyAllowedOnSameOrigin) {
+  SSLSocketDataProvider ssl(SYNCHRONOUS, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+  SequencedSocketData data(nullptr, 0, nullptr, 0);
+  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  base::WeakPtr<SpdySession> spdy_session =
+      CreateSpdySession(http_network_session_.get(), key1_, log_);
+
+  const GURL url("http://www.example.org");
+
+  EXPECT_FALSE(index_.Find(key1_, url));
+  EXPECT_FALSE(index_.Find(key2_, url));
+
+  index_.RegisterUnclaimedPushedStream(url, spdy_session);
+
+  // Http scheme can only be pushed if SpdySessionKey matches.
+  EXPECT_EQ(spdy_session.get(), index_.Find(key1_, url).get());
+  EXPECT_FALSE(index_.Find(key2_, url));
+
+  index_.UnregisterUnclaimedPushedStream(url, spdy_session.get());
+
+  EXPECT_FALSE(index_.Find(key1_, url));
+  EXPECT_FALSE(index_.Find(key2_, url));
+
+  // SpdySession weak pointers must still be valid,
+  // otherwise comparisons above are not meaningful.
+  EXPECT_TRUE(spdy_session);
+
+  EXPECT_TRUE(data.AllReadDataConsumed());
+  EXPECT_TRUE(data.AllWriteDataConsumed());
 }
 
 }  // namespace test
