@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ed76452_f25efa2d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-12T15:12:32Z",
+      "side": 1,
+      "message": "You need to de-register on the destructor / Shutdown().",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 46
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b6bde5_1d79d100",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-12T15:12:32Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\n if (!pending_pai_lock_)\n   return;\n // rest.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3192a778_64d9ba52",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-12T15:12:32Z",
+      "side": 1,
+      "message": "nit: s/Arc/ARC/",
+      "range": {
+        "startLine": 181,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
