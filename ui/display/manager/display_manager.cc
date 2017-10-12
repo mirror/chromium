@@ -43,6 +43,7 @@
 #if defined(OS_CHROMEOS)
 #include "base/sys_info.h"
 #include "chromeos/system/devicemode.h"
+#include "ui/display/manager/chromeos/touchscreen_util.h"
 #endif
 
 #if defined(OS_WIN)
@@ -1046,17 +1047,20 @@ void DisplayManager::SetTouchCalibrationData(
     const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
     const gfx::Size& display_bounds,
     uint32_t touch_device_identifier) {
-  // If the touch device identifier is associated with a touch device for the
-  // then do not perform any calibration. We do not want to modify any
-  // calibration information related to the internal display.
-  if (Display::HasInternalDisplay()) {
-    int64_t intenral_display_id = Display::InternalDisplayId();
-    if (GetDisplayInfo(intenral_display_id)
-            .HasTouchDevice(touch_device_identifier)) {
-      return;
-    }
+  if (Display::HasInternalDisplay() &&
+      display_id == Display::InternalDisplayId()) {
+    return;
   }
-  bool update = false;
+
+  // If the touch device identifier is an internal touch device then do not
+  // perform any calibration. We do not want to modify any calibration
+  // information related to the internal touch device.
+  if (IsInternalTouchscreenDevice(touch_device_identifier))
+    return;
+
+  bool did_set_data = false;
+  bool did_remove_data = false;
+
   TouchCalibrationData calibration_data(point_pair_quad, display_bounds);
 
   DisplayInfoList display_info_list;
@@ -1064,15 +1068,27 @@ void DisplayManager::SetTouchCalibrationData(
     ManagedDisplayInfo info = GetDisplayInfo(display.id());
     if (info.id() == display_id) {
       info.SetTouchCalibrationData(touch_device_identifier, calibration_data);
-      update = true;
+      did_set_data = true;
+    } else if (info.HasTouchDevice(touch_device_identifier)) {
+      info.RemoveTouchDevice(touch_device_identifier);
+      did_remove_data = true;
     }
     display_info_list.push_back(info);
   }
-  if (update)
+  if (did_set_data || did_remove_data)
     UpdateDisplaysWith(display_info_list);
-  else {
-    display_info_[display_id].SetTouchCalibrationData(touch_device_identifier,
-                                                      calibration_data);
+  if (!did_set_data || !did_remove_data) {
+    if (!did_set_data) {
+      display_info_[display_id].SetTouchCalibrationData(touch_device_identifier,
+                                                        calibration_data);
+    }
+    if (!did_remove_data) {
+      for (auto& it : display_info_) {
+        if (it.first == display_id)
+          continue;
+        it.second.RemoveTouchDevice(touch_device_identifier);
+      }
+    }
   }
 }
 
