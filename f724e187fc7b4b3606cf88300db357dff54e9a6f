@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "37205217_23a94675",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T15:26:21Z",
+      "side": 1,
+      "message": "I don\u0027t have strong opinion. So, Container is also fine, or keeping ArcInstance/Container name inconsistency is also acceptable if you\u0027d like.\nAs for naming of \"Container\", maybe good to have a very short comment about that perspective, since in ARC, we use \"Instance\".",
+      "parentUuid": "df83e8b9_8eba2b2e",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "813d78e2_3b2bec0d",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -136,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "d3269229_cf3dbfaf",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T15:26:21Z",
+      "side": 1,
+      "message": "Thank you for clarification. Probably nice to have a comment about the concept of the expected UMA event sequence on enum, too?",
+      "parentUuid": "bbd6ab70_7889bbdb",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c40364e_46b46857",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -164,6 +200,24 @@
       "writtenOn": "2017-10-12T15:05:29Z",
       "side": 1,
       "message": "Is this guaranteed to be called always? IIRC at some point there were cases in which this function was not called for clean shutdowns due to us needing to wait for the D-Bus callback but the messageloop was sometimes stopped before that was delivered.",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a8faf9_b6dd3e26",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T15:26:21Z",
+      "side": 1,
+      "message": "If you meant at the very end of UI thread lifetime, yes, it should.\nAfter UI message loop stops, OnShutdown() should be called, which invokes ArcSession::Shutdown(), which intentionally synchronously invokes OnShutdown() to let the caller give it a try to make a graceful shutdown (like this).\nIn that case, stop_reason would be \"SHUTDOWN\".",
+      "parentUuid": "b08e9bb4_78d4d9de",
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
