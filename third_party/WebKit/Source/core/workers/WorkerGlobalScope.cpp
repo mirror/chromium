@@ -81,7 +81,7 @@ WorkerGlobalScope::~WorkerGlobalScope() {
       InstanceCounters::kWorkerGlobalScopeCounter);
 }
 
-KURL WorkerGlobalScope::CompleteURL(const String& url) const {
+KURL WorkerGlobalScope::ContextCompleteURL(const String& url) const {
   // Always return a null URL when passed a null string.
   // FIXME: Should we change the KURL constructor to have this behavior?
   if (url.IsNull())
@@ -183,7 +183,7 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
   ExecutionContext& execution_context = *this->GetExecutionContext();
   Vector<KURL> completed_urls;
   for (const String& url_string : urls) {
-    const KURL& url = execution_context.CompleteURL(url_string);
+    const KURL& url = execution_context.ContextCompleteURL(url_string);
     if (!url.IsValid()) {
       exception_state.ThrowDOMException(
           kSyntaxError, "The URL '" + url_string + "' is invalid.");
@@ -451,10 +451,6 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
         kContentSecurityPolicyHeaderSourceHTTP);
   }
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
-}
-
-KURL WorkerGlobalScope::VirtualCompleteURL(const String& url) const {
-  return CompleteURL(url);
 }
 
 DEFINE_TRACE(WorkerGlobalScope) {

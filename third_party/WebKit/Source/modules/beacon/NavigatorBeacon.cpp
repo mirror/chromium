@@ -106,7 +106,7 @@ bool NavigatorBeacon::SendBeaconImpl(
     const ArrayBufferViewOrBlobOrStringOrFormData& data,
     ExceptionState& exception_state) {
   ExecutionContext* context = ExecutionContext::From(script_state);
-  KURL url = context->CompleteURL(urlstring);
+  KURL url = context->ContextCompleteURL(urlstring);
   if (!CanSendBeacon(context, url, exception_state))
     return false;
 

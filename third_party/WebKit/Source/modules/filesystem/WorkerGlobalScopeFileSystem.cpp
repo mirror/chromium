@@ -110,7 +110,7 @@ void WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemURL(
     const String& url,
     EntryCallback* success_callback,
     ErrorCallback* error_callback) {
-  KURL completed_url = worker.CompleteURL(url);
+  KURL completed_url = worker.ContextCompleteURL(url);
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem() ||
       !secure_context->GetSecurityOrigin()->CanRequest(completed_url)) {
@@ -138,7 +138,7 @@ EntrySync* WorkerGlobalScopeFileSystem::webkitResolveLocalFileSystemSyncURL(
     WorkerGlobalScope& worker,
     const String& url,
     ExceptionState& exception_state) {
-  KURL completed_url = worker.CompleteURL(url);
+  KURL completed_url = worker.ContextCompleteURL(url);
   ExecutionContext* secure_context = worker.GetExecutionContext();
   if (!secure_context->GetSecurityOrigin()->CanAccessFileSystem() ||
       !secure_context->GetSecurityOrigin()->CanRequest(completed_url)) {

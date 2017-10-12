@@ -12,7 +12,7 @@ namespace blink {
 TrustedURL::TrustedURL(const KURL& url) : url_(url) {}
 
 TrustedURL* TrustedURL::create(ScriptState* script_state, const String& url) {
-  KURL result(ExecutionContext::From(script_state)->CompleteURL(url));
+  KURL result(ExecutionContext::From(script_state)->ContextCompleteURL(url));
 
   if (!result.IsValid() || !result.ProtocolIsInHTTPFamily())
     result = KURL(kParsedURLString, "about:invalid");
@@ -23,7 +23,7 @@ TrustedURL* TrustedURL::create(ScriptState* script_state, const String& url) {
 TrustedURL* TrustedURL::unsafelyCreate(ScriptState* script_state,
                                        const String& url) {
   return TrustedURL::Create(
-      ExecutionContext::From(script_state)->CompleteURL(url));
+      ExecutionContext::From(script_state)->ContextCompleteURL(url));
 }
 
 String TrustedURL::toString() const {

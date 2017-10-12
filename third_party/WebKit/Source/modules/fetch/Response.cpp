@@ -298,7 +298,8 @@ Response* Response::redirect(ScriptState* script_state,
                              const String& url,
                              unsigned short status,
                              ExceptionState& exception_state) {
-  KURL parsed_url = ExecutionContext::From(script_state)->CompleteURL(url);
+  KURL parsed_url =
+      ExecutionContext::From(script_state)->ContextCompleteURL(url);
   if (!parsed_url.IsValid()) {
     exception_state.ThrowTypeError("Failed to parse URL from " + url);
     return nullptr;

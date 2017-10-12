@@ -28,7 +28,7 @@ WebNotificationData::Direction ToDirectionEnumValue(const String& direction) {
 
 WebURL CompleteURL(ExecutionContext* execution_context,
                    const String& string_url) {
-  WebURL url = execution_context->CompleteURL(string_url);
+  WebURL url = execution_context->ContextCompleteURL(string_url);
   if (url.IsValid())
     return url;
   return WebURL();

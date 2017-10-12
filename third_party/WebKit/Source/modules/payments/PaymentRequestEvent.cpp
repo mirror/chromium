@@ -73,7 +73,7 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
   ExecutionContext* context = ExecutionContext::From(script_state);
 
-  KURL parsed_url_to_open = context->CompleteURL(url);
+  KURL parsed_url_to_open = context->ContextCompleteURL(url);
   if (!parsed_url_to_open.IsValid()) {
     resolver->Reject(V8ThrowException::CreateTypeError(
         script_state->GetIsolate(), "'" + url + "' is not a valid URL."));

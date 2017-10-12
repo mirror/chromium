@@ -48,7 +48,7 @@ KURL AbstractWorker::ResolveURL(ExecutionContext* execution_context,
                                 const String& url,
                                 ExceptionState& exception_state,
                                 WebURLRequest::RequestContext request_context) {
-  KURL script_url = execution_context->CompleteURL(url);
+  KURL script_url = execution_context->ContextCompleteURL(url);
   if (!script_url.IsValid()) {
     exception_state.ThrowDOMException(kSyntaxError,
                                       "'" + url + "' is not a valid URL.");

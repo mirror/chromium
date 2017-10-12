@@ -165,7 +165,7 @@ ScriptPromise PaymentInstruments::set(ScriptState* script_state,
   if (details.hasIcons()) {
     ExecutionContext* context = ExecutionContext::From(script_state);
     for (const ImageObject image_object : details.icons()) {
-      KURL parsed_url = context->CompleteURL(image_object.src());
+      KURL parsed_url = context->ContextCompleteURL(image_object.src());
       if (!parsed_url.IsValid() || !parsed_url.ProtocolIsInHTTPFamily()) {
         resolver->Reject(V8ThrowException::CreateTypeError(
             script_state->GetIsolate(),

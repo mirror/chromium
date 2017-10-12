@@ -646,7 +646,7 @@ void XMLHttpRequest::open(const AtomicString& method,
   if (!GetExecutionContext())
     return;
 
-  KURL url(GetExecutionContext()->CompleteURL(url_string));
+  KURL url(GetExecutionContext()->ContextCompleteURL(url_string));
   if (!ValidateOpenArguments(method, url, exception_state))
     return;
 
@@ -662,7 +662,7 @@ void XMLHttpRequest::open(const AtomicString& method,
   if (!GetExecutionContext())
     return;
 
-  KURL url(GetExecutionContext()->CompleteURL(url_string));
+  KURL url(GetExecutionContext()->ContextCompleteURL(url_string));
   if (!ValidateOpenArguments(method, url, exception_state))
     return;
 

@@ -115,7 +115,7 @@ bool ExecutionContext::ShouldSanitizeScriptError(
     AccessControlStatus cors_status) {
   if (cors_status == kOpaqueResource)
     return true;
-  const KURL& url = CompleteURL(source_url);
+  const KURL& url = ContextCompleteURL(source_url);
   if (url.ProtocolIsData())
     return false;
   return !(GetSecurityOrigin()->CanRequestNoSuborigin(url) ||
@@ -181,10 +181,6 @@ ContentSecurityPolicy* ExecutionContext::GetContentSecurityPolicy() {
 
 const KURL& ExecutionContext::Url() const {
   return VirtualURL();
-}
-
-KURL ExecutionContext::CompleteURL(const String& url) const {
-  return VirtualCompleteURL(url);
 }
 
 void ExecutionContext::AllowWindowInteraction() {
