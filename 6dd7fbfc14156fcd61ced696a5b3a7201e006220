@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "ef300517_16ceda27",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44bb44d8_c1249de2",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f25b9127_7390d3e0",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a34e17_b7d36b99",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 44
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbfe33a_79bd4ce0",
         "filename": "components/previews/core/previews_io_data_unittest.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f07033_cc0fc7fb",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bbfe33a_79bd4ce0",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "bdd82fa6_2d072025",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done. Added a test that calls ShouldAllowPreviewAtECT.",
+      "parentUuid": "6c65989f_dfb2c3da",
+      "range": {
+        "startLine": 555,
+        "startChar": 13,
+        "endLine": 555,
+        "endChar": 36
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93d24112_00424acd",
         "filename": "components/previews/core/previews_io_data_unittest.cc",
         "patchSetId": 5
@@ -93,6 +177,30 @@
       "writtenOn": "2017-10-12T17:40:38Z",
       "side": 1,
       "message": "can we instead read log_messages() from the logger?",
+      "range": {
+        "startLine": 558,
+        "startChar": 12,
+        "endLine": 558,
+        "endChar": 18
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aa99e5_65ccdd87",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "I don\u0027t think we should read log_messages() from logger here, since PreviewsIOData only interacts with PreviewsUIService, and not PreviewsLogger. The interactions between PreviewsUIService and the PreviewsLogger is being tested in the UIService\u0027s unit tests.",
+      "parentUuid": "93d24112_00424acd",
       "range": {
         "startLine": 558,
         "startChar": 12,
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "0ed84490_62bf6ecd",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done. crbug.com/774252",
+      "parentUuid": "344281e6_9042196b",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8d0f5c_66453d8d",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 5
@@ -136,6 +262,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561ac411_dbaac25e",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8d0f5c_66453d8d",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +323,48 @@
     },
     {
       "key": {
+        "uuid": "48cc1ec2_48c9691a",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8f5bbd_6159f360",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a76fdb0f_85a942a0",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44d4a801_1fe34f7b",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09030c0d_83db3969",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 5
@@ -193,6 +379,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4183f88d_66919d28",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09030c0d_83db3969",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "7379d0d1_9df7641f",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd84881_747aab10",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5758ae_9bbfc9a3",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 5
@@ -227,6 +449,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773f892f_5cacebad",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5758ae_9bbfc9a3",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "66fa678b_e75f4ed3",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb98265_e603dd41",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "766b7323_9c3d8807",
         "filename": "components/previews/core/previews_logger.cc",
         "patchSetId": 5
@@ -261,6 +519,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0076b685_ad17c637",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "766b7323_9c3d8807",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "73095113_c3a6abaa",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee14389_aa61076d",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1b60cc0_5618201b",
         "filename": "components/previews/core/previews_logger_unittest.cc",
         "patchSetId": 5
@@ -292,6 +586,30 @@
       "writtenOn": "2017-10-12T17:40:38Z",
       "side": 1,
       "message": "Why is this not 5?",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aafde96_a04ce098",
+        "filename": "components/previews/core/previews_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Changed |message_logs_| to |navigation_logs| to make it a little bit less confusing.\n\nThere are now 2 lists of historical logs (navigation logs and decision logs) kept separately. This is because the decision made can flood the historical logs, leaving no room for historical Previews navigations.\n\nThe historical logs are merged together by time, to give the user some info about the previous navigations and decisions made.",
+      "parentUuid": "d1b60cc0_5618201b",
       "range": {
         "startLine": 79,
         "startChar": 31,
@@ -321,6 +639,24 @@
     },
     {
       "key": {
+        "uuid": "8df2da7d_8c4554ed",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ecc00fa_b2ddd74f",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "036c93ad_13103f40",
         "filename": "components/previews/core/previews_ui_service_unittest.cc",
         "patchSetId": 5
@@ -335,6 +671,24 @@
       "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252ad6d5_44bf751f",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-12T22:08:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "036c93ad_13103f40",
+      "revId": "6dd7fbfc14156fcd61ced696a5b3a7201e006220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
