@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a098554d_0a89f0e5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-12T02:08:55Z",
+      "side": 1,
+      "message": "nit: s/dispatchSelectStart()/DispatchSelectStart()/\nnit: s/document/GetDocument()/",
+      "revId": "30110d5db3f2bff0842ba7efd725062d64600be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03136c4_494a39ab",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-12T02:08:55Z",
+      "side": 1,
+      "message": "Note: !Selection().IsAvaliable() means Selection().GetDocument() \u003d\u003d nullptr.\nWe can assume lifetime and associate document of FrameSelection and\nSelecitonController are same.",
+      "revId": "30110d5db3f2bff0842ba7efd725062d64600be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33aa124f_8e267519",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-12T02:08:55Z",
+      "side": 1,
+      "message": "nit: s/*frame-\u003eGetDocument()/GetDocument()/",
+      "revId": "30110d5db3f2bff0842ba7efd725062d64600be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
