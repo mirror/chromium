@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be6d56f_f4677cd4",
+        "filename": "ash/wm/ash_focus_rules_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-12T21:34:04Z",
+      "side": 1,
+      "message": "I assume you needed this because the creation of modal dialog in lock state isn\u0027t easy.\n\nIs it possible to move this to CreateWindowInLockSystemMOdalContainer and add comment?",
+      "revId": "31891ae427a648e62c151bca58f3d19342a7f1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
