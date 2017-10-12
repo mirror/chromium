@@ -46,6 +46,30 @@
       "revId": "547b66b94f285170b84b0981cb69153145ecb824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1a7af7_852bc953",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-12T23:38:14Z",
+      "side": 1,
+      "message": "In general this change lgtm, I\u0027d just check with UX that this is what we want to do.",
+      "parentUuid": "e785663b_336c4a0a",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "547b66b94f285170b84b0981cb69153145ecb824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
