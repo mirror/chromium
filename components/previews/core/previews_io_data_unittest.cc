@@ -77,19 +77,20 @@ class TestPreviewsUIService : public PreviewsUIService {
                           std::move(previews_opt_out_store),
                           is_enabled_callback,
                           std::move(logger)),
-        type_(PreviewsType::NONE) {}
+        decision_type_(PreviewsType::NONE),
+        navigation_type_(PreviewsType::NONE) {}
 
-  // Return the passed in url.
-  GURL url() const { return url_; }
+  // Return the passed in LogPreviewDecision parameters.
+  PreviewsEligibilityReason decision_reason() const { return decision_reason_; }
+  GURL decision_url() const { return decision_url_; }
+  PreviewsType decision_type() const { return decision_type_; }
+  base::Time decision_time() const { return decision_time_; }
 
-  // Return the passed in opt_out.
-  bool opt_out() const { return opt_out_; }
-
-  // Return the passed in type.
-  PreviewsType type() const { return type_; }
-
-  // Return the passed in time.
-  base::Time time() const { return time_; }
+  // Return the passed in LogPreviewNavigation parameters.
+  GURL navigation_url() const { return navigation_url_; }
+  bool navigation_opt_out() const { return navigation_opt_out_; }
+  base::Time navigation_time() const { return navigation_time_; }
+  PreviewsType navigation_type() const { return navigation_type_; }
 
  private:
   // PreviewsUIService:
@@ -97,16 +98,33 @@ class TestPreviewsUIService : public PreviewsUIService {
                             PreviewsType type,
                             bool opt_out,
                             base::Time time) override {
-    url_ = url;
-    opt_out_ = opt_out;
-    type_ = type;
-    time_ = base::Time(time);
+    navigation_url_ = url;
+    navigation_opt_out_ = opt_out;
+    navigation_type_ = type;
+    navigation_time_ = base::Time(time);
   }
 
-  GURL url_;
-  bool opt_out_;
-  PreviewsType type_;
-  base::Time time_;
+  void LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                               const GURL& url,
+                               base::Time time,
+                               PreviewsType type) override {
+    decision_reason_ = reason;
+    decision_url_ = GURL(url);
+    decision_time_ = time;
+    decision_type_ = type;
+  }
+
+  // Passed in LogPreviewDecision parameters.
+  PreviewsEligibilityReason decision_reason_;
+  GURL decision_url_;
+  PreviewsType decision_type_;
+  base::Time decision_time_;
+
+  // Passed in LogPreviewsNavigation parameters.
+  GURL navigation_url_;
+  bool navigation_opt_out_;
+  base::Time navigation_time_;
+  PreviewsType navigation_type_;
 };
 
 class TestPreviewsIOData : public PreviewsIOData {
@@ -524,10 +542,47 @@ TEST_F(PreviewsIODataTest, LogPreviewNavigationPassInCorrectParams) {
   io_data()->LogPreviewNavigation(url, opt_out, type, time);
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_EQ(url, ui_service()->url());
-  EXPECT_EQ(opt_out, ui_service()->opt_out());
-  EXPECT_EQ(type, ui_service()->type());
-  EXPECT_EQ(time, ui_service()->time());
+  EXPECT_EQ(url, ui_service()->navigation_url());
+  EXPECT_EQ(opt_out, ui_service()->navigation_opt_out());
+  EXPECT_EQ(type, ui_service()->navigation_type());
+  EXPECT_EQ(time, ui_service()->navigation_time());
+}
+
+TEST_F(PreviewsIODataTest, LogPreviewsDecisionMadePassInCorrectParams) {
+  InitializeUIService();
+  PreviewsEligibilityReason reason(
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE);
+  GURL url("http://www.url_a.com/url_a");
+  base::Time time = base::Time::Now();
+  PreviewsType type = PreviewsType::OFFLINE;
+
+  io_data()->LogPreviewsDecisionMade(reason, url, time, type);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(reason, ui_service()->decision_reason());
+  EXPECT_EQ(url, ui_service()->decision_url());
+  EXPECT_EQ(time, ui_service()->decision_time());
+  EXPECT_EQ(type, ui_service()->decision_type());
+}
+
+TEST_F(PreviewsIODataTest, ShouldAllowPreviewAtECTCallsLogDecisionMade) {
+  // LoFi and LitePage check NQE on their own.
+  InitializeUIService();
+
+  network_quality_estimator()->set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_3G);
+
+  auto expected_reason = PreviewsEligibilityReason::ALLOWED;
+  auto expected_type = PreviewsType::LITE_PAGE;
+
+  base::HistogramTester histogram_tester;
+  EXPECT_TRUE(io_data()->ShouldAllowPreviewAtECT(
+      *CreateRequest(), expected_type, net::EFFECTIVE_CONNECTION_TYPE_4G,
+      std::vector<std::string>()));
+
+  // Testing correct log method is called.
+  EXPECT_EQ(expected_reason, ui_service()->decision_reason());
+  EXPECT_EQ(expected_type, ui_service()->decision_type());
 }
 
 }  // namespace
