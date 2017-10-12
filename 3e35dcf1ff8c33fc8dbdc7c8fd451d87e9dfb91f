@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d085b336_11e96673",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-12T05:43:04Z",
+      "side": 1,
+      "message": "nit: CreateForTest() doesn\u0027t have ScriptFetchOptions as an argument. Do you mean moving nonce/parser disposition/credential mode args into ScriptFetchOptions?",
+      "revId": "3e35dcf1ff8c33fc8dbdc7c8fd451d87e9dfb91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9b2c34_11563696",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ScriptFetchOptions.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-12T05:43:04Z",
+      "side": 1,
+      "message": "nit: IntegrityMetadata integrity_metadata_;",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 61
+      },
+      "revId": "3e35dcf1ff8c33fc8dbdc7c8fd451d87e9dfb91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
