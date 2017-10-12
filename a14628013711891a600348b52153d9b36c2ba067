@@ -16,6 +16,24 @@
       "revId": "a14628013711891a600348b52153d9b36c2ba067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09e7910_3d094468",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-10-12T15:46:45Z",
+      "side": 1,
+      "message": "I don\u0027t believe so, but I don\u0027t know this code at all. The one case where this does happen is here: https://cs.chromium.org/chromium/src/content/browser/gpu/gpu_process_host.cc?q\u003dgpu_process_host\u0026dr\u003dCSs\u0026l\u003d408",
+      "parentUuid": "bfcb03df_4a3d04a0",
+      "revId": "a14628013711891a600348b52153d9b36c2ba067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
