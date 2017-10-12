@@ -16,6 +16,24 @@
       "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a2e9f6_ee457b67",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T02:27:40Z",
+      "side": 1,
+      "message": "Actually, I\u0027ve been told by tansell@ that the \u0027right\u0027 way to do this is to run it on the linux bot permanently, and deprecate the closure bot altogether.\n\nThe bots use gn analyze to figure out which targets need to build when a bot updates so this shouldn\u0027t be very expensive anymore. Further, this GN setup runs the closure compiler once per js_binary() target, rather than the n^2 setup we have currently with gyp.",
+      "parentUuid": "9469cfe9_c2e077f5",
+      "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
