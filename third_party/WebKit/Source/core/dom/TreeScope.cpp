@@ -196,7 +196,7 @@ HTMLMapElement* TreeScope::GetImageMap(const String& url) const {
 }
 
 static bool PointWithScrollAndZoomIfPossible(const Document& document,
-                                             IntPoint& point) {
+                                             DoublePoint& point) {
   LocalFrame* frame = document.GetFrame();
   if (!frame)
     return false;
@@ -204,41 +204,38 @@ static bool PointWithScrollAndZoomIfPossible(const Document& document,
   if (!frame_view)
     return false;
 
-  FloatPoint point_in_document(point);
-  point_in_document.Scale(frame->PageZoomFactor(), frame->PageZoomFactor());
-  point_in_document.Move(frame_view->GetScrollOffset());
-  IntPoint rounded_point_in_document = RoundedIntPoint(point_in_document);
+  point.Scale(frame->PageZoomFactor(), frame->PageZoomFactor());
+  point.Move(frame_view->GetScrollOffset());
 
-  if (!frame_view->VisibleContentRect().Contains(rounded_point_in_document))
+  if (!frame_view->VisibleContentRect().Contains(RoundedIntPoint(point)))
     return false;
 
-  point = rounded_point_in_document;
   return true;
 }
 
 HitTestResult HitTestInDocument(const Document* document,
-                                int x,
-                                int y,
+                                double x,
+                                double y,
                                 const HitTestRequest& request) {
-  IntPoint hit_point(x, y);
-  if (!PointWithScrollAndZoomIfPossible(*document, hit_point))
+  DoublePoint point(x, y);
+  if (!PointWithScrollAndZoomIfPossible(*document, point))
     return HitTestResult();
 
   if (!document->IsActive())
     return HitTestResult();
 
-  HitTestResult result(request, hit_point);
+  HitTestResult result(request, LayoutPoint(point));
   document->GetLayoutViewItem().HitTest(result);
   return result;
 }
 
-Element* TreeScope::ElementFromPoint(int x, int y) const {
+Element* TreeScope::ElementFromPoint(double x, double y) const {
   return HitTestPoint(x, y,
                       HitTestRequest::kReadOnly | HitTestRequest::kActive);
 }
 
-Element* TreeScope::HitTestPoint(int x,
-                                 int y,
+Element* TreeScope::HitTestPoint(double x,
+                                 double y,
                                  const HitTestRequest& request) const {
   HitTestResult result =
       HitTestInDocument(&RootNode().GetDocument(), x, y, request);
@@ -289,16 +286,17 @@ HeapVector<Member<Element>> TreeScope::ElementsFromHitTestResult(
   return elements;
 }
 
-HeapVector<Member<Element>> TreeScope::ElementsFromPoint(int x, int y) const {
+HeapVector<Member<Element>> TreeScope::ElementsFromPoint(double x,
+                                                         double y) const {
   Document& document = RootNode().GetDocument();
-  IntPoint hit_point(x, y);
-  if (!PointWithScrollAndZoomIfPossible(document, hit_point))
+  DoublePoint point(x, y);
+  if (!PointWithScrollAndZoomIfPossible(document, point))
     return HeapVector<Member<Element>>();
 
   HitTestRequest request(HitTestRequest::kReadOnly | HitTestRequest::kActive |
                          HitTestRequest::kListBased |
                          HitTestRequest::kPenetratingList);
-  HitTestResult result(request, hit_point);
+  HitTestResult result(request, LayoutPoint(point));
   document.GetLayoutViewItem().HitTest(result);
 
   return ElementsFromHitTestResult(result);
