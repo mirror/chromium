@@ -37,6 +37,14 @@
         -webkit-margin-end: 20px;
       }
 
+      #enable-section span {
+        font-weight: 500;
+      }
+
+      #enabled-text {
+        color: var(--google-blue-700);
+      }
+
       #container {
         height: 100%;
         overflow: overlay;
@@ -165,7 +173,9 @@
         </div>
         <div class="section continuation" id="enable-section">
           <div class="control-line">
-            <span>[[computeEnabledText_(data.*)]]</span>
+            <span id="[[computeEnabledStyle_(data.*)]]">
+              [[computeEnabledText_(data.*)]]
+            </span>
             <div class="layout horizontal">
               <cr-tooltip-icon hidden$="[[!data.controlledInfo]]"
                   tooltip-text="[[data.controlledInfo.text]]"
