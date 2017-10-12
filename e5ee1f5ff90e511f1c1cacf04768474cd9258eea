@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6729139a_ad8be9ee",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T17:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dda6374_f10795b9",
+      "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c1bad2_a77b5afb",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac9bce1_a65a82f0",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T17:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60c1bad2_a77b5afb",
+      "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8f7a8e2_58eb7c91",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T17:15:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e2a9d0_7ea2283c",
+      "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bf96318_278adcde",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "98d4d5fa_f338a721",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T17:15:25Z",
+      "side": 1,
+      "message": "Done. Also renamed the user_pref_service to user_prefs.",
+      "parentUuid": "2bf96318_278adcde",
+      "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71a6fda_1edfdbae",
         "filename": "ash/system/palette/palette_tray_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6c056a_837eaadb",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T17:15:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d71a6fda_1edfdbae",
+      "revId": "e5ee1f5ff90e511f1c1cacf04768474cd9258eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
