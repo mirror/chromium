@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0563a914_e47ed848",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-12T19:39:36Z",
+      "side": 1,
+      "message": "optional: What do you think about making the Delegate a set-once object, i.e., remove the Reset method and DCHECK |delegate_| is null before setting?",
+      "revId": "e5cdfce054ad177f6897fb2941703bff88827f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
