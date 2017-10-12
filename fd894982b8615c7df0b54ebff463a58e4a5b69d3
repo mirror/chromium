@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d98894_30a85952",
+        "filename": "mojo/public/tools/bindings/generators/mojom_java_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-12T23:09:02Z",
+      "side": 1,
+      "message": "I feel that these rules are too magical. Given \"HTTPEntry9E2EFooBar\" to human beings, they probably don\u0027t know what is the correct way to split either. :) Why \"E2EFoo\" should be grouped as \"E2E_Foo\", but not \"E2_E_Foo\"?\n\nI am not sure whether the following is a better approach, but I will throw it out for consideration:\n- If the name already has \"_\" in it, split using the \"_\".\n- Otherwise, split before each capital character.\n\nI think according to our style guide, people should always use XmlHttpRequest instead of XMLHTTPRequest anyway. So the rule-2 above should be good enough.\n\nhttps://google.github.io/styleguide/javaguide.html#s5.3-camel-case\n\nWDYT?",
+      "revId": "fd894982b8615c7df0b54ebff463a58e4a5b69d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
