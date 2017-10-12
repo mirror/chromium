@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84257699_ab1b9196",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "Question: Shouldn\u0027t that voice command key toggle voice interaction as well? What happens when the user presses it once to start it, and then presses it again?",
+      "range": {
+        "startLine": 654,
+        "startChar": 0,
+        "endLine": 657,
+        "endChar": 62
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c46ff2_923ec57f",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "case START_VOICE_INTERACTION:\ncase START_VOICE_INTERACTION_VOICE_COMMAND:\n  return CanHandleStartVoiceInteraction();",
+      "range": {
+        "startLine": 1078,
+        "startChar": 0,
+        "endLine": 1083,
+        "endChar": 46
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a00fafc_3aae023c",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "Can you add a comment explaining the difference between the two?",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d916a2_3db16c4f",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "Where is this coming from?",
+      "range": {
+        "startLine": 3693,
+        "startChar": 0,
+        "endLine": 3696,
+        "endChar": 9
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f945f157_58faa436",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "Assistant command?",
+      "range": {
+        "startLine": 425,
+        "startChar": 56,
+        "endLine": 425,
+        "endChar": 65
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af4fc89_49c65a9e",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "Assistant command?",
+      "range": {
+        "startLine": 425,
+        "startChar": 56,
+        "endLine": 425,
+        "endChar": 65
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e4b5da_7fa89981",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T17:25:08Z",
+      "side": 1,
+      "message": "I wonder if we should revert all these formatting changes to avoid messing up the git blame. I would leave that for the owner.",
+      "range": {
+        "startLine": 453,
+        "startChar": 47,
+        "endLine": 453,
+        "endChar": 48
+      },
+      "revId": "261827b310dcc40e213586c1e8c24ba67042a8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
