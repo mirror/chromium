@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb22c1de_e5739a53",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-12T05:05:46Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "b70adf88_6ab2a6bf",
+      "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e695ff54_3635a12c",
         "filename": "ash/display/cursor_window_controller.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T04:28:27Z",
       "side": 1,
       "message": "is this only for mash?",
+      "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816dd76f_05a917e3",
+        "filename": "ash/display/cursor_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-12T05:05:46Z",
+      "side": 1,
+      "message": "I think it is for not only mash according to the comment here:\nhttps://cs.chromium.org/chromium/src/ash/session/session_controller.h?type\u003dcs\u0026q\u003dGetActivePrefService\u0026l\u003d156",
+      "parentUuid": "e695ff54_3635a12c",
       "revId": "a1b09f66b03d951c54166030f4e92901e21a8fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
