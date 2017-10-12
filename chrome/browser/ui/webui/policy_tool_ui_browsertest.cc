@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/files/scoped_temp_dir.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
 #include "base/macros.h"
@@ -17,13 +18,25 @@
 #include "chrome/browser/ui/webui/policy_tool_ui_handler.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "ui/base/l10n/l10n_util.h"
+
+#include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/test_extension_system.h"
+#include "extensions/common/extension_builder.h"
+
+namespace {
+const char bookmarks_test_value[] =
+    "[{\"toplevel_name\": \"My managed bookmarks folder\"}, "
+    "{\"url\": \"google.com\", \"name\": \"Google\"}]";
+}
 
 class PolicyToolUITest : public InProcessBrowserTest {
  public:
@@ -61,8 +74,14 @@ class PolicyToolUITest : public InProcessBrowserTest {
   void SetPolicyValue(const std::string& policy_name,
                       const std::string& policy_value);
 
+  void SetUpOnMainThread() override;
+
+ protected:
+  base::ScopedTempDir downloads_directory_;
+
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
+
   DISALLOW_COPY_AND_ASSIGN(PolicyToolUITest);
 };
 
@@ -97,6 +116,13 @@ void PolicyToolUITest::SetUpInProcessBrowserTestFixture() {}
 void PolicyToolUITest::SetUp() {
   scoped_feature_list_.InitAndEnableFeature(features::kPolicyTool);
   InProcessBrowserTest::SetUp();
+}
+
+void PolicyToolUITest::SetUpOnMainThread() {
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  EXPECT_TRUE(downloads_directory_.CreateUniqueTempDir());
+  browser()->profile()->GetPrefs()->SetFilePath(
+      prefs::kDownloadDefaultDirectory, downloads_directory_.GetPath());
 }
 
 void PolicyToolUITest::LoadSession(const std::string& session_name) {
@@ -460,9 +486,7 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SessionTypeValidation) {
       *page->FindPath({"chromePolicies", "ImagesAllowedForUrls", "status"}));
 
   // Check that a dictionary is parsed correctly.
-  SetPolicyValue("ManagedBookmarks",
-                 "[{\"toplevel_name\": \"My managed bookmarks folder\"}, "
-                 "{\"url\": \"google.com\", \"name\": \"Google\"}]");
+  SetPolicyValue("ManagedBookmarks", bookmarks_test_value);
   page = ExtractPolicyValues(true);
   EXPECT_EQ(base::Value(l10n_util::GetStringUTF8(IDS_POLICY_OK)),
             *page->FindPath({"chromePolicies", "ManagedBookmarks", "status"}));
@@ -472,4 +496,92 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SessionTypeValidation) {
   page = ExtractPolicyValues(true);
   EXPECT_EQ(base::Value(l10n_util::GetStringUTF8(IDS_POLICY_TOOL_INVALID_TYPE)),
             *page->FindPath({"chromePolicies", "ManagedBookmarks", "status"}));
+}
+
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, ExportLinux) {
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::ScopedTempDir temp_dir_;
+  ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+
+  // Set up policy schema for extension.
+  const std::string newly_added_policy_name = "new_policy";
+  std::string json_data = "{\"type\": \"object\",\"properties\": {\"" +
+                          newly_added_policy_name +
+                          "\": { \"type\": \"string\"}}}";
+
+  const std::string schema_file = "schema.json";
+  base::FilePath schema_path = temp_dir_.GetPath().AppendASCII(schema_file);
+  base::WriteFile(schema_path, json_data.data(), json_data.size());
+
+  // Build extension.
+  extensions::DictionaryBuilder storage;
+  storage.Set("managed_schema", schema_file);
+
+  extensions::DictionaryBuilder manifest;
+  manifest.Set("name", "test")
+      .Set("version", "1")
+      .Set("manifest_version", 2)
+      .Set("storage", storage.Build());
+
+  extensions::ExtensionBuilder builder;
+  builder.SetPath(temp_dir_.GetPath());
+  builder.SetManifest(manifest.Build());
+
+  // Generate a valid extension id.
+  std::string extension_id = "";
+  for (int i = 0; i < 32; ++i)
+    extension_id += 'a';
+  builder.SetID(extension_id);
+
+  // Install extension.
+  ExtensionService* service =
+      extensions::ExtensionSystem::Get(browser()->profile())
+          ->extension_service();
+  service->OnExtensionInstalled(builder.Build().get(), syncer::StringOrdinal(),
+                                0);
+
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+
+  // Set policies of different data types.
+  SetPolicyValue("AllowDinosaurEasterEgg", "true");
+  SetPolicyValue("ImagesAllowedForUrls", "[\"a\", \"b\"]");
+
+  SetPolicyValue("ManagedBookmarks", bookmarks_test_value);
+  SetPolicyValue("new_policy", "string");
+
+  // Export policies in Linux format.
+  EXPECT_TRUE(
+      ExecuteScript(browser()->tab_strip_model()->GetActiveWebContents(),
+                    "$('export-linux').click();"));
+  // Wait for the backend to process policy values.
+  content::RunAllTasksUntilIdle();
+  // Wait for the policy.Page.downloadFile call to complete.
+  EXPECT_TRUE(
+      ExecuteScript(browser()->tab_strip_model()->GetActiveWebContents(), ""));
+  // Wait for the download to finish.
+  content::RunAllTasksUntilIdle();
+
+  std::string contents;
+  // TODO(urusant): create a constant for default filename, which is common for
+  // JS and test.
+  base::ReadFileToString(
+      downloads_directory_.GetPath().Append(FILE_PATH_LITERAL("policies.json")),
+      &contents);
+  std::unique_ptr<base::Value> linux_dict = base::JSONReader::Read(contents);
+  EXPECT_TRUE(linux_dict);
+
+  // Set up expected dictionary.
+  base::DictionaryValue expected;
+  expected.SetKey("AllowDinosaurEasterEgg", base::Value(true));
+  base::ListValue list_of_strings;
+  list_of_strings.GetList().push_back(base::Value("a"));
+  list_of_strings.GetList().push_back(base::Value("b"));
+  expected.SetKey("ImagesAllowedForUrls", std::move(list_of_strings));
+  std::unique_ptr<base::Value> bookmarks =
+      base::JSONReader::Read(bookmarks_test_value);
+  expected.SetKey("ManagedBookmarks", std::move(*bookmarks));
+  expected.SetPath({"3rdparty", "extensions", extension_id, "new_policy"},
+                   base::Value("string"));
+
+  EXPECT_EQ(expected, *linux_dict);
 }

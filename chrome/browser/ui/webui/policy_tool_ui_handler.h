@@ -31,6 +31,7 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void HandleLoadSession(const base::ListValue* args);
   void HandleUpdateSession(const base::ListValue* args);
   void HandleResetSession(const base::ListValue* args);
+  void HandleExportLinux(const base::ListValue* args);
 
   std::string ReadOrCreateFileCallback();
   void OnSessionContentsReceived(const std::string& contents);

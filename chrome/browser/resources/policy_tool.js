@@ -21,6 +21,14 @@ policy.Page.setSessionsList = function(sessions) {
   }
 };
 
+policy.Page.downloadFile = function(contents) {
+  var blob = new Blob([contents], {type: 'text/json'});
+  var link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = 'policies.json';
+  link.click();
+};
+
 // Override some methods of policy.Page.
 
 /**
@@ -108,6 +116,11 @@ policy.Page.prototype.initialize = function() {
     this.enableEditing();
     chrome.send('resetSession');
   };
+
+  $('export-linux').onclick = () => {
+    chrome.send('exportLinux', [this.getDictionary()]);
+  };
+
   // Notify the browser that the page has loaded, causing it to send the
   // list of all known policies and the values from the default session.
   chrome.send('initialized');

@@ -50,6 +50,9 @@ void PolicyToolUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "resetSession", base::Bind(&PolicyToolUIHandler::HandleResetSession,
                                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "exportLinux", base::Bind(&PolicyToolUIHandler::HandleExportLinux,
+                                base::Unretained(this)));
 }
 
 void PolicyToolUIHandler::OnJavascriptDisallowed() {
@@ -336,6 +339,47 @@ void PolicyToolUIHandler::HandleResetSession(const base::ListValue* args) {
                      base::Unretained(this), "{}"),
       base::BindOnce(&PolicyToolUIHandler::OnSessionUpdated,
                      callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PolicyToolUIHandler::HandleExportLinux(const base::ListValue* args) {
+  DCHECK_EQ(args->GetSize(), 1U);
+  base::DictionaryValue* values;
+  args->GetList()[0].DeepCopy()->GetAsDictionary(&values);
+  ParseAndCheckPolicyTypes(values);
+
+  base::DictionaryValue linux_policies;
+
+  // Convert chrome policies to the linux format.
+  base::Value* chromePolicies = values->FindKey("chromePolicies");
+  if (chromePolicies) {
+    for (const auto& policy : chromePolicies->DictItems()) {
+      if (!policy.second.FindKey("invalid")) {
+        base::Value* policy_value = policy.second.FindKey("value")->DeepCopy();
+        linux_policies.SetKey(policy.first, std::move(*policy_value));
+      }
+    }
+  }
+  // Convert extension policies to the linux format.
+  base::Value* extensionPolicies = values->FindKey("extensionPolicies");
+  if (extensionPolicies) {
+    for (const auto& extension : extensionPolicies->DictItems()) {
+      for (const auto& policy : extension.second.DictItems()) {
+        if (!policy.second.FindKey("invalid")) {
+          base::Value* policy_value =
+              policy.second.FindKey("value")->DeepCopy();
+          linux_policies.SetPath(
+              {"3rdparty", "extensions", extension.first, policy.first},
+              std::move(*policy_value));
+        }
+      }
+    }
+  }
+  std::string stringified_values;
+  base::JSONWriter::WriteWithOptions(
+      linux_policies, base::JSONWriter::Options::OPTIONS_PRETTY_PRINT,
+      &stringified_values);
+  CallJavascriptFunction("policy.Page.downloadFile",
+                         base::Value(stringified_values));
 }
 
 void PolicyToolUIHandler::ShowErrorMessageToUser(
