@@ -5,6 +5,7 @@
 #include <string>
 
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "content/child/child_process.h"
 #include "content/public/test/mock_render_thread.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -44,8 +45,10 @@ class PepperToVideoTrackAdapterTest : public PpapiUnittest {
   }
 
  protected:
-  // A ChildProcess and a MessageLoop are both needed to fool the Tracks and
-  // Sources inside |registry_| into believing they are on the right threads.
+  // A ScopedTaskEnvironment and a ChildProcess are both needed to fool the
+  // Tracks and Sources inside |registry_| into believing they are on the right
+  // threads.
+  const base::test::ScopedTaskEnvironment scoped_task_environment_;
   const ChildProcess child_process_;
   const MockRenderThread render_thread_;
   std::unique_ptr<MockMediaStreamRegistry> registry_;
