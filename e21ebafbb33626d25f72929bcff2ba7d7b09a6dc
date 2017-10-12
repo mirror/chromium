@@ -348,6 +348,30 @@
     },
     {
       "key": {
+        "uuid": "d976df98_fdaa8b7f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-12T02:49:33Z",
+      "side": 1,
+      "message": "Umm. I think it\u0027s done a tiny bit in Android? But not really anywhere other than that :/\n\n(I searched static_cast\u003cContentSettingsType\u003e and came up with pref_service_bridge.cc and an Android test.)",
+      "parentUuid": "60ef58e6_a1cdec31",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1c6429c_be7ef623",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
