@@ -58,6 +58,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/compositor/gpu_process_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
@@ -1388,6 +1389,8 @@ void BrowserMainLoop::InitializeMainThread() {
 int BrowserMainLoop::BrowserThreadsStarted() {
   TRACE_EVENT0("startup", "BrowserMainLoop::BrowserThreadsStarted");
 
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+
   // Bring up Mojo IPC and the embedded Service Manager as early as possible.
   // Initializaing mojo requires the IO thread to have been initialized first,
   // so this cannot happen any earlier than now.
@@ -1396,10 +1399,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   const bool is_mus = IsUsingMus();
 #if defined(USE_AURA)
   if (is_mus) {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kIsRunningInMash);
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kEnableSurfaceSynchronization);
+    command_line->AppendSwitch(switches::kIsRunningInMash);
+    command_line->AppendSwitch(switches::kEnableSurfaceSynchronization);
   }
 #endif
 
@@ -1410,10 +1411,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
 #if BUILDFLAG(ENABLE_VULKAN)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableVulkan)) {
+  if (command_line->HasSwitch(switches::kEnableVulkan))
     gpu::InitializeVulkan();
-  }
 #endif
 
   // Initialize the GPU shader cache. This needs to be initialized before
@@ -1465,7 +1464,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
   DCHECK(factory);
   if (!is_mus) {
-    ImageTransportFactory::Initialize(GetResizeTaskRunner());
+    ImageTransportFactory::SetFactory(
+        std::make_unique<GpuProcessTransportFactory>(GetResizeTaskRunner()));
     ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
         factory);
   }
