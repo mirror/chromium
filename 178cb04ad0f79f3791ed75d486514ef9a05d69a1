@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ad80a942_c23c7437",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-12T22:38:46Z",
+      "side": 1,
+      "message": "Correction: This is called by the base SafeBrowsingDatabaseManager class, and is used only for permissions\ncode for both local and remote database managers.\n\nIn the case of remote database manager, there\u0027s no DB on disk so the client_state will always be empty.\nIn the case of local database manager, this would incorrectly report the  client_states to be empty but it is going to be executed much less often than the URL reputation checks. I\u0027ll try to find a workaround.",
+      "parentUuid": "f309466f_027e3ab6",
+      "revId": "178cb04ad0f79f3791ed75d486514ef9a05d69a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e349bd6_ea804734",
         "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.h",
         "patchSetId": 1
