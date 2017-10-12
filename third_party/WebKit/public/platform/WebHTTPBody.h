@@ -36,6 +36,7 @@
 #include "WebNonCopyable.h"
 #include "WebString.h"
 #include "WebURL.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 
 #if INSIDE_BLINK
 #include "platform/wtf/RefPtr.h"
@@ -79,6 +80,8 @@ class WebHTTPBody {
   // Sets the values of the element at the given index. Returns false if
   // index is out of bounds.
   BLINK_PLATFORM_EXPORT bool ElementAt(size_t index, Element&) const;
+
+  BLINK_PLATFORM_EXPORT mojo::ScopedMessagePipeHandle AsMessagePipe() const;
 
   // Append to the list of elements.
   BLINK_PLATFORM_EXPORT void AppendData(const WebData&);

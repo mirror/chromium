@@ -14,7 +14,10 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
+#include "mojo/public/cpp/system/message_pipe.h"
+#include "storage/common/blob_storage/blob_handle.h"
 #include "storage/common/data_element.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "url/gurl.h"
 
 #if defined(OS_ANDROID)
@@ -60,11 +63,19 @@ class CONTENT_EXPORT ResourceRequestBody
                                  uint64_t length,
                                  const base::Time& expected_modification_time);
 
+  // The "elements" functions should not be used when NetworkService or
+  // MojoBlobs are enabled. Instead, SetBlob()/blob() should be used.
   const std::vector<Element>* elements() const { return &elements_; }
   std::vector<Element>* elements_mutable() { return &elements_; }
   void swap_elements(std::vector<Element>* elements) {
     elements_.swap(*elements);
   }
+
+  // Used only when NetworkService or MojoBlobs are enabled.
+  void SetBlob(storage::mojom::BlobPtr blob_ptr) {
+    blob_ = base::MakeRefCounted<storage::BlobHandle>(std::move(blob_ptr));
+  }
+  scoped_refptr<storage::BlobHandle> blob() { return blob_; }
 
   // Identifies a particular upload instance, which is used by the cache to
   // formulate a cache key.  This value should be unique across browser
@@ -88,6 +99,8 @@ class CONTENT_EXPORT ResourceRequestBody
   ~ResourceRequestBody();
 
   std::vector<Element> elements_;
+  // |blob_| is for NetworkService/MojoBlobs.
+  scoped_refptr<storage::BlobHandle> blob_;
   int64_t identifier_;
 
   bool contains_sensitive_info_;

@@ -12,6 +12,7 @@
 #include "modules/fetch/BytesConsumer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
+#include "storage/public/interfaces/blobs.mojom-blink.h"
 
 namespace blink {
 
@@ -83,6 +84,7 @@ class MODULES_EXPORT BlobBytesConsumer final : public BytesConsumer,
   Member<BytesConsumer> body_;
   Member<BytesConsumer::Client> client_;
   Member<ThreadableLoader> loader_;
+  storage::mojom::blink::BlobURLHandlePtr blob_url_handle_;
 
   PublicState state_ = PublicState::kReadableOrWaiting;
   // These two booleans are meaningful only when m_state is ReadableOrWaiting.
