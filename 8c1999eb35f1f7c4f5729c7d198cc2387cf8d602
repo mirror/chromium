@@ -71,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "10efb37f_3a2fb07b",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-12T06:02:15Z",
+      "side": 1,
+      "message": "nit: This can be simplified to:\n\n  for (MediaPlayerRenderer* player : players_)\n    player-\u003eOnUpdateAudioMutingState(muted);",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40ecbb6_50d61d86",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-12T06:02:15Z",
+      "side": 1,
+      "message": "If you switch to base::flat_set, iterators are invalidated on mutations. So, this should become:\n\n  for (MediaPlayerRenderer* player : players_)\n    player-\u003eOnWebContentsDestroyed();\n  players_.clear();",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71099716_c91dd7e1",
         "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
         "patchSetId": 4
@@ -82,6 +128,30 @@
       "writtenOn": "2017-10-12T01:41:01Z",
       "side": 1,
       "message": "I am not sure what the guidance is for std::set vs base::flat_set. Someone else to chime in?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75d64d2_f3ad0656",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-12T06:02:15Z",
+      "side": 1,
+      "message": "Based on the access pattern (in the .cc file), the operations you are using are: 1) insert element; 2) erase element; 3) iterate over all elements (but ordering does not matter).\n\n#1 and #2 do not occur frequently (e.g., in a call stack originating from any kind of tight loop). Therefore, you do not care much about their runtime complexity, assuming there are fewer than hundreds of elements in this set. FWIW, O(N) inserts/deletes when using std::vector are likely to perform *faster* than the O(lg N) inserts/deletes with std::set.\n\nTherefore, you want std::vector. So, use base::flat_set since it is a std::vector with a \"std::set-like\" interface on top.\n\nDocumentation/Advice: https://cs.chromium.org/chromium/src/base/containers/README.md",
+      "parentUuid": "71099716_c91dd7e1",
       "range": {
         "startLine": 34,
         "startChar": 2,
