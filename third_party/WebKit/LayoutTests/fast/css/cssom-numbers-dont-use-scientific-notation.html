@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<body></body>
+<script>
+test(() => {
+  var units = ["%", "em", "ex", "rem", "ch", "px", "cm", "mm", "q", "in", "pt", "pc", "vw", "vh", "vmin", "vmax"];
+  for (var i = 0; i < units.length; i++) {
+    var value = "1000990.797"+units[i];
+    document.body.style.height = value;
+    assert_equals(document.body.style.height, value);
+  }
+  for (var i = 0; i < units.length; i++) {
+    var value = "1000990.79785698"+units[i];
+    var expected_value = "1000990.797857"+units[i];
+    document.body.style.height = value;
+    assert_equals(document.body.style.height, expected_value);
+  }
+  for (var i = 0; i < units.length; i++) {
+    var value = (1/500)+units[i];
+    document.body.style.height = value;
+    assert_equals(document.body.style.height, value);
+  }
+  for (var i = 0; i < units.length; i++) {
+    var value = (1)+units[i];
+    document.body.style.height = value;
+    assert_equals(document.body.style.height, value);
+  }
+}, "Numbers in CSSOM shouldn't use scientific notation.");
+</script>
