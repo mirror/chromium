@@ -39,12 +39,13 @@ void IdlenessDetector::DomContentLoadedEventFired() {
   OnDidLoadResource();
 }
 
-void IdlenessDetector::OnWillSendRequest() {
+void IdlenessDetector::OnWillSendRequest(ResourceFetcher* fetcher) {
   if (!local_frame_)
     return;
 
-  int request_count =
-      local_frame_->GetDocument()->Fetcher()->ActiveRequestCount();
+  // When OnWillSendRequest is called, the new loader hasn't been added to the
+  // fetcher, thus we need to add 1 as the total request count.
+  int request_count = fetcher->ActiveRequestCount() + 1;
   // If we are above the allowed number of active requests, reset timers.
   if (network_2_quiet_ >= 0 && request_count > 2)
     network_2_quiet_ = 0;

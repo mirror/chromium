@@ -14,6 +14,7 @@
 namespace blink {
 
 class LocalFrame;
+class ResourceFetcher;
 
 // IdlenessDetector observes network request count everytime a load is
 // finshed after DOMContentLoadedEventEnd is fired, and emit network almost idle
@@ -30,7 +31,7 @@ class CORE_EXPORT IdlenessDetector
 
   void Shutdown();
   void DomContentLoadedEventFired();
-  void OnWillSendRequest();
+  void OnWillSendRequest(ResourceFetcher*);
   void OnDidLoadResource();
 
   DECLARE_TRACE();
