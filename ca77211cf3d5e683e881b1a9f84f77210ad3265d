@@ -277,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "bb63323e_35df4102",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T20:22:09Z",
+      "side": 1,
+      "message": "Per offline discussion, JS styleguide seems to propose adding the comment after the parameter, with spaces and without the \"\u003d\" sign. See [1].\n\n\n[1] https://google.github.io/styleguide/jsguide.html#formatting-block-comment-style",
+      "parentUuid": "59fcf19b_3bf66e34",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011a9151_3186d7e1",
         "filename": "chrome/test/data/webui/settings/site_data_test.js",
         "patchSetId": 3
