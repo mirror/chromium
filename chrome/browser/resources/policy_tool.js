@@ -21,6 +21,20 @@ policy.Page.setSessionsList = function(sessions) {
   }
 };
 
+/**
+ * Asks for the session name and sends it to backend.
+ * @param{boolean} initial Indicates whether this is a first attempt or a retry.
+ * @param{string} backendMessage Message that should be sent to backend.
+ */
+policy.Page.sessionNameDialog = function(initial, backendMessage) {
+  var message = loadTimeData.getString(
+      'promptSessionName' + (initial ? '' : 'Retry') + 'Message');
+  var sessionName = prompt(message, 'session');
+  if (sessionName) {
+    chrome.send(backendMessage, [sessionName]);
+  }
+};
+
 // Override some methods of policy.Page.
 
 /**
@@ -108,6 +122,17 @@ policy.Page.prototype.initialize = function() {
     this.enableEditing();
     chrome.send('resetSession');
   };
+
+  $('delete-session-button').onclick = () => {
+    var sessionName = $('session-list').value;
+    if (sessionName) {
+      chrome.send('deleteSession', [sessionName]);
+    }
+  };
+
+  $('create-session-button').onclick =
+      policy.Page.sessionNameDialog.bind(true, 'createSession');
+
   // Notify the browser that the page has loaded, causing it to send the
   // list of all known policies and the values from the default session.
   chrome.send('initialized');

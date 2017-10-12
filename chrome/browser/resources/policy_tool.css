@@ -34,8 +34,18 @@ tbody.value-editing-on .value {
 
 #session-list {
   background: white;
+  height: 100%;
 }
 
 #saving span {
   font-weight: bold;
+}
+
+#session-actions {
+  float: left;
+}
+
+#session-actions button {
+  display: block;
+  width: 100%;
 }
