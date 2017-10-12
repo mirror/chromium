@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "172e392c_b4272d20",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T19:10:19Z",
+      "side": 1,
+      "message": "Can we just make this a DCHECK or CHECK?  Is there any valid reason we shouldn\u0027t call or reset this?",
+      "revId": "4a8561c8582e314d68a2ab41a12698c5da6aed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
