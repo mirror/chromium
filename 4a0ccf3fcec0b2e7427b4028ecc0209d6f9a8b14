@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5d0177_e79aeb4e",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T15:41:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to introduce use of gmock.  It makes test code much more obscure and less self-contained.  I\u0027m certainly not qualified to review any code that uses it (And I\u0027ve even introduced uses of it myself in the past), so it makes code much less accessible.",
+      "range": {
+        "startLine": 802,
+        "startChar": 6,
+        "endLine": 802,
+        "endChar": 19
+      },
+      "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
