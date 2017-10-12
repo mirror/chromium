@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73bd3b8f_27f7d19f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-12T21:36:57Z",
+      "side": 1,
+      "message": "would be nice to figure out a way to avoid all this code duplication for the observers as a follow up...",
+      "revId": "b7b20cab3336dea3f34fdc8a63c18edfe557bcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
