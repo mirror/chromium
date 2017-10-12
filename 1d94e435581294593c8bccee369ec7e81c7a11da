@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f6fb05_2f2af536",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T16:05:24Z",
+      "side": 1,
+      "message": "How about a using instead?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
