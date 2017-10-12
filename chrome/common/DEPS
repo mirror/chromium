@@ -55,4 +55,9 @@ specific_include_rules = {
   "service_process_util.*": [
     "+mojo/edk/embedder",
   ],
+  "origin_manifest/origin_manifest_url_loader_throttle.cc": [
+    "+chrome/browser/profiles/profile_io_data.h",
+    "+content/public/browser/browser_thread.h",
+    "+content/public/browser/resource_context.h",
+  ],
 }
