@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74dd9891_58f14dd2",
+        "filename": "chrome/browser/resources/bluetooth_internals/bluetooth_internals.css",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "Just button.show-all-properties is not working.\nSo i increased specificity by adding as below:\nbutton[id^\u003dsow-all-properties-].show-all-properties.\nWith the above change, it is working.",
+      "parentUuid": "61e86fc7_de1909ba",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fc87388_332a3636",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T19:37:36Z",
       "side": 1,
       "message": "I still don\u0027t understand why waiting is necessary. The DOM gets updated synchronously by all operations above this line.\n\nCan you explain the error you are seeing when simply calling this.setupShowAllButton() here, without setTimeout() ?",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682f6386_b105b8f6",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "I have updated the comment.\nBy simply calling this.setupShowAllButton(), $(this.createShowAllButtonId())\nis returned as undefined. Hence setTimeOut is required.",
+      "parentUuid": "2fc87388_332a3636",
       "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "220cbe8f_60370dac",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9be70d_afbed347",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63569db_b1805f96",
         "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T19:37:36Z",
       "side": 1,
       "message": "What is the point of making this member private, if both a setter and a getter are exposing it publicly?",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dfc55b_5a53963e",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "removed the private comment.",
+      "parentUuid": "f63569db_b1805f96",
       "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,48 @@
       "writtenOn": "2017-10-11T19:37:36Z",
       "side": 1,
       "message": "if (!value \u0026\u0026 !this.showAll_)\n  return;\n\n// Do stuff here",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49c7c78_a71c65e1",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02bf67ac_5d52d30a",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 17
+      },
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f60d3df_931bb6cd",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-12T08:42:09Z",
+      "side": 1,
+      "message": "Applied more specific check with type(value) \u003d\u003d\u003d boolean.\nThis ensures only boolean values will be handled.",
+      "parentUuid": "c21b3875_8f5f6c2e",
       "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
