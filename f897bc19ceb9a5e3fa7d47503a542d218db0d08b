@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48e59bb1_55e9be11",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdcdbc6f_388ea4ef",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e07bf342_7655b124",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d17ee8e_3f06f60a",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e07bf342_7655b124",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a44b33aa_f92a3639",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f08d54_f8930e0a",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "931fb599_a03df644",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "508739ef_8b4e055c",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931fb599_a03df644",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "754ca264_35aa7b35",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-10T21:30:32Z",
       "side": 1,
       "message": "Use a while loop instead of eliding the ++device_it",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abb8d37_a75ded85",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "That would require declaration of device_it out of scope of the loop. Its more readable and easier to get context when kept in a for loop.",
+      "parentUuid": "754ca264_35aa7b35",
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "f0bcc222_b58d3c13",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be1bae1_e394e81e",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98be873d_8dd8c746",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -135,6 +243,24 @@
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec22e28_58d4907f",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "It is required that the touch device be associated to some display for its events to propagate down to the windows event dispatcher. Its easier and cleaner (that is without adding hacky dependencies) to keep it associated in the beginning and let the user re-associate when needed.",
+      "parentUuid": "98be873d_8dd8c746",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "6dc4b72e_682ecc2e",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0bac6e0_1dab678a",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f40c8f6_01f30bde",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 10
@@ -166,6 +310,24 @@
       "writtenOn": "2017-10-10T21:30:32Z",
       "side": 1,
       "message": "Update comment. Why do we no longer remove from |displays|? Maybe it\u0027d be better to maintain two lists, paired and unpaired display lists? I\u0027m worried that not removing from |displays| will introduce subtle bugs since it is not obvious.",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07df1288_52b38ead",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "A single display can have multiple touch devices associated with it. So we cannot delete the displays during the process.",
+      "parentUuid": "4f40c8f6_01f30bde",
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +348,24 @@
       "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bafc59_d856dadc",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T04:13:14Z",
+      "side": 1,
+      "message": "Yes. The entire concept of TouchCalibrationData needs to have a file and util class of its own. This will be done in future cleanup that has no functional change.",
+      "parentUuid": "ae1d1665_e212b517",
+      "revId": "f897bc19ceb9a5e3fa7d47503a542d218db0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
