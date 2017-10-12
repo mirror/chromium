@@ -1,0 +1,838 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Based on the grammar provided here: https://goo.gl/svLze7
+// Most top level definitions here (mostly messages, but also the enum "h", is
+// named after a rule or token in the grammar. The messages that aren't were
+// implemented to hack around shortcomings in the protobuf format (such as
+// "StringCharOrQuote"). These can be identified because they are preceded by
+// a comment that says "Not in grammar".
+
+syntax = "proto2";
+
+package css_parser_proto_fuzzer;
+
+// Tokens
+// TODO(metzman): Implement CDO, CDC, UNICODERANGE, and range.
+// The following tokens are implmented in code and do not have their own
+// message: INCLUDES, DASHMATCH, HASH, STRING IMPORT_SYM, PAGE_SYM, MEDIA_SYM,
+// FONT_FACE_SYM, CHARSET_SYM, NAMESPACE_SYM, IMPORTANT_SYM, EMS, EXS, NUMBER,
+// and PERCENTAGE.
+// DIMEN not implemented since it isnt used in any production.
+
+// This is named "h" because it represents the "h" token in the grammar this is
+// based off of.
+enum H {
+  ZERO = 48;
+  ONE = 49;
+  TWO = 50;
+  THREE = 51;
+  FOUR = 52;
+  FIVE = 53;
+  SIX = 54;
+  SEVEN = 55;
+  EIGHT = 56;
+  NINE = 57;
+  A_UPPER = 65;
+  B_UPPER = 66;
+  C_UPPER = 67;
+  D_UPPER = 68;
+  E_UPPER = 69;
+  F_UPPER = 70;
+  A_LOWER = 97;
+  B_LOWER = 98;
+  C_LOWER = 99;
+  D_LOWER = 100;
+  E_LOWER = 101;
+  F_LOWER = 102;
+}
+
+// TODO(metzman): Add "nonascii" token from grammar.
+
+message Unicode {
+  required H ascii_value_1 = 1;
+  optional H ascii_value_2 = 2;
+  optional H ascii_value_3 = 3;
+  optional H ascii_value_4 = 4;
+  optional H ascii_value_5 = 5;
+  optional H ascii_value_6 = 6;
+  optional UnrepeatedW unrepeated_w = 7;
+}
+
+// unicode | '\' [#x20-#x7E#x80-#xD7FF#xE000-#xFFFD#x10000-#x10FFFF]
+message Escape {
+  // #x20-#x7E
+  enum AsciiValue {
+    SPACE = 32;
+    EXCLAMATION_POINT = 33;
+    DOUBLE_QUOTE = 34;
+    HASH = 35;
+    DOLLAR = 36;
+    PERCENT = 37;
+    AMPERSAND = 38;
+    APOSTROPHE = 39;
+    OPEN_PAREN = 40;
+    CLOSE_PAREN = 41;
+    STAR = 42;
+    PLUS = 43;
+    COMMA = 44;
+    MINUS = 45;
+    DOT = 46;
+    SLASH = 47;
+    ZERO = 48;
+    ONE = 49;
+    TWO = 50;
+    THREE = 51;
+    FOUR = 52;
+    FIVE = 53;
+    SIX = 54;
+    SEVEN = 55;
+    EIGHT = 56;
+    NINE = 57;
+    COLON = 58;
+    SEMI_COLON = 59;
+    LESS_THAN = 60;
+    EQUAL = 61;
+    GREATER_THAN = 62;
+    QUESTION = 63;
+    AT_SIGN = 64;
+    A_UPPER = 65;
+    B_UPPER = 66;
+    C_UPPER = 67;
+    D_UPPER = 68;
+    E_UPPER = 69;
+    F_UPPER = 70;
+    G_UPPER = 71;
+    H_UPPER = 72;
+    I_UPPER = 73;
+    J_UPPER = 74;
+    K_UPPER = 75;
+    L_UPPER = 76;
+    M_UPPER = 77;
+    N_UPPER = 78;
+    O_UPPER = 79;
+    P_UPPER = 80;
+    Q_UPPER = 81;
+    R_UPPER = 82;
+    S_UPPER = 83;
+    T_UPPER = 84;
+    U_UPPER = 85;
+    V_UPPER = 86;
+    W_UPPER = 87;
+    X_UPPER = 88;
+    Y_UPPER = 89;
+    Z_UPPER = 90;
+    OPEN_BRACKET = 91;
+    BACKSLASH = 92;
+    CLOSE_BRACKET = 93;
+    CARET = 94;
+    UNDERSCORE = 95;
+    BACKTICK = 96;
+    A_LOWER = 97;
+    B_LOWER = 98;
+    C_LOWER = 99;
+    D_LOWER = 100;
+    E_LOWER = 101;
+    F_LOWER = 102;
+    G_LOWER = 103;
+    H_LOWER = 104;
+    I_LOWER = 105;
+    J_LOWER = 106;
+    K_LOWER = 107;
+    L_LOWER = 108;
+    M_LOWER = 109;
+    N_LOWER = 110;
+    O_LOWER = 111;
+    P_LOWER = 112;
+    Q_LOWER = 113;
+    R_LOWER = 114;
+    S_LOWER = 115;
+    T_LOWER = 116;
+    U_LOWER = 117;
+    V_LOWER = 118;
+    W_LOWER = 119;
+    X_LOWER = 120;
+    Y_LOWER = 121;
+    Z_LOWER = 122;
+    OPEN_CURLY_BRACE = 123;
+    PIPE = 124;
+    CLOSE_CURLY_BRACE_ = 125;
+    TILDE = 126;
+  }
+
+  oneof rhs {
+    Unicode unicode = 1;
+    AsciiValue ascii_value = 2;
+  }
+  // TODO(metzman): determine if we care about unicode points not covered here.
+}
+
+message Nmstart {
+  enum AsciiValue {
+    A_UPPER = 65;
+    B_UPPER = 66;
+    C_UPPER = 67;
+    D_UPPER = 68;
+    E_UPPER = 69;
+    F_UPPER = 70;
+    G_UPPER = 71;
+    H_UPPER = 72;
+    I_UPPER = 73;
+    J_UPPER = 74;
+    K_UPPER = 75;
+    L_UPPER = 76;
+    M_UPPER = 77;
+    N_UPPER = 78;
+    O_UPPER = 79;
+    P_UPPER = 80;
+    Q_UPPER = 81;
+    R_UPPER = 82;
+    S_UPPER = 83;
+    T_UPPER = 84;
+    U_UPPER = 85;
+    V_UPPER = 86;
+    W_UPPER = 87;
+    X_UPPER = 88;
+    Y_UPPER = 89;
+    Z_UPPER = 90;
+    A_LOWER = 97;
+    B_LOWER = 98;
+    C_LOWER = 99;
+    D_LOWER = 100;
+    E_LOWER = 101;
+    F_LOWER = 102;
+    G_LOWER = 103;
+    H_LOWER = 104;
+    I_LOWER = 105;
+    J_LOWER = 106;
+    K_LOWER = 107;
+    L_LOWER = 108;
+    M_LOWER = 109;
+    N_LOWER = 110;
+    O_LOWER = 111;
+    P_LOWER = 112;
+    Q_LOWER = 113;
+    R_LOWER = 114;
+    S_LOWER = 115;
+    T_LOWER = 116;
+    U_LOWER = 117;
+    V_LOWER = 118;
+    W_LOWER = 119;
+    X_LOWER = 120;
+    Y_LOWER = 121;
+    Z_LOWER = 122;
+  }
+
+  oneof rhs {
+    AsciiValue ascii_value = 1;
+    Escape escape = 2;
+    // TODO(metzman): Add nonascii token once (if) I implement it.
+  }
+}
+
+message Nmchar {
+  enum AsciiValue {
+    MINUS = 45;
+    ZERO = 48;
+    ONE = 49;
+    TWO = 50;
+    THREE = 51;
+    FOUR = 52;
+    FIVE = 53;
+    SIX = 54;
+    SEVEN = 55;
+    EIGHT = 56;
+    NINE = 57;
+    A_UPPER = 65;
+    B_UPPER = 66;
+    C_UPPER = 67;
+    D_UPPER = 68;
+    E_UPPER = 69;
+    F_UPPER = 70;
+    G_UPPER = 71;
+    H_UPPER = 72;
+    I_UPPER = 73;
+    J_UPPER = 74;
+    K_UPPER = 75;
+    L_UPPER = 76;
+    M_UPPER = 77;
+    N_UPPER = 78;
+    O_UPPER = 79;
+    P_UPPER = 80;
+    Q_UPPER = 81;
+    R_UPPER = 82;
+    S_UPPER = 83;
+    T_UPPER = 84;
+    U_UPPER = 85;
+    V_UPPER = 86;
+    W_UPPER = 87;
+    X_UPPER = 88;
+    Y_UPPER = 89;
+    Z_UPPER = 90;
+    A_LOWER = 97;
+    B_LOWER = 98;
+    C_LOWER = 99;
+    D_LOWER = 100;
+    E_LOWER = 101;
+    F_LOWER = 102;
+    G_LOWER = 103;
+    H_LOWER = 104;
+    I_LOWER = 105;
+    J_LOWER = 106;
+    K_LOWER = 107;
+    L_LOWER = 108;
+    M_LOWER = 109;
+    N_LOWER = 110;
+    O_LOWER = 111;
+    P_LOWER = 112;
+    Q_LOWER = 113;
+    R_LOWER = 114;
+    S_LOWER = 115;
+    T_LOWER = 116;
+    U_LOWER = 117;
+    V_LOWER = 118;
+    W_LOWER = 119;
+    X_LOWER = 120;
+    Y_LOWER = 121;
+    Z_LOWER = 122;
+  }
+  oneof rhs {
+    AsciiValue ascii_value = 1;
+    Escape escape = 2;
+    // TODO(metzman): Add nonascii token once (if) I implement it.
+  }
+}
+
+// string1, string2 and string
+message String {
+  // TODO(metzman): determine if these hacks are more efficient than enforcing
+  // constraints on string types in the actual code.
+  required bool use_single_quotes = 1;
+  repeated StringCharOrQuote string_char_quotes = 2;
+}
+
+// Not in grammar.
+message StringCharOrQuote {
+  enum QuoteChar {
+    UNSET = 0;
+    IS_SET = 1;
+  }
+  oneof rhs {
+    StringChar string_char = 2;
+    QuoteChar quote_char = 1;
+  }
+}
+
+message StringChar {
+  enum Space {
+    UNSET = 0;
+    IS_SET = 1;
+  }
+  oneof rhs {
+    UrlChar url_char = 1;
+    Space space = 2;
+    // '\' nl
+    Nl nl = 3;
+  }
+}
+
+message Ident {
+  optional bool starting_minus = 1 [default = false];  // -
+  required Nmstart nmstart = 2;
+  repeated Nmchar nmchars = 3;
+}
+
+message Name {
+  required Nmchar first_nmchar = 1;
+  repeated Nmchar later_nmchars = 2;
+}
+
+message Num {
+  oneof rhs {
+    float float_value = 1;
+    sint64 signed_int_value = 2;
+  }
+}
+
+message UrlChar {
+  enum AsciiValue {
+    NUL = 0;
+    // #x9
+    HT = 9;
+
+    // #x21
+    EXCLAMATION_POINT = 33;
+
+    // #x23-#x26
+    HASH = 35;
+    DOLLAR = 36;
+    PERCENT = 37;
+    AMPERSAND = 38;
+
+    // #x26-#x27
+    APOSTROPHE = 39;
+    OPEN_PAREN = 40;
+    CLOSE_PAREN = 41;
+    STAR = 42;
+    PLUS = 43;
+    COMMA = 44;
+    MINUS = 45;
+    DOT = 46;
+    SLASH = 47;
+    ZERO = 48;
+    ONE = 49;
+    TWO = 50;
+    THREE = 51;
+    FOUR = 52;
+    FIVE = 53;
+    SIX = 54;
+    SEVEN = 55;
+    EIGHT = 56;
+    NINE = 57;
+    COLON = 58;
+    SEMI_COLON = 59;
+    LESS_THAN = 60;
+    EQUAL = 61;
+    GREATER_THAN = 62;
+    QUESTION = 63;
+    AT_SIGN = 64;
+    A_UPPER = 65;
+    B_UPPER = 66;
+    C_UPPER = 67;
+    D_UPPER = 68;
+    E_UPPER = 69;
+    F_UPPER = 70;
+    G_UPPER = 71;
+    H_UPPER = 72;
+    I_UPPER = 73;
+    J_UPPER = 74;
+    K_UPPER = 75;
+    L_UPPER = 76;
+    M_UPPER = 77;
+    N_UPPER = 78;
+    O_UPPER = 79;
+    P_UPPER = 80;
+    Q_UPPER = 81;
+    R_UPPER = 82;
+    S_UPPER = 83;
+    T_UPPER = 84;
+    U_UPPER = 85;
+    V_UPPER = 86;
+    W_UPPER = 87;
+    X_UPPER = 88;
+    Y_UPPER = 89;
+    Z_UPPER = 90;
+    OPEN_BRACKET = 91;
+    BACKSLASH = 92;
+    CLOSE_BRACKET = 93;
+    CARET = 94;
+    UNDERSCORE = 95;
+    BACKTICK = 96;
+    A_LOWER = 97;
+    B_LOWER = 98;
+    C_LOWER = 99;
+    D_LOWER = 100;
+    E_LOWER = 101;
+    F_LOWER = 102;
+    G_LOWER = 103;
+    H_LOWER = 104;
+    I_LOWER = 105;
+    J_LOWER = 106;
+    K_LOWER = 107;
+    L_LOWER = 108;
+    M_LOWER = 109;
+    N_LOWER = 110;
+    O_LOWER = 111;
+    P_LOWER = 112;
+    Q_LOWER = 113;
+    R_LOWER = 114;
+    S_LOWER = 115;
+    T_LOWER = 116;
+    U_LOWER = 117;
+    V_LOWER = 118;
+    W_LOWER = 119;
+    X_LOWER = 120;
+    Y_LOWER = 121;
+    Z_LOWER = 122;
+    OPEN_CURLY_BRACE = 123;
+    PIPE = 124;
+    CLOSE_CURLY_BRACE_ = 125;
+    TILDE = 126;
+  }
+  oneof rhs {
+    AsciiValue ascii_value = 1;
+    Escape escape = 2;
+    // TODO(metzman): nonascii
+  }
+}
+
+message W {
+  repeated UnrepeatedW unrepeated_w = 1;
+}
+
+// Not in grammar
+message UnrepeatedW {
+  enum AsciiValue {
+    // #x9 ('\t')
+    HT = 9;
+    // #xA ('\n')
+    LF = 10;
+    // #xC ('\f')
+    FF = 12;
+    // #xD ('\r')
+    CR = 13;
+    // #x20 (' ')
+    SPACE = 32;
+  }
+  required AsciiValue ascii_value = 1;
+}
+
+message Nl {
+  enum NewlineKind {
+    // #xA ('\n')
+    LF = 10;
+    // #xD #xA ('\r\n') Pseudo value, since we don't need SOH
+    CR_LF = 1;
+    // #xD ('\r')
+    CR = 13;
+    // #xC ('\f')
+    FF = 12;
+  }
+  required NewlineKind newline_kind = 1;
+}
+
+// {num}[px|cm|mm|in|pt|pc]
+message Length {
+  enum Unit {
+    PX = 1;
+    CM = 2;
+    MM = 3;
+    IN = 4;
+    PT = 5;
+    PC = 6;
+  }
+  required Num num = 1;
+  required Unit unit = 2;
+}
+
+// {num}[deg|rad|grad]
+message Angle {
+  enum Unit {
+    DEG = 1;
+    RAD = 2;
+    GRAD = 3;
+  }
+  required Num num = 1;
+  required Unit unit = 2;
+}
+
+// {num}[ms|s]
+message Time {
+  enum Unit {
+    MS = 1;
+    S = 2;
+  }
+  required Num num = 1;
+  required Unit unit = 2;
+}
+
+// {num}[Hz|kHz]
+message Freq {
+  enum Unit {
+    _HZ = 1;  // Hack around really dumb build bug
+    KHZ = 2;
+  }
+  required Num num = 1;
+  required Unit unit = 2;
+}
+
+message Uri {
+  // "url(" w (string | url* ) w ")"
+  // TODO(metzman): Add url token once (if) I implement it.
+  required String value = 1;
+}
+
+// FUNCTION. Not named Function to avoid conflict.
+message FunctionToken {
+  required Ident ident = 1;
+}
+// end tokens
+
+// rules
+// TODO(metzman): Add rules for @apply, @keyframes (including -webkit-keyframes), @viewport, @supports.
+message StyleSheet {
+  optional CharsetDeclaration charset_declaration = 1;
+  repeated Import imports = 2;
+  repeated Namespace namespaces = 3;
+  repeated RulesetOrMediaOrPageOrFontFace ruleset_media_page_font_faces = 4;
+}
+
+// Not in grammar.
+message CharsetDeclaration {
+  required String string = 2;
+}
+
+// Not in grammar.
+message RulesetOrMediaOrPageOrFontFace {
+  oneof rhs {
+    Ruleset ruleset = 1;
+    Media media = 2;
+    Page page = 3;
+    FontFace font_face = 4;
+  }
+}
+
+message Import {
+  oneof rhs {
+    Uri uri = 1;
+    String string = 2;
+  }
+  optional MediumList medium_list = 3;
+}
+
+// Not in grammar.
+message MediumList {
+  required Medium first_medium = 1;
+  repeated Medium later_mediums = 2;
+}
+
+message Namespace {
+  optional NamespacePrefix namespace_prefix = 1;
+  oneof rhs {
+    String string = 2;
+    Uri uri = 3;
+  }
+}
+
+// TODO(metzman): Determine if this is unnecessary.
+message NamespacePrefix {
+  required Ident ident = 1;
+}
+
+message Media {
+  required MediumList medium_list = 1;
+  repeated Ruleset rulesets = 2;
+}
+
+// TODO(metzman): Determine if this is unnecessary.
+message Medium {
+  required Ident ident = 1;
+}
+
+message Page {
+  optional Ident ident = 1;
+  optional PseudoPage pseudo_page = 2;
+  required DeclarationList declaration_list = 3;
+}
+
+// Not in grammar.
+message DeclarationList {
+  required Declaration first_declaration = 1;
+  repeated Declaration later_declarations = 2;
+}
+
+// TODO(metzman): Determine if this is unnecessary.
+message PseudoPage {
+  required Ident ident = 1;
+}
+
+message FontFace {
+  required DeclarationList declaration_list = 1;
+}
+
+message Operator {
+  enum AsciiValue {
+    COMMA = 44;
+    SLASH = 47;
+  }
+  optional AsciiValue ascii_value = 1;
+}
+
+message Combinator {
+  enum AsciiValue {
+    PLUS = 43;
+    GREATER_THAN = 62;
+  }
+  optional AsciiValue ascii_value = 1;
+}
+
+message UnaryOperator {
+  enum AsciiValue {
+    PLUS = 43;
+    MINUS = 45;
+  }
+  required AsciiValue ascii_value = 1;
+}
+
+// TODO(metzman): Determine if this is unnecessary.
+message Property {
+  required Ident ident = 1;
+}
+
+message Ruleset {
+  required SelectorList selector_list = 1;
+  required DeclarationList declaration_list = 2;
+}
+
+// Not in grammar.
+message SelectorList {
+  required Selector first_selector = 1;
+  repeated Selector later_selectors = 2;
+}
+
+message Selector {
+  required SimpleSelector simple_selector = 1;
+  repeated CombinatorAndSimpleSelector combinator_simple_selectors = 2;
+}
+
+// Not in grammar.
+message CombinatorAndSimpleSelector {
+  required Combinator combinator = 1;
+  required SimpleSelector simple_selector = 2;
+}
+
+message SimpleSelector {
+  optional ElementName element_name = 1;
+  repeated HashOrClassOrAttribOrPseudo hash_class_attrib_pseudos = 2;
+}
+
+// Not in grammar.
+message HashOrClassOrAttribOrPseudo {
+  oneof rhs {
+    Name hash = 1;  // "#"
+    _Class _class = 2;
+    Attrib attrib = 3;
+    Pseudo pseudo = 4;
+  }
+}
+
+// Not in grammar. Not named Class to avoid confusion with class keyword in c++.
+message _Class {
+  required Ident ident = 1;
+}
+
+message ElementName {
+  // Since setting a bool is cheap, don't use oneof.
+  required bool star = 1;
+  optional Ident ident = 2;
+}
+
+message Attrib {
+  required Ident ident = 1;
+  // [ [ '=' | INCLUDES | DASHMATCH ] S*
+  // [ IDENT | STRING ] S* ]?
+  optional AttribPartTwo attrib_part_two = 2;
+}
+
+message AttribPartTwo {
+  enum EqualOrIncludesOrDashmatch {
+    EQUAL = 1;
+    INCLUDES = 2;
+    DASHMATCH = 3;
+  }
+  required EqualOrIncludesOrDashmatch equal_includes_dashmatch = 1;
+  oneof rhs {
+    Ident ident = 4;
+    String string = 5;
+  }
+}
+
+message Pseudo {
+  oneof rhs {
+    Ident ident_1 = 1;
+    FunctionToken function_token = 2;
+  }
+  required Ident ident_2 = 3;
+}
+
+message Declaration {
+  // property ':' S* expr prio? | /* empty */
+  optional NonEmptyDeclaration nonempty_declaration = 1;
+}
+
+message NonEmptyDeclaration {
+  enum Prio {
+    UNSET = 0;
+    IS_SET = 1;
+  }
+  required Property property = 1;
+  required Expr expr = 2;
+  optional Prio prio = 3;
+}
+
+message Expr {
+  required Term term = 1;
+  repeated OperatorTerm operator_terms = 2;
+}
+
+// Not in grammar.
+message OperatorTerm {
+  required Operator _operator = 1;
+  required Term term = 2;
+}
+
+message Term {
+  optional UnaryOperator unary_operator = 1;
+  oneof rhs {
+    //  [ NUMBER S* | PERCENTAGE S* | LENGTH S* | EMS S* | EXS S* | ANGLE S* |
+    // TIME S* | FREQ S* | function ]
+    TermPart term_part = 2;
+    // | STRING
+    String string = 3;
+  }
+  // S* | IDENT S* | URI S* | UNICODERANGE S* | hexcolor
+  optional Ident ident = 4;
+  optional Uri uri = 5;
+  // TODO(metzman): Add UNICODERANGE token once (if) I implement it.
+  optional Hexcolor hexcolor = 6;
+}
+
+// Not in grammar.
+message TermPart {
+  // NUMBER
+  required Num number = 1;
+  // S* | PERCENTAGE
+  optional Num percentage = 2;  // num "%"
+  // S* | LENGTH
+  optional Length length = 3;
+  optional Num ems = 4;  // {num}em
+  optional Num exs = 5;  // {num}ex
+  optional Angle angle = 6;
+  optional Time time = 7;
+  optional Freq freq = 8;
+  optional Function function = 9;
+}
+
+message Function {
+  required FunctionToken function_token = 1;
+  required Expr expr = 2;
+}
+
+message Hexcolor {
+  required HexcolorThree first_three = 1;
+  optional HexcolorThree last_three = 2;
+}
+
+// Not in grammar.
+message HexcolorThree {
+  // 0-9A-Za-z
+  required H ascii_value_1 = 1;
+  required H ascii_value_2 = 2;
+  required H ascii_value_3 = 3;
+}
+
+message Input {
+  enum CSSParserMode {
+    kHTMLStandardMode = 0;
+    kHTMLQuirksMode = 1;
+    kSVGAttributeMode = 2;
+    kCSSViewportRuleMode = 3;
+    kCSSFontFaceRuleMode = 4;
+    kUASheetMode = 5;
+  }
+  required CSSParserMode css_parser_mode = 1;
+  required bool defer_property_parsing = 2;
+  required StyleSheet style_sheet = 3;
+  required bool is_dynamic_profile = 4;
+}
