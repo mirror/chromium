@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "350c4840_4e423d02",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-12T17:42:38Z",
+      "side": 1,
+      "message": "This is done via Finch, right? So the comment is not right and is likely to change without being revisited.",
+      "revId": "84767feaf95609c5b24c2bb818177af648fbe825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
