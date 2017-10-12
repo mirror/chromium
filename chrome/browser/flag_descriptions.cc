@@ -209,6 +209,10 @@ const char kDisplayList2dCanvasDescription[] =
     "Enables the use of display lists to record 2D canvas commands. This "
     "allows 2D canvas rasterization to be performed on separate thread.";
 
+const char kStackedTabsName[] = "Stacked tabs";
+const char kStackedTabsDescription[] =
+    "Enables dynamic tab sizing for touch users.";
+
 const char kDistanceFieldTextName[] = "Distance field text";
 const char kDistanceFieldTextDescription[] =
     "Text is rendered with signed distance fields rather than bitmap alpha "

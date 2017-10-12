@@ -159,6 +159,9 @@ extern const char kDisallowDocWrittenScriptsUiDescription[];
 extern const char kDisplayList2dCanvasName[];
 extern const char kDisplayList2dCanvasDescription[];
 
+extern const char kStackedTabsName[];
+extern const char kStackedTabsDescription[];
+
 extern const char kDistanceFieldTextName[];
 extern const char kDistanceFieldTextDescription[];
 

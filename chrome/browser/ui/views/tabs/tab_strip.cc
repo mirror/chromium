@@ -69,12 +69,6 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/non_client_view.h"
 
-#if defined(OS_WIN)
-#include "ui/display/win/screen_win.h"
-#include "ui/gfx/win/hwnd_util.h"
-#include "ui/views/win/hwnd_util.h"
-#endif
-
 using base::UserMetricsAction;
 using ui::DropTargetEvent;
 
