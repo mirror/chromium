@@ -165,6 +165,8 @@ const AcceleratorData kAcceleratorData[] = {
     // Voice Interaction shortcuts.
     {true, ui::VKEY_A, ui::EF_COMMAND_DOWN, START_VOICE_INTERACTION},
     {true, ui::VKEY_ASSISTANT, ui::EF_NONE, START_VOICE_INTERACTION},
+    {true, ui::VKEY_ASSISTANT_VOICE_COMMAND, ui::EF_NONE,
+     START_VOICE_INTERACTION_VOICE_COMMAND},
 
     // Debugging shortcuts that need to be available to end-users in
     // release builds.
