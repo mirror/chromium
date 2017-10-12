@@ -16,6 +16,24 @@
       "revId": "1121994bbaadacfdc0e3e9211eeb348c74d067b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b6cd3f_8057252a",
+        "filename": "components/cronet/ios/test/cronet_perf_test_base.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-10-12T17:50:19Z",
+      "side": 1,
+      "message": "Currently CronetPerfTestBase is completely identical to CronetTestBase - they will handle parallel requests differently.  However, it\u0027s probably not worth having both until that ability to implemented, so I\u0027m removing CronetPerfTestBase for now and will put it back in a future CL.",
+      "parentUuid": "591f8e52_e5d3606d",
+      "revId": "1121994bbaadacfdc0e3e9211eeb348c74d067b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
