@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6117084f_665140ff",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-12T22:45:46Z",
+      "side": 1,
+      "message": "should be !Array, as we never expect to get null from the C++",
+      "range": {
+        "startLine": 104,
+        "startChar": 25,
+        "endLine": 104,
+        "endChar": 30
+      },
+      "revId": "cc495440117a29b44d5c2d2cbcbc679f8982465a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
