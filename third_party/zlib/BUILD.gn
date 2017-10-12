@@ -137,6 +137,15 @@ static_library("zlib") {
     }
   }
 
+  # TODO: enable arm64, see crbug.com/754929.
+  if (current_cpu == "arm" && arm_arch == "armv8-a+crc") {
+    sources += [
+      "armv8_crc32.c",
+      "armv8_crc32.h",
+    ]
+    defines = [ "USE_ARMV8_CRC32" ]
+  }
+
   defines = []
   deps = []
 
@@ -162,9 +171,7 @@ static_library("zlib") {
 
   public_configs = [ ":zlib_config" ]
 
-  deps += [
-    ":zlib_x86_simd"
-  ]
+  deps += [ ":zlib_x86_simd" ]
 }
 
 config("minizip_warnings") {
