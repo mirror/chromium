@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fa09dab_404264c7",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-12T00:24:14Z",
+      "side": 1,
+      "message": "i\u0027m not at all sure that this is safe for decoding.  we usually connect MediaCodec to an Android Surface, and never touch the decoded data directly.  we just move the index around.\n\ndoing this might cause all sorts of copying of data.  i base that on some work i did a year or so ago, where i tried to do something with the buffer data.  that\u0027s more than just the copy that you\u0027re making explicitly below.\n\nplus, it\u0027s almost certainly not going to work as intended if this is a secure decoder (e.g., for protected content).",
+      "revId": "fd12bc8802ef6cede94d486c1377016b4e367494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327ec181_aba1efe3",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-12T00:24:14Z",
+      "side": 1,
+      "message": "this can be an enormous amount of data.",
+      "revId": "fd12bc8802ef6cede94d486c1377016b4e367494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
