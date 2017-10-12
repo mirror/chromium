@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d729db9_106e4abf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-12T10:16:16Z",
+      "side": 1,
+      "message": "Ack :)",
+      "parentUuid": "3ddd47de_9cec7e47",
+      "range": {
+        "startLine": 227,
+        "startChar": 54,
+        "endLine": 227,
+        "endChar": 91
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b5bac9_f94553c2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ec7a48_9f405c76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-12T10:16:16Z",
+      "side": 1,
+      "message": "Noted on my TODO list, will explore next week.",
+      "parentUuid": "c2b5bac9_f94553c2",
+      "range": {
+        "startLine": 609,
+        "startChar": 17,
+        "endLine": 609,
+        "endChar": 44
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc0addb9_711b5262",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-12T10:16:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a99b77_e1ac9fa5",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ea1484_d4a690ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5c71b8ae_f7db15fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-12T10:16:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1ea1484_d4a690ba",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a5fcdd3_a126dae2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dee8084_5efd0987",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-12T10:16:16Z",
+      "side": 1,
+      "message": "Indeed sir!",
+      "parentUuid": "1a5fcdd3_a126dae2",
+      "range": {
+        "startLine": 47,
+        "startChar": 29,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
