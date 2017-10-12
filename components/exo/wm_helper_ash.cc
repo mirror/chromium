@@ -135,6 +135,10 @@ double WMHelperAsh::GetDefaultDeviceScaleFactor() const {
   return 1.0f;
 }
 
+bool WMHelperAsh::IsClassicAsh() const {
+  return ash::Shell::GetAshConfig() == ash::Config::CLASSIC;
+}
+
 void WMHelperAsh::OnWindowActivated(
     wm::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
