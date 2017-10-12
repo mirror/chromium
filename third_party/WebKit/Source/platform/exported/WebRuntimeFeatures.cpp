@@ -280,6 +280,10 @@ void WebRuntimeFeatures::EnableScriptedSpeech(bool enable) {
   RuntimeEnabledFeatures::SetScriptedSpeechEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableSimpleUserActivation(bool enable) {
+  RuntimeEnabledFeatures::SetSimpleUserActivationEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableSkipCompositingSmallScrollers(bool enable) {
   RuntimeEnabledFeatures::SetSkipCompositingSmallScrollersEnabled(enable);
 }
