@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d4ca51_3925faaa",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:58:15Z",
+      "side": 1,
+      "message": "Nit: Should this forward the printerId parameter, and check it at line 326?",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa9f71d_bdc1a0dc",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:58:15Z",
+      "side": 1,
+      "message": "Not sure why this is necessary. The setup() function is executed one before each test, which means that there is always a fresh new instance of TestCupsPrintersBrowserProxy.",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fc6612_7ad479a1",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:58:15Z",
+      "side": 1,
+      "message": "Why is this necessary? The next call to setup() will create a new cupsPrintersBrowserProxy instance anyway.",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d057fc_63969d9f",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T23:58:15Z",
+      "side": 1,
+      "message": "|usbInfo| is now (accidentally?) overriding the |usbInfo| at line 285, and this can lead to subtle bugs. In fact, I would suggest to change every \u0027var\u0027 in this file to \u0027let\u0027 to ensure that this can\u0027t happen (it will result in a runtime error instead of silently shadowing).\n\nSee more at https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#let-Block_Scoped-Variables.\n\nAlso you can probably use\nassertDeepEquals(usbInfo, printer.printerUsbInfo);\ninstead of comparing fields one by one.",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
