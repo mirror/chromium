@@ -34,6 +34,24 @@
       "revId": "99659a4e2f6b173f221dea1940b0719238263320",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2580279_9a060345",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-12T16:36:13Z",
+      "side": 1,
+      "message": "Ah, yeah, that does work -- they wind up as 0640, which is sufficient. Switched to that, as it\u0027s a bit cleaner imo. Using copyfile instead of copy is still kinda nuanced, as you mentioned, so I\u0027ve rephrased the comment as well.",
+      "parentUuid": "0b6fb0e9_7c939087",
+      "revId": "99659a4e2f6b173f221dea1940b0719238263320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
