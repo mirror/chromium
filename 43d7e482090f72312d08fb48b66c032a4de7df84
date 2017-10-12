@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c1462c08_a93d242d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T16:09:11Z",
+      "side": 1,
+      "message": "I thought it was only a warning these days and not an error (i.e. an warning on upload but wouldn\u0027t block the CQ).",
+      "parentUuid": "dcd76fcd_cedfd2ce",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "43d7e482090f72312d08fb48b66c032a4de7df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ed7d0b_6f5b5d6e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "For waitForTabs() INVALID_TAB_ID means \"don\u0027t check active tab id\". Perhaps it\u0027s not very intuitive.",
       "parentUuid": "62ed7d0b_6f5b5d6e",
+      "range": {
+        "startLine": 147,
+        "startChar": 39,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "43d7e482090f72312d08fb48b66c032a4de7df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc0bad4_4680b7f6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T16:09:11Z",
+      "side": 1,
+      "message": "Ack...that is fine.  One thing to be cautious of is the tab count though where it has a tab to restore from a previous run and now you\u0027d have two tabs on startup causing your test to fail.  First, I think in those cases it is more of a test framework issue and not the test, but tests can be a bit more tolerant by tracking tab count deltas instead of the expected initial count (i.e. do you really care that there was only 1 tab in the original CTA or do you want to check that the tab count goes from X to X-1).  I wouldn\u0027t worry too much about it for now, but if it gives us grief we can investigate something like that.",
+      "parentUuid": "86058998_65549a5f",
       "range": {
         "startLine": 147,
         "startChar": 39,
