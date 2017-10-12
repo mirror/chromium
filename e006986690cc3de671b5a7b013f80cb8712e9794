@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f774c3b5_90af010b",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-12T13:17:47Z",
+      "side": 1,
+      "message": "I\u0027m having this take a UIViewController\u003cTabSwitcher\u003e because I\u0027d like to move the animation out of MainController and into the individual VCs.  Otherwise I\u0027ll end up in a situation where MC has to trigger the animation only when the experiment is off.\n\nLonger-term, the animation will be run only if someone sets the appropriate transition delegates on the child VC.  But we\u0027re not there yet.",
+      "revId": "e006986690cc3de671b5a7b013f80cb8712e9794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
