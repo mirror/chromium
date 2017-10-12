@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f80b8d_061e79e0",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "This needs to be marked as optional now. {number\u003d}, same for count.",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3869202c_efa6a9bf",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "IIUC having a fixed ID inside an iron-list \u003ctemplate\u003e/\u003cdom-repeat\u003e will end up generating multiple elements with identical IDs in the same DOM tree. Do we do this elsewhere? This is generally not a suggested practice (and I think there can be unspecified behavior triggered by it).\n\nCan we convert those IDs to CSS classes instead?",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa07373_f9180fdf",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "Can we specify the type of data this array holds? !Array\u003cFooType\u003e",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853db7ad_251574fb",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "What is the type of this member variable? We lose all type coverage where this variable is involved if this is not specified to the compiler.",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b827b5_57134eaf",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "extendSiteList_ does not exist anymore.",
+      "range": {
+        "startLine": 128,
+        "startChar": 26,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c6b937_c827e08e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "Instead of adding a comment for this, can we enforce it in code? \n\nassert(!this.pendingUpdate_);\nthis.pendingUpdate_ \u003d this.browserProxy_.getDisplayList(...).then((listInfo) \u003d\u003e {\n  this.pendingUpdate_ \u003d null;  \n  this.sites \u003d listInfo.items;\n  this.fire(\u0027site-data-list-complete\u0027);\n});",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d618c33_2ce1b680",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "I am assuming this is passing compilation, because the compiler does not know the type of |browserProxy_|. See my other related comment in local_data_browser_proxy.js.",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011a9151_3186d7e1",
+        "filename": "chrome/test/data/webui/settings/site_data_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:55:05Z",
+      "side": 1,
+      "message": "Can you use eventToPromise() instead [1]? Then the test will look more similar to our other async tests, without the need for using done(), as follows:\n\nlet promise \u003d eventToPromise(\u0027site-data-list-complete\u0027, siteData).then(() \u003d\u003e {\n  ...\n  retrun testBrowserProxy.whenCalled(\u0027removeItem\u0027);\n}).then(() \u003d\u003e {\n  assertEquals(\u0027Hello\u0027, path);\n});\n\ntestBrowserProxy.setCookieList(sites);\ndocument.body.appendChild(siteData);\nsettings.navigateTo(settings.routes.SITE_SETTINGS_SITE_DATA);\nreturn promise;\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/test_util.js?l\u003d40",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
