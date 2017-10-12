@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d86fa6d0_896215c8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T00:04:16Z",
+      "side": 1,
+      "message": "this looks quite, quite odd.  I would say this is definitely not good git cl formatting.  Can we undo this and potentially file a clang format bug for this?",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "43d7e482090f72312d08fb48b66c032a4de7df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ed7d0b_6f5b5d6e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T00:04:16Z",
+      "side": 1,
+      "message": "were you testing with chrome home enabled?  pre-chrome home, an NTP would have a valid tab ID.  Or are there no tabs at all in the old chrome world?\n\nI think in general, we potentially shouldn\u0027t rely on the invalid tab id, but we should just make sure it isn\u0027t the googleTabId.  In the event we started creating other tabs as part of startup, this could flake if it selected some other previously existing tab.",
+      "range": {
+        "startLine": 147,
+        "startChar": 39,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "43d7e482090f72312d08fb48b66c032a4de7df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
