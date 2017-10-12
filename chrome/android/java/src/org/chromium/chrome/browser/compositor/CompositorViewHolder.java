@@ -505,7 +505,7 @@ public class CompositorViewHolder extends FrameLayout
     @Override
     public void onBottomControlsHeightChanged(int bottomControlsHeight) {
         if (mTabVisible == null || mTabVisible.getContentViewCore() == null) return;
-        mTabVisible.getContentViewCore().setBottomControlsHeight(bottomControlsHeight);
+        mTabVisible.setBottomControlsHeight(bottomControlsHeight);
     }
 
     @Override
@@ -826,7 +826,7 @@ public class CompositorViewHolder extends FrameLayout
                     assert content.isAlive();
                     content.getContainerView().setVisibility(View.VISIBLE);
                     if (mFullscreenManager != null) {
-                        mFullscreenManager.updateContentViewViewportSize(content);
+                        mFullscreenManager.updateViewportSizeForTab(getCurrentTab());
                     }
                 }
 
@@ -918,9 +918,9 @@ public class CompositorViewHolder extends FrameLayout
      */
     private void initializeContentViewCore(ContentViewCore contentViewCore) {
         contentViewCore.setCurrentTouchEventOffsets(0.f, 0.f);
-        contentViewCore.setTopControlsHeight(getTopControlsHeightPixels(),
-                contentViewCore.doBrowserControlsShrinkBlinkSize());
-        contentViewCore.setBottomControlsHeight(getBottomControlsHeightPixels());
+        WebContents webContents = contentViewCore.getWebContents();
+        mCompositorView.setControlsHeight(
+                webContents, getTopControlsHeightPixels(), getBottomControlsHeightPixels());
 
         adjustPhysicalBackingSize(contentViewCore,
                 mCompositorView.getWidth(), mCompositorView.getHeight());

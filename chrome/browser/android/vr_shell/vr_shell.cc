@@ -528,6 +528,16 @@ void VrShell::OnPhysicalBackingSizeChanged(
   web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
 }
 
+void VrShell::OnSizeChanged(JNIEnv* env,
+                            const JavaParamRef<jobject>& obj,
+                            const JavaParamRef<jobject>& jweb_contents,
+                            jint width,
+                            jint height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetNativeView()->OnSizeChanged(width, height);
+}
+
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            const JavaParamRef<jobject>& object,
                                            jint width,

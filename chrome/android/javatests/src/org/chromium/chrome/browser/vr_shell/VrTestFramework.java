@@ -8,6 +8,7 @@ import org.junit.Assert;
 
 import org.chromium.base.Log;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
@@ -49,9 +50,9 @@ public class VrTestFramework {
     private static final String TAG = "VrTestFramework";
     static final String TEST_DIR = "chrome/test/data/android/webvr_instrumentation";
 
-    private ChromeActivityTestRule mRule;
-    private WebContents mFirstTabWebContents;
-    private ContentViewCore mFirstTabCvc;
+    private final ChromeActivityTestRule mRule;
+    private final WebContents mFirstTabWebContents;
+    private final ContentViewCore mFirstTabCvc;
 
     /**
      * Must be constructed after the rule has been applied (e.g. in whatever method is
@@ -66,6 +67,10 @@ public class VrTestFramework {
 
     public WebContents getFirstTabWebContents() {
         return mFirstTabWebContents;
+    }
+
+    public Tab getFirstTab() {
+        return mRule.getActivity().getActivityTab();
     }
 
     public ContentViewCore getFirstTabCvc() {

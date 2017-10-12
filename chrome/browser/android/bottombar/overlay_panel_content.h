@@ -32,6 +32,11 @@ class OverlayPanelContent {
   // Called by the Java OverlayPanelContent when it is being destroyed.
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
+  void OnSizeChanged(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     const base::android::JavaParamRef<jobject>& jweb_contents,
+                     jint width,
+                     jint height);
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
