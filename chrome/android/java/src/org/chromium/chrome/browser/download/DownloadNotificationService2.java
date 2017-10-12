@@ -228,7 +228,7 @@ public class DownloadNotificationService2 {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, true, isTransient));
-        // TODO(jming): do we want to handle the pending option in a different manner?
+
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.IN_PROGRESS, notificationId,
                 notification);
@@ -299,7 +299,9 @@ public class DownloadNotificationService2 {
             return;
         }
         // If download is already paused, do nothing.
-        if (entry != null && !entry.isAutoResumable) return;
+        if (entry != null && !entry.isAutoResumable) {
+            return;
+        }
         boolean canDownloadWhileMetered = entry == null ? false : entry.canDownloadWhileMetered;
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
