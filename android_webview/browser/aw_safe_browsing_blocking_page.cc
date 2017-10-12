@@ -104,12 +104,13 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     ErrorUiType errorType =
         static_cast<ErrorUiType>(ui_manager->GetErrorUiType(unsafe_resource));
 
-    AwSafeBrowsingBlockingPage* blocking_page = new AwSafeBrowsingBlockingPage(
-        ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
-        unsafe_resources,
-        CreateControllerClient(web_contents, unsafe_resources, ui_manager,
-                               pref_service),
-        display_options, errorType);
+    std::unique_ptr<AwSafeBrowsingBlockingPage> blocking_page =
+        base::WrapUnique(new AwSafeBrowsingBlockingPage(
+            ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
+            unsafe_resources,
+            CreateControllerClient(web_contents, unsafe_resources, ui_manager,
+                                   pref_service),
+            display_options, errorType));
     blocking_page->Show();
   }
 }
