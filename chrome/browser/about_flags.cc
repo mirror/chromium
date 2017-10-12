@@ -3504,6 +3504,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordSelectionDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(password_manager::features::kEnablePasswordSelection)},
 
+    {"stacked-tabs", flag_descriptions::kStackedTabsName,
+     flag_descriptions::kStackedTabsDescription, kOsWin,
+     ENABLE_DISABLE_VALUE_TYPE(switches::kEnableStackedTabs,
+                               switches::kDisableStackedTabs)},
+
     {"enable-html-base-username-detector",
      flag_descriptions::kHtmlBasedUsernameDetectorName,
      flag_descriptions::kHtmlBasedUsernameDetectorDescription, kOsAll,

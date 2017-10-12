@@ -87,6 +87,12 @@ const char kTopChromeMDMaterial[] = "material";
 // mouse/touch hybrid devices.
 const char kTopChromeMDMaterialHybrid[] = "material-hybrid";
 
+// Enable stacked tabs for |kStackedTabs| switch.
+const char kEnableStackedTabs[] = "enable-stacked-tabs";
+
+// Disable stacked tabs for |kStackedTabs| switch.
+const char kDisableStackedTabs[] = "disable-stacked-tabs";
+
 // Classic, non-material, mode for the |kTopChromeMD| switch.
 const char kTopChromeMDNonMaterial[] = "non-material";
 

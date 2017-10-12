@@ -46,6 +46,7 @@
 #include "net/base/filename_util.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "ui/base/models/list_selection_model.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/gfx/image/image.h"
 #include "ui/views/controls/menu/menu_runner.h"
 #include "ui/views/widget/widget.h"
@@ -84,6 +85,11 @@ bool DetermineTabStripLayoutStacked(PrefService* prefs, bool* adjust_layout) {
 #if defined(OS_CHROMEOS)
   *adjust_layout = true;
   return prefs->GetBoolean(prefs::kTabStripStackedLayout);
+#elif defined(OS_WIN)
+  if (base::FeatureList::IsEnabled(switches::kEnableStackedTabs)) {
+    *adjust_layout = true;
+    return prefs->GetBoolean(prefs::kTabStripStackedLayout);
+  }
 #else
   return false;
 #endif
