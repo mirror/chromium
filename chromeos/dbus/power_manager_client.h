@@ -19,7 +19,7 @@
 namespace power_manager {
 class PowerManagementPolicy;
 class PowerSupplyProperties;
-}
+}  // namespace power_manager
 
 namespace chromeos {
 
