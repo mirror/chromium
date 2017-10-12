@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cde4a71_43a67d7d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:23:44Z",
+      "side": 1,
+      "message": "Done.  Wasn\u0027t sure if that was worth the effort or not.",
+      "parentUuid": "6f51731a_f5f75411",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bce26da1_acc9024b",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-11T20:04:47Z",
       "side": 1,
       "message": "Why CREATE_ALWAYS if the file\u0027s just been created?  My concern is implementations that implement that if the file is already there by deleting, which might result in a race with Other Entities doing the creation.  (I don\u0027t know of any implementations that do that, just brainstorming.)",
+      "range": {
+        "startLine": 440,
+        "startChar": 56,
+        "endLine": 440,
+        "endChar": 74
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c213b041_de2ac53c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:23:44Z",
+      "side": 1,
+      "message": "The API contract is that file handles are always closed before CreateTemporaryFile returns.  If they weren\u0027t, we\u0027d have other races dealing with them creating/us openning, unless they created synchronously, closed asynchronously, but also didn\u0027t prevent us from deleting at any point (Since we could learn we fail and try to delete the file, before a delete task completes).\n\nSo...erm, anyways, I think we\u0027re fine here.  We could probably do open_existing in the temp file case, but I don\u0027t think we get anything out of it, and I\u0027m paranoid.",
+      "parentUuid": "bce26da1_acc9024b",
       "range": {
         "startLine": 440,
         "startChar": 56,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "82ebda64_8c0a4a45",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:23:44Z",
+      "side": 1,
+      "message": "But then we\u0027d need an execute method, so I\u0027m not sure it gets us much.  I suppose we could take a struct with all parameters, instead of setters/getters on the class (And it could even have the ResourceRequest, actually), and then just make the method take that, as long as we guarantee not to invoke any callbacks synchronously.  I\u0027m not particularly opposed to this, just not sure how much it gets us.",
+      "parentUuid": "b4550943_bddcfba4",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f588c26b_e46125b2",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-11T20:04:47Z",
       "side": 1,
       "message": "It\u0027s a shared directory that\u0027s wholly owned by this test, right?  So you could compare the file list pre/post test?",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc24ebd_229f126a",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:23:44Z",
+      "side": 1,
+      "message": "CreateTempFile always uses the same temp directory on a given system, so if multiple tests are run in parallel, or anything else left something in that directory, that doesn\u0027t work.  If we took a temp directory (Made with CreateTempDirectory()), and then called CreateTempFile using that directory, we could do that, but that changes the API, and if something wants a temp file, presumably it prefers it in \"the\" temp directory.",
+      "parentUuid": "f588c26b_e46125b2",
       "range": {
         "startLine": 256,
         "startChar": 16,
