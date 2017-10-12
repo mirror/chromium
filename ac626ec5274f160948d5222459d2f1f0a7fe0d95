@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56bea7a0_1bf54007",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this name a bit clearer, e.g., this never actually sets any connection handlers.",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c9d219_bdb1d170",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "Would it be possible to just fwd-declare this here?",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9172258f_16a6b696",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "It looks like nothing else is calling this. Can we just inline this at the sole call site?",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7190f143_c94fda22",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: payment? ;-)",
+      "range": {
+        "startLine": 57,
+        "startChar": 63,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36221cdb_b010693e",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: Blank line before.",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07888a8_16b30f4b",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "Have you thought about passing input parameters by value and moving the arguments at call sites?",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9746a402_0e469887",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33da63f1_c05722f0",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "I am thinking how we could structure this logic a bit more. Primarily, I want to avoid having all our parameters with so generic types as vector\u003cuint8_t\u003e, as well as output parameters.\n\nHave you considered grouping attributes that semantically belong together into classes, and adding member functions to parse from and serialize to various formats (U2F, WebAuthN)?\n\nFor example, we could introduce a RegisterResponseData (or AttestationData depending on which terminology you prefer) class, which would contain members |key_handle|, |attestation_certificate|, |signature|, |public_key|, in some fitting representation.\n\nThen we could have an AuthenticatorData which could be created From(AttestationData, rp id), and would provide a member function to serialize in WebAuthN format?\n\nThese classes would be non-copyable and potentially movable if that\u0027s needed.",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d33e11_9f2c64d9",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "I think it would be super helpful to either have some simple ASCII art to visualise this, or to link to the diagram you sent me.",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512c05e3_29eca2f1",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: For the sake of tidiness, if you are planning to use these in tests, let\u0027s put them in a \"internal\" or \"impl\" namespace. If not, let\u0027s move them to the .cc file in an unnamed namespace.\n\nThe same goes for the methods that are here for testing only, not because they are part of the interface.",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa531eb_7b2848a8",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: Do we still need this forwarder call? Can we just inline it in the sole call site?",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6496beb5_9ac50ca2",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: Do we need these symbols to be accessible outside of content/?",
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ba6dec_256a78fb",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-12T17:28:41Z",
+      "side": 1,
+      "message": "nit: client_data_json",
+      "range": {
+        "startLine": 34,
+        "startChar": 52,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "ac626ec5274f160948d5222459d2f1f0a7fe0d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
