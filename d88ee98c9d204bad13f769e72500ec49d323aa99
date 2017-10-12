@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2530321_40d80ea2",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-12T16:22:21Z",
+      "side": 0,
+      "message": "I think this is a case where we should reject the clang formatting since it\u0027s messing up the alignment with the column headers and creating a bunch of extra diffed lines. Would you mind restoring the old formatting?",
+      "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

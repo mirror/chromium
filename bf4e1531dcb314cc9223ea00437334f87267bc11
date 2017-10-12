@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae7e981_a9834bbf",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-12T16:22:21Z",
+      "side": 1,
+      "message": "This method is called both when entering and exiting fullscreen mode. Since the outcome isn\u0027t dependent on the fullscreen state, it looks to me like this should be moved to InitCommandState next to the other commands that are always set to enabled.",
+      "revId": "bf4e1531dcb314cc9223ea00437334f87267bc11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
