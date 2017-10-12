@@ -488,8 +488,10 @@ size_t ImagePlanes::RowBytes(int i) const {
 }
 
 void ImageDecoder::SetEmbeddedColorProfile(const char* icc_data,
-                                           unsigned icc_length) {
-  sk_sp<SkColorSpace> color_space = SkColorSpace::MakeICC(icc_data, icc_length);
+                                           unsigned icc_length,
+                                           SkColorSpace::ICCTypeFlag icc_type) {
+  sk_sp<SkColorSpace> color_space =
+      SkColorSpace::MakeICC(icc_data, icc_length, icc_type);
   if (!color_space)
     DLOG(ERROR) << "Failed to parse image ICC profile";
   SetEmbeddedColorSpace(std::move(color_space));

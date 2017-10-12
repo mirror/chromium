@@ -313,7 +313,8 @@ void WEBPImageDecoder::ReadColorProfile() {
       reinterpret_cast<const char*>(chunk_iterator.chunk.bytes);
   size_t profile_size = chunk_iterator.chunk.size;
 
-  SetEmbeddedColorProfile(profile_data, profile_size);
+  SetEmbeddedColorProfile(profile_data, profile_size,
+                          SkColorSpace::kRGB_ICCTypeFlag);
 
   WebPDemuxReleaseChunkIterator(&chunk_iterator);
 }
