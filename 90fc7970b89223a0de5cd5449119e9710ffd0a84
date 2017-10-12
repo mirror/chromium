@@ -16,6 +16,24 @@
       "revId": "90fc7970b89223a0de5cd5449119e9710ffd0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94345e34_b83e17da",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T02:00:37Z",
+      "side": 1,
+      "message": "Err, I meant std::set\u003cint64_t\u003e",
+      "parentUuid": "3fd1c225_86b96468",
+      "revId": "90fc7970b89223a0de5cd5449119e9710ffd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
