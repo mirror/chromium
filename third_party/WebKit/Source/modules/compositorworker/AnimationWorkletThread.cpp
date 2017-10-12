@@ -82,7 +82,10 @@ WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
                "AnimationWorkletThread::createWorkerGlobalScope");
 
-  RefPtr<SecurityOrigin> security_origin =
+  // TODO(nhiroki): WorkletGlobalScope should be a unique opaque origin.
+  // (https://crbug.com/773772)
+  DCHECK(!creation_params->security_origin);
+  creation_params->security_origin =
       SecurityOrigin::Create(creation_params->script_url);
   if (creation_params->starter_origin_privilege_data) {
     security_origin->TransferPrivilegesFrom(
@@ -90,9 +93,7 @@ WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
   }
 
   return AnimationWorkletGlobalScope::Create(
-      creation_params->script_url, creation_params->user_agent,
-      std::move(security_origin), this->GetIsolate(), this,
-      creation_params->worker_clients);
+      std::move(creation_params), GetIsolate(), this);
 }
 
 }  // namespace blink

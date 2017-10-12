@@ -13,6 +13,7 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkletModuleResponsesMap.h"
 #include "core/workers/WorkletModuleTreeClient.h"
@@ -21,16 +22,17 @@
 
 namespace blink {
 
-WorkletGlobalScope::WorkletGlobalScope(const KURL& url,
-                                       const String& user_agent,
-                                       RefPtr<SecurityOrigin> security_origin,
-                                       v8::Isolate* isolate,
-                                       WorkerClients* worker_clients,
-                                       WorkerReportingProxy& reporting_proxy)
-    : WorkerOrWorkletGlobalScope(isolate, worker_clients, reporting_proxy),
-      url_(url),
-      user_agent_(user_agent) {
-  SetSecurityOrigin(std::move(security_origin));
+WorkletGlobalScope::WorkletGlobalScope(
+    std::unique_ptr<GlobalScopeCreationParams> creation_params,
+    RefPtr<SecurityOrigin>,
+    v8::Isolate* isolate,
+    WorkerReportingProxy& reporting_proxy)
+    : WorkerOrWorkletGlobalScope(isolate, creation_params->worker_clients, reporting_proxy),
+      url_(creation_params->script_url),
+      user_agent_(creation_params->user_agent) {
+  // TODO(nhiroki): WorkletGlobalScope should be a unique opaque origin.
+  // (https://crbug.com/773772)
+  SetSecurityOrigin(std::move(creation_params->security_origin));
 }
 
 WorkletGlobalScope::~WorkletGlobalScope() = default;

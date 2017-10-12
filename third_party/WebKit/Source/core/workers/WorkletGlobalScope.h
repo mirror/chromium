@@ -26,6 +26,7 @@ class Modulator;
 class WorkletModuleResponsesMap;
 class WorkletPendingTasks;
 class WorkerReportingProxy;
+struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkletGlobalScope
     : public GarbageCollectedFinalized<WorkletGlobalScope>,
@@ -103,13 +104,8 @@ class CORE_EXPORT WorkletGlobalScope
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
-  // The url, userAgent and securityOrigin arguments are inherited from the
-  // parent ExecutionContext for Worklets.
-  WorkletGlobalScope(const KURL&,
-                     const String& user_agent,
-                     RefPtr<SecurityOrigin>,
+  WorkletGlobalScope(std::unique_ptr<GlobalScopeCreationParams>,
                      v8::Isolate*,
-                     WorkerClients*,
                      WorkerReportingProxy&);
 
  private:
@@ -119,8 +115,10 @@ class CORE_EXPORT WorkletGlobalScope
   EventTarget* ErrorEventTarget() final { return nullptr; }
   void DidUpdateSecurityOrigin() final {}
 
+  // The |url_| and |user_agent_| are inherited from the parent Document.
   const KURL url_;
   const String user_agent_;
+
   Member<WorkletModuleResponsesMapProxy> module_responses_map_proxy_;
   // LocalDOMWindow::modulator_ workaround equivalent.
   // TODO(kouhei): Remove this.

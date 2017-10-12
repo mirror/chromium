@@ -15,16 +15,11 @@ namespace blink {
 
 MainThreadWorkletGlobalScope::MainThreadWorkletGlobalScope(
     LocalFrame* frame,
-    const KURL& url,
-    const String& user_agent,
-    RefPtr<SecurityOrigin> security_origin,
+    std::unique_ptr<GlobalScopeCreationParams> creation_params,
     v8::Isolate* isolate,
     WorkerReportingProxy& reporting_proxy)
-    : WorkletGlobalScope(url,
-                         user_agent,
-                         std::move(security_origin),
+    : WorkletGlobalScope(std::move(creation_params),
                          isolate,
-                         nullptr /* worker_clients */,
                          reporting_proxy),
       ContextClient(frame) {}
 

@@ -23,9 +23,7 @@ class CORE_EXPORT MainThreadWorkletGlobalScope
 
  public:
   MainThreadWorkletGlobalScope(LocalFrame*,
-                               const KURL&,
-                               const String& user_agent,
-                               RefPtr<SecurityOrigin>,
+                               std::unique_ptr<GlobalScopeCreationParams>,
                                v8::Isolate*,
                                WorkerReportingProxy&);
   ~MainThreadWorkletGlobalScope() override;
