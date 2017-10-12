@@ -10,6 +10,8 @@ namespace extensions {
 namespace manifest_keys {
 
 const char kAboutPage[] = "about_page";
+const char kAction[] = "action";
+const char kActionDefaultState[] = "default_state";
 const char kAllFrames[] = "all_frames";
 const char kAltKey[] = "altKey";
 const char kApp[] = "app";
@@ -307,6 +309,8 @@ const char kFileNotFound[] = "File not found: *.";
 const char kInvalidAboutPage[] = "Invalid value for 'about_page'.";
 const char kInvalidAboutPageExpectRelativePath[] =
     "Invalid value for 'about_page'. Value must be a relative path.";
+const char kInvalidAction[] = "Invalid value for 'action'.";
+const char kInvalidActionDefaultState[] = "Invalid value for 'default_state'.";
 const char kInvalidAllFrames[] =
     "Invalid value for 'content_scripts[*].all_frames'.";
 const char kInvalidAppIconColor[] = "Invalid value for app.icon_color.";
