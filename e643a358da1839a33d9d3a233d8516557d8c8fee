@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17bc9411_35563d15",
+        "filename": "components/safe_browsing/browser/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-12T23:25:32Z",
+      "side": 1,
+      "message": "umm, this is pretty broad.\nlet\u0027s just do the per-file change in the other file for now.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "e643a358da1839a33d9d3a233d8516557d8c8fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
