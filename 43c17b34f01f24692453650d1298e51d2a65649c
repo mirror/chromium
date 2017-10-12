@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8146b63_63ac5527",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-12T06:23:03Z",
+      "side": 1,
+      "message": "I think we should remove these optimisations that compress the queue for the following reasons:\n1. It can change the series of calls to the observers - e.g. compressing updates will change the sequence of update calls. (Discussed offline - we at least want to preserve delete observer callbacks in the case: delete A, update B-\u003eA)\n2. We don\u0027t want observers modifying the message center when they are being notified of a change anyway, so it seems strange to optimise for that case which we don\u0027t want to me. Ideally the queue will contain nothing or almost nothing.\n3. Having this extra code leaves more chances for bugs, I think we should only add it if it\u0027s necessary.\n\nHave you measured the benefit from these optimisations?",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b69e8e_62f5b4d7",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-12T06:23:03Z",
+      "side": 1,
+      "message": "Does this find the latest notification? Seems like it would find the first change relating to that notification.",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd6357f_c1ca8581",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-12T06:23:03Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to provide any more information than the name - might be worth explaining why this class exists.",
+      "revId": "43c17b34f01f24692453650d1298e51d2a65649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
