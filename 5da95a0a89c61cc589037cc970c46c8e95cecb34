@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4e31028_0e8009af",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "nit: Add {} if we have them for else block.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929b5825_ac9848f3",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "small nit: return false /* Error */;",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6aa7ada_832a2884",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "optional: maybe it\u0027s time to rename this to flush_buffer or something else?",
+      "range": {
+        "startLine": 245,
+        "startChar": 49,
+        "endLine": 245,
+        "endChar": 58
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9065eba7_4e9fe7f8",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "nit: simply canceled_ \u003d true?",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 17
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b9016_750e3ee4",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "question: why are we set empty message? Wouldn\u0027t it be weird that an empty notification appears?",
+      "range": {
+        "startLine": 757,
+        "startChar": 42,
+        "endLine": 757,
+        "endChar": 53
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d163b6_807ed353",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "nit: why is this changed to nullable?",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f8460e_ebc9cc8c",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-12T07:45:32Z",
+      "side": 1,
+      "message": "nit: compressorId_ should be better as other places are using it for logging.",
+      "range": {
+        "startLine": 564,
+        "startChar": 33,
+        "endLine": 564,
+        "endChar": 50
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
