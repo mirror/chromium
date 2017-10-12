@@ -16,6 +16,24 @@
       "revId": "3735c942e57ff7289562c8a818d462950fa2954d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e30d944_fbfa526c",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-12T14:29:24Z",
+      "side": 1,
+      "message": "Good idea :) I needed to invert some logic to do that... Done.",
+      "parentUuid": "933939e2_1e9c0c2d",
+      "revId": "3735c942e57ff7289562c8a818d462950fa2954d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
