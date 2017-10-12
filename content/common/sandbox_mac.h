@@ -63,6 +63,8 @@ class CONTENT_EXPORT Sandbox {
   static const char* kSandboxElCapOrLater;
   static const char* kSandboxMacOS1013;
 
+  static const char* kSandboxBundleVersionPath;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(MacDirAccessSandboxTest, StringEscape);
   FRIEND_TEST_ALL_PREFIXES(MacDirAccessSandboxTest, RegexEscape);
