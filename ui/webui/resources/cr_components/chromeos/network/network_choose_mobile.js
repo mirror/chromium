@@ -114,7 +114,18 @@ Polymer({
    * @private
    */
   getEnableScanButton_: function(network) {
-    return !this.get('Cellular.Scanning', network);
+    return network.ConnectionState == CrOnc.ConnectionState.NOT_CONNECTED &&
+        !this.get('Cellular.Scanning', network);
+  },
+
+  /**
+   * @param {!chrome.networkingPrivate.FoundNetworkProperties} network
+   * @return {boolean}
+   * @private
+   */
+  getEnableSelectNetwork_: function(network) {
+    var found = this.get('Cellular.FoundNetworks', this.networkProperties);
+    return found && found.length > 0;
   },
 
   /**
@@ -122,7 +133,7 @@ Polymer({
    * @return {string}
    * @private
    */
-  getScanStatus_: function(network) {
+  getSecondaryText_: function(network) {
     if (!network || !network.Cellular)
       return '';
     var cellular = network.Cellular;
@@ -130,6 +141,8 @@ Polymer({
       return this.i18n('networkCellularScanning');
     else if (this.scanRequested_)
       return this.i18n('networkCellularScanCompleted');
+    else if (network.ConnectionState != CrOnc.ConnectionState.NOT_CONNECTED)
+      return this.i18n('networkCellularScanConnectedHelp');
     return '';
   },
 
