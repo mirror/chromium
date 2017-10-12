@@ -16,6 +16,46 @@
       "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5402e838_bddbbf17",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T04:05:04Z",
+      "side": 1,
+      "message": "Passing a pointer to a private member into another object\u0027s ctor looks odd. AFAICS, |startup_data_| is not used other than line 83. Does |startup_data_| need to be a member of V8PerIsolateData? Would it be possible to make it on-stack variable or move it somewhere else, for example, IsolateHolder?",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 24
+      },
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430bde54_ecc629da",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-12T04:05:04Z",
+      "side": 1,
+      "message": "How about moving some of these initialization into the header file so that we can deduplicate them among ctors?",
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
