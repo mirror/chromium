@@ -73,7 +73,8 @@ bool ContentHashReader::Init() {
 
   have_computed_hashes_ = true;
 
-  if (!verified_contents.HasTreeHashRoot(relative_path_)) {
+  if (!verified_contents.HasTreeHashRoot(relative_path_) &&
+      !base::PathExists(extension_root_.Append(relative_path_))) {
     // Extension is requesting a non-existent resource that does not have an
     // entry in verified_contents.json. This can happen when an extension sends
     // XHR to its non-existent resource. This should not result in content
