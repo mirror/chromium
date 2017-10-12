@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684a1d21_f8acecae",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-12T23:51:44Z",
+      "side": 1,
+      "message": "What does this field control?\n\nThis config change will add a webkit_layout_tests step to Chromium Mac 10.13, and swarming tasks will be triggered, right?",
+      "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefb6803_85d2e1ee",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/mac.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-12T23:51:44Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what will happen if \u0027mac10.13\u0027 is not in FALLBACK_PATHS ... I think that running the tests on Mac10.13 will fail if port.version() return \"mac10.13\" but it\u0027s not FALLBACK_PATHS, because in base.py we have:\n\n    def default_baseline_search_path(self):\n        return map(self._absolute_baseline_path, self.FALLBACK_PATHS[self.version()])\n\nMaybe for now we want to put `FALLBACK_PATHS[\u0027mac10.13\u0027] \u003d [\u0027mac\u0027]`?",
+      "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
