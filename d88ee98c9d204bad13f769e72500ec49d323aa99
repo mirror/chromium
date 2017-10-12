@@ -16,6 +16,24 @@
       "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414970e7_c22c2ba8",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-10-12T20:33:48Z",
+      "side": 0,
+      "message": "Done. I had to put a clang-format guard so that I\u0027m allowed to upload the patch.",
+      "parentUuid": "b2530321_40d80ea2",
+      "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
