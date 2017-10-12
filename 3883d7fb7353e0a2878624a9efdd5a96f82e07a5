@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1efcf0db_a7268cad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ViewAnchoredTextBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T19:15:32Z",
+      "side": 1,
+      "message": "I assume the view coordinates in window become positive at some point after this?\n\nI think it\u0027s OK to land this for 62, but it is valid for a view to be positioned slightly off screen and we should be able to handle that case.",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 87
+      },
+      "revId": "3883d7fb7353e0a2878624a9efdd5a96f82e07a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
