@@ -124,11 +124,12 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
 
-  bool Initialize(const scoped_refptr<gl::GLSurface>& surface,
-                  const scoped_refptr<gl::GLContext>& context,
-                  bool offscreen,
-                  const DisallowedFeatures& disallowed_features,
-                  const ContextCreationAttribHelper& attrib_helper) override;
+  gpu::ContextResult Initialize(
+      const scoped_refptr<gl::GLSurface>& surface,
+      const scoped_refptr<gl::GLContext>& context,
+      bool offscreen,
+      const DisallowedFeatures& disallowed_features,
+      const ContextCreationAttribHelper& attrib_helper) override;
 
   // Destroys the graphics context.
   void Destroy(bool have_context) override;
