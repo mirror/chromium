@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c4290169_aac1dc96",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-10-12T19:50:54Z",
+      "side": 1,
+      "message": "Updated the CL: return false when x is 0",
+      "parentUuid": "410c966b_033a8920",
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8193407e_39df9911",
         "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
         "patchSetId": 1
