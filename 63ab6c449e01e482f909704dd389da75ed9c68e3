@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc7dbb0_5eb9b5f6",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T22:35:39Z",
+      "side": 1,
+      "message": "Let\u0027s make these toggles that have labels. i.e. use a higher level element than cr-toggle.",
+      "revId": "63ab6c449e01e482f909704dd389da75ed9c68e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
