@@ -812,6 +812,7 @@ ALWAYS_INLINE void* PartitionAllocGenericFlags(PartitionRootGeneric* root,
   {
     subtle::SpinLock::Guard guard(root->lock);
     ret = PartitionBucketAlloc(root, flags, size, bucket);
+    LOG(ERROR) << "Allocating: " << size << " at " << ret;
   }
   PartitionAllocHooks::AllocationHookIfEnabled(ret, requested_size, type_name);
   return ret;

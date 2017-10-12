@@ -13,7 +13,10 @@
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 #include "base/bit_cast.h"
 #include "base/bits.h"
+#include "base/process/process_metrics.h"
 #include "base/sys_info.h"
+#include "base/time/time.h"
+#include "base/threading/platform_thread.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -2154,6 +2157,32 @@ TEST_F(PartitionAllocTest, ReallocMovesCookies) {
   memset(ptr, 0xbd, kSize + 2);
   PartitionFreeGeneric(generic_allocator.root(), ptr);
 }
+
+// How
+TEST_F(PartitionAllocTest, HowMuchWaste) {
+  size_t kSize = (1 <<20) - 4096*3; // A bit less than 1Mb.
+  kSize *= 3;
+  kSize /= 4;
+  //const size_t kSize = 512*1024 - 100; // A bit less 512.
+  // Allocated about 100 megs.
+  for(int i=0; i < 300; i++) {
+    void* ptr =
+      PartitionAllocGeneric(generic_allocator.root(), kSize, "wasted");
+    EXPECT_TRUE(ptr);
+
+    // Touch all allcoated memory with hard-to-dedupe fill pattern.
+    char* foo = reinterpret_cast<char*>(ptr);
+    static char counter = 1;
+    for (unsigned i = 0; i < kSize; ++i) {
+      foo[i] = counter;
+      counter +=7;
+    }
+  }
+  while (1) {
+    PlatformThread::Sleep(TimeDelta::FromMinutes(10));
+  }
+}
+
 
 }  // namespace base
 
