@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf07cba7_db98efc5",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-12T23:57:34Z",
+      "side": 1,
+      "message": "This is also under-documented: you can just implement `performClick:`, AppKit will call it when the spacebar is pressed.",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de23fcf_1110d53c",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-12T23:57:34Z",
+      "side": 1,
+      "message": "I don\u0027t think controls normally respond to return/enter. In dialogs, for instance, return/enter clicks the default button regardless of which button is key. It\u0027s common for a dialog to have a button other than the default one be key by default, so that space performs one action (e.g. \"don\u0027t save\") and enter performs another (e.g. \"save\").",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
