@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4c927e1e_02e23ed0",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-12T22:28:51Z",
+      "side": 1,
+      "message": "Got it, thanks.",
+      "parentUuid": "b21d8f3b_a49e7219",
+      "revId": "df86de94f2be00cfc3684813d1f113e9c3b3fb91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1442adb6_bca7da8a",
         "filename": "build/vs_toolchain.py",
         "patchSetId": 2
