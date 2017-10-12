@@ -4,6 +4,7 @@
 
 #include "content/common/feature_policy/feature_policy.h"
 
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
