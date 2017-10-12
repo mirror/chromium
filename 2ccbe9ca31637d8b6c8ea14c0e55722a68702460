@@ -22,6 +22,23 @@
       "revId": "2ccbe9ca31637d8b6c8ea14c0e55722a68702460",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7b9e1b_862c3aa4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-12T18:56:43Z",
+      "side": 1,
+      "message": "For these two computes, it seems like eventually it both goes to isEnabled_(), which uses only data.state. Can you bind to jut data.state instead of data.*, so it doesn\u0027t get triggered whenever anything changes?",
+      "revId": "2ccbe9ca31637d8b6c8ea14c0e55722a68702460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
