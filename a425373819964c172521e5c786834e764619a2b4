@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7571d784_56f929a2",
+        "filename": "components/viz/service/surfaces/surface_hittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-12T13:35:00Z",
+      "side": 1,
+      "message": "I\u0027m confused how this works, gfx::Transform::TransformPoint seems to only take Point or Point3F. While Point3F can be constructed from PointF it requires explicit conversion and would result in not transforming the original point.",
+      "revId": "a425373819964c172521e5c786834e764619a2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
