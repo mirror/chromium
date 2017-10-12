@@ -167,6 +167,9 @@ CHROMEOS_EXPORT bool IsGaiaIdMigrationStarted();
 // Returns true if this is a Cellular First device.
 CHROMEOS_EXPORT bool IsCellularFirstDevice();
 
+// Returns true if the md based login/lock UI is enabled.
+CHROMEOS_EXPORT bool IsUsingMdLogin();
+
 // Returns true if the locale is supported by voice interaction.
 CHROMEOS_EXPORT bool IsVoiceInteractionLocalesSupported();
 
