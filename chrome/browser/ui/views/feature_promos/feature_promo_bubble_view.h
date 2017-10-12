@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/feature_engagement/feature_promo_bubble.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 
 namespace gfx {
@@ -20,17 +21,23 @@ class MouseEvent;
 // The FeaturePromoBubbleView is a special BubbleDialogDelegateView for
 // in-product help which educates users about certain Chrome features in a
 // deferred context.
-class FeaturePromoBubbleView : public views::BubbleDialogDelegateView {
+class FeaturePromoBubbleView : public views::BubbleDialogDelegateView,
+                               public FeaturePromoBubble {
  public:
   enum class ActivationAction {
     DO_NOT_ACTIVATE,
     ACTIVATE,
   };
 
+  FeaturePromoBubbleView() {}
   ~FeaturePromoBubbleView() override;
 
   // Closes the promo bubble.
   void CloseBubble();
+
+  // FeaturePromoBubble:
+  void ShowPromoBubble() override{};
+  void ClosePromoBubble() override{};
 
  protected:
   // The |anchor_view| is used to anchor the FeaturePromoBubbleView. The |arrow|
