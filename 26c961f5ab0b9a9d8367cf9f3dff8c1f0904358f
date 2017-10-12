@@ -93,6 +93,29 @@
     },
     {
       "key": {
+        "uuid": "09fdcfbe_5f4c2b8d",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "Why is this needed?  We only use this reference when creating NativePhantomReference(s)",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 38
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73ea1fb7_4ac19fc1",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -180,6 +203,29 @@
     },
     {
       "key": {
+        "uuid": "4e48ed71_520fa90b",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "if our strong references set is empty, should/could we be stopping the thread at this point?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 33
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e3a3f73_dac35512",
         "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
         "patchSetId": 3
@@ -251,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "ad41ef73_725747a2",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "(IMO) I don\u0027t see thread safety as the main concern.  My main concern would be giving out your raw native pointer at all externally.\n\nI don\u0027t see why any class would ever expose their NativeRefHolder object.  The second they\u0027re doing that, it seems like they\u0027ve given up all control.\n\nI don\u0027t see this as a unique or sharedptr...it is the raw pointer to the native object.  It\u0027s not different than passing a raw pointer across threads in C++ and all the concerns that go along with it.  I think it would be reasonable to document the thread-safety-ness (or lack thereof) at the class level and let the consumers deal with it as dtrainor@ says.\n\nBut then, why is it an AtomicLong vs long?  I thought all the destroys were process on the main looper (i.e. not the GC thread or something)?  Or is the thought that destroy() below can be called off the UI thread?\n\nThat said, I would like to get to a world where we don\u0027t expose the long value at all.  I wonder if we could teach our jni generators to understand taking a NativeRefHolder instead of the long and that would be the sole place that could get access to this (other than passing it to the destroy method).",
+      "parentUuid": "2c578f32_a78c153f",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96a62fd_e1ba68be",
         "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
         "patchSetId": 3
@@ -267,6 +331,29 @@
         "startChar": 12,
         "endLine": 40,
         "endChar": 40
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d32cb6_38727899",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "why 16 (60hz update rate)?",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 35
       },
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
