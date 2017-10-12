@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1df43c5c_59071717",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-12T12:22:05Z",
+      "side": 1,
+      "message": "You\u0027re right. Removed redundant throw specifications from this flie.",
+      "parentUuid": "108437e2_931c559e",
+      "range": {
+        "startLine": 94,
+        "startChar": 39,
+        "endLine": 94,
+        "endChar": 56
+      },
+      "revId": "1188fc90f7cdccd1b4917e54cf66854f3635cc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb26423_cc56f8bd",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1188fc90f7cdccd1b4917e54cf66854f3635cc2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1da13b_ddd66780",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-12T12:22:05Z",
+      "side": 1,
+      "message": "Sure. AndroidStudio somehow thinks that expression lambda is always better than a braced block.",
+      "parentUuid": "5cb26423_cc56f8bd",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "1188fc90f7cdccd1b4917e54cf66854f3635cc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
