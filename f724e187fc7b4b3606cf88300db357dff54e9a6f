@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2f6681a_71790e14",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T07:55:29Z",
+      "side": 1,
+      "message": "This looks not a part of \"crash\". Do we want to rename the enum class name somehow to include \"start\"? ArcInstanceEvent maybe? But not really representing \"crashing\", though... Hmm...",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7231814_338dfbcf",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T07:55:29Z",
+      "side": 1,
+      "message": "nit: maybe better to share the name for histogram and enum?",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813d78e2_3b2bec0d",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T07:55:29Z",
+      "side": 1,
+      "message": "nit/optional: as |out_uma_to_record| is available only when this returns true,\nnowadays I\u0027d recommend to use base::Optional\u003cArcInstanceCrashEvent\u003e.",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f22f82_324612ce",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T07:55:29Z",
+      "side": 1,
+      "message": "Should this condition be checked \"before\" |was_running|, considering a following situation?\n- ARC is first boot then CRASH for some reason (then UMA is recorded here).\n- ARC is automatically rebooted, but then CRASHed again before Mojo connection is established (then UMA is recorded again).\n\nI think we\u0027d like to have corresponding START and \"either CRASH_EARLY or CRASH\"?\nWhat\u0027s the expected behavior here?",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c40364e_46b46857",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-12T07:55:29Z",
+      "side": 1,
+      "message": "nit: Can this be closer to L309?",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
