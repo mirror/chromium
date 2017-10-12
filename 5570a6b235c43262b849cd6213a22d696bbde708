@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d6dea1d_626789b0",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T05:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de854f5f_e67ace2f",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02df5e3f_3ad59a65",
         "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T05:44:08Z",
       "side": 1,
       "message": "Just to make sure, when we use this we don\u0027t need to run the callback right?\n\n(I know you used to have a comment \"// Will close current binding.\" but that doesn\u0027t really talk about the callback. And if it\u0027s known that bindings_.ReportBadMessage means we don\u0027t\u0027need to run the callback, then we don\u0027t need a comment)\n\nDo we have unit test coverage about this?",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c24c5f3c_c56fd69f",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T05:24:39Z",
+      "side": 1,
+      "message": "Yeah it\u0027s known that bindings_.ReportBadMessage will close current binding, and then no need to run the callback because binding itself has been destroyed. Code comment: https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding_set.h?rcl\u003d8089055c7ed4ed6f70d5ce1867ec1964c418e49b\u0026l\u003d163\n\nCurrently there is not unit test to coverage Update related logic, can I do it with follow-up CLs? Next step I plan to move all ServiceWorkerContainerHost interface related unit test out from service_worker_dispatcher_host_unittest.cc into service_worker_provider_host_unittest.cc, and create a new service_worker_registration_handle_unittest.cc to hold all ServiceWorkerRegistrationObjectHost interface related unit test.",
+      "parentUuid": "02df5e3f_3ad59a65",
       "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bd8139ce_33093dc7",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T05:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c312f5a_8be1b89d",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496d64a4_21d5ebd2",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e38baf66_6c408481",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T05:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "496d64a4_21d5ebd2",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08247832_02bda937",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c259a43a_e3896275",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T05:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08247832_02bda937",
+      "revId": "5570a6b235c43262b849cd6213a22d696bbde708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
