@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b41375_7185f287",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "nit: there is just one URL, so should this instead be \"favicon_url\" maybe, something like\n\n  // Saves the most visited sites to disk with icon at |favicon_url| using\n  // |favicon_fetcher| to fetch it.\n\nOr is favicons_url a file:// URL pointing to local disk? If so, should this instead be a base::FilePath (then it should go in a followup-CL). If it is a file:// URL, maybe rename this to \"favicons_folder\" or \"favicons_path\" to make it slightly easier to understand.",
+      "range": {
+        "startLine": 22,
+        "startChar": 55,
+        "endLine": 22,
+        "endChar": 67
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba42fd25_a45bb598",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "ditto: I don\u0027t really understand what \"saves it in |favicons_url|\" can possibly mean. Is it a local file:// URL (i.e. maybe better presented as base::FilePath) or is it the URL of the icon to fetch?",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 79
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f71294_3edd7fe1",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "Please add here (and below) the following to ensure this is called from a sequence that is allowed to access the disk and to block (it would be better to use base:: primitives to access disk because they include such calls):\n\n  ThreadRestrictions::AssertIOAllowed();",
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615da869_baa9407f",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "nit: tmpFaviconURL → temporary_favicon_url",
+      "range": {
+        "startLine": 148,
+        "startChar": 9,
+        "endLine": 148,
+        "endChar": 22
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505497bc_6267ed51",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "nit: faviconFileName → favicon_file_name",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb364d2c_5fd4133b",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-12T13:05:39Z",
+      "side": 1,
+      "message": "nit: fileURL → file_url\n\nand other variables but I think all those renaming should be done in a single CL that only rename variables (to make it easier to review).",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 18
+      },
+      "revId": "4878d9d887b352d3e3eb079c3eef7ab8b40e87e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
