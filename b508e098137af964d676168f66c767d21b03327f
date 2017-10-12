@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839ccff5_5b78d50e",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-10-12T18:03:09Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as PS1 again?\n\nJust go with 3 separate blocks:\n\n  deps \u003d []\n\n  if (chromecast_branding \u003d\u003d \"public\" \u0026\u0026 is_android) {\n    deps +\u003d [ \":cast_shell_apk\" ]\n  }\n\n  if (!is_android) {\n    deps +\u003d [ \":cast_shell\"]\n  }\n\n  if (chromecast_branding !\u003d \"public\") {\n    deps +\u003d [ \"//chromecast/internal:all\" ]\n  }",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "b508e098137af964d676168f66c767d21b03327f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
