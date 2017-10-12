@@ -22,10 +22,6 @@
 
 class Profile;
 
-namespace base {
-class ListValue;
-}
-
 namespace chromeos {
 
 // Performs check whether locale has been changed automatically recently
@@ -52,7 +48,6 @@ class LocaleChangeGuard : public content::NotificationObserver,
 
   void ConnectToLocaleNotificationController();
 
-  void RevertLocaleChangeCallback(const base::ListValue* list);
   void Check();
 
   void OnResult(ash::mojom::LocaleNotificationResult result);
