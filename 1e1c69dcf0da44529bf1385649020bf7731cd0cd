@@ -22,6 +22,30 @@
       "revId": "1e1c69dcf0da44529bf1385649020bf7731cd0cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4265cd_6b7500b1",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-12T20:21:37Z",
+      "side": 1,
+      "message": "The two issues are almost similar. This cl fixes 771409\n\nWhen latching is enabled GSB GSU1 GSU2 .. are the event sequence. The first GSU happens right after the GSB so if the node is null then an early return happens. But for the GSU2 and the rest of the GSU events (previous_gesture_scrolled_element_ is not null) there is a chance that the node gets deleted in the middle of scrolling. This cl calls HandleGestureScrollEvent(scroll_begin) to find a new node for scrolling rather than an early return in those cases.",
+      "parentUuid": "13336f85_436c5954",
+      "range": {
+        "startLine": 401,
+        "startChar": 8,
+        "endLine": 401,
+        "endChar": 42
+      },
+      "revId": "1e1c69dcf0da44529bf1385649020bf7731cd0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
