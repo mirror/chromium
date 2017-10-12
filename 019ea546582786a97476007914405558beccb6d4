@@ -94,6 +94,30 @@
       "revId": "019ea546582786a97476007914405558beccb6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4382499f_d3f34f71",
+        "filename": "chrome/browser/feature_engagement/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-12T01:26:01Z",
+      "side": 1,
+      "message": "Thanks for explaining! I learned a lot while fixing this!!",
+      "parentUuid": "7bf5ffd2_d2865dee",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 43
+      },
+      "revId": "019ea546582786a97476007914405558beccb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
