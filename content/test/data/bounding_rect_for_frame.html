@@ -1,0 +1,16 @@
+<html>
+<body>
+<iframe style="width:400px; height:300px;"></iframe>
+<script>
+  function sendBoundingClientRect(element) {
+    var rect = element.getBoundingClientRect();
+    window.domAutomationController.send(
+        [rect.x, rect.y, rect.width, rect.height].join(','));
+  }
+
+  function setMargin(element, left, top) {
+    element.style.margin = left + ' ' + top;
+  }
+</script>
+</body>
+</html>
