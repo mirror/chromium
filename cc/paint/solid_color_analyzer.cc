@@ -151,50 +151,19 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
   bool is_transparent = true;
   SkColor color = SK_ColorTRANSPARENT;
 
-  struct Frame {
-    Frame() = default;
-    Frame(PaintOpBuffer::CompositeIterator iter,
-          const SkMatrix& original_ctm,
-          int save_count)
-        : iter(iter), original_ctm(original_ctm), save_count(save_count) {}
-
-    PaintOpBuffer::CompositeIterator iter;
-    const SkMatrix original_ctm;
-    int save_count = 0;
-  };
-
   SkNoDrawCanvas canvas(rect.width(), rect.height());
   canvas.translate(-rect.x(), -rect.y());
   canvas.clipRect(gfx::RectToSkRect(rect), SkClipOp::kIntersect, false);
 
-  std::vector<Frame> stack;
-  // We expect to see at least one DrawRecordOp because of the way items are
-  // constructed. Reserve this to 2, and go from there.
-  stack.reserve(2);
-  stack.emplace_back(PaintOpBuffer::CompositeIterator(buffer, offsets),
-                     canvas.getTotalMatrix(), canvas.getSaveCount());
-
+  PlaybackParams params(nullptr, canvas.getTotalMatrix());
   int num_draw_ops = 0;
-  while (!stack.empty()) {
-    auto& frame = stack.back();
-    if (!frame.iter) {
-      canvas.restoreToCount(frame.save_count);
-      stack.pop_back();
-      if (!stack.empty())
-        ++stack.back().iter;
-      continue;
-    }
-
-    const PaintOp* op = *frame.iter;
-    PlaybackParams params(nullptr, frame.original_ctm);
+  for (PaintOpBuffer::FlatteningIterator iter(buffer, offsets, &canvas, params);
+       iter; ++iter) {
+    const PaintOp* op = *iter;
     switch (op->GetType()) {
-      case PaintOpType::DrawRecord: {
-        const DrawRecordOp* record_op = static_cast<const DrawRecordOp*>(op);
-        stack.emplace_back(
-            PaintOpBuffer::CompositeIterator(record_op->record.get(), nullptr),
-            canvas.getTotalMatrix(), canvas.getSaveCount());
-        continue;
-      }
+      case PaintOpType::DrawRecord:
+        NOTREACHED();
+        break;
 
       // Any of the following ops result in non solid content.
       case PaintOpType::DrawDRRect:
@@ -259,7 +228,7 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
         const ClipRectOp* clip_op = static_cast<const ClipRectOp*>(op);
         if (clip_op->op == SkClipOp::kDifference)
           return base::nullopt;
-        op->Raster(&canvas, params);
+        iter.Raster();
         break;
       }
 
@@ -273,10 +242,9 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
       case PaintOpType::Save:
       case PaintOpType::Translate:
       case PaintOpType::Noop:
-        op->Raster(&canvas, params);
+        iter.Raster();
         break;
     }
-    ++frame.iter;
   }
 
   if (is_transparent)
