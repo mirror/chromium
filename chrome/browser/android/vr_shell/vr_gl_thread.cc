@@ -156,6 +156,20 @@ void VrGLThread::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
                             weak_vr_shell_, bounds));
 }
 
+void VrGLThread::ActivateVoiceSearch(bool activate) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::ActivateVoiceSearch, weak_vr_shell_, activate));
+}
+
+void VrGLThread::OnVoiceSearchResult(const std::string& result) {
+  DCHECK(OnGlThread());
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::OnVoiceSearchResult, weak_vr_shell_, result));
+}
+
 void VrGLThread::SetFullscreen(bool enabled) {
   DCHECK(OnMainThread());
   task_runner()->PostTask(
@@ -256,6 +270,13 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetExitVrPromptEnabled,
                             browser_ui_, enabled, reason));
+}
+
+void VrGLThread::SetVoiceSearchResult(std::string url) {
+  DCHECK(OnMainThread());
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::BrowserUiInterface::SetVoiceSearchResult,
+                            browser_ui_, url));
 }
 
 bool VrGLThread::OnMainThread() const {

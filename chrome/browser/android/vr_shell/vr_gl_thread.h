@@ -59,6 +59,8 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice) override;
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds) override;
+  void ActivateVoiceSearch(bool activate) override;
+  void OnVoiceSearchResult(const std::string& result) override;
 
   // vr::BrowserUiInterface implementation (Browser calling to UI).
   void SetWebVrMode(bool enabled, bool show_toast) override;
@@ -76,6 +78,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
+  void SetVoiceSearchResult(std::string url) override;
 
  protected:
   void Init() override;

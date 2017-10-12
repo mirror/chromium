@@ -27,8 +27,11 @@
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
 #include "chrome/browser/android/vr_shell/vr_web_contents_observer.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/toolbar_helper.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
@@ -709,6 +712,29 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
+}
+
+void VrShell::ActivateVoiceSearch(bool activate) {
+  if (!activate && !speech_recognizer_)
+    return;
+
+  if (!speech_recognizer_) {
+    Profile* profile = ProfileManager::GetActiveUserProfile();
+    std::string profile_locale = g_browser_process->GetApplicationLocale();
+    speech_recognizer_.reset(new vr::SpeechRecognizer(
+        ui_, profile->GetRequestContext(), profile_locale));
+  }
+  if (activate) {
+    speech_recognizer_->Start();
+  } else {
+    speech_recognizer_->Stop();
+  }
+}
+
+void VrShell::OnVoiceSearchResult(std::string result) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_loadUrl(env, j_vr_shell_,
+                           base::android::ConvertUTF8ToJavaString(env, result));
 }
 
 void VrShell::PollMediaAccessFlag() {

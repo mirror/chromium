@@ -24,6 +24,8 @@ class MockBrowserInterface : public UiBrowserInterface {
   MOCK_METHOD2(OnExitVrPromptResult,
                void(UiUnsupportedMode reason, ExitVrPromptChoice choice));
   MOCK_METHOD1(OnContentScreenBoundsChanged, void(const gfx::SizeF& bounds));
+  MOCK_METHOD1(ActivateVoiceSearch, void(bool activate));
+  MOCK_METHOD1(OnVoiceSearchResult, void(const std::string& result));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserInterface);

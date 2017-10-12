@@ -101,6 +101,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateToasts();
   CreateSplashScreen();
   CreateUnderDevelopmentNotice();
+  CreateVoiceSearchButton();
 
   ConfigureScene();
 }
@@ -391,6 +392,23 @@ void UiSceneManager::CreateViewportAwareRoot() {
   element->SetVisible(true);
   element->set_hit_testable(false);
   scene_->AddUiElement(k2dBrowsingRoot, std::move(element));
+}
+
+void UiSceneManager::CreateVoiceSearchButton() {
+  // TODO(bshe): This button is currently not visible. It should hide behind
+  // features::kExperimentalVRFeature runtime flag once it is ready.
+  // TODO(bshe): Use a proper microphone button and update size and translation
+  // according to UX.
+  auto element = base::MakeUnique<Button>(
+      base::Bind(&UiSceneManager::OnVoiceSearchButtonClicked,
+                 base::Unretained(this)),
+      base::MakeUnique<CloseButtonTexture>());
+  element->set_name(kVoiceSearchButton);
+  element->set_draw_phase(kPhaseForeground);
+  element->SetTranslate(0.f, 0.f, -kCloseButtonDistance);
+  element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+  voice_search_button_ = element.get();
+  scene_->AddUiElement(k2dBrowsingForeground, std::move(element));
 }
 
 void UiSceneManager::CreateUrlBar(Model* model) {
@@ -902,6 +920,15 @@ void UiSceneManager::OnCloseButtonClicked() {
   if (in_cct_) {
     browser_->ExitCct();
   }
+}
+
+void UiSceneManager::OnVoiceSearchButtonClicked() {
+  recognizing_speech_ = !recognizing_speech_;
+  browser_->ActivateVoiceSearch(recognizing_speech_);
+}
+
+void UiSceneManager::SetVoiceSearchResult(const std::string& url) {
+  browser_->OnVoiceSearchResult(url);
 }
 
 void UiSceneManager::OnUnsupportedMode(UiUnsupportedMode mode) {

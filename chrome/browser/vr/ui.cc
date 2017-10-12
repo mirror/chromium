@@ -92,6 +92,10 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
   scene_manager_->SetExitVrPromptEnabled(enabled, reason);
 }
 
+void Ui::SetVoiceSearchResult(std::string url) {
+  scene_manager_->SetVoiceSearchResult(url);
+}
+
 bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }
