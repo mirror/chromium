@@ -6,6 +6,7 @@
 #define PageMemory_h
 
 #include "platform/heap/HeapPage.h"
+#include "platform/heap/RegionTree.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Compiler.h"
@@ -13,10 +14,7 @@
 
 namespace blink {
 
-class RegionTree;
-class RegionTreeNode;
-
-class MemoryRegion {
+class PLATFORM_EXPORT MemoryRegion {
   USING_FAST_MALLOC(MemoryRegion);
 
  public:
@@ -102,44 +100,6 @@ class PageMemoryRegion : public MemoryRegion {
   bool in_use_[kBlinkPagesPerRegion];
   int num_pages_;
   RegionTree* region_tree_;
-};
-
-// A RegionTree is a simple binary search tree of PageMemoryRegions sorted
-// by base addresses.
-class RegionTree {
-  USING_FAST_MALLOC(RegionTree);
-
- public:
-  RegionTree() : root_(nullptr) {}
-
-  void Add(PageMemoryRegion*);
-  void Remove(PageMemoryRegion*);
-  PageMemoryRegion* Lookup(Address);
-
- private:
-  RegionTreeNode* root_;
-};
-
-class RegionTreeNode {
-  USING_FAST_MALLOC(RegionTreeNode);
-
- public:
-  explicit RegionTreeNode(PageMemoryRegion* region)
-      : region_(region), left_(nullptr), right_(nullptr) {}
-
-  ~RegionTreeNode() {
-    delete left_;
-    delete right_;
-  }
-
-  void AddTo(RegionTreeNode** context);
-
- private:
-  PageMemoryRegion* region_;
-  RegionTreeNode* left_;
-  RegionTreeNode* right_;
-
-  friend RegionTree;
 };
 
 // Representation of the memory used for a Blink heap page.

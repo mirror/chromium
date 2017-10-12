@@ -39,6 +39,8 @@ source_set("heap") {
     "Persistent.h",
     "PersistentNode.cpp",
     "PersistentNode.h",
+    "RegionTree.cpp",
+    "RegionTree.h",
     "SafePoint.h",
     "SelfKeepAlive.h",
     "SparseHeapBitmap.cpp",
@@ -81,6 +83,7 @@ test("blink_heap_unittests") {
     "HeapTestUtilities.cpp",
     "HeapTestUtilities.h",
     "PersistentTest.cpp",
+    "RegionTreeTest.cpp",
     "RunAllTests.cpp",
   ]
 
