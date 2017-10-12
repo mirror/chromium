@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ce73ae1_6d414d82",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-12T00:34:53Z",
+      "side": 1,
+      "message": "Yep, you\u0027re right.  Maybe a separate set of #ifdefs is in order, since the reasons are distinct.",
+      "parentUuid": "c74bb112_cd4fd2a9",
+      "range": {
+        "startLine": 523,
+        "startChar": 45,
+        "endLine": 523,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3f6574_2709b958",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 13
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Local style omits them for single-line conditionals with single-line bodies.",
       "parentUuid": "ae3f6574_2709b958",
+      "range": {
+        "startLine": 1510,
+        "startChar": 8,
+        "endLine": 1510,
+        "endChar": 11
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "464dfd73_70cb2577",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-12T00:34:53Z",
+      "side": 1,
+      "message": "grumble something something goto fail",
+      "parentUuid": "81e72c7a_bfffd562",
       "range": {
         "startLine": 1510,
         "startChar": 8,
@@ -231,6 +279,30 @@
       "side": 1,
       "message": "In this case, |path| refers to the user-data-directory; the old file that we\u0027re deleting is \"[path]/Certificate Revocation Lists\" and the new files will be at \"[path]/CertificateRevocation/[version]/crl-set\". We can\u0027t reuse the old path/file because we need to transition to the versioned-directory approach.\n\nDoes that answer the question?",
       "parentUuid": "4c73c90a_8118bc54",
+      "range": {
+        "startLine": 223,
+        "startChar": 56,
+        "endLine": 223,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a3c4ae_eb8dcde4",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-10-12T00:34:53Z",
+      "side": 1,
+      "message": "Got it.  (Could rename path to \"dir\" to make that clearer.)",
+      "parentUuid": "fe1f8d4e_e5a45cd3",
       "range": {
         "startLine": 223,
         "startChar": 56,
