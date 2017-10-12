@@ -16,6 +16,24 @@
       "revId": "eed17a4c72de30374ce40186931ec961409fe57a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eab5979_4103b126",
+        "filename": "services/viz/privileged/cpp/context_lost_reason_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T17:45:18Z",
+      "side": 1,
+      "message": "The struct-traits used to live in interfaces/. I believe we decided that they should live in cpp instead (see services/viz/public/cpp, for example).",
+      "parentUuid": "99aeaa25_db114064",
+      "revId": "eed17a4c72de30374ce40186931ec961409fe57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
