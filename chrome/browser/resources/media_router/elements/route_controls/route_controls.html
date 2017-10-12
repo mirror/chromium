@@ -81,6 +81,24 @@
             </paper-checkbox>
           </div>
         </div>
+        <div id="intellicast-option-controls"
+             hidden="[[!routeStatus.mirroringExtraData]]">
+          <div id="intellicast-option-label">
+            <span>Intellicast</span>
+          </div>
+          <div id="intellicast-option-slider-holder">
+            <div>
+              <span>Never</span>
+              <span>Auto</span>
+              <span>Always</span>
+            </div>
+            <paper-slider
+                id="intellicast-option-slider"
+                on-change="onIntellicastOptionSelectComplete_"
+                value="[[intellicastOption_]]"
+                min="0" max="2" step="1"></paper-slider>
+          </div>
+        </div>
       </div>
     </div>
   </template>

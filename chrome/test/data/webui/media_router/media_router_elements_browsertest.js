@@ -90,13 +90,20 @@ MediaRouterElementsBrowserTest.prototype = {
         document.dispatchEvent(event);
       }
 
+      function setIntellicastOption(option) {
+        const event = new CustomEvent(
+            'mock-set-intellicast-option', {detail: {option: option}});
+        document.dispatchEvent(event);
+      }
+
       return {
         pauseCurrentMedia: pauseCurrentMedia,
         playCurrentMedia: playCurrentMedia,
         seekCurrentMedia: seekCurrentMedia,
         setCurrentMediaMute: setCurrentMediaMute,
         setCurrentMediaVolume: setCurrentMediaVolume,
-        setHangoutsLocalPresent: setHangoutsLocalPresent
+        setHangoutsLocalPresent: setHangoutsLocalPresent,
+        setIntellicastOption: setIntellicastOption
       };
     });
   },
