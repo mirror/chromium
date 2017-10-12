@@ -332,4 +332,28 @@ std::unique_ptr<CertVerificationContext> CertVerificationContextImplForTest(
                                                        "CommonName");
 }
 
+std::string CastCertErrorToString(CastCertError error) {
+  switch (error) {
+    case CastCertError::ERR_CERTS_MISSING:
+      return "Cast certificate is missing.";
+    case CastCertError::ERR_CERTS_PARSE:
+      return "Cast certificate is unparsable.";
+    case CastCertError::ERR_CERTS_DATE_INVALID:
+      return "Cast certificate is not time-valid.";
+    case CastCertError::ERR_CERTS_VERIFY_GENERIC:
+      return "Cast certificate is not trusted.";
+    case CastCertError::ERR_CERTS_RESTRICTIONS:
+      return "Cast certificate CN is missing or key usage is not "
+             "Digital Signature.";
+    case CastCertError::ERR_CRL_INVALID:
+      return "Cast certificate is valid but the CRL is invalid.";
+    case CastCertError::ERR_CERTS_REVOKED:
+      return "Cast certificate is revoked.";
+    case CastCertError::ERR_UNEXPECTED:
+      return "Cast certificate verification internal error.";
+    case CastCertError::OK:
+      return "Cast certificate is valid.";
+  }
+}
+
 }  // namespace cast_certificate
