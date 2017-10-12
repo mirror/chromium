@@ -120,6 +120,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
                          bool is_page,
                          bool is_positive) override;
 
+  void set_draw_overflow_indicator(bool draw_overflow_indicator) {
+    draw_overflow_indicator_ = draw_overflow_indicator;
+  }
+
  private:
   friend class test::ScrollViewTestApi;
 
@@ -237,6 +241,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Only needed for pre-Harmony. Remove when Harmony is default.
   bool draw_border_ = false;
+
+  // Whether to draw white separator on the four sides of scroll view when it
+  // is overflow.
+  bool draw_overflow_indicator_ = true;
 
   // Focus ring, if one is installed.
   View* focus_ring_ = nullptr;
