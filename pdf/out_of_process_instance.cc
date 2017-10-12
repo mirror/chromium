@@ -9,6 +9,7 @@
 
 #include <algorithm>  // for min/max()
 #include <cmath>      // for log() and pow()
+#include <iostream>
 #include <list>
 
 #include "base/logging.h"
@@ -1436,7 +1437,8 @@ void OutOfProcessInstance::SearchString(
 
 void OutOfProcessInstance::DocumentPaintOccurred() {}
 
-void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
+void OutOfProcessInstance::DocumentLoadComplete(
+    const PDFEngine::DocumentFeatures& document_features) {
   // Clear focus state for OSK.
   FormTextFieldFocusChange(false);
 
@@ -1501,7 +1503,9 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   }
 
   pp::PDF::SetContentRestriction(this, content_restrictions);
-  HistogramCustomCounts("PDF.PageCount", page_count, 1, 1000000, 50);
+  HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
+                        1000000, 50);
+  HistogramEnumeration("PDF.IsTagged", document_features.is_tagged ? 1 : 0, 2);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
@@ -1819,7 +1823,7 @@ void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
                                                 int32_t boundary_value) {
   if (IsPrintPreview())
     return;
-
+  std::cerr << "HistogramEnumeration " << name << " " << sample << std::endl;
   uma_.HistogramEnumeration(name, sample, boundary_value);
 }
 

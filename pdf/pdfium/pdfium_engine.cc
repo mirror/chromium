@@ -51,6 +51,7 @@
 #include "printing/pdf_transform.h"
 #include "printing/units.h"
 #include "third_party/pdfium/public/fpdf_annot.h"
+#include "third_party/pdfium/public/fpdf_catalog.h"
 #include "third_party/pdfium/public/fpdf_edit.h"
 #include "third_party/pdfium/public/fpdf_ext.h"
 #include "third_party/pdfium/public/fpdf_flatten.h"
@@ -1271,8 +1272,12 @@ void PDFiumEngine::FinishLoadingDocument() {
     FORM_DoPageAAction(new_page, form_, FPDFPAGE_AACTION_OPEN);
   }
 
-  if (doc_)  // This can only happen if loading |doc_| fails.
-    client_->DocumentLoadComplete(pages_.size());
+  if (doc_) {
+    DocumentFeatures document_features;
+    document_features.page_count = pages_.size();
+    document_features.is_tagged = FPDFCatalog_IsTagged(doc_);
+    client_->DocumentLoadComplete(document_features);
+  }
 }
 
 void PDFiumEngine::UnsupportedFeature(int type) {
