@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c435a1e6_88c27c72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-12T21:34:24Z",
+      "side": 1,
+      "message": "Probably not--the reason this is separate from mDownloadUpdateQueue is that the notifications don\u0027t necessarily get removed just because they are canceled/paused.",
+      "parentUuid": "f4becf72_7b672d72",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 67
+      },
+      "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c56be4b5_dbe40a8c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3d4dc5_f6cad7b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-12T21:34:24Z",
+      "side": 1,
+      "message": "Will save checking more complicated states after we get some initial metrics!",
+      "parentUuid": "c56be4b5_dbe40a8c",
+      "range": {
+        "startLine": 460,
+        "startChar": 8,
+        "endLine": 462,
+        "endChar": 72
+      },
+      "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9005e18a_7138b8c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-12T21:34:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be061701_888021d0",
+      "range": {
+        "startLine": 477,
+        "startChar": 12,
+        "endLine": 479,
+        "endChar": 79
+      },
+      "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "522f09d3_c06f4c9b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4ffd30_91348f4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-12T21:34:24Z",
+      "side": 1,
+      "message": "I was just thinking that! Done.",
+      "parentUuid": "522f09d3_c06f4c9b",
+      "range": {
+        "startLine": 482,
+        "startChar": 8,
+        "endLine": 483,
+        "endChar": 69
+      },
+      "revId": "d804b6a83d9f14aa556d6502114f87e5f75a5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
