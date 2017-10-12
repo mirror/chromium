@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.omnibox;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @VisibleForTesting
 public class OmniboxSuggestion {
+    private static final String SUGGESTIONS_PREFERENCES_FILE_NAME = "zero_suggest_cached_results";
     private static final String KEY_ZERO_SUGGEST_LIST_SIZE = "zero_suggest_list_size";
     private static final String KEY_PREFIX_ZERO_SUGGEST_URL = "zero_suggest_url";
     private static final String KEY_PREFIX_ZERO_SUGGEST_DISPLAY_TEST = "zero_suggest_display_text";
@@ -29,6 +31,8 @@ public class OmniboxSuggestion {
     private static final String KEY_PREFIX_ZERO_SUGGEST_ANSWER_TYPE = "zero_suggest_answer_type";
     private static final String KEY_PREFIX_ZERO_SUGGEST_IS_DELETABLE = "zero_suggest_is_deletable";
     private static final String KEY_PREFIX_ZERO_SUGGEST_IS_STARRED = "zero_suggest_is_starred";
+
+    private static List<OmniboxSuggestion> sCachedZeroSuggestList;
 
     /**
      * Specifies the style of portions of the suggestion text.
@@ -207,13 +211,22 @@ public class OmniboxSuggestion {
                 && mIsDeletable == suggestion.mIsDeletable;
     }
 
+    private static SharedPreferences getSharedPreferencesForCachedSuggestions() {
+        return ContextUtils.getApplicationContext().getSharedPreferences(
+                SUGGESTIONS_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+    }
+
     /**
      * Cache the given suggestion list in shared preferences.
      * @param suggestions Suggestions to be cached.
      */
     public static void cacheOmniboxSuggestionListForZeroSuggest(
             List<OmniboxSuggestion> suggestions) {
-        Editor editor = ContextUtils.getAppSharedPreferences().edit();
+        // TODO(yusufo): Improve this by checking for echo suggest and other initial suggestions
+        // that are not most visited.
+        if (suggestions.equals(sCachedZeroSuggestList)) return;
+
+        Editor editor = getSharedPreferencesForCachedSuggestions().edit();
         editor.putInt(KEY_ZERO_SUGGEST_LIST_SIZE, suggestions.size()).apply();
         for (int i = 0; i < suggestions.size(); i++) {
             OmniboxSuggestion suggestion = suggestions.get(i);
@@ -233,13 +246,34 @@ public class OmniboxSuggestion {
                     .putBoolean(KEY_PREFIX_ZERO_SUGGEST_IS_STARRED + i, suggestion.mIsStarred)
                     .apply();
         }
+        sCachedZeroSuggestList = suggestions;
+
+        // TODO(yusufo): Remove this for m65.
+        // Cleanup old values stored on default preferences file.
+        SharedPreferences defaultPrefs = ContextUtils.getAppSharedPreferences();
+        int size = defaultPrefs.getInt(KEY_ZERO_SUGGEST_LIST_SIZE, 0);
+        if (size == 0) return;
+
+        Editor edit = defaultPrefs.edit();
+        for (int i = 0; i < size; i++) {
+            edit.remove(KEY_PREFIX_ZERO_SUGGEST_URL + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_DISPLAY_TEST + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_DESCRIPTION + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_ANSWER_TEXT + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_ANSWER_TYPE + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_NATIVE_TYPE + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_IS_SEARCH_TYPE)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_IS_STARRED + i)
+                    .remove(KEY_PREFIX_ZERO_SUGGEST_IS_DELETABLE + i)
+                    .apply();
+        }
     }
 
     /**
      * @return The zero suggest result if they have been cached before.
      */
     public static List<OmniboxSuggestion> getCachedOmniboxSuggestionsForZeroSuggest() {
-        SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences prefs = getSharedPreferencesForCachedSuggestions();
         int size = prefs.getInt(KEY_ZERO_SUGGEST_LIST_SIZE, -1);
         List<OmniboxSuggestion> suggestions = null;
         if (size > 1) {
