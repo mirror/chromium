@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21df2325_791b1ef6",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T07:30:40Z",
+      "side": 1,
+      "message": "FaviconService::CloneFaviconMappingsForPages() should be called from here instead of the other place. The other place gets called when the favicon has expired as well",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb495b72_150a56ac",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T07:30:40Z",
+      "side": 1,
+      "message": "Nit: \"favicons\" -\u003e \"favicon\"",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f0d5c6_a239dcda",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-12T07:30:40Z",
+      "side": 1,
+      "message": "\"whose FaviconID is not in |icon_ids|\" -\u003e \"with FaviconID other than |icon_id|\"",
+      "revId": "a1444cf27fd074c347f5332b5157c74bd46ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
