@@ -81,9 +81,10 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
 
 MainThreadTaskQueue::MainThreadTaskQueue(
     std::unique_ptr<internal::TaskQueueImpl> impl,
+    const TaskQueue::Spec& spec,
     const QueueCreationParams& params,
     RendererSchedulerImpl* renderer_scheduler)
-    : TaskQueue(std::move(impl)),
+    : TaskQueue(std::move(impl), spec),
       queue_type_(params.queue_type),
       queue_class_(QueueClassForQueueType(params.queue_type)),
       can_be_blocked_(params.can_be_blocked),
