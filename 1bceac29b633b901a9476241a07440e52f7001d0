@@ -22,6 +22,81 @@
       "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372ac779_247f2144",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T20:37:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "946b5378_858eb83f",
+      "range": {
+        "startLine": 808,
+        "startChar": 0,
+        "endLine": 813,
+        "endChar": 14
+      },
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bcae96c_5d83a267",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T20:37:38Z",
+      "side": 1,
+      "message": "Down the road, I wonder if this is worth calling inside SetSite now?  I\u0027m not sure if there are any other calls to SetSite that do want to assign about:blank and chrome://native.  Anyway, not something to change at the moment.",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52eb7bf_33233dab",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T20:37:38Z",
+      "side": 1,
+      "message": "Side note: I wonder if this should use SiteInstanceImpl::ShouldAssignSiteForURL as well, for consistency.  (I don\u0027t think it\u0027s a problem to skip about:blank site assignment on restore.)\n\nAnyway, let\u0027s not change it in this CL, right before branch.  We can discuss separately.  (I\u0027m also curious if PlzNav will let us get rid of lazy site assignment for SiteInstances, but I think that gets into questions about how it decides whether its speculative process / RFH is still suitable after a redirect.)",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f21cd2b_b837d015",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T20:37:38Z",
+      "side": 1,
+      "message": "There\u0027s a difference between ShouldLockToOrigin and DoesSiteRequireDedicatedProcess, right?  I think the latter returns true for extensions as well, even though they don\u0027t call LockToOrigin.\n\nI think you\u0027re right that we want DoesSiteRequireDedicatedProcess so that we don\u0027t have a race that breaks isolate-extensions?  Just wanted to sanity check it.",
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
