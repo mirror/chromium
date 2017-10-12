@@ -7,6 +7,7 @@
 
 #include "ui/aura/aura_export.h"
 #include "ui/aura/window.h"
+#include "ui/gfx/geometry/point_conversions.h"
 
 namespace gfx {
 class Display;
@@ -25,10 +26,22 @@ class AURA_EXPORT ScreenPositionClient {
 
   // Converts the |screen_point| from a given |window|'s coordinate space
   // into screen coordinate space.
+  // TODO: crbug.com/773331, remove int version of point conversion when
+  // current usage are changed to use float version.
   virtual void ConvertPointToScreen(const Window* window,
-                                    gfx::Point* point) = 0;
+                                    gfx::PointF* point) = 0;
   virtual void ConvertPointFromScreen(const Window* window,
-                                      gfx::Point* point) = 0;
+                                      gfx::PointF* point) = 0;
+  void ConvertPointToScreen(const Window* window, gfx::Point* point) {
+    gfx::PointF point_float(*point);
+    ConvertPointToScreen(window, &point_float);
+    *point = gfx::ToFlooredPoint(point_float);
+  }
+  void ConvertPointFromScreen(const Window* window, gfx::Point* point) {
+    gfx::PointF point_float(*point);
+    ConvertPointFromScreen(window, &point_float);
+    *point = gfx::ToFlooredPoint(point_float);
+  }
   // Converts the |screen_point| from root window host's coordinate of
   // into screen coordinate space.
   // A typical example of using this function instead of ConvertPointToScreen is
