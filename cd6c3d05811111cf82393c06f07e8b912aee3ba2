@@ -106,6 +106,24 @@
       "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea542d52_c022417e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-12T01:13:47Z",
+      "side": 1,
+      "message": "Yeah. I now feel more strongly that we should deprecate WebHTTPBody and requestbody etc, but get BlobPtr (or data pipe from it eventually, yep NetworkService probably shouldn\u0027t know about blob) and just use that. I think falken@ has been looking into some of these possibilities.",
+      "parentUuid": "2139d1ad_72718b65",
+      "revId": "cd6c3d05811111cf82393c06f07e8b912aee3ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
