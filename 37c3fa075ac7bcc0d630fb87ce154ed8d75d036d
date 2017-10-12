@@ -16,6 +16,24 @@
       "revId": "37c3fa075ac7bcc0d630fb87ce154ed8d75d036d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864a3590_accd8ca2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-12T20:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3142c6a8_4394fde0",
+      "revId": "37c3fa075ac7bcc0d630fb87ce154ed8d75d036d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
