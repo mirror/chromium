@@ -16,6 +16,24 @@
       "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44c20d5_2e7addc5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-12T18:55:56Z",
+      "side": 1,
+      "message": "I tried SizeToFit(0) and InvalidateLayout() first, but didn\u0027t work... I\u0027m quite surprised that adding an extra layer of container actually works ...\n\nI\u0027ll try replacing the GridLayout with BoxLayout next. Will report result soon. Thanks!",
+      "parentUuid": "27d0ac48_580bb584",
+      "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
