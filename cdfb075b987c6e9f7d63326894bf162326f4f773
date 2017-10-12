@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14af8565_c9fb7586",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-10-12T11:52:46Z",
+      "side": 0,
+      "message": "Could you clarify why this check is removed, do we no longer need an external_references table with V8 context startup data?",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "cdfb075b987c6e9f7d63326894bf162326f4f773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
