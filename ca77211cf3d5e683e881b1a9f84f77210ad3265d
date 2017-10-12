@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98a3c30c_5d744d05",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f80b8d_061e79e0",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3869202c_efa6a9bf",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebeeb09_99ae2f87",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3869202c_efa6a9bf",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "63914558_6e2cf163",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa07373_f9180fdf",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "853db7ad_251574fb",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caca13eb_28be26b1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "853db7ad_251574fb",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "e0907f06_6549ce39",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b827b5_57134eaf",
+      "range": {
+        "startLine": 128,
+        "startChar": 26,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c6b937_c827e08e",
         "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
         "patchSetId": 3
@@ -104,6 +200,24 @@
       "writtenOn": "2017-10-12T17:55:05Z",
       "side": 1,
       "message": "Instead of adding a comment for this, can we enforce it in code? \n\nassert(!this.pendingUpdate_);\nthis.pendingUpdate_ \u003d this.browserProxy_.getDisplayList(...).then((listInfo) \u003d\u003e {\n  this.pendingUpdate_ \u003d null;  \n  this.sites \u003d listInfo.items;\n  this.fire(\u0027site-data-list-complete\u0027);\n});",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0767dc9_ac60c3c3",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Comment doesn\u0027t apply. It only applies to the follow-up cl.",
+      "parentUuid": "04c6b937_c827e08e",
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "29a21814_a56eb565",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Was this expected to generate an error? It looks correct to me (and the compiler accepts it with the type defined).",
+      "parentUuid": "7d618c33_2ce1b680",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011a9151_3186d7e1",
         "filename": "chrome/test/data/webui/settings/site_data_test.js",
         "patchSetId": 3
@@ -141,6 +273,24 @@
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52957dd_9569daf7",
+        "filename": "chrome/test/data/webui/settings/site_data_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T18:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "011a9151_3186d7e1",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
