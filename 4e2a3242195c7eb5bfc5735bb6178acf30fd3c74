@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28902c1b_d5d288f1",
+        "filename": "third_party/WebKit/Source/core/style/StyleFetchedImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-12T21:41:50Z",
+      "side": 1,
+      "message": "Maybe you want to have this in StyleFetchedImageSet too? (For *image-set(...), don\u0027t know how common those are today.)",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 119,
+        "endChar": 60
+      },
+      "revId": "4e2a3242195c7eb5bfc5735bb6178acf30fd3c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6540cf_0fcc03eb",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-12T21:41:50Z",
+      "side": 1,
+      "message": "Only BitmapImages are checkerable I guess? (SVGImages will often not have large intrinsic dimensions, or rather concrete object size, so I would imagine that they would often fail the last part of the test.)",
+      "range": {
+        "startLine": 448,
+        "startChar": 6,
+        "endLine": 449,
+        "endChar": 44
+      },
+      "revId": "4e2a3242195c7eb5bfc5735bb6178acf30fd3c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049a63da_2982180a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 4338,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-12T21:41:50Z",
+      "side": 1,
+      "message": "\"svg image tag\"?",
+      "range": {
+        "startLine": 4338,
+        "startChar": 59,
+        "endLine": 4338,
+        "endChar": 66
+      },
+      "revId": "4e2a3242195c7eb5bfc5735bb6178acf30fd3c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
