@@ -215,6 +215,8 @@ source_set("base") {
     "scoped_callback_runner.h",
     "seekable_buffer.cc",
     "seekable_buffer.h",
+    "sequenced_object.cc",
+    "sequenced_object.h",
     "serial_runner.cc",
     "serial_runner.h",
     "silent_sink_suspender.cc",
