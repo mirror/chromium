@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebbc66e2_2b7007ea",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-12T19:34:21Z",
+      "side": 1,
+      "message": "It\u0027s fixed in the latest patch.",
+      "parentUuid": "8b911357_477cd44f",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "783f591c_ef87a0ba",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069aa71b_688ca445",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-12T19:34:21Z",
+      "side": 1,
+      "message": "It\u0027s fixed in the latest patch.",
+      "parentUuid": "783f591c_ef87a0ba",
+      "range": {
+        "startLine": 1508,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 25
+      },
+      "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
