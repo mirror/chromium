@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c340a1ce_f70821ad",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T20:55:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea441ebd_9c12fa62",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1f8ff11_5286b182",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df99b7f_c3f7649c",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T20:55:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c1f8ff11_5286b182",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +227,30 @@
       "side": 1,
       "message": "My bad, you are absolutely right Tommy! I don\u0027t know why I thought it was implemented as a map\u003cWebContents*, UserData\u003e.\n\nYes, we can delete the MPR here. The only thing I am worried about is the MPR\u0027s normal deletion being reported as an error in WMPI. When the WebContents destroyed event is raised, will the frames in the Renderer process already have been destroyed? Otherwise, there might be a small window of time where the MPRClient in WMPI might run into a \"Mojo connection error\", report an error and skew our UMAs.",
       "parentUuid": "c727a808_5f1f4710",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9ab4c5_166d6121",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T20:55:51Z",
+      "side": 1,
+      "message": "So, given the above concern should we just leave as is for now? Either way, we\u0027ll need the code here to detach when the MPR is deleted before the WC, so I\u0027m not sure exactly what the advantage of deleting on WCDestroyed is",
+      "parentUuid": "d2cf40d3_13583a60",
       "range": {
         "startLine": 58,
         "startChar": 2,
