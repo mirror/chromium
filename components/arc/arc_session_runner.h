@@ -102,6 +102,7 @@ class ArcSessionRunner : public ArcSession::Observer,
   // to finish tearing down in case it is still in the process of stopping.
   base::TimeDelta restart_delay_;
   base::OneShotTimer restart_timer_;
+  size_t restart_after_crash_count_;  // for UMA recording.
 
   // Factory to inject a fake ArcSession instance for testing.
   ArcSessionFactory factory_;

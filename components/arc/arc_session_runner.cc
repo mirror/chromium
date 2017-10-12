@@ -5,6 +5,7 @@
 #include "components/arc/arc_session_runner.h"
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_runner.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "components/arc/arc_util.h"
@@ -12,6 +13,19 @@
 namespace arc {
 
 namespace {
+
+// These enums are used to define the buckets for an enumerated UMA histogram
+// and need to be synced with histograms.xml. This enum class should also be
+// treated as append-only.
+enum class ArcInstanceCrashEvent : int {
+  // An ARC instance (of any kind) is started. We record this as a baseline.
+  INSTANCE_STARTED = 0,
+  // The instance crashed before establishing an IPC connection to Chrome.
+  INSTANCE_CRASHED_EARLY = 1,
+  // The instance crashed after establishing the connection.
+  INSTANCE_CRASHED = 2,
+  COUNT
+};
 
 constexpr base::TimeDelta kDefaultRestartDelay =
     base::TimeDelta::FromSeconds(5);
@@ -24,6 +38,37 @@ chromeos::SessionManagerClient* GetSessionManagerClient() {
       !chromeos::DBusThreadManager::Get()->GetSessionManagerClient())
     return nullptr;
   return chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+}
+
+void RecordInstanceCrashUma(ArcInstanceCrashEvent sample) {
+  UMA_HISTOGRAM_ENUMERATION("Arc.ContainerCrash", sample,
+                            ArcInstanceCrashEvent::COUNT);
+}
+
+void RecordInstanceRestartAfterCrashUma(size_t restart_after_crash_count) {
+  UMA_HISTOGRAM_COUNTS_100("Arc.ContainerRestartAfterCrashCount",
+                           restart_after_crash_count);
+}
+
+bool IsCrashUmaRecordingNeeded(size_t restart_after_crash_count,
+                               ArcStopReason stop_reason,
+                               bool was_running,
+                               ArcInstanceCrashEvent* out_uma_to_record) {
+  if (stop_reason != ArcStopReason::CRASH)
+    return false;
+
+  if (!was_running) {
+    // Always record early crashes. Restarting is not available at this point.
+    *out_uma_to_record = ArcInstanceCrashEvent::INSTANCE_CRASHED_EARLY;
+    return true;
+  }
+
+  // Record UMA only when this is the first non-early crash.
+  if (restart_after_crash_count)
+    return false;
+
+  *out_uma_to_record = ArcInstanceCrashEvent::INSTANCE_CRASHED;
+  return true;
 }
 
 // Returns true if restart is needed for given conditions.
@@ -91,6 +136,7 @@ bool IsRequestAllowed(const base::Optional<ArcInstanceMode>& current_mode,
 
 ArcSessionRunner::ArcSessionRunner(const ArcSessionFactory& factory)
     : restart_delay_(kDefaultRestartDelay),
+      restart_after_crash_count_(0),
       factory_(factory),
       weak_ptr_factory_(this) {
   chromeos::SessionManagerClient* client = GetSessionManagerClient();
@@ -205,6 +251,11 @@ void ArcSessionRunner::StartArcSession() {
   if (!arc_session_) {
     arc_session_ = factory_.Run();
     arc_session_->AddObserver(this);
+    // Record the UMA only when |restart_after_crash_count_| is zero to avoid
+    // recording an auto-restart-then-crash loop. Such a crash loop is recorded
+    // separately with RecordInstanceRestartAfterCrashUma().
+    if (!restart_after_crash_count_)
+      RecordInstanceCrashUma(ArcInstanceCrashEvent::INSTANCE_STARTED);
   } else {
     DCHECK(arc_session_->IsForLoginScreen());
   }
@@ -235,6 +286,12 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason,
 
   VLOG(0) << "ARC stopped: " << stop_reason;
 
+  ArcInstanceCrashEvent uma_to_record;
+  if (IsCrashUmaRecordingNeeded(restart_after_crash_count_, stop_reason,
+                                was_running, &uma_to_record)) {
+    RecordInstanceCrashUma(uma_to_record);
+  }
+
   // The observers should be agnostic to the existence of the limited-purpose
   // instance.
   const bool notify_observers = !arc_session_->IsForLoginScreen();
@@ -244,6 +301,15 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason,
 
   const bool restarting =
       IsRestartNeeded(target_mode_, stop_reason, was_running);
+
+  if (restarting && stop_reason == ArcStopReason::CRASH) {
+    ++restart_after_crash_count_;
+  } else {
+    // The session ended. Record the restart count.
+    RecordInstanceRestartAfterCrashUma(restart_after_crash_count_);
+    restart_after_crash_count_ = 0;
+  }
+
   if (restarting) {
     // There was a previous invocation and it crashed for some reason. Try
     // starting ARC instance later again.
