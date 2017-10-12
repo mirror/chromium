@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e108252_f788d7ea",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-12T18:45:43Z",
+      "side": 1,
+      "message": "up on line 113 you check if GetDictionary() returns nullptr.  Do you need to here? (or not there?)",
+      "revId": "c370e10d4ede27ad16a5eb7641ea2a5f50fee958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e78a48a_3af2248b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-12T18:45:43Z",
+      "side": 1,
+      "message": "Does anything weird/wrong happen if the nav id returned here is \"0\"?",
+      "revId": "c370e10d4ede27ad16a5eb7641ea2a5f50fee958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
