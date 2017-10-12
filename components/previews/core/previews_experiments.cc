@@ -128,6 +128,7 @@ net::EffectiveConnectionType GetECTThresholdForPreview(
                                 kEffectiveConnectionTypeThreshold,
                                 net::EFFECTIVE_CONNECTION_TYPE_2G);
     case PreviewsType::LOFI:
+    case PreviewsType::NOSCRIPT:
       return GetParamValueAsECT(kClientLoFiExperimentName,
                                 kEffectiveConnectionTypeThreshold,
                                 net::EFFECTIVE_CONNECTION_TYPE_2G);
@@ -186,6 +187,14 @@ int AMPRedirectionPreviewsVersion() {
                                           0);
 }
 
+bool IsNoScriptPreviewsEnabled() {
+  return base::FeatureList::IsEnabled(features::kNoScriptPreviews);
+}
+
+int NoScriptPreviewsVersion() {
+  return 0;
+}
+
 }  // namespace params
 
 std::string GetStringNameForType(PreviewsType type) {
@@ -200,6 +209,8 @@ std::string GetStringNameForType(PreviewsType type) {
       return "LitePage";
     case PreviewsType::AMP_REDIRECTION:
       return "AMPRedirection";
+    case PreviewsType::NOSCRIPT:
+      return "NoScript";
     case PreviewsType::NONE:
     case PreviewsType::LAST:
       break;
