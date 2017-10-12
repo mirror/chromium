@@ -87,15 +87,19 @@ class GraphicsLayerTest : public ::testing::Test {
   WebLayerTreeView* LayerTreeView() { return layer_tree_view_.get(); }
 
  protected:
+  bool PaintWithoutCommit(GraphicsLayer& layer, const IntRect* interest_rect) {
+    return layer.PaintWithoutCommit(interest_rect);
+  }
+
   WebLayer* platform_layer_;
   std::unique_ptr<FakeGraphicsLayer> graphics_layer_;
   std::unique_ptr<FakeGraphicsLayer> page_scale_layer_;
   std::unique_ptr<FakeGraphicsLayer> scroll_elasticity_layer_;
   std::unique_ptr<FakeGraphicsLayer> clip_layer_;
+  FakeGraphicsLayerClient client_;
 
  private:
   std::unique_ptr<WebLayerTreeViewImplForTesting> layer_tree_view_;
-  FakeGraphicsLayerClient client_;
 };
 
 class AnimationPlayerForTesting : public CompositorAnimationPlayerClient {
@@ -164,6 +168,29 @@ TEST_F(GraphicsLayerTest, updateLayerShouldFlattenTransformWithAnimations) {
 
   compositor_timeline->PlayerDestroyed(player);
   host.RemoveTimeline(*compositor_timeline.get());
+}
+
+TEST_F(GraphicsLayerTest, Paint) {
+  IntRect interest_rect(1, 2, 3, 4);
+  EXPECT_TRUE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+  graphics_layer_->GetPaintController().CommitNewDisplayItems();
+
+  client_.SetNeedsRepaint(true);
+  EXPECT_TRUE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+  graphics_layer_->GetPaintController().CommitNewDisplayItems();
+
+  client_.SetNeedsRepaint(false);
+  EXPECT_FALSE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+
+  interest_rect.Move(IntSize(10, 20));
+  EXPECT_TRUE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+  graphics_layer_->GetPaintController().CommitNewDisplayItems();
+  EXPECT_FALSE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+
+  graphics_layer_->SetNeedsDisplay();
+  EXPECT_TRUE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
+  graphics_layer_->GetPaintController().CommitNewDisplayItems();
+  EXPECT_FALSE(PaintWithoutCommit(*graphics_layer_, &interest_rect));
 }
 
 }  // namespace blink
