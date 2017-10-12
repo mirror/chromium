@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "dd7a12bc_09a9d99c",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T14:51:04Z",
+      "side": 1,
+      "message": "Sure, that\u0027s fine.  Thanks!",
+      "parentUuid": "06046578_b438336a",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542d2918_53af21c6",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -225,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "ef4accd3_7202720a",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T14:51:04Z",
+      "side": 1,
+      "message": "Agreed, on the condition you make sure to get a security review for this CL before it goes in--we *are* exposing a new interface to the renderer, and if we\u0027re not doing security checks, that may not be acceptable.  But I\u0027m happy to defer to the security folks.",
+      "parentUuid": "55c39c5c_3cf06313",
+      "range": {
+        "startLine": 132,
+        "startChar": 32,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48929bb1_f0624074",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -272,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "2636af69_52cd41ea",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T14:51:04Z",
+      "side": 1,
+      "message": "Hmmm.  That seems like a flaw in the interface, though it may be a spec-level issue.  The goal of priorities (AIUI) is to allow the website to indicate which cookies should be flushed first when there get to be too many cookies--it\u0027s not really a chrome-internal feature.  (See https://www.ietf.org/mail-archive/web/httpbisa/current/msg26718.html).  Given that priority is an extension to the Set-Cookie header syntax (see https://tools.ietf.org/html/draft-west-cookie-priority-00#page-4) I would assume that document.cookie setting would also allow for it.\n\nTL;DR: I think you\u0027ll need to deal with it eventually, but it certainly doesn\u0027t need to be in this CL.",
+      "parentUuid": "17c55b9a_80835e9e",
+      "range": {
+        "startLine": 137,
+        "startChar": 22,
+        "endLine": 137,
+        "endChar": 37
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48df680_de1bd7a0",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 33
@@ -307,6 +379,30 @@
       "side": 1,
       "message": "I think this is needed to set __Secure- cookies. I added a TODO to compute the right value for this. I\u0027d rather do it in a follow-up, when we\u0027ll have solid coverage via WPT tests.",
       "parentUuid": "c48df680_de1bd7a0",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 22
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "799a859c_571440af",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T14:51:04Z",
+      "side": 1,
+      "message": "It\u0027s totally needed to set secure cookies, but it should be set on the security properties of the URL it\u0027s being set from (i.e. HTTP vs. HTTPS).  I\u0027ll ok the followup conditional on the security review again (my guess is that a compromised renderer, which is the current security threat model for this interface, could also lie about whether it\u0027s HTTP or HTTPS, but I\u0027m not certain).\n\nETA: Actually, given that this is a skeleton that\u0027s not currently being used, can you make the default |false|?  I don\u0027t see any reason to start out with relaxed security and tighten it rather than start out with tight security and relax it.",
+      "parentUuid": "bde980aa_3bda5a8b",
       "range": {
         "startLine": 143,
         "startChar": 21,
