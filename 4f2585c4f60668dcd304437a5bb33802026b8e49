@@ -87,6 +87,24 @@
       "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508c8ac8_c0ed379b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-12T05:38:02Z",
+      "side": 1,
+      "message": "Yea... This thing is inherently complex, not sure if the alternative will be any cleaner.",
+      "parentUuid": "36359e07_088003a4",
+      "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
