@@ -267,14 +267,28 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void SetViewportIntersectionFromParent(const IntRect&);
   IntRect RemoteViewportIntersection() { return remote_viewport_intersection_; }
 
+  // Activates the user activation state of this frame and all its ancestors.
   void NotifyUserActivation();
 
   // Creates a UserGestureIndicator that contains a UserGestureToken with the
-  // given status. Also if a non-null LocalFrame* is provided, associates the
-  // token with the frame tree.
+  // given status. Also activates the user activation state of the LocalFrame
+  // (provided it's non-null) and all its ancestors.
   static std::unique_ptr<UserGestureIndicator> CreateUserGesture(
       LocalFrame*,
       UserGestureToken::Status = UserGestureToken::kPossiblyExistingGesture);
+
+  // Returns the transient user activation state of |LocalFrame*|, provided it
+  // is non-null.  Otherwise returns |false|.
+  //
+  // The |checkIfMainThread| parameter determines if the token based gestures
+  // (legacy code) must be used in a thread-safe manner.
+  static bool HasTransientUserActivation(LocalFrame*,
+                                         bool checkIfMainThread = false);
+
+  // Consumes the transient user activation state of |LocalFrame*|, provided
+  // the frame pointer is non-null and the state hasn't been consumed since
+  // activation.  Returns |true| if succesfully consumed the state.
+  static bool ConsumeTransientUserActivation(LocalFrame*);
 
   // Replaces the initial empty document with a Document suitable for
   // |mime_type| and populated with the contents of |data|. Only intended for

@@ -1021,6 +1021,8 @@ KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {
 void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
   // The client potentially needs to dispatch the event to other processes only
   // for the first time.
+  //
+  // TODO(mustaq): Not sure why this is different from autofill-client below.
   if (!received_previously && web_frame_->Client())
     web_frame_->Client()->SetHasReceivedUserGesture();
   // WebAutofillClient reacts only to the user gestures for this particular
