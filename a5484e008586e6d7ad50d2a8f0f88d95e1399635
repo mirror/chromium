@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aff2d97_a6ebda47",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:09:17Z",
+      "side": 1,
+      "message": "If you switch to a `bool`, you could set it to false here.",
+      "revId": "a5484e008586e6d7ad50d2a8f0f88d95e1399635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533afb6a_9036116a",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:09:17Z",
+      "side": 1,
+      "message": "Any reason why you use a struct with only a bool inside?",
+      "revId": "a5484e008586e6d7ad50d2a8f0f88d95e1399635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f7dcff_e1a3c936",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T09:09:17Z",
+      "side": 1,
+      "message": "style: you seem to be mixing functions and variables in there. The style guide recommends structs, methods, then variables.",
+      "revId": "a5484e008586e6d7ad50d2a8f0f88d95e1399635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
