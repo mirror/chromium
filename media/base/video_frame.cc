@@ -23,6 +23,37 @@
 
 namespace media {
 
+class SomeType : public base::UnbindableType {
+ public:
+  void foo();
+};
+
+void testfn() {
+  // base::internal::IsTypeAsPtrUnbindable<std::false_type,
+  // VideoFrame*>((VideoFrame*)nullptr);
+  // base::internal::IsTypeAsPtrUnbindable<std::false_type,
+  // base::subtle::RefCountedBase*>((subtle::RefCountedBase*)nullptr);
+  VideoFrame* video_frame = 0;
+  // decltype(::base::internal::IsTypeAsPtrUnbindable<std::false_type,
+  // VideoFrame*>((VideoFrame*)nullptr)) t1_;  Foo<VideoFrame> t1_;
+  // Goo<VideoFrame> t1_;
+  // Foo<base::Bat> t1_;
+  // Goo<base::Bat> t1_;
+  // t1_.x++;
+  //::base::internal::IsSingleTypeAsNonPointerBindable<VideoFrame> t1_;
+  //::base::internal::IsSingleTypeAsNonPointerBindable<::base::subtle::RefCountedBase>
+  //t2_;
+  //::base::internal::IsSingleTypeBindableHelper<VideoFrame*> t1_;
+  base::weak_ptr<SomeType> wp;
+  base::Bind(&SomeType::foo, wp);
+
+  base::Bind([](VideoFrame*, VideoFrame*) {});  // okay
+  // base::Bind([](int, SomeType*){}, 123, (SomeType*)nullptr);  // not okay
+  // base::Bind([](VideoFrame*, VideoFrame*){}, video_frame);  // not okay
+  base::Bind([](VideoFrame*, VideoFrame*) {})
+      .Run(video_frame, video_frame);  // okay
+}
+
 namespace {
 
 // Helper to privide gfx::Rect::Intersect() as an expression.
