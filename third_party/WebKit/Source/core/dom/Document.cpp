@@ -532,6 +532,9 @@ class Document::NetworkStateObserver final
     AtomicString event_name =
         on_line ? EventTypeNames::online : EventTypeNames::offline;
     Document* document = ToDocument(GetExecutionContext());
+    // |document| might already be shut down.
+    if (!document)
+      return;
     if (!document->domWindow())
       return;
     document->domWindow()->DispatchEvent(Event::Create(event_name));

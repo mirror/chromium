@@ -55,10 +55,11 @@
 
 namespace blink {
 
-static WebTaskRunner* GetTaskRunnerFor(const ResourceRequest& request,
-                                       FetchContext& context) {
-  if (!request.GetKeepalive())
+static RefPtr<WebTaskRunner> GetTaskRunnerFor(const ResourceRequest& request,
+                                              FetchContext& context) {
+  if (!request.GetKeepalive()) {
     return context.GetLoadingTaskRunner().get();
+  }
   // The loader should be able to work after the frame destruction, so we
   // cannot use the task runner associated with the frame.
   return Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
