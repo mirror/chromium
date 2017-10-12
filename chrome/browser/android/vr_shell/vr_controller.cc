@@ -42,6 +42,13 @@ constexpr float kCutoffHz = 10.0f;
 constexpr float kRC = 1.0f / (2.0f * base::kPiFloat * kCutoffHz);
 constexpr float kNanoSecondsPerSecond = 1.0e9f;
 
+// Maximum angles (in degrees counterclockwise from positive x-axis) for
+// different directions.
+constexpr float kRight = 28.f;
+constexpr float kUp = 151.f;
+constexpr float kLeft = 224.f;
+constexpr float kDown = 317.f;
+
 constexpr int kMaxNumOfExtrapolations = 2;
 
 // Distance from the center of the controller to start rendering the laser.
@@ -399,7 +406,24 @@ void VrController::HandleScrollingState(blink::WebGestureEvent* gesture) {
 }
 
 bool VrController::IsHorizontalGesture() {
-  return std::abs(last_velocity_.x()) > std::abs(last_velocity_.y());
+  float x, y, gesture_angle;
+  x = last_velocity_.x();
+  if (fabs(x) == 0.0f)
+    return false;
+  y = -last_velocity_.y();
+  // Angle of the gesture in degrees counterclockwise from positive x-axis.
+  gesture_angle = std::atan2(y, x) * 180.f / base::kPiFloat;
+  if (gesture_angle < 0)
+    gesture_angle += 360.f;
+  if (gesture_angle < kRight)
+    return true;
+  if (gesture_angle < kUp)
+    return false;
+  if (gesture_angle < kLeft)
+    return true;
+  if (gesture_angle < kDown)
+    return false;
+  return true;
 }
 
 bool VrController::InSlop(const gfx::Vector2dF touch_position) {
