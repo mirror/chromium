@@ -16,6 +16,24 @@
       "revId": "46968ca6e446bd495104679e0ff938250a3c88c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c49ec9_c2a51858",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-12T19:52:04Z",
+      "side": 1,
+      "message": "Yes, this test isn\u0027t actually for the tab switcher UI, but it about DialogPresenter functionality.  The only thing that matters for this test is that a Tab is closed while the tab switcher is displayed.",
+      "parentUuid": "2c9f2b11_56ccd702",
+      "revId": "46968ca6e446bd495104679e0ff938250a3c88c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
