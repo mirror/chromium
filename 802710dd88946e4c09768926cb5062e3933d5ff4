@@ -16,6 +16,24 @@
       "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cedb15_50eba038",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-12T17:03:05Z",
+      "side": 1,
+      "message": "Nate pointed out that in new navigation, GetDocument-\u003eFetcher() will return the ResourceFetcher from the navigated-away Document, and suggested passing ResourceFetcher into OnWillSendRequest instead.",
+      "parentUuid": "bc6fca62_4ed47e0c",
+      "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
