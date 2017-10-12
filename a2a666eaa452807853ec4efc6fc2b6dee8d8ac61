@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a878b734_a4168709",
+        "filename": "components/omnibox/browser/shortcuts_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-12T17:58:17Z",
+      "side": 1,
+      "message": "It looks like you\u0027re assuming here that search queries will only have matches at the front of the text? (As handled above but then skipping the in-the-middle logic here.)\n\nUnfortunately, we can\u0027t make that assumption. See, for example, this case, where the match \"yeller\" appears in the middle of the text (\"old yeller movie full\" is being produced by the shortcuts provider): https://screenshot.googleplex.com/MipLdK4FhFg.png.\n\nYou should be able to reproduce that case by following the steps listed here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d767172#c6.\n\nCan we use class_of_find_text and class_of_additional_text here or is there some additional complexity arising from this logic?",
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d616ccb0_bc195e18",
+        "filename": "components/omnibox/browser/shortcuts_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-12T17:58:17Z",
+      "side": 1,
+      "message": "typo: within",
+      "range": {
+        "startLine": 54,
+        "startChar": 36,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219801b7_d055c819",
+        "filename": "components/omnibox/browser/shortcuts_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-12T17:58:17Z",
+      "side": 1,
+      "message": "Indent this paragraph so it\u0027s clearer that it\u0027s specific to the \"not search query\" case (second bullet).",
+      "revId": "a2a666eaa452807853ec4efc6fc2b6dee8d8ac61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
