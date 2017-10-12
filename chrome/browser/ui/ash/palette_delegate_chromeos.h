@@ -8,7 +8,6 @@
 #include <string>
 
 #include "ash/palette_delegate.h"
-#include "base/callback_list.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/values.h"
@@ -32,12 +31,8 @@ class PaletteDelegateChromeOS
 
  private:
   // ash::PaletteDelegate:
-  std::unique_ptr<EnableListenerSubscription> AddPaletteEnableListener(
-      const EnableListener& on_state_changed) override;
   void CreateNote() override;
   bool HasNoteApp() override;
-  bool ShouldAutoOpenPalette() override;
-  bool ShouldShowPalette() override;
 
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
@@ -47,12 +42,7 @@ class PaletteDelegateChromeOS
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  // Called when the palette enabled pref has changed.
-  void OnPaletteEnabledPrefChanged();
-
   void SetProfile(Profile* profile);
-
-  base::CallbackList<void(bool)> palette_enabled_callback_list_;
 
   // Unowned pointer to the active profile.
   Profile* profile_ = nullptr;
