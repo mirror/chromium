@@ -36,6 +36,11 @@ constexpr double kMaxMediaBitrateCapacityFraction = 0.9;
 constexpr int kPixelPerSec4K = 3840 * 2160 * 30;  // 4k 30fps.
 constexpr int kPixelPerSec2K = 1920 * 1080 * 30;  // 1080p 30fps.
 
+// The minimum media element duration that is allowed to start media remoting.
+// Frequent switching into and out of media remoting for short-duration media
+// can feel "janky" to the user.
+constexpr double kMinRemotingMediaDurationInSec = 60;
+
 }  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
@@ -338,6 +343,9 @@ bool RendererController::CanBeRemoting() const {
     return false;
 
   if (is_remote_playback_disabled_)
+    return false;
+
+  if (client_->Duration() <= kMinRemotingMediaDurationInSec)
     return false;
 
   return true;
