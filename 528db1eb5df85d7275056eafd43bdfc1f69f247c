@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7b23c8_7895b572",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T20:18:02Z",
+      "side": 1,
+      "message": "Elsewhere you\u0027ve indicated that a true return from InitiateTruncateEntry() might go along with this having been deleted.  That\u0027s a fairly big deal, and deserves a comment both at the ITE decl and here as to why it\u0027s safe to touch member variables.\n\nMy personal preference would have been to leave the DoLoop() call outside of InitiateTruncateEntry() for exactly this reason; then it can only be called (conditional on in_do_loop_) in the one place where we know we might possibly not be in the DoLoop(), and only that place needs to be careful about touching member variables afterwards.  But I don\u0027t feel strongly--it might be worth a quick three way discussion, or we could just comment InitiateTruncateEntry() pretty thoroughly.",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04377f4d_dbce4827",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T20:18:02Z",
+      "side": 1,
+      "message": "nit, suggestion: request_ \u003d MockHttpRequest(transaction);?",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cce959_39142148",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T20:18:02Z",
+      "side": 1,
+      "message": "Should there be something checking the state of the entry here?  Same above?",
+      "range": {
+        "startLine": 346,
+        "startChar": 20,
+        "endLine": 346,
+        "endChar": 32
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc49565_fcff0b68",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-12T20:18:02Z",
+      "side": 1,
+      "message": "nitty nit: Remove space before period.",
+      "range": {
+        "startLine": 503,
+        "startChar": 59,
+        "endLine": 503,
+        "endChar": 63
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
