@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3e718ce_6023ef94",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-12T22:05:31Z",
+      "side": 1,
+      "message": "nit: Can you clarify the comment further, maybe:\n\nWe always collect this metric when we have 2 or more backgrounded loading or pending tabs (|total_count|) which is the more interesting set and we sample the rest (i.e. when there is one tab loading in the background when no tabs pending).",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "5ab144107e32bfb04808e813ce4cddb94575e463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95dd92e1_c9a05fdf",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 19
