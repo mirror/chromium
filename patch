@@ -1,0 +1,170 @@
+diff --git a/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc b/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc
+index 0cc017eacb8c..9a5c8b21b21e 100644
+--- a/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc
++++ b/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc
+@@ -113,10 +113,15 @@ void SubresourceFilterBrowserTest::ConfigureAsSubresourceFilterOnlyURL(
+       url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
+ }
+ 
+-void SubresourceFilterBrowserTest::
+-    ConfigureAsSubresourceFilterOnlyURLWithWarning(const GURL& url) {
++void SubresourceFilterBrowserTest::ConfigureURLWithWarning(
++    const GURL& url,
++    const std::vector<safe_browsing::SubresourceFilterType>& filter_types) {
+   safe_browsing::ThreatMetadata metadata;
+-  metadata.warning = true;
++
++  for (auto type : filter_types) {
++    metadata.subresource_filter_match[type] =
++        safe_browsing::SubresourceFilterLevel::WARN;
++  }
+   database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+       url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
+ }
+diff --git a/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h b/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h
+index abc12aa941db..1312a6c5c136 100644
+--- a/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h
++++ b/chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h
+@@ -32,6 +32,10 @@ class WebContents;
+ class SubresourceFilterContentSettingsManager;
+ class TestSafeBrowsingDatabaseHelper;
+ 
++namespace safe_browsing {
++enum class SubresourceFilterType;
++}
++
+ namespace subresource_filter {
+ 
+ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
+@@ -56,7 +60,9 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
+ 
+   void ConfigureAsSubresourceFilterOnlyURL(const GURL& url);
+ 
+-  void ConfigureAsSubresourceFilterOnlyURLWithWarning(const GURL& url);
++  void ConfigureURLWithWarning(
++      const GURL& url,
++      const std::vector<safe_browsing::SubresourceFilterType>& filter_types);
+ 
+   content::WebContents* web_contents() const;
+ 
+diff --git a/chrome/browser/subresource_filter/subresource_filter_browsertest.cc b/chrome/browser/subresource_filter/subresource_filter_browsertest.cc
+index 3d7dc0b83a02..d38d20224e6e 100644
+--- a/chrome/browser/subresource_filter/subresource_filter_browsertest.cc
++++ b/chrome/browser/subresource_filter/subresource_filter_browsertest.cc
+@@ -212,18 +212,19 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
+ }
+ 
+ IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
+-                       MainFrameActivationWithWarning_SubresourceFilterList) {
++                       MainFrameActivationWithWarning_BetterAdsList) {
+   content::ConsoleObserverDelegate console_observer1(web_contents(),
+                                                      "*show ads*");
+   web_contents()->SetDelegate(&console_observer1);
+   GURL url(GetTestUrl("subresource_filter/frame_with_included_script.html"));
+-  ConfigureAsSubresourceFilterOnlyURLWithWarning(url);
++  ConfigureURLWithWarning(url,
++                          {safe_browsing::SubresourceFilterType::BETTER_ADS});
+   ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(
+       "suffix-that-does-not-match-anything"));
+ 
+   Configuration config(subresource_filter::ActivationLevel::ENABLED,
+                        subresource_filter::ActivationScope::ACTIVATION_LIST,
+-                       subresource_filter::ActivationList::SUBRESOURCE_FILTER);
++                       subresource_filter::ActivationList::BETTER_ADS);
+   ResetConfiguration(std::move(config));
+ 
+   ui_test_utils::NavigateToURL(browser(), url);
+@@ -535,7 +536,13 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
+       GetTestUrl("subresource_filter/frame_with_included_script.html"));
+   ASSERT_NO_FATAL_FAILURE(
+       SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+-  ConfigureAsSubresourceFilterOnlyURLWithWarning(url);
++  ConfigureURLWithWarning(url,
++                          {safe_browsing::SubresourceFilterType::BETTER_ADS});
++
++  Configuration config(subresource_filter::ActivationLevel::ENABLED,
++                       subresource_filter::ActivationScope::ACTIVATION_LIST,
++                       subresource_filter::ActivationList::BETTER_ADS);
++  ResetConfiguration(std::move(config));
+ 
+   // Should not trigger activation, the URL is not on the blacklist.
+   ui_test_utils::NavigateToURL(browser(), url);
+diff --git a/chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc b/chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc
+index a56f9f187eee..4cbdbd9eaa12 100644
+--- a/chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc
++++ b/chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc
+@@ -19,6 +19,7 @@
+ #include "chrome/test/base/ui_test_utils.h"
+ #include "components/content_settings/core/browser/host_content_settings_map.h"
+ #include "components/content_settings/core/common/content_settings_types.h"
++#include "components/safe_browsing/db/util.h"
+ #include "components/subresource_filter/core/browser/subresource_filter_constants.h"
+ #include "components/subresource_filter/core/browser/subresource_filter_features.h"
+ #include "components/url_pattern_index/proto/rules.pb.h"
+@@ -45,8 +46,8 @@ class ScopedLoggingObserver {
+ 
+   void RoundTripAndVerifyLogMessages(
+       content::WebContents* web_contents,
+-      std::vector<std::string> messages_expected,
+-      std::vector<std::string> messages_not_expected) {
++      const std::vector<std::string>& messages_expected,
++      const std::vector<std::string>& messages_not_expected) {
+     // Round trip to the renderer to ensure the message would have gotten sent.
+     EXPECT_TRUE(content::ExecuteScript(web_contents, "var a = 1;"));
+     bool verify_messages_expected[messages_expected.size()];
+@@ -195,9 +196,16 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+ 
+ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+                        WarningDoNotBlockCreatingNewWindows_LogsToConsole) {
++  Configuration config = Configuration::MakePresetForLiveRunForAbusiveAds();
++  config.activation_options.should_disable_ruleset_rules = false;
++  config.activation_options.should_suppress_notifications = false;
++  ResetConfiguration(std::move(config));
++
+   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+-  ConfigureAsSubresourceFilterOnlyURLWithWarning(a_url);
++
++  ConfigureURLWithWarning(a_url,
++                          {safe_browsing::SubresourceFilterType::ABUSIVE});
+ 
+   // Navigate to a_url, should log a warning and not trigger the popup blocker.
+   ScopedLoggingObserver log_observer;
+@@ -219,17 +227,13 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+ IN_PROC_BROWSER_TEST_F(
+     SubresourceFilterPopupBrowserTest,
+     WarningDoNotBlockCreatingNewWindowsDisableRules_LogsToConsole) {
+-  Configuration config(subresource_filter::ActivationLevel::ENABLED,
+-                       subresource_filter::ActivationScope::ACTIVATION_LIST,
+-                       subresource_filter::ActivationList::SUBRESOURCE_FILTER);
+-  config.activation_options.should_strengthen_popup_blocker = true;
+-  config.activation_options.should_disable_ruleset_rules = true;
+-
++  Configuration config = Configuration::MakePresetForLiveRunForAbusiveAds();
+   ResetConfiguration(std::move(config));
+ 
+   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+-  ConfigureAsSubresourceFilterOnlyURLWithWarning(a_url);
++  ConfigureURLWithWarning(a_url,
++                          {safe_browsing::SubresourceFilterType::ABUSIVE});
+ 
+   // Navigate to a_url, should log a warning and not trigger the popup blocker.
+   ScopedLoggingObserver log_observer;
+@@ -250,9 +254,15 @@ IN_PROC_BROWSER_TEST_F(
+ 
+ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+                        WarningAllowCreatingNewWindows_LogsToConsole) {
++  Configuration config = Configuration::MakePresetForLiveRunForAbusiveAds();
++  config.activation_options.should_disable_ruleset_rules = false;
++  config.activation_options.should_suppress_notifications = false;
++  ResetConfiguration(std::move(config));
++
+   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+-  ConfigureAsSubresourceFilterOnlyURLWithWarning(a_url);
++  ConfigureURLWithWarning(a_url,
++                          {safe_browsing::SubresourceFilterType::ABUSIVE});
+ 
+   // Allow popups on |a_url|.
+   HostContentSettingsMap* settings_map =

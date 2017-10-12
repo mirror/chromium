@@ -233,6 +233,9 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
 
   // Remove the transaction.
   void EraseTransaction(Transaction* transaction, int result);
+  TransactionMap::iterator EraseTransaction(TransactionMap::iterator it,
+                                            int result);
+  void ErasedTransaction(Transaction* transaction);
 
   TransactionSet RemoveTransactionsFromAllWriters();
 
