@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1ff804_2910ffac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-12T07:38:12Z",
+      "side": 1,
+      "message": "Out of curiosity: baseline language model still uses heuristic logic, right?",
+      "revId": "4dd0723f85fc01a1cc8e46f4bf4c6140197b27a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
