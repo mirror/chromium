@@ -37,6 +37,14 @@
     margin-top: 10px;
 }
 
+.report-group-header {
+    border-top: 16px solid #f9f9f9
+}
+
+.report-group-header:first-child {
+    border-top: none;
+}
+
 .report-section {
     display: flex;
     padding: 12px;

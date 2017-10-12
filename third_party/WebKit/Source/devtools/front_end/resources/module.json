@@ -54,6 +54,7 @@
         "resourcesPanel.css",
         "resourcesSidebar.css",
         "serviceWorkerCacheViews.css",
+        "serviceWorkerFilter.css",
         "serviceWorkersView.css"
     ]
 }

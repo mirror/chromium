@@ -27,6 +27,7 @@ DevTools
 Push
 Sync
 Sync
+Service workers from other domains
 ============================
 The second Serviceworker is installed.
 ==== ServiceWorkersView ====
@@ -60,6 +61,7 @@ DevTools
 Push
 Sync
 Sync
+Service workers from other domains
 ============================
 The first ServiceWorker worker became redundant and stopped.
 ==== ServiceWorkersView ====
@@ -88,6 +90,7 @@ DevTools
 Push
 Sync
 Sync
+Service workers from other domains
 ============================
 DevTools frontend is reopened.
 ==== ServiceWorkersView ====
@@ -115,5 +118,6 @@ DevTools
 Push
 Sync
 Sync
+Service workers from other domains
 ============================
 

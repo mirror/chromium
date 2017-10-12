@@ -190,4 +190,11 @@ UI.ReportView.Section = class extends UI.VBox {
     this._fieldList.removeChildren();
     this._fieldMap.clear();
   }
+
+  /**
+   * @param {boolean} header
+   */
+  setGroupdHeader(header) {
+    this.element.classList.toggle('report-group-header', header);
+  }
 };
