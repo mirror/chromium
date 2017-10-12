@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06cf324b_420145a7",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T22:59:20Z",
+      "side": 1,
+      "message": "DCHECK_IMPLIES(use_overlay, !(hint \u0026 TEXTURE_HINT_MIPMAP))",
+      "revId": "bd12127bc5b866f1ff5acd024efba0f2df471c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
