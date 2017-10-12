@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e9665e_499a31fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "nit: first line too long (it\u0027s recommended to keep it under 50 character.",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458e6cbe_d4cb4f5e",
+        "filename": "ui/display/manager/fake_display_snapshot.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "You really like braces around one line statements.",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dabb34f_d101e962",
+        "filename": "ui/display/mojo/display_struct_traits_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "What about adding an invalid one in one of those tests?",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e35b2f1_7cbc728f",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "Should we test this function?",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab3382c_5ee5d050",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "Do you want to zero initialize the struct? Did you mean {0}?",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979f4ed1_c0e1fa26",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "I can\u0027t quite parse this comment.\nDo you mean something like:\n // If |edid| has no Gamma, deafault gfx::ColorSpace gamma to the standard of sRGB, 2.2.\n\nIs it a good idea to set a default here or should we propagate the invalid gamma and let the renderer/DisplayColorManager decide what to default to?",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97607c1_10f3a855",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-12T18:28:28Z",
+      "side": 1,
+      "message": "Can you link to the place where they specify the particular order and how they are interepreted.",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
