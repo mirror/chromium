@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "6db84b62_6ca0fdd4",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1151082
+      },
+      "writtenOn": "2017-10-12T07:35:14Z",
+      "side": 1,
+      "message": "It seems that SyncAppTimeSettings() is called only when IntentHelperInstance is ready on ARC side. That means there is no safe timing to sync locale just after ARC container is up and starts running. Am I right?",
+      "parentUuid": "6cd29dd3_936a9857",
+      "revId": "424dddad2dce50bd4eed94992344a066ca5b6e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20bcc59f_36d0674b",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 6
