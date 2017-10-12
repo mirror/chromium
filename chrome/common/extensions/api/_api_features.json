@@ -398,6 +398,10 @@
     "extension_types": ["extension", "legacy_packaged_app"],
     "contexts": ["blessed_extension"]
   },
+  "extensionAction": {
+    "dependencies": ["manifest:extension_action"],
+    "contexts": ["blessed_extension"]
+  },
   "extension.getURL": {
     "contexts": ["blessed_extension", "unblessed_extension", "content_script", "extension_service_worker"]
   },

@@ -43,6 +43,7 @@ const char kEventName[] = "event_name";
 const char kExcludeGlobs[] = "exclude_globs";
 const char kExcludeMatches[] = "exclude_matches";
 const char kExport[] = "export";
+const char kExtensionAction[] = "extension_action";
 const char kExternallyConnectable[] = "externally_connectable";
 const char kEventRules[] = "event_rules";
 const char kFileAccessList[] = "file_access";
@@ -388,6 +389,7 @@ const char kInvalidExportWhitelist[] =
     "Invalid value for 'export.whitelist'.";
 const char kInvalidExportWhitelistString[] =
     "Invalid value for 'export.whitelist[*]'.";
+const char kInvalidExtensionAction[] = "Invalid value for 'extension_action'.";
 const char kInvalidFileAccessList[] =
     "Invalid value for 'file_access'.";
 const char kInvalidFileAccessValue[] =

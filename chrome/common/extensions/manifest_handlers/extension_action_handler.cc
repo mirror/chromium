@@ -28,14 +28,24 @@ bool ExtensionActionHandler::Parse(Extension* extension,
                                    base::string16* error) {
   const char* key = NULL;
   const char* error_key = NULL;
+  if (extension->manifest()->HasKey(manifest_keys::kExtensionAction)) {
+    key = manifest_keys::kExtensionAction;
+    error_key = manifest_errors::kInvalidExtensionAction;
+  }
+
   if (extension->manifest()->HasKey(manifest_keys::kPageAction)) {
+    if (key != NULL) {
+      // An extension can only have one action.
+      *error = base::ASCIIToUTF16(manifest_errors::kOneUISurfaceOnly);
+      return false;
+    }
     key = manifest_keys::kPageAction;
     error_key = manifest_errors::kInvalidPageAction;
   }
 
   if (extension->manifest()->HasKey(manifest_keys::kBrowserAction)) {
     if (key != NULL) {
-      // An extension cannot have both browser and page actions.
+      // An extension can only have one action.
       *error = base::ASCIIToUTF16(manifest_errors::kOneUISurfaceOnly);
       return false;
     }
