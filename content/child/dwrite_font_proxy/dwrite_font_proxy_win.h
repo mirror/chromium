@@ -30,7 +30,7 @@ class DWriteFontFamilyProxy;
 // into a custom font collection.
 // This is needed because the sandbox interferes with DirectWrite's
 // communication with the system font service.
-class CONTENT_EXPORT DWriteFontCollectionProxy
+class DWriteFontCollectionProxy
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteFontCollection,
@@ -99,7 +99,7 @@ class CONTENT_EXPORT DWriteFontCollectionProxy
 // stub, until something calls a method that requires actual font data. At that
 // point this will load the font files into a custom collection and
 // subsequently calls will be proxied to the resulting DirectWrite object.
-class CONTENT_EXPORT DWriteFontFamilyProxy
+class DWriteFontFamilyProxy
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteFontFamily> {
@@ -151,7 +151,7 @@ class CONTENT_EXPORT DWriteFontFamilyProxy
 
 // Implements the DirectWrite font file enumerator interface, backed by a list
 // of font files.
-class CONTENT_EXPORT FontFileEnumerator
+class FontFileEnumerator
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteFontFileEnumerator> {
@@ -181,7 +181,7 @@ class CONTENT_EXPORT FontFileEnumerator
 // Implements the DirectWrite font file stream interface that maps the file to
 // be loaded as a memory mapped file, and subsequently returns pointers into
 // the mapped memory block.
-class CONTENT_EXPORT FontFileStream
+class FontFileStream
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteFontFileStream> {

@@ -39,4 +39,8 @@ void DragSourceWin::OnDragSourceDrop() {
       ->set_in_drag_loop(false);
 }
 
+Microsoft::WRL::ComPtr<ui::DragSourceWin> DragSourceWinFactory() {
+  return Microsoft::WRL::Make<ui::DragSourceWin>();
+}
+
 }  // namespace ui

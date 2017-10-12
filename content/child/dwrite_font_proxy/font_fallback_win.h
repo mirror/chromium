@@ -20,7 +20,7 @@ namespace content {
 
 // Implements an  IDWriteFontFallback that uses IPC to proxy the fallback calls
 // to the system fallback in the browser process.
-class CONTENT_EXPORT FontFallback
+class FontFallback
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteFontFallback> {
