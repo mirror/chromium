@@ -569,6 +569,9 @@ class MEDIA_GPU_EXPORT DXVAVideoDecodeAccelerator
   // Set to true if we are processing a video configuration change.
   bool processing_config_changed_;
 
+  // TEST:
+  bool enable_burst_mode_;
+
   // WeakPtrFactory for posting tasks back to |this|.
   base::WeakPtrFactory<DXVAVideoDecodeAccelerator> weak_this_factory_;
 

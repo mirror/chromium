@@ -579,6 +579,10 @@ DXVAVideoDecodeAccelerator::DXVAVideoDecodeAccelerator(
   memset(&input_stream_info_, 0, sizeof(input_stream_info_));
   memset(&output_stream_info_, 0, sizeof(output_stream_info_));
   use_color_info_ = base::FeatureList::IsEnabled(kVideoBlitColorAccuracy);
+
+  // TEST
+  enable_burst_mode_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableDecodeBurstMode);
 }
 
 DXVAVideoDecodeAccelerator::~DXVAVideoDecodeAccelerator() {
@@ -1064,6 +1068,7 @@ void DXVAVideoDecodeAccelerator::AssignPictureBuffers(
   }
 
   ProcessPendingSamples();
+
   if (pending_flush_ || processing_config_changed_) {
     decoder_thread_task_runner_->PostTask(
         FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::FlushInternal,
@@ -1124,7 +1129,18 @@ void DXVAVideoDecodeAccelerator::ReusePictureBuffer(int32_t picture_buffer_id) {
       }
     }
 
-    ProcessPendingSamples();
+    // Experiment - call ProcessPendingSamples only when there are at least two
+    // picture buffers available.
+    int picture_buffers_available = 0;
+    for (it = output_picture_buffers_.begin();
+         it != output_picture_buffers_.end(); ++it) {
+      if (it->second->available())
+        picture_buffers_available++;
+    }
+
+    if (!enable_burst_mode_ || picture_buffers_available >= 2)
+      ProcessPendingSamples();
+
     if (pending_flush_) {
       decoder_thread_task_runner_->PostTask(
           FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::FlushInternal,
@@ -1973,7 +1989,18 @@ bool DXVAVideoDecodeAccelerator::ProcessOutputSample(
 }
 
 void DXVAVideoDecodeAccelerator::ProcessPendingSamples() {
-  TRACE_EVENT0("media", "DXVAVideoDecodeAccelerator::ProcessPendingSamples");
+  bool output_samples_present = OutputSamplesPresent();
+  int picture_buffers_available = 0;
+  for (auto it = output_picture_buffers_.begin();
+       it != output_picture_buffers_.end(); ++it) {
+    if (it->second->available())
+      picture_buffers_available++;
+  }
+
+  TRACE_EVENT2("media", "DXVAVideoDecodeAccelerator::ProcessPendingSamples",
+               "output_samples_present", output_samples_present,
+               "picture_buffers_available", picture_buffers_available);
+
   DCHECK(main_thread_task_runner_->BelongsToCurrentThread());
 
   if (output_picture_buffers_.empty())
@@ -2311,12 +2338,24 @@ void DXVAVideoDecodeAccelerator::FlushInternal() {
 
 void DXVAVideoDecodeAccelerator::DecodeInternal(
     const base::win::ScopedComPtr<IMFSample>& sample) {
-  TRACE_EVENT0("media", "DXVAVideoDecodeAccelerator::DecodeInternal");
+  // TODO: test code
+  bool output_samples_present = OutputSamplesPresent();
+  int pending_input_buffers_count = pending_input_buffers_.size();
+
+  TRACE_EVENT2("media", "DXVAVideoDecodeAccelerator::DecodeInternal",
+               "output_samples_present", output_samples_present,
+               "pending_input_buffers_count", pending_input_buffers_count);
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
 
   if (GetState() == kUninitialized)
     return;
 
+  // TODO: this is likely the code that prevents the decoder from decoding
+  // multiple input samples in a burst.
+  // TODO: may be try removing the OutputSamplesPresent() condition or at least
+  // understand what makes this code bail here.
+  // An alternative condition could be to track the time, which is best to be
+  // done outside of DecodeInternal.
   if (OutputSamplesPresent() || !pending_input_buffers_.empty()) {
     pending_input_buffers_.push_back(sample);
     return;
