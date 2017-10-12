@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cbc0a42_4ae7595b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T23:26:46Z",
+      "side": 1,
+      "message": "Might make sense to have  DCHECK that we\u0027re in an inner WebContents?  I suppose it\u0027s not urgent if you want to land this patch before branch, since we\u0027ll only hit a null deref below if it\u0027s called improperly, and not the bad cast following it.",
+      "revId": "4fe166e4276716f0738cf62571bd31fae603ff74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
