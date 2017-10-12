@@ -53,8 +53,13 @@ FileTableList.prototype.mergeItems = function(beginIndex, endIndex) {
     if (!item)
       continue;
     var isSelected = this.selectionModel.getIndexSelected(i);
-    if (item.selected != isSelected)
+    if (item.selected != isSelected) {
       item.selected = isSelected;
+      var checkbox = item.querySelector('div.detail-checkmark');
+      if (checkbox) {
+        checkbox.setAttribute('aria-checked', isSelected);
+      }
+    }
   }
 
   if (this.onMergeItems_) {

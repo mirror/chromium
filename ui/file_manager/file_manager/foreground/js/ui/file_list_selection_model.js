@@ -70,8 +70,10 @@ FileListSelectionModel.prototype.onChangeEvent_ = function(event) {
   var selectedIndexes = this.selectedIndexes;
   if (selectedIndexes.length === 0) {
     this.isCheckSelectMode_ = false;
+    cr.dispatchSimpleEvent(this, 'exit-checkselect');
   } else if (selectedIndexes.length >= 2) {
     this.isCheckSelectMode_ = true;
+    cr.dispatchSimpleEvent(this, 'enter-checkselect');
   }
 };
 

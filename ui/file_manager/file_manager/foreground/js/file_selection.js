@@ -159,6 +159,11 @@ function FileSelectionHandler(
   // Register evnets to update file selections.
   directoryModel.addEventListener(
       'directory-changed', this.onFileSelectionChanged.bind(this));
+
+  this.listContainer_.selectionModel.addEventListener(
+      'enter-checkselect', this.onEnterCheckSelectMode_);
+  this.listContainer_.selectionModel.addEventListener(
+      'exit-checkselect', this.onExitCheckSelectMode_);
 }
 
 /**
@@ -200,9 +205,31 @@ FileSelectionHandler.NUMBER_OF_ITEMS_HEAVY_TO_COMPUTE = 100;
 FileSelectionHandler.prototype.__proto__ = cr.EventTarget.prototype;
 
 /**
- * Update the UI when the selection model changes.
+ * Update the UI when entered check-select mode.
+ * @private
  */
-FileSelectionHandler.prototype.onFileSelectionChanged = function() {
+FileSelectionHandler.prototype.onEnterCheckSelectMode_ = function() {
+  var event = new Event(FileSelectionHandler.EventType.CHANGE);
+  event.checkSelectMode = true;
+  // this.dispatchEvent(event);
+};
+
+/**
+ * Update the UI when exited check-select mode.
+ * @private
+ */
+FileSelectionHandler.prototype.onExitCheckSelectMode_ = function() {
+  var event = new Event(FileSelectionHandler.EventType.CHANGE);
+  event.checkSelectMode = false;
+  // this.dispatchEvent(event);
+};
+
+/**
+ * Update the UI when the selection model changes.
+ * @param {Event=} opt_changeEvent Event with change info.
+ */
+FileSelectionHandler.prototype.onFileSelectionChanged = function(
+    opt_changeEvent) {
   var indexes = this.listContainer_.selectionModel.selectedIndexes;
   var entries = indexes.map(function(index) {
     return /** @type {!Entry} */ (
@@ -238,7 +265,14 @@ FileSelectionHandler.prototype.onFileSelectionChanged = function() {
       this.updateFileSelectionAsync_(selection);
   }.bind(this), updateDelay);
 
-  cr.dispatchSimpleEvent(this, FileSelectionHandler.EventType.CHANGE);
+  if (opt_changeEvent && opt_changeEvent.type == 'change') {
+    var event =
+        new Event(FileSelectionHandler.EventType.CHANGE, opt_changeEvent);
+    event.changes = opt_changeEvent.changes;
+    this.dispatchEvent(event);
+  } else {
+    cr.dispatchSimpleEvent(this, FileSelectionHandler.EventType.CHANGE);
+  }
 };
 
 /**
