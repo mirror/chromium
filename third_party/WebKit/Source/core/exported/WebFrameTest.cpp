@@ -12068,11 +12068,11 @@ TEST_F(WebFrameTest, ExecuteCommandProducesUserGesture) {
   web_view_helper.InitializeAndLoad("about:blank");
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
 
-  EXPECT_FALSE(frame->GetFrame()->HasReceivedUserGesture());
+  EXPECT_FALSE(frame->GetFrame()->HasBeenActivated());
   frame->ExecuteScript(WebScriptSource(WebString("document.execCommand('copy');")));
-  EXPECT_FALSE(frame->GetFrame()->HasReceivedUserGesture());
+  EXPECT_FALSE(frame->GetFrame()->HasBeenActivated());
   frame->ExecuteCommand(WebString::FromUTF8("Paste"));
-  EXPECT_TRUE(frame->GetFrame()->HasReceivedUserGesture());
+  EXPECT_TRUE(frame->GetFrame()->HasBeenActivated());
 }
 
 }  // namespace blink

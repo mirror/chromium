@@ -797,7 +797,7 @@ bool LocalFrame::CanNavigate(const Frame& target_frame,
       CanNavigateWithoutFramebusting(target_frame, error_reason);
   const bool sandboxed =
       GetSecurityContext()->GetSandboxFlags() != kSandboxNone;
-  const bool has_user_gesture = HasReceivedUserGesture();
+  const bool has_user_gesture = HasBeenActivated();
 
   // Top navigation in sandbox with or w/o 'allow-top-navigation'.
   if (target_frame != this && sandboxed && target_frame == Tree().Top()) {
@@ -1148,7 +1148,7 @@ void LocalFrame::NotifyUserActivation() {
     UpdateUserActivationInFrameTree();
     Client()->SetHasReceivedUserGesture(false);
   } else {
-    bool had_gesture = HasReceivedUserGesture();
+    bool had_gesture = HasBeenActivated();
     if (!had_gesture)
       UpdateUserActivationInFrameTree();
     Client()->SetHasReceivedUserGesture(had_gesture);

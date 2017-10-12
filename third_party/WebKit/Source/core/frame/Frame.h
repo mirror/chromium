@@ -146,8 +146,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
 
   void UpdateUserActivationInFrameTree();
 
-  // TODO(mustaq): make this name consistent with the term "activation".
-  bool HasReceivedUserGesture() const {
+  bool HasBeenActivated() const {
     return user_activation_state_.HasBeenActive();
   }
 
@@ -159,8 +158,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
     return user_activation_state_.ConsumeIfActive();
   }
 
-  // TODO(mustaq): make this name consistent with the term "activation".
-  void ClearDocumentHasReceivedUserGesture() { user_activation_state_.Clear(); }
+  void ClearActivation() { user_activation_state_.Clear(); }
 
   void SetDocumentHasReceivedUserGestureBeforeNavigation(bool value) {
     has_received_user_gesture_before_nav_ = value;
