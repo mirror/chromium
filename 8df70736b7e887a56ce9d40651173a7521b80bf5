@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f833e43_37771ae9",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T18:16:32Z",
+      "side": 1,
+      "message": "DCHECK_EQ(1, [self.childViewControllers count]);",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f2ddac_ed9e2111",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T18:16:32Z",
+      "side": 1,
+      "message": "nit:\nDCHECK_EQ(nil, self.activeViewController);\nDCHECK_EQ(0, self.view.subviews.count);",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a2114b_94360898",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T18:16:32Z",
+      "side": 1,
+      "message": "Since the activeVC is contained in self, couldn\u0027t self simply present?",
+      "range": {
+        "startLine": 79,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0380ee2_64cd4fcc",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T18:16:32Z",
+      "side": 1,
+      "message": "#import \u003cUIKit/UIKit.h\u003e",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7517ffb_7d751a75",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-12T18:16:32Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like it\u0027s needed in the public interface. It is only accessed inside the implementation.",
+      "range": {
+        "startLine": 19,
+        "startChar": 57,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
