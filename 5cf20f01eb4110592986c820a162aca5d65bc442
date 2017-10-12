@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53aa8bb_7f1139f1",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 0,
+      "message": "Why delete the comment?",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 21
+      },
+      "revId": "5cf20f01eb4110592986c820a162aca5d65bc442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

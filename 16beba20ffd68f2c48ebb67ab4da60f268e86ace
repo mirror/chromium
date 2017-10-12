@@ -1,0 +1,374 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a16001_aa5a2267",
+        "filename": "breakpad/src",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Accidental commit?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d85a95_6152afaf",
+        "filename": "build/config/gclient_args.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Also an accident?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcebeccc_55475a6d",
+        "filename": "content/child/blink_platform_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Parameters should be named in headers in chromium code",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6986a65b_80225f8f",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Can you add a comment that this returns true if and only if the feature is enabled for *?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b082153_745ab26c",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "And I\u0027d add a comment here that this only returns the explicitly-named origins in the whitelist, and will return an empty list if the feature is enabled for all origins (so this method should be used together with IsFeatureEnabledForAll to get the complete whitelist)\n\nAlternately, this could return a WebParsedFeaturePolicyDeclaration for the feature, and then there would only need to be one method. WDYT?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7d918d_ac6fcdea",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "This looks like an accident, is that right?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3db06d_62508fd9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Comment looks out of date -- pasted from another file?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 54
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979d5f7e_5404edba",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "You can also do\nfor (var feature of allowed_features) { ... }\n\nto iterate over the items in the array, if you don\u0027t need the index variable for anything. (ditto for the other loops in this file)",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b327a759_6d1ef577",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Is the trailing slash here significant? Would it still return true if you tested \u0027https://www.example.net/index.html\u0027?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde7309e_ac951a31",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Can you TODO to add a spec link here?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f2c76e_720ea77d",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Can you extract this into a method to avoid repeating it?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 75
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bea409_aef7e057",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "\"Invalid origin for feature\" makes it sound like the feature name has something to do with the error, but I don\u0027t think it does -- what if we move this block out of the if(), and test the origin by itself -- if it\u0027s invalid, then just report \"Invalid origin: \" + origin ?\n\nIf you still want to test the feature name first, then you could start the method with\n\nif(!feature_names.Contains(feature)) {\n  document_-\u003eAddConsoleMessage(...);\n  return false;\n}",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 5
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a33d5b_58339fac",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Can this constructor be private (or even deleted)? I think that Create should be the only way to construct a Policy object.",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f59626b_1296d758",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "These parameters should be named -- they\u0027re not obvious from the method name",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44a1e51_6f7a8fa8",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "I think this String should be named, too (or we should rename the method to getAllowlistForFeature)",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bd1ba9_00ab82aa",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "nit: end member names with \u0027_\u0027",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8ab2bb_a1ec6f9d",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "We\u0027ll need to add a spec link in here, I think -- at least to https://wicg.github.io/feature-policy; I\u0027m not sure if the standard these days is to link to a specific section of a spec. If so, I\u0027ll need to update the spec to include this as well.\n\nCan you add a TODO to add that, in case this is ready to land before the spec changes do?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8872d8a2_558dd11d",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Also accidentally included?",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a3fd86_fe68d4ed",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Can this construct an empty WebVector\u003c\u003e and return that, instead of making a std::vector just to convert it?",
+      "range": {
+        "startLine": 304,
+        "startChar": 9,
+        "endLine": 304,
+        "endChar": 20
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc47b27_8e89348c",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-12T15:11:33Z",
+      "side": 1,
+      "message": "Should mention that these are strings because they are serialized origins, and could include things like \u0027*\u0027 (which isn\u0027t, technically, an origin)",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
