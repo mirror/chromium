@@ -193,6 +193,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   // Added for http://crbug.com/754704; remove when that bug is resolved.
   const net::URLRequestContext* request_context_;
 
+  bool cancelled_ = false;
+
   base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<ResourceLoader> weak_ptr_factory_;

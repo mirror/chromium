@@ -502,6 +502,9 @@ void ResourceLoader::CancelCertificateSelection() {
 void ResourceLoader::Resume(bool called_from_resource_controller) {
   DCHECK(!is_transferring_);
 
+  if (cancelled_)
+    return;
+
   DeferredStage stage = deferred_stage_;
   deferred_stage_ = DEFERRED_NONE;
   switch (stage) {
@@ -604,6 +607,10 @@ void ResourceLoader::StartRequestInternal() {
 
 void ResourceLoader::CancelRequestInternal(int error, bool from_renderer) {
   DVLOG(1) << "CancelRequestInternal: " << request_->url().spec();
+
+  if (cancelled_)
+    return;
+  cancelled_ = true;
 
   ResourceRequestInfoImpl* info = GetRequestInfo();
 

@@ -1501,13 +1501,40 @@ TEST_F(ResourceLoaderTest, OutOfBandCancelDuringRead) {
   EXPECT_EQ("", raw_ptr_resource_handler_->body());
 }
 
-TEST_F(ResourceLoaderTest, ResumeCanceledRequest) {
+TEST_F(ResourceLoaderTest, ResumeStartAfterCancellingRequest) {
   raw_ptr_resource_handler_->set_defer_on_will_start(true);
 
   loader_->StartRequest();
   raw_ptr_resource_handler_->WaitUntilDeferred();
   loader_->CancelRequest(true);
   raw_ptr_resource_handler_->Resume();
+}
+
+TEST_F(ResourceLoaderTest, ResumeRedirectAfterCancellingRequest) {
+  raw_ptr_resource_handler_->set_defer_on_request_redirected(true);
+
+  loader_->StartRequest();
+  raw_ptr_resource_handler_->WaitUntilDeferred();
+  loader_->CancelRequest(true);
+  raw_ptr_resource_handler_->Resume();
+}
+
+TEST_F(ResourceLoaderTest, DoubleCancellationBeforeStart) {
+  raw_ptr_resource_handler_->set_defer_on_will_start(true);
+
+  loader_->StartRequest();
+  raw_ptr_resource_handler_->WaitUntilDeferred();
+  loader_->CancelRequest(false);
+  loader_->CancelRequest(false);
+}
+
+TEST_F(ResourceLoaderTest, DoubleCancellationBeforeRedirect) {
+  raw_ptr_resource_handler_->set_defer_on_request_redirected(true);
+
+  loader_->StartRequest();
+  raw_ptr_resource_handler_->WaitUntilDeferred();
+  loader_->CancelRequest(false);
+  loader_->CancelRequest(false);
 }
 
 class EffectiveConnectionTypeResourceLoaderTest : public ResourceLoaderTest {
