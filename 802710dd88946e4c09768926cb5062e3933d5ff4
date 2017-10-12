@@ -34,6 +34,24 @@
       "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc0411a7_24a9d267",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-12T23:05:34Z",
+      "side": 1,
+      "message": "There\u0027s one thing I didn\u0027t consider when I suggested this: how should we handle the case where a new navigation has begun and is still provisional, but the committed Document has ongoing network requests? I\u0027m not familiar enough with how IdlenessDetector is used to know how we want to handle that case.",
+      "parentUuid": "61cedb15_50eba038",
+      "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
