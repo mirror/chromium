@@ -88,8 +88,8 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
   request.Enumerate();
   EXPECT_EQ(static_cast<size_t>(0), request.devices_.size());
 
-  HidCollectionInfo c_info;
-  c_info.usage = HidUsageAndPage(1, 0xf1d0);
+  auto c_info = device::mojom::HidCollectionInfo::New();
+  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
 
   // Add one U2F device
   auto u2f_device = std::make_unique<device::mojom::HidDeviceInfo>();
@@ -97,7 +97,7 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
   u2f_device->product_name = "Test Fido Device";
   u2f_device->serial_number = "123FIDO";
   u2f_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
-  u2f_device->collections.push_back(c_info);
+  u2f_device->collections.push_back(std::move(c_info));
   u2f_device->max_input_report_size = 64;
   u2f_device->max_output_report_size = 64;
 
@@ -126,8 +126,8 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
 TEST_F(U2fRequestTest, TestIterateDevice) {
   TestResponseCallback cb;
   FakeU2fRequest request(cb.callback(), connector_.get());
-  HidCollectionInfo c_info;
-  c_info.usage = HidUsageAndPage(1, 0xf1d0);
+  auto c_info = device::mojom::HidCollectionInfo::New();
+  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
 
   // Add one U2F device and one non-U2f device
   auto u2f_device = device::mojom::HidDeviceInfo::New();
@@ -135,7 +135,7 @@ TEST_F(U2fRequestTest, TestIterateDevice) {
   u2f_device->product_name = "Test Fido device";
   u2f_device->serial_number = "123FIDO";
   u2f_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
-  u2f_device->collections.push_back(c_info);
+  u2f_device->collections.push_back(std::move(c_info));
   u2f_device->max_input_report_size = 64;
   u2f_device->max_output_report_size = 64;
 
@@ -174,8 +174,8 @@ TEST_F(U2fRequestTest, TestBasicMachine) {
   FakeU2fRequest request(cb.callback(), connector_.get());
   request.Start();
 
-  HidCollectionInfo c_info;
-  c_info.usage = HidUsageAndPage(1, 0xf1d0);
+  auto c_info = device::mojom::HidCollectionInfo::New();
+  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
 
   // Add one U2F device
   auto u2f_device = device::mojom::HidDeviceInfo::New();
@@ -183,7 +183,7 @@ TEST_F(U2fRequestTest, TestBasicMachine) {
   u2f_device->product_name = "Test Fido device";
   u2f_device->serial_number = "123FIDO";
   u2f_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
-  u2f_device->collections.push_back(c_info);
+  u2f_device->collections.push_back(std::move(c_info));
   u2f_device->max_input_report_size = 64;
   u2f_device->max_output_report_size = 64;
 
