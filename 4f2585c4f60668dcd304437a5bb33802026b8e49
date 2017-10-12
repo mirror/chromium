@@ -69,6 +69,24 @@
       "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36359e07_088003a4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-12T02:42:21Z",
+      "side": 1,
+      "message": "Good point. I renamed the field to fix this issue, WDYT?",
+      "parentUuid": "e4f0c6f2_ef3e9695",
+      "revId": "4f2585c4f60668dcd304437a5bb33802026b8e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
