@@ -16,6 +16,24 @@
       "revId": "7ff332470340943fad856cf758eba00f4d3c1c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e982b2_e7818a7f",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:52:56Z",
+      "side": 0,
+      "message": "Can a provisional document loader have outstanding XHRs? That would be... really surprising.\n\n(I wish there was some way to enforce that nothing other the XHR abort events fire during this... I guess we could add a new scoper? But I guess the problem is XHR abort events could maybe trigger other events?)",
+      "parentUuid": "72163da2_79376466",
+      "revId": "7ff332470340943fad856cf758eba00f4d3c1c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
