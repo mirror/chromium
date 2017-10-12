@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8374e3f0_85cb8e4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-12T17:49:17Z",
+      "side": 1,
+      "message": "This isn\u0027t completely accurate.  How about:\n\nUse the reverse index file to obviate downloading multiple manufacturer listings.  Reverse index files are sharded, add the hash function to compute the shard number.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "78e58ce4f10a396ad03bdc494e71ceeb23e52f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45c6e03_9248d4ca",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-12T17:49:17Z",
+      "side": 1,
+      "message": "Per the styleguide, we use nullptr now instead of NULL.\n\nhttps://google.github.io/styleguide/cppguide.html#0_and_nullptr/NULL",
+      "range": {
+        "startLine": 1069,
+        "startChar": 23,
+        "endLine": 1069,
+        "endChar": 27
+      },
+      "revId": "78e58ce4f10a396ad03bdc494e71ceeb23e52f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
