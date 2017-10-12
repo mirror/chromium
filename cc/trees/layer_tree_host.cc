@@ -39,6 +39,7 @@
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/painted_scrollbar_layer.h"
+#include "cc/layers/picture_layer.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/tiles/frame_viewer_instrumentation.h"
 #include "cc/trees/clip_node.h"
@@ -748,10 +749,50 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
                                                    &update_layer_list);
   }
 
+  // We have already found the list of layers that needs update, now creating
+  // the squashing recording source for the first picture layer, which is likely
+  // the root layer.
+  PictureLayer* first_picture_layer;
+  if (GetSettings().should_squash_picture_layer) {
+    for (auto& it : update_layer_list) {
+      if (it->IsPictureLayer()) {
+        first_picture_layer = static_cast<PictureLayer*>(it.get());
+        first_picture_layer->CreateSquashingRecordingSource();
+        // May not need to discard.
+        first_picture_layer->DiscardDisplayItemList();
+        break;
+      }
+    }
+  }
+
   bool content_has_slow_paths = false;
   bool content_has_non_aa_paint = false;
   bool did_paint_content = PaintContent(
       update_layer_list, &content_has_slow_paths, &content_has_non_aa_paint);
+
+  if (GetSettings().should_squash_picture_layer) {
+    // Squash all other picture layer to the picture layer that has the
+    // squashing recording source.
+    gfx::RectF first_clip_rect =
+        property_trees()
+            ->clip_tree.Node(first_picture_layer->clip_tree_index())
+            ->cached_accumulated_rect_in_screen_space;
+    for (auto& it : update_layer_list) {
+      if (!it->IsPictureLayer())
+        continue;
+      PictureLayer* current_picture_layer =
+          static_cast<PictureLayer*>(it.get());
+      if (current_picture_layer == first_picture_layer)
+        continue;
+      gfx::RectF current_clip_rect =
+          property_trees()
+              ->clip_tree.Node(current_picture_layer->clip_tree_index())
+              ->cached_accumulated_rect_in_screen_space;
+      current_picture_layer->SquashToFirstPictureLayer(
+          first_picture_layer, first_clip_rect, current_clip_rect);
+      current_picture_layer->SetHasSquashedAway(true);
+    }
+  }
 
   // |content_has_non_aa_paint| is a correctness (not performance) modifier, if
   // it changes we immediately update. To prevent churn, this flag is sticky.

@@ -211,6 +211,14 @@ sk_sp<SkPicture> Layer::GetPicture() const {
   return nullptr;
 }
 
+bool Layer::IsPictureLayer() {
+  return false;
+}
+
+bool Layer::GetHasSquashedAway() {
+  return false;
+}
+
 void Layer::SetParent(Layer* layer) {
   DCHECK(!layer || !layer->HasAncestor(this));
 
@@ -1237,6 +1245,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   if (mask_layer())
     DCHECK_EQ(bounds().ToString(), mask_layer()->bounds().ToString());
   layer_tree_host_->RemoveLayerShouldPushProperties(this);
+  layer->SetHasSquashedAway(GetHasSquashedAway());
 }
 
 void Layer::TakeCopyRequests(

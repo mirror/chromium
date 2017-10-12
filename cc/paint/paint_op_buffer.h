@@ -229,6 +229,7 @@ class CC_PAINT_EXPORT AnnotateOp final : public PaintOp {
   AnnotateOp(PaintCanvas::AnnotationType annotation_type,
              const SkRect& rect,
              sk_sp<SkData> data);
+  AnnotateOp(const AnnotateOp& other);
   ~AnnotateOp();
   static void Raster(const AnnotateOp* op,
                      SkCanvas* canvas,
@@ -249,6 +250,8 @@ class CC_PAINT_EXPORT ClipPathOp final : public PaintOp {
   static constexpr PaintOpType kType = PaintOpType::ClipPath;
   ClipPathOp(SkPath path, SkClipOp op, bool antialias)
       : path(path), op(op), antialias(antialias) {}
+  ClipPathOp(const ClipPathOp& other)
+      : path(other.path), op(other.op), antialias(other.antialias) {}
   static void Raster(const ClipPathOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -270,6 +273,8 @@ class CC_PAINT_EXPORT ClipRectOp final : public PaintOp {
   static constexpr PaintOpType kType = PaintOpType::ClipRect;
   ClipRectOp(const SkRect& rect, SkClipOp op, bool antialias)
       : rect(rect), op(op), antialias(antialias) {}
+  ClipRectOp(const ClipRectOp& other)
+      : rect(other.rect), op(other.op), antialias(other.antialias) {}
   static void Raster(const ClipRectOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -289,6 +294,8 @@ class CC_PAINT_EXPORT ClipRRectOp final : public PaintOp {
   static constexpr PaintOpType kType = PaintOpType::ClipRRect;
   ClipRRectOp(const SkRRect& rrect, SkClipOp op, bool antialias)
       : rrect(rrect), op(op), antialias(antialias) {}
+  ClipRRectOp(const ClipRRectOp& other)
+      : rrect(other.rrect), op(other.op), antialias(other.antialias) {}
   static void Raster(const ClipRRectOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -308,6 +315,7 @@ class CC_PAINT_EXPORT ConcatOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::Concat;
   explicit ConcatOp(const SkMatrix& matrix) : matrix(matrix) {}
+  ConcatOp(const ConcatOp& other) : matrix(other.matrix) {}
   static void Raster(const ConcatOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -325,6 +333,8 @@ class CC_PAINT_EXPORT DrawColorOp final : public PaintOp {
   static constexpr PaintOpType kType = PaintOpType::DrawColor;
   static constexpr bool kIsDrawOp = true;
   DrawColorOp(SkColor color, SkBlendMode mode) : color(color), mode(mode) {}
+  DrawColorOp(const DrawColorOp& other)
+      : color(other.color), mode(other.mode) {}
   static void Raster(const DrawColorOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -346,6 +356,8 @@ class CC_PAINT_EXPORT DrawDRRectOp final : public PaintOpWithFlags {
                const SkRRect& inner,
                const PaintFlags& flags)
       : PaintOpWithFlags(flags), outer(outer), inner(inner) {}
+  DrawDRRectOp(const DrawDRRectOp& other)
+      : outer(other.outer), inner(other.inner) {}
   static void RasterWithFlags(const DrawDRRectOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -370,6 +382,8 @@ class CC_PAINT_EXPORT DrawImageOp final : public PaintOpWithFlags {
               SkScalar left,
               SkScalar top,
               const PaintFlags* flags);
+  DrawImageOp(const DrawImageOp& other)
+      : image(other.image), left(other.left), top(other.top) {}
   ~DrawImageOp();
   static void RasterWithFlags(const DrawImageOp* op,
                               const PaintFlags* flags,
@@ -397,6 +411,11 @@ class CC_PAINT_EXPORT DrawImageRectOp final : public PaintOpWithFlags {
                   const SkRect& dst,
                   const PaintFlags* flags,
                   PaintCanvas::SrcRectConstraint constraint);
+  DrawImageRectOp(const DrawImageRectOp& other)
+      : image(other.image),
+        src(other.src),
+        dst(other.dst),
+        constraint(other.constraint) {}
   ~DrawImageRectOp();
   static void RasterWithFlags(const DrawImageRectOp* op,
                               const PaintFlags* flags,
@@ -423,6 +442,7 @@ class CC_PAINT_EXPORT DrawIRectOp final : public PaintOpWithFlags {
   static constexpr bool kIsDrawOp = true;
   DrawIRectOp(const SkIRect& rect, const PaintFlags& flags)
       : PaintOpWithFlags(flags), rect(rect) {}
+  DrawIRectOp(const DrawIRectOp& other) : rect(other.rect) {}
   static void RasterWithFlags(const DrawIRectOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -447,6 +467,8 @@ class CC_PAINT_EXPORT DrawLineOp final : public PaintOpWithFlags {
              SkScalar y1,
              const PaintFlags& flags)
       : PaintOpWithFlags(flags), x0(x0), y0(y0), x1(x1), y1(y1) {}
+  DrawLineOp(const DrawLineOp& other)
+      : x0(other.x0), y0(other.y0), x1(other.x1), y1(other.y1) {}
   static void RasterWithFlags(const DrawLineOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -471,6 +493,7 @@ class CC_PAINT_EXPORT DrawOvalOp final : public PaintOpWithFlags {
   static constexpr bool kIsDrawOp = true;
   DrawOvalOp(const SkRect& oval, const PaintFlags& flags)
       : PaintOpWithFlags(flags), oval(oval) {}
+  DrawOvalOp(const DrawOvalOp& other) : oval(other.oval) {}
   static void RasterWithFlags(const DrawOvalOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -490,6 +513,7 @@ class CC_PAINT_EXPORT DrawPathOp final : public PaintOpWithFlags {
   static constexpr bool kIsDrawOp = true;
   DrawPathOp(const SkPath& path, const PaintFlags& flags)
       : PaintOpWithFlags(flags), path(path) {}
+  DrawPathOp(const DrawPathOp& other) : path(other.path) {}
   static void RasterWithFlags(const DrawPathOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -509,6 +533,7 @@ class CC_PAINT_EXPORT DrawRecordOp final : public PaintOp {
   static constexpr PaintOpType kType = PaintOpType::DrawRecord;
   static constexpr bool kIsDrawOp = true;
   explicit DrawRecordOp(sk_sp<const PaintRecord> record);
+  DrawRecordOp(const DrawRecordOp& other);
   ~DrawRecordOp();
   static void Raster(const DrawRecordOp* op,
                      SkCanvas* canvas,
@@ -532,6 +557,7 @@ class CC_PAINT_EXPORT DrawRectOp final : public PaintOpWithFlags {
   static constexpr bool kIsDrawOp = true;
   DrawRectOp(const SkRect& rect, const PaintFlags& flags)
       : PaintOpWithFlags(flags), rect(rect) {}
+  DrawRectOp(const DrawRectOp& other) : rect(other.rect) {}
   static void RasterWithFlags(const DrawRectOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -551,6 +577,7 @@ class CC_PAINT_EXPORT DrawRRectOp final : public PaintOpWithFlags {
   static constexpr bool kIsDrawOp = true;
   DrawRRectOp(const SkRRect& rrect, const PaintFlags& flags)
       : PaintOpWithFlags(flags), rrect(rrect) {}
+  DrawRRectOp(const DrawRRectOp& other) : rrect(other.rrect) {}
   static void RasterWithFlags(const DrawRRectOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -572,6 +599,7 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
                  SkScalar x,
                  SkScalar y,
                  const PaintFlags& flags);
+  DrawTextBlobOp(const DrawTextBlobOp& other);
   ~DrawTextBlobOp();
   static void RasterWithFlags(const DrawTextBlobOp* op,
                               const PaintFlags* flags,
@@ -612,6 +640,7 @@ class CC_PAINT_EXPORT RotateOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::Rotate;
   explicit RotateOp(SkScalar degrees) : degrees(degrees) {}
+  RotateOp(const RotateOp& other) : degrees(other.degrees) {}
   static void Raster(const RotateOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -640,6 +669,7 @@ class CC_PAINT_EXPORT SaveLayerOp final : public PaintOpWithFlags {
   SaveLayerOp(const SkRect* bounds, const PaintFlags* flags)
       : PaintOpWithFlags(flags ? *flags : PaintFlags()),
         bounds(bounds ? *bounds : kUnsetRect) {}
+  SaveLayerOp(const SaveLayerOp& other) : bounds(other.bounds) {}
   static void RasterWithFlags(const SaveLayerOp* op,
                               const PaintFlags* flags,
                               SkCanvas* canvas,
@@ -663,6 +693,10 @@ class CC_PAINT_EXPORT SaveLayerAlphaOp final : public PaintOp {
       : bounds(bounds ? *bounds : kUnsetRect),
         alpha(alpha),
         preserve_lcd_text_requests(preserve_lcd_text_requests) {}
+  SaveLayerAlphaOp(const SaveLayerAlphaOp& other)
+      : bounds(other.bounds),
+        alpha(other.alpha),
+        preserve_lcd_text_requests(other.preserve_lcd_text_requests) {}
   static void Raster(const SaveLayerAlphaOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -681,6 +715,7 @@ class CC_PAINT_EXPORT ScaleOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::Scale;
   ScaleOp(SkScalar sx, SkScalar sy) : sx(sx), sy(sy) {}
+  ScaleOp(const ScaleOp& other) : sx(other.sx), sy(other.sy) {}
   static void Raster(const ScaleOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
@@ -698,6 +733,7 @@ class CC_PAINT_EXPORT SetMatrixOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::SetMatrix;
   explicit SetMatrixOp(const SkMatrix& matrix) : matrix(matrix) {}
+  SetMatrixOp(const SetMatrixOp& other) : matrix(other.matrix) {}
   // This is the only op that needs the original ctm of the SkCanvas
   // used for raster (since SetMatrix is relative to the recording origin and
   // shouldn't clobber the SkCanvas raster origin).
@@ -720,6 +756,7 @@ class CC_PAINT_EXPORT TranslateOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::Translate;
   TranslateOp(SkScalar dx, SkScalar dy) : dx(dx), dy(dy) {}
+  TranslateOp(const TranslateOp& other) : dx(other.dx), dy(other.dy) {}
   static void Raster(const TranslateOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);

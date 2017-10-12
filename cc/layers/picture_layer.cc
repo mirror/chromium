@@ -14,6 +14,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/transform_node.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/transform_util.h"
 
 static constexpr int kMaxNumberOfSlowPathsBeforeReporting = 5;
 
@@ -43,6 +44,11 @@ PictureLayer::PictureLayer(ContentLayerClient* client,
 PictureLayer::~PictureLayer() {
 }
 
+void PictureLayer::CreateSquashingRecordingSource() {
+  squashing_recording_source_ =
+      std::make_unique<SquashingRecordingSource>(recording_source_.get());
+}
+
 std::unique_ptr<LayerImpl> PictureLayer::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
   return PictureLayerImpl::Create(tree_impl, id(), mask_type_);
@@ -60,9 +66,32 @@ void PictureLayer::PushPropertiesTo(LayerImpl* base_layer) {
       ShouldUseTransformedRasterization());
   layer_impl->set_gpu_raster_max_texture_size(
       layer_tree_host()->device_viewport_size());
-  layer_impl->UpdateRasterSource(recording_source_->CreateRasterSource(),
-                                 &last_updated_invalidation_, nullptr);
+  // When we create a raster_source for this layer, if it has been squashed
+  // to another picture layer, then we make the display list of the raster
+  // source to be a nullptr. In this way, we won't allocate any GPU memory when
+  // we prepare tiles.
+  scoped_refptr<RasterSource> raster_source =
+      recording_source_->CreateRasterSource();
+  if (has_squashed_away_) {
+    raster_source->SetDisplayItemListToNull();
+  }
+  if (squashing_recording_source_) {
+    layer_impl->UpdateRasterSource(
+        squashing_recording_source_->CreateRasterSource(),
+        &last_updated_invalidation_, nullptr);
+  } else {
+    layer_impl->UpdateRasterSource(raster_source, &last_updated_invalidation_,
+                                   nullptr);
+  }
   DCHECK(last_updated_invalidation_.IsEmpty());
+}
+
+bool PictureLayer::IsPictureLayer() {
+  return true;
+}
+
+bool PictureLayer::GetHasSquashedAway() {
+  return has_squashed_away_;
 }
 
 void PictureLayer::SetLayerTreeHost(LayerTreeHost* host) {
@@ -89,9 +118,99 @@ void PictureLayer::SetNeedsDisplayRect(const gfx::Rect& layer_rect) {
   DCHECK(!layer_tree_host() || !layer_tree_host()->in_paint_layer_contents());
   if (recording_source_)
     recording_source_->SetNeedsDisplayRect(layer_rect);
+  if (squashing_recording_source_)
+    squashing_recording_source_->SetNeedsDisplayRect(layer_rect);
   Layer::SetNeedsDisplayRect(layer_rect);
 }
 
+void PictureLayer::UpdateDisplayItemList(
+    const scoped_refptr<DisplayItemList>& display_list,
+    const size_t& painter_reported_memory_usage) {
+  picture_layer_inputs_.display_list = display_list;
+  picture_layer_inputs_.painter_reported_memory_usage =
+      painter_reported_memory_usage;
+}
+
+void PictureLayer::DiscardDisplayItemList() {
+  DisplayItemList* display_list = new DisplayItemList();
+  picture_layer_inputs_.display_list = display_list;
+  picture_layer_inputs_.painter_reported_memory_usage = 0;
+}
+
+void PictureLayer::SquashToFirstPictureLayer(
+    PictureLayer* first_picture_layer,
+    const gfx::RectF& first_clip_rect,
+    const gfx::RectF& current_clip_rect) {
+  if (!first_picture_layer->HasSquashingRecordingSource())
+    return;
+
+  DisplayItemList* concated_display_list = new DisplayItemList();
+  size_t total_painter_memory = 0;
+  // Get the display list for the first picture layer.
+  concated_display_list->Append(*(first_picture_layer->GetDisplayItemList()));
+  total_painter_memory += first_picture_layer->GetPainterReportedMemoryUsage();
+  // Now append the display list of this picture layer to the first picture
+  // layer. Needs to account for clip and transform
+  //
+  // Account for clip first: do a saveOp, then a clipRect with the
+  // |cached_accumulated_rect_in_screen_space|, at the end of the paint op
+  // buffer, do a restoreOp. Note we'd only need to account for the clip iff
+  // first_clip_rect != current_clip_rect and that the screen space transform
+  // matrix for the first picture layer can be inverted. We need the second
+  // condition because we need to apply the inverse transform inorder to squash
+  // to the first picture layer's coordinate system.
+  //
+  // Note that both first_clip_rect and current_clip_rect are in screen space.
+  bool should_account_for_clip = (first_clip_rect == current_clip_rect);
+  const SkMatrix first_transform_matrix =
+      first_picture_layer->ScreenSpaceTransform().matrix();
+  SkMatrix first_inverted_transform_matrix = SkMatrix::MakeScale(1.0f);
+  bool can_be_inverted =
+      first_transform_matrix.invert(&first_inverted_transform_matrix);
+  if (should_account_for_clip && can_be_inverted) {
+    concated_display_list->push<SaveOp>();
+    SkRect src =
+        SkRect::MakeXYWH(current_clip_rect.x(), current_clip_rect.y(),
+                         current_clip_rect.width(), current_clip_rect.height());
+    SkRect dst = SkRect::MakeEmpty();
+    if (first_inverted_transform_matrix.mapRect(&dst, src)) {
+      Region region_to_union(
+          gfx::Rect(dst.x(), dst.y(), dst.width(), dst.height()));
+      first_picture_layer->UpdateInvalidationRegion(Region(region_to_union));
+      // The last parameter indicates whether we antialias or not.
+      concated_display_list->push<ClipRectOp>(dst, SkClipOp::kIntersect, true);
+    } else {
+      // When mapping fails, it means that the rect is no longer a rect after
+      // the transform, what do we do?
+    }
+  }
+
+  // Now account for the transform from the current picture layer.
+  // The screen_space_transform is a 4x4 matrix which account for 3D transform.
+  // Let's ignore that for now, and directly convert the 4x4 matrix into a 3x3
+  // matrix.
+  const SkMatrix current_transform_matrix = ScreenSpaceTransform().matrix();
+  if (can_be_inverted) {
+    first_inverted_transform_matrix.preConcat(current_transform_matrix);
+    concated_display_list->push<SetMatrixOp>(first_inverted_transform_matrix);
+  }
+
+  concated_display_list->Append(*(GetDisplayItemList()));
+
+  if (should_account_for_clip && can_be_inverted)
+    concated_display_list->push<RestoreOp>();
+
+  first_picture_layer->UpdateDisplayItemList(concated_display_list,
+                                             total_painter_memory);
+  first_picture_layer->GetSquashingRecordingSource()->UpdateDisplayItemList(
+      concated_display_list, total_painter_memory);
+}
+
+// This function is called in LayerTreeHost::PaintContent(), which is called by
+// LayerTreeHost::DoUpdateLayers(). It is called after we create a squashing
+// recording source for the first picture, but before we squash anything into
+// the squashing recording source. So we don't need to do anything to the
+// squashing recording source in this function.
 bool PictureLayer::Update() {
   update_source_frame_number_ = layer_tree_host()->SourceFrameNumber();
   bool updated = Layer::Update();
