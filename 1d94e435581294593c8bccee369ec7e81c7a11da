@@ -22,6 +22,30 @@
       "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738582d8_1088b19e",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-12T16:40:13Z",
+      "side": 1,
+      "message": "It won\u0027t let me:\n\n../../extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc:21:31: error: using declaration cannot refer to class member\nusing LogSourceAccessManager::kMaxReadersPerSource;\n      ~~~~~~~~~~~~~~~~~~~~~~~~^\n../../extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc:21:1: note: use a reference instead",
+      "parentUuid": "68f6fb05_2f2af536",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
