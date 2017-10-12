@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecaad1ec_c68ab225",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "This is actually imprecise. The domains need to have the same public suffix and the next lower subdomain. This is also commonly called eTLD+1 (effective top-level domain \u003d public suffix, +1 for the first subdomain). See examples:\n\na.example.com vs. b.example.com -- here eTLD \u003d .com and the \"+1\" is .example; these domains match.\na.appspot.com vs. b.appspot.com -- here eTLD \u003d .appspot.com and the \"+1\" is .a and .b, respectively, hence no PSL match\nsub1.a.appspot.com vs. sub2.a.appspot.com -- eTLD \u003d .appspot, \"+1\" \u003d .a, this is a PSL match",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee5e791_6fee9be0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "nit: a -\u003e the\n(there is at most one \"same public suffix\" for the frame domains)",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce2e73b_ada0316b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "nit: \"For ex - On\" -\u003e \"For example, on\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f6729b_a1e378db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "nit: Please add a space between \",\" and \"the\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c6c12a_0c95dd0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "nit: Seems like there is unnecessary whitespace at the end of lines 11, 12 and 14. Please remove.",
+      "range": {
+        "startLine": 11,
+        "startChar": 70,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef95acb_dd597e9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-10-12T13:40:14Z",
+      "side": 1,
+      "message": "nit: \"these scenarios\" is vague. Please specify exactly: \"...only when eTLD+1 is the same for both the iframe and the main frame.\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 37,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "11c9079d0d669970877f3972435f82db4085419c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
