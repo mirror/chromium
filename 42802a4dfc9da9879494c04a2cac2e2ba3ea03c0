@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "7906b956_7c70215c",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T22:38:01Z",
+      "side": 1,
+      "message": "(and now I see that this previously didn\u0027t require a GLImage).",
+      "parentUuid": "4c076b3c_7855cd1b",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2c9ea0c_0f404741",
         "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
         "patchSetId": 5
@@ -70,6 +88,24 @@
       "writtenOn": "2017-10-12T20:19:22Z",
       "side": 1,
       "message": "Consider merging into a common method with GLImageIOSurface.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2affb8_7a4d950c",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T22:38:01Z",
+      "side": 1,
+      "message": "(nm, from discussion)",
+      "parentUuid": "e2c9ea0c_0f404741",
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +140,24 @@
       "writtenOn": "2017-10-12T20:19:22Z",
       "side": 1,
       "message": "It may be worth combining this with the GpuMemoryBuffer function into an IOSurfaceSetColorSpace method.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323ce966_ce949464",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T22:38:01Z",
+      "side": 1,
+      "message": "(likewise nm)",
+      "parentUuid": "16e80ccb_696fdf0b",
       "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
