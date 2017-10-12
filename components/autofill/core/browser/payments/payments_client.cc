@@ -19,6 +19,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/autofill_data_model.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/payments/payments_request.h"
@@ -75,20 +76,28 @@ GURL GetRequestUrl(const std::string& path) {
   return GetBaseSecureUrl().Resolve(path);
 }
 
-std::unique_ptr<base::DictionaryValue> BuildRiskDictionary(
+base::DictionaryValue BuildCustomerContextDictionary(
+    int64_t external_customer_id) {
+  base::DictionaryValue customer_context;
+  customer_context.SetString("external_customer_id",
+                             std::to_string(external_customer_id));
+  return customer_context;
+}
+
+base::DictionaryValue BuildRiskDictionary(
     const std::string& encoded_risk_data) {
-  std::unique_ptr<base::DictionaryValue> risk_data(new base::DictionaryValue());
+  base::DictionaryValue risk_data;
 #if defined(OS_IOS)
   // Browser fingerprinting is not available on iOS. Instead, we generate
   // RiskAdvisoryData.
-  risk_data->SetString("message_type", "RISK_ADVISORY_DATA");
-  risk_data->SetString("encoding_type", "BASE_64_URL");
+  risk_data.SetString("message_type", "RISK_ADVISORY_DATA");
+  risk_data.SetString("encoding_type", "BASE_64_URL");
 #else
-  risk_data->SetString("message_type", "BROWSER_NATIVE_FINGERPRINTING");
-  risk_data->SetString("encoding_type", "BASE_64");
+  risk_data.SetString("message_type", "BROWSER_NATIVE_FINGERPRINTING");
+  risk_data.SetString("encoding_type", "BASE_64");
 #endif
 
-  risk_data->SetString("value", encoded_risk_data);
+  risk_data.SetString("value", encoded_risk_data);
 
   return risk_data;
 }
@@ -197,9 +206,18 @@ class UnmaskCardRequest : public PaymentsRequest {
     base::DictionaryValue request_dict;
     request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
     request_dict.SetString("credit_card_id", request_details_.card.server_id());
-    request_dict.Set("risk_data_encoded",
-                     BuildRiskDictionary(request_details_.risk_data));
-    request_dict.Set("context", base::MakeUnique<base::DictionaryValue>());
+    request_dict.SetPath({"risk_data_encoded"},
+                         BuildRiskDictionary(request_details_.risk_data));
+    int billable_service_number = 70154;
+    std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
+    context->SetInteger("billable_service", billable_service_number);
+    if (IsAutofillSendBillingCustomerNumberExperimentEnabled() &&
+        request_details_.billing_customer_number != 0) {
+      context->SetPath({"customer_context"},
+                       BuildCustomerContextDictionary(
+                           request_details_.billing_customer_number));
+    }
+    request_dict.Set("context", std::move(context));
 
     int value = 0;
     if (base::StringToInt(request_details_.user_response.exp_month, &value))
@@ -215,6 +233,7 @@ class UnmaskCardRequest : public PaymentsRequest {
         net::EscapeUrlEncodedData(
             base::UTF16ToASCII(request_details_.user_response.cvc), true)
             .c_str());
+    DLOG(WARNING) << "getrealpan request body: " << request_content;
     VLOG(3) << "getrealpan request body: " << request_content;
     return request_content;
   }
@@ -318,12 +337,20 @@ class UploadCardRequest : public PaymentsRequest {
     base::DictionaryValue request_dict;
     request_dict.SetString("encrypted_pan", "__param:s7e_1_pan");
     request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
-    request_dict.Set("risk_data_encoded",
-                     BuildRiskDictionary(request_details_.risk_data));
+    request_dict.SetPath({"risk_data_encoded"},
+                         BuildRiskDictionary(request_details_.risk_data));
 
     const std::string& app_locale = request_details_.app_locale;
+    int billable_service_number = 70073;
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
     context->SetString("language_code", app_locale);
+    context->SetInteger("billable_service", billable_service_number);
+    if (IsAutofillSendBillingCustomerNumberExperimentEnabled() &&
+        request_details_.billing_customer_number != 0) {
+      context->SetPath({"customer_context"},
+                       BuildCustomerContextDictionary(
+                           request_details_.billing_customer_number));
+    }
     request_dict.Set("context", std::move(context));
 
     SetStringIfNotEmpty(request_details_.card, CREDIT_CARD_NAME_FULL,
@@ -360,6 +387,7 @@ class UploadCardRequest : public PaymentsRequest {
         net::EscapeUrlEncodedData(base::UTF16ToASCII(request_details_.cvc),
                                   true)
             .c_str());
+    DLOG(WARNING) << "savecard request body: " << request_content;
     VLOG(3) << "savecard request body: " << request_content;
     return request_content;
   }
@@ -386,6 +414,8 @@ const char PaymentsClient::kRecipientName[] = "recipient_name";
 const char PaymentsClient::kPhoneNumber[] = "phone_number";
 
 PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails() {}
+PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails(
+    const UnmaskRequestDetails& other) = default;
 PaymentsClient::UnmaskRequestDetails::~UnmaskRequestDetails() {}
 
 PaymentsClient::UploadRequestDetails::UploadRequestDetails() {}
@@ -394,9 +424,11 @@ PaymentsClient::UploadRequestDetails::UploadRequestDetails(
 PaymentsClient::UploadRequestDetails::~UploadRequestDetails() {}
 
 PaymentsClient::PaymentsClient(net::URLRequestContextGetter* context_getter,
+                               PrefService* pref_service,
                                PaymentsClientDelegate* delegate)
     : OAuth2TokenService::Consumer(kTokenServiceConsumerId),
       context_getter_(context_getter),
+      pref_service_(pref_service),
       delegate_(delegate),
       has_retried_authorization_(false),
       weak_ptr_factory_(this) {
@@ -408,6 +440,10 @@ PaymentsClient::~PaymentsClient() {}
 void PaymentsClient::Prepare() {
   if (access_token_.empty())
     StartTokenFetch(false);
+}
+
+PrefService* PaymentsClient::GetPrefService() const {
+  return pref_service_;
 }
 
 void PaymentsClient::UnmaskCard(
