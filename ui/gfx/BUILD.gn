@@ -547,6 +547,7 @@ source_set("memory_buffer_sources") {
 
   public_deps = [
     ":buffer_types",
+    ":color_space",
   ]
 
   deps = [
