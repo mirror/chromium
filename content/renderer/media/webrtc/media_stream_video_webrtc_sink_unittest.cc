@@ -48,8 +48,9 @@ class MediaStreamVideoWebRtcSinkTest : public ::testing::Test {
 
  private:
   MockMediaStreamRegistry registry_;
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources in |registry_| into believing they are on the right threads.
+  // A ScopedTaskEnvironment and a ChildProcess are both needed to fool the
+  // Tracks and Sources in |registry_| into believing they are on the right
+  // threads.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   const ChildProcess child_process_;
 };
