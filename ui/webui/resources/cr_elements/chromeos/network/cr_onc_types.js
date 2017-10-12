@@ -121,6 +121,10 @@ CrOnc.IPConfigType = chrome.networkingPrivate.IPConfigType;
 CrOnc.ProxySettingsType = chrome.networkingPrivate.ProxySettingsType;
 
 /** @enum {string} */
+CrOnc.Source = chrome.networkingPrivate.SourceType;
+CrOnc.Source.NONE = 'None';
+
+/** @enum {string} */
 CrOnc.Type = chrome.networkingPrivate.NetworkType;
 
 /** @enum {string} */
@@ -180,16 +184,6 @@ CrOnc.Security = {
   WEP_PSK: 'WEP-PSK',
   WPA_EAP: 'WPA-EAP',
   WPA_PSK: 'WPA-PSK',
-};
-
-/** @enum {string} */
-CrOnc.Source = {
-  NONE: 'None',
-  DEVICE: 'Device',
-  DEVICE_POLICY: 'DevicePolicy',
-  USER: 'User',
-  USER_POLICY: 'UserPolicy',
-  ACTIVE_EXTENSION: 'ActiveExtension',
 };
 
 /** @enum {string} */

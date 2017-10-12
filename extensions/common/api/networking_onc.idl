@@ -55,6 +55,10 @@ namespace networking.onc {
     Direct, Manual, PAC, WPAD
   };
 
+  enum SourceType {
+    Device, DevicePolicy, User, UserPolicy
+  };
+
   enum ClientCertificateType {
     Ref, Pattern
   };
@@ -734,7 +738,7 @@ namespace networking.onc {
     // static IP configuration.
     IPConfigProperties? SavedIPConfig;
     // Indicates whether and how the network is configured.
-    DOMString? Source;
+    SourceType? Source;
     // The network type.
     NetworkType Type;
     // For VPN networks, the network VPN properties.
@@ -780,7 +784,7 @@ namespace networking.onc {
     // See $(ref:NetworkProperties.SavedIPConfig).
     IPConfigProperties? SavedIPConfig;
     // See $(ref:NetworkProperties.Source).
-    DOMString? Source;
+    SourceType? Source;
     // See $(ref:NetworkProperties.Type).
     NetworkType Type;
     // See $(ref:NetworkProperties.VPN).
@@ -809,7 +813,7 @@ namespace networking.onc {
     // See $(ref:NetworkProperties.Priority).
     long? Priority;
     // See $(ref:NetworkProperties.Source).
-    DOMString? Source;
+    SourceType? Source;
     // See $(ref:NetworkProperties.Type).
     NetworkType Type;
     // See $(ref:NetworkProperties.VPN).
@@ -904,7 +908,9 @@ namespace networking.onc {
     static void getState(DOMString networkGuid,
                          GetStatePropertiesCallback callback);
 
-    // Sets the properties of the network with id networkGuid.
+    // Sets the properties of the network with id |networkGuid|. This is only
+    // valid for configured networks (Source != None). Unconfigured visible
+    // networks should use createNetwork instead.
     // <b>
     //   In kiosk sessions, calling this method on a shared network will fail.
     // </b>
