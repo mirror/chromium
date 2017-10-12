@@ -16,6 +16,24 @@
       "revId": "8fae5a2ff35b69b935f95fa7b8f172eb50d5183f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055b00b7_acfc6ed1",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T00:59:26Z",
+      "side": 1,
+      "message": "The call to SetSelection(start) at the end of the method will always clobber any caret affinity set here with the one that\u0027s on |start|.\n\nI guess that just moves the question to whether the caret affinity on |start| is what we want. \n\nWhen there is a selection, it always points \"in\" thanks to GetSelectionModelForSelectionStart(), so methods like GetRunContainingCaret will always return the text run that\u0027s selected and not the one \"outside\". All good.\n\nThat leaves the case where we use GetSelectionModelForSelectionStart() and there is no selection. But in this case, GetSelectionModelForSelectionStart() just returns |selection_model_|, so it\u0027s impossible for a reversal to happen (start_x \u003d\u003d end_x).\n\nI\u0027ve added a note. But also I guess it\u0027s silly to do the computation for GetCursorBounds() when there is no selection, so I\u0027ve included that in the `if` condition.",
+      "parentUuid": "0a5b98b4_27f8b162",
+      "revId": "8fae5a2ff35b69b935f95fa7b8f172eb50d5183f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
