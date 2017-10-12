@@ -51,8 +51,6 @@ struct ServiceWorkerVersionAttributes;
 // scripts through methods like navigator.registerServiceWorker().
 class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
  public:
-  typedef blink::WebServiceWorkerRegistration::WebServiceWorkerUpdateCallbacks
-      WebServiceWorkerUpdateCallbacks;
   typedef blink::WebServiceWorkerRegistration::
       WebServiceWorkerUnregistrationCallbacks
           WebServiceWorkerUnregistrationCallbacks;
@@ -70,11 +68,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
 
   void OnMessageReceived(const IPC::Message& msg);
 
-  // Corresponds to ServiceWorkerRegistration.update().
-  void UpdateServiceWorker(
-      int provider_id,
-      int64_t registration_id,
-      std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks);
   // Corresponds to ServiceWorkerRegistration.unregister().
   void UnregisterServiceWorker(
       int provider_id,
@@ -117,17 +110,21 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   scoped_refptr<WebServiceWorkerImpl> GetOrCreateServiceWorker(
       std::unique_ptr<ServiceWorkerHandleReference> handle_ref);
 
-  // Returns the existing registration or a newly created one. When a new one is
-  // created, increments interprocess references to the registration and its
-  // versions via ServiceWorker(Registration)HandleReference.
-  scoped_refptr<WebServiceWorkerRegistrationImpl> GetOrCreateRegistration(
+  // Returns the existing registration or a newly created one for service worker
+  // execution context. When a new one is created, increments interprocess
+  // references to its versions via ServiceWorkerHandleReference.
+  scoped_refptr<WebServiceWorkerRegistrationImpl>
+  GetOrCreateRegistrationForServiceWorkerGlobalScope(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
-      const ServiceWorkerVersionAttributes& attrs);
+      const ServiceWorkerVersionAttributes& attrs,
+      scoped_refptr<base::SingleThreadTaskRunner> binding_task_runner);
 
-  // Returns the existing registration or a newly created one. Always adopts
-  // interprocess references to the registration and its versions via
-  // ServiceWorker(Registration)HandleReference.
-  scoped_refptr<WebServiceWorkerRegistrationImpl> GetOrAdoptRegistration(
+  // Returns the existing registration or a newly created one for service worker
+  // clients contexts(document, shared worker, dedicated worker). Always adopts
+  // interprocess references to its versions via
+  // ServiceWorkerHandleReference.
+  scoped_refptr<WebServiceWorkerRegistrationImpl>
+  GetOrAdoptRegistrationForServiceWorkerClient(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
       const ServiceWorkerVersionAttributes& attrs);
 
@@ -144,8 +141,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   }
 
  private:
-  using UpdateCallbackMap =
-      base::IDMap<std::unique_ptr<WebServiceWorkerUpdateCallbacks>>;
   using UnregistrationCallbackMap =
       base::IDMap<std::unique_ptr<WebServiceWorkerUnregistrationCallbacks>>;
   using EnableNavigationPreloadCallbackMap =
@@ -170,7 +165,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // WorkerThread::Observer implementation.
   void WillStopCurrentWorkerThread() override;
 
-  void OnUpdated(int thread_id, int request_id);
   void OnUnregistered(int thread_id,
                       int request_id,
                       bool is_success);
@@ -179,10 +173,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
                                       int request_id,
                                       const NavigationPreloadState& state);
   void OnDidSetNavigationPreloadHeader(int thread_id, int request_id);
-  void OnUpdateError(int thread_id,
-                     int request_id,
-                     blink::mojom::ServiceWorkerErrorType error_type,
-                     const base::string16& message);
   void OnUnregistrationError(int thread_id,
                              int request_id,
                              blink::mojom::ServiceWorkerErrorType error_type,
@@ -232,7 +222,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   std::unique_ptr<ServiceWorkerHandleReference> Adopt(
       const ServiceWorkerObjectInfo& info);
 
-  UpdateCallbackMap pending_update_callbacks_;
   UnregistrationCallbackMap pending_unregistration_callbacks_;
   EnableNavigationPreloadCallbackMap enable_navigation_preload_callbacks_;
   GetNavigationPreloadStateCallbackMap get_navigation_preload_state_callbacks_;
