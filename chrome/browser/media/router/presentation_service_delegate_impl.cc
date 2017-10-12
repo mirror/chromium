@@ -12,6 +12,7 @@
 #include "base/containers/small_map.h"
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/media/router/browser_presentation_connection_proxy.h"
 #include "chrome/browser/media/router/media_router.h"
@@ -50,6 +51,21 @@ namespace media_router {
 namespace {
 
 using DelegateObserver = content::PresentationServiceDelegate::Observer;
+
+constexpr char kLegacyCastPresentationUrlPrefix[] =
+    "https://google.com/cast#__castAppId__=";
+
+enum class PresentationUrlType {
+  kUnknown,
+  kCast,
+  kCastDial,
+  kCastLegacy,
+  kDial,
+  kHttp,
+  kHttps,
+  // Add new types only immediately above this line.
+  kPresentationUrlTypeCount
+};
 
 // Gets the last committed URL for the render frame specified by
 // |render_frame_host_id|.
@@ -149,16 +165,41 @@ MediaRoute::Id PresentationFrame::GetRouteId(
                                                : "";
 }
 
+PresentationUrlType GetPresentationUrlType(const GURL& url) {
+  if (url.SchemeIs(kDialPresentationUrlScheme))
+    return PresentationUrlType::kDial;
+  if (url.SchemeIs(kCastPresentationUrlScheme))
+    return PresentationUrlType::kCast;
+  if (url.SchemeIs(kCastDialPresentationUrlScheme))
+    return PresentationUrlType::kCastDial;
+  if (url.SchemeIs(url::kHttpScheme))
+    return PresentationUrlType::kHttp;
+  if (url.SchemeIs(url::kHttpScheme))
+    return PresentationUrlType::kHttps;
+  if (base::StartsWith(url.spec(), kLegacyCastPresentationUrlPrefix,
+                       base::CompareCase::INSENSITIVE_ASCII))
+    return PresentationUrlType::kCastLegacy;
+  return PresentationUrlType::kUnknown;
+}
+
+void RecordPresentationUrlType(const GURL& url) {
+  PresentationUrlType type = GetPresentationUrlType(url);
+  UMA_HISTOGRAM_ENUMERATION("MediaRouter.PresentationUrlType", type,
+                            PresentationUrlType::kPresentationUrlTypeCount);
+}
+
 bool PresentationFrame::SetScreenAvailabilityListener(
     content::PresentationScreenAvailabilityListener* listener) {
-  MediaSource source =
-      MediaSourceForPresentationUrl(listener->GetAvailabilityUrl());
-  if (!IsValidPresentationUrl(source.url())) {
+  GURL url = listener->GetAvailabilityUrl();
+  if (!IsValidPresentationUrl(url)) {
     listener->OnScreenAvailabilityChanged(
         blink::mojom::ScreenAvailability::SOURCE_NOT_SUPPORTED);
     return false;
   }
 
+  RecordPresentationUrlType(url);
+
+  MediaSource source = MediaSourceForPresentationUrl(url);
   auto& sinks_observer = url_to_sinks_observer_[source.id()];
   if (sinks_observer && sinks_observer->listener() == listener)
     return false;
@@ -334,6 +375,7 @@ bool PresentationServiceDelegateImpl::AddScreenAvailabilityListener(
     int render_frame_id,
     content::PresentationScreenAvailabilityListener* listener) {
   DCHECK(listener);
+
   RenderFrameHostId render_frame_host_id(render_process_id, render_frame_id);
   auto* presentation_frame = GetOrAddPresentationFrame(render_frame_host_id);
   return presentation_frame->SetScreenAvailabilityListener(listener);
