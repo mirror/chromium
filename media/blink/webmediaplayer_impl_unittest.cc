@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/task_runner_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread.h"
@@ -229,6 +230,22 @@ class MockSurfaceLayerBridge : public blink::WebSurfaceLayerBridge {
   MOCK_CONST_METHOD0(GetFrameSinkId, const viz::FrameSinkId&());
 };
 
+class MockVideoFrameCompositor : public VideoFrameCompositor {
+ public:
+  MockVideoFrameCompositor(
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+      : VideoFrameCompositor(
+            task_runner,
+            base::BindRepeating(
+                [](base::OnceCallback<void(viz::ContextProvider*)>) {}),
+            nullptr,
+            nullptr) {}
+
+  MOCK_METHOD1(SetOnNewProcessedFrameCallback,
+               void(const OnNewProcessedFrameCB& cb));
+  MOCK_METHOD0(GetCurrentFrameAndUpdateIfStale, scoped_refptr<VideoFrame>());
+};
+
 class WebMediaPlayerImplTest : public testing::Test {
  public:
   WebMediaPlayerImplTest()
@@ -261,23 +278,27 @@ class WebMediaPlayerImplTest : public testing::Test {
     WatchTimeRecorder::CreateWatchTimeRecorderProvider(
         mojo::MakeRequest(&provider_));
 
+    auto params = base::MakeUnique<WebMediaPlayerParams>(
+        std::move(media_log), WebMediaPlayerParams::DeferLoadCB(),
+        scoped_refptr<SwitchableAudioRendererSink>(),
+        media_thread_.task_runner(), message_loop_.task_runner(),
+        message_loop_.task_runner(), base::Bind(&OnAdjustAllocatedMemory),
+        nullptr, nullptr, RequestRoutingTokenCallback(), nullptr,
+        kMaxKeyframeDistanceToDisableBackgroundVideo,
+        kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
+        provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
+        base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
+                   base::Unretained(this)),
+        cc::TestContextProvider::Create());
+
+    auto compositor = base::MakeUnique<StrictMock<MockVideoFrameCompositor>>(
+        params->vfc_task_runner());
+    compositor_ = compositor.get();
+
     wmpi_ = base::MakeUnique<WebMediaPlayerImpl>(
         web_local_frame_, &client_, nullptr, &delegate_,
-        std::move(factory_selector), url_index_.get(),
-        base::MakeUnique<WebMediaPlayerParams>(
-            std::move(media_log), WebMediaPlayerParams::DeferLoadCB(),
-            scoped_refptr<SwitchableAudioRendererSink>(),
-            media_thread_.task_runner(), message_loop_.task_runner(),
-            message_loop_.task_runner(), base::Bind(&OnAdjustAllocatedMemory),
-            nullptr, nullptr, RequestRoutingTokenCallback(), nullptr,
-            kMaxKeyframeDistanceToDisableBackgroundVideo,
-            kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
-            base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
-                       base::Unretained(this)),
-            base::BindRepeating(&WebMediaPlayerImplTest::ProvideContext,
-                                base::Unretained(this)),
-            cc::TestContextProvider::Create()));
+        std::move(factory_selector), url_index_.get(), std::move(compositor),
+        std::move(params));
 }
 
   ~WebMediaPlayerImplTest() override {
@@ -291,13 +312,6 @@ class WebMediaPlayerImplTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     web_view_->Close();
-  }
-
-  void ProvideContext(
-      base::OnceCallback<void(viz::ContextProvider*)> callback) {
-    media_thread_.task_runner()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback),
-                                  base::Unretained(context_provider_.get())));
   }
 
  protected:
@@ -456,6 +470,7 @@ class WebMediaPlayerImplTest : public testing::Test {
   blink::WebLocalFrame* web_local_frame_;
 
   scoped_refptr<cc::TestContextProvider> context_provider_;
+  StrictMock<MockVideoFrameCompositor>* compositor_;
 
   std::unique_ptr<media::UrlIndex> url_index_;
 

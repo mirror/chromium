@@ -72,7 +72,9 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // thread.
   VideoFrameCompositor(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      blink::WebContextProviderCallback media_context_provider_callback);
+      blink::WebContextProviderCallback media_context_provider_callback,
+      viz::SharedBitmapManager* shared_bitmap_manager,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.
@@ -91,6 +93,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   bool HasCurrentFrame() override;
   scoped_refptr<VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner() override;
 
   // VideoRendererSink implementation. These methods must be called from the
   // same thread (typically the media thread).
@@ -110,7 +113,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // where the <video> tag is invisible (possibly not even in the DOM) and thus
   // does not receive a |client_|.  In this case, frame acquisition is driven by
   // the frequency of canvas or WebGL paints requested via JavaScript.
-  scoped_refptr<VideoFrame> GetCurrentFrameAndUpdateIfStale();
+  virtual scoped_refptr<VideoFrame> GetCurrentFrameAndUpdateIfStale();
 
   // Returns the timestamp of the current (possibly stale) frame, or
   // base::TimeDelta() if there is no current frame. This method may be called
@@ -121,7 +124,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // Sets the callback to be run when the new frame has been processed. The
   // callback is only run once and then reset.
   // Must be called on the compositor thread.
-  void SetOnNewProcessedFrameCallback(const OnNewProcessedFrameCB& cb);
+  virtual void SetOnNewProcessedFrameCallback(const OnNewProcessedFrameCB& cb);
 
   void set_tick_clock_for_testing(std::unique_ptr<base::TickClock> tick_clock) {
     tick_clock_ = std::move(tick_clock);
