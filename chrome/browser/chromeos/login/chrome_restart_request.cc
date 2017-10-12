@@ -220,6 +220,8 @@ void DeriveCommandLine(const GURL& start_url,
     chromeos::switches::kSystemInDevMode,
     policy::switches::kDeviceManagementUrl,
     wm::switches::kWindowAnimationsDisabled,
+    // TEST
+    ::switches::kEnableDecodeBurstMode,
   };
   command_line->CopySwitchesFrom(base_command_line, kForwardSwitches,
                                  arraysize(kForwardSwitches));

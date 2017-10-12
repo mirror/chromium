@@ -169,6 +169,8 @@ static const char* const kSwitchNames[] = {
     switches::kUsePassthroughCmdDecoder,
     switches::kIgnoreGpuBlacklist,
     switches::kForceVideoOverlays,
+    // TEST
+    switches::kEnableDecodeBurstMode,
 };
 
 enum GPUProcessLifetimeEvent {
