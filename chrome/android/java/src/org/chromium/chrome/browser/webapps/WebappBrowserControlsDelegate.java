@@ -33,7 +33,7 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
         return canAutoHideBrowserControls(mTab.getSecurityLevel());
     }
 
-    boolean canAutoHideBrowserControls(int securityLevel) {
+    static boolean canAutoHideBrowserControls(int securityLevel) {
         // Allow auto-hiding browser controls unless they are shown because of low security level.
         return !shouldShowBrowserControlsForSecurityLevel(securityLevel);
     }
@@ -46,7 +46,7 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
      * @param securityLevel The security level for the webapp's current URL.
      * @return Whether the browser controls should be shown for {@code url}.
      */
-    boolean shouldShowBrowserControls(WebappInfo info, String url, int securityLevel) {
+    static boolean shouldShowBrowserControls(WebappInfo info, String url, int securityLevel) {
         // Do not show browser controls when URL is not ready yet.
         if (TextUtils.isEmpty(url)) return false;
 
@@ -59,16 +59,35 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
      * Returns whether the browser controls should be shown when a webapp is navigated to
      * {@code url}.
      */
-    protected boolean shouldShowBrowserControlsForUrl(WebappInfo info, String url) {
-        return !UrlUtilities.sameDomainOrHost(info.uri().toString(), url, true);
+    static private boolean shouldShowBrowserControlsForUrl(WebappInfo info, String url) {
+        return info instanceof WebApkInfo
+                ? !UrlUtilities.isUrlWithinScope(url, info.scopeUri().toString())
+                : !UrlUtilities.sameDomainOrHost(info.uri().toString(), url, true);
     }
 
-    private boolean shouldShowBrowserControlsForSecurityLevel(int securityLevel) {
+    static private boolean shouldShowBrowserControlsForSecurityLevel(int securityLevel) {
         return securityLevel == ConnectionSecurityLevel.DANGEROUS;
     }
 
-    private boolean shouldShowBrowserControlsForDisplayMode(WebappInfo info) {
+    static private boolean shouldShowBrowserControlsForDisplayMode(WebappInfo info) {
         return info.displayMode() != WebDisplayMode.STANDALONE
                 && info.displayMode() != WebDisplayMode.FULLSCREEN;
+    }
+
+    /**
+     * Determines whether the close button should be shown in the PWA toolbar.
+     *
+     * This is called by {@link WebappActivity}, but contained here as it uses the same concepts
+     * that are used to determine visibility of the browser toolbar.
+     */
+    static boolean shouldShowToolbarCloseButton(WebappActivity activity) {
+        // Show if we're on the URL requiring browser controls, i.e. off-scope.
+        return shouldShowBrowserControlsForUrl(
+                       activity.mWebappInfo, activity.getActivityTab().getUrl())
+                // Also keep shown if toolbar is not visible, so that during the in and off-scope
+                // transitions we avoid button flickering when toolbar is appearing/disappearing.
+                || !shouldShowBrowserControls(activity.mWebappInfo,
+                           activity.getActivityTab().getUrl(),
+                           activity.getActivityTab().getSecurityLevel());
     }
 }

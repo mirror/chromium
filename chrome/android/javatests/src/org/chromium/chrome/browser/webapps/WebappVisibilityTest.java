@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.blink_public.platform.WebDisplayMode;
-import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content.browser.test.NativeLibraryTestRule;
 
@@ -50,8 +49,8 @@ public class WebappVisibilityTest {
         mUiThreadTestRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                testCanAutoHideBrowserControls();
                 for (Type type : new Type[] {Type.WEBAPP, Type.WEBAPK}) {
-                    testCanAutoHideBrowserControls(type);
                     for (int displayMode : new int[] {WebDisplayMode.STANDALONE,
                             WebDisplayMode.FULLSCREEN, WebDisplayMode.MINIMAL_UI}) {
                         testShouldShowBrowserControls(type, displayMode);
@@ -61,14 +60,13 @@ public class WebappVisibilityTest {
         });
     }
 
-    private static void testCanAutoHideBrowserControls(Type type) {
+    private static void testCanAutoHideBrowserControls() {
         // Allow auto-hiding controls unless we're on a dangerous connection.
-        Assert.assertTrue(canAutoHideBrowserControls(type, ConnectionSecurityLevel.NONE));
-        Assert.assertTrue(canAutoHideBrowserControls(type, ConnectionSecurityLevel.SECURE));
-        Assert.assertTrue(canAutoHideBrowserControls(type, ConnectionSecurityLevel.EV_SECURE));
-        Assert.assertTrue(
-                canAutoHideBrowserControls(type, ConnectionSecurityLevel.HTTP_SHOW_WARNING));
-        Assert.assertFalse(canAutoHideBrowserControls(type, ConnectionSecurityLevel.DANGEROUS));
+        Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.NONE));
+        Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.SECURE));
+        Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.EV_SECURE));
+        Assert.assertTrue(canAutoHideBrowserControls(ConnectionSecurityLevel.HTTP_SHOW_WARNING));
+        Assert.assertFalse(canAutoHideBrowserControls(ConnectionSecurityLevel.DANGEROUS));
     }
 
     private static void testShouldShowBrowserControls(Type type, @WebDisplayMode int displayMode) {
@@ -119,18 +117,12 @@ public class WebappVisibilityTest {
 
     private static boolean shouldShowBrowserControls(String webappStartUrlOrScopeUrl, String url,
             int securityLevel, Type type, @WebDisplayMode int displayMode) {
-        return createDelegate(type).shouldShowBrowserControls(
+        return WebappBrowserControlsDelegate.shouldShowBrowserControls(
                 createWebappInfo(webappStartUrlOrScopeUrl, type, displayMode), url, securityLevel);
     }
 
-    private static boolean canAutoHideBrowserControls(Type type, int securityLevel) {
-        return createDelegate(type).canAutoHideBrowserControls(securityLevel);
-    }
-
-    private static WebappBrowserControlsDelegate createDelegate(Type type) {
-        return type == Type.WEBAPP
-                ? new WebappBrowserControlsDelegate(null, new Tab(0, false, null))
-                : new WebApkBrowserControlsDelegate(null, new Tab(0, false, null));
+    private static boolean canAutoHideBrowserControls(int securityLevel) {
+        return WebappBrowserControlsDelegate.canAutoHideBrowserControls(securityLevel);
     }
 
     private static WebappInfo createWebappInfo(
