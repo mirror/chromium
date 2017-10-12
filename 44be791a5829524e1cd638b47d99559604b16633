@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13952604_2890be7d",
+        "filename": "ios/chrome/browser/ui/ntp/metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-12T11:05:15Z",
+      "side": 1,
+      "message": "Should it be \"NTP\" in all caps?",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "44be791a5829524e1cd638b47d99559604b16633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
