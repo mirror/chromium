@@ -9,6 +9,7 @@
 
 #include <algorithm>  // for min/max()
 #include <cmath>      // for log() and pow()
+#include <iostream>
 #include <list>
 
 #include "base/logging.h"
@@ -1504,6 +1505,12 @@ void OutOfProcessInstance::DocumentLoadComplete(
   pp::PDF::SetContentRestriction(this, content_restrictions);
   HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
                         1000000, 50);
+
+  HistogramEnumeration("PDF.HasAttachment",
+                       document_features.attachment_count ? 1 : 0, 2);
+
+  HistogramEnumeration("PDF.IsLinearized",
+                       document_features.is_linearized ? 1 : 0, 2);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
@@ -1813,6 +1820,8 @@ void OutOfProcessInstance::HistogramCustomCounts(const std::string& name,
   if (IsPrintPreview())
     return;
 
+  std::cerr << name << " " << sample << " " << min << "-" << max << " "
+            << bucket_count << std::endl;
   uma_.HistogramCustomCounts(name, sample, min, max, bucket_count);
 }
 
@@ -1822,6 +1831,7 @@ void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
   if (IsPrintPreview())
     return;
 
+  std::cerr << name << " " << sample << " " << boundary_value << std::endl;
   uma_.HistogramEnumeration(name, sample, boundary_value);
 }
 
