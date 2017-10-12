@@ -35,4 +35,10 @@ component("sandbox") {
       "IOSurface.framework",
     ]
   }
+  if (is_win) {
+    sources += [
+      "features.cc",
+      "features.h",
+    ]
+  }
 }
