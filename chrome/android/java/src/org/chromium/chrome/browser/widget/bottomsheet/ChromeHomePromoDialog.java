@@ -108,7 +108,7 @@ public class ChromeHomePromoDialog extends PromoDialog {
         }
 
         ChromeActivity activity = (ChromeActivity) getOwnerActivity();
-        Tab tab = activity.getActivityTab();
+        final Tab tab = activity.getActivityTab();
 
         boolean showOptOutSnackbar = false;
         if (!mSwitchStateShouldEnable
@@ -124,13 +124,13 @@ public class ChromeHomePromoDialog extends PromoDialog {
             finalizeCallback = new Runnable() {
                 @Override
                 public void run() {
-                    ChromeHomeSnackbarController.initialize(tab);
+                    if (tab != null) ChromeHomeSnackbarController.initialize(tab);
                 }
             };
         }
 
         // Detach the foreground tab and. It will be reattached when the activity is restarted.
-        tab.detachAndStartReparenting(null, null, finalizeCallback);
+        if (tab != null) tab.detachAndStartReparenting(null, null, finalizeCallback);
 
         getOwnerActivity().recreate();
     }
