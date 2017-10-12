@@ -10,6 +10,7 @@
 #include "ash/lock_screen_action/lock_screen_action_background_controller.h"
 #include "ash/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/lock_screen_action/test_lock_screen_action_background_controller.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/root_window_controller.h"
@@ -172,6 +173,12 @@ class LockActionHandlerLayoutManagerTestWithTestBackgroundController
   LockActionHandlerLayoutManagerTestWithTestBackgroundController() = default;
   ~LockActionHandlerLayoutManagerTestWithTestBackgroundController() override =
       default;
+
+  void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kShowMdLogin);
+    LockActionHandlerLayoutManagerTest::SetUp();
+  }
 
   void TearDown() override {
     LockActionHandlerLayoutManagerTest::TearDown();
