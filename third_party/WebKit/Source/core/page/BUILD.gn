@@ -39,6 +39,8 @@ blink_core_sources("page") {
     "Page.h",
     "PageAnimator.cpp",
     "PageAnimator.h",
+    "PageLifecycleState.cpp",
+    "PageLifecycleState.h",
     "PageOverlay.cpp",
     "PageOverlay.h",
     "PagePopup.h",
