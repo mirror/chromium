@@ -106,7 +106,15 @@ void LinkStyle::SetCSSStyleSheet(
 
     if (sheet_)
       ClearSheet();
+
+    // If the stylesheet has a media query, we need to clone restored_sheet
+    // due to potential differences in the rule set.
+    if (RuntimeEnabledFeatures::CacheStyleSheetWithMediaQueriesEnabled() &&
+        restored_sheet->HasMediaQueries()) {
+      restored_sheet = restored_sheet->Copy();
+    }
     sheet_ = CSSStyleSheet::Create(restored_sheet, *owner_);
+
     sheet_->SetMediaQueries(MediaQuerySet::Create(owner_->Media()));
     if (owner_->IsInDocumentTree())
       SetSheetTitle(owner_->title());
