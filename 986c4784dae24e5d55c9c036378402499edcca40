@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cdf0863_9427e3d9",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T02:12:03Z",
+      "side": 1,
+      "message": "`using namespace` is really uncommon in Chrome.. maybe\n\nusing net::test_server::HttpResponse;\n\n(and use net::test_server::BasicHttpResponse below where you use it since it\u0027s used just once)",
+      "revId": "986c4784dae24e5d55c9c036378402499edcca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d74bf8_253b9590",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T02:12:03Z",
+      "side": 1,
+      "message": "Why doesn\u0027t HostedAppTest.SubframeRedirectsToHostedApp need this?\n\nCan you just put the `script` string down below on line 212 into a file and have the embedded test server serve it from disk? I think that\u0027s usually how the embedded test server is typically used.\n\nThere\u0027s a ExtensionTestMessageListener which a script on the page can use to communicate back a string to the test.",
+      "revId": "986c4784dae24e5d55c9c036378402499edcca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e2461b_767c5b25",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T02:12:03Z",
+      "side": 1,
+      "message": "adding \"-\u003e std::unique_ptr\u003cHttpResponse\u003e\" before the opening `{` should allow you to remove the static_cast below\n\nbut also nothing is being captured -- could this just be a function in an anonymous namespace with a descriptive name like\n\nstd::unique_ptr\u003cHttpResponse\u003e EmptyResponse(const HttpRequest\u0026 request) {\n\n}",
+      "range": {
+        "startLine": 177,
+        "startChar": 28,
+        "endLine": 177,
+        "endChar": 56
+      },
+      "revId": "986c4784dae24e5d55c9c036378402499edcca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3618916_2e7e2ee0",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T02:12:03Z",
+      "side": 1,
+      "message": "(i.e. just `return response;` should work here.. or maybe you need `std::move` still, to upcast)",
+      "revId": "986c4784dae24e5d55c9c036378402499edcca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbbd11b_6bcc1018",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T02:12:03Z",
+      "side": 1,
+      "message": "Could this manifest be reused?",
+      "revId": "986c4784dae24e5d55c9c036378402499edcca40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
