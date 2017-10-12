@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260be543_aefa544e",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "There\u0027s an extra space here.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94ec915_ab8129d6",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Re-iterating general comment to clean up html tagging. Make sure paragraphs closed off, with code in it\u0027s own tag, not nested in paragraphs.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d036f25_168aec21",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Typo: keeo should be keep.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6b0d55_5a791924",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Move this up to be combined with 79, as it is always good to say why they should do something before you show them, so long as it can be done briefly.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0900ca_10841069",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "This sentence doesn\u0027t make sense to me-- might need to talk this out. This section in general is confusing. The grammar is a bit cut off by code, so maybe separate the concepts into paragraphs then code, and re-organize into a more linear narrative.\n\nIf your extension needs to do \u0027this\u0027, use the new \u0027method\u0027 instead of the old \u0027method\u0027. The new method starts the non-persistent page before returning it.\n\nFor example, here is the previous way to do \u0027this\u0027:\n\nAnd here is the new way to do \u0027this\u0027:",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2ed925_de09b1b7",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Small nit to replace full-stop with colon after false... \u0027field set to false:\u0027",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450dadb8_500e711b",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Small nit to add a line between the intro and code snippet.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a665c8f_15deb282",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Can we put this in a warning maybe, to draw attention to it?",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0232a956_7c534867",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Formatting suggesting to wrap your paragraphs in \u003cp\u003e and your code separately. In lines 99 - 122, it\u0027s one paragraph with nested code.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02057159_03335905",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Important: I\u0027d separate filters and initiation sections. It\u0027s confusing covering them in one section. Also, I\u0027d follow your pattern of task-based section titles-- so more like \u0027Filtering event notifications\u0027 and \u0027Initializing your extension\u0027.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79314d61_a78c5faa",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "Make this active voice: \"Include event filters to restrict event notifications to the cases you care about\".",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753101aa_56104d86",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "This confuses me. I would expect to see an event filter to isolate an event that I care about, but the example code seems to be more about an alternative path, since tabs API doesn\u0027t support filters. Might want to discuss this one, as I\u0027m confused a bit.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcaab47_0e91fa0a",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "General comment: I\u0027m realizing that your paragraph tags are a bit off across the doc. Make sure each paragraph is wrapped in it\u0027s own \u003cp\u003e and the code is handled in separate html tags, not nested in paragraphs.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee01bd30_842289dd",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "As mentioned above, make this it\u0027s own section, something like \"Initializing your extension\".",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5fc2d9_ef73121e",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "This first sentence is a run-on sentence. Try something more like: Listen to the runtime.onInstalled event to initialize your extension when it is installed. For example, use this event to set state. This event is also good for one-time initialization of a Context Menu.",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b74d27_5349207a",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-10-12T20:00:39Z",
+      "side": 1,
+      "message": "You can skip the \u0027you can\u0027. So just \u0027Use the ...\u0027",
+      "revId": "eaf09a59335e587434972d2bfc3b60a01b23e0c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
