@@ -227,6 +227,8 @@ static const CGFloat kDragDistThreshold = 2.5;
     // When the delay is set to zero, this button operates like a popup button
     // from a user perspective.
     return NSAccessibilityPopUpButtonRole;
+  } else if ([attribute isEqual:NSAccessibilityChildrenAttribute]) {
+    return @[];
   }
   return [super accessibilityAttributeValue:attribute];
 }

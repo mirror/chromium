@@ -71,6 +71,13 @@ TEST_F(ClickHoldButtonCellTest, Defaults) {
   EXPECT_TRUE([cell activateOnDrag]);
 }
 
+// Test accessibility attributes; make sure they don't explode when touched.
+TEST_F(ClickHoldButtonCellTest, AccessibilityAttributes) {
+  ClickHoldButtonCell* cell = static_cast<ClickHoldButtonCell*>([view_ cell]);
+  EXPECT_NSEQ(
+      [cell accessibilityAttributeValue:NSAccessibilityChildrenAttribute], @[]);
+}
+
 // TODO(viettrungluu): (1) Enable click-hold and figure out how to test the
 // tracking loop (i.e., |-trackMouse:...|), which is the nontrivial part.
 // (2) Test various initialization code paths (in particular, loading from nib).
