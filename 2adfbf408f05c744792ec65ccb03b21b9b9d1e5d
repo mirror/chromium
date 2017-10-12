@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73facfec_a5208b0e",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-12T23:52:32Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d name this \"UserPreferenceValue.OnStartup\" and the other histogram \"UserPreferenceValue.OnToggle\".",
+      "range": {
+        "startLine": 134,
+        "startChar": 42,
+        "endLine": 134,
+        "endChar": 70
+      },
+      "revId": "2adfbf408f05c744792ec65ccb03b21b9b9d1e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0132fcad_2749062f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29034,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-12T23:52:32Z",
+      "side": 1,
+      "message": "nit: Please document that this is recorded when the value is toggled.",
+      "range": {
+        "startLine": 29034,
+        "startChar": 36,
+        "endLine": 29034,
+        "endChar": 0
+      },
+      "revId": "2adfbf408f05c744792ec65ccb03b21b9b9d1e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
