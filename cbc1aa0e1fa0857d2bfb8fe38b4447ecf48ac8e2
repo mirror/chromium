@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3bead94_b075043c",
+        "filename": "third_party/WebKit/Source/platform/blob/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-12T08:59:03Z",
+      "side": 1,
+      "message": "It\u0027s a small target, but since you mentioned it, would you mind using jumbo_source_set (after import(\"//build/config.gni\"), here and for the other two source_sets?",
+      "revId": "cbc1aa0e1fa0857d2bfb8fe38b4447ecf48ac8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be238505_a661ab3a",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-12T08:59:03Z",
+      "side": 1,
+      "message": "To not lose the jumbiness of this, could you use jumbo_source_set instead (after import(\"//build/config/jumbo.gni\") )? Here and below?\n\nThere is also a target type named \"core_blink_sources\" that is used generally, but I assume there is a reason that is not used? It expands to source_set or static_library depending on build type.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "cbc1aa0e1fa0857d2bfb8fe38b4447ecf48ac8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
