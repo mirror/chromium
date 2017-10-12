@@ -11,6 +11,7 @@
 @class OpenUrlCommand;
 @class ShowSigninCommand;
 @class StartVoiceSearchCommand;
+@class UIViewController;
 
 // This protocol groups commands that are part of ApplicationCommands, but
 // may also be forwarded directly to a settings navigation controller.
@@ -41,6 +42,9 @@
 
 // Shows the Settings UI.
 - (void)showSettings;
+
+// Shows the Settings UI, presenting from |baseViewController|.
+- (void)showSettingsFromViewController:(UIViewController*)baseViewController;
 
 // Switches to show either regular or incognito tabs, and then opens
 // a new oen of those tabs. |newTabCommand|'s |incognito| property inidcates

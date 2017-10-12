@@ -1992,6 +1992,10 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (void)showSettings {
+  [self showSettingsFromViewController:[self topPresentedViewController]];
+}
+
+- (void)showSettingsFromViewController:(UIViewController*)baseViewController {
   if (_settingsNavigationController)
     return;
   [[DeferredInitializationRunner sharedInstance]
@@ -2000,10 +2004,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   _settingsNavigationController = [SettingsNavigationController
       newSettingsMainControllerWithBrowserState:_mainBrowserState
                                        delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
+  [baseViewController presentViewController:_settingsNavigationController
+                                   animated:YES
+                                 completion:nil];
 }
 
 - (void)showSigninWithOperation:(AuthenticationOperation)operation

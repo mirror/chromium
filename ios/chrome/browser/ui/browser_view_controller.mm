@@ -3830,6 +3830,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
   return [self.keyCommandsProvider
       keyCommandsForConsumer:self
+          baseViewController:self
                   dispatcher:self.dispatcher
                  editingText:![self isFirstResponder]];
 }
