@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30587b54_766c29a8",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d727af7_b888dd66",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "061d6580_6286555a",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T20:02:20Z",
       "side": 1,
       "message": "q: when is this non-zero? for RTL/Bidi?",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8e28f3_bee52994",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "\u003e q: when is this non-zero? for RTL/Bidi?\n\nIt\u0027s non-zero whenever there are multiple lines - \"text-space\" coordinates assume everything is laid out in a single line. So |preceding_run_widths| of the first run on a line needs to be subtracted whenever a new lines starts.",
+      "parentUuid": "061d6580_6286555a",
       "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c93fe41_78e01903",
+        "filename": "ui/gfx/render_text_harfbuzz.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b372fe61_49d68601",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d38db36_5c02f378",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-11T20:02:20Z",
       "side": 1,
       "message": "nit: Telugu spelling here and elsewhere? (according to wikipedia)",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff02006_91802686",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4714,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "\u003e nit: Telugu spelling here and elsewhere? (according to wikipedia)\n\nwhoops - done. Thanks for checking!",
+      "parentUuid": "8d38db36_5c02f378",
       "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "81de9c13_254f4d6d",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4737,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "\u003e q: Is actually drawing the selection necessary? (ditto here and below)\n\nHm - it was DrawSelection() that was triggering the DCHECK in TextRunHarfBuzz::GetGraphemeBounds. But I guess there\u0027s not really anything in DrawSelection that isn\u0027t covered by GetSubstringBoundsUnion.\n\nRemoved / replaced with EnsureLayout()",
+      "parentUuid": "2b2006de_b64ee4c5",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25187b7f_8b6a9777",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "06996c66_662a230c",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4743,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "\u003e nit: maybe checks against the start and end would be clearer?\n\u003e (though I\u0027m not sure if the rounding would make that easy...)\n\u003e EXPECT_EQ(0, selection_bounds.x());\n\u003e EXPECT_LE(half_width, selection_bounds.width()); // (or |half_width - 1|)\n\nThe end is important, since it\u0027s the diacritical mark there that was triggering the DCHECK. Left a comment.",
+      "parentUuid": "25187b7f_8b6a9777",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ac8585b_c39a84c6",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-11T20:02:20Z",
       "side": 1,
       "message": "Given that this uses int math, shouldn\u0027t this just be EXPECT_EQ(0,...)?",
+      "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfd8e0d_5ab4ff38",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4744,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T05:41:25Z",
+      "side": 1,
+      "message": "\u003e Given that this uses int math, shouldn\u0027t this just be EXPECT_EQ(0,...)?\n\nHm - I think that\u0027s safe. Done.\n\nI guess I\u0027m not that trusting of fonts :) E.g. We can\u0027t completely guarantee that a platform\u0027s font uses a ligature at all, so I didn\u0027t want this to be much more specific than \"about half\".\n\nhalf_width will be rounded down when the width is an odd integer (7, say), which is why I went for a leniency of `1`. But with GetSubstringBounds using ceil() for the start, I don\u0027t think we will reach a case where x() here can be less than 3.",
+      "parentUuid": "9ac8585b_c39a84c6",
       "revId": "128742ac2c30eb0e42a05c92cb6b8194ca3fac27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
