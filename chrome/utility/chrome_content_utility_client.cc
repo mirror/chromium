@@ -14,7 +14,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
+#include "base/trace_event/trace_log.h"
 #include "build/build_config.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "chrome/common/file_patcher.mojom.h"
 #include "chrome/common/profiling/constants.mojom.h"
@@ -260,6 +262,14 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
 #endif
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+  if (command_line->HasSwitch(switches::kMashServiceName)) {
+    const std::string service_name =
+        command_line->GetSwitchValueASCII(switches::kMashServiceName);
+    base::trace_event::TraceLog::GetInstance()->SetProcessName(
+        ("Service: " + service_name).c_str());
+  }
+#endif
   if (command_line->HasSwitch(switches::kUtilityProcessRunningElevated))
     utility_process_running_elevated_ = true;
 

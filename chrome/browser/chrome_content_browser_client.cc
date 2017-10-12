@@ -1855,7 +1855,8 @@ void ChromeContentBrowserClient::AdjustUtilityServiceProcessCommandLine(
   if (IsMashServiceName(identity.name())) {
     // This switch is used purely for debugging to make it easier to know what
     // service a process is running.
-    command_line->AppendSwitchASCII("mash-service-name", identity.name());
+    command_line->AppendSwitchASCII(switches::kMashServiceName,
+                                    identity.name());
   }
   bool copy_switches = false;
   if (identity.name() == ui::mojom::kServiceName) {
