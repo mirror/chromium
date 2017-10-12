@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc63a14c_f5264142",
+        "filename": "ui/aura/mus/window_port_mus.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T16:55:37Z",
+      "side": 1,
+      "message": "We would ideally just set the ui:: types, and the enum-trait should take care of doing the right conversion when needed.",
+      "revId": "5ba993906c3ac93b07dae1e33742eb9dd9763cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
