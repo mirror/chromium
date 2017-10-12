@@ -34,6 +34,24 @@
       "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7abdc34c_32be7909",
+        "filename": "chrome/browser/ui/browser_command_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-12T21:05:22Z",
+      "side": 0,
+      "message": "I believe you can get around format whining with the flag --skip-checks?",
+      "parentUuid": "414970e7_c22c2ba8",
+      "revId": "d88ee98c9d204bad13f769e72500ec49d323aa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
