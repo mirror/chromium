@@ -16,6 +16,24 @@
       "revId": "4c1cb7ceed9654d606141c89955bbc1f09387d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f45e61_5d5e0fb8",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-12T17:22:49Z",
+      "side": 1,
+      "message": "Sorry for not explaining it well, I updated the description. I think the reason for the bug is that the bottom overflow indicator shows when scroll view is overflow. So I added a setter for |draw_overflow_indicator_| so that app list could disable this indicator.",
+      "parentUuid": "601fa5fe_8cbc25f7",
+      "revId": "4c1cb7ceed9654d606141c89955bbc1f09387d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
