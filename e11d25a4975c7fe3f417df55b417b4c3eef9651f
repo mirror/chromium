@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2877cb82_6c049e9b",
+        "filename": "chrome/browser/ui/cocoa/chrome_command_dispatcher_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-12T19:20:28Z",
+      "side": 1,
+      "message": "random drive-by typo: received",
+      "range": {
+        "startLine": 19,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "e11d25a4975c7fe3f417df55b417b4c3eef9651f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
