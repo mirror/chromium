@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "548bd29b_4005de62",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T22:02:10Z",
+      "side": 1,
+      "message": "I\u0027m also wondering if it\u0027d make sense to use the service worker interface provider to connect these interfaces up in the future\n\nThough I guess we\u0027d need to plumb things the other way as well, since one of these is a request.",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 331,
+        "endChar": 75
+      },
+      "revId": "dddb44cd7afbdd6f55e5c9d372a6e0e5741c93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
