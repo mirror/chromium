@@ -372,6 +372,30 @@
     },
     {
       "key": {
+        "uuid": "f57a6187_35ff5a31",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T03:36:14Z",
+      "side": 1,
+      "message": "\u003e Umm. I think it\u0027s done a tiny bit in Android? But not really anywhere other than that :/\n\u003e \n\u003e (I searched static_cast\u003cContentSettingsType\u003e and came up with pref_service_bridge.cc and an Android test.)\n\nAhh, I think it\u0027s fine. An option could be\n\nfor(..) {\n if ([view tag] \u003c 0)\n   continue;\n\n ContentSettingsType permissionType \u003d static_cast\u003cContentSettingsType\u003e([view tag]);\n ...\n\n(that keeps the casting closer to info about it coming out of the untyped `tag` field)\n\nbut what you have is ok.",
+      "parentUuid": "d976df98_fdaa8b7f",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1c6429c_be7ef623",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
