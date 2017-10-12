@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e1258f_d5e7490d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-10-12T14:39:42Z",
+      "side": 1,
+      "message": "Should these be else ifs? Otherwise we may bump the count more than once for each result.",
+      "revId": "608f091116fd7ed8c3fd85b91c1bba65184811ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
