@@ -70,6 +70,125 @@
     },
     {
       "key": {
+        "uuid": "306ef1d1_7353299f",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you need all the assert_true() in this function. If anything is null the test will crash and we\u0027ll get a nice backtrace.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168711ef_f41a97c8",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "This method seems to combine setting the state for other tests and testing the internal state transitions of the controller. I think the tests in this file would be clearer if there was an Init method like this that just set the controller state (and didn\u0027t assert anything), and optionally a separate test that checks all the observers/state changes.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a62f1f_1a2d7969",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "nit: ..",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac27553_e8b4652b",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "nit: ..",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe0554a_44959eee",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "nit: Hiding",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a85ff12_539de664",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "nit: Hiding",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b9c2b9_0a8822af",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:54:06Z",
+      "side": 1,
+      "message": "Wow, very thorough tests!",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35a2b129_486175df",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
         "patchSetId": 10
