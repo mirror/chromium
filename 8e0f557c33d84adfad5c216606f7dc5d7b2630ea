@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b0c511bf_4c2ce2c4",
+        "filename": "media/video/jpeg_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-12T09:28:52Z",
+      "side": 1,
+      "message": "Deleted the file and moved the method inline. The implementation of destructor is needed because the destructor in subclass will eventually implicitly call the destructor here. If it\u0027s not implemented, the linker complains.",
+      "parentUuid": "4b0064d2_c3af2289",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c99ce3f8_571bdc3e",
         "filename": "media/video/jpeg_encode_accelerator.h",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2017-10-06T17:58:28Z",
       "side": 1,
       "message": "Seems pretty dicey to do things this way. See suggestion below about returning allocated memory.",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc807f5_6741ca65",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-12T09:28:52Z",
+      "side": 1,
+      "message": "Reply below.",
+      "parentUuid": "c99ce3f8_571bdc3e",
       "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0b1b1fa1_d10ce37a",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-12T09:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8aa366d_65936675",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96eb8a77_f1c54615",
         "filename": "media/video/jpeg_encode_accelerator.h",
         "patchSetId": 1
@@ -82,6 +136,24 @@
       "writtenOn": "2017-10-06T17:58:28Z",
       "side": 1,
       "message": "Why return the id vs a pointer back to the bitstream buffer? Does it make sense to just let VideoFrameReady allocate and return the memory?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385a03d2_7554bc95",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-12T09:28:52Z",
+      "side": 1,
+      "message": "+jcliang@\nIn the camera still capture flow, can we allocate output buffer inside JEA? Or should the buffer come from HAL?",
+      "parentUuid": "96eb8a77_f1c54615",
       "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +188,24 @@
       "writtenOn": "2017-10-06T17:58:28Z",
       "side": 1,
       "message": "Seems a little late by this point? Should this be a static? Should Initialize() just fail instead?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905982aa_7aeff5ad",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-12T09:28:52Z",
+      "side": 1,
+      "message": "It can\u0027t be a static method because it needs to be virtual. And Initialize() can fail for many reasons, so I think it\u0027s more clear to have a separate IsSupported() method.",
+      "parentUuid": "1136024e_3ea5bdee",
       "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
