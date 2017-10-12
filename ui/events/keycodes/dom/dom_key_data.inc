@@ -368,6 +368,9 @@ DOM_KEY_MAP_DECLARATION {
   // Similarly to Launch Assistant, Launch Control Panel is also
   // Chrome-specific.
   DOM_KEY_MAP("LaunchControlPanel",   LAUNCH_CONTROL_PANEL,     0x0B0F),
+  // LaunchAssistantVoiceCommand is currently Chrome-specific, which is
+  // not part of any web standard and is not exposed to web platform.
+  DOM_KEY_MAP("LaunchAssistantVoiceCommand", LAUNCH_ASSISTANT_VOICE_COMMAND, 0x0B10),
 
   // =========================================================
   // Browser Keys
