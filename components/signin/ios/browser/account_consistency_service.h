@@ -25,9 +25,9 @@
 namespace web {
 class BrowserState;
 class WebState;
-class WebStatePolicyDecider;
 }
 
+class AccountConsistencyHandler;
 class AccountReconcilor;
 class SigninClient;
 
@@ -61,15 +61,20 @@ class AccountConsistencyService : public KeyedService,
   static void RegisterPrefs(user_prefs::PrefRegistrySyncable* registry);
 
   // Sets the handler for |web_state| that reacts on Gaia responses with the
-  // X-Chrome-Manage-Accounts header and notifies |delegate|.
-  void SetWebStateHandler(web::WebState* web_state,
-                          id<ManageAccountsDelegate> delegate);
+  // X-Chrome-Manage-Accounts header.
+  void SetWebStateHandler(web::WebState* web_state);
   // Removes the handler associated with |web_state|.
   void RemoveWebStateHandler(web::WebState* web_state);
 
   // Removes CHROME_CONNECTED cookies on all the Google domains where it was
   // set. Calls callback once all cookies were removed.
   void RemoveChromeConnectedCookies(base::OnceClosure callback);
+
+  // Sets the |delegate| that is notified when the user taps on actions on
+  // Google web properties that should invoke native UI.
+  void SetManageAccountsDelegateForWebState(
+      web::WebState* web_state,
+      id<ManageAccountsDelegate> delegate);
 
   // Enqueues a request to add the CHROME_CONNECTED cookie to |domain|. If the
   // cookie is already on |domain|, this function will do nothing unless
@@ -197,7 +202,7 @@ class AccountConsistencyService : public KeyedService,
 
   // Handlers reacting on GAIA responses with the X-Chrome-Manage-Accounts
   // header set.
-  std::map<web::WebState*, std::unique_ptr<web::WebStatePolicyDecider>>
+  std::map<web::WebState*, std::unique_ptr<AccountConsistencyHandler>>
       web_state_handlers_;
 
   DISALLOW_COPY_AND_ASSIGN(AccountConsistencyService);

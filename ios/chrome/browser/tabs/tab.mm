@@ -37,9 +37,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/reading_list/core/reading_list_model.h"
 #include "components/search_engines/template_url_service.h"
-#include "components/signin/core/browser/account_reconcilor.h"
-#include "components/signin/core/browser/signin_metrics.h"
-#import "components/signin/ios/browser/account_consistency_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ios/chrome/browser/application_context.h"
@@ -61,8 +58,6 @@
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #include "ios/chrome/browser/sessions/ios_chrome_session_tab_helper.h"
-#include "ios/chrome/browser/signin/account_consistency_service_factory.h"
-#include "ios/chrome/browser/signin/account_reconcilor_factory.h"
 #include "ios/chrome/browser/signin/signin_capability.h"
 #import "ios/chrome/browser/snapshots/snapshot_manager.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay_provider.h"
@@ -1329,64 +1324,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   return _isPrerenderTab;
 }
 
-#pragma mark - ManageAccountsDelegate
-
-- (void)onManageAccounts {
-  if (_isPrerenderTab) {
-    [delegate_ discardPrerender];
-    return;
-  }
-  if (self != [_parentTabModel currentTab])
-    return;
-
-  signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
-      ios::AccountReconcilorFactory::GetForBrowserState(_browserState)
-          ->GetState());
-  [self.dispatcher showAccountsSettings];
-}
-
-- (void)onAddAccount {
-  if (_isPrerenderTab) {
-    [delegate_ discardPrerender];
-    return;
-  }
-  if (self != [_parentTabModel currentTab])
-    return;
-
-  signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
-      ios::AccountReconcilorFactory::GetForBrowserState(_browserState)
-          ->GetState());
-  [self.dispatcher showAddAccount];
-}
-
-- (void)onGoIncognito:(const GURL&)url {
-  if (_isPrerenderTab) {
-    [delegate_ discardPrerender];
-    return;
-  }
-  if (self != [_parentTabModel currentTab])
-    return;
-
-  // The user taps on go incognito from the mobile U-turn webpage (the web page
-  // that displays all users accounts available in the content area). As the
-  // user chooses to go to incognito, the mobile U-turn page is no longer
-  // neeeded. The current solution is to go back in history. This has the
-  // advantage of keeping the current browsing session and give a good user
-  // experience when the user comes back from incognito.
-  [self goBack];
-
-  if (url.is_valid()) {
-    OpenUrlCommand* command = [[OpenUrlCommand alloc]
-         initWithURL:url
-            referrer:web::Referrer()  // Strip referrer when switching modes.
-         inIncognito:YES
-        inBackground:NO
-            appendTo:kLastTab];
-    [self.dispatcher openURL:command];
-  } else {
-    [self.dispatcher openNewTab:[OpenNewTabCommand command]];
-  }
-}
+#pragma mark - Public methods
 
 - (void)wasShown {
   _visible = YES;

@@ -43,6 +43,8 @@ NSString* const kChromeConnectedCookieTemplate =
      "document.cookie=\"CHROME_CONNECTED=%@; path=/; domain=\" + domain + \";"
      " expires=\" + new Date(%f).toGMTString() + \"; secure;\"</script></html>";
 
+}  // namespace
+
 // WebStatePolicyDecider that monitors the HTTP headers on Gaia responses,
 // reacting on the X-Chrome-Manage-Accounts header and notifying its delegate.
 // It also notifies the AccountConsistencyService of domains it should add the
@@ -51,8 +53,11 @@ class AccountConsistencyHandler : public web::WebStatePolicyDecider {
  public:
   AccountConsistencyHandler(web::WebState* web_state,
                             AccountConsistencyService* service,
-                            AccountReconcilor* account_reconcilor,
-                            id<ManageAccountsDelegate> delegate);
+                            AccountReconcilor* account_reconcilor);
+
+  // Sets the |delegate| that is notified when the user taps on Manage Accounts
+  // actions on Google web properties.
+  void SetManageAccountsDelegate(id<ManageAccountsDelegate> delegate);
 
  private:
   // web::WebStatePolicyDecider override
@@ -64,17 +69,19 @@ class AccountConsistencyHandler : public web::WebStatePolicyDecider {
   AccountReconcilor* account_reconcilor_;                   // Weak.
   __weak id<ManageAccountsDelegate> delegate_;
 };
-}
 
 AccountConsistencyHandler::AccountConsistencyHandler(
     web::WebState* web_state,
     AccountConsistencyService* service,
-    AccountReconcilor* account_reconcilor,
-    id<ManageAccountsDelegate> delegate)
+    AccountReconcilor* account_reconcilor)
     : web::WebStatePolicyDecider(web_state),
       account_consistency_service_(service),
-      account_reconcilor_(account_reconcilor),
-      delegate_(delegate) {}
+      account_reconcilor_(account_reconcilor) {}
+
+void AccountConsistencyHandler::SetManageAccountsDelegate(
+    id<ManageAccountsDelegate> delegate) {
+  delegate_ = delegate;
+}
 
 bool AccountConsistencyHandler::ShouldAllowResponse(NSURLResponse* response,
                                                     bool for_main_frame) {
@@ -251,18 +258,22 @@ void AccountConsistencyService::RegisterPrefs(
       AccountConsistencyService::kDomainsWithCookiePref);
 }
 
-void AccountConsistencyService::SetWebStateHandler(
-    web::WebState* web_state,
-    id<ManageAccountsDelegate> delegate) {
+void AccountConsistencyService::SetWebStateHandler(web::WebState* web_state) {
   DCHECK_EQ(0u, web_state_handlers_.count(web_state));
-  web_state_handlers_[web_state].reset(new AccountConsistencyHandler(
-      web_state, this, account_reconcilor_, delegate));
+  web_state_handlers_[web_state].reset(
+      new AccountConsistencyHandler(web_state, this, account_reconcilor_));
 }
 
 void AccountConsistencyService::RemoveWebStateHandler(
     web::WebState* web_state) {
   DCHECK_LT(0u, web_state_handlers_.count(web_state));
   web_state_handlers_.erase(web_state);
+}
+
+void AccountConsistencyService::SetManageAccountsDelegateForWebState(
+    web::WebState* web_state,
+    id<ManageAccountsDelegate> delegate) {
+  web_state_handlers_[web_state]->SetManageAccountsDelegate(delegate);
 }
 
 bool AccountConsistencyService::ShouldAddChromeConnectedCookieToDomain(
