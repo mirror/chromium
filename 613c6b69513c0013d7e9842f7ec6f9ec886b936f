@@ -52,6 +52,24 @@
       "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa73fb8_04b07098",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-12T05:16:57Z",
+      "side": 1,
+      "message": "Sorry I was wrong, we can synchronously DecrementLoadDelayCount here, as onload events from DecrementLDC is dispatched async. (so this code change is good)",
+      "parentUuid": "9953b620_619afaa5",
+      "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
