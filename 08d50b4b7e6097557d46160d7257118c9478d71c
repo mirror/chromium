@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "65c54fce_6494cd1b",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-12T13:05:13Z",
+      "side": 1,
+      "message": "Another solution is to instantiate an NCN instance in the NCT just for the purposes of determining the initial connection type.  You could add a \"bool tracking\" to the NCN constructor to make it more lightweight when tracking isn\u0027t necessary (i.e. when used only for the purposes of determining the initial connection type).",
+      "parentUuid": "3fc6c6f0_005d99e4",
+      "revId": "08d50b4b7e6097557d46160d7257118c9478d71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce32e905_a9d2d726",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 20
