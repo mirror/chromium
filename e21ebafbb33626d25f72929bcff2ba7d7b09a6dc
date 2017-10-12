@@ -396,6 +396,30 @@
     },
     {
       "key": {
+        "uuid": "5398d0e9_fa6c236f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-12T07:20:26Z",
+      "side": 1,
+      "message": "Done, thanks Trent!",
+      "parentUuid": "f57a6187_35ff5a31",
+      "range": {
+        "startLine": 1344,
+        "startChar": 28,
+        "endLine": 1344,
+        "endChar": 63
+      },
+      "revId": "e21ebafbb33626d25f72929bcff2ba7d7b09a6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c6429c_be7ef623",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 3
