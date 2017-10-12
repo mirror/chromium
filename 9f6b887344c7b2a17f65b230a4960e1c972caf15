@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdc3b347_9e60294a",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T15:11:52Z",
+      "side": 1,
+      "message": "nit: let\u0027s make this \"event later\" more explicit.\n\n  // Caps lock hint starts invisible. This constructor will call \n  // OnCapsLockChanged with the actual caps lock state.",
+      "revId": "9f6b887344c7b2a17f65b230a4960e1c972caf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
