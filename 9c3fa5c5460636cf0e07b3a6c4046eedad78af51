@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32964965_a129c603",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "We have several copies of this utility function. Just stick it in ash::switches and use that version everywhere.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6556d621_ee25211e",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "Can you use a views::WidgetObserver or an aura::Window observer instead of this callback?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ce5c90_13fcca76",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: Document who owns the widget.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a573f007_18c318e6",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_test_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "This is fine.\n\noptional: I\u0027m also OK with implementing these like:\n\nviews::Widget* widget() { return controller_-\u003ewidget_; }\n\ndirectly in the header. It reduces boilerplate code. The test getter methods generally don\u0027t need documentation either -- if the member variables have important behavior they should be documented in the class under test.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a2b129_486175df",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "Can observer be null? If so, document. If not, DCHECK it.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7825610a_e009a385",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "Q: Why is this flipped for RTL? Is the icon in the other corner in RTL?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f38620e_0a529e69",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: document \"1\" or put in a named local const variable",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a593372e_b440fd6d",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with ink drop -- is the state !\u003d animating_to_state_ check required because show/hide animations could be triggered before the previous animation is complete?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565ca7d0_b2814c16",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "Why are we allowing resize and maximize? The user can\u0027t change this window, right?\n Is this for display rotation or something?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e5d2dd_bf023db0",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976d4cde_49828ee4",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: |done_callback| or just |done|.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5dd7d7_59cf4916",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fda671_7a5dc86d",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: \"as a View*\". I think the reason this method exists is because the test api doesn\u0027t know how to cast a NoteBackground to a view.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1aa5f3_56c4df81",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: either move up after friends at 49, or down near usage at 61",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fdc1e1_6185975c",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "Thanks for using OnceClosure!",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b984fade_84d56035",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view_test_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:29:13Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
