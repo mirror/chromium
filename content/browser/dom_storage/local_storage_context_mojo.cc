@@ -29,6 +29,21 @@
 #include "storage/browser/quota/special_storage_policy.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/leveldb_chrome.h"
+// third_party/webrtc/base/thread_checker.h leaks the define
+// EXCLUSIVE_LOCKS_REQUIRED and more which collide with the same define in
+// third_party/leveldatabase/src/port/thread_annotations.
+#undef EXCLUSIVE_LOCKS_REQUIRED
+#undef SHARED_LOCKS_REQUIRED
+#undef LOCKS_EXCLUDED
+#undef LOCK_RETURNED
+#undef LOCKABLE
+#undef SCOPED_LOCKABLE
+#undef EXCLUSIVE_LOCK_FUNCTION
+#undef SHARED_LOCK_FUNCTION
+#undef EXCLUSIVE_TRYLOCK_FUNCTION
+#undef SHARED_TRYLOCK_FUNCTION
+#undef UNLOCK_FUNCTION
+#undef NO_THREAD_SAFETY_ANALYSIS
 
 namespace content {
 
