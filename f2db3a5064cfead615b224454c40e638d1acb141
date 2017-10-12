@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7351e33e_0254d19e",
+        "filename": "chrome/browser/resources/settings/site_settings/local_data_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T19:19:38Z",
+      "side": 1,
+      "message": "Well, it turns out those parameters where not used as optional, I just misread the code that was using them (see my other comment for explanation).\n\nFeel free to revert this. Either way, I think we should mention the semantics of -1 here.",
+      "revId": "f2db3a5064cfead615b224454c40e638d1acb141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb06f229_45022789",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T19:19:38Z",
+      "side": 1,
+      "message": "siteItem, siteSecondary are also duplicated IDs that should be converted to CSS classes.",
+      "revId": "f2db3a5064cfead615b224454c40e638d1acb141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e2c27_141b437a",
+        "filename": "chrome/test/data/webui/settings/site_data_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T19:19:38Z",
+      "side": 1,
+      "message": "Is this clang-formatting? The indentation seems way off from what I would expect. It also seems much different than similar case at line 26 which is indented +4 compared to line 25.",
+      "revId": "f2db3a5064cfead615b224454c40e638d1acb141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "59fcf19b_3bf66e34",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T19:19:38Z",
+      "side": 1,
+      "message": "Ah you are right. I totally misread this, for two reasons\n\n1) poor color highlighting in Gerrit. See https://imgur.com/a/Yhjgz where the comments and the parameters are all highlighted green.\n2) lack of space character  between the comment and the argument.\n\nCould you change this to \"/* start */ 0\" and \"/* count */ -1\". This would definitely help me visually parse it better.",
+      "parentUuid": "29a21814_a56eb565",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011a9151_3186d7e1",
         "filename": "chrome/test/data/webui/settings/site_data_test.js",
         "patchSetId": 3
@@ -291,6 +309,23 @@
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35e68a12_405652e3",
+        "filename": "chrome/test/data/webui/settings/test_local_data_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T19:19:38Z",
+      "side": 1,
+      "message": "Syntax error?",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
