@@ -161,6 +161,10 @@ Core::~Core() {
                              base::Bind(&Core::PassNodeControllerToIOThread,
                                         base::Passed(&node_controller_)));
   }
+  UnregisterMemoryDumpProvider();
+}
+
+void Core::UnregisterMemoryDumpProvider() {
   base::trace_event::MemoryDumpManager::GetInstance()
       ->UnregisterAndDeleteDumpProviderSoon(std::move(handles_));
 }
