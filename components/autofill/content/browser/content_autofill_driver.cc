@@ -111,16 +111,16 @@ void ContentAutofillDriver::PropagateAutofillPredictions(
 
 void ContentAutofillDriver::SendAutofillTypePredictionsToRenderer(
     const std::vector<FormStructure*>& forms) {
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kShowAutofillTypePredictions))
-    return;
-
   if (!RendererIsAvailable())
     return;
 
   std::vector<FormDataPredictions> type_predictions =
       FormStructure::GetFieldTypePredictions(forms);
-  GetAutofillAgent()->FieldTypePredictionsAvailable(type_predictions);
+  bool attach_predictions_to_dom =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kShowAutofillTypePredictions);
+  GetAutofillAgent()->FieldTypePredictionsAvailable(type_predictions,
+                                                    attach_predictions_to_dom);
 }
 
 void ContentAutofillDriver::RendererShouldAcceptDataListSuggestion(

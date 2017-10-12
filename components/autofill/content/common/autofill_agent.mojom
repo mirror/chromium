@@ -19,7 +19,10 @@ interface AutofillAgent {
   PreviewForm(int32 id, FormData form);
 
   // Sends the heuristic and server field type predictions to the renderer.
-  FieldTypePredictionsAvailable(array<FormDataPredictions> forms);
+  // |attach_predictions_to_dom| indicates the the predictions should be
+  // attached to the fields in the DOM as part of the "title" attribute, so that
+  // they are easily visible for debugging purposes.
+  FieldTypePredictionsAvailable(array<FormDataPredictions> forms, bool attach_predictions_to_dom);
 
   // Clears the currently displayed Autofill results.
   ClearForm();

@@ -70,7 +70,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   void FillForm(int32_t id, const FormData& form) override;
   void PreviewForm(int32_t id, const FormData& form) override;
   void FieldTypePredictionsAvailable(
-      const std::vector<FormDataPredictions>& forms) override;
+      const std::vector<FormDataPredictions>& forms,
+      bool attach_predictions_to_dom) override;
   void ClearForm() override;
   void ClearPreviewedForm() override;
   void FillFieldWithValue(const base::string16& value) override;
