@@ -217,6 +217,7 @@ class BubbleHeaderView : public views::View {
   // The label that displays the status of the identity check for this site.
   // Includes a link to open the Chrome Help Center article about connection
   // security.
+  views::View* security_details_label_container_;
   views::StyledLabel* security_details_label_;
 
   // A container for the styled label with a link for resetting cert decisions.
@@ -268,6 +269,7 @@ BubbleHeaderView::BubbleHeaderView(
     int side_margin)
     : button_listener_(button_listener),
       styled_label_listener_(styled_label_listener),
+      security_details_label_container_(nullptr),
       security_details_label_(nullptr),
       reset_decisions_label_container_(nullptr),
       reset_cert_decisions_label_(nullptr),
@@ -281,12 +283,15 @@ BubbleHeaderView::BubbleHeaderView(
 
   layout->StartRowWithPadding(0, label_column_status, 0,
                               kHeaderTitleBottomPadding);
+  security_details_label_container_ = new views::View();
+  security_details_label_container_->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kHorizontal));
+  layout->AddView(security_details_label_container_, 1, 1,
+                  views::GridLayout::FILL, views::GridLayout::LEADING);
   security_details_label_ =
       new views::StyledLabel(base::string16(), styled_label_listener);
   security_details_label_->set_id(
       PageInfoBubbleView::VIEW_ID_PAGE_INFO_LABEL_SECURITY_DETAILS);
-  layout->AddView(security_details_label_, 1, 1, views::GridLayout::FILL,
-                  views::GridLayout::LEADING);
 
   layout->StartRow(0, label_column_status);
   reset_decisions_label_container_ = new views::View();
@@ -327,6 +332,9 @@ void BubbleHeaderView::SetDetails(const base::string16& details_text) {
   link_style.disable_line_wrapping = false;
 
   security_details_label_->AddStyleRange(details_range, link_style);
+  security_details_label_->SizeToFit(0);
+  security_details_label_container_->AddChildView(security_details_label_);
+  InvalidateLayout();
 }
 
 void BubbleHeaderView::AddResetDecisionsLabel() {
@@ -358,8 +366,6 @@ void BubbleHeaderView::AddResetDecisionsLabel() {
   // Now that it contains a label, the container needs padding at the top.
   reset_decisions_label_container_->SetBorder(
       views::CreateEmptyBorder(8, 0, 0, 0));
-
-  InvalidateLayout();
 }
 
 void BubbleHeaderView::AddPasswordReuseButtons() {
