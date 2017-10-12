@@ -20,8 +20,6 @@
 
 namespace blink {
 
-class NGExclusionSpace;
-
 class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   DISALLOW_NEW();
 
@@ -42,15 +40,16 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   using WeakBoxList = PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>;
 
-  NGFragmentBuilder& SetSize(const NGLogicalSize&);
   NGFragmentBuilder& SetBlockSize(LayoutUnit);
-  NGLogicalSize Size() const { return size_; }
+  NGLogicalSize Size() const final { return {inline_size_, block_size_}; }
 
   NGFragmentBuilder& SetIntrinsicBlockSize(LayoutUnit);
 
-  NGFragmentBuilder& AddChild(RefPtr<NGLayoutResult>, const NGLogicalOffset&);
-  NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
-                              const NGLogicalOffset&);
+  // We have a special version of AddChild to .... TODO FIXME
+  NGBaseFragmentBuilder& AddChild(RefPtr<NGLayoutResult>,
+                                  const NGLogicalOffset&) final;
+  NGBaseFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
+                                  const NGLogicalOffset&) final;
 
   // Add a break token for a child that doesn't yet have any fragments, because
   // its first fragment is to be produced in the next fragmentainer. This will
@@ -60,8 +59,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   // Update if we have fragmented in this flow.
   NGFragmentBuilder& PropagateBreak(RefPtr<NGLayoutResult>);
   NGFragmentBuilder& PropagateBreak(RefPtr<NGPhysicalFragment>);
-
-  NGFragmentBuilder& SetBfcOffset(const NGBfcOffset& offset);
 
   // Builder has non-trivial out-of-flow descendant methods.
   // These methods are building blocks for implementation of
@@ -96,8 +93,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
 
-  NGFragmentBuilder& AddOutOfFlowDescendant(NGOutOfFlowPositionedDescendant);
-
   // Set how much of the block size we've used so far for this box.
   NGFragmentBuilder& SetUsedBlockSize(LayoutUnit used_block_size) {
     used_block_size_ = used_block_size;
@@ -112,11 +107,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
     return *this;
   }
 
-  NGFragmentBuilder& SetEndMarginStrut(const NGMarginStrut& from) {
-    end_margin_strut_ = from;
-    return *this;
-  }
-
   // Offsets are not supposed to be set during fragment construction, so we
   // do not provide a setter here.
 
@@ -128,21 +118,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   // A vector of child offsets. Initially set by AddChild().
   const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
-
-  NGFragmentBuilder& SwapUnpositionedFloats(
-      Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats) {
-    unpositioned_floats_.swap(*unpositioned_floats);
-    return *this;
-  }
-
-  NGFragmentBuilder& SetExclusionSpace(
-      std::unique_ptr<const NGExclusionSpace> exclusion_space);
-
-  const WTF::Optional<NGBfcOffset>& BfcOffset() const { return bfc_offset_; }
-
-  const Vector<RefPtr<NGPhysicalFragment>>& Children() const {
-    return children_;
-  }
 
   bool DidBreak() const { return did_break_; }
 
@@ -162,52 +137,18 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   void AddBaseline(NGBaselineRequest, LayoutUnit);
 
  private:
-  // An out-of-flow positioned-candidate is a temporary data structure used
-  // within the NGFragmentBuilder.
-  //
-  // A positioned-candidate can be:
-  // 1. A direct out-of-flow positioned child. The child_offset is (0,0).
-  // 2. A fragment containing an out-of-flow positioned-descendant. The
-  //    child_offset in this case is the containing fragment's offset.
-  //
-  // The child_offset is stored as a NGLogicalOffset as the physical offset
-  // cannot be computed until we know the current fragment's size.
-  //
-  // When returning the positioned-candidates (from
-  // GetAndClearOutOfFlowDescendantCandidates), the NGFragmentBuilder will
-  // convert the positioned-candidate to a positioned-descendant using the
-  // physical size the fragment builder.
-  struct NGOutOfFlowPositionedCandidate {
-    NGOutOfFlowPositionedDescendant descendant;
-    NGLogicalOffset child_offset;
-  };
 
   NGLayoutInputNode node_;
   LayoutObject* layout_object_;
 
-  NGLogicalSize size_;
+  LayoutUnit block_size_;
   LayoutUnit intrinsic_block_size_;
-
-  Vector<RefPtr<NGPhysicalFragment>> children_;
-  Vector<NGLogicalOffset> offsets_;
 
   bool did_break_;
   LayoutUnit used_block_size_;
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens_;
   RefPtr<NGBreakToken> last_inline_break_token_;
-
-  Vector<NGOutOfFlowPositionedCandidate> oof_positioned_candidates_;
-  Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
-
-  std::unique_ptr<const NGExclusionSpace> exclusion_space_;
-
-  // Floats that need to be positioned by the next in-flow fragment that can
-  // determine its block position in space.
-  Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
-
-  WTF::Optional<NGBfcOffset> bfc_offset_;
-  NGMarginStrut end_margin_strut_;
 
   Vector<NGBaseline> baselines_;
 

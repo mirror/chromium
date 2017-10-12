@@ -34,6 +34,8 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
                LayoutUnit inline_size,
                LayoutUnit line_height);
 
+  NGLogicalSize Size() const final { return size_; }
+
   // Creates the fragment. Can only be called once.
   RefPtr<NGPhysicalTextFragment> ToTextFragment(unsigned index,
                                                 unsigned start_offset,
