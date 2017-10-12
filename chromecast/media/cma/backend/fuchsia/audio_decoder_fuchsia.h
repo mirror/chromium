@@ -16,7 +16,7 @@ class AudioDecoderFuchsia : public MediaPipelineBackend::AudioDecoder {
   AudioDecoderFuchsia();
   ~AudioDecoderFuchsia();
 
-  void Initialize();
+  bool Initialize();
   bool Start(int64_t start_pts);
   void Stop();
   bool Pause();
