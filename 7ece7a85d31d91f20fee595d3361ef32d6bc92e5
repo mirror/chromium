@@ -195,6 +195,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d285a3f_63cfda31",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-12T19:09:14Z",
+      "side": 1,
+      "message": "I see! This is much better! Thank you!",
+      "parentUuid": "c87f2d6c_3398aa07",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
