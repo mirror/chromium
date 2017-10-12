@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d664020_d2ce5dca",
+        "filename": "ui/android/java/src/org/chromium/ui/resources/dynamics/ViewResourceAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T17:52:05Z",
+      "side": 1,
+      "message": "I think we use null pretty often to force a full redraw, and I don\u0027t think we want to drop the bitmap in that case.\n\nI think we\u0027ll want a separate method that gives the signal to drop any cached resources instead of relying on invalidate.",
+      "revId": "501e9d572a4d140ccf8f19e9f1fa84641d2e99d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
