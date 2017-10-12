@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67150ee1_a8ec4182",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-12T17:52:53Z",
+      "side": 1,
+      "message": "added\n\nif seems we should also add this to destructor, no?\n arc_bridge_service_-\u003evoice_interaction_arc_home()-\u003eRemoveObserver(this);",
+      "parentUuid": "7ed76452_f25efa2d",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 46
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b6bde5_1d79d100",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edb405f2_b4eb0f1a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-12T17:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b6bde5_1d79d100",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3192a778_64d9ba52",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9bd556_5ed8dd51",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-12T17:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3192a778_64d9ba52",
+      "range": {
+        "startLine": 181,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 41
+      },
+      "revId": "ec49ec9cfa2c77f3a8b7a2d32645ddd7de122c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
