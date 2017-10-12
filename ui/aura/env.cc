@@ -17,7 +17,6 @@
 #include "ui/aura/mus/os_exchange_data_provider_mus.h"
 #include "ui/aura/mus/system_input_injector_mus.h"
 #include "ui/aura/mus/window_port_mus.h"
-#include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_port_for_shutdown.h"
 #include "ui/events/event_target_iterator.h"

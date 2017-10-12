@@ -71,6 +71,12 @@ void GpuClient::OnCreateGpuMemoryBuffer(
   callback.Run(handle);
 }
 
+void GpuClient::RequestCompleteGpuInfo(
+    const RequestCompleteGpuInfoCallback& callback) {
+  // Non-MUS code uses a different path to request complete gpu info.
+  NOTREACHED();
+}
+
 void GpuClient::EstablishGpuChannel(
     const EstablishGpuChannelCallback& callback) {
   GpuProcessHost* host = GpuProcessHost::Get();

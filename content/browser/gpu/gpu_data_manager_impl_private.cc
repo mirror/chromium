@@ -45,6 +45,7 @@
 #include "gpu/ipc/host/shader_disk_cache.h"
 #include "gpu/ipc/service/switches.h"
 #include "media/media_features.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_features.h"
@@ -52,15 +53,21 @@
 #include "ui/gl/gl_switches.h"
 #include "ui/gl/gpu_switching_manager.h"
 
+#if defined(USE_AURA)
+#include "ui/aura/env.h"
+#endif
+
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_switches.h"
 #endif
+
 #if defined(OS_MACOSX)
 #include <ApplicationServices/ApplicationServices.h>
-#endif  // OS_MACOSX
+#endif
+
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
-#endif  // OS_WIN
+#endif
 
 namespace content {
 
@@ -452,6 +459,14 @@ void GpuDataManagerImplPrivate::RequestCompleteGpuInfoIfNeeded() {
   }
 
   complete_gpu_info_already_requested_ = true;
+
+#if defined(USE_AURA)
+  if (aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS) {
+    ui::Gpu* gpu = aura::Env::GetInstance()->gpu();
+    gpu->RequestCompleteGpuInfo(base::BindOnce(&UpdateGpuInfoOnIO));
+    return;
+  }
+#endif
 
   GpuProcessHost::CallOnIO(
 #if defined(OS_WIN)
