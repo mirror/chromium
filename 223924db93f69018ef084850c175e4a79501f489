@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f34aaa9c_082ff88d",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T19:34:16Z",
+      "side": 1,
+      "message": "nit: }  // namespace",
+      "revId": "223924db93f69018ef084850c175e4a79501f489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2442a307_df5a9601",
+        "filename": "chrome/browser/chromeos/policy/off_hours/time_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T19:34:16Z",
+      "side": 1,
+      "message": "nit: ditto, }  // namespace",
+      "revId": "223924db93f69018ef084850c175e4a79501f489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
