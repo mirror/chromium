@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "d1829d38_654be906",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f521a8_b82b0f1e",
+      "range": {
+        "startLine": 1617,
+        "startChar": 150,
+        "endLine": 1617,
+        "endChar": 154
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b104658_8441d57a",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29cfdb59_09332434",
+      "range": {
+        "startLine": 1617,
+        "startChar": 93,
+        "endLine": 1617,
+        "endChar": 94
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6638848_261a33ec",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "988590d75e925dc31616d089d15cbbb04226f708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3b8d9e_bd95db3e",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6638848_261a33ec",
+      "range": {
+        "startLine": 1623,
+        "startChar": 102,
+        "endLine": 1623,
+        "endChar": 104
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8115d1d0_40e1b656",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1626,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09955893_aae5287f",
+      "range": {
+        "startLine": 1626,
+        "startChar": 52,
+        "endLine": 1626,
+        "endChar": 101
+      },
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c50a1028_a3c69575",
         "filename": "extensions/common/api/networking_onc.idl",
         "patchSetId": 5
@@ -105,6 +201,24 @@
       "writtenOn": "2017-10-12T22:29:13Z",
       "side": 1,
       "message": "None is missing - stripping it would be a breaking change to the API (considering None is currently a valid value here).\n\nI assume this is due to conflict with auto-generated SOURCE_TYPE_NONE enum in extensions/common/api/networking_private.h :/\n\nI\u0027d rather keep this a DOMString for now, and maybe change the code generated values for unset enum vars (maybe something like SOURCE_TYPE_NULL/SOURCE_TYPE_UNDEFINED).",
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4f2649_81f272f7",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Yeah... I\u0027ve been back and forth in the past and decided it was worth it this time, but you\u0027re reminding me of all the reasons we didn\u0027t do this before. I\u0027ll add a comment this time.\n\nFixing extensions turns out to be a fair bit of work IIRC.\n\nAlso, this is causing test failures.",
+      "parentUuid": "c50a1028_a3c69575",
       "revId": "988590d75e925dc31616d089d15cbbb04226f708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -125,6 +239,24 @@
       "revId": "988590d75e925dc31616d089d15cbbb04226f708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5843e3_18d8a0ea",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-12T23:41:03Z",
+      "side": 1,
+      "message": "Done (and slightly modified the logic, it wasn\u0027t quite right).",
+      "parentUuid": "aff77f60_00017bd6",
+      "revId": "988590d75e925dc31616d089d15cbbb04226f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
