@@ -94,6 +94,30 @@
       "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8c8b8f6_35ecb529",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-12T18:09:22Z",
+      "side": 1,
+      "message": "I guess it\u0027s because of the constexpr. You can either ignore this comment, or use the fully qualified name which is too long, or wrap it inside a function. Up to you.",
+      "parentUuid": "23d8a3e2_53ae4ca6",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "1d94e435581294593c8bccee369ec7e81c7a11da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
