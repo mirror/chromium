@@ -22,6 +22,30 @@
       "revId": "0098ac7277895a8c24fde1b5bee4a423a86ffccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df25952f_893607a3",
+        "filename": "components/cronet/tools/generate_javadoc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-12T16:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a2cdd1_12189282",
+      "range": {
+        "startLine": 62,
+        "startChar": 33,
+        "endLine": 62,
+        "endChar": 37
+      },
+      "revId": "0098ac7277895a8c24fde1b5bee4a423a86ffccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
