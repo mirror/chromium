@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
@@ -74,6 +75,7 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
 
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
+  DeviceOffHoursController(base::Clock* clock, base::TickClock* timer_clock);
   ~DeviceOffHoursController() override;
 
   void AddObserver(Observer* observer);
@@ -142,7 +144,10 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
 
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
-  base::OneShotTimer timer_;
+  std::unique_ptr<base::OneShotTimer> timer_;
+
+  // TODO(yakovleva): description
+  std::unique_ptr<base::Clock> clock_;
 
   // Value is false until the system time is synchronized with network time.
   bool network_synchronized_ = false;
@@ -150,7 +155,7 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
   // Current "OffHours" time intervals.
   std::vector<off_hours::OffHoursInterval> off_hours_intervals_;
 
-  base::WeakPtrFactory<DeviceOffHoursController> weak_ptr_factory_;
+  base::WeakPtrFactory<DeviceOffHoursController> weak_ptr_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(DeviceOffHoursController);
 };

@@ -6,11 +6,13 @@
 
 #include <algorithm>
 #include <string>
+#include <tuple>
 #include <utility>
 
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
+#include "base/time/default_clock.h"
+#include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/policy/device_policy_remover.h"
 #include "chrome/browser/chromeos/policy/off_hours/weekly_time.h"
@@ -33,7 +35,9 @@ constexpr base::TimeDelta kWeek = base::TimeDelta::FromDays(7);
 // Put time in milliseconds which is added to local time to get GMT time to
 // |offset| considering current daylight time. Return true if there was no
 // error.
-bool GetOffsetFromTimezoneToGmt(const std::string& timezone, int* offset) {
+bool GetOffsetFromTimezoneToGmt(const std::string& timezone,
+                                base::Clock* clock,
+                                int* offset) {
   auto zone = base::WrapUnique(
       icu::TimeZone::createTimeZone(icu::UnicodeString::fromUTF8(timezone)));
   if (*zone == icu::TimeZone::getUnknown()) {
@@ -50,6 +54,13 @@ bool GetOffsetFromTimezoneToGmt(const std::string& timezone, int* offset) {
       base::MakeUnique<icu::GregorianCalendar>(*zone, status);
   if (U_FAILURE(status)) {
     LOG(ERROR) << "Gregorian calendar error = " << u_errorName(status);
+    return false;
+  }
+  UDate cur_date = static_cast<UDate>(clock->Now().ToDoubleT() * 1000);
+  status = U_ZERO_ERROR;
+  gregorian_calendar->setTime(cur_date, status);
+  if (U_FAILURE(status)) {
+    LOG(ERROR) << "Gregorian calendar set time error = " << u_errorName(status);
     return false;
   }
   status = U_ZERO_ERROR;
@@ -126,9 +137,11 @@ base::Optional<std::string> GetTimezone(
 // Convert time intervals from |timezone| to GMT timezone.
 std::vector<off_hours::OffHoursInterval> ConvertIntervalsToGmt(
     const std::vector<off_hours::OffHoursInterval>& intervals,
+    base::Clock* clock,
     const std::string& timezone) {
   int gmt_offset = 0;
-  bool no_offset_error = GetOffsetFromTimezoneToGmt(timezone, &gmt_offset);
+  bool no_offset_error =
+      GetOffsetFromTimezoneToGmt(timezone, clock, &gmt_offset);
   if (!no_offset_error)
     return {};
   std::vector<off_hours::OffHoursInterval> gmt_intervals;
@@ -192,7 +205,7 @@ std::unique_ptr<em::ChromeDeviceSettingsProto> ApplyOffHoursPolicyToProto(
   return policies;
 }
 
-DeviceOffHoursController::DeviceOffHoursController() : weak_ptr_factory_(this) {
+DeviceOffHoursController::DeviceOffHoursController() {
   // IsInitialized() check is used for testing. Otherwise it has to be already
   // initialized.
   if (chromeos::DBusThreadManager::IsInitialized()) {
@@ -206,6 +219,19 @@ DeviceOffHoursController::DeviceOffHoursController() : weak_ptr_factory_(this) {
             base::Bind(&DeviceOffHoursController::SystemClockInitiallyAvailable,
                        weak_ptr_factory_.GetWeakPtr()));
   }
+  clock_.reset(new base::DefaultClock());
+  timer_.reset(new base::OneShotTimer());
+}
+
+DeviceOffHoursController::DeviceOffHoursController(
+    base::Clock* clock,
+    base::TickClock* timer_clock) {
+  if (chromeos::DBusThreadManager::IsInitialized()) {
+    chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
+        this);
+  }
+  clock_.reset(clock);
+  timer_.reset(new base::OneShotTimer(timer_clock));
 }
 
 DeviceOffHoursController::~DeviceOffHoursController() {
@@ -235,8 +261,8 @@ void DeviceOffHoursController::UpdateOffHoursPolicy(
         device_settings_proto.device_off_hours());
     base::Optional<std::string> timezone = GetTimezone(container);
     if (timezone) {
-      off_hours_intervals =
-          ConvertIntervalsToGmt(GetIntervals(container), *timezone);
+      off_hours_intervals = ConvertIntervalsToGmt(GetIntervals(container),
+                                                  clock_.get(), *timezone);
     }
   }
   off_hours_intervals_.swap(off_hours_intervals);
@@ -272,7 +298,7 @@ void DeviceOffHoursController::UpdateOffHoursMode() {
     return;
   }
   off_hours::WeeklyTime current_time =
-      off_hours::WeeklyTime::GetCurrentWeeklyTime();
+      off_hours::WeeklyTime::GetCurrentWeeklyTime(clock_.get());
   for (const auto& interval : off_hours_intervals_) {
     if (interval.Contains(current_time)) {
       base::TimeDelta remaining_off_hours_duration =
@@ -309,13 +335,13 @@ void DeviceOffHoursController::SetOffHoursMode(bool off_hours_enabled) {
 void DeviceOffHoursController::StartOffHoursTimer(base::TimeDelta delay) {
   DCHECK_GT(delay, base::TimeDelta());
   DVLOG(1) << "OffHours mode timer starts for " << delay;
-  timer_.Start(FROM_HERE, delay,
-               base::Bind(&DeviceOffHoursController::UpdateOffHoursMode,
-                          weak_ptr_factory_.GetWeakPtr()));
+  timer_->Start(FROM_HERE, delay,
+                base::Bind(&DeviceOffHoursController::UpdateOffHoursMode,
+                           weak_ptr_factory_.GetWeakPtr()));
 }
 
 void DeviceOffHoursController::StopOffHoursTimer() {
-  timer_.Stop();
+  timer_->Stop();
 }
 
 void DeviceOffHoursController::SystemClockUpdated() {
