@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb33f17_e6f20735",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T22:28:18Z",
+      "side": 1,
+      "message": "Nit: std::move() please.",
+      "range": {
+        "startLine": 61,
+        "startChar": 43,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "25b2469ad65d8ab4bd5e71dd7f7408c101cd4b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cb2a10_41b50f74",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T22:28:18Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure why this needs its own sequence?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 68
+      },
+      "revId": "25b2469ad65d8ab4bd5e71dd7f7408c101cd4b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
