@@ -109,3 +109,57 @@
   margin-top: 2px;
   width: 249px;
 }
+
+#intellicast-option-controls {
+  display: table-row;
+  width: 100%;
+}
+
+#intellicast-option-label {
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 20px;
+  vertical-align: middle;
+  width: 20%;
+}
+
+#intellicast-option-slider-holder {
+  display: table-cell;
+  width: 80%;
+}
+
+#intellicast-option-slider-holder > div {
+  display: inline-block;
+  margin-bottom: -9px;
+  width: 100%;
+}
+
+#intellicast-option-slider-holder > div > span {
+  color: rgb(125, 125, 125);
+  font-size: 0.8em;
+}
+
+#intellicast-option-slider-holder > div > span:nth-child(1) {
+  float: left;
+  text-align: left;
+  width: 33%;
+}
+
+#intellicast-option-slider-holder > div > span:nth-child(2) {
+  float: left;
+  text-align: center;
+  width: 33%;
+}
+
+#intellicast-option-slider-holder > div > span:nth-child(3) {
+  float: left;
+  text-align: right;
+  width: 34%;
+}
+
+#intellicast-option-slider {
+  --paper-slider-knob-color: rgb(16, 16, 16);
+  --paper-slider-active-color: rgb(33, 150, 243);
+  --paper-slider-pin-color: rgb(16, 16, 16);
+  width: 100%
+}
