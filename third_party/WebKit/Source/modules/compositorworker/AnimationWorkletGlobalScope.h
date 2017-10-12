@@ -11,6 +11,7 @@
 #include "modules/compositorworker/Animator.h"
 #include "modules/compositorworker/AnimatorDefinition.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/graphics/CompositorAnimatorsState.h"
 
 namespace blink {
 
@@ -44,9 +45,9 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   bool IsAnimationWorkletGlobalScope() const final { return true; }
 
   Animator* CreateInstance(const String& name);
-
   // Invokes the |animate| function of all of its active animators.
-  void Mutate();
+  std::unique_ptr<CompositorMutatorOutputState> Mutate(
+      const CompositorMutatorInputState&);
 
   // Registers a animator definition with the given name and constructor.
   void registerAnimator(const String& name,
@@ -54,6 +55,7 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
                         ExceptionState&);
 
   AnimatorDefinition* FindDefinitionForTest(const String& name);
+  unsigned GetAnimatorsSizeForTest() { return animators_.size(); }
 
  private:
   AnimationWorkletGlobalScope(const KURL&,
@@ -63,12 +65,13 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
                               WorkerThread*,
                               WorkerClients*);
 
+  Animator* GetAnimatorFor(int player_id, const String& name);
   typedef HeapHashMap<String, TraceWrapperMember<AnimatorDefinition>>
       DefinitionMap;
   DefinitionMap animator_definitions_;
 
-  typedef HeapVector<TraceWrapperMember<Animator>> AnimatorList;
-  AnimatorList animators_;
+  typedef HeapHashMap<int, TraceWrapperMember<Animator>> AnimatorMap;
+  AnimatorMap animators_;
 };
 
 }  // namespace blink
