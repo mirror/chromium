@@ -981,6 +981,9 @@ public class Tab
      *                                       changed.
      */
     void updateThemeColorIfNeeded(boolean didWebContentsThemeColorChange) {
+        // Check the current color; the tab may have loaded with an invalid color.
+        if (!ColorUtils.isValidThemeColor(mThemeColor)) mThemeColor = getDefaultThemeColor();
+
         int themeColor = calculateThemeColor(didWebContentsThemeColorChange);
         if (themeColor == mThemeColor) return;
         mThemeColor = themeColor;
