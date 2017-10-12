@@ -159,6 +159,13 @@ declare_args() {
 }
 
 declare_args() {
+  # Unsafe developer build. Has developer-friendly features that compromise
+  # security measures like sandboxing or ASLR.
+  # IMPORTANT: Unsafe developer builds should never be distributed to end users.
+  is_unsafe_developer_build = !is_official_build
+}
+
+declare_args() {
   # Component build. Setting to true compiles targets declared as "components"
   # as shared libraries loaded dynamically. This speeds up development time.
   # When false, components will be linked statically.
