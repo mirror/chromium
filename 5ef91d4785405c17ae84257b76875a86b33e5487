@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d915210d_cc29385c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-12T01:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbdef83e_fd2d2a8f",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "5ef91d4785405c17ae84257b76875a86b33e5487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd2fe75_901d3b73",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5ef91d4785405c17ae84257b76875a86b33e5487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de93f0da_3f4088fb",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-12T01:14:53Z",
+      "side": 1,
+      "message": "Done.  Old habits die hard, it seems.",
+      "parentUuid": "dcd2fe75_901d3b73",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5ef91d4785405c17ae84257b76875a86b33e5487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
