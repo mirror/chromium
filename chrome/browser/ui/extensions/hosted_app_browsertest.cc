@@ -38,6 +38,7 @@
 #include "extensions/common/extension_set.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_response.h"
 
 #if defined(OS_MACOSX)
 #include "chrome/common/chrome_features.h"
@@ -45,6 +46,7 @@
 
 using content::WebContents;
 using extensions::Extension;
+using namespace net::test_server;
 
 namespace {
 
@@ -169,17 +171,39 @@ IN_PROC_BROWSER_TEST_F(HostedAppTest, OpenLinkInNewTab) {
 }
 
 // Tests that Ctrl + Clicking a link opens a foreground tab.
-IN_PROC_BROWSER_TEST_F(HostedAppTest, DISABLED_CtrlClickLink) {
+IN_PROC_BROWSER_TEST_F(HostedAppTest, CtrlClickLink) {
+  // Setup a request handler so pages load successfully.
+  embedded_test_server()->RegisterRequestHandler(
+      base::BindRepeating([](const HttpRequest& request) {
+        auto response = base::MakeUnique<BasicHttpResponse>();
+        response->set_content_type("text/html");
+        response->AddCustomHeader("Access-Control-Allow-Origin", "*");
+        return static_cast<std::unique_ptr<HttpResponse>>(std::move(response));
+      }));
+
   ASSERT_TRUE(embedded_test_server()->Start());
 
+  // Set up an app which covers app.com URLs.
+  GURL app_url = embedded_test_server()->GetURL("app.com", "/");
   ui_test_utils::UrlLoadObserver url_observer(
-      GURL("http://www.example.com/empty.html"),
-      content::NotificationService::AllSources());
-  SetupApp("app", true);
+      app_url, content::NotificationService::AllSources());
+  extensions::TestExtensionDir test_app_dir;
+  test_app_dir.WriteManifest(base::StringPrintf(
+      R"( { "name": "Hosted App",
+            "version": "1",
+            "manifest_version": 2,
+            "app": {
+              "launch": {
+                "web_url": "%s"
+              }
+            }
+          } )",
+      app_url.spec().c_str()));
+  SetupApp(test_app_dir.UnpackedPath(), false);
   // Wait for URL to load so that we can run JS on the page.
   url_observer.Wait();
 
-  const GURL url("http://www.foo.com/");
+  const GURL url = embedded_test_server()->GetURL("foo.com", "/");
   TestAppActionOpensForegroundTab(
       base::BindOnce(
           [](content::WebContents* app_contents, const GURL& target_url) {
