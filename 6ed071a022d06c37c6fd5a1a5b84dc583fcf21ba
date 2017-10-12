@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc43354b_717413a2",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T23:23:04Z",
+      "side": 1,
+      "message": "Could you use {} when the body is multi-line?",
+      "revId": "6ed071a022d06c37c6fd5a1a5b84dc583fcf21ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
