@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88119237_a3169706",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T22:29:10Z",
+      "side": 1,
+      "message": "Here\u0027s what I had in mind. I think using remove_if in this way is a clever and concise but confusing.\n\n  void AssociateFromDisplayPreferences(DisplayInfoPointerList* displays,\n                                       DeviceList* devices,\n                                       const DisplayManager* display_manager) {\n    if (!displays-\u003esize() || !devices-\u003esize())\n      return;\n    VLOG(2) \u003c\u003c \"Trying to match \" \u003c\u003c displays-\u003esize() \u003c\u003c \" displays and \"\n            \u003c\u003c devices-\u003esize() \u003c\u003c \" devices using display preference data.\";\n    std::map\u003cuint32_t, int\u003e touch_device_identifiers;\n    for (auto device_it \u003d devices-\u003ebegin(); device_it !\u003d devices-\u003eend();) {\n      uint32_t touch_device_identifier \u003d\n          TouchCalibrationData::GenerateTouchDeviceIdentifier(**device_it);\n      bool found \u003d false;\n      for (auto* new_display_info : *displays) {\n        // During tests the display ids may be invalid.\n        if (!display_manager-\u003eIsDisplayIdValid(new_display_info-\u003eid()))\n          continue;\n        // The existing ManagedDisplayInfo has the display preferences stored with\n        // it.\n        const ManagedDisplayInfo\u0026 info \u003d\n            display_manager-\u003eGetDisplayInfo(new_display_info-\u003eid());\n        if (info.HasTouchDevice(touch_device_identifier)) {\n          Associate(new_display_info, *device_it);\n          VLOG(2) \u003c\u003c \"\u003d\u003e Matched device \" \u003c\u003c (*device_it)-\u003ename \u003c\u003c \" to display \"\n                  \u003c\u003c new_display_info-\u003ename();\n          device_it \u003d devices-\u003eerase(device_it);\n          found \u003d true;\n          break;\n        }\n      }\n      if (!found)\n        device_it++;\n    }\n  }\n\n\n// \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e\n\n\n  void AssociateFromDisplayPreferences(DisplayInfoPointerList* displays,\n                                       DeviceList* devices,\n                                       const DisplayManager* display_manager) {\n    if (!displays-\u003esize() || !devices-\u003esize())\n      return;\n\n    VLOG(2) \u003c\u003c \"Trying to match \" \u003c\u003c displays-\u003esize() \u003c\u003c \" displays and \"\n            \u003c\u003c devices-\u003esize() \u003c\u003c \" devices using display preference data.\";\n\n    // Finds a display which has |touch_device_identifier| stored in prefs.\n    auto find_display_with_stored_device \u003d [\u0026](auto device) {\n      uint32_t touch_device_identifier \u003d\n          TouchCalibrationData::GenerateTouchDeviceIdentifier(**device_it);\n\n      for (auto* new_display_info : *displays) {\n        // During tests the display ids may be invalid.\n        if (!display_manager-\u003eIsDisplayIdValid(new_display_info-\u003eid()))\n          continue;\n        // The existing ManagedDisplayInfo has the display preferences stored with\n        // it.\n        const ManagedDisplayInfo\u0026 info \u003d\n            display_manager-\u003eGetDisplayInfo(new_display_info-\u003eid());\n        if (info.HasTouchDevice(touch_device_identifier))\n          return info;\n      }\n\n      return nullptr;\n    };\n\n    // Iterate every device and try to find a display which has a preference\n    // associated it with the device.\n    for (auto device_it \u003d devices-\u003ebegin(); device_it !\u003d devices-\u003eend();) {\n      DisplayInfo* display \u003d find_display_with_stored_touch_identifier(**device_it);\n      if (display) {\n        Associate(display, *device_it);\n        VLOG(2) \u003c\u003c \"\u003d\u003e Matched device \" \u003c\u003c (*device_it)-\u003ename \u003c\u003c \" to display \"\n                \u003c\u003c display-\u003ename();\n        device_it \u003d devices-\u003eerase(device_it);\n      } else {\n        ++device_it;\n      }\n    }\n  }\n\nIf you prefer the remove_if then feel free to use that instead.",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f042bcf5_a346b09b",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T22:29:10Z",
+      "side": 1,
+      "message": "Please follow \"\u003d\u003e Matched\" pattern as established in other Associate functions.",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
