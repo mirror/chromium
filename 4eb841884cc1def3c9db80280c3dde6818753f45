@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a7299d_e851ec50",
+        "filename": "third_party/WebKit/Source/core/style/CounterValue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-12T23:03:55Z",
+      "side": 1,
+      "message": "I assume you just want to do this:\n\n  return base::CheckAdd(value_, increment).ValueOrDefault(value_);\n\nIf the operation doesn\u0027t wrap you\u0027ll get the result, otherwise you just return value_.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "4eb841884cc1def3c9db80280c3dde6818753f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
