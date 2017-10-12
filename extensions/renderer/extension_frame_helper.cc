@@ -194,14 +194,6 @@ void ExtensionFrameHelper::ScheduleAtDocumentIdle(
   document_idle_callbacks_.push_back(callback);
 }
 
-void ExtensionFrameHelper::DidMatchCSS(
-    const blink::WebVector<blink::WebString>& newly_matching_selectors,
-    const blink::WebVector<blink::WebString>& stopped_matching_selectors) {
-  extension_dispatcher_->content_watcher()->DidMatchCSS(
-      render_frame()->GetWebFrame(), newly_matching_selectors,
-      stopped_matching_selectors);
-}
-
 void ExtensionFrameHelper::DidStartProvisionalLoad(
     blink::WebDocumentLoader* document_loader) {
   if (!delayed_main_world_script_initialization_)
