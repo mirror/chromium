@@ -5339,8 +5339,17 @@ void RenderFrameImpl::OnFailedNavigation(
   pending_navigation_params_.reset(new NavigationParams(
       common_params, StartNavigationParams(), request_params));
 
+  // If possible, commit a chrome-error://<error code> instead.
+  GURL unreachable_url;
+  if (error_code == net::ERR_BLOCKED_BY_CLIENT) {
+    unreachable_url = GURL(std::string(kChromeErrorScheme) + "://" +
+                           net::ErrorToShortString(error_code));
+  } else {
+    unreachable_url = common_params.url;
+  }
+
   // Send the provisional load failure.
-  blink::WebURLError error(common_params.url, has_stale_copy_in_cache,
+  blink::WebURLError error(unreachable_url, has_stale_copy_in_cache,
                            error_code);
   WebURLRequest failed_request =
       CreateURLRequestForNavigation(common_params, request_params,

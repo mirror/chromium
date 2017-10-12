@@ -770,6 +770,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
       "a.com", "/cross-site/baz.com/title2.html"));
   GURL allowed_subframe_final_url(
       embedded_test_server()->GetURL("baz.com", "/title2.html"));
+  GURL error_url("chrome-error://ERR_BLOCKED_BY_CLIENT");
 
   // Exercise both synchronous and deferred throttle check results, and both on
   // WillStartRequest and on WillRedirectRequest.
@@ -817,12 +818,12 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     {
       SCOPED_TRACE("Initial navigation blocked on main frame load.");
       NavigationHandleObserver subframe_observer(shell()->web_contents(),
-                                                 blocked_subframe_url);
+                                                 error_url);
 
       ASSERT_TRUE(NavigateToURL(shell(), main_url));
       EXPECT_TRUE(subframe_observer.is_error());
       EXPECT_TRUE(subframe_observer.has_committed());
-      EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, subframe_observer.net_error_code());
+      EXPECT_EQ(net::Error::OK, subframe_observer.net_error_code());
       ExpectChildFrameCollapsed(shell(), kChildFrameId,
                                 true /* expect_collapsed */);
     }
@@ -845,14 +846,14 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     {
       SCOPED_TRACE("Subsequent subframe navigation is blocked.");
       NavigationHandleObserver subframe_observer(shell()->web_contents(),
-                                                 blocked_subframe_url);
+                                                 error_url);
 
       ASSERT_TRUE(NavigateIframeToURL(shell()->web_contents(), kChildFrameId,
                                       blocked_subframe_url));
 
       EXPECT_TRUE(subframe_observer.has_committed());
       EXPECT_TRUE(subframe_observer.is_error());
-      EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, subframe_observer.net_error_code());
+      EXPECT_EQ(net::Error::OK, subframe_observer.net_error_code());
       ExpectChildFrameCollapsed(shell(), kChildFrameId,
                                 true /* expect_collapsed */);
     }
@@ -870,6 +871,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
       embedded_test_server()->GetURL("a.com", "/title1.html"));
   GURL allowed_subframe_url(
       embedded_test_server()->GetURL("a.com", "/title2.html"));
+  GURL error_url("chrome-error://ERR_BLOCKED_BY_CLIENT");
 
   TestNavigationThrottleInstaller subframe_throttle_installer(
       shell()->web_contents(), NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE,
@@ -879,12 +881,12 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
   {
     SCOPED_TRACE("Initial navigation blocked on main frame load.");
     NavigationHandleObserver subframe_observer(shell()->web_contents(),
-                                               blocked_subframe_url);
+                                               error_url);
 
     ASSERT_TRUE(NavigateToURL(shell(), main_url));
     EXPECT_TRUE(subframe_observer.is_error());
     EXPECT_TRUE(subframe_observer.has_committed());
-    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, subframe_observer.net_error_code());
+    EXPECT_EQ(net::Error::OK, subframe_observer.net_error_code());
     ExpectChildFrameSetAsCollapsedInFTN(shell(), true /* expect_collapsed */);
     ExpectChildFrameCollapsedInLayout(shell(), kChildFrameId,
                                       false /* expect_collapsed */);
@@ -1089,7 +1091,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     // Try to navigate to the url. The navigation should be canceled and the
     // NavigationHandle should have the right error code.
     EXPECT_FALSE(NavigateToURL(shell(), kUrl));
-    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
+    EXPECT_EQ(net::Error::OK, observer.net_error_code());
   }
 
   // Using BLOCK_REQUEST on redirect is available only with PlzNavigate.
@@ -1104,7 +1106,7 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     // Try to navigate to the url. The navigation should be canceled and the
     // NavigationHandle should have the right error code.
     EXPECT_FALSE(NavigateToURL(shell(), kRedirectingUrl));
-    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
+    EXPECT_EQ(net::Error::OK, observer.net_error_code());
   }
 }
 
@@ -1317,13 +1319,14 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, BlockedOnRedirect) {
   const GURL kUrl = embedded_test_server()->GetURL("/title1.html");
   const GURL kRedirectingUrl =
       embedded_test_server()->GetURL("/server-redirect?" + kUrl.spec());
+  const GURL kErrorUrl("chrome-error://ERR_BLOCKED_BY_CLIENT");
 
   // Set up a NavigationThrottle that will block the navigation in
   // WillRedirectRequest.
   TestNavigationThrottleInstaller installer(
       shell()->web_contents(), NavigationThrottle::PROCEED,
       NavigationThrottle::BLOCK_REQUEST, NavigationThrottle::PROCEED);
-  NavigationHandleObserver observer(shell()->web_contents(), kRedirectingUrl);
+  NavigationHandleObserver observer(shell()->web_contents(), kErrorUrl);
   NavigationLogger logger(shell()->web_contents());
 
   // Try to navigate to the url. The navigation should be canceled and the
@@ -1332,10 +1335,10 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, BlockedOnRedirect) {
   // EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
 
   // Only one navigation is expected to happen.
-  std::vector<GURL> started_navigation = {kRedirectingUrl};
+  std::vector<GURL> started_navigation = {kRedirectingUrl, kErrorUrl};
   EXPECT_EQ(started_navigation, logger.started_navigation_urls());
 
-  std::vector<GURL> finished_navigation = {kUrl};
+  std::vector<GURL> finished_navigation = {kUrl, kErrorUrl};
   EXPECT_EQ(finished_navigation, logger.finished_navigation_urls());
 }
 
@@ -1397,6 +1400,7 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
 
   GURL start_url(embedded_test_server()->GetURL("foo.com", "/title1.html"));
   GURL blocked_url(embedded_test_server()->GetURL("bar.com", "/title2.html"));
+  GURL error_url("chrome-error://ERR_BLOCKED_BY_CLIENT");
 
   {
     NavigationHandleObserver observer(shell()->web_contents(), start_url);
@@ -1415,7 +1419,7 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
   {
     // A blocked, renderer-initiated navigation should commit an error page
     // in the process that originated the navigation.
-    NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
     TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
     EXPECT_TRUE(
         ExecuteScript(shell(), base::StringPrintf("location.href = '%s'",
@@ -1430,14 +1434,13 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
   {
     // Reloading the blocked document should load about:blank and not transfer
     // processes.
-    GURL about_blank_url(url::kAboutBlankURL);
-    NavigationHandleObserver observer(shell()->web_contents(), about_blank_url);
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
     TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
 
     shell()->Reload();
     navigation_observer.Wait();
     EXPECT_TRUE(observer.has_committed());
-    EXPECT_FALSE(observer.is_error());
+    EXPECT_TRUE(observer.is_error());
     EXPECT_EQ(site_instance,
               shell()->web_contents()->GetMainFrame()->GetSiteInstance());
   }
@@ -1465,7 +1468,7 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
   {
     // A blocked, browser-initiated navigation should commit an error page in a
     // different process.
-    NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
     TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
 
     EXPECT_FALSE(NavigateToURL(shell(), blocked_url));
@@ -1533,20 +1536,21 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
   // Start a new, non-webUI navigation that will be blocked by a
   // NavigationThrottle.
   GURL blocked_url("http://blocked-by-throttle.example.cc");
+  GURL error_url("chrome-error://ERR_BLOCKED_BY_CLIENT");
   TestNavigationThrottleInstaller installer(
       web_contents, NavigationThrottle::BLOCK_REQUEST,
       NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
-  NavigationHandleObserver commit_observer(web_contents, blocked_url);
+  NavigationHandleObserver commit_observer(web_contents, error_url);
   EXPECT_FALSE(NavigateToURL(shell(), blocked_url));
   NavigationEntry* last_committed =
       web_contents->GetController().GetLastCommittedEntry();
   EXPECT_TRUE(last_committed);
-  EXPECT_EQ(blocked_url, last_committed->GetVirtualURL());
+  EXPECT_EQ(error_url, last_committed->GetVirtualURL());
   EXPECT_EQ(PAGE_TYPE_ERROR, last_committed->GetPageType());
   EXPECT_NE(web_ui_process.get(), web_contents->GetSiteInstance());
   EXPECT_TRUE(commit_observer.has_committed());
   EXPECT_TRUE(commit_observer.is_error());
-  EXPECT_FALSE(commit_observer.is_renderer_initiated());
+  EXPECT_TRUE(commit_observer.is_renderer_initiated());
 }
 
 // Redirects to renderer debug URLs caused problems.
