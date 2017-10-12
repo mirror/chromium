@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25c2c96_cf3fea7b",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T17:53:41Z",
+      "side": 1,
+      "message": "Do we still need to make auth request using the webview\u0027s storage partition? We initially did this because we need gaia cookies for manual auth flow. Since manual auth flow goes away, I wonder whether this is still needed.\n\nThat part that I am not sure is the active directory code path. It seems also not needing the cookies. If that is the case, we can get rid of |storage_partition_| and use request context from |profile|. Also get rid of the \"persist:\" prefix in arc support host page.",
+      "revId": "afb25ad00518ce306be3d1c1becd3d1533570324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
