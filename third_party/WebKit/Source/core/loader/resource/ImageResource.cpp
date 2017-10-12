@@ -229,8 +229,7 @@ ImageResource::ImageResource(const ResourceRequest& resource_request,
       is_scheduling_reload_(false),
       placeholder_option_(
           is_placeholder ? PlaceholderOption::kShowAndReloadPlaceholderAlways
-                         : PlaceholderOption::kDoNotReloadPlaceholder),
-      flush_timer_(this, &ImageResource::FlushImageIfNeeded) {
+                         : PlaceholderOption::kDoNotReloadPlaceholder) {
   DCHECK(GetContent());
   RESOURCE_LOADING_DVLOG(1) << "new ImageResource(ResourceRequest) " << this;
   GetContent()->SetImageResourceInfo(new ImageResourceInfoImpl(this));
@@ -336,7 +335,7 @@ void ImageResource::AppendData(const char* data, size_t length) {
     // inform the clients which causes an invalidation of this image. In other
     // words, we only invalidate this image every |kFlushDelaySeconds| seconds
     // while loading.
-    if (!flush_timer_.IsActive()) {
+    if (!flush_task_.IsActive()) {
       double now = WTF::MonotonicallyIncreasingTime();
       if (!last_flush_time_)
         last_flush_time_ = now;
@@ -345,12 +344,17 @@ void ImageResource::AppendData(const char* data, size_t length) {
       double flush_delay = last_flush_time_ - now + kFlushDelaySeconds;
       if (flush_delay < 0.)
         flush_delay = 0.;
-      flush_timer_.StartOneShot(flush_delay, BLINK_FROM_HERE);
+      WebTaskRunner* task_runner =
+          Loader()->Fetcher()->Context().GetLoadingTaskRunner();
+      flush_task_ = task_runner->PostDelayedCancellableTask(
+          BLINK_FROM_HERE,
+          WTF::Bind(&ImageResource::FlushImageIfNeeded, WrapPersistent(this)),
+          TimeDelta::FromSecondsD(flush_delay));
     }
   }
 }
 
-void ImageResource::FlushImageIfNeeded(TimerBase*) {
+void ImageResource::FlushImageIfNeeded() {
   // We might have already loaded the image fully, in which case we don't need
   // to call |updateImage()|.
   if (IsLoading()) {

@@ -23,14 +23,14 @@
 #ifndef ImageResource_h
 #define ImageResource_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceInfo.h"
 #include "core/loader/resource/MultipartImageResourceParser.h"
-#include "platform/Timer.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
-#include <memory>
 
 namespace blink {
 
@@ -135,7 +135,7 @@ class CORE_EXPORT ImageResource final
   void DestroyDecodedDataIfPossible() override;
   void DestroyDecodedDataForFailedRevalidation() override;
 
-  void FlushImageIfNeeded(TimerBase*);
+  void FlushImageIfNeeded();
 
   bool ShouldReloadBrokenPlaceholder() const;
 
@@ -174,7 +174,7 @@ class CORE_EXPORT ImageResource final
   };
   PlaceholderOption placeholder_option_;
 
-  Timer<ImageResource> flush_timer_;
+  TaskHandle flush_task_;
   double last_flush_time_ = 0.;
 
   bool is_during_finish_as_error_ = false;
