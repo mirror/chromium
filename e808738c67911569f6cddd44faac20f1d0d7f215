@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f5ac0f_e5093183",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-12T23:35:49Z",
+      "side": 1,
+      "message": "AppKit handles this automagically if the you override -needsPanelToBecomeKey to return NO. It\u0027s sort of hinted at in the docs but described incredibly poorly. I think that\u0027ll be simpler once this is no longer behind a flag.",
+      "revId": "e808738c67911569f6cddd44faac20f1d0d7f215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
