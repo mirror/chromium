@@ -8,7 +8,7 @@
 
 {% set symbol_export = '%s ' % export if export else '' %}
 {% if suffix %}
-#include "core/{{namespace}}Names.h"
+#include "core/{{corresponding_core_header_name}}"
 {% else %}
 #include "platform/wtf/text/AtomicString.h"
 {% endif %}

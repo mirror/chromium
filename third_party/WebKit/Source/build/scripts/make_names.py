@@ -78,6 +78,9 @@ class MakeNamesWriter(json5_generator.Writer):
             (basename + '.h'): self.generate_header,
             (basename + '.cc'): self.generate_implementation,
         }
+        core_header = None
+        if suffix:
+            core_header = name_utilities.snake_case(namespace) + '_names.h'
         self._template_context = {
             'namespace': namespace,
             'suffix': suffix,
@@ -85,6 +88,7 @@ class MakeNamesWriter(json5_generator.Writer):
             'entries': self.json5_file.name_dictionaries,
             'input_files': self._input_files,
             'this_include_header_name': basename + '.h',
+            'corresponding_core_header_name': core_header,
         }
 
     @template_expander.use_jinja("templates/MakeNames.h.tmpl", filters=filters)
