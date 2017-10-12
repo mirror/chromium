@@ -714,7 +714,7 @@ void LocalFrameClientImpl::ReportLegacySymantecCert(const KURL& url,
                          "more information."));
   }
   web_frame_->GetFrame()->GetDocument()->AddConsoleMessage(
-      ConsoleMessage::Create(kSecurityMessageSource, kWarningMessageLevel,
+      ConsoleMessage::Create(kSecurityMessageSource, kVerboseMessageLevel,
                              console_message));
 }
 
