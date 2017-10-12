@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32aafce6_41a9cb11",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-12T21:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a8e49f_99bc97d5",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed695e69_f65419a9",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T20:27:07Z",
       "side": 1,
       "message": "Lines 255-272 seem more complicated than they need to be. There is no need to use \"bind(this, dialog)\". |dialog| is already in scope.\n\nSee suggestion at https://pastebin.com/PJMPFGR2.",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0dc337_d2c3154f",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-12T21:30:23Z",
+      "side": 1,
+      "message": "Thanks!  I didn\u0027t realize that syntax would work.",
+      "parentUuid": "ed695e69_f65419a9",
       "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583b44de_989212a7",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-12T21:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4233185d_620b245c",
+      "revId": "ecc2c98fab26dc56c44dfcf187ec51d5198806e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
