@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e42b2b2_95ec92fe",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-12T16:54:05Z",
+      "side": 1,
+      "message": "Are there other accesses of web_contents() that should be protected this way?",
+      "revId": "c74b8653dc9532141436583d83a76038410558a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
