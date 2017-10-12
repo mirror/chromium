@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78811fe3_945b1d69",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-12T15:54:06Z",
+      "side": 1,
+      "message": "I was a bit surprised that this has been moved to the Document prototype, but it\u0027s true, double-checked in Edge.",
+      "range": {
+        "startLine": 983,
+        "startChar": 11,
+        "endLine": 983,
+        "endChar": 14
+      },
+      "revId": "8501d849cdd149e4b17fb746e15a572587891518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
