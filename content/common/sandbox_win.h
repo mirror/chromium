@@ -7,9 +7,15 @@
 
 #include <stdint.h>
 
+#include <string>
+
+#include "base/callback.h"
+#include "base/process/launch.h"
+#include "base/process/process_handle.h"
 #include "content/common/content_export.h"
 #include "sandbox/win/src/sandbox_types.h"
 #include "sandbox/win/src/security_level.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace base {
 class CommandLine;
@@ -23,8 +29,18 @@ class TargetServices;
 
 namespace content {
 
-// Wrapper around sandbox::TargetPolicy::SetJobLevel that checks if the sandbox
-// should be let to run without a job object assigned.
+sandbox::ResultCode StartSandboxedProcessInternal(
+    base::CommandLine* cmd_line,
+    const std::string& process_type,
+    service_manager::SandboxType sandbox_type,
+    bool disable_default_policy,
+    const base::HandlesToInheritVector& handles_to_inherit,
+    base::OnceCallback<bool(sandbox::TargetPolicy*)> pre_spawn_target,
+    base::OnceCallback<void(base::ProcessHandle process)> post_spawn_target,
+    base::Process* process);
+
+// Wrapper around sandbox::TargetPolicy::SetJobLevel that checks if the
+// sandbox should be let to run without a job object assigned.
 sandbox::ResultCode SetJobLevel(const base::CommandLine& cmd_line,
                                 sandbox::JobLevel job_level,
                                 uint32_t ui_exceptions,
@@ -42,7 +58,6 @@ sandbox::ResultCode AddWin32kLockdownPolicy(sandbox::TargetPolicy* policy,
                                             bool enable_opm);
 
 bool InitBrokerServices(sandbox::BrokerServices* broker_services);
-
 bool InitTargetServices(sandbox::TargetServices* target_services);
 
 }  // namespace content
