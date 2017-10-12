@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7654be0_ca502371",
+        "filename": "mojo/public/cpp/bindings/tests/test_helpers_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-12T20:59:12Z",
+      "side": 1,
+      "message": "nit: task_environment_ (with trailing _)",
+      "range": {
+        "startLine": 22,
+        "startChar": 36,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "8f80eb6ab7f11c9c965799431539de4852265269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31f8bbd6_963fb961",
         "filename": "mojo/public/cpp/bindings/tests/test_helpers_unittest.cc",
         "patchSetId": 3
@@ -13,6 +36,23 @@
       "writtenOn": "2017-10-11T20:50:06Z",
       "side": 1,
       "message": "I think the ergonomics are good. wait_for_ping.Ping() is odd, but that\u0027s because the interface name and method name are the same. That doesn\u0027t happen often in my code. wait_for_trampoline.Bounce() reads just fine to me. Likewise, if there\u0027s only one interface we\u0027ll be able to use wait_for.Bounce().",
+      "revId": "8f80eb6ab7f11c9c965799431539de4852265269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c398c903_54c656d3",
+        "filename": "mojo/public/cpp/bindings/type_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-12T20:59:12Z",
+      "side": 1,
+      "message": "This file is not needed anymore, right?",
       "revId": "8f80eb6ab7f11c9c965799431539de4852265269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
