@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "66f83c3f_598cfe36",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T18:28:23Z",
+      "side": 1,
+      "message": "Why not doing the following here?\nthis.showAllBtn_ \u003d propertiesBtn;",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fc87388_332a3636",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 12
@@ -84,6 +101,24 @@
       "side": 1,
       "message": "Oh, the this.info hasn\u0027t been set yet.  Let\u0027s not race against that.\n\ndpapad certainly has a better advice, but I\u0027m guessing the setup of the button event listener could simply capture a value of the current button it is executing for?  Remove the   createShowAllButtonId and setupShowAllButton methods, and instead in the ~line 182 area :\n\n      propertiesBtn.textContent \u003d \u0027Show All\u0027;\n      // don\u0027t set an .id\n      propertiesBtn.classList.add(\u0027show-all-properties\u0027);\n      propertiesBtn.addEventListener(\u0027click\u0027, () \u003d\u003e {\n        const fieldSet \u003d this.propertiesFieldSet_;\n        const button \u003d propertiesBtn;\n        if (showAll) {\n          fieldSet.showAll \u003d false;\n          button.textContent \u003d \u0027Show All\u0027;\n          fieldSet.redraw();\n        } else {\n          fieldSet.showAll \u003d true;\n          button.textContent \u003d \u0027Hide\u0027;\n          fieldSet.redraw();\n        }\n      });",
       "parentUuid": "682f6386_b105b8f6",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94aaf643_0b1a896e",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T18:28:23Z",
+      "side": 1,
+      "message": "How can this.info not be set yet? Isn\u0027t it used multiple times in this function before this line? For example line 147 is using this.info.id already.\n\nAlso isn\u0027t |propertiesBtn| the same object as |this.showAllBtn_|? If yes, then how can $(this.createShowAllButtonId()) return null, if |propertiesBtn| is already added to the DOM? Sorry for the repeated questions, I am probably missing something.\n\nThe only explanation I can find is that |this.expandedContent_| element has maybe not been added to the DOM yet (I haven\u0027t looked at the superclass). Either way, I don\u0027t find the need for setupShowAllButton() to do any DOM querying. You can do any of the following\n\n 1) Vincent\u0027s proposal\n 2) See comment at line 182\n 3) Modify setupShowAllButton() to take |propertiesBtn| as a parameter\n 4) Modify setupShowAllButton() to query |this.expandedContent_| instead of querying |document|.",
+      "parentUuid": "1656f919_8ee852c5",
       "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
