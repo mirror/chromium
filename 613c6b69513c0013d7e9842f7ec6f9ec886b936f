@@ -70,6 +70,24 @@
       "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38334038_6098ab78",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-12T05:23:03Z",
+      "side": 1,
+      "message": "\u003e I think we need to delay the decrement, since we trigger onload synchronously\n\nIncrementLoadEventDelayCount\u0027s dtor decrements the counter synchronously but does NOT trigger onload synchronously (see Document::DecrementLoadEventDelayCount()).\nSo probably safe?\nIf EnqueueImageLoadingMicroTask() at the bottom of this function is called, then the load event delay counter is incremented again (before the counter is checked asynchronously in CheckCompleted()) and thus the load event is not fired in that case.\nPlease double check.",
+      "parentUuid": "9953b620_619afaa5",
+      "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
