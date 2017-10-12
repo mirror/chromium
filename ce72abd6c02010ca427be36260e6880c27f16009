@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0b2ec02c_a44c3b61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-12T14:21:37Z",
+      "side": 1,
+      "message": "That sounds like a bug in GetViableReferenceFrameIndex, rather than a bug in Decode. The comments describing GetViableReferenceFrameIndex don\u0027t seem to indicate that it will never return the required frame, and it\u0027s not clear why it wouldn\u0027t. Obviously Decode would prefer to return the required frame, rather than kNotFound. (No reason to call Decode on it just to return early.) Not only that, ClearCacheExceptFrame wants the same answer that Decode wants. We *want* it to return the required frame if it\u0027s FrameComplete, so that it gets passed to ClearCacheExceptTwoFrames and does not get cleared.\n\nThe unfortunate part of this bug is that it\u0027s probably a very common case. If a frame has transparency it will depend on the frame before it, in which case GetViableReferenceFrameIndex *always* returns kNotFound, so we\u0027ll always be re-decoding the prior frame. Not only that, but this is recursive - if it depends on the frame directly before it, we\u0027ll have to redecode it, and so on.\n\nThis seems like a very serious bug (unless there\u0027s something I\u0027m missing here?). I\u0027m guessing we don\u0027t have adequate performance testing (i.e. gifs with long dependency chains) to catch this. (Maybe this was responsible for crbug.com/758946 - using more memory to redecode old frames?)\n\nI think we\u0027ve discussed the over-complexity of ClearCacheExceptFrame before, but it\u0027s relevant here as we figure out whether the GetViableReferenceFrameIndex bug actually hurts it. Currently, Blink essentially does the following:\n\n  if (!index || FrameIsCompleteAtIndex(index)) {\n    Decode(index);\n    ClearCacheExceptFrame(index);\n  }\n\nIn the first case, the frame may be incomplete, and it is independent (since it\u0027s first). So ClearCacheExceptFrame won\u0027t clear it, and it doesn\u0027t search back for earlier frames.\n\nFor later frames, they are either complete or contain an error. If there was an error, we don\u0027t need to keep earlier frames around, since we\u0027re done decoding. So it\u0027s okay that GetViableReferenceFrameIndex failed to keep the required frame around.\n\nIf the frame is complete, ClearCacheExceptFrame does not check for earlier frames to keep around, since FrameStatusSufficientForSuccessors returns true. So it doesn\u0027t get exposed to the bug. But there is an exception - if the frame is DisposePrevious, we should have kept the required frame. Well, that\u0027s somewhat debatable - we really want to know the frame that index + 1 depends on, and save that if possible. It may be that the next frame is independent, in which case we don\u0027t need to save any frames. So the bug here is only a problem when:\n\n- index is DisposePrevious (complete and w/o error)\n- index + 1 depends on the same frame that index does\n\nIn that case, we\u0027ll throw away the required frame and have to redecode it when we decode index + 1. Obviously, this is particularly bad if that means we have to start a long chain of decoding to decode that frame.",
+      "parentUuid": "3258f608_431e9a45",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa152806_ea97faf5",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 1
@@ -89,6 +113,29 @@
         "startChar": 2,
         "endLine": 222,
         "endChar": 54
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8063663e_db8105fa",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-12T14:21:37Z",
+      "side": 1,
+      "message": "As argued above, both Decode and ClearCacheExceptFrame want to return the required index if it\u0027s complete. You could accomplish that with something like the following:\n\n  size_t i \u003d dependent_index;\n  do {\n    i--;\n    const auto\u0026 frame \u003d frame_buffer_cache_[i];\n    if (kDisposePrevious)\n      continue;\n    if (kFrameComplete)\n      return i;\n  } while (i !\u003d required_prevous_frame_index);\n  return kNotFound;",
+      "range": {
+        "startLine": 329,
+        "startChar": 12,
+        "endLine": 329,
+        "endChar": 0
       },
       "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
