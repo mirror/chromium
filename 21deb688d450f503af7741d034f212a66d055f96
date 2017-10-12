@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6c484d_9d34866d",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T18:52:23Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 14,
+        "startChar": 37,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "21deb688d450f503af7741d034f212a66d055f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
