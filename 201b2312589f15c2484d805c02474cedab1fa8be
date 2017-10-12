@@ -51,6 +51,24 @@
       "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39cfa50_1a7e0ae9",
+        "filename": "content/browser/gpu/browser_gpu_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T13:17:25Z",
+      "side": 1,
+      "message": "Ignore this comment (I notice in the other CL that BrowserGpuChannelHostFactory is actually not created when this is created, so we would still have only one instance).",
+      "parentUuid": "45bca948_7a1a0e65",
+      "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
