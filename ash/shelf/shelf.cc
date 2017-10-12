@@ -34,7 +34,7 @@ void NoopCallback(ShelfAction,
 
 // Shelf::AutoHideEventHandler -----------------------------------------------
 
-// Forwards mouse and gesture events to ShelfLayoutManager.
+// Forwards mouse and gesture events to ShelfLayoutManager for auto-hide.
 // TODO(mash): Add similar event handling support for mash.
 class Shelf::AutoHideEventHandler : public ui::EventHandler {
  public:
@@ -52,7 +52,7 @@ class Shelf::AutoHideEventHandler : public ui::EventHandler {
         event, static_cast<aura::Window*>(event->target()));
   }
   void OnGestureEvent(ui::GestureEvent* event) override {
-    shelf_layout_manager_->ProcessGestureEventOnWindow(
+    shelf_layout_manager_->UpdateAutoHideForGestureEvent(
         event, static_cast<aura::Window*>(event->target()));
   }
 
