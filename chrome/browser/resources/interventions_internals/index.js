@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+/** The columns that are used to find rows that contain the keyword. */
+let KEY_COLUMNS = ['log-type', 'log-description', 'log-url'];
+
 /**
  * Switch the selected tab to 'selected-tab' class.
  */
@@ -42,6 +45,30 @@ function setupTabControl() {
 
   // Turn on the default selected tab.
   setSelectedTab();
+}
+
+/**
+ * Initialize the search functionality of the search bar on the log tab. Only
+ * displaying the rows that contains the keyword (case insensitive) currently in
+ * the search bar will be displayed on the page.
+ */
+function setupLogSearch() {
+  $('log-search-bar').addEventListener('keyup', () => {
+    let keyword = $('log-search-bar').value.toUpperCase();
+    let rows = document.querySelectorAll('.log-message');
+
+    rows.forEach((row) => {
+      let found = false;
+      KEY_COLUMNS.forEach((column) => {
+        if (row.querySelector('.' + column)
+                .textContent.toUpperCase()
+                .indexOf(keyword) > -1) {
+          found = true;
+        }
+      });
+      row.style.display = found ? '' : 'none';
+    });
+  });
 }
 
 /** @constructor */
@@ -137,6 +164,7 @@ window.setupFn = window.setupFn || function() {
 
 document.addEventListener('DOMContentLoaded', () => {
   setupTabControl();
+  setupLogSearch();
   let pageHandler = null;
   let pageImpl = null;
 
