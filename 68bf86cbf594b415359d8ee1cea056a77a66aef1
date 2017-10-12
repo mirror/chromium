@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bbeca1f_d02434d6",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-12T23:03:44Z",
+      "side": 1,
+      "message": "If we just generally want to disable coverage for component builds for now, I\u0027d write:\n\n    assert(!use_clang_coverage || !is_component_build,\n        \"code coverage is not yet supported for component builds\")\n\nor something like that. I don\u0027t think you need to worry about the different toolchains;\nthere\u0027s no case where we use static default toolchains but components for host or other\ntoolchains.",
+      "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
