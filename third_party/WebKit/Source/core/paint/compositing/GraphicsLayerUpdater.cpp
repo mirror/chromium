@@ -107,8 +107,10 @@ void GraphicsLayerUpdater::UpdateRecursive(
     CompositedLayerMapping* mapping = layer.GetCompositedLayerMapping();
 
     if (update_type == kForceUpdate || mapping->NeedsGraphicsLayerUpdate()) {
-      if (mapping->UpdateGraphicsLayerConfiguration())
+      if (mapping->UpdateGraphicsLayerConfiguration()) {
+        layers_needing_paint_invalidation.push_back(&layer);
         needs_rebuild_tree_ = true;
+      }
       mapping->UpdateGraphicsLayerGeometry(context.CompositingContainer(layer),
                                            context.CompositingStackingContext(),
                                            layers_needing_paint_invalidation);
