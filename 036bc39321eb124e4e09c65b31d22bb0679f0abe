@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b119e473_34782be2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-12T05:16:53Z",
+      "side": 1,
+      "message": "Is there a difference in code path between here and hideAppMenu().\nStrangely enough if I move the \"mAppMenuIsShowing \u003d false\" here, it sometimes seem to hang when I checked with delay \u003d 1000ms.",
+      "revId": "036bc39321eb124e4e09c65b31d22bb0679f0abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
