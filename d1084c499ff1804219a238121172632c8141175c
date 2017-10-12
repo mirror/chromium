@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c676a4e_ea8e1c89",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-12T19:12:37Z",
+      "side": 1,
+      "message": "use client()-\u003eGetPrefs() here? And remove pref_service_ in TestAutofillManager?",
+      "range": {
+        "startLine": 724,
+        "startChar": 48,
+        "endLine": 724,
+        "endChar": 61
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21193736_6f2c6579",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-12T19:12:37Z",
+      "side": 1,
+      "message": "LGTM. Can you share what\u0027s the benefit to use unique pointer here?",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 44
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1dc1cb_0e613e8e",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-12T19:12:37Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 68
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b856853d_84f652bb",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-12T19:12:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in a constant file?",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 40
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416d8f4e_476f0a9f",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-12T19:12:37Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 390,
+        "startChar": 3,
+        "endLine": 390,
+        "endChar": 66
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
