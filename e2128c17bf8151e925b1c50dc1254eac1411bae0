@@ -34,6 +34,24 @@
       "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c7372f_037df9a9",
+        "filename": "BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T17:18:07Z",
+      "side": 1,
+      "message": "My understanding from past conversations with @dbeam is that we don\u0027t want every developer who builds Chrome to have to setup and depend on Java. Only Android builds currently depend on Java. Are you sure that the larger chromium community will be OK with this?\n\nMy suggestion is to make small incremental steps, by switching our existing bot to use GN, without affecting Chromium builds otherwise. Once we feel confident about the performance we can re-consider, but I don\u0027t think this can be turned on without having a discussion about Java dependency for Win,Mac,Linux both on chromium-dev and chrome-eng-review.",
+      "parentUuid": "c4a2e9f6_ee457b67",
+      "revId": "e2128c17bf8151e925b1c50dc1254eac1411bae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
