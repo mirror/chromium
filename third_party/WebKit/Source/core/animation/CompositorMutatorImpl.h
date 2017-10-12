@@ -30,14 +30,15 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
  public:
   static std::unique_ptr<CompositorMutatorClient> CreateClient();
   static CompositorMutatorImpl* Create();
+  static CompositorMutatorImpl* CreateForTest();
 
   // CompositorMutator implementation.
-  bool Mutate(double monotonic_time_now) override;
+  void Mutate(double monotonic_time_now) override;
+  // TODO(majidvp): Remove when timeline inputs are known.
+  bool HasAnimators() override;
 
   void RegisterCompositorAnimator(CompositorAnimator*);
   void UnregisterCompositorAnimator(CompositorAnimator*);
-
-  void SetNeedsMutate();
 
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
 
