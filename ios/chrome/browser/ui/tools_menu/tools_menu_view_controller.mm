@@ -16,6 +16,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/animation_util.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notification_delegate.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
@@ -116,6 +117,8 @@ NS_INLINE void AnimateInViews(NSArray* views,
   __weak ReadingListMenuNotifier* _readingListMenuNotifier;
 }
 
+// The view controller from which to present other view controllers.
+@property(nonatomic, weak, readonly) UIViewController* baseViewController;
 // Determines if the reading list should display a new feature badge. Defaults
 // to |NO|.
 @property(nonatomic, assign) BOOL showReadingListNewBadge;
@@ -140,6 +143,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 @implementation ToolsMenuViewController
 
+@synthesize baseViewController = _baseViewController;
 @synthesize showReadingListNewBadge = _showReadingListNewBadge;
 @synthesize highlightNewIncognitoTabCell = _highlightNewIncognitoTabCell;
 @synthesize engagementTracker = _engagementTracker;
@@ -228,6 +232,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 }
 
 - (void)initializeMenuWithConfiguration:(ToolsMenuConfiguration*)configuration {
+  _baseViewController = configuration.baseViewController;
   self.requestStartTime = configuration.requestStartTime;
   self.showReadingListNewBadge = configuration.showReadingListNewBadge;
   self.engagementTracker = configuration.engagementTracker;
@@ -592,7 +597,12 @@ NS_INLINE void AnimateInViews(NSArray* views,
         // menu, is no longer supported.
         DCHECK([menuItem tag] < 0);
         [_delegate commandWasSelected:[menuItem tag]];
-        [menuItem executeCommandWithDispatcher:self.dispatcher];
+        if ([menuItem tag] == TOOLS_SETTINGS_ITEM) {
+          [self.dispatcher
+              showSettingsFromViewController:self.baseViewController];
+        } else {
+          [menuItem executeCommandWithDispatcher:self.dispatcher];
+        }
       });
 }
 
