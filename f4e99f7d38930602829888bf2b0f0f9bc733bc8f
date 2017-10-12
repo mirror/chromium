@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "e02b2b16_b9653aa4",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-12T13:24:35Z",
+      "side": 1,
+      "message": "Thanks Vaclav but If I change the code as below using TestPasswordStore it is not working\nand giving Security Error.\n\nCan you please have a look.\n\nI changed as below :\n\n  GURL main_frame_url \u003d embedded_test_server()-\u003eGetURL(\n      \"www.foo.com\", \"/password/password_form_in_crosssite_iframe.html\");\n  NavigationObserver observer(WebContents());\n  ui_test_utils::NavigateToURL(browser(), main_frame_url);\n  observer.Wait();\n\n  // Create an iframe and navigate cross-site.\n  NavigationObserver iframe_observer(WebContents());\n  iframe_observer.SetPathToWaitFor(\"/password/crossite_iframe_content.html\");\n  GURL iframe_url \u003d embedded_test_server()-\u003eGetURL(\n      \"abc.foo.com\", \"/password/crossite_iframe_content.html\");\n  std::string create_iframe \u003d\n      base::StringPrintf(\"create_iframe(\u0027%s\u0027);\", iframe_url.spec().c_str());\n  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(RenderFrameHost(),\n                                                       create_iframe));\n  iframe_observer.Wait();\n\n  // Store a password for autofill later.\n  scoped_refptr\u003cpassword_manager::TestPasswordStore\u003e password_store \u003d\n  static_cast\u003cpassword_manager::TestPasswordStore*\u003e(\n      PasswordStoreFactory::GetForProfile(\n          browser()-\u003eprofile(), ServiceAccessType::IMPLICIT_ACCESS)\n          .get());\n  autofill::PasswordForm signin_form;\n  signin_form.signon_realm \u003d iframe_url.spec();\n  signin_form.origin \u003d iframe_url;\n  signin_form.username_value \u003d base::ASCIIToUTF16(\"temp\");\n  signin_form.password_value \u003d base::ASCIIToUTF16(\"pa55w0rd\");\n  password_store-\u003eAddLogin(signin_form);\n\n\n  // Visit the form again.\n  NavigationObserver reload_observer(WebContents());\n  ui_test_utils::NavigateToURL(browser(), main_frame_url);\n  reload_observer.Wait();\n\n  NavigationObserver iframe_observer_2(WebContents());\n  iframe_observer_2.SetPathToWaitFor(\"/password/crossite_iframe_content.html\");\n  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(RenderFrameHost(),\n                                                       create_iframe));\n  iframe_observer_2.Wait();\n\n  // Simulate the user interaction in the iframe which should trigger autofill.\n  // Click in the middle of the frame to avoid the border.\n  ASSERT_TRUE(content::ExecuteScriptWithoutUserGesture(\n      RenderFrameHost(),\n      \"var iframeRect \u003d document.getElementById(\"\n      \"\u0027iframe\u0027).getBoundingClientRect();\"));\n  int y;\n  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(\n      RenderFrameHost(),\n      \"window.domAutomationController.send((iframeRect.top +\"\n      \"iframeRect.bottom) / 2);\",\n      \u0026y));\n  int x;\n  ASSERT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(\n      RenderFrameHost(),\n      \"window.domAutomationController.send((iframeRect.left + iframeRect.right)\"\n      \"/ 2);\",\n      \u0026x));\n\n  content::SimulateMouseClickAt(\n      WebContents(), 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(x, y));\n\n    // Verify password has been autofilled\n  CheckElementValue(\"iframe\", \"password_field\", \"pa55w0rd\");\n\n  // Verify username has been autofilled\n  CheckElementValue(\"iframe\", \"username_field\", \"temp\");",
+      "parentUuid": "6495531d_4da1c0db",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2189,
+        "endChar": 38
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3287dffe_1c666e8c",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 4
