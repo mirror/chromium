@@ -17,6 +17,8 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
@@ -751,6 +753,75 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest,
         "</script>");
     main_document_response.Done();
     EXPECT_EQ(document_loaded_title, watcher.WaitAndGetTitle());
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(
+    ContentBrowserTest,
+    SamePageBrowserInitiatedNavigationWhileDocumentIsLoading) {
+  ControllableHttpResponse response_1(embedded_test_server(), "/main_document");
+  ControllableHttpResponse response_2(embedded_test_server(), "/main_document");
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  // 1) Starts at /main_document
+  GURL url(embedded_test_server()->GetURL("/main_document"));
+  shell()->LoadURL(url);
+  response_1.WaitForRequest();
+  response_1.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html><body><div id=\"anchor\"></div>Document loaded</body></html>");
+  response_1.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  // 2) Reload /main_document, it reaches the ReadyToCommit stage and then is
+  // slow to load.
+  TestNavigationManager observer_new_document(shell()->web_contents(), url);
+  shell()->Reload();
+  EXPECT_TRUE(observer_new_document.WaitForRequestStart());
+  observer_new_document.ResumeNavigation();
+  response_2.WaitForRequest();
+  response_2.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "<html><body><div id=\"anchor\"></div>First part of the response...");
+
+  EXPECT_TRUE(observer_new_document.WaitForResponse());
+  observer_new_document.ResumeNavigation();
+
+  // TODO(arthursonzogni): Find a better way to wait :-(
+  for (int i = 0; i < 10000; ++i) {
+    base::RunLoop().RunUntilIdle();
+  }
+
+  // 3) In the meantime, a browser-initiated same-document navigation happens.
+  GURL anchor_url(url.spec() + "#anchor");
+  TestNavigationManager observer_same_document(shell()->web_contents(),
+                                               anchor_url);
+  shell()->LoadURL(anchor_url);
+  observer_same_document.WaitForNavigationFinished();
+
+  // 4) The current document receives the end of its response.
+  response_2.Send(" ...second part of the response.</body></html>");
+  response_2.Done();
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+
+  // Test what is in the loaded document.
+  std::string html_content;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "domAutomationController.send(document.body.textContent)",
+      &html_content));
+
+  // TODO(arthursonzogni): The PlzNavigate case needs to be fixed.
+  // See http://crbug.com/773683.
+  if (IsBrowserSideNavigationEnabled() &&
+      !base::FeatureList::IsEnabled(features::kNetworkService)) {
+    EXPECT_EQ("First part of the response...", html_content);
+  } else {
+    EXPECT_EQ("First part of the response... ...second part of the response.",
+              html_content);
   }
 }
 

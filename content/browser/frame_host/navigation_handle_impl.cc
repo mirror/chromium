@@ -131,6 +131,8 @@ NavigationHandleImpl::NavigationHandleImpl(
       is_form_submission_(is_form_submission),
       expected_render_process_host_id_(ChildProcessHost::kInvalidUniqueID),
       weak_factory_(this) {
+  LOG(ERROR) << __func__ << "(" << url_
+             << ") IsSameDocument() = " << IsSameDocument();
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationHandle", this,
                            "frame_tree_node",
                            frame_tree_node_->frame_tree_node_id(), "url",
@@ -187,6 +189,9 @@ NavigationHandleImpl::NavigationHandleImpl(
 }
 
 NavigationHandleImpl::~NavigationHandleImpl() {
+  LOG(ERROR) << __func__ << "(" << url_
+             << ") IsSameDocument() = " << IsSameDocument()
+             << " HasCommitted() = " << HasCommitted();
   // Inform the RenderProcessHost to no longer expect a navigation.
   if (expected_render_process_host_id_ != ChildProcessHost::kInvalidUniqueID) {
     RenderProcessHost* process =
