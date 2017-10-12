@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575495f4_284dcc21",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T15:02:45Z",
+      "side": 1,
+      "message": "btw I find it a bit mysterious that this happens if it is enabled, but the NTP/startup are disabled. Why would a promo need to be shown if it is enabled?",
+      "revId": "1de06d9c3aea2f1abd838481ecd4624997927669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
