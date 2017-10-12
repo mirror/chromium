@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c8b0271_0075d0e3",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T03:32:13Z",
+      "side": 1,
+      "message": "Changed it back.",
+      "parentUuid": "6ab15eeb_b00e9f61",
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13062da7_5be77f44",
         "filename": "gpu/ipc/service/direct_composition_surface_win.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "21352300_7b5e1a6f",
+        "filename": "gpu/ipc/service/direct_composition_surface_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T03:32:13Z",
+      "side": 1,
+      "message": "Pulled this into a separate patch.",
+      "parentUuid": "13062da7_5be77f44",
+      "range": {
+        "startLine": 1090,
+        "startChar": 12,
+        "endLine": 1090,
+        "endChar": 32
+      },
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39926f9c_58ad0494",
         "filename": "ui/display/win/screen_win.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-11T22:56:01Z",
       "side": 1,
       "message": "this is what weak pointers are for",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 28
+      },
+      "revId": "48195256af3581d0b5d48cfffd04c0418019fdbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca23680_57bffc70",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T03:32:13Z",
+      "side": 1,
+      "message": "This went back to being a static method.",
+      "parentUuid": "39926f9c_58ad0494",
       "range": {
         "startLine": 234,
         "startChar": 16,
