@@ -16,6 +16,24 @@
       "revId": "a8b1707bb6ceec193bfa312308c2c6041e8629ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f0da53_f69ecc38",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T16:57:05Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "c736d168_3dc789c7",
+      "revId": "a8b1707bb6ceec193bfa312308c2c6041e8629ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

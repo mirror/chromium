@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0faf4350_1be3c407",
+        "filename": "ash/system/palette/tools/capture_region_mode.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T16:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650fcdb2_aa6e6baa",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf06950_56eb1e56",
         "filename": "ash/system/palette/tools/capture_screen_action.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0faf3e4_23878dd6",
+        "filename": "ash/system/palette/tools/capture_screen_action.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T16:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf06950_56eb1e56",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c64d741e_abf10669",
+        "filename": "ash/system/palette/tools/capture_screen_action.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T16:57:05Z",
+      "side": 1,
+      "message": "I want to look into it eventually.",
+      "parentUuid": "ec25669a_d9ed7db4",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72b6d17e_a48cf1ed",
         "filename": "ash/utility/screenshot_controller.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7d8822_3bc9e5f2",
+        "filename": "ash/utility/screenshot_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-12T16:57:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72b6d17e_a48cf1ed",
+      "revId": "ec5ed3cd13514d9d5a863c223006e7eaa707cb2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
