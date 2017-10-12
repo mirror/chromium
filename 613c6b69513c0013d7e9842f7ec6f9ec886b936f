@@ -16,6 +16,24 @@
       "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5128b0a_efbfaa57",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-12T04:25:04Z",
+      "side": 1,
+      "message": "Looks it\u0027s fine as we\u0027re calling ClearLoader() here, but I\u0027m not so familiar with this code.\n\nAdding yhirano@ and kouhei@ as they\u0027ve been reviewing hiroshige@\u0027s work on ImageLoader.",
+      "parentUuid": "a1ec642e_42a01342",
+      "revId": "613c6b69513c0013d7e9842f7ec6f9ec886b936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
