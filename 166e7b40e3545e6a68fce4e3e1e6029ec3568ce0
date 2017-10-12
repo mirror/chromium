@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "14913c26_5b9d036b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T22:59:13Z",
+      "side": 1,
+      "message": "nit: Please fix capitalization - thanks. :)\n\nWhy are we implementing this with a DOM Code, given that it\u0027s not a physical key on a keyboard?  i.e. you could instead just trigger an event with the DOM Key Assistant value, surely?",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13e5b42_1b28895b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T22:59:13Z",
+      "side": 1,
+      "message": "Please be more specific; either describe the feature to use to verify, or put those details in the bug and refer to it in the TEST\u003d text, for example.",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1738025f_cbb07c4b",
         "filename": "ash/accelerators/accelerator_table.h",
         "patchSetId": 3
@@ -19,6 +53,40 @@
         "endLine": 121,
         "endChar": 75
       },
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab9a428_e26c14d9",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T22:59:13Z",
+      "side": 1,
+      "message": "What is the distinction between \"start voice interaction\" and \"start voice interaction command\"?",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e36535b_f36a4cdb",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-12T22:59:13Z",
+      "side": 1,
+      "message": "Who is driving the standardization effort for LaunchAssistant, LaunchControlPanel, and this new assignment?\n\nWhy do we need an explicit LaunchAssistantVoiceCommand, rather than just using the LaunchAssistant value? Don\u0027t they trigger the same basic action?",
       "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
