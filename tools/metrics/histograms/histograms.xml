@@ -753,6 +753,28 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="Android.DownloadManager.ExistingNotificationsCount.ForegroundDisabled">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records the number of notifications that are already existing (presumably
+    displayed) when a new notification is being launched to help understand the
+    frequency of multiple downloads with downloads as a foreground service
+    disabled.
+  </summary>
+</histogram>
+
+<histogram
+    name="Android.DownloadManager.ExistingNotificationsCount.ForegroundEnabled">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records the number of notifications that are already existing (presumably
+    displayed) when a new notification is being launched to help understand the
+    frequency of multiple downloads with downloads as a foreground service
+    enabled.
+  </summary>
+</histogram>
+
 <histogram name="Android.DownloadManager.Filter"
     enum="AndroidDownloadFilterType">
   <owner>dfalcantara@chromium.org</owner>
@@ -761,6 +783,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Recorded when the user selects a filter from the Chrome download manager
     navigation drawer.
+  </summary>
+</histogram>
+
+<histogram name="Android.DownloadManager.ForegroundServiceLifecycle"
+    enum="Download.Notification.ForegroundLifecycle">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records instances where the foreground undergoes a lifecycle change (when
+    the foreground starts, changes pinned notification, or stops).
   </summary>
 </histogram>
 
@@ -788,6 +819,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>twellington@chromium.org</owner>
   <owner>ianwen@chromium.org</owner>
   <summary>Recorded when a download is opened.</summary>
+</histogram>
+
+<histogram name="Android.DownloadManager.NotificationInteraction"
+    enum="Download.Notification.Interactions">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records instances where a user interacts with a download notification (ie.
+    clicks on, pauses, resumes, cancels).
+  </summary>
+</histogram>
+
+<histogram name="Android.DownloadManager.NotificationLaunch"
+    enum="Download.Notification.LaunchType">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records instances when a notification is being launched for the first time
+    or relaunched due to the need to dissociate the notification from the
+    foreground (only on API less than 24).
+  </summary>
 </histogram>
 
 <histogram name="Android.DownloadManager.OtherExtensions.InitialCount"
@@ -827,6 +877,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The extension type for downloads that match the &quot;other&quot; filter
     type. Recorded when downloads are shared through the download manager.
+  </summary>
+</histogram>
+
+<histogram name="Android.DownloadManager.ServiceStopped.DownloadNotification"
+    enum="Download.Notification.ServiceStopped">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records instances where the DownloadNotificationService stops, using
+    expected stops as the denominator to understand the frequency of unexpected
+    stops (low memory, task removed, etc).
+  </summary>
+</histogram>
+
+<histogram name="Android.DownloadManager.ServiceStopped.Foreground"
+    enum="Download.Notification.ServiceStopped">
+  <owner>jming@chromium.org</owner>
+  <summary>
+    Records instances where the DownloadForegroundService stops, using expected
+    stops as the denominator to understand the frequency of unexpected stops
+    (low memory, task removed, etc).
   </summary>
 </histogram>
 
