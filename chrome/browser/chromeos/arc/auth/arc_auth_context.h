@@ -81,7 +81,7 @@ class ArcAuthContext : public UbertokenConsumer,
   bool skip_merge_session_for_testing_ = false;
 
   // Owned by content::BrowserContent. Used to isolate cookies for auth server
-  // communication and shared with ARC OptIn UI platform app.
+  // communication.
   content::StoragePartition* storage_partition_ = nullptr;
 
   PrepareCallback callback_;
