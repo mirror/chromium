@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1f6ac5c8_efb3e249",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T01:06:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5b464bc_5554f9ee",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9d4a95a_cabd04f8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 3
@@ -213,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e93681a6_727eab24",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T01:06:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d8c24799_80975074",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 18
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa202fb6_fe164c8d",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
         "patchSetId": 3
@@ -295,6 +343,30 @@
       "side": 1,
       "message": "Left as is since we did not move the ReportStuckItems call",
       "parentUuid": "9a84b6df_6ca48483",
+      "range": {
+        "startLine": 378,
+        "startChar": 36,
+        "endLine": 378,
+        "endChar": 62
+      },
+      "revId": "1141d18e47ade681dfc5da9f833496a6b0c3e6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2424d38d_206c71c9",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T01:06:12Z",
+      "side": 1,
+      "message": "This test covers the added functionality enough so this is a suggestion for a follow up CL:\nWe\u0027d better cover the whole of the current StaleEntryFinalizerTask implementation by repurposing some of the existing tests to also cover this reporting. This involves mostly changing dates and adding histogram checks.",
+      "parentUuid": "6b79608b_c656df7e",
       "range": {
         "startLine": 378,
         "startChar": 36,
