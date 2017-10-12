@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a923c092_71bb8c1c",
+        "filename": "content/browser/frame_host/frame_tree.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-12T20:07:32Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t seem to save much typing, and I think it\u0027s weird to introduce a public (even if only nominal) FrameTree::InterfaceProviderRequest type.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b49ecc_75923e81",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-12T20:07:32Z",
+      "side": 1,
+      "message": "nit: (here and in quite a few other places) you could just use nullptr to get an implicit default-constructed InterfaceRequest. Even if you wanted to add a clarifying comment:\n\n  nullptr /* interfaces_request */\n\nit\u0027s less verbose than typing out the typename.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61c504d_07d3ddec",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-12T20:07:32Z",
+      "side": 1,
+      "message": "nit: It might be a bit clearer to move this logic into a preceding statement:\n\n  if (!interfaces_request.is_pending())\n    interfaces_request \u003d mojo::MakeRequest(\u0026pending_interfaces_);",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120915d1_86b7ee03",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-12T20:07:32Z",
+      "side": 1,
+      "message": "nit nit: I guess while you\u0027re making this change, might as well update to std::make_unique? I noticed a few other places too",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
