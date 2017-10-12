@@ -16,6 +16,24 @@
       "revId": "4573c60f6eb9370a93c2cad4053f9a1cd76b2fbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38c111c_89a4c13a",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/HTMLAnchorElement/anchor-ismap-crash.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-10-12T05:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "709d7ffa_098d0896",
+      "revId": "4573c60f6eb9370a93c2cad4053f9a1cd76b2fbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
