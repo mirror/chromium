@@ -404,7 +404,8 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
   if (!node)
     return false;
 
-  if (node->IsTextNode() && (node->CanStartSelection() || result.IsOverLink()))
+  if (node->IsTextNode() &&
+      (node->CanStartSelection() || IsSelectingLink(result)))
     return true;
 
   return HasEditableStyle(*node);

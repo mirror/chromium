@@ -466,7 +466,7 @@ TEST_F(EventHandlerTest, ImagesCannotStartSelection) {
 }
 
 TEST_F(EventHandlerTest, AnchorTextCannotStartSelection) {
-  SetHtmlInnerHTML("<a id='id' href=bala>Anchor Text</a>");
+  SetHtmlInnerHTML("<a href='www'>Anchor Text</a>");
   Node* const link = GetDocument().body()->firstChild();
   LayoutPoint location = link->GetLayoutObject()->VisualRect().Center();
   HitTestResult hit =
@@ -474,6 +474,21 @@ TEST_F(EventHandlerTest, AnchorTextCannotStartSelection) {
           location);
   Node* const text = link->firstChild();
   EXPECT_FALSE(text->CanStartSelection());
+  EXPECT_TRUE(hit.IsOverLink());
+  EXPECT_FALSE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
+}
+
+TEST_F(EventHandlerTest, EditableAnchorTextCanStartSelection) {
+  SetHtmlInnerHTML("<a contenteditable='true' href='www'>Editable</a>");
+  Node* const link = GetDocument().body()->firstChild();
+  LayoutPoint location = link->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  Node* const text = link->firstChild();
+  EXPECT_TRUE(text->CanStartSelection());
   EXPECT_TRUE(hit.IsOverLink());
   EXPECT_TRUE(
       GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
