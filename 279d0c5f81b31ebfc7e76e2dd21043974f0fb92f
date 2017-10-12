@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "512df2f3_462bf3d0",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-10-12T19:00:16Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "0adb6572_1954ac46",
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8193407e_39df9911",
         "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-12T13:59:20Z",
       "side": 1,
       "message": "There is kPiFloat for this now, to ditch the Windows/M_PI issue.  I think there\u0027s also a ToDegrees around, but maybe it hasn\u0027t landed yet as CS doesn\u0027t show anything.",
+      "range": {
+        "startLine": 415,
+        "startChar": 45,
+        "endLine": 415,
+        "endChar": 49
+      },
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65de5c5b_a8dcfe76",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-10-12T19:00:16Z",
+      "side": 1,
+      "message": "changed M_PI to kPiFloat",
+      "parentUuid": "8193407e_39df9911",
       "range": {
         "startLine": 415,
         "startChar": 45,
@@ -56,6 +98,24 @@
       "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07d29da_9fab62d1",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-10-12T19:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e25eb86_8a9d2933",
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
