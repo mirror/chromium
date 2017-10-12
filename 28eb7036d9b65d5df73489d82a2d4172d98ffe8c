@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "096962aa_4a2ac381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T21:21:28Z",
+      "side": 1,
+      "message": "Getting the URI for a file causes a disk read.",
+      "range": {
+        "startLine": 267,
+        "startChar": 12,
+        "endLine": 267,
+        "endChar": 81
+      },
+      "revId": "28eb7036d9b65d5df73489d82a2d4172d98ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
