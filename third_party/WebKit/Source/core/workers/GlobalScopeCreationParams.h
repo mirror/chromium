@@ -76,7 +76,7 @@ struct CORE_EXPORT GlobalScopeCreationParams final {
   //
   // See SecurityOrigin::transferPrivilegesFrom() for details on what
   // privileges are transferred.
-  std::unique_ptr<SecurityOrigin::PrivilegeData> starter_origin_privilege_data;
+  RefPtr<SecurityOrigin> starter_origin;
 
   // This object is created and initialized on the thread creating
   // a new worker context, but ownership of it and this
