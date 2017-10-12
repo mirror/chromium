@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4bd0004_11efab2d",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-12T13:14:22Z",
+      "side": 1,
+      "message": "This test is unfortunately wrong.\n\nHovering a link should show a Hand pointer, not an I-beam (unless we are hovering _and_ selecting).\n\nHere\u0027s a fixup: https://chromium-review.googlesource.com/#/c/chromium/src/+/715901.",
+      "range": {
+        "startLine": 458,
+        "startChar": 9,
+        "endLine": 458,
+        "endChar": 13
+      },
+      "revId": "74ef53b06b1e1f1e775371296c3457f54a2b9eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
