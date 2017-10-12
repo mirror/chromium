@@ -1151,6 +1151,9 @@ extern const char kNtpCondensedLayoutDescription[];
 extern const char kNtpCondensedTileLayoutName[];
 extern const char kNtpCondensedTileLayoutDescription[];
 
+extern const char kSimpleUserActivationName[];
+extern const char kSimpleUserActivationDescription[];
+
 extern const char kSiteExplorationUiName[];
 extern const char kSiteExplorationUiDescription[];
 
