@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b025559_2fc02f14",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T00:42:42Z",
+      "side": 1,
+      "message": "This statement doesn\u0027t seem accurate.",
+      "revId": "891c3dc0bf683b87a01dfe34d0f717cae6e50524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
