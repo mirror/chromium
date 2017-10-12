@@ -22,6 +22,30 @@
       "revId": "a46afef10686d9463573a2b715916bd67b7dfbad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5b5c36_77f13723",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/double_click_after_last_cell.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-12T01:42:39Z",
+      "side": 1,
+      "message": "Good point!\n\nI think we can use comment syntax:\n- for DIV@0: \u003cdiv\u003e\u003c!--|--\u003ebar\u003c/div\u003e\n- for DIV@1: \u003cdiv\u003ebar\u003c!--|--\u003e\u003c/div\u003e\n\nFollowing code should remove the comment node and set boundary point\nat |parent_node| at |node-\u003eNodeIndex()|.\n\nvoid HandleCharacterData(CharacterData* node) {\n...\n    if (node-\u003elength() \u003d\u003d 0) {\n      // Remove |node| if it contains only selection markers.\n      ContainerNode* const parent_node \u003d node-\u003eparentNode();\n      DCHECK(parent_node) \u003c\u003c node;\n      const int offset_in_parent \u003d node-\u003eNodeIndex();\n      if (anchor_offset \u003e\u003d 0)\n        RecordSelectionAnchor(parent_node, offset_in_parent);\n      if (focus_offset \u003e\u003d 0)\n        RecordSelectionFocus(parent_node, offset_in_parent);\n      parent_node-\u003eremoveChild(node);\n      return;\n    }\n...\n}\n\nLet met try the patch[1] which requires selection at SPAN@0.",
+      "parentUuid": "635996a8_ce216f52",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "a46afef10686d9463573a2b715916bd67b7dfbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
