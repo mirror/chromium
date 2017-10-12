@@ -916,7 +916,8 @@ RendererBlinkPlatformImpl::CreateCanvasCaptureHandler(
     WebMediaStreamTrack* track) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   return CanvasCaptureHandler::CreateCanvasCaptureHandler(
-      size, frame_rate, RenderThread::Get()->GetIOTaskRunner(), track);
+      size, frame_rate, RenderThread::Get()->GetIOTaskRunner(),
+      RenderThreadImpl::current()->SharedMainThreadContextProvider(), track);
 #else
   return nullptr;
 #endif  // BUILDFLAG(ENABLE_WEBRTC)

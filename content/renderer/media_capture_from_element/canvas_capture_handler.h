@@ -25,6 +25,11 @@
 
 class SkImage;
 
+namespace viz {
+class ContextProvider;
+class GLHelper;
+}  // namespace viz
+
 namespace content {
 
 // CanvasCaptureHandler acts as the link between Blink side HTMLCanvasElement
@@ -46,10 +51,11 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const blink::WebSize& size,
       double frame_rate,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      const scoped_refptr<viz::ContextProvider>& context_provider,
       blink::WebMediaStreamTrack* track);
 
   // blink::WebCanvasCaptureHandler Implementation.
-  void SendNewFrame(const SkImage* image) override;
+  void SendNewFrame(sk_sp<SkImage> image) override;
   bool NeedsNewFrame() const override;
 
   // Functions called by media::VideoCapturerSource implementation.
@@ -60,7 +66,6 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const media::VideoCapturerSource::RunningCallback& running_callback);
   void RequestRefreshFrame();
   void StopVideoCapture();
-  blink::WebSize GetSourceSize() const { return size_; }
 
  private:
   // A VideoCapturerSource instance is created, which is responsible for handing
@@ -71,9 +76,22 @@ class CONTENT_EXPORT CanvasCaptureHandler final
       const blink::WebSize& size,
       double frame_rate,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      const scoped_refptr<viz::ContextProvider>& context_provider,
       blink::WebMediaStreamTrack* track);
 
-  void CreateNewFrame(const SkImage* image);
+  void DeliverNewFrame(sk_sp<SkImage> image);
+  void DeliverAsYUVFrame(bool isOpaque,
+                         bool flip,
+                         const uint8_t* source_ptr,
+                         const gfx::Size& image_size,
+                         SkColorType source_color_type);
+  void ReadPixelsSync(sk_sp<SkImage> image,
+                      const scoped_refptr<media::VideoFrame> temp_frame);
+  void ReadPixelsAsync(sk_sp<SkImage> image,
+                       const scoped_refptr<media::VideoFrame> temp_frame,
+                       bool flip,
+                       bool success);
+
   void AddVideoCapturerSourceToVideoTrack(
       std::unique_ptr<media::VideoCapturerSource> source,
       blink::WebMediaStreamTrack* web_track);
@@ -85,15 +103,11 @@ class CONTENT_EXPORT CanvasCaptureHandler final
   media::VideoCaptureFormat capture_format_;
   bool ask_for_new_frame_;
 
-  const blink::WebSize size_;
-  gfx::Size last_size;
-  std::vector<uint8_t> temp_data_;
-  size_t temp_data_stride_;
-  SkImageInfo image_info_;
   media::VideoFramePool frame_pool_;
-
+  std::unique_ptr<viz::GLHelper> gl_helper_;
   scoped_refptr<media::VideoFrame> last_frame_;
 
+  const scoped_refptr<viz::ContextProvider> context_provider_;
   const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
   std::unique_ptr<CanvasCaptureHandlerDelegate> delegate_;
 

@@ -12,7 +12,7 @@ namespace blink {
 CanvasDrawListener::~CanvasDrawListener() {}
 
 void CanvasDrawListener::SendNewFrame(sk_sp<SkImage> image) {
-  handler_->SendNewFrame(image.get());
+  handler_->SendNewFrame(image);
 }
 
 bool CanvasDrawListener::NeedsNewFrame() const {
