@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8b00e7_cb8679f4",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-12T16:26:14Z",
+      "side": 1,
+      "message": "Generally we prefer a line break before comments when used in lists like this.",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9194c0cf_10067606",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-12T16:26:14Z",
+      "side": 1,
+      "message": "Not useful.",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59061c34_c81b4d72",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-12T16:26:14Z",
+      "side": 1,
+      "message": "Maybe order above the Initialize() method, since you\u0027re implying that clients should call this before Initialize?\n\nThat said, I don\u0027t understand why you don\u0027t just return failure during Initialize? I realize you feel it\u0027s clearer, but can you elaborate further? Practically speaking, you\u0027d only want an API like this is if a Client (or some transitive step prior) is expensive to construct, but presumably it\u0027ll just be |this| for the calling class.\n\nOver time one comes to regret verbosity and repetition in APIs; you end up with every caller doing extra work to handle cases which would be a natural product of the API flow.",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d3c1b5_6131e56e",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-12T16:26:14Z",
+      "side": 1,
+      "message": "This is not necessary, just mark it a virtual ~ as you do with your subclasses?",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
