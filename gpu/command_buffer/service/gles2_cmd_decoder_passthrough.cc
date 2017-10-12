@@ -547,7 +547,7 @@ base::WeakPtr<GLES2Decoder> GLES2DecoderPassthroughImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-bool GLES2DecoderPassthroughImpl::Initialize(
+gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
     const scoped_refptr<gl::GLSurface>& surface,
     const scoped_refptr<gl::GLContext>& context,
     bool offscreen,
@@ -562,11 +562,13 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
-  if (!group_->Initialize(this, attrib_helper.context_type,
-                          disallowed_features)) {
-    group_ = NULL;  // Must not destroy ContextGroup if it is not initialized.
+  auto result =
+      group_->Initialize(this, attrib_helper.context_type, disallowed_features);
+  if (result != gpu::ContextResult::kSuccess) {
+    // Must not destroy ContextGroup if it is not initialized.
+    group_ = nullptr;
     Destroy(true);
-    return false;
+    return result;
   }
 
   // Extensions that are enabled via emulation on the client side or needed for
@@ -627,11 +629,7 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   // Each context initializes its own feature info because some extensions may
   // be enabled dynamically.  Don't disallow any features, leave it up to ANGLE
   // to dynamically enable extensions.
-  if (!feature_info_->Initialize(attrib_helper.context_type,
-                                 DisallowedFeatures())) {
-    Destroy(true);
-    return false;
-  }
+  feature_info_->Initialize(attrib_helper.context_type, DisallowedFeatures());
 
   // Check for required extensions
   // TODO(geofflang): verify
@@ -646,12 +644,12 @@ bool GLES2DecoderPassthroughImpl::Initialize(
           IsWebGLContextType(attrib_helper.context_type) ||
       !feature_info_->feature_flags().angle_request_extension) {
     Destroy(true);
-    return false;
+    return gpu::ContextResult::kFatalFailure;
   }
 
   if (attrib_helper.enable_oop_rasterization) {
     Destroy(true);
-    return false;
+    return gpu::ContextResult::kFatalFailure;
   }
 
   bind_generates_resource_ = group_->bind_generates_resource();
@@ -777,14 +775,18 @@ bool GLES2DecoderPassthroughImpl::Initialize(
     if (!emulated_back_buffer_->Resize(attrib_helper.offscreen_framebuffer_size,
                                        feature_info_.get())) {
       Destroy(true);
-      return false;
+      bool was_lost = CheckResetStatus();
+      return was_lost ? gpu::ContextResult::kTransientFailure
+                      : gpu::ContextResult::kFatalFailure;
     }
 
     if (FlushErrors()) {
       LOG(ERROR) << "Creation of the offscreen framebuffer failed because "
                     "errors were generated.";
       Destroy(true);
-      return false;
+      // TODO(???): Might some errors be fatal? But FlushErrors also checks for
+      // loss, split it up?
+      return gpu::ContextResult::kTransientFailure;
     }
 
     framebuffer_id_map_.SetIDMapping(
@@ -798,7 +800,7 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   }
 
   set_initialized();
-  return true;
+  return gpu::ContextResult::kSuccess;
 }
 
 void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
