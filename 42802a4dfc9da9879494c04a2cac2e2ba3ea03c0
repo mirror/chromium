@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b182ac16_51398adc",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T20:19:22Z",
+      "side": 1,
+      "message": "I\u0027m curious about the mechanism we plan to use for serializing ColorSpace.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c076b3c_7855cd1b",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_scanout_color_space.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T20:19:22Z",
+      "side": 1,
+      "message": "Should make sure that this generates and error if the texture isn\u0027t backed by a GLImage.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c9ea0c_0f404741",
+        "filename": "gpu/ipc/client/gpu_memory_buffer_impl_io_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T20:19:22Z",
+      "side": 1,
+      "message": "Consider merging into a common method with GLImageIOSurface.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e80ccb_696fdf0b",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-12T20:19:22Z",
+      "side": 1,
+      "message": "It may be worth combining this with the GpuMemoryBuffer function into an IOSurfaceSetColorSpace method.",
+      "revId": "42802a4dfc9da9879494c04a2cac2e2ba3ea03c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
