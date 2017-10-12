@@ -37,7 +37,7 @@ _log = logging.getLogger(__name__)
 
 
 class MacPort(base.Port):
-    SUPPORTED_VERSIONS = ('mac10.10', 'mac10.11', 'mac10.12', 'retina')
+    SUPPORTED_VERSIONS = ('mac10.10', 'mac10.11', 'mac10.12', 'mac10.13', 'retina')
     port_name = 'mac'
 
     # FIXME: We treat Retina (High-DPI) devices as if they are running
@@ -48,6 +48,12 @@ class MacPort(base.Port):
     # We also currently only support Retina on 10.11.
 
     FALLBACK_PATHS = {}
+
+    # FIXME(crbug.com/774301): ideally the 10.12 bots will fall back to the
+    # 10.13 bots, but we can't really make that happen until we have 10.13
+    # on the main waterfalls.
+    # FALLBACK_PATHS['mac10.13'] = ['mac']
+    # FALLBACK_PATHS['mac10.12'] = ['mac-mac10.12'] + FALLBACK_PATHS['mac10.13']
     FALLBACK_PATHS['mac10.12'] = ['mac']
     FALLBACK_PATHS['mac10.11'] = ['mac-mac10.11'] + FALLBACK_PATHS['mac10.12']
     FALLBACK_PATHS['mac10.10'] = ['mac-mac10.10'] + FALLBACK_PATHS['mac10.11']
