@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adc1ee2_608dbc49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "This part isn\u0027t necessary.",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8365f140_f6aacd44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "That\u0027s quite a mouthful... :) Maybe just PrefObserver? I mean, you could even replace it with just Runnable...",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ceab64_d59fe4a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "Can you make this final and initialize here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 53,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd71679_1b6661ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "Currently this only supports one observer per pref. That\u0027s probably fine for what we need (and IIRC that\u0027s what the native side does too), but should we make that explicit and assert it here?",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d916bd3_68e1d8cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "I think this should be an assert, because this case should never happen in the absence of bugs.\n\n(You\u0027ll get a crash in line 65 anyway, but with the assert you can add the preference key to the error message.)",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 48
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8174d42d_dc503f72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefChangeRegistrar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "Ugh, finalizers :-/\n\nWe generally try to avoid finalizers, because they\u0027re sort-of deprecated / discouraged in Java overall at this point (see https://stuartmarks.wordpress.com/2017/04/17/deprecation-of-object-finalize/), and in particular on Android don\u0027t work very well and tend to have performance implications. Tommy is working on a mechanism to automatically destroy native objects in CL:704180, but that\u0027s not landed yet. I think in the mean time you\u0027re just going to have to demand that clients call destroy() when they\u0027re done with the object (which also has the advantage that destroy() doesn\u0027t have to be idempotent anymore, because it would be equally strange to have several calls to destroy()).",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4764bd_313708b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "Can you\n1) add to the comment where exactly the pref names are coming from (i.e. pref_names.{cc,h})?\n2) add a TODO to automatically generate them?\n\nIf we start doing this at scale, we should maybe also think about whether we even want to represent the pref names as strings in Java, because that could add a lot of overhead (both to APK size and memory use). Maybe on the Java side they could just be ints, with methods to get the pref names if necessary (which should only be for debugging or so).",
+      "range": {
+        "startLine": 59,
+        "startChar": 67,
+        "endLine": 59,
+        "endChar": 78
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076bb592_9eecc6a6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "As an aside, we should totally have a helper function that takes a Callable\u003cBoolean\u003e and maybe a description and returns a Criteria for it, so we can just use that with lambdas.",
+      "range": {
+        "startLine": 702,
+        "startChar": 27,
+        "endLine": 702,
+        "endChar": 40
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4265d5c_35bcfebd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "This could be a lambda.",
+      "range": {
+        "startLine": 708,
+        "startChar": 60,
+        "endLine": 710,
+        "endChar": 50
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d0a13b_735e17d1",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "You don\u0027t actually need to bind the pref name here -- PrefChangeRegistrar has an overload that takes a Callback with a string argument, and it will supply the pref name itself.",
+      "range": {
+        "startLine": 44,
+        "startChar": 50,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb29f72_77c998a5",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "`explicit` is only necessary for single-argument constructors.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99eeccc5_0e7a22a3",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "Pass C++ strings by const ref. Also, can this method be private?",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d5df68_8536fd31",
+        "filename": "chrome/browser/android/preferences/pref_change_registrar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-12T12:15:42Z",
+      "side": 1,
+      "message": "I think you could just make this a direct member.",
+      "range": {
+        "startLine": 32,
+        "startChar": 39,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "7ca799cbb193938515c9cc2b38e0cee4a57e5233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
