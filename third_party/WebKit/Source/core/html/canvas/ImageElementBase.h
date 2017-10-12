@@ -41,9 +41,6 @@ class CORE_EXPORT ImageElementBase : public CanvasImageSource,
 
   bool IsAccelerated() const override;
 
-  int SourceWidth() override;
-  int SourceHeight() override;
-
   bool IsSVGSource() const override;
 
   bool IsOpaque() const override;
