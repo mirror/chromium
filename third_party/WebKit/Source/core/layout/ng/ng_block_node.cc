@@ -9,6 +9,7 @@
 #include "core/layout/LayoutMultiColumnSet.h"
 #include "core/layout/MinMaxSize.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/layout/ng/ng_block_break_token.h"
@@ -144,8 +145,16 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
-      layout_result->UnpositionedFloats().IsEmpty())
-    CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+      layout_result->UnpositionedFloats().IsEmpty()) {
+    if (AreNGBlockFlowChildrenInline(ToLayoutNGBlockFlow(box_)) &&
+        FirstChild()) {
+      NGInlineNode node = ToNGInlineNode(FirstChild());
+      node.CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+      CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+    } else {
+      CopyFragmentDataToLayoutBox(constraint_space, *layout_result);
+    }
+  }
 
   return layout_result;
 }
@@ -360,9 +369,10 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
 
     // At the moment "anonymous" fragments for inline layout will have the same
     // layout object as ourselves, we need to copy its floats across.
-    if (child_object == box_) {
+    // TODO FIXME remove.
+    /*if (child_fragment->IsLineBox() || child_object == box_) {
       for (const auto& maybe_float_fragment :
-           ToNGPhysicalBoxFragment(child_fragment.get())->Children()) {
+           ToNGPhysicalLineBoxFragment(child_fragment.get())->Children()) {
         // The child of the anonymous fragment might be just a line-box
         // fragment - ignore.
         if (IsFloatFragment(*maybe_float_fragment)) {
@@ -374,7 +384,11 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
         }
       }
       continue;
-    }
+    }*/
+
+    if (!child_fragment->IsBox())
+      continue;
+
     const auto& box_fragment = *ToNGPhysicalBoxFragment(child_fragment.get());
     if (IsFirstFragment(constraint_space, box_fragment))
       CopyChildFragmentPosition(box_fragment, offset_from_start);

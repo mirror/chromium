@@ -25,6 +25,7 @@ struct NGPreviousInflowPosition {
   LayoutUnit logical_block_offset;
   NGMarginStrut margin_strut;
   bool empty_block_affected_by_clearance;
+  RefPtr<NGBreakToken> break_token;
 };
 
 // This strut holds information for the current inflow child. The data is not
@@ -38,21 +39,23 @@ struct NGInflowChildData {
 // Updates the fragment's BFC offset if it's not already set.
 bool MaybeUpdateFragmentBfcOffset(const NGConstraintSpace&,
                                   LayoutUnit bfc_block_offset,
-                                  NGFragmentBuilder* builder);
+                                  NGBaseFragmentBuilder* builder);
 
 // Positions pending floats starting from {@origin_block_offset} and relative
 // to container's BFC offset.
 void PositionPendingFloats(
     const NGConstraintSpace&,
     LayoutUnit origin_block_offset,
-    NGFragmentBuilder* container_builder,
+    NGBaseFragmentBuilder* container_builder,
     Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
     NGExclusionSpace*);
 
 // A class for general block layout (e.g. a <div> with no special style).
 // Lays out the children in sequence.
 class CORE_EXPORT NGBlockLayoutAlgorithm
-    : public NGLayoutAlgorithm<NGBlockNode, NGBlockBreakToken> {
+    : public NGLayoutAlgorithm<NGBlockNode,
+                               NGFragmentBuilder,
+                               NGBlockBreakToken> {
  public:
   // Default constructor.
   // @param node The input node to perform layout upon.
@@ -89,8 +92,8 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
       const NGLogicalOffset& logical_offset,
       const NGLayoutResult& layout_result,
       const NGFragment& fragment,
-      bool empty_block_affected_by_clearance);
-
+      bool empty_block_affected_by_clearance,
+      RefPtr<NGBreakToken> break_token);
 
   // Positions the fragment that knows its BFC offset.
   WTF::Optional<NGBfcOffset> PositionWithBfcOffset(

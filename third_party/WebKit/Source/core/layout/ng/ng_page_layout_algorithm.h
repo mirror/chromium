@@ -13,10 +13,11 @@ class NGBlockNode;
 class NGBlockBreakToken;
 class NGBreakToken;
 class NGConstraintSpace;
+class NGFragmentBuilder;
 struct NGLogicalSize;
 
 class CORE_EXPORT NGPageLayoutAlgorithm
-    : public NGLayoutAlgorithm<NGBlockNode, NGBlockBreakToken> {
+    : public NGLayoutAlgorithm<NGBlockNode, NGFragmentBuilder, NGBlockBreakToken> {
  public:
   NGPageLayoutAlgorithm(NGBlockNode node,
                         const NGConstraintSpace& space,
