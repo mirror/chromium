@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f7743e9_6383d130",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T21:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790424ec_791e6fcb",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e377e0_5932e60d",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15670622_03e52d24",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T21:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e377e0_5932e60d",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "09b273f7_2f00ae8d",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T21:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a37cfdd_23b75489",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3844f03_94881a6a",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "91c16362_0a3e81f5",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T21:55:47Z",
+      "side": 1,
+      "message": "Removing this log all together since the displays are already logged in line #357.",
+      "parentUuid": "c3844f03_94881a6a",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca99712f_689738ad",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21faabe6_157c0b74",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-12T21:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca99712f_689738ad",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
