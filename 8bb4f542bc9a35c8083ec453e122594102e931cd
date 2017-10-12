@@ -34,6 +34,24 @@
       "revId": "8bb4f542bc9a35c8083ec453e122594102e931cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72786ee5_4cd05ed3",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-12T18:33:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "279d6acc_a49358ac",
+      "revId": "8bb4f542bc9a35c8083ec453e122594102e931cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
