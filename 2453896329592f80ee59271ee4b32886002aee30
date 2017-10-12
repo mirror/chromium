@@ -16,6 +16,29 @@
       "revId": "2453896329592f80ee59271ee4b32886002aee30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53b9a62_05f949bd",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-12T19:40:49Z",
+      "side": 1,
+      "message": "Isn\u0027t it supposed to be transparent black? \"SkColorSetA(SK_ColorBLACK, 20)\"?",
+      "range": {
+        "startLine": 48,
+        "startChar": 41,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "2453896329592f80ee59271ee4b32886002aee30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
