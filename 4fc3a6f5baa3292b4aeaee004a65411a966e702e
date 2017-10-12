@@ -22,6 +22,30 @@
       "revId": "4fc3a6f5baa3292b4aeaee004a65411a966e702e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ea8b1d_d1f4006c",
+        "filename": "ui/base/ime/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000499
+      },
+      "writtenOn": "2017-10-12T20:16:58Z",
+      "side": 1,
+      "message": "Sounds good. I\u0027m no longer a good reviewer for this directory.",
+      "parentUuid": "454eb59e_35840e49",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "4fc3a6f5baa3292b4aeaee004a65411a966e702e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
