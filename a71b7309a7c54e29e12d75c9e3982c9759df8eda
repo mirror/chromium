@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6157140_b046349f",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-12T23:10:17Z",
+      "side": 1,
+      "message": "Will implement the GetExtensionActionActionInfo() equivalent in another patch or separate CL.",
+      "range": {
+        "startLine": 42,
+        "startChar": 27,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b3cc9e_abd48fbf",
+        "filename": "chrome/common/extensions/api/extension_action/action_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-12T23:10:17Z",
+      "side": 1,
+      "message": "WDYT of the naming? Initially it was going to be SetActionActionInfo(), but ExtensionAction may be clearer.",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "a71b7309a7c54e29e12d75c9e3982c9759df8eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
