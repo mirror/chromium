@@ -45,6 +45,8 @@ Console.ConsoleViewMessage = class {
     this._repeatCount = 1;
     this._closeGroupDecorationCount = 0;
     this._nestingLevel = nestingLevel;
+    /** @type {!Array<!ConsoleModel.ConsoleMessage>|undefined} */
+    this._textDuplicateMessages;
 
     /** @type {?DataGrid.DataGrid} */
     this._dataGrid = null;
@@ -52,6 +54,28 @@ Console.ConsoleViewMessage = class {
     this._searchRegex = null;
     /** @type {?UI.Icon} */
     this._messageLevelIcon = null;
+  }
+
+  /**
+   * @param {!Event} event
+   * @return {?UI.PopoverRequest}
+   */
+  _getPopoverRequest(event) {
+    var traceIcon = event.target.enclosingNodeOrSelfWithClass('trace-icon');
+    if (!traceIcon)
+      return null;
+    var hoverDetails = traceIcon.hoverDetails;
+    if (!hoverDetails)
+      return;
+    return {
+      box: traceIcon.boxInWindow(),
+      show: popover => {
+        var content = Components.DOMPresentationUtils.buildStackTracePreviewContents(
+            hoverDetails.target, hoverDetails.linkifier, hoverDetails.stack);
+        popover.contentElement.appendChild(content);
+        return Promise.resolve(true);
+      }
+    };
   }
 
   /**
@@ -117,7 +141,7 @@ Console.ConsoleViewMessage = class {
     var formattedMessage = createElement('span');
     UI.appendStyle(formattedMessage, 'object_ui/objectValue.css');
     formattedMessage.className = 'source-code';
-    var anchorElement = this._buildMessageAnchor();
+    var anchorElement = Console.ConsoleViewMessage._buildMessageAnchor(this._message, this._linkifier);
     if (anchorElement)
       formattedMessage.appendChild(anchorElement);
     var badgeElement = this._buildMessageBadge();
@@ -255,10 +279,12 @@ Console.ConsoleViewMessage = class {
       } else {
         messageElement = this._format([messageText]);
       }
+    } else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation) {
+        messageElement = createElement('span');
+        messageElement.textContent = Common.UIString('[Violation] %s', this._message.messageText);
+        this._dupesContainer = messageElement.createChild('div', 'dupes-container');
     } else {
-      if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
-        messageText = Common.UIString('[Violation] %s', messageText);
-      else if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Intervention)
+      if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Intervention)
         messageText = Common.UIString('[Intervention] %s', messageText);
       if (this._message.source === ConsoleModel.ConsoleMessage.MessageSource.Deprecation)
         messageText = Common.UIString('[Deprecation] %s', messageText);
@@ -271,7 +297,7 @@ Console.ConsoleViewMessage = class {
     UI.appendStyle(formattedMessage, 'object_ui/objectValue.css');
     formattedMessage.className = 'source-code';
 
-    var anchorElement = this._buildMessageAnchor();
+    var anchorElement = Console.ConsoleViewMessage._buildMessageAnchor(this._message, this._linkifier);
     if (anchorElement)
       formattedMessage.appendChild(anchorElement);
     var badgeElement = this._buildMessageBadge();
@@ -282,27 +308,43 @@ Console.ConsoleViewMessage = class {
   }
 
   /**
+   * @param {!ConsoleModel.ConsoleMessage} message
+   * @param {!Components.Linkifier} linkifier
+   * @param {boolean=} withTraceIcon
    * @return {?Element}
    */
-  _buildMessageAnchor() {
+  static _buildMessageAnchor(message, linkifier, withTraceIcon) {
     var anchorElement = null;
-    if (this._message.source !== ConsoleModel.ConsoleMessage.MessageSource.Network || this._message.request) {
-      if (this._message.scriptId) {
-        anchorElement = this._linkifyScriptId(
-            this._message.scriptId, this._message.url || '', this._message.line, this._message.column);
-      } else if (this._message.stackTrace && this._message.stackTrace.callFrames.length) {
-        anchorElement = this._linkifyStackTraceTopFrame(this._message.stackTrace);
-      } else if (this._message.url && this._message.url !== 'undefined') {
-        anchorElement = this._linkifyLocation(this._message.url, this._message.line, this._message.column);
+    if (message.source !== ConsoleModel.ConsoleMessage.MessageSource.Network || message.request) {
+      var runtimeModel = message.runtimeModel();
+      if (!runtimeModel)
+        return null;
+      if (message.scriptId) {
+        anchorElement = linkifier.linkifyScriptLocation(
+            runtimeModel.target(), message.scriptId, message.url || '', message.line, message.column);
+      } else if (message.stackTrace && message.stackTrace.callFrames.length) {
+        anchorElement = linkifier.linkifyStackTraceTopFrame(runtimeModel.target(), message.stackTrace);
+      } else if (message.url && message.url !== 'undefined') {
+        anchorElement = linkifier.linkifyScriptLocation(
+            runtimeModel.target(), null, message.url, message.line, message.column);
       }
-    } else if (this._message.url) {
+    } else if (message.url) {
       anchorElement =
-          Components.Linkifier.linkifyURL(this._message.url, {maxLength: Console.ConsoleViewMessage.MaxLengthForLinks});
+          Components.Linkifier.linkifyURL(message.url, {maxLength: Console.ConsoleViewMessage.MaxLengthForLinks});
     }
 
     // Append a space to prevent the anchor text from being glued to the console message when the user selects and copies the console messages.
     if (anchorElement) {
       var anchorWrapperElement = createElementWithClass('span', 'console-message-anchor');
+      if (message.stackTrace && withTraceIcon) {
+        var traceIcon = UI.Icon.create('smallicon-network-product', 'trace-icon');
+        anchorWrapperElement.appendChild(traceIcon);
+        traceIcon.hoverDetails = {
+          stack: message.stackTrace,
+          target: message.runtimeModel() ? message.runtimeModel().target() : null,
+          linkifier: linkifier
+        };
+      }
       anchorWrapperElement.appendChild(anchorElement);
       anchorWrapperElement.createTextChild(' ');
       return anchorWrapperElement;
@@ -397,43 +439,6 @@ Console.ConsoleViewMessage = class {
 
     toggleElement._expandStackTraceForTest = expandStackTrace.bind(null, true);
     return toggleElement;
-  }
-
-  /**
-   * @param {string} url
-   * @param {number} lineNumber
-   * @param {number} columnNumber
-   * @return {?Element}
-   */
-  _linkifyLocation(url, lineNumber, columnNumber) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyScriptLocation(
-        this._message.runtimeModel().target(), null, url, lineNumber, columnNumber);
-  }
-
-  /**
-   * @param {!Protocol.Runtime.StackTrace} stackTrace
-   * @return {?Element}
-   */
-  _linkifyStackTraceTopFrame(stackTrace) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyStackTraceTopFrame(this._message.runtimeModel().target(), stackTrace);
-  }
-
-  /**
-   * @param {string} scriptId
-   * @param {string} url
-   * @param {number} lineNumber
-   * @param {number} columnNumber
-   * @return {?Element}
-   */
-  _linkifyScriptId(scriptId, url, lineNumber, columnNumber) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyScriptLocation(
-        this._message.runtimeModel().target(), scriptId, url, lineNumber, columnNumber);
   }
 
   /**
@@ -989,6 +994,10 @@ Console.ConsoleViewMessage = class {
 
     this._element = createElement('div');
     this.updateMessageElement();
+
+    this._popoverHelper = new UI.PopoverHelper(this._element, this._getPopoverRequest.bind(this));
+    this._popoverHelper.setHasPadding(true);
+    this._popoverHelper.setTimeout(300, 300);
     return this._element;
   }
 
@@ -1062,6 +1071,8 @@ Console.ConsoleViewMessage = class {
   }
 
   resetIncrementRepeatCount() {
+    if (this._textDuplicateMessages)
+      delete this._textDuplicateMessages;
     this._repeatCount = 1;
     if (!this._repeatCountElement)
       return;
@@ -1072,7 +1083,15 @@ Console.ConsoleViewMessage = class {
     delete this._repeatCountElement;
   }
 
-  incrementRepeatCount() {
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} textDuplicateMessage
+   */
+  incrementRepeatCount(textDuplicateMessage) {
+    if (textDuplicateMessage) {
+      if (!this._textDuplicateMessages)
+        this._textDuplicateMessages = [];
+      this._textDuplicateMessages.push(textDuplicateMessage);
+    }
     this._repeatCount++;
     this._showRepeatCountElement();
   }
@@ -1100,6 +1119,33 @@ Console.ConsoleViewMessage = class {
       this._contentElement.classList.add('repeated-message');
     }
     this._repeatCountElement.textContent = this._repeatCount;
+
+    if (!this._dupesContainer || !this._textDuplicateMessages || !this._textDuplicateMessages.length)
+      return;
+
+    this._dupesContainer.removeChildren();
+    this._dupesContainer.createChild('span').textContent = Common.UIString('Also found at: ');
+    var dupeAnchors = this._textDuplicateMessages.map(message => {
+      var savedAnchor = Console.ConsoleViewMessage._messageToAnchor.get(message);
+      if (!savedAnchor) {
+        savedAnchor = Console.ConsoleViewMessage._buildMessageAnchor(message, this._linkifier, true /* withTraceIcon */);
+        Console.ConsoleViewMessage._messageToAnchor.set(message, savedAnchor);
+      }
+      return savedAnchor;
+    }).filter(anchor => !!anchor);
+    var maxVisible = 3;
+    this._dupesContainer.appendChildren.apply(this._dupesContainer, dupeAnchors.slice(0, maxVisible));
+    var hiddenDupeAnchors = dupeAnchors.slice(maxVisible);
+    if (hiddenDupeAnchors.length) {
+      var hiddenFragment = createDocumentFragment();
+      hiddenFragment.appendChildren.apply(hiddenFragment, hiddenDupeAnchors);
+      var expandableText = this._dupesContainer.createChild('span', 'expandable-text');
+      expandableText.textContent = Common.UIString(`and ${hiddenDupeAnchors.length} more`);
+      expandableText.addEventListener('click', () => {
+        this._dupesContainer.insertBefore(hiddenFragment, expandableText);
+        expandableText.remove();
+      });
+    }
   }
 
   get text() {
@@ -1352,3 +1398,6 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
  * @type {number}
  */
 Console.ConsoleViewMessage.MaxLengthForLinks = 40;
+
+/** @type {!WeakMap<!ConsoleModel.ConsoleMessage, ?Element>} */
+Console.ConsoleViewMessage._messageToAnchor = new WeakMap();

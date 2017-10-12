@@ -296,7 +296,7 @@ void EventTarget::SetDefaultAddEventListenerOptions(
 
     PerformanceMonitor::ReportGenericViolation(
         GetExecutionContext(), PerformanceMonitor::kDiscouragedAPIUse,
-        message_text, 0, nullptr);
+        message_text, 0, nullptr, true);
   }
 }
 
@@ -379,7 +379,7 @@ void EventTarget::AddedEventListener(
           event_type.GetString().Utf8().data());
       PerformanceMonitor::ReportGenericViolation(
           context, PerformanceMonitor::kDiscouragedAPIUse, message_text, 0,
-          nullptr);
+          nullptr, true);
     }
   }
 }

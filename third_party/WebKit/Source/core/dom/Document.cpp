@@ -3484,7 +3484,7 @@ void Document::write(const SegmentedString& text,
   DCHECK(parser_);
   PerformanceMonitor::ReportGenericViolation(
       this, PerformanceMonitor::kDiscouragedAPIUse,
-      "Avoid using document.write().", 0, nullptr);
+      "Avoid using document.write().", 0, nullptr, true);
   probe::breakableLocation(this, "Document.write");
   parser_->insert(text);
 }

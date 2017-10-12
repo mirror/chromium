@@ -161,6 +161,8 @@ Console.ConsoleView = class extends UI.VBox {
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
     this._consoleMessages = [];
+    /** @type {!Map<string, !Console.ConsoleViewMessage>} */
+    this._textToVisibileViolation = new Map();
     this._viewMessageSymbol = Symbol('viewMessage');
 
     this._consoleHistorySetting = Common.settings.createLocalSetting('consoleHistory', []);
@@ -490,6 +492,8 @@ Console.ConsoleView = class extends UI.VBox {
 
     if (this._tryToCollapseMessages(viewMessage, this._visibleViewMessages.peekLast()))
       return;
+    if (viewMessage.consoleMessage().source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
+      this._textToVisibileViolation.set(viewMessage.text, viewMessage);
 
     var lastMessage = this._visibleViewMessages.peekLast();
     if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
@@ -641,9 +645,18 @@ Console.ConsoleView = class extends UI.VBox {
    * @return {boolean}
    */
   _tryToCollapseMessages(lastMessage, viewMessage) {
+    var lastConsoleMessage = lastMessage.consoleMessage();
+    if (lastConsoleMessage.source === ConsoleModel.ConsoleMessage.MessageSource.Violation) {
+      var olderViolation = this._textToVisibileViolation.get(lastMessage.text);
+      if (olderViolation) {
+        olderViolation.incrementRepeatCount(lastConsoleMessage);
+        return true;
+      }
+    }
+
     var timestampsShown = this._timestampsSetting.get();
-    if (!timestampsShown && viewMessage && !lastMessage.consoleMessage().isGroupMessage() &&
-        lastMessage.consoleMessage().isEqual(viewMessage.consoleMessage())) {
+    if (!timestampsShown && viewMessage && !lastConsoleMessage.isGroupMessage() &&
+        lastConsoleMessage.isEqual(viewMessage.consoleMessage())) {
       viewMessage.incrementRepeatCount();
       return true;
     }
@@ -661,6 +674,7 @@ Console.ConsoleView = class extends UI.VBox {
       this._visibleViewMessages[i].resetIncrementRepeatCount();
     }
     this._visibleViewMessages = [];
+    this._textToVisibileViolation.clear();
     for (var i = 0; i < this._consoleMessages.length; ++i)
       this._appendMessageToEnd(this._consoleMessages[i]);
     this._updateFilterStatus();

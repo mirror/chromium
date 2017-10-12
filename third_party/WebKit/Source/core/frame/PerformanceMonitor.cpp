@@ -42,13 +42,15 @@ void PerformanceMonitor::ReportGenericViolation(
     Violation violation,
     const String& text,
     double time,
-    std::unique_ptr<SourceLocation> location) {
+    std::unique_ptr<SourceLocation> location,
+    bool order_independent = false) {
   PerformanceMonitor* monitor =
       PerformanceMonitor::InstrumentingMonitor(context);
   if (!monitor)
     return;
   monitor->InnerReportGenericViolation(context, violation, text, time,
-                                       std::move(location));
+                                       std::move(location),
+                                       order_independent);
 }
 
 // static
@@ -336,7 +338,7 @@ void PerformanceMonitor::DocumentWriteFetchScript(Document* document) {
   if (!enabled_)
     return;
   String text = "Parser was blocked due to document.write(<script>)";
-  InnerReportGenericViolation(document, kBlockedParser, text, 0, nullptr);
+  InnerReportGenericViolation(document, kBlockedParser, text, 0, nullptr, true);
 }
 
 void PerformanceMonitor::WillProcessTask(double start_time) {
@@ -411,7 +413,8 @@ void PerformanceMonitor::InnerReportGenericViolation(
     Violation violation,
     const String& text,
     double time,
-    std::unique_ptr<SourceLocation> location) {
+    std::unique_ptr<SourceLocation> location,
+    bool order_independent = false) {
   ClientThresholds* client_thresholds = subscriptions_.at(violation);
   if (!client_thresholds)
     return;
@@ -419,7 +422,7 @@ void PerformanceMonitor::InnerReportGenericViolation(
     location = SourceLocation::Capture(context);
   for (const auto& it : *client_thresholds) {
     if (it.value < time)
-      it.key->ReportGenericViolation(violation, text, time, location.get());
+      it.key->ReportGenericViolation(violation, text, time, location.get(), order_independent);
   }
 }
 

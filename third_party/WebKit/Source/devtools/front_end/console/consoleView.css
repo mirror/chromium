@@ -314,7 +314,7 @@
     clear: both;
 }
 
-.console-message-anchor {
+:not(.dupes-container) > .console-message-anchor {
     float: right;
     text-align: right;
     max-width: 100%;
