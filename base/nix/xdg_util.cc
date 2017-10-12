@@ -59,8 +59,6 @@ DesktopEnvironment GetDesktopEnvironment(Environment* env) {
   if (env->GetVar("XDG_CURRENT_DESKTOP", &xdg_current_desktop)) {
     // Not all desktop environments set this env var as of this writing.
     if (base::StartsWith(xdg_current_desktop, "Unity",
-                         base::CompareCase::SENSITIVE) ||
-        base::StartsWith(xdg_current_desktop, "Pantheon",
                          base::CompareCase::SENSITIVE)) {
       // gnome-fallback sessions set XDG_CURRENT_DESKTOP to Unity
       // DESKTOP_SESSION can be gnome-fallback or gnome-fallback-compiz
@@ -80,6 +78,8 @@ DesktopEnvironment GetDesktopEnvironment(Environment* env) {
         }
       }
       return DESKTOP_ENVIRONMENT_KDE4;
+    } else if (xdg_current_desktop == "Pantheon") {
+      return DESKTOP_ENVIRONMENT_PANTHEON;
     }
   }
 
@@ -126,6 +126,8 @@ const char* GetDesktopEnvironmentName(DesktopEnvironment env) {
       return "KDE4";
     case DESKTOP_ENVIRONMENT_KDE5:
       return "KDE5";
+    case DESKTOP_ENVIRONMENT_PANTHEON:
+      return "PANTHEON";
     case DESKTOP_ENVIRONMENT_UNITY:
       return "UNITY";
     case DESKTOP_ENVIRONMENT_XFCE:
