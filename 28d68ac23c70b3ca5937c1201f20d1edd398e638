@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d918990b_4156c048",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:17:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c9a42b6c_7b832c81",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "215e0f92_9ab44a49",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "6989df80_47be713b",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:17:52Z",
+      "side": 1,
+      "message": "I familiarized myself better with the async and sync passes and the complexity it adds. I will avoid the proposed change to URL canonicalization. We could get back to that in a different context and change it if other bugs depend on it.\n\nGoing back to your initial comment on \"test here for only doing this on UNKNOWN and URL inputs\": I think the \"!url.is_valid()\" on line 377 should take care of this. If the url is not valid, then the canonicalized_url was not initialized, therefore the code in line 384 is never reached. Please let me know if I am mistaken.",
+      "parentUuid": "5ac8b9aa_9657339a",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "248a83e5_ecbb5fd9",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5
@@ -152,6 +188,30 @@
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d084093_55d81d25",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:17:52Z",
+      "side": 1,
+      "message": "Added the desired tld here.",
+      "parentUuid": "71ed460c_e9654926",
+      "range": {
+        "startLine": 390,
+        "startChar": 69,
+        "endLine": 390,
+        "endChar": 71
+      },
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +265,24 @@
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fd9400_816d53f9",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-12T19:17:52Z",
+      "side": 1,
+      "message": "I understand now. I think crbug.com/104638 would take care of this in a better structured way, but I added an extra check in CanFindInstranetURL to take care of the \"www.\" condition.",
+      "parentUuid": "006f6262_88eebe8f",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
