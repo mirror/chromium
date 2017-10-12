@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a4083b_5a7fad7f",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T01:32:42Z",
+      "side": 1,
+      "message": "If the browser is shutdown, would we invoke the destructor?",
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a984bb0_34e342fc",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T01:32:42Z",
+      "side": 1,
+      "message": "This isn\u0027t used in ExtensionSystem at all yet - is that coming later?",
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0169d525_e0067cdc",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T01:32:42Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 38
+      },
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
