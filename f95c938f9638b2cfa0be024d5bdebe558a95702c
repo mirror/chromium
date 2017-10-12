@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4636f4_92e3088c",
+        "filename": "components/domain_reliability/service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "Do we need this?  Generally classes just assume they run on the task runner they\u0027re created on.",
+      "range": {
+        "startLine": 60,
+        "startChar": 50,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46048062_fd22c39c",
+        "filename": "components/domain_reliability/service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "call this file domain_reliability_service_unittest?  Non-unique names confuse me, whether they\u0027re class names, file names, or people names (Too...many...Ryans...)",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 35
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b79eb3_63ff9194",
+        "filename": "components/domain_reliability/service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "Fix the chirality of your parentheses.",
+      "range": {
+        "startLine": 200,
+        "startChar": 10,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5fc478_9213381a",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "This should be documented",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9428c1d_116cfc57",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a reason that the number of discard uploads we can report should be related to the maximum amount of memory a pointer can point at.  I\u0027d suggest just using int, unless we really need 64-bit of data, in which case int64_t.  Google style guide says not to make things unsigned just to indicate they can\u0027t be negative.",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 17
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0069f6_eeabd5da",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T21:13:54Z",
+      "side": 1,
+      "message": "virtual methods really shouldn\u0027t use fast_and_potentially_inlined_function_naming.",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
