@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f80d4b03_bc96c8dc",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-12T16:23:48Z",
+      "side": 1,
+      "message": "The idea is that only active downloads will have JobControllers. Registrations without active downloads will only live in the database. But I\u0027m not changing this logic here, just renaming these. The logic change happened in https://chromium-review.googlesource.com/668541",
+      "parentUuid": "9ce3552c_ff5e63ff",
+      "range": {
+        "startLine": 678,
+        "startChar": 2,
+        "endLine": 678,
+        "endChar": 45
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adec5b9b_cba661cb",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefd9e2d_e9819371",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-12T16:23:48Z",
+      "side": 1,
+      "message": "Actually no, the DataManager also only needs the total of the completed download sizes. The per-file values are only needed here because they\u0027re not final, and we need to be able to replace them with updated progress values.",
+      "parentUuid": "adec5b9b_cba661cb",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 80
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9711de4_f32e8553",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-12T16:23:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a9ec2c_1d40b975",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848df3d1_f507b97a",
         "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574b7533_bfa2055a",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-12T16:23:48Z",
+      "side": 1,
+      "message": "They\u0027re equivalent here, I just wanted it to be symmetric with the constructor. And {} is more explicit than \u003ddefault, since you don\u0027t have to think about whether any funny business is going on (beyond the funny business that empty constructors and destructors already do that is)",
+      "parentUuid": "848df3d1_f507b97a",
+      "range": {
+        "startLine": 15,
+        "startChar": 76,
+        "endLine": 15,
+        "endChar": 78
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
