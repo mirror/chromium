@@ -1564,7 +1564,8 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       // |embedded_worker_| whose owner is |this|.
       base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
                      std::move(pending_provider_host), context()),
-      mojo::MakeRequest(&event_dispatcher_), std::move(installed_scripts_info),
+      mojo::MakeRequest(&event_dispatcher_),
+      mojo::MakeRequest(&controller_ptr_), std::move(installed_scripts_info),
       base::BindOnce(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                      weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::BindOnce(
@@ -1722,6 +1723,15 @@ void ServiceWorkerVersion::OnPingTimeout() {
 }
 
 void ServiceWorkerVersion::StopWorkerIfIdle() {
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    // We don't stop the service worker for idle-timeout in the browser
+    // process when Servicification is enabled, as events might be
+    // dispatched directory without going through the browser-process.
+    // TODO(kinuko): Re-enable or re-implement the browser-side timer
+    // for S13n code path, maybe by always (asyncly) propagate the event
+    // dispatching status to the browser process too.
+    return;
+  }
   if (HasWork() && !ping_controller_->IsTimedOut())
     return;
   if (running_status() == EmbeddedWorkerStatus::STOPPED ||
@@ -1935,6 +1945,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   pending_requests_.Clear();
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
+  controller_ptr_.reset();
   installed_scripts_sender_.reset();
 
   for (auto& observer : listeners_)
