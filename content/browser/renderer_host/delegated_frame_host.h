@@ -89,7 +89,8 @@ class CONTENT_EXPORT DelegatedFrameHost
  public:
   DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
                      DelegatedFrameHostClient* client,
-                     bool enable_surface_synchronization);
+                     bool enable_surface_synchronization,
+                     bool enable_viz);
   ~DelegatedFrameHost() override;
 
   // ui::CompositorObserver implementation.
@@ -259,11 +260,16 @@ class CONTENT_EXPORT DelegatedFrameHost
   void CreateCompositorFrameSinkSupport();
   void ResetCompositorFrameSinkSupport();
 
+  // Returns SurfaceReferenceFactory instance. If |enable_viz| is true then it
+  // will be a stub instance.
+  scoped_refptr<viz::SurfaceReferenceFactory> GetSurfaceReferenceFactory();
+
   const viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId local_surface_id_;
   DelegatedFrameHostClient* const client_;
   const bool enable_surface_synchronization_;
-  ui::Compositor* compositor_;
+  const bool enable_viz_;
+  ui::Compositor* compositor_ = nullptr;
 
   // The vsync manager we are observing for changes, if any.
   scoped_refptr<ui::CompositorVSyncManager> vsync_manager_;

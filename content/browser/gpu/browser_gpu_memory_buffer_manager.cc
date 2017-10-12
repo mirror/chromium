@@ -69,6 +69,7 @@ BrowserGpuMemoryBufferManager::BrowserGpuMemoryBufferManager(
     : native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
       gpu_client_id_(gpu_client_id),
       gpu_client_tracing_id_(gpu_client_tracing_id) {
+  LOG(ERROR) << __FUNCTION__;
   DCHECK(!g_gpu_memory_buffer_manager);
   g_gpu_memory_buffer_manager = this;
 
@@ -82,6 +83,7 @@ BrowserGpuMemoryBufferManager::BrowserGpuMemoryBufferManager(
 }
 
 BrowserGpuMemoryBufferManager::~BrowserGpuMemoryBufferManager() {
+  LOG(ERROR) << __FUNCTION__;
   g_gpu_memory_buffer_manager = nullptr;
 }
 

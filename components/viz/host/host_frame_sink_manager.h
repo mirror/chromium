@@ -53,6 +53,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     return display_hit_test_query_;
   }
 
+  void SetErrorHandler(base::OnceClosure closure);
+  void OnContextLost();
+  void RegisterAfterCrash();
+
   // Sets a local FrameSinkManagerImpl instance and connects directly to it.
   void SetLocalManager(FrameSinkManagerImpl* frame_sink_manager_impl);
 

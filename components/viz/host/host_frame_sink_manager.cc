@@ -20,12 +20,46 @@ HostFrameSinkManager::HostFrameSinkManager()
 
 HostFrameSinkManager::~HostFrameSinkManager() = default;
 
+void HostFrameSinkManager::SetErrorHandler(base::OnceClosure closure) {
+  DCHECK(frame_sink_manager_ptr_.is_bound());
+  frame_sink_manager_ptr_.set_connection_error_handler(std::move(closure));
+}
+
 void HostFrameSinkManager::SetLocalManager(
     FrameSinkManagerImpl* frame_sink_manager_impl) {
   DCHECK(!frame_sink_manager_ptr_);
   frame_sink_manager_impl_ = frame_sink_manager_impl;
 
   frame_sink_manager_ = frame_sink_manager_impl;
+}
+
+void HostFrameSinkManager::OnContextLost() {
+  frame_sink_manager_impl_ = nullptr;
+  binding_.Close();
+  frame_sink_manager_ptr_.reset();
+
+  for (auto& map_entry : frame_sink_data_map_) {
+    FrameSinkData& data = map_entry.second;
+    data.has_created_compositor_frame_sink = false;
+  }
+}
+
+void HostFrameSinkManager::RegisterAfterCrash() {
+  for (auto& map_entry : frame_sink_data_map_) {
+    const FrameSinkId& frame_sink_id = map_entry.first;
+    FrameSinkData& data = map_entry.second;
+    if (data.client)
+      frame_sink_manager_->RegisterFrameSinkId(frame_sink_id);
+  }
+
+  for (auto& map_entry : frame_sink_data_map_) {
+    const FrameSinkId& frame_sink_id = map_entry.first;
+    FrameSinkData& data = map_entry.second;
+    for (auto& child_frame_sink_id : data.children) {
+      frame_sink_manager_->RegisterFrameSinkHierarchy(frame_sink_id,
+                                                      child_frame_sink_id);
+    }
+  }
 }
 
 void HostFrameSinkManager::BindAndSetManager(

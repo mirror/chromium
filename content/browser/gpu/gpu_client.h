@@ -15,7 +15,7 @@ namespace content {
 
 class GpuClient : public ui::mojom::Gpu {
  public:
-  explicit GpuClient(int render_process_id);
+  explicit GpuClient(int client_process_id, bool is_privileged_client = false);
   ~GpuClient() override;
 
   void Add(ui::mojom::GpuRequest request);
@@ -47,7 +47,8 @@ class GpuClient : public ui::mojom::Gpu {
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               const gpu::SyncToken& sync_token) override;
 
-  const int render_process_id_;
+  const int client_process_id_;
+  const bool is_privileged_client_;
   mojo::BindingSet<ui::mojom::Gpu> bindings_;
   base::WeakPtrFactory<GpuClient> weak_factory_;
 

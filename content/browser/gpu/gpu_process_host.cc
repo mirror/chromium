@@ -80,7 +80,6 @@
 #if defined(OS_WIN)
 #include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
-#include "ui/gfx/switches.h"
 #include "ui/gfx/win/rendering_window_manager.h"
 #endif
 
@@ -473,6 +472,7 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
       status_(UNKNOWN),
       gpu_host_binding_(this),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << __FUNCTION__;
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kSingleProcess) ||
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -491,6 +491,7 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
 }
 
 GpuProcessHost::~GpuProcessHost() {
+  LOG(ERROR) << __FUNCTION__;
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   SendOutstandingReplies();
@@ -736,6 +737,13 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                                             const gpu::SyncToken& sync_token) {
   TRACE_EVENT0("gpu", "GpuProcessHost::DestroyGpuMemoryBuffer");
   gpu_service_ptr_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
+}
+
+void GpuProcessHost::ConnectFrameSinkManager(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtr client) {
+  TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
+  gpu_main_ptr_->CreateFrameSinkManager(std::move(request), std::move(client));
 }
 
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {
