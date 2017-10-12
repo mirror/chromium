@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "946b5378_858eb83f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T19:32:18Z",
+      "side": 1,
+      "message": "This was the reason why my earlier idea of putting the check in CommitNavigation didn\u0027t work.  If a throttle defers the navigation after we\u0027ve picked the process above, the same race and happen - and was happening in my own test. :)\n\nI think it\u0027s ok to do this here even if we end up with an error later on -- we might mark the process as used unnecessarily, which might lead to being more conservative in later process reuse decisions, but at least this is consistent, and we don\u0027t need any special logic for handling failed requests, which Nasko brought up on the bug.",
+      "range": {
+        "startLine": 808,
+        "startChar": 0,
+        "endLine": 813,
+        "endChar": 14
+      },
+      "revId": "1bceac29b633b901a9476241a07440e52f7001d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

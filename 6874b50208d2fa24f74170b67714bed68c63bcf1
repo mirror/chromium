@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33428f8_5a35e1d8",
+        "filename": "content/browser/frame_host/navigator_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-12T19:32:18Z",
+      "side": 0,
+      "message": "Moved to SiteInstanceImpl so we can check it from OnResponseStarted.  I think it might actually fit better there in any case.",
+      "revId": "6874b50208d2fa24f74170b67714bed68c63bcf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
