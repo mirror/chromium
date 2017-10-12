@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "bc7a07cc_333e793c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-12T00:47:13Z",
+      "side": 1,
+      "message": "Sure. What you have is perfectly fine.",
+      "parentUuid": "8e53b0bb_36d56701",
+      "revId": "534a6449ddab28ae27674e40dd8121dfce6c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d78d1eaa_ea79a1bd",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPathsFuzzer.cpp",
         "patchSetId": 1
