@@ -672,7 +672,12 @@ bool TaskQueueImpl::BlockedByFence() const {
          main_thread_only().current_fence;
 }
 
-bool TaskQueueImpl::HasFence() const {
+bool TaskQueueImpl::HasActiveFence() {
+  if (main_thread_only().delayed_fence &&
+      main_thread_only().time_domain->Now() >
+          main_thread_only().delayed_fence.value()) {
+    return true;
+  }
   return !!main_thread_only().current_fence;
 }
 
