@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50327ad5_d5b37e3d",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T02:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e24ee8d3_09a8b93b",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5584b30_5b6cab04",
         "filename": "extensions/common/image_util.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9afa5c362028479102e19436f48ac8d37228105c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219ac6bc_9e3daf3c",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T02:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5584b30_5b6cab04",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f818d99_fe47d8a2",
+        "filename": "extensions/common/image_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T02:45:28Z",
+      "side": 1,
+      "message": "Ok, changed to failure. Worth noting that coercion is used for HSL below.",
+      "parentUuid": "b64028d4_6fdbe3fd",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7000f1fc_1046c603",
         "filename": "extensions/common/image_util_unittest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "9afa5c362028479102e19436f48ac8d37228105c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8892c81_9fea030a",
+        "filename": "extensions/common/image_util_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-12T02:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7000f1fc_1046c603",
+      "revId": "9afa5c362028479102e19436f48ac8d37228105c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
