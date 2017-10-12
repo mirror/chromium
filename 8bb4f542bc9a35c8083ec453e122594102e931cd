@@ -52,6 +52,24 @@
       "revId": "8bb4f542bc9a35c8083ec453e122594102e931cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b63a0c1_3e30f9ca",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-12T18:36:05Z",
+      "side": 1,
+      "message": "The implementation of local storage databases have an in-memory cache on both client side and on the wrapper. The clients keep a copy so that the get calls are synchronous and transactions are faster without IPC.  The wrapper needs to send notifications to all observers about each change with the old value. For this reason we currently cache values in the wrapper also instead of accessing the leveldb database (disk) at each transaction.\nIf the old values are sent from the clients then the wrapper does not need to store the values in cache, which saves memory.\n\nThis old_value param is needed for the case of local storage. If we have other use cases for leveldb wrapper then we can just notify sending old values is not required.",
+      "parentUuid": "4f47967e_b1ce1c88",
+      "revId": "8bb4f542bc9a35c8083ec453e122594102e931cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
