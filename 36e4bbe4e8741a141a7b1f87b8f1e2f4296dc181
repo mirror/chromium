@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60544073_8681e749",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6902,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-12T03:55:34Z",
+      "side": 1,
+      "message": "I prefer\n\nfactory \u003d GetDefaultURLLoaderFactoryGetter()-\u003eGetFactoryForURL(request.Url(), custom_url_loader_factory_.get());",
+      "revId": "36e4bbe4e8741a141a7b1f87b8f1e2f4296dc181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
