@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a93f52_305b19d3",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-12T15:23:12Z",
+      "side": 1,
+      "message": "I believe exposing this as a paramter is needed.\nWill remove in next patch.",
+      "range": {
+        "startLine": 176,
+        "startChar": 45,
+        "endLine": 176,
+        "endChar": 51
+      },
+      "revId": "2ccbe9ca31637d8b6c8ea14c0e55722a68702460",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
