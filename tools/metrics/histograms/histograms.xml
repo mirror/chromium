@@ -1511,6 +1511,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="AppBanners.ReportStatusDest" enum="AppBannersReportStatusDest">
+  <owner>mcgreevy@chromium.org</owner>
+  <summary>
+    App banners promote an application related to the current website, and are
+    requested specifically through the current page's HTML. This stat tracks
+    which mechanism the app banner system uses to log the
+    AppBannersInstallableStatusCode.
+  </summary>
+</histogram>
+
 <histogram name="AppBanners.UserResponse" enum="AppBannersUserResponse">
   <owner>dominickn@chromium.org</owner>
   <summary>
