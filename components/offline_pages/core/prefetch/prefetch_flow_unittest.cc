@@ -10,6 +10,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "components/download/public/test/test_download_service.h"
 #include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/prefetch/download_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
@@ -27,12 +28,13 @@ const int64_t kTestFileSize = 88888;
 
 namespace offline_pages {
 
-// Tests the interaction between prefetch service and download service to
-// validate the whole prefetch download flow regardless which service is up
-// first.
-class PrefetchDownloadFlowTest : public TaskTestBase {
+// Tests that PrefetchDispatcherImpl interacts with PrefetchStore to do the
+// pipeline processing and move items in different states. It also contains
+// the test to validate the whole prefetch download flow regardless if download
+// service is up first or not.
+class PrefetchFlowTest : public TaskTestBase {
  public:
-  PrefetchDownloadFlowTest() {
+  PrefetchFlowTest() {
     feature_list_.InitAndEnableFeature(kPrefetchingOfflinePagesFeature);
   }
 
@@ -80,8 +82,13 @@ class PrefetchDownloadFlowTest : public TaskTestBase {
     RunUntilIdle();
   }
 
-  PrefetchDispatcher* prefetch_dispatcher() const {
-    return prefetch_service_taco_->prefetch_service()->GetPrefetchDispatcher();
+  PrefetchBackgroundTask* GetBackgroundTask() {
+    return prefetch_dispatcher()->background_task_.get();
+  }
+
+  PrefetchDispatcherImpl* prefetch_dispatcher() const {
+    return static_cast<PrefetchDispatcherImpl*>(
+        prefetch_service_taco_->prefetch_service()->GetPrefetchDispatcher());
   }
 
   PrefetchDownloader* prefetch_downloader() const {
@@ -95,7 +102,7 @@ class PrefetchDownloadFlowTest : public TaskTestBase {
   std::unique_ptr<PrefetchServiceTestTaco> prefetch_service_taco_;
 };
 
-TEST_F(PrefetchDownloadFlowTest, DownloadServiceReadyAfterPrefetchSystemReady) {
+TEST_F(PrefetchFlowTest, DownloadServiceReadyAfterPrefetchSystemReady) {
   // Create an item ready for download.
   PrefetchItem item =
       item_generator()->CreateItem(PrefetchItemState::RECEIVED_BUNDLE);
@@ -121,8 +128,7 @@ TEST_F(PrefetchDownloadFlowTest, DownloadServiceReadyAfterPrefetchSystemReady) {
   EXPECT_EQ(PrefetchItemState::IMPORTING, found_item->state);
 }
 
-TEST_F(PrefetchDownloadFlowTest,
-       DownloadServiceReadyBeforePrefetchSystemReady) {
+TEST_F(PrefetchFlowTest, DownloadServiceReadyBeforePrefetchSystemReady) {
   // Download service is ready initially.
   SetDownloadServiceReady();
   RunUntilIdle();
@@ -143,7 +149,7 @@ TEST_F(PrefetchDownloadFlowTest,
   EXPECT_EQ(PrefetchItemState::IMPORTING, found_item->state);
 }
 
-TEST_F(PrefetchDownloadFlowTest, DownloadServiceUnavailable) {
+TEST_F(PrefetchFlowTest, DownloadServiceUnavailable) {
   // Download service is unavailable.
   EXPECT_FALSE(prefetch_downloader()->IsDownloadServiceUnavailable());
   prefetch_downloader()->OnDownloadServiceUnavailable();
@@ -165,7 +171,7 @@ TEST_F(PrefetchDownloadFlowTest, DownloadServiceUnavailable) {
   EXPECT_EQ(item, *found_item);
 }
 
-TEST_F(PrefetchDownloadFlowTest, DelayRunningDownloadCleanupTask) {
+TEST_F(PrefetchFlowTest, DelayRunningDownloadCleanupTask) {
   // Create an item in DOWNLOADING state.
   PrefetchItem item =
       item_generator()->CreateItem(PrefetchItemState::DOWNLOADING);
@@ -193,6 +199,79 @@ TEST_F(PrefetchDownloadFlowTest, DelayRunningDownloadCleanupTask) {
   // finally transit to IMPORTING state.
   found_item = store_util()->GetPrefetchItem(item.offline_id);
   EXPECT_EQ(PrefetchItemState::IMPORTING, found_item->state);
+}
+
+TEST_F(PrefetchFlowTest, DoDownloadCleanupOnlyOnce) {
+  // Download service is ready initially.
+  SetDownloadServiceReady();
+  RunUntilIdle();
+
+  // Create an item in DOWNLOADING state.
+  PrefetchItem item =
+      item_generator()->CreateItem(PrefetchItemState::DOWNLOADING);
+  item.download_initiation_attempts = DownloadCleanupTask::kMaxDownloadAttempts;
+  store_util()->InsertPrefetchItem(item);
+  RunUntilIdle();
+
+  // Start the prefetch processing pipeline.
+  BeginBackgroundTask();
+
+  // The item should finally transit to ZOMBIE state.
+  std::unique_ptr<PrefetchItem> found_item =
+      store_util()->GetPrefetchItem(item.offline_id);
+  EXPECT_EQ(PrefetchItemState::ZOMBIE, found_item->state);
+
+  // Because there is no work remaining, the background task should be released.
+  EXPECT_EQ(nullptr, GetBackgroundTask());
+
+  // Create another item in DOWNLOADING state.
+  PrefetchItem item2 =
+      item_generator()->CreateItem(PrefetchItemState::DOWNLOADING);
+  item2.download_initiation_attempts =
+      DownloadCleanupTask::kMaxDownloadAttempts;
+  store_util()->InsertPrefetchItem(item2);
+
+  // Start the prefetch processing pipeline again.
+  BeginBackgroundTask();
+
+  // The item is intact due to that the download cleanup task is not invoked
+  // the second time.
+  std::unique_ptr<PrefetchItem> found_item2 =
+      store_util()->GetPrefetchItem(item2.offline_id);
+  EXPECT_EQ(item2, *found_item2);
+}
+
+TEST_F(PrefetchFlowTest, DoImportCleanupOnlyOnce) {
+  // Create an item in IMPORTING state.
+  PrefetchItem item =
+      item_generator()->CreateItem(PrefetchItemState::IMPORTING);
+  store_util()->InsertPrefetchItem(item);
+  RunUntilIdle();
+
+  // Start the prefetch processing pipeline.
+  BeginBackgroundTask();
+
+  // The item should finally transit to ZOMBIE state.
+  std::unique_ptr<PrefetchItem> found_item =
+      store_util()->GetPrefetchItem(item.offline_id);
+  EXPECT_EQ(PrefetchItemState::ZOMBIE, found_item->state);
+
+  // Because there is no work remaining, the background task should be released.
+  EXPECT_EQ(nullptr, GetBackgroundTask());
+
+  // Create another item in IMPORTING state.
+  PrefetchItem item2 =
+      item_generator()->CreateItem(PrefetchItemState::IMPORTING);
+  store_util()->InsertPrefetchItem(item2);
+
+  // Start the prefetch processing pipeline again.
+  BeginBackgroundTask();
+
+  // The item is intact due to that the import cleanup task is not invoked
+  // the second time.
+  std::unique_ptr<PrefetchItem> found_item2 =
+      store_util()->GetPrefetchItem(item2.offline_id);
+  EXPECT_EQ(item2, *found_item2);
 }
 
 }  // namespace offline_pages

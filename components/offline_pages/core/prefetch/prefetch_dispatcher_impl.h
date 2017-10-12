@@ -54,6 +54,7 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
 
  private:
   friend class PrefetchDispatcherTest;
+  friend class PrefetchFlowTest;
 
   void DisposeTask();
 
@@ -83,6 +84,7 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
 
   PrefetchService* service_;
   TaskQueue task_queue_;
+  bool did_reconciliation_ = false;
   bool needs_pipeline_processing_ = false;
   bool suspended_ = false;
   std::unique_ptr<PrefetchBackgroundTask> background_task_;

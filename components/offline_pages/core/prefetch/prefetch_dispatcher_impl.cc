@@ -21,6 +21,7 @@
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
 #include "components/offline_pages/core/prefetch/import_archives_task.h"
+#include "components/offline_pages/core/prefetch/import_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/import_completed_task.h"
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
 #include "components/offline_pages/core/prefetch/metrics_finalization_task.h"
@@ -143,11 +144,18 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
       service_->GetPrefetchStore(),
       service_->GetPrefetchNetworkRequestFactory()));
 
-  // Notifies the downloader that the download cleanup can proceed when the
-  // download service is up. The prefetch service and download service are two
-  // separate services which can start up on their own. The download cleanup
-  // should only kick in when both services are ready.
-  service_->GetPrefetchDownloader()->CleanupDownloadsWhenReady();
+  // Download and import cleanups should only be triggered once when Chrome
+  // starts.
+  if (!did_reconciliation_) {
+    // Notifies the downloader that the download cleanup can proceed when the
+    // download service is up. The prefetch service and download service are two
+    // separate services which can start up on their own. The download cleanup
+    // should only kick in when both services are ready.
+    service_->GetPrefetchDownloader()->CleanupDownloadsWhenReady();
+
+    task_queue_.AddTask(
+        base::MakeUnique<ImportCleanupTask>(service_->GetPrefetchStore()));
+  }
 
   // This task should be last, because it is least important for correct
   // operation of the system, and because any reconciliation tasks might
@@ -155,6 +163,8 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
   // could pick up.
   task_queue_.AddTask(
       base::MakeUnique<MetricsFinalizationTask>(service_->GetPrefetchStore()));
+
+  did_reconciliation_ = true;
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
