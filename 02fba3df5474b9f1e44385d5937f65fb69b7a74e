@@ -94,6 +94,30 @@
       "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f95250_205a26b8",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T18:55:55Z",
+      "side": 1,
+      "message": "Yes - URLRequestContextBuilder can\u0027t currently be used to build app request contexts, since they share so much with the main one.  I eventually want to get rid of that sharing, but it will be easier to figure out what to do there (I hope...) once we\u0027re completely creating the main request context in content/network.  That does mean we\u0027ll have to depend on the guts of the network service for quite a while, though.  :(",
+      "parentUuid": "b9114d70_492a9ca3",
+      "range": {
+        "startLine": 222,
+        "startChar": 10,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

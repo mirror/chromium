@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91fa181_ca7db897",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-12T18:55:55Z",
+      "side": 1,
+      "message": "Actually, can we remove the call to SetCreateHttpTransactionFactoryCallback in profile_io_data in this CL?",
+      "range": {
+        "startLine": 221,
+        "startChar": 10,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "dc71a8c27295c14d7701d8f28370d5fb83b10186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
