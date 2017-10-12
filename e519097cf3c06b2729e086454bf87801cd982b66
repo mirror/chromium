@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8738a4c7_3f5dc469",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/shared-renderer/longtask-in-new-window.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-12T18:19:34Z",
+      "side": 1,
+      "message": "Using a mark instead of a timeout to ensure that the test would fail when observing the longtask from the other window. panicker@, does this look good?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "e519097cf3c06b2729e086454bf87801cd982b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
