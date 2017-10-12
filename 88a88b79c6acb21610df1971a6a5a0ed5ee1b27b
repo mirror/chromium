@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d08336c1_9b93b3c9",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T20:13:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3d524416_f25b45d1",
+      "revId": "88a88b79c6acb21610df1971a6a5a0ed5ee1b27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c65cb0a_1ae61f25",
         "filename": "docs/win_cross.md",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T20:10:14Z",
       "side": 1,
       "message": "Lines 30-32 are my favourite :-)",
+      "revId": "88a88b79c6acb21610df1971a6a5a0ed5ee1b27b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a5a3d1_31950576",
+        "filename": "docs/win_cross.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-12T20:13:32Z",
+      "side": 1,
+      "message": ":-)\n\nThe target_os thing is in hindsight also pretty natural (it\u0027s how we set up android,ios,fuchsia cross builds).",
+      "parentUuid": "9c65cb0a_1ae61f25",
       "revId": "88a88b79c6acb21610df1971a6a5a0ed5ee1b27b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
