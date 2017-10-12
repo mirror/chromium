@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
-#define CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
+#ifndef CONTENT_PUBLIC_NETWORK_IGNORE_ERRORS_CERT_VERIFIER_H_
+#define CONTENT_PUBLIC_NETWORK_IGNORE_ERRORS_CERT_VERIFIER_H_
 
 #include <memory>
 #include <string>
@@ -75,4 +75,4 @@ class CONTENT_EXPORT IgnoreErrorsCertVerifier : public net::CertVerifier {
 
 }  // namespace content
 
-#endif  // CONTENT_PUBLIC_BROWSER_IGNORE_ERRORS_CERT_VERIFIER_H_
+#endif  // CONTENT_PUBLIC_NETWORK_IGNORE_ERRORS_CERT_VERIFIER_H_

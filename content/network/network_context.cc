@@ -11,6 +11,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
@@ -27,6 +28,7 @@
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/network/ignore_errors_cert_verifier.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/http/http_network_session.h"
@@ -209,6 +211,20 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
     builder.set_proxy_config_service(std::move(fixed_config_service));
   } else {
     builder.set_proxy_service(net::ProxyService::CreateDirect());
+  }
+
+  if (command_line->HasSwitch(switches::kIgnoreCertificateErrorsSPKIList)) {
+    auto spki_list =
+        base::SplitString(command_line->GetSwitchValueASCII(
+                              switches::kIgnoreCertificateErrorsSPKIList),
+                          ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+    std::unique_ptr<net::CertVerifier> cert_verifier =
+        net::CertVerifier::CreateDefault();
+    std::unique_ptr<net::CertVerifier> ignore_errors_cert_verifier =
+        base::MakeUnique<content::IgnoreErrorsCertVerifier>(
+            std::move(cert_verifier),
+            content::IgnoreErrorsCertVerifier::MakeWhitelist(spki_list));
+    builder.SetCertVerifier(std::move(ignore_errors_cert_verifier));
   }
 
   ApplyContextParamsToBuilder(&builder, network_context_params);
