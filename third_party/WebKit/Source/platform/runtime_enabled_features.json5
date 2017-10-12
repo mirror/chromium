@@ -139,6 +139,10 @@
       status: "experimental",
     },
     {
+      name: "CacheStyleSheetWithMediaQueries",
+      status: "experimental",
+    },
+    {
       name: "Canvas2dFixedRenderingMode",
       status: "test",
     },
