@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47d12aff_bf10dcf6",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-lifetime.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-12T14:19:56Z",
+      "side": 1,
+      "message": "Consider migrating this test to testharness.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "4937d8764f36a8c1e0598573dbd96f86e28b3297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
