@@ -306,6 +306,8 @@ class MOJO_SYSTEM_IMPL_EXPORT Core {
 
   void GetActiveHandlesForTest(std::vector<MojoHandle>* handles);
 
+  void UnregisterMemoryDumpProvider();
+
  private:
   // Used to pass ownership of our NodeController over to the IO thread in the
   // event that we're torn down before said thread.
