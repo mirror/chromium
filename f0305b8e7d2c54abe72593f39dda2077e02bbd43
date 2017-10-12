@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1c34bd4_67a8ce23",
+        "filename": "sandbox/win/src/restricted_token_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-12T18:49:00Z",
+      "side": 1,
+      "message": "nit: you could use DWORD{ERROR_SUCCESS} here, I think that\u0027s actually preferred by coding standard.",
+      "range": {
+        "startLine": 744,
+        "startChar": 13,
+        "endLine": 744,
+        "endChar": 45
+      },
+      "revId": "f0305b8e7d2c54abe72593f39dda2077e02bbd43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
