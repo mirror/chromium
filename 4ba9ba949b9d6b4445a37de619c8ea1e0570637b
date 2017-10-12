@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ddd47de_9cec7e47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:19:42Z",
+      "side": 1,
+      "message": "This is so amazing",
+      "range": {
+        "startLine": 227,
+        "startChar": 54,
+        "endLine": 227,
+        "endChar": 91
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b5bac9_f94553c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:19:42Z",
+      "side": 1,
+      "message": "Probably worth exploring more what might happen in pathological cases (immediate redirect on a WebAPK URL, window.open(), etc.). Not blocking and can be in a follow up",
+      "range": {
+        "startLine": 609,
+        "startChar": 17,
+        "endLine": 609,
+        "endChar": 44
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a99b77_e1ac9fa5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappBrowserControlsDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:19:42Z",
+      "side": 1,
+      "message": "Nit: put this one up with the other non-private static methods",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ea1484_d4a690ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:19:42Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s use \"WEBAPP\" and \"WEBAPK\", the underscore is much less common in the code base",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5fcdd3_a126dae2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappScopePolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:19:42Z",
+      "side": 1,
+      "message": "otherwise?",
+      "range": {
+        "startLine": 47,
+        "startChar": 29,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "4ba9ba949b9d6b4445a37de619c8ea1e0570637b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
