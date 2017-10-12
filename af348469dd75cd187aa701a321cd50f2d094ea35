@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "945803e7_3ffa4d60",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T07:16:48Z",
+      "side": 1,
+      "message": "nit: acaOrigin",
+      "revId": "af348469dd75cd187aa701a321cd50f2d094ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafc60e1_3bf543cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T07:16:48Z",
+      "side": 1,
+      "message": "I think we need to update all these test names?",
+      "revId": "af348469dd75cd187aa701a321cd50f2d094ea35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
