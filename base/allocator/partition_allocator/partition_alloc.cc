@@ -225,6 +225,7 @@ void PartitionAllocGenericInit(PartitionRootGeneric* root) {
     }
     currentIncrement <<= 1;
   }
+  LOG(ERROR) << "current_size: " << current_size;
   DCHECK(current_size == 1 << kGenericMaxBucketedOrder);
   DCHECK(bucket == &root->buckets[0] + kGenericNumBuckets);
 

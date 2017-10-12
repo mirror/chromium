@@ -13,7 +13,10 @@
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 #include "base/bit_cast.h"
 #include "base/bits.h"
+#include "base/process/process_metrics.h"
 #include "base/sys_info.h"
+#include "base/time/time.h"
+#include "base/threading/platform_thread.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -2153,6 +2156,44 @@ TEST_F(PartitionAllocTest, ReallocMovesCookies) {
 
   memset(ptr, 0xbd, kSize + 2);
   PartitionFreeGeneric(generic_allocator.root(), ptr);
+}
+
+// How
+TEST_F(PartitionAllocTest, HowMuchWaste) {
+  //size_t kSize = (1 <<20) - (base::kCookieSize *2 -1) - 4096*3; // A bit less than 1Mb.
+  // Max slot size on 32-bit from emprical testing? 983040.  Breakpoint input size was 983041 vs 982529 to get this value.
+  // 0xF 00000 -- last bucket.
+  // 0xE 00000 -- second to last bucket.
+  //const size_t kSize = 512*1024 - 100; // A bit less 512.
+#if DCHECK_IS_ON()
+  const size_t kSize = 0xF0000 - 2 * base::kCookieSize - 1;
+#else
+  const size_t kSize = 0xF0000 - 1;
+#endif
+  // Allocated about 200 megs.
+  for(int i=0; i < 200; i++) {
+    void* ptr =
+      PartitionAllocGeneric(generic_allocator.root(), kSize, "wasted");
+    EXPECT_TRUE(ptr);
+
+    // Touch all allcoated memory with hard-to-dedupe fill pattern.
+    char* foo = reinterpret_cast<char*>(ptr);
+    static char counter = 1;
+    for (unsigned i = 0; i < kSize; ++i) {
+      foo[i] = counter;
+      counter +=7;
+    }
+
+    // Fragment the super block here.
+    //
+    // 2Mb- 32kb guard / max-bucket = 2.1.  0.1* max bucket = 96kb. So allocated
+    // just one above that for worst-case fragmentation.
+    ptr = PartitionAllocGeneric(generic_allocator.root(), 96*1024 + 1, "wasted");
+    reinterpret_cast<char*>(ptr)[0] = counter +=7 ;
+  }
+  while (1) {
+    PlatformThread::Sleep(TimeDelta::FromMinutes(10));
+  }
 }
 
 }  // namespace base
