@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09eeacbd_e9ae0cec",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "Yeah, I agree, this is a big bummer, especially because the ones that are probably hardest for developers to track down are probably in iframes. Will try to figure something out for 64...",
+      "parentUuid": "6677dea7_b200e409",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad6b0afb_9bbbdab6",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f004867_2d893b53",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "This is a little awkward because it gets passed in to a WebFrameClient method below... there\u0027s probably some nicer way to do this but I\u0027ll skip it for this patch because branch.",
+      "parentUuid": "ad6b0afb_9bbbdab6",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c8fb8883_a807a48e",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a18d48_1dbf1d7f",
+      "range": {
+        "startLine": 715,
+        "startChar": 62,
+        "endLine": 715,
+        "endChar": 70
+      },
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef843188_4d925b19",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00c79b1_9d117394",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good idea. De-duped by hostname and upped the max to 10 in hopes of getting better coverage that way.",
+      "parentUuid": "ef843188_4d925b19",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5abb7196_33f1569d",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac66c9f2_765a58a1",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ca63bfe_a7bbed71",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.h",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc4a9c5_fb10a7bf",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-12T14:28:48Z",
+      "side": 1,
+      "message": "Ah, turns out this needs to be reset in DispatchDidCommitLoad to catch the case where a navigation commits in the same frame.",
+      "parentUuid": "4ca63bfe_a7bbed71",
+      "revId": "cd1284588f276b817231a6f0b930d7075f74608a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
