@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "6b39d507_5dd6cd0e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-12T09:52:44Z",
+      "side": 1,
+      "message": "I wonder if this should still be explicit now?  Not actually sure.",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 10
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da652602_8a7bf24c",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
@@ -139,6 +162,29 @@
       "writtenOn": "2017-10-12T04:04:27Z",
       "side": 1,
       "message": "Can we keep these variables private and add protected functions for tests?",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7677c556_d900cfa6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-12T09:52:44Z",
+      "side": 1,
+      "message": "This test is failing\n\n RUN      ] TaskQueueManagerTest.GracefulShutdown_ManagerDeletedInFlight\n[19219:19219:1011/093151.200026:7414898558:FATAL:task_queue_impl.cc(66)] Check failed: any_thread().task_queue_manager \u003d\u003d nullptr. UnregisterTaskQueue must be called first!",
+      "range": {
+        "startLine": 3182,
+        "startChar": 29,
+        "endLine": 3182,
+        "endChar": 68
+      },
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
