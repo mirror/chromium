@@ -30,6 +30,7 @@
 #include "platform/LayoutUnit.h"
 #include "platform/wtf/SizeAssertions.h"
 #include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/dtoa.h"
 
 namespace blink {
 
@@ -515,13 +516,23 @@ CSSPrimitiveValue::UnitType CSSPrimitiveValue::LengthUnitTypeToUnitType(
 }
 
 static String FormatNumber(double number, const char* suffix) {
-#if defined(OS_WIN) && _MSC_VER < 1900
-  unsigned oldFormat = _set_output_format(_TWO_DIGIT_EXPONENT);
-#endif
-  String result = String::Format("%.6g%s", number, suffix);
-#if defined(OS_WIN) && _MSC_VER < 1900
-  _set_output_format(oldFormat);
-#endif
+  NumberToStringBuffer buffer;
+  NumberToFixedWidthString(number, 6, buffer);
+  for (unsigned int i = 0; i < strlen(buffer); i++) {
+    if (buffer[i] == '.') {
+      unsigned int decimal_point_pos = i;
+      for (unsigned int j = strlen(buffer) - 1; j > decimal_point_pos; j--) {
+        if (buffer[j] == '0')
+          buffer[j] = '\0';
+        else
+          break;
+      }
+      if (buffer[strlen(buffer) - 1] == '.')
+        buffer[strlen(buffer) - 1] = '\0';
+      break;
+    }
+  }
+  String result = String::Format("%s%s", buffer, suffix);
   return result;
 }
 
