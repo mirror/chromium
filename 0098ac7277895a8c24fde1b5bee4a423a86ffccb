@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31a2cdd1_12189282",
+        "filename": "components/cronet/tools/generate_javadoc.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-12T14:43:25Z",
+      "side": 1,
+      "message": "minor nit: I think the spaces after [ and before ] are not needed.",
+      "range": {
+        "startLine": 62,
+        "startChar": 33,
+        "endLine": 62,
+        "endChar": 37
+      },
+      "revId": "0098ac7277895a8c24fde1b5bee4a423a86ffccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
