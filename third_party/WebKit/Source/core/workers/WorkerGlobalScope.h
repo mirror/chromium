@@ -84,7 +84,7 @@ class CORE_EXPORT WorkerGlobalScope
     return nullptr;
   }
 
-  KURL CompleteURL(const String&) const;
+  KURL ContextCompleteURL(const String&) const final;
 
   // WorkerOrWorkletGlobalScope
   void EvaluateClassicScript(
@@ -205,7 +205,6 @@ class CORE_EXPORT WorkerGlobalScope
   // ExecutionContext
   EventTarget* ErrorEventTarget() final { return this; }
   const KURL& VirtualURL() const final { return url_; }
-  KURL VirtualCompleteURL(const String&) const final;
 
   // SecurityContext
   void DidUpdateSecurityOrigin() final {}

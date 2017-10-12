@@ -72,7 +72,7 @@ void InstallEvent::registerForeignFetch(ScriptState* script_state,
   const Vector<String>& sub_scopes = options.scopes();
   Vector<KURL> sub_scope_urls(sub_scopes.size());
   for (size_t i = 0; i < sub_scopes.size(); ++i) {
-    sub_scope_urls[i] = execution_context->CompleteURL(sub_scopes[i]);
+    sub_scope_urls[i] = execution_context->ContextCompleteURL(sub_scopes[i]);
     if (!sub_scope_urls[i].IsValid()) {
       exception_state.ThrowTypeError("Invalid subscope URL: " + sub_scopes[i]);
       return;

@@ -285,14 +285,14 @@ ScriptPromise ServiceWorkerContainer::registerServiceWorker(
   if (!execution_context)
     return ScriptPromise();
 
-  KURL script_url = execution_context->CompleteURL(url);
+  KURL script_url = execution_context->ContextCompleteURL(url);
   script_url.RemoveFragmentIdentifier();
 
   KURL pattern_url;
   if (options.scope().IsNull())
     pattern_url = KURL(script_url, "./");
   else
-    pattern_url = execution_context->CompleteURL(options.scope());
+    pattern_url = execution_context->ContextCompleteURL(options.scope());
 
   RegisterServiceWorkerImpl(
       execution_context, script_url, pattern_url,
@@ -341,7 +341,7 @@ ScriptPromise ServiceWorkerContainer::getRegistration(
     return promise;
   }
 
-  KURL completed_url = execution_context->CompleteURL(document_url);
+  KURL completed_url = execution_context->ContextCompleteURL(document_url);
   completed_url.RemoveFragmentIdentifier();
   if (!document_origin->CanRequest(completed_url)) {
     RefPtr<SecurityOrigin> document_url_origin =

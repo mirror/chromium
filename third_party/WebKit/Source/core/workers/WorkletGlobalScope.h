@@ -99,6 +99,8 @@ class CORE_EXPORT WorkletGlobalScope
 
   void SetModulator(Modulator*);
 
+  KURL ContextCompleteURL(const String&) const final;
+
   DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
@@ -114,7 +116,6 @@ class CORE_EXPORT WorkletGlobalScope
 
  private:
   const KURL& VirtualURL() const final { return url_; }
-  KURL VirtualCompleteURL(const String&) const final;
 
   EventTarget* ErrorEventTarget() final { return nullptr; }
   void DidUpdateSecurityOrigin() final {}

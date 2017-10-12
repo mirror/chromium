@@ -14,7 +14,7 @@ TrustedScriptURL::TrustedScriptURL(const KURL& url) : url_(url) {}
 TrustedScriptURL* TrustedScriptURL::unsafelyCreate(ScriptState* script_state,
                                                    const String& url) {
   return TrustedScriptURL::Create(
-      ExecutionContext::From(script_state)->CompleteURL(url));
+      ExecutionContext::From(script_state)->ContextCompleteURL(url));
 }
 
 String TrustedScriptURL::toString() const {

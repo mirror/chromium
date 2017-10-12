@@ -3665,7 +3665,7 @@ const KURL& Document::VirtualURL() const {
   return url_;
 }
 
-KURL Document::VirtualCompleteURL(const String& url) const {
+KURL Document::ContextCompleteURL(const String& url) const {
   return CompleteURL(url);
 }
 

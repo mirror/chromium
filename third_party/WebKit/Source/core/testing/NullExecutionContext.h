@@ -48,6 +48,8 @@ class NullExecutionContext
 
   void SetUpSecurityContext();
 
+  KURL ContextCompleteURL(const String&) const override { return url_; }
+
   using SecurityContext::GetSecurityOrigin;
   using SecurityContext::GetContentSecurityPolicy;
 
@@ -59,7 +61,6 @@ class NullExecutionContext
 
  protected:
   const KURL& VirtualURL() const override { return url_; }
-  KURL VirtualCompleteURL(const String&) const override { return url_; }
 
  private:
   bool tasks_need_suspension_;

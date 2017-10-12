@@ -66,7 +66,8 @@ ScriptPromise Worklet::addModule(ScriptState* script_state,
 
   // Step 3: "Let moduleURLRecord be the result of parsing the moduleURL
   // argument relative to the relevant settings object of this."
-  KURL module_url_record = GetExecutionContext()->CompleteURL(module_url);
+  KURL module_url_record =
+      GetExecutionContext()->ContextCompleteURL(module_url);
 
   // Step 4: "If moduleURLRecord is failure, then reject promise with a
   // "SyntaxError" DOMException and return promise."

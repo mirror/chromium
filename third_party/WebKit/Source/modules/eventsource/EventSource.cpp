@@ -91,7 +91,7 @@ EventSource* EventSource::Create(ExecutionContext* context,
     return nullptr;
   }
 
-  KURL full_url = context->CompleteURL(url);
+  KURL full_url = context->ContextCompleteURL(url);
   if (!full_url.IsValid()) {
     exception_state.ThrowDOMException(
         kSyntaxError,

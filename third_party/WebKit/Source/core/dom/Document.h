@@ -657,6 +657,10 @@ class CORE_EXPORT Document : public ContainerNode,
   // https://html.spec.whatwg.org/multipage/urls-and-fetching.html#fallback-base-url
   KURL FallbackBaseURL() const;
 
+  KURL ContextCompleteURL(const String&) const final;
+  // Same as ContextCompleteURL(). Exposed as a non-virtual method for
+  // performance.
+  //
   // Creates URL based on passed relative url and this documents base URL.
   // Depending on base URL value it is possible that parent document
   // base URL will be used instead. Uses CompleteURLWithOverride internally.
@@ -1444,11 +1448,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   ShadowCascadeOrder shadow_cascade_order_ = kShadowCascadeNone;
 
-  // Same as url(), but needed for ExecutionContext to implement it without a
+  // Same as Url(), but needed for ExecutionContext to implement it without a
   // performance loss for direct calls.
   const KURL& VirtualURL() const final;
-  // Same as completeURL() for the same reason as above.
-  KURL VirtualCompleteURL(const String&) const final;
 
   void UpdateTitle(const String&);
   void UpdateFocusAppearanceTimerFired(TimerBase*);
