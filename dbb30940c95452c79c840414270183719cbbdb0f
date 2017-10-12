@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733b9dd6_610828e9",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/element-from-point-parameters.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-12T15:58:03Z",
+      "side": 1,
+      "message": "Can you put this test somewhere in LayoutTests/external/wpt/cssom-view/? Maybe there are already some existing tests that can be extended?",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "dbb30940c95452c79c840414270183719cbbdb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
