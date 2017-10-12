@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0be36bc_c89a1b33",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-12T19:55:11Z",
+      "side": 1,
+      "message": "never false? you are comparing a uint32 here based on https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_version.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d415",
+      "range": {
+        "startLine": 890,
+        "startChar": 10,
+        "endLine": 890,
+        "endChar": 22
+      },
+      "revId": "24e5c55ff1e1ffa02ccbcd9dc4fcc014d0f32a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
