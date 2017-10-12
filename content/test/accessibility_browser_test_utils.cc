@@ -21,7 +21,8 @@ namespace content {
 
 AccessibilityNotificationWaiter::AccessibilityNotificationWaiter(
     WebContents* web_contents)
-    : event_to_wait_for_(ui::AX_EVENT_NONE),
+    : WebContentsObserver(web_contents),
+      event_to_wait_for_(ui::AX_EVENT_NONE),
       loop_runner_(new MessageLoopRunner()),
       event_target_id_(0),
       event_render_frame_host_(nullptr),
@@ -37,7 +38,8 @@ AccessibilityNotificationWaiter::AccessibilityNotificationWaiter(
     WebContents* web_contents,
     ui::AXMode accessibility_mode,
     ui::AXEvent event_type)
-    : event_to_wait_for_(event_type),
+    : WebContentsObserver(web_contents),
+      event_to_wait_for_(event_type),
       loop_runner_(new MessageLoopRunner()),
       event_target_id_(0),
       weak_factory_(this) {
@@ -54,7 +56,8 @@ AccessibilityNotificationWaiter::AccessibilityNotificationWaiter(
 AccessibilityNotificationWaiter::AccessibilityNotificationWaiter(
     RenderFrameHostImpl* frame_host,
     ui::AXEvent event_type)
-    : frame_host_(frame_host),
+    : WebContentsObserver(frame_host->delegate()->GetAsWebContents()),
+      frame_host_(frame_host),
       event_to_wait_for_(event_type),
       loop_runner_(new MessageLoopRunner()),
       event_target_id_(0),
@@ -88,6 +91,15 @@ const ui::AXTree& AccessibilityNotificationWaiter::GetAXTree() const {
   if (tree)
     return *tree;
   return empty_tree;
+}
+
+void AccessibilityNotificationWaiter::RenderFrameHostChanged(
+    RenderFrameHost* old_host,
+    RenderFrameHost* new_host) {
+  if (old_host == frame_host_) {
+    frame_host_ = static_cast<RenderFrameHostImpl*>(new_host);
+    ListenToAdditionalFrame(frame_host_);
+  }
 }
 
 void AccessibilityNotificationWaiter::OnAccessibilityEvent(

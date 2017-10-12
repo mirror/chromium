@@ -3313,6 +3313,12 @@ void RenderFrameHostImpl::CommitNavigation(
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type) ||
       IsRendererDebugURL(common_params.url));
 
+  // From now on, this process should be considered "tainted" for future
+  // process reuse decisions.  That is, a site requiring a dedicated process
+  // should not reuse this process, unless it's same-site with the URL we're
+  // committing.
+  GetProcess()->SetIsUsed();
+
   // TODO(arthursonzogni): Consider using separate methods and IPCs for
   // javascript-url navigation. Excluding this case from the general one will
   // prevent us from doing inappropriate things with javascript-url.

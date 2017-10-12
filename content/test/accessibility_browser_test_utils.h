@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_tree.h"
@@ -22,7 +23,7 @@ class WebContents;
 // clicking on a button). Then call WaitForNotification
 // afterwards to block until the specified accessibility notification has been
 // received.
-class AccessibilityNotificationWaiter {
+class AccessibilityNotificationWaiter : public WebContentsObserver {
  public:
   explicit AccessibilityNotificationWaiter(WebContents* web_contents);
   AccessibilityNotificationWaiter(WebContents* web_contents,
@@ -31,7 +32,7 @@ class AccessibilityNotificationWaiter {
   AccessibilityNotificationWaiter(
       RenderFrameHostImpl* frame_host,
        ui::AXEvent event);
-  ~AccessibilityNotificationWaiter();
+  ~AccessibilityNotificationWaiter() override;
 
   void ListenToAdditionalFrame(RenderFrameHostImpl* frame_host);
 
@@ -53,6 +54,10 @@ class AccessibilityNotificationWaiter {
   RenderFrameHostImpl* event_render_frame_host() const {
     return event_render_frame_host_;
   }
+
+  // content::WebContentsObserver overrides.
+  void RenderFrameHostChanged(content::RenderFrameHost* old_host,
+                              content::RenderFrameHost* new_host) override;
 
  private:
   // Callback from RenderViewHostImpl.
