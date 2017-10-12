@@ -22,6 +22,30 @@
       "revId": "890d7b73129bb09c0e0a74486791bed6be50d83d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3c2611_75094956",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T09:34:41Z",
+      "side": 1,
+      "message": "ActivateDelayedFenceIfNeeded generates a new enqueue order. This snippet here uses an existing enqueue order from an immediate task to block already scheduled immediate tasks. The problem is that an immediate task can be posted from any thread, so we can\u0027t insert a fence at the time of posting, so instead we activate a fence when we take immediate tasks from incoming queue.",
+      "parentUuid": "77d465dd_cbf71ef8",
+      "range": {
+        "startLine": 323,
+        "startChar": 5,
+        "endLine": 323,
+        "endChar": 13
+      },
+      "revId": "890d7b73129bb09c0e0a74486791bed6be50d83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
