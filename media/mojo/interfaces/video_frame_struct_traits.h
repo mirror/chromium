@@ -53,6 +53,9 @@ struct StructTraits<media::mojom::VideoFrameDataView,
     return input->timestamp();
   }
 
+  static media::mojom::VideoFrameReleaserPtr releaser(
+      const scoped_refptr<media::VideoFrame>& input);
+
   static media::mojom::VideoFrameDataPtr data(
       const scoped_refptr<media::VideoFrame>& input);
 

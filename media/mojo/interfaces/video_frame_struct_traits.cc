@@ -7,15 +7,87 @@
 #include <utility>
 #include <vector>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/location.h"
 #include "base/logging.h"
+#include "base/task_scheduler/post_task.h"
 #include "media/mojo/common/mojo_shared_buffer_video_frame.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace mojo {
 
 namespace {
 
-media::mojom::VideoFrameDataPtr MakeVideoFrameData(
-    const scoped_refptr<media::VideoFrame>& input) {
+// Implementation of media.mojom.VideoFrameReleaser, which holds a VideoFrame
+// ref as long as the connection is not closed.
+class VideoFrameReleaser : public media::mojom::VideoFrameReleaser,
+                           public media::VideoFrame::SyncTokenClient {
+ public:
+  VideoFrameReleaser(scoped_refptr<media::VideoFrame> video_frame)
+      : video_frame_(std::move(video_frame)) {}
+
+  void UpdateReleaseSyncToken(const gpu::SyncToken& sync_token) final {
+    // TODO(sandersd): Add a more direct setter so that we don't need to be a
+    // SyncTokenClient.
+    sync_token_ = sync_token;
+    video_frame_->UpdateReleaseSyncToken(this);
+  }
+
+  void GenerateSyncToken(gpu::SyncToken* sync_token) final {
+    *sync_token = sync_token_;
+  }
+
+  void WaitSyncToken(const gpu::SyncToken& sync_token) final {
+    // NOP, we don't care what the old sync token was.
+  }
+
+ private:
+  scoped_refptr<media::VideoFrame> video_frame_;
+  gpu::SyncToken sync_token_;
+};
+
+void NotifyRelease(media::mojom::VideoFrameReleaserPtrInfo releaser_info,
+                   const gpu::SyncToken& sync_token) {
+  DCHECK(releaser_info.is_valid());
+  media::mojom::VideoFrameReleaserPtr releaser;
+  releaser.Bind(std::move(releaser_info));
+  releaser->UpdateReleaseSyncToken(sync_token);
+}
+
+void BindReleaserOnSequence(scoped_refptr<media::VideoFrame> video_frame,
+                            media::mojom::VideoFrameReleaserRequest request) {
+  StrongBinding<media::mojom::VideoFrameReleaser>::Create(
+      base::MakeUnique<VideoFrameReleaser>(std::move(video_frame)),
+      std::move(request));
+}
+
+}  // namespace
+
+// static
+media::mojom::VideoFrameReleaserPtr
+StructTraits<media::mojom::VideoFrameDataView,
+             scoped_refptr<media::VideoFrame>>::
+    releaser(const scoped_refptr<media::VideoFrame>& input) {
+  // TODO(sandersd): If there is no release callback or destruction observer,
+  // return nullptr.
+  media::mojom::VideoFrameReleaserPtr video_frame_releaser;
+  // Note: Binds |video_frame_releaser| on the current task runner. This is
+  // probably okay since we are about to send it across the channel anyway.
+  media::mojom::VideoFrameReleaserRequest request =
+      MakeRequest(&video_frame_releaser);
+  // Schedule construction of the channel listener on its own sequence.
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(base::TaskTraits());
+  task_runner->PostTask(FROM_HERE, base::Bind(&BindReleaserOnSequence, input,
+                                              base::Passed(&request)));
+  return video_frame_releaser;
+}
+
+// static
+media::mojom::VideoFrameDataPtr StructTraits<media::mojom::VideoFrameDataView,
+                                             scoped_refptr<media::VideoFrame>>::
+    data(const scoped_refptr<media::VideoFrame>& input) {
   if (input->metadata()->IsTrue(media::VideoFrameMetadata::END_OF_STREAM)) {
     return media::mojom::VideoFrameData::NewEosData(
         media::mojom::EosVideoFrameData::New());
@@ -53,15 +125,6 @@ media::mojom::VideoFrameDataPtr MakeVideoFrameData(
   return nullptr;
 }
 
-}  // namespace
-
-// static
-media::mojom::VideoFrameDataPtr StructTraits<media::mojom::VideoFrameDataView,
-                                             scoped_refptr<media::VideoFrame>>::
-    data(const scoped_refptr<media::VideoFrame>& input) {
-  return media::mojom::VideoFrameDataPtr(MakeVideoFrameData(input));
-}
-
 // static
 bool StructTraits<media::mojom::VideoFrameDataView,
                   scoped_refptr<media::VideoFrame>>::
@@ -72,6 +135,7 @@ bool StructTraits<media::mojom::VideoFrameDataView,
   input.GetDataDataView(&data);
 
   if (data.is_eos_data()) {
+    // TODO(sandersd): Are destruction callbacks needed for EOS frames?
     *output = media::VideoFrame::CreateEOSFrame();
     return !!*output;
   }
@@ -104,6 +168,8 @@ bool StructTraits<media::mojom::VideoFrameDataView,
     media::mojom::SharedBufferVideoFrameDataDataView shared_buffer_data;
     data.GetSharedBufferDataDataView(&shared_buffer_data);
 
+    // TODO(sandersd): Destruction callback.
+
     // TODO(sandersd): Conversion from uint64_t to size_t could cause
     // corruption. Platform-dependent types should be removed from the
     // implementation (limiting to 32-bit offsets is fine).
@@ -126,9 +192,18 @@ bool StructTraits<media::mojom::VideoFrameDataView,
     for (size_t i = 0; i < media::VideoFrame::kMaxPlanes; i++)
       mailbox_holder_array[i] = mailbox_holder[i];
 
+    media::VideoFrame::ReleaseMailboxCB release_cb;
+    media::mojom::VideoFrameReleaserPtr releaser =
+        input.TakeReleaser<media::mojom::VideoFrameReleaserPtr>();
+    if (releaser) {
+      media::mojom::VideoFrameReleaserPtrInfo releaser_info =
+          releaser.PassInterface();
+      release_cb = base::Bind(&NotifyRelease, base::Passed(&releaser_info));
+    }
+
     frame = media::VideoFrame::WrapNativeTextures(
-        format, mailbox_holder_array, media::VideoFrame::ReleaseMailboxCB(),
-        coded_size, visible_rect, natural_size, timestamp);
+        format, mailbox_holder_array, std::move(release_cb), coded_size,
+        visible_rect, natural_size, timestamp);
   } else {
     // TODO(sandersd): Switch on the union tag to avoid this ugliness?
     NOTREACHED();

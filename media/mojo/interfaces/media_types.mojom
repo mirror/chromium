@@ -5,6 +5,7 @@
 module media.mojom;
 
 import "gpu/ipc/common/mailbox_holder.mojom";
+import "gpu/ipc/common/sync_token.mojom";
 import "mojo/common/time.mojom";
 import "mojo/common/values.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
@@ -217,6 +218,19 @@ struct AudioBuffer {
   array<uint8> data;
 };
 
+// Plumbing for VideoFrame destruction callbacks.
+//
+// VideoFrame producers watch for VideoFrameReleaser connections to be closed,
+// signaling the destruction of their associated VideoFrames.
+interface VideoFrameReleaser {
+  // Implements VideoFrame::UpdateReleaseSyncToken().
+  //
+  // This method should only need to be called at most once (immediately before
+  // destruction) because the renderer should be waiting for intermediate
+  // sync points already.
+  UpdateReleaseSyncToken(gpu.mojom.SyncToken sync_token);
+};
+
 // This defines a mojo transport format for media::VideoFrame.
 struct VideoFrame {
   // Format of the frame.
@@ -233,6 +247,9 @@ struct VideoFrame {
 
   // Timestamp in microseconds of the associated frame.
   mojo.common.mojom.TimeDelta timestamp;
+
+  // Handle that monitors for VideoFrame destruction.
+  VideoFrameReleaser? releaser;
 
   // Contents of the video frame (or EOS marker).
   VideoFrameData data;
