@@ -3327,6 +3327,62 @@ TEST_F(RemoteSuggestionsProviderImplTest, ShouldNotPrependDismissedSuggestion) {
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldNotPrependExistingOrArchivedSuggestion) {
+  SetTriggeringNotificationsAndSubscriptionParams(
+      /*fetched_notifications_enabled=*/false,
+      /*pushed_notifications_enabled=*/false,
+      /*subscribe_signed_in=*/true,
+      /*subscribe_signed_out=*/true);
+
+  auto provider = MakeSuggestionsProvider(
+      /*use_mock_prefetched_pages_tracker=*/false,
+      /*use_fake_breaking_news_listener=*/true,
+      /*use_mock_remote_suggestions_status_service=*/false);
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(
+      FetchedCategoryBuilder()
+          .SetCategory(articles_category())
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://prepended.com")
+                                       .SetUrl("http://prepended.com"))
+          .Build());
+
+  FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
+                        Status::Success(), std::move(fetched_categories));
+  ASSERT_THAT(provider->GetSuggestionsForTesting(articles_category()),
+              SizeIs(1));
+
+  // Prepend an article suggestion.
+  const RemoteSuggestionBuilder suggestion_builder =
+      RemoteSuggestionBuilder()
+          .AddId("http://prepended.com")
+          .SetUrl("http://prepended.com");
+
+  PushArticleSuggestionToTheFront(suggestion_builder.Build());
+
+  // No more articles should be added.
+  EXPECT_THAT(provider->GetSuggestionsForTesting(articles_category()),
+              SizeIs(1));
+
+  fetched_categories.clear();
+  fetched_categories.push_back(
+      FetchedCategoryBuilder()
+          .SetCategory(articles_category())
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://prepended2.com")
+                                       .SetUrl("http://prepended2.com"))
+          .Build());
+
+  // Prepend an article suggestion.
+  PushArticleSuggestionToTheFront(suggestion_builder.Build());
+
+  // No more articles should be added.
+  EXPECT_THAT(provider->GetSuggestionsForTesting(articles_category()),
+              SizeIs(1));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
        ShouldRestorePrependedSuggestionOnTopAfterRestart) {
   SetTriggeringNotificationsAndSubscriptionParams(
       /*fetched_notifications_enabled=*/false,
