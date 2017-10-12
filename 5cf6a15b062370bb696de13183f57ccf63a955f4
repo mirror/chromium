@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3eda53e_b61f3fc7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5495,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-12T17:16:31Z",
+      "side": 1,
+      "message": "This suppresses the 1st restore of a dynamically created frame, but doesn\u0027t help with subsequent history navigations affecting the frame.  Should we / can we purge the frame\u0027s history here?",
+      "range": {
+        "startLine": 5494,
+        "startChar": 0,
+        "endLine": 5495,
+        "endChar": 52
+      },
+      "revId": "5cf6a15b062370bb696de13183f57ccf63a955f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

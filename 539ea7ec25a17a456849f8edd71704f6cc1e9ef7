@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7428fa45_4419722c",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/history-length-append-subframe-with-hash-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-12T17:16:31Z",
+      "side": 0,
+      "message": "This change seems accidental, but okay.  The main purpose of the test was to verify that the *forward* entry (i.e. fast/history/resources/back-on-load.html) is not lost.  See also https://crbug.com/353096 (the test is a regression test for this bug).",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "539ea7ec25a17a456849f8edd71704f6cc1e9ef7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
