@@ -67,6 +67,7 @@ component("embedder") {
     public_deps += [
       ":embedder_switches",
       "//mojo/edk/system",
+      "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
       "//services/service_manager/background:lib",
       "//services/service_manager/public/cpp/standalone_service",
       "//services/service_manager/runner:init",

@@ -976,6 +976,9 @@ const char kMash[]                          = "mash";
 
 // Used to enable mus as a separate process, but chrome+ash still together.
 const char kMus[] = "mus";
+
+// Used to pass the Mus+ash service name.
+const char kMashServiceName[] = "mash-service-name";
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OFFICIAL_BUILD)
