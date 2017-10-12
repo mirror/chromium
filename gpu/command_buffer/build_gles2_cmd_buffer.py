@@ -4431,7 +4431,7 @@ _FUNCTION_INFO = {
     'client_test': False,
     'cmd_args': 'GLuint texture_id, GLuint shm_id, GLuint shm_offset, '
                 'GLsizei color_space_size',
-    'extension': 'CHROMIUM_schedule_ca_layer',
+    'extension': 'CHROMIUM_scanout_color_space',
   },
   'CommitOverlayPlanesCHROMIUM': {
     'impl_func': False,

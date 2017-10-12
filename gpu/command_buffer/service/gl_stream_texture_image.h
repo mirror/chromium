@@ -23,6 +23,8 @@ class GPU_EXPORT GLStreamTextureImage : public gl::GLImage {
   // UV=(0,0) corresponds to the top left corner of the image.
   virtual void GetTextureMatrix(float matrix[16]) = 0;
 
+  void SetColorSpaceForScanout(const gfx::ColorSpace& color_space) override {}
+
   void Flush() override {}
 
   virtual void NotifyPromotionHint(bool promotion_hint,

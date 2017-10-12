@@ -73,6 +73,10 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
                                     const gfx::Rect& bounds_rect,
                                     const gfx::RectF& crop_rect) = 0;
 
+  // Sets the color-space used to scanout from this image, if the image is used
+  // as an overlay.
+  virtual void SetColorSpaceForScanout(const gfx::ColorSpace& color_space) = 0;
+
   // Flush any preceding rendering for the image.
   virtual void Flush() = 0;
 
@@ -97,16 +101,8 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
   enum class Type { NONE, MEMORY, IOSURFACE, DXGI_IMAGE };
   virtual Type GetType() const;
 
-  void SetColorSpaceForScanout(const gfx::ColorSpace& color_space) {
-    color_space_ = color_space;
-  }
-
-  const gfx::ColorSpace& color_space() const { return color_space_; }
-
  protected:
   virtual ~GLImage() {}
-
-  gfx::ColorSpace color_space_;
 
  private:
   friend class base::RefCounted<GLImage>;
