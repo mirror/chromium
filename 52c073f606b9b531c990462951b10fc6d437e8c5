@@ -16,6 +16,24 @@
       "revId": "52c073f606b9b531c990462951b10fc6d437e8c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d517f56_43640b10",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-12T20:17:26Z",
+      "side": 1,
+      "message": "I can\u0027t for std:array. But the upside is that this is now static constexpr what is allowed for class type variables per guidelines: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables. \\o/",
+      "parentUuid": "8e49c94e_1e32a5b0",
+      "revId": "52c073f606b9b531c990462951b10fc6d437e8c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
