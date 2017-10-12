@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9947d4bb_688c368b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-12T18:03:09Z",
+      "side": 1,
+      "message": "Page loads are not comparable across platforms. The only important trait is to have the count stable across he releases and that\u0027s what I\u0027m trying to do in this CL.",
+      "parentUuid": "4f06a7a6_1cd2c226",
+      "revId": "393fc4ec18f802e1a67edec8322405b2c1b9ad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8661d17c_1fb26c35",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T22:22:49Z",
       "side": 1,
       "message": "This may be more restrictive than what currently is counted. What about cases where user selected an omnibox suggestion, like PAGE_TRANSITION_GENERATED?",
+      "revId": "393fc4ec18f802e1a67edec8322405b2c1b9ad62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b4d425_e550b131",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-12T18:03:09Z",
+      "side": 1,
+      "message": "Good catch. Added PAGE_TRANSITION_GENERATED.\n\nSeems like PAGE_TRANSITION_KEYWORD and PAGE_TRANSITION_KEYWORD_GENERATED are not supported on iOS, but I added them anyway.",
+      "parentUuid": "8661d17c_1fb26c35",
       "revId": "393fc4ec18f802e1a67edec8322405b2c1b9ad62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
