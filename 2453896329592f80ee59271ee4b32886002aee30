@@ -39,6 +39,30 @@
       "revId": "2453896329592f80ee59271ee4b32886002aee30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284ce7cf_3f22f3b4",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-12T23:52:44Z",
+      "side": 1,
+      "message": "\u003e Isn\u0027t it supposed to be transparent black? \"SkColorSetA(SK_ColorBLACK, 20)\"?\n\nI don\u0027t think so. That would make the divider invisible on inverted color schemes (see e.g. http://crbug.com/738292). (Generally, transparency just makes things more complicated when there\u0027s no use-case for showing content behind whatever it is that\u0027s transparent).",
+      "parentUuid": "c53b9a62_05f949bd",
+      "range": {
+        "startLine": 48,
+        "startChar": 41,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "2453896329592f80ee59271ee4b32886002aee30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
