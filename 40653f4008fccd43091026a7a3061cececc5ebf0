@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa506792_b46d5066",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataConsumerHandleTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-12T06:21:12Z",
+      "side": 1,
+      "message": "bytesconsumerclient -\u003e BytesConsumerClient",
+      "revId": "40653f4008fccd43091026a7a3061cececc5ebf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
