@@ -781,6 +781,7 @@ target(link_target_type, "renderer") {
       "//jingle:jingle_glue",
       "//third_party/libvpx",
       "//third_party/opus",
+      "//third_party/webrtc/api:libjingle_logging_api",
       "//third_party/webrtc/api:libjingle_peerconnection",
       "//third_party/webrtc/api:optional",
       "//third_party/webrtc/api:rtc_stats_api",

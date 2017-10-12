@@ -183,6 +183,9 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Stop recording an event log.
   void StopEventLog();
 
+  // When an RTC event is sent back from PeerConnection, it arrives here.
+  bool OnRtcEventLogWrite(const std::string& output);
+
  protected:
   webrtc::PeerConnectionInterface* native_peer_connection() {
     return native_peer_connection_.get();

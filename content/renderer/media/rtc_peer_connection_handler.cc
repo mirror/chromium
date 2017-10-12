@@ -48,6 +48,7 @@
 #include "third_party/WebKit/public/platform/WebRTCSessionDescriptionRequest.h"
 #include "third_party/WebKit/public/platform/WebRTCVoidRequest.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/webrtc/api/rtceventlogoutput.h"
 #include "third_party/webrtc/pc/mediasession.h"
 
 using webrtc::DataChannelInterface;
@@ -60,6 +61,24 @@ using webrtc::StatsReports;
 
 namespace content {
 namespace {
+
+class ProxyRtcEventLogOutput final : public webrtc::RtcEventLogOutput {
+ public:
+  ProxyRtcEventLogOutput(RTCPeerConnectionHandler* peerconnection_handler)
+      : peerconnection_handler_(peerconnection_handler) {}
+  ~ProxyRtcEventLogOutput() override = default;
+
+  bool IsActive() const override {
+    return true;  // Active until the proxy is destroyed.
+  }
+
+  bool Write(const std::string& output) override {
+    return peerconnection_handler_->OnRtcEventLogWrite(output);
+  }
+
+ private:
+  RTCPeerConnectionHandler* const peerconnection_handler_;
+};
 
 // Used to back histogram value of "WebRTC.PeerConnection.RtcpMux",
 // so treat as append-only.
@@ -1874,6 +1893,11 @@ void RTCPeerConnectionHandler::StartEventLog(IPC::PlatformFileForTransit file,
 void RTCPeerConnectionHandler::StopEventLog() {
   DCHECK(thread_checker_.CalledOnValidThread());
   native_peer_connection_->StopRtcEventLog();
+}
+
+bool RTCPeerConnectionHandler::OnRtcEventLogWrite(const std::string& output) {
+  // TODO(eladalon): !!! Change threads.
+  return true;
 }
 
 blink::WebRTCDataChannelHandler* RTCPeerConnectionHandler::CreateDataChannel(
