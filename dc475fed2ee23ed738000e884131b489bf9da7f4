@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "e48e7289_11aeb598",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-12T04:04:27Z",
+      "side": 1,
+      "message": "As the default value is nullptr, can\u0027t |shutdown_task_runner_| be null?",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32a37f47_c95b298f",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 1
@@ -105,6 +122,23 @@
         "endLine": 166,
         "endChar": 34
       },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ca3f54_f17947b9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-12T04:04:27Z",
+      "side": 1,
+      "message": "Can we keep these variables private and add protected functions for tests?",
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
