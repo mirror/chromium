@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ab9d005_a1cb534b",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-12T00:38:43Z",
+      "side": 1,
+      "message": "Ah thanks!  I ended up pulling it out to it\u0027s own var.  I\u0027ll pull it back in.",
+      "parentUuid": "55accd8c_2e9bfa06",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "2d4ffe35207f070af6d73bfbe3be66a94be3f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16e0714b_c21b7298",
         "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "what\u0027s the error?",
       "parentUuid": "16e0714b_c21b7298",
+      "range": {
+        "startLine": 104,
+        "startChar": 31,
+        "endLine": 104,
+        "endChar": 43
+      },
+      "revId": "2d4ffe35207f070af6d73bfbe3be66a94be3f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac071df_ca681f15",
+        "filename": "chrome/browser/resources/download_internals/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-12T00:38:43Z",
+      "side": 1,
+      "message": "ERROR - Bad type annotation. Unknown type ServiceEntry\n##      * @return {!Promise\u003cArray\u003cServiceEntry\u003e\u003e} A promise firing when the list of",
+      "parentUuid": "8080ad5f_f37e7f08",
       "range": {
         "startLine": 104,
         "startChar": 31,
