@@ -16,6 +16,24 @@
       "revId": "46d95a0a7423a4749fc1a72858004f1e73ff6abc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91acb036_1a3711f5",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-12T20:56:51Z",
+      "side": 1,
+      "message": "There was test coverage for non-proxy jobs, but at some point that code got separated out for proxies vs. non-proxies :(",
+      "parentUuid": "9e44708b_057c41a0",
+      "revId": "46d95a0a7423a4749fc1a72858004f1e73ff6abc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
