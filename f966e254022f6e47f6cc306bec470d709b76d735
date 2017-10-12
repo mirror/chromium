@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79704ccc_19d9f452",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T14:26:09Z",
+      "side": 1,
+      "message": "Ack. Yeah currently although |this| is held by WebSWRegistration::Handle, it\u0027s not owned by Handle. Will try to modify the sentence later.",
+      "parentUuid": "cb3dcd8f_3317c33f",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fecdf33_36d00742",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T08:13:15Z",
       "side": 1,
       "message": "The second paragraph is seems to say we\u0027re owned by ServiceWorkerRegistrationHandle, while this paragraph is says we try to keep the handle alive?",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bccaca_6ea9dce4",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T14:26:09Z",
+      "side": 1,
+      "message": "// |info_-\u003ehost_ptr_info| holds a Mojo connection end point retaining an\n// reference to the remote content::ServiceWorkerRegistrationHandle to control\n// its lifetime.\nIn normal case, closing |info_-\u003ehost_ptr_info| leads to destruction of remote SWRegistrationHandle, which closes the other end point of |binding_|, then in turn leads to destruction of |this|.",
+      "parentUuid": "0fecdf33_36d00742",
       "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8073ab9e_0ba65dca",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-12T14:26:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8f22948_cbfb8091",
+      "revId": "f966e254022f6e47f6cc306bec470d709b76d735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
