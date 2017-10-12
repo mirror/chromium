@@ -192,45 +192,96 @@ BindOnce(Functor&& functor, Args&&... args) {
       std::forward<Args>(args)...));
 }
 
-// Bind as RepeatingCallback.
 template <typename Functor, typename... Args>
-inline RepeatingCallback<MakeUnboundRunType<Functor, Args...>>
-BindRepeating(Functor&& functor, Args&&... args) {
-  static_assert(
-      !internal::IsOnceCallback<std::decay_t<Functor>>(),
-      "BindRepeating cannot bind OnceCallback. Use BindOnce with std::move().");
+struct BindRepeatingStruct {
+  // Bind as RepeatingCallback.
+  // template <typename Functor, typename... Args>
+  inline static RepeatingCallback<MakeUnboundRunType<Functor, Args...>>
+  BindRepeating(Functor&& functor, Args&&... args) {
+    static_assert(!internal::IsOnceCallback<std::decay_t<Functor>>(),
+                  "BindRepeating cannot bind OnceCallback. Use BindOnce with "
+                  "std::move().");
 
-  // This block checks if each |args| matches to the corresponding params of the
-  // target function. This check does not affect the behavior of Bind, but its
-  // error message should be more readable.
-  using Helper = internal::BindTypeHelper<Functor, Args...>;
-  using FunctorTraits = typename Helper::FunctorTraits;
-  using BoundArgsList = typename Helper::BoundArgsList;
-  using UnwrappedArgsList =
-      internal::MakeUnwrappedTypeList<false, FunctorTraits::is_method,
-                                      Args&&...>;
-  using BoundParamsList = typename Helper::BoundParamsList;
-  static_assert(internal::AssertBindArgsValidity<
-                    std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
-                    UnwrappedArgsList, BoundParamsList>::ok,
-                "The bound args need to be convertible to the target params.");
+    // This block checks if each |args| matches to the corresponding params of
+    // the target function. This check does not affect the behavior of Bind, but
+    // its error message should be more readable.
+    using Helper = internal::BindTypeHelper<Functor, Args...>;
+    using FunctorTraits = typename Helper::FunctorTraits;
+    using BoundArgsList = typename Helper::BoundArgsList;
+    using UnwrappedArgsList =
+        internal::MakeUnwrappedTypeList<false, FunctorTraits::is_method,
+                                        Args&&...>;
+    using BoundParamsList = typename Helper::BoundParamsList;
+    static_assert(
+        internal::AssertBindArgsValidity<
+            std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
+            UnwrappedArgsList, BoundParamsList>::ok,
+        "The bound args need to be convertible to the target params.");
 
-  using BindState = internal::MakeBindStateType<Functor, Args...>;
-  using UnboundRunType = MakeUnboundRunType<Functor, Args...>;
-  using Invoker = internal::Invoker<BindState, UnboundRunType>;
-  using CallbackType = RepeatingCallback<UnboundRunType>;
+    using BindState = internal::MakeBindStateType<Functor, Args...>;
+    using UnboundRunType = MakeUnboundRunType<Functor, Args...>;
+    using Invoker = internal::Invoker<BindState, UnboundRunType>;
+    using CallbackType = RepeatingCallback<UnboundRunType>;
 
-  // Store the invoke func into PolymorphicInvoke before casting it to
-  // InvokeFuncStorage, so that we can ensure its type matches to
-  // PolymorphicInvoke, to which CallbackType will cast back.
-  using PolymorphicInvoke = typename CallbackType::PolymorphicInvoke;
-  PolymorphicInvoke invoke_func = &Invoker::Run;
+    // Store the invoke func into PolymorphicInvoke before casting it to
+    // InvokeFuncStorage, so that we can ensure its type matches to
+    // PolymorphicInvoke, to which CallbackType will cast back.
+    using PolymorphicInvoke = typename CallbackType::PolymorphicInvoke;
+    PolymorphicInvoke invoke_func = &Invoker::Run;
 
-  using InvokeFuncStorage = internal::BindStateBase::InvokeFuncStorage;
-  return CallbackType(new BindState(
-      reinterpret_cast<InvokeFuncStorage>(invoke_func),
-      std::forward<Functor>(functor),
-      std::forward<Args>(args)...));
+    using InvokeFuncStorage = internal::BindStateBase::InvokeFuncStorage;
+    return CallbackType(new BindState(
+        reinterpret_cast<InvokeFuncStorage>(invoke_func),
+        std::forward<Functor>(functor), std::forward<Args>(args)...));
+  }
+};
+
+#if 1
+template <typename T>
+class weak_ptr {
+ public:
+  T* t_ = nullptr;
+};
+
+// Base class that doesn't match.
+template <typename Functor, typename Class>
+struct GetFunctorTypeIfFunctorIsMethod {};
+// Could insist on wp here too.
+template <typename Class, typename... Args>
+struct GetFunctorTypeIfFunctorIsMethod<void (Class::*)(Args...), Class> {
+  using type = void (Class::*)(Args...);
+};
+
+// TODO: this doesn't check if the functor type matches the wp.  that might be
+// okay, though we should still verify that Functor is some sort of method.  If
+// it's the wrong type, then it'll fail to bind.  however, if it's not a method,
+// then it might just take some random wp as its first argument, and we'd get
+// confused about it.
+template <typename Functor, typename Class, typename... Args>
+struct BindRepeatingStruct<Functor, weak_ptr<Class>&, Args...> {
+  // template <typename Functor, typename Class, typename... Args>
+  inline static RepeatingCallback<MakeUnboundRunType<Functor, Class*, Args...>>
+  BindRepeating(Functor&& functor, weak_ptr<Class> wp, Args&&... args) {
+    // TODO: bind something else.
+    // we'd probably bind the callback, and then return wp->Rebind(callback)
+    // to create something thread safe out of it.  it would wrap it in something
+    // that posts to the right thread, then checks the wp before calling our
+    // callback, to make Unretained safe.  alternatively, it could provide us
+    // with a normal wp to bind instead, and just wrap that callback in one that
+    // posts to the right thread.
+    return BindRepeatingStruct<Functor, decltype(Unretained(wp.t_)), Args...>::
+        BindRepeating(std::forward<Functor>(functor), Unretained(wp.t_),
+                      std::forward<Args>(args)...);
+  }
+};
+#endif
+
+template <typename Functor, typename... Args>
+inline RepeatingCallback<MakeUnboundRunType<Functor, Args...>> BindRepeating(
+    Functor&& functor,
+    Args&&... args) {
+  return BindRepeatingStruct<Functor, Args...>::BindRepeating(
+      std::forward<Functor>(functor), std::forward<Args>(args)...);
 }
 
 // Unannotated Bind.

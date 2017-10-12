@@ -11,8 +11,8 @@
 #include <utility>
 
 #include "base/bind_helpers.h"
+#include "base/bind_type_restrictions.h"
 #include "base/callback_internal.h"
-#include "base/memory/raw_scoped_refptr_mismatch_checker.h"
 #include "base/memory/weak_ptr.h"
 #include "base/template_util.h"
 #include "build/build_config.h"
@@ -85,22 +85,6 @@ struct IsConvertibleToRunType : std::false_type {};
 template <typename Callable>
 struct IsConvertibleToRunType<Callable, void_t<decltype(&Callable::operator())>>
     : std::is_convertible<Callable, ExtractCallableRunType<Callable>*> {};
-
-// HasRefCountedTypeAsRawPtr selects true_type when any of the |Args| is a raw
-// pointer to a RefCounted type.
-// Implementation note: This non-specialized case handles zero-arity case only.
-// Non-zero-arity cases should be handled by the specialization below.
-template <typename... Args>
-struct HasRefCountedTypeAsRawPtr : std::false_type {};
-
-// Implementation note: Select true_type if the first parameter is a raw pointer
-// to a RefCounted type. Otherwise, skip the first parameter and check rest of
-// parameters recursively.
-template <typename T, typename... Args>
-struct HasRefCountedTypeAsRawPtr<T, Args...>
-    : std::conditional_t<NeedsScopedRefptrButGetsRawPtr<T>::value,
-                         std::true_type,
-                         HasRefCountedTypeAsRawPtr<Args...>> {};
 
 // ForceVoidReturn<>
 //
@@ -479,8 +463,15 @@ struct MakeBindStateTypeImpl;
 
 template <typename Functor, typename... BoundArgs>
 struct MakeBindStateTypeImpl<false, Functor, BoundArgs...> {
-  static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
-                "A parameter is a refcounted type and needs scoped_refptr.");
+  // TODO: check functor args.
+  static_assert(CheckAllTypes<std::decay_t<BoundArgs>...>::value,
+                "This just forces type evaluation.");
+  // static_assert(CheckFunctorTypes<std::decay_t<Functor>>::value, "This just
+  // forces type evaluation.");
+  /*
+static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
+              "A parameter is a refcounted type and needs scoped_refptr.");
+              */
   using Type = BindState<std::decay_t<Functor>, std::decay_t<BoundArgs>...>;
 };
 
@@ -493,8 +484,15 @@ template <typename Functor, typename Receiver, typename... BoundArgs>
 struct MakeBindStateTypeImpl<true, Functor, Receiver, BoundArgs...> {
   static_assert(!std::is_array<std::remove_reference_t<Receiver>>::value,
                 "First bound argument to a method cannot be an array.");
+  static_assert(CheckAllTypes<std::decay_t<BoundArgs>...>::value,
+                "This just forces type evaluation.");
+  // static_assert(CheckFunctorTypes<std::decay_t<Functor>>::value, "This just
+  // forces type evaluation.");
+  // TODO: check functor args.
+  /*
   static_assert(!HasRefCountedTypeAsRawPtr<std::decay_t<BoundArgs>...>::value,
                 "A parameter is a refcounted type and needs scoped_refptr.");
+                */
 
  private:
   using DecayedReceiver = std::decay_t<Receiver>;

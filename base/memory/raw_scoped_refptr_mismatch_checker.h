@@ -23,6 +23,41 @@ namespace base {
 // Not for public consumption, so we wrap it in namespace internal.
 namespace internal {
 
+// TODO: this is generic.
+// Catch any other type of pointer.
+struct TypeIsBindable {};
+template <typename v, typename T>
+TypeIsBindable IsTypeAsPtrUnbindable(const void*) {
+  return TypeIsBindable();
+}
+template <typename v, typename T, typename ReturnType, typename... Args>
+TypeIsBindable IsTypeAsPtrUnbindable(ReturnType (*)(Args...)) {
+  // just to make sure that this isn't matching too much
+  return TypeIsBindable();
+}
+
+// We do this since template specializations don't match subclasses.  Plus,
+// static_assert requires a string constant, so it pretty much has to be a
+// macro if we want to provide custom messages.
+#define UNBINDABLE_AS_PTR_REASON(RuleName, TypeName, Reason)          \
+  template <typename v>                                               \
+  struct RuleName##_IsUnbindable {                                    \
+    static_assert(v::value, Reason);                                  \
+  };                                                                  \
+  template <typename v, typename T>                                   \
+  RuleName##_IsUnbindable<v> IsTypeAsPtrUnbindable(const TypeName*) { \
+    return RuleName##_IsUnbindable<v>();                              \
+  }
+
+UNBINDABLE_AS_PTR_REASON(
+    RefCountedBase,
+    subtle::RefCountedBase,
+    "A parameter is a refcounted type and needs scoped_refptr.");
+UNBINDABLE_AS_PTR_REASON(
+    RefCountedThreadSafeBase,
+    subtle::RefCountedThreadSafeBase,
+    "A parameter is a refcounted type and needs scoped_refptr.");
+
 template <typename T>
 struct NeedsScopedRefptrButGetsRawPtr {
   static_assert(!std::is_reference<T>::value,

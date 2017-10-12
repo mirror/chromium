@@ -12,6 +12,7 @@
 
 #include "base/atomic_ref_count.h"
 #include "base/base_export.h"
+#include "base/bind_type_restrictions.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -473,6 +474,18 @@ template <typename T>
 scoped_refptr<T> WrapRefCounted(T* t) {
   return scoped_refptr<T>(t);
 }
+
+// It is dangerous to post a task with a T* argument where T is a subtype of
+// RefCounted(Base|ThreadSafeBase), since by the time the parameter is used, the
+// object may already have been deleted since it was not held with a
+// scoped_refptr. Example: http://crbug.com/27191
+// The following set of traits are designed to generate a compile error
+// whenever this antipattern is attempted.
+// UNBINDABLE_AS_PTR_REASON(RefCountedBase, subtle::RefCountedBase, "A parameter
+// is a refcounted type and needs scoped_refptr.");
+// UNBINDABLE_AS_PTR_REASON(RefCountedThreadSafeBase,
+// subtle::RefCountedThreadSafeBase, "A parameter is a refcounted type and needs
+// scoped_refptr.");
 
 }  // namespace base
 
