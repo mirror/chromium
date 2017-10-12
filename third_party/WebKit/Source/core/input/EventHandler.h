@@ -415,6 +415,8 @@ class CORE_EXPORT EventHandler final
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, ImagesCannotStartSelection);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, AnchorTextCannotStartSelection);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
+                           EditableAnchorTextCanStartSelection);
+  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
                            ReadOnlyInputDoesNotInheritUserSelect);
 };
 
