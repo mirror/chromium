@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "38320d8e_2119b28f",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-12T00:24:42Z",
+      "side": 0,
+      "message": "Yes, the client side workaround (related to emulation of RGB surfaces on top of IOSurfaces, which are implicitly RGBA) is much easier so let\u0027s keep it there. It\u0027s centralized inside WebGL\u0027s DrawingBuffer; the more general case would be difficult.",
+      "parentUuid": "111abfe8_542cd902",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b94428d3_24436435",
         "filename": "gpu/command_buffer/common/capabilities.h",
         "patchSetId": 8
