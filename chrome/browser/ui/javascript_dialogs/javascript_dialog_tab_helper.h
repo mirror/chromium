@@ -10,6 +10,7 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "build/build_config.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog.h"
 #include "content/public/browser/javascript_dialog_manager.h"
