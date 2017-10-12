@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f25662b_1533a858",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5418,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-12T23:23:47Z",
+      "side": 1,
+      "message": "I explored whether LoadNavigationErrorPage can just return a boolean we can check here and in DidFailProvisionalLoad. However, the latter one is an override on WebFrameClient, which means a change of the interface will be needed too. I think it becomes a bit more invasive change than needed, so I opted for just adding one more check.",
+      "revId": "493f611d99bf1da70aaca5383ca425478dba3c6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
