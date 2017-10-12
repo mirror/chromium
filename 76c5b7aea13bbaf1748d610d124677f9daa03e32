@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733203af_83a00ea8",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T22:47:40Z",
+      "side": 1,
+      "message": "Nit: Since this line and the following are completely parallel calculations, create a copy of each inside `if (isRTL)` for ease of reading the branches.",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d14626_be05d01d",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T22:47:40Z",
+      "side": 1,
+      "message": "Nit:\n\nchangePasswordButtonOrigin.x \u003d whitelistReuseButtonOrigin.x +/- whitelistReuseButtonWidth\n\n(+/- depends on isRTL branch)",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d87ff59_b3c8057e",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T22:47:40Z",
+      "side": 1,
+      "message": "If the text is long, will this make the button smaller than the text that fits on it? If so, will it elide e.g. using ellipsis?",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481530f4_ded30293",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T22:47:40Z",
+      "side": 1,
+      "message": "My expectation is that the reversal should only happen if the buttons fit on one line (like in the Mac code). Could you either fix that or confirm that the divergent behaviour is intended?",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8edf3fc4_5ab91046",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T22:47:40Z",
+      "side": 1,
+      "message": "Is this border only for the vertical layout? If so, can you pass it into the BoxLayout constructor?",
+      "revId": "76c5b7aea13bbaf1748d610d124677f9daa03e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
