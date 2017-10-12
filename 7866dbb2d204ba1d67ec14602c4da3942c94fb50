@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b911357_477cd44f",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-12T19:32:38Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783f591c_ef87a0ba",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-12T19:32:38Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1508,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 25
+      },
+      "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1b52bc2_45369c1f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -13,6 +59,30 @@
       "writtenOn": "2017-10-12T19:25:01Z",
       "side": 1,
       "message": "We\u0027re really more interested in whether attachments are a valuable feature, and not in how many attachments PDFs typically have, hence this is a Boolean rather than an int.",
+      "range": {
+        "startLine": 57532,
+        "startChar": 36,
+        "endLine": 57532,
+        "endChar": 50
+      },
+      "revId": "7866dbb2d204ba1d67ec14602c4da3942c94fb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e3008e9_56332040",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57532,
+      "author": {
+        "id": 1000592
+      },
+      "writtenOn": "2017-10-12T19:32:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1b52bc2_45369c1f",
       "range": {
         "startLine": 57532,
         "startChar": 36,
