@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f47967e_b1ce1c88",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-12T18:18:54Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with leveldb, but why would the client know the old value? Isn\u0027t that in the actual database the client is working on?",
+      "revId": "8bb4f542bc9a35c8083ec453e122594102e931cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
