@@ -16,6 +16,24 @@
       "revId": "e14ffb06a73bddc5257bf479555d72edeb7faa46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d1a097_0bf164a8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-12T15:17:21Z",
+      "side": 1,
+      "message": "The threading doesn\u0027t make the unittest clearer or more legible for this class.  It isn\u0027t much about threading, this check is here as an arbitrary restriction on the use of the code, and is guarding the invocation of mutate.  To clarify responsibility I would actually move this to a member of the animator which can know what its own thread restrictions are, but that is overreaching this change.\n\nIn fact, I think I should refactor the unit test and make it a separate change.  Then we can discuss this in a better place.",
+      "parentUuid": "d4cdd6f8_9fd1c644",
+      "revId": "e14ffb06a73bddc5257bf479555d72edeb7faa46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
