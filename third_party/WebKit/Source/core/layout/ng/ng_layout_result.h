@@ -17,6 +17,7 @@ namespace blink {
 
 class NGExclusionSpace;
 struct NGUnpositionedFloat;
+struct NGPositionedFloat;
 
 // The NGLayoutResult stores the resulting data from layout. This includes
 // geometry information in form of a NGPhysicalFragment, which is kept around
@@ -60,6 +61,10 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return unpositioned_floats_;
   }
 
+  const Vector<NGPositionedFloat>& PositionedFloats() const {
+    return positioned_floats_;
+  }
+
   const NGExclusionSpace* ExclusionSpace() const {
     return exclusion_space_.get();
   }
@@ -78,11 +83,13 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
 
  private:
   friend class NGFragmentBuilder;
+  friend class NGLineBoxFragmentBuilder;
 
   NGLayoutResult(RefPtr<NGPhysicalFragment> physical_fragment,
                  Vector<NGOutOfFlowPositionedDescendant>
                      out_of_flow_positioned_descendants,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
+                 Vector<NGPositionedFloat>& positioned_floats,
                  std::unique_ptr<const NGExclusionSpace> exclusion_space,
                  const WTF::Optional<NGBfcOffset> bfc_offset,
                  const NGMarginStrut end_margin_strut,
@@ -92,6 +99,9 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
   RefPtr<NGPhysicalFragment> physical_fragment_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
+
+  // TODO FIXME.
+  Vector<NGPositionedFloat> positioned_floats_;
 
   const std::unique_ptr<const NGExclusionSpace> exclusion_space_;
   const WTF::Optional<NGBfcOffset> bfc_offset_;

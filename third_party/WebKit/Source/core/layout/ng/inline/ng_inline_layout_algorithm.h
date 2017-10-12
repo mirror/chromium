@@ -30,18 +30,20 @@ class NGTextFragmentBuilder;
 //
 // Uses NGLineBreaker to find NGInlineItems to form a line.
 class CORE_EXPORT NGInlineLayoutAlgorithm final
-    : public NGLayoutAlgorithm<NGInlineNode, NGInlineBreakToken> {
+    : public NGLayoutAlgorithm<NGInlineNode,
+                               NGLineBoxFragmentBuilder,
+                               NGInlineBreakToken> {
  public:
   NGInlineLayoutAlgorithm(NGInlineNode,
                           const NGConstraintSpace&,
                           NGInlineBreakToken* = nullptr);
 
+  ~NGInlineLayoutAlgorithm() override;
+
   // Create a line.
   // @return false if the line does not fit in the constraint space in block
   //         direction.
-  bool CreateLine(NGLineInfo*,
-                  NGExclusionSpace*,
-                  RefPtr<NGInlineBreakToken> = nullptr);
+  bool CreateLine(NGLineInfo*, NGExclusionSpace*);
 
   RefPtr<NGLayoutResult> Layout() override;
 
@@ -50,9 +52,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   void BidiReorder(NGInlineItemResults*);
 
-  bool PlaceItems(NGLineInfo*,
-                  const NGExclusionSpace&,
-                  RefPtr<NGInlineBreakToken>);
+  bool PlaceItems(NGLineInfo*, const NGExclusionSpace&);
   void PlaceText(RefPtr<const ShapeResult>,
                  RefPtr<const ComputedStyle>,
                  LayoutUnit* position,
@@ -89,14 +89,14 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                                 const NGExclusionSpace&,
                                 LayoutUnit line_bottom);
 
-  void PropagateBaselinesFromChildren();
-  bool AddBaseline(const NGBaselineRequest&,
+  // void PropagateBaselinesFromChildren();
+  /*bool AddBaseline(const NGBaselineRequest&,
                    const NGPhysicalFragment*,
-                   LayoutUnit child_offset);
+                   LayoutUnit child_offset);*/
 
-  NGInlineLayoutStateStack box_states_;
-  LayoutUnit content_size_;
-  LayoutUnit max_inline_size_;
+  std::unique_ptr<NGInlineLayoutStateStack> box_states_;
+  // LayoutUnit content_size_;
+  // LayoutUnit max_inline_size_;
   FontBaseline baseline_type_ = FontBaseline::kAlphabeticBaseline;
 
   unsigned is_horizontal_writing_mode_ : 1;

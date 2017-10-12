@@ -16,17 +16,20 @@ namespace blink {
 class NGInlineNode;
 class NGPhysicalFragment;
 class NGPhysicalLineBoxFragment;
+struct NGPositionedFloat;
 
 class CORE_EXPORT NGLineBoxFragmentBuilder final
     : public NGBaseFragmentBuilder {
   STACK_ALLOCATED();
-
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            RefPtr<const ComputedStyle>,
-                           NGWritingMode);
+                           NGWritingMode,
+                           TextDirection);
 
   NGLogicalSize Size() const final;
+
+  void AddPositionedFloat(NGPositionedFloat);
 
   void MoveChildrenInBlockDirection(LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit, unsigned start, unsigned end);
@@ -43,12 +46,13 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   void SetBreakToken(RefPtr<NGInlineBreakToken>);
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
+  RefPtr<NGLayoutResult> ToLineBoxFragment();
 
  private:
   NGInlineNode node_;
 
   NGLineHeightMetrics metrics_;
+  Vector<NGPositionedFloat> positioned_floats_;
 
   RefPtr<NGInlineBreakToken> break_token_;
 };
