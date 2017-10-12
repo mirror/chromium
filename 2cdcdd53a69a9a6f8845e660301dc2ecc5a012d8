@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e91b8132_e2e06535",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "7f905685_8484e6e5",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17634cd_cb1262f6",
         "filename": "components/autofill/core/browser/autofill_experiments.cc",
         "patchSetId": 12
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "Make 2 constants?\n\nkUploadCardBillableServiceNumber\nkUnmaskCardBillableServiceNumber",
       "parentUuid": "5f82a89b_bbdc9f50",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d460e4_175bcbd1",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Ah right.",
+      "parentUuid": "e12bc04a_bb817ced",
       "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

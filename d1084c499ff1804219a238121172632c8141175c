@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a00f5c8d_1956462b",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c676a4e_ea8e1c89",
+      "range": {
+        "startLine": 724,
+        "startChar": 48,
+        "endLine": 724,
+        "endChar": 61
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21193736_6f2c6579",
         "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T19:12:37Z",
       "side": 1,
       "message": "LGTM. Can you share what\u0027s the benefit to use unique pointer here?",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 44
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec92313_c3c3f314",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Actually I was following how it is used in autofill_manager_unittest, but Mathieu asked to change back...",
+      "parentUuid": "21193736_6f2c6579",
       "range": {
         "startLine": 129,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36077f34_8a0da6d9",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e1dc1cb_0e613e8e",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 68
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b856853d_84f652bb",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 17
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3f35c673_91f396a7",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b856853d_84f652bb",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 40
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "416d8f4e_476f0a9f",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 17
@@ -114,6 +210,30 @@
       "revId": "d1084c499ff1804219a238121172632c8141175c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd277f0_36863e8b",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-12T21:50:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416d8f4e_476f0a9f",
+      "range": {
+        "startLine": 390,
+        "startChar": 3,
+        "endLine": 390,
+        "endChar": 66
+      },
+      "revId": "d1084c499ff1804219a238121172632c8141175c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
