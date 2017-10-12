@@ -16,6 +16,24 @@
       "revId": "31891ae427a648e62c151bca58f3d19342a7f1bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8745e58d_ec255b06",
+        "filename": "ash/wm/ash_focus_rules_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T21:49:15Z",
+      "side": 1,
+      "message": "it\u0027s not just that - the old method did not really work, except for CreateWindowInDefaultContainer.\n\nE.g. for CreateWindowInAlwaysOnTopContainer, aura::client::kAlwaysOnTopKey property was set on the window *after* ParentWindowWithContext was called, so the window would get parented to default container - ParentWindowWithContext uses container solely to get the appropriate root window to use, and makes the decision about the target container based only the window properties - which would at the time be missing kAlwaysOnTopKey.\n\n(i.e. container_id was pretty much ignored - we\u0027d have the same result doing\naura::client::ParentWindowWithContext(window, root_window, gfx::Rect(....)));",
+      "parentUuid": "4be6d56f_f4677cd4",
+      "revId": "31891ae427a648e62c151bca58f3d19342a7f1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
