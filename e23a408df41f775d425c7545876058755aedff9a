@@ -152,6 +152,30 @@
       "revId": "e23a408df41f775d425c7545876058755aedff9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fccc83_6d3c8424",
+        "filename": "services/ui/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-12T20:58:17Z",
+      "side": 1,
+      "message": "I talked to //media/gpu owners and found out the Accelerator should live in gpu thread. To do it, we need access ui::Service::window_server_::gpu_host. So it is more easier to expose those interfaces from ui service.\n\nPlease check the code at https://chromium-review.googlesource.com/c/chromium/src/+/709734/8/chrome/browser/embedded_ui_service_info_factory.cc#69",
+      "parentUuid": "70875783_8ea90e71",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "e23a408df41f775d425c7545876058755aedff9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
