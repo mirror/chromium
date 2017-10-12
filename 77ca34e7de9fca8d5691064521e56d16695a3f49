@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5b33522f_882243ed",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Note that this is different than my partial_sort suggestion. This one is not for performance; rather, stable_sort would guarantee that items with equal score keep their previous order. I don\u0027t know if that\u0027s important.",
+      "parentUuid": "b2fff0d6_8e755cf6",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ab865e_fee13dc8",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5

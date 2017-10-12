@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e528d561_b6833f2e",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Could we just run the callback just before calling OnHistoryQueryComplete? Then the provider wouldn\u0027t have to call this, removing one step in the back-and-forth between provider and query.",
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e03ab6_4f0dff4c",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "optional: I think an std::set\u003cHistoryQuery\u003e (no unique_ptr) might make all this a bit nicer. (Not fully thought through, maybe it\u0027s not actually possible.)",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 11
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da71ad3_ff80eaf8",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "|urls| is a raw pointer, I don\u0027t think std::move() will do anything useful?\n\nMore generally: Who is responsible for deleting |urls|? Right now this is very unclear IMO. Could we instead have a history::MostVisitedURLList object (not pointer) in HistoryQuery?",
+      "range": {
+        "startLine": 128,
+        "startChar": 55,
+        "endLine": 128,
+        "endChar": 70
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b587f2_fef51650",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Please add a class-level comment.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4fa515_913d1986",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "I find tests much easier to read when the actual EXPECTs are in the test body. How about just storing a copy of |urls| here and doing the actual checking within the tests themselves?",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27472198_cd9c64b0",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "This check doesn\u0027t seem necessary..?",
+      "range": {
+        "startLine": 48,
+        "startChar": 34,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5fea3a1_a13d9fd3",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "history_service_ \u003d std::make_unique\u003chistory::MostVisitedURLList\u003e(...)",
+      "range": {
+        "startLine": 91,
+        "startChar": 55,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efba868_ddecb8f1",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "nullptr?",
+      "range": {
+        "startLine": 92,
+        "startChar": 17,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fbebec_7b9dffc6",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "This looks scary... does it actually need to be non-null? Some tests just pass in nullptr.",
+      "range": {
+        "startLine": 102,
+        "startChar": 19,
+        "endLine": 102,
+        "endChar": 58
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74a4afe_77f48604",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "CreateProvider?",
+      "range": {
+        "startLine": 113,
+        "startChar": 50,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a539d8_5703516a",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Get/CreateProvider()? (Or just remove that helper and create the provider inline in each test)",
+      "range": {
+        "startLine": 268,
+        "startChar": 34,
+        "endLine": 268,
+        "endChar": 0
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f55c3c_6bbac838",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Some more possible tests:\n- Multiple (overlapping) requests, making sure all get served.\n- Using the cancelable_task_tracker to cancel a pending request. (I think right now, that request would just never complete and so effectively leak memory?)",
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c6395a_7d2ccd0e",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "CreateTopSitesProvider",
+      "range": {
+        "startLine": 90,
+        "startChar": 43,
+        "endLine": 90,
+        "endChar": 68
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73344d0_46f0477c",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "/*history_service\u003d*/",
+      "range": {
+        "startLine": 36,
+        "startChar": 63,
+        "endLine": 36,
+        "endChar": 70
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfcf695_dbd4c566",
+        "filename": "components/history/core/browser/default_top_sites_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Please add a class-level comment.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e62e17_9883b781",
+        "filename": "components/history/core/browser/top_sites_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "history_service_.get()?",
+      "range": {
+        "startLine": 283,
+        "startChar": 50,
+        "endLine": 283,
+        "endChar": 57
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d29cdc8_72f5b24c",
+        "filename": "components/history/core/browser/top_sites_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "Please add a class-level comment.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a9bc7c_a737d208",
+        "filename": "ios/chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-12T09:25:27Z",
+      "side": 1,
+      "message": "I think this is missing the history_service param?",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "fce4690f8053d98098f8683bb820322d6d022ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
