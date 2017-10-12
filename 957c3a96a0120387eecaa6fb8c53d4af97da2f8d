@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c343647b_7ba6495d",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-12T23:01:13Z",
+      "side": 1,
+      "message": "Can we have a test that uses OpenDevice before and after the salt/id changes? Similar to MediaDevicesDispatcherHostTest.Salt.",
+      "revId": "957c3a96a0120387eecaa6fb8c53d4af97da2f8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
