@@ -7,20 +7,24 @@
 #include "media/base/scoped_callback_runner.h"
 #include "media/cdm/cdm_helpers.h"
 #include "media/mojo/services/mojo_cdm_allocator.h"
+#include "media/mojo/services/mojo_cdm_file_io.h"
 #include "services/service_manager/public/cpp/connect.h"
 
 namespace media {
 
 MojoCdmHelper::MojoCdmHelper(
     service_manager::mojom::InterfaceProvider* interface_provider)
-    : interface_provider_(interface_provider) {}
+    : interface_provider_(interface_provider), weak_factory_(this) {}
 
 MojoCdmHelper::~MojoCdmHelper() {}
 
 std::unique_ptr<CdmFileIO> MojoCdmHelper::CreateCdmFileIO(
     cdm::FileIOClient* client) {
-  // TODO(jrummell): Hook up File IO. http://crbug.com/479923.
-  return nullptr;
+  if (!ConnectToCdmStorage())
+    return nullptr;
+
+  // Pass a reference to CdmStorage so that MojoCdmFileIO can open a file.
+  return std::make_unique<MojoCdmFileIO>(client, cdm_storage_ptr_.get());
 }
 
 cdm::Buffer* MojoCdmHelper::CreateCdmBuffer(size_t capacity) {
@@ -37,7 +41,7 @@ void MojoCdmHelper::QueryStatus(QueryStatusCB callback) {
   if (!ConnectToOutputProtection())
     return;
 
-  output_protection_->QueryStatus(std::move(scoped_callback));
+  output_protection_ptr_->QueryStatus(std::move(scoped_callback));
 }
 
 void MojoCdmHelper::EnableProtection(uint32_t desired_protection_mask,
@@ -47,8 +51,8 @@ void MojoCdmHelper::EnableProtection(uint32_t desired_protection_mask,
   if (!ConnectToOutputProtection())
     return;
 
-  output_protection_->EnableProtection(desired_protection_mask,
-                                       std::move(scoped_callback));
+  output_protection_ptr_->EnableProtection(desired_protection_mask,
+                                           std::move(scoped_callback));
 }
 
 void MojoCdmHelper::ChallengePlatform(const std::string& service_id,
@@ -59,8 +63,8 @@ void MojoCdmHelper::ChallengePlatform(const std::string& service_id,
   if (!ConnectToPlatformVerification())
     return;
 
-  platform_verification_->ChallengePlatform(service_id, challenge,
-                                            std::move(scoped_callback));
+  platform_verification_ptr_->ChallengePlatform(service_id, challenge,
+                                                std::move(scoped_callback));
 }
 
 void MojoCdmHelper::GetStorageId(uint32_t version, StorageIdCB callback) {
@@ -70,6 +74,15 @@ void MojoCdmHelper::GetStorageId(uint32_t version, StorageIdCB callback) {
   // http://crbug.com/478960.
 }
 
+bool MojoCdmHelper::ConnectToCdmStorage() {
+  if (!cdm_storage_ptr_) {
+    service_manager::GetInterface<mojom::CdmStorage>(interface_provider_,
+                                                     &cdm_storage_ptr_);
+  }
+
+  return !cdm_storage_ptr_.encountered_error();
+}
+
 CdmAllocator* MojoCdmHelper::GetAllocator() {
   if (!allocator_)
     allocator_ = base::MakeUnique<MojoCdmAllocator>();
@@ -77,21 +90,19 @@ CdmAllocator* MojoCdmHelper::GetAllocator() {
 }
 
 bool MojoCdmHelper::ConnectToOutputProtection() {
-  if (!output_protection_attempted_) {
-    output_protection_attempted_ = true;
-    service_manager::GetInterface<mojom::OutputProtection>(interface_provider_,
-                                                           &output_protection_);
+  if (!output_protection_ptr_) {
+    service_manager::GetInterface<mojom::OutputProtection>(
+        interface_provider_, &output_protection_ptr_);
   }
-  return output_protection_.is_bound();
+  return !output_protection_ptr_.encountered_error();
 }
 
 bool MojoCdmHelper::ConnectToPlatformVerification() {
-  if (!platform_verification_attempted_) {
-    platform_verification_attempted_ = true;
+  if (!platform_verification_ptr_) {
     service_manager::GetInterface<mojom::PlatformVerification>(
-        interface_provider_, &platform_verification_);
+        interface_provider_, &platform_verification_ptr_);
   }
-  return platform_verification_.is_bound();
+  return !platform_verification_ptr_.encountered_error();
 }
 
 }  // namespace media
