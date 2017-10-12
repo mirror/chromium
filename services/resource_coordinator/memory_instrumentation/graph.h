@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/gtest_prod_util.h"
+#include "base/optional.h"
 #include "base/process/process_handle.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
 
@@ -32,7 +33,7 @@ class GlobalDumpGraph {
     // Creates a node in the dump graph which is associated with the
     // given |guid|, |path| and |weak|ness and returns it.
     GlobalDumpGraph::Node* CreateNode(
-        base::trace_event::MemoryAllocatorDumpGuid guid,
+        base::Optional<base::trace_event::MemoryAllocatorDumpGuid> guid,
         base::StringPiece path,
         bool weak);
 
