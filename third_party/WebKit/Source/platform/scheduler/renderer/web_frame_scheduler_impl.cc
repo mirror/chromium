@@ -47,7 +47,9 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       cross_origin_(false),
       frame_type_(frame_type),
       active_connection_count_(0),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+        DCHECK(throttling_state_, CalculateThrottlingState()); 
+      }
 
 namespace {
 

@@ -197,6 +197,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
+#include "core/page/PageLifecycleState.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/RootScrollerController.h"
@@ -3387,8 +3388,9 @@ void Document::DispatchUnloadEvents() {
       load_event_progress_ = kPageHideInProgress;
       if (LocalDOMWindow* window = domWindow()) {
         const double pagehide_event_start = MonotonicallyIncreasingTime();
-        window->DispatchEvent(
-            PageTransitionEvent::Create(EventTypeNames::pagehide, false), this);
+        window->DispatchEvent(PageTransitionEvent::CreatePageHide(
+                                  false, kPageLifecycleStateUserExit),
+                              this);
         const double pagehide_event_end = MonotonicallyIncreasingTime();
         DEFINE_STATIC_LOCAL(
             CustomCountHistogram, pagehide_histogram,

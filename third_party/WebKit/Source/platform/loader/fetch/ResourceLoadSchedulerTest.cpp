@@ -174,5 +174,41 @@ TEST_F(ResourceLoadSchedulerTest, Unthrottle) {
       id1, ResourceLoadScheduler::ReleaseOption::kReleaseOnly));
 }
 
+TEST_F(ResourceLoadSchedulerTest, Stopped) {
+  // Push three requests.
+  MockClient* client1 = new MockClient;
+  ResourceLoadScheduler::ClientId id1 = ResourceLoadScheduler::kInvalidClientId;
+  scheduler()->Request(
+      client1, ResourceLoadScheduler::ThrottleOption::kCanBeThrottled, &id1);
+  EXPECT_NE(ResourceLoadScheduler::kInvalidClientId, id1);
+  EXPECT_TRUE(client1->WasRan());
+
+  MockClient* client2 = new MockClient;
+  ResourceLoadScheduler::ClientId id2 = ResourceLoadScheduler::kInvalidClientId;
+  scheduler()->Request(
+      client2, ResourceLoadScheduler::ThrottleOption::kCanBeThrottled, &id2);
+  EXPECT_NE(ResourceLoadScheduler::kInvalidClientId, id2);
+  EXPECT_FALSE(client2->WasRan());
+
+  MockClient* client3 = new MockClient;
+  ResourceLoadScheduler::ClientId id3 = ResourceLoadScheduler::kInvalidClientId;
+  scheduler()->Request(
+      client3, ResourceLoadScheduler::ThrottleOption::kCanBeThrottled, &id3);
+  EXPECT_NE(ResourceLoadScheduler::kInvalidClientId, id3);
+  EXPECT_FALSE(client3->WasRan());
+
+  // Allows to pass all requests.
+  scheduler()->SetOutstandingLimitForTesting(0);
+  EXPECT_TRUE(client2->WasRan());
+  EXPECT_TRUE(client3->WasRan());
+
+  // Release all.
+  EXPECT_TRUE(scheduler()->Release(
+      id3, ResourceLoadScheduler::ReleaseOption::kReleaseOnly));
+  EXPECT_TRUE(scheduler()->Release(
+      id2, ResourceLoadScheduler::ReleaseOption::kReleaseOnly));
+  EXPECT_TRUE(scheduler()->Release(
+      id1, ResourceLoadScheduler::ReleaseOption::kReleaseOnly));
+}
 }  // namespace
 }  // namespace blink
