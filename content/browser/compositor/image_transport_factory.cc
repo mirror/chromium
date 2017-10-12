@@ -14,12 +14,12 @@
 namespace content {
 
 namespace {
-ImageTransportFactory* g_factory = NULL;
+ImageTransportFactory* g_image_transport_factory = NULL;
 bool g_initialized_for_unit_tests = false;
 static gl::DisableNullDrawGLBindings* g_disable_null_draw = NULL;
 
 void SetFactory(ImageTransportFactory* factory) {
-  g_factory = factory;
+  g_image_transport_factory = factory;
 }
 
 }
@@ -27,7 +27,7 @@ void SetFactory(ImageTransportFactory* factory) {
 // static
 void ImageTransportFactory::Initialize(
     scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner) {
-  DCHECK(!g_factory || g_initialized_for_unit_tests);
+  DCHECK(!g_image_transport_factory || g_initialized_for_unit_tests);
   if (g_initialized_for_unit_tests)
     return;
   SetFactory(new GpuProcessTransportFactory(std::move(resize_task_runner)));
@@ -35,7 +35,7 @@ void ImageTransportFactory::Initialize(
 
 void ImageTransportFactory::InitializeForUnitTests(
     std::unique_ptr<ImageTransportFactory> factory) {
-  DCHECK(!g_factory);
+  DCHECK(!g_image_transport_factory);
   DCHECK(!g_initialized_for_unit_tests);
   g_initialized_for_unit_tests = true;
 
@@ -49,8 +49,8 @@ void ImageTransportFactory::InitializeForUnitTests(
 
 // static
 void ImageTransportFactory::Terminate() {
-  delete g_factory;
-  g_factory = NULL;
+  delete g_image_transport_factory;
+  g_image_transport_factory = NULL;
   delete g_disable_null_draw;
   g_disable_null_draw = NULL;
   g_initialized_for_unit_tests = false;
@@ -58,7 +58,7 @@ void ImageTransportFactory::Terminate() {
 
 // static
 ImageTransportFactory* ImageTransportFactory::GetInstance() {
-  return g_factory;
+  return g_image_transport_factory;
 }
 
 }  // namespace content
