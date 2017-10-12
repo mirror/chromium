@@ -12,6 +12,7 @@
 #include "base/observer_list.h"
 #include "base/sequence_checker.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_black_list.h"
 #include "components/previews/core/previews_experiments.h"
 #include "url/gurl.h"
 
@@ -46,27 +47,6 @@ class PreviewsLogger {
     const base::Time time;
   };
 
-  // Information about a preview navigation.
-  struct PreviewNavigation {
-    PreviewNavigation(const GURL& url,
-                      PreviewsType type,
-                      bool opt_out,
-                      base::Time time)
-        : url(url), type(type), opt_out(opt_out), time(time) {}
-
-    // The url associated with the log.
-    const GURL url;
-
-    const PreviewsType type;
-
-    // Opt out status of the navigation.
-    const bool opt_out;
-
-    // Time stamp of when the navigation was determined to be an opt out non-opt
-    // out.
-    const base::Time time;
-  };
-
   PreviewsLogger();
   virtual ~PreviewsLogger();
 
@@ -88,8 +68,18 @@ class PreviewsLogger {
                   base::Time time);
 
   // Convert |navigation| to a MessageLog, and add that message to
-  // |log_messages_|. Virtual for testing.
-  virtual void LogPreviewNavigation(const PreviewNavigation& navigation);
+  // |log_messages_|. Virtualized in testing.
+  virtual void LogPreviewNavigation(const GURL& url,
+                                    PreviewsType type,
+                                    bool opt_out,
+                                    base::Time time);
+
+  // Add a MessageLog for the a decision that was made about the state of
+  // previews and blacklist. Virtualized in testing.
+  virtual void LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                                       const GURL& url,
+                                       base::Time time,
+                                       PreviewsType type);
 
  private:
   // Collection of recorded log messages.

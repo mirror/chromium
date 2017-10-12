@@ -27,6 +27,7 @@ class URLRequest;
 }
 
 namespace previews {
+enum class PreviewsEligibilityReason;
 class PreviewsBlackList;
 class PreviewsOptOutStore;
 class PreviewsUIService;
@@ -54,7 +55,13 @@ class PreviewsIOData : public PreviewsDecider {
   void LogPreviewNavigation(const GURL& url,
                             bool opt_out,
                             PreviewsType type,
-                            base::Time time);
+                            base::Time time) const;
+
+  // Adds log message of preview decision made asynchronously.
+  void LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                               const GURL& url,
+                               base::Time time,
+                               PreviewsType type) const;
 
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);

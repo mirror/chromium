@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_black_list.h"
 #include "components/previews/core/previews_logger_observer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -16,6 +17,7 @@ namespace previews {
 
 namespace {
 
+const char kPreviewsDecisionMade[] = "Decision";
 const char kPreviewsNavigationEventType[] = "Navigation";
 const size_t kMaximumMessageLogs = 10;
 
@@ -62,20 +64,38 @@ class PreviewsLoggerTest : public testing::Test {
   std::unique_ptr<PreviewsLogger> logger_;
 };
 
+TEST_F(PreviewsLoggerTest, PreviewsLoggerOnlySaveRecentPreviewNavigationsLogs) {
+  const std::string event_types[] = {"Event_0", kPreviewsNavigationEventType,
+                                     "Event_1", "Event_2", "Event_3"};
+
+  const std::string description = "Some description";
+  const GURL url("http://www.url_.com/url_");
+  const base::Time time = base::Time::Now();
+
+  for (auto type : event_types) {
+    logger_->LogMessage(type, description, url, time);
+  }
+
+  const size_t expected_size = 1;
+  EXPECT_EQ(expected_size, logger_->log_messages().size());
+  EXPECT_EQ(kPreviewsNavigationEventType,
+            logger_->log_messages()[0].event_type);
+}
+
 TEST_F(PreviewsLoggerTest, AddLogMessageToLogger) {
   size_t expected_size = 0;
   EXPECT_EQ(expected_size, logger_->log_messages().size());
 
   const PreviewsLogger::MessageLog expected_messages[] = {
-      PreviewsLogger::MessageLog("Event_a", "Some description a",
-                                 GURL("http://www.url_a.com/url_a"),
-                                 base::Time::Now()),
-      PreviewsLogger::MessageLog("Event_b", "Some description b",
-                                 GURL("http://www.url_b.com/url_b"),
-                                 base::Time::Now()),
-      PreviewsLogger::MessageLog("Event_c", "Some description c",
-                                 GURL("http://www.url_c.com/url_c"),
-                                 base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description a",
+          GURL("http://www.url_a.com/url_a"), base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description b",
+          GURL("http://www.url_b.com/url_b"), base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description c",
+          GURL("http://www.url_c.com/url_c"), base::Time::Now()),
   };
 
   for (auto message : expected_messages) {
@@ -105,13 +125,8 @@ TEST_F(PreviewsLoggerTest, LogPreviewNavigationLogMessage) {
   const GURL url_a("http://www.url_a.com/url_a");
   const GURL url_b("http://www.url_b.com/url_b");
 
-  PreviewsLogger::PreviewNavigation navigation_a(url_a, type_a,
-                                                 true /* opt_out */, time);
-  PreviewsLogger::PreviewNavigation navigation_b(url_b, type_b,
-                                                 false /* opt_out */, time);
-
-  logger_->LogPreviewNavigation(navigation_a);
-  logger_->LogPreviewNavigation(navigation_b);
+  logger_->LogPreviewNavigation(url_a, type_a, true /* opt_out */, time);
+  logger_->LogPreviewNavigation(url_b, type_b, false /* opt_out */, time);
 
   std::vector<PreviewsLogger::MessageLog> actual = logger_->log_messages();
 
@@ -133,8 +148,41 @@ TEST_F(PreviewsLoggerTest, LogPreviewNavigationLogMessage) {
   EXPECT_EQ(time, actual[1].time);
 }
 
-TEST_F(PreviewsLoggerTest, PreviewsLoggerOnlyKeepsCertainNumberOfMessageLogs) {
-  const std::string event_type = "Event";
+TEST_F(PreviewsLoggerTest, LogPreviewsDecisionMadeLogMessage) {
+  const base::Time time = base::Time::Now();
+
+  PreviewsType type_a = PreviewsType::OFFLINE;
+  PreviewsType type_b = PreviewsType::LOFI;
+  PreviewsEligibilityReason reason_a =
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE;
+  PreviewsEligibilityReason reason_b =
+      PreviewsEligibilityReason::NETWORK_NOT_SLOW;
+  const GURL url_a("http://www.url_a.com/url_a");
+  const GURL url_b("http://www.url_b.com/url_b");
+
+  TestPreviewsLoggerObserver observer;
+  logger_->AddAndNotifyObserver(&observer);
+
+  logger_->LogPreviewsDecisionMade(reason_a, url_a, time, type_a);
+  std::string expected_description_a =
+      "Offline preview decision made - Blacklist unavailable";
+  EXPECT_EQ(kPreviewsDecisionMade, observer.message()->event_type);
+  EXPECT_EQ(expected_description_a, observer.message()->event_description);
+  EXPECT_EQ(url_a, observer.message()->url);
+  EXPECT_EQ(time, observer.message()->time);
+
+  logger_->LogPreviewsDecisionMade(reason_b, url_b, time, type_b);
+  std::string expected_description_b =
+      "LoFi preview decision made - Network not slow";
+  EXPECT_EQ(kPreviewsDecisionMade, observer.message()->event_type);
+  EXPECT_EQ(expected_description_b, observer.message()->event_description);
+  EXPECT_EQ(url_b, observer.message()->url);
+  EXPECT_EQ(time, observer.message()->time);
+}
+
+TEST_F(PreviewsLoggerTest,
+       PreviewsLoggerOnlyKeepsCertainNumberOfNavigationLogs) {
+  const std::string event_type = kPreviewsNavigationEventType;
   const std::string event_description = "Some description";
   const base::Time time = base::Time::Now();
   const GURL url("http://www.url_.com/url_");
@@ -146,20 +194,23 @@ TEST_F(PreviewsLoggerTest, PreviewsLoggerOnlyKeepsCertainNumberOfMessageLogs) {
   EXPECT_EQ(kMaximumMessageLogs, logger_->log_messages().size());
 }
 
-TEST_F(PreviewsLoggerTest, ObserverIsNotifiedOfHistoricalMessagesWhenAdded) {
+TEST_F(PreviewsLoggerTest, ObserverIsNotifiedOfHistoricalNavigationsWhenAdded) {
   std::unique_ptr<TestPreviewsLoggerObserver> observer =
       base::MakeUnique<TestPreviewsLoggerObserver>();
 
   const PreviewsLogger::MessageLog expected_messages[] = {
-      PreviewsLogger::MessageLog("Event_a", "Some description a",
-                                 GURL("http://www.url_a.com/url_a"),
+      PreviewsLogger::MessageLog("Event_", "Some description_",
+                                 GURL("http://www.url_.com/url_"),
                                  base::Time::Now()),
-      PreviewsLogger::MessageLog("Event_b", "Some description b",
-                                 GURL("http://www.url_b.com/url_b"),
-                                 base::Time::Now()),
-      PreviewsLogger::MessageLog("Event_c", "Some description c",
-                                 GURL("http://www.url_c.com/url_c"),
-                                 base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description a",
+          GURL("http://www.url_a.com/url_a"), base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description b",
+          GURL("http://www.url_b.com/url_b"), base::Time::Now()),
+      PreviewsLogger::MessageLog(
+          kPreviewsNavigationEventType, "Some description c",
+          GURL("http://www.url_c.com/url_c"), base::Time::Now()),
   };
 
   for (auto message : expected_messages) {
@@ -180,7 +231,7 @@ TEST_F(PreviewsLoggerTest, ObserversOnNewMessageIsCalledWithCorrectParams) {
     logger_->AddAndNotifyObserver(&observers[i]);
   }
 
-  std::string type = "Event";
+  std::string type = kPreviewsNavigationEventType;
   std::string description = "Some description";
   GURL url("http://www.url_.com/url_");
   base::Time now = base::Time::Now();
@@ -207,7 +258,7 @@ TEST_F(PreviewsLoggerTest, RemovedObserverIsNotNotified) {
   const size_t removed_observer = 1;
   logger_->RemoveObserver(&observers[removed_observer]);
 
-  std::string type = "Event";
+  std::string type = kPreviewsNavigationEventType;
   std::string description = "Some description";
   GURL url("http://www.url_.com/url_");
   base::Time now = base::Time::Now();
