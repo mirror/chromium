@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22eef725_3011bb7e",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-12T17:26:28Z",
+      "side": 1,
+      "message": "If the browser is shutdown abruptly, this destructor will not be invoked. In any case, I\u0027ll remove the part about shutting down to avoid confusion.",
+      "parentUuid": "35a4083b_5a7fad7f",
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a984bb0_34e342fc",
         "filename": "extensions/browser/extension_system.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc96387_4057772f",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-12T17:26:28Z",
+      "side": 1,
+      "message": "It will be used as a parameter of InstallUpdate in the coming code review.",
+      "parentUuid": "4a984bb0_34e342fc",
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40484eea_654774c0",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-10-12T17:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0169d525_e0067cdc",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 38
+      },
+      "revId": "080c58bea287ea7abb2e775244aa50569da0a0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
