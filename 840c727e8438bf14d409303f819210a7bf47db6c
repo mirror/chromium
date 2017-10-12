@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c72a71d8_ec6fbfe2",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-12T06:29:59Z",
+      "side": 1,
+      "message": "We probably need to add TODO here too to drop dependency to Blob at some point.",
+      "revId": "840c727e8438bf14d409303f819210a7bf47db6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
