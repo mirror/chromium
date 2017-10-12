@@ -125,6 +125,11 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
   DECLARE_VIRTUAL_TRACE();
 
+ protected:
+  friend class MediaControlInputElement;
+
+  void MaybeRecordOverflowTimeToAction();
+
  private:
   // MediaControlsMediaEventListener is a component that is listening to events
   // and calling the appropriate callback on MediaControlsImpl. The object is
