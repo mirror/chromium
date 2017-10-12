@@ -31,11 +31,9 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
-import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.chrome.test.util.browser.contextmenu.ContextMenuUtils;
@@ -65,41 +63,50 @@ public class WebappNavigationTest {
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
-    public void testRegularLinkOffOriginInCctNoWebappThemeColor() throws Exception {
+    public void testRegularLinkOffOriginNoWebappThemeColor() throws Exception {
         runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent());
-        addAnchor("testId", OFF_ORIGIN_URL, "_self");
-        DOMUtils.clickNode(
-                mActivityTestRule.getActivity().getActivityTab().getContentViewCore(), "testId");
-
-        CustomTabActivity customTab = assertCustomTabActivityLaunchedForOffOriginUrl();
-
-        Assert.assertTrue(
-                "Sending to external handlers needs to be enabled for redirect back (e.g. OAuth).",
-                IntentUtils.safeGetBooleanExtra(customTab.getIntent(),
-                        CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, false));
-
+        WebappActivity activity = mActivityTestRule.getActivity();
         Assert.assertEquals(
-                "CCT Toolbar should use default primary color if theme color is not specified",
+                "Toolbar should use default primary color if theme color is not specified",
                 ApiCompatibilityUtils.getColor(
-                        customTab.getResources(), R.color.default_primary_color),
-                customTab.getToolbarManager().getPrimaryColor());
+                        activity.getResources(), R.color.default_primary_color),
+                activity.getToolbarManager().getPrimaryColor());
+
+        addAnchor("testId", OFF_ORIGIN_URL, "_self");
+        DOMUtils.clickNode(activity.getActivityTab().getContentViewCore(), "testId");
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                // Dropping the TLD, as Google can redirect to a local site
+                // and this could fail outside US.
+                return activity.getActivityTab().getUrl().contains("https://www.google.");
+            }
+        });
     }
 
     @Test
     @SmallTest
     @Feature({"Webapps"})
     @RetryOnFailure
-    public void testWindowTopLocationOffOriginInCctAndWebappThemeColor() throws Exception {
+    public void testWindowTopLocationOffOriginAndWebappThemeColor() throws Exception {
         runWebappActivityAndWaitForIdle(mActivityTestRule.createIntent().putExtra(
                 ShortcutHelper.EXTRA_THEME_COLOR, (long) Color.CYAN));
+        WebappActivity activity = mActivityTestRule.getActivity();
+        Assert.assertEquals("Toolbar should use the theme color of a webapp", Color.CYAN,
+                activity.getToolbarManager().getPrimaryColor());
 
         mActivityTestRule.runJavaScriptCodeInCurrentTab(
                 String.format("window.top.location = '%s'", OFF_ORIGIN_URL));
 
-        CustomTabActivity customTab = assertCustomTabActivityLaunchedForOffOriginUrl();
-
-        Assert.assertEquals("CCT Toolbar should use the theme color of a webapp", Color.CYAN,
-                customTab.getToolbarManager().getPrimaryColor());
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                // Dropping the TLD, as Google can redirect to a local site
+                // and this could fail outside US.
+                return activity.getActivityTab().getUrl().contains("https://www.google.");
+            }
+        });
     }
 
     @Test
