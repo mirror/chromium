@@ -105,6 +105,24 @@
       "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202d739d_e4e8b4ef",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-12T00:31:05Z",
+      "side": 1,
+      "message": "Ah, now I see what you mean by the complication with (non-)RLS...",
+      "parentUuid": "23a6c469_88af1384",
+      "revId": "58be5b12100b89e2280d5704f9e36793af9c5266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
