@@ -50,6 +50,16 @@ Polymer({
     },
 
     /**
+     * The intellicast option shown in the intellicast control, with value 0, 1,
+     * and 2.
+     * @private {number}
+     */
+    intellicastOption_: {
+      type: Number,
+      value: 1,
+    },
+
+    /**
      * The timestamp for when the initial media status was loaded.
      * @private {number}
      */
@@ -362,6 +372,11 @@ Polymer({
     }
     this.hangoutsLocalPresent_ = !!newRouteStatus.hangoutsExtraData &&
         newRouteStatus.hangoutsExtraData.localPresent;
+
+    if (newRouteStatus.mirroringExtraData) {
+      this.intellicastOption_ =
+          newRouteStatus.mirroringExtraData.intellicastOption;
+    }
   },
 
   /**
@@ -433,6 +448,16 @@ Polymer({
     var target = /** @type {{immediateValue: number}} */ (e.target);
     this.displayedVolume_ = target.immediateValue;
     media_router.browserApi.setCurrentMediaVolume(this.displayedVolume_);
+  },
+
+  /**
+   * Called when the user clicks on or stops dragging the intellicast slider.
+   * @param {!Event} e
+   * @private
+   */
+  onIntellicastOptionSelectComplete_: function(e) {
+    this.intellicastOption_ = e.target.value;
+    media_router.browserApi.setIntellicastOption(this.intellicastOption_);
   },
 
   /**

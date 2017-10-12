@@ -304,6 +304,15 @@ cr.define('media_router.browserApi', function() {
   }
 
   /**
+   * Sends a command to change the intellicast option.
+   *
+   * @param {number} option
+   */
+  function setIntellicastOption(option) {
+    chrome.send('setIntellicastOption', [{option: option}]);
+  }
+
+  /**
    * Sets the local present mode of the Hangouts associated with the current
    * route.
    * @param {boolean} localPresent
@@ -344,6 +353,7 @@ cr.define('media_router.browserApi', function() {
     selectLocalMediaFile: selectLocalMediaFile,
     setCurrentMediaMute: setCurrentMediaMute,
     setCurrentMediaVolume: setCurrentMediaVolume,
+    setIntellicastOption: setIntellicastOption,
     setHangoutsLocalPresent: setHangoutsLocalPresent
   };
 });

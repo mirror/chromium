@@ -278,6 +278,27 @@ cr.define('route_controls', function() {
         }, 1000);
       });
 
+      test('set intellicast option', function(done) {
+        assertElementHidden('intellicast-option-controls');
+        let routeStatus = createRouteStatus();
+        controls.routeStatus = routeStatus;
+        assertElementHidden('intellicast-option-controls');
+
+        routeStatus = createRouteStatus();
+        routeStatus.mirroringExtraData = {intellicastOption: 2};
+        controls.routeStatus = routeStatus;
+        assertElementShown('intellicast-option-controls');
+        assertEquals(controls.$$('#intellicast-option-slider').value, 2);
+
+        document.addEventListener('mock-set-intellicast-option',
+            function(e) {
+              done();
+            });
+
+        controls.$$('#intellicast-option-slider').value = 0;
+        controls.$$('#intellicast-option-slider').fire('change');
+      });
+
       test('hangouts local present mode', function(done) {
         assertElementHidden('hangouts-local-present-controls');
         let routeStatus = createRouteStatus();
