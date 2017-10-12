@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fae526a_99b6d0b5",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T19:12:11Z",
+      "side": 1,
+      "message": "This was just ported, but I can\u0027t see any reason these could be WebStrings - am I missing something?",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2bb85f_8041385c",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T19:12:11Z",
+      "side": 1,
+      "message": "I\u0027ll look into this in a followup.",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
