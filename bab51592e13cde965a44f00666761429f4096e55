@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c9e1be_82c625cb",
+        "filename": "chrome/browser/resources/download_internals/download_internals.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-12T21:59:58Z",
+      "side": 1,
+      "message": "All: Should be\n   @param {type} name Description.\n\nie, reverse the type and name positions. Not sure why closure isn\u0027t complaining about that. https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#param-type-varname-description",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "bab51592e13cde965a44f00666761429f4096e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
