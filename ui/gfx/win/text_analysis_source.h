@@ -18,13 +18,20 @@ namespace win {
 // Implements an IDWriteTextAnalysisSource, describing a single pre-defined
 // chunk of text with a uniform locale, reading direction, and number
 // substitution.
-class GFX_EXPORT TextAnalysisSource
+class TextAnalysisSource
     : public Microsoft::WRL::RuntimeClass<
           Microsoft::WRL::RuntimeClassFlags<Microsoft::WRL::ClassicCom>,
           IDWriteTextAnalysisSource> {
  public:
-  TextAnalysisSource();
+  // Factory method to avoid exporting the class and all it derives from.
+  static HRESULT GFX_EXPORT
+  Factory(IDWriteTextAnalysisSource** p,
+          const base::string16& text,
+          const base::string16& locale_name,
+          IDWriteNumberSubstitution* number_substitution,
+          DWRITE_READING_DIRECTION reading_direction);
 
+  TextAnalysisSource();
   // IDWriteTextAnalysisSource:
   HRESULT STDMETHODCALLTYPE GetLocaleName(UINT32 text_position,
                                           UINT32* text_length,
