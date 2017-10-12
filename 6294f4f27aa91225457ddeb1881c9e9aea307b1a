@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c70d746_ef2062c8",
+        "filename": "third_party/WebKit/Source/core/css/FontSize.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T00:21:29Z",
+      "side": 1,
+      "message": "nit: Is 12 a browser default or something? Is there a global constant somewhere that you can use instead of hardcoding it here?",
+      "revId": "6294f4f27aa91225457ddeb1881c9e9aea307b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
