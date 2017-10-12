@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "990f68a4_dc80e6c2",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30062897_6781cf69",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a3189e_82e929cb",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
         "patchSetId": 3
@@ -356,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "f44ca9cb_4d66179f",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244a01b1_8b11524b",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78754ce_145ebdb8",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
         "patchSetId": 3
@@ -424,6 +472,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5782220f_d07c5668",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e16e4e_423748eb",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "702b3b75_a0dc1f83",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "|callback| needs to take a raw MostVisitedURLList pointer, and I still need a raw pointer so I can iterate over the urls after the ownership has been passed away. I don\u0027t think using a unique_ptr helps very much here, but if you can elaborate that would be great.",
+      "parentUuid": "4676d876_909e37a3",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 9
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f9ecef_86e6fd00",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-06T08:07:35Z",
       "side": 1,
       "message": "Would stable_sort make any difference here? You know better the internals of this score and how the list is produced.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fff0d6_8e755cf6",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Probably an unnecessary change, the list is likely to be small.",
+      "parentUuid": "99f9ecef_86e6fd00",
       "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8073feb7_984a2850",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ab865e_fee13dc8",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a4107ee_714fac77",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "357c8010_318d4c14",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a4107ee_714fac77",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b59e3fd6_c6421a27",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5
@@ -99,6 +189,24 @@
       "writtenOn": "2017-10-06T08:07:35Z",
       "side": 1,
       "message": "Does this code handle well the urls-\u003eempty() case? I don\u0027t see a codepath that would trigger the completion callback. Please add a unit test too.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ac3244_33ab6fbf",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Good catch, thanks",
+      "parentUuid": "b59e3fd6_c6421a27",
       "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +253,48 @@
     },
     {
       "key": {
+        "uuid": "c2699d6a_7a868d57",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8d433f_a4571d7c",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d881c5c_0b86f629",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89383f43_e44919da",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f35d958_c035a04f",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5
@@ -165,6 +315,30 @@
       "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57eea69d_9d1ebce9",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f35d958_c035a04f",
+      "range": {
+        "startLine": 63,
+        "startChar": 36,
+        "endLine": 63,
+        "endChar": 47
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "aa787c95_519c33a7",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d150ccba_601afa78",
+      "range": {
+        "startLine": 69,
+        "startChar": 36,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b416d00_9d546c57",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
         "patchSetId": 5
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "ac6228cd_cf7302de",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b416d00_9d546c57",
+      "range": {
+        "startLine": 20,
+        "startChar": 60,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af58baf4_30d4ad5a",
         "filename": "components/history/core/browser/top_sites_provider.h",
         "patchSetId": 5
@@ -225,6 +447,24 @@
       "writtenOn": "2017-10-06T08:07:35Z",
       "side": 1,
       "message": "I think it\u0027d be great to document a few more details here:\n- That |tracker| must not be null.\n- That the client can interrupt the process by using |tracker|.\n- (Depending on the outcome of an ongoing discussion) That the client must not start two overlaping requests (must cancel the first one before starting the second).\n- The |callback| will never be called before the function returns.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2acaf93_ec5006b9",
+        "filename": "components/history/core/browser/top_sites_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-12T06:20:57Z",
+      "side": 1,
+      "message": "It\u0027s a fairly obvious crash when |tracker| is null, and I think it\u0027s fairly implicit that |callback| can be invoked at any time. Otherwise done.",
+      "parentUuid": "af58baf4_30d4ad5a",
       "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
