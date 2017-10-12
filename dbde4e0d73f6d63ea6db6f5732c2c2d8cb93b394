@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "000cc14c_23f23fab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T21:54:30Z",
+      "side": 1,
+      "message": "s/OIB/Page Info/",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ebe36a_99165551",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T21:54:30Z",
+      "side": 1,
+      "message": "Has UI review explicitly approved this in the context of hiding default permissions?\n\n(They very well might have, but this CL and the bug don\u0027t link to any documentation on that.)",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd092472_f8c2c975",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-12T21:54:30Z",
+      "side": 1,
+      "message": "What if a user mutes the sound in the site first and then goes to Page Info?\nWould it make sense to show the permission if the page has played any sound at all?\n(Or at least, say, in the last minute?)",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
