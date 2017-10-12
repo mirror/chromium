@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee49f100_72bdb5a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-12T20:02:55Z",
+      "side": 1,
+      "message": "please clarify \"our surface\", there\u0027s several involved in this code.",
+      "range": {
+        "startLine": 9,
+        "startChar": 60,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "c093636f65af93c5288740026c5511d8b8b9bbf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
