@@ -408,9 +408,11 @@ function runTest(pixelTest, enableWatchDogWhileDebugging)
         // 1. Preload panels.
         var lastLoadedPanel;
 
-        var promises = [];
+        var modulePromise = Promise.resolve();
+        var promises = [modulePromise];
         for (var moduleName of InspectorTest._modulesToPreload)
-            promises.push(self.runtime.loadModulePromise(moduleName));
+            modulePromise.then(() => TestRunner.loadModule(moduleName))
+            // promises.push(TestRunner.loadModule(moduleName));
 
         for (var i = 0; i < InspectorTest._panelsToPreload.length; ++i) {
             lastLoadedPanel = InspectorTest._panelsToPreload[i];
