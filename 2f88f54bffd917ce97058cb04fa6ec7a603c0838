@@ -22,6 +22,30 @@
       "revId": "2f88f54bffd917ce97058cb04fa6ec7a603c0838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecefdcec_7c4d7b2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-12T20:00:55Z",
+      "side": 1,
+      "message": "I think not showing when the tab is null is fine. It\u0027s not likely to be hit often.\n\nLet\u0027s move this up, though, so showOptOutSnackbar \u003d false and we skip creating the runnable, e.g.\n\nif (tab !\u003d null \u0026\u0026 !mSwitchStateShouldEnable \u0026\u0026 ChromeFeatureList.isEnabled(...))",
+      "parentUuid": "0262b048_18178269",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 82
+      },
+      "revId": "2f88f54bffd917ce97058cb04fa6ec7a603c0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
