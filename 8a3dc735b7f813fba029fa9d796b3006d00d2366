@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "ce10f60f_27851f01",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T21:29:44Z",
+      "side": 1,
+      "message": "Cool.  Thanks for mentioning 773683 in the comment.  That makes it easier to know in the future that it\u0027s ok for the test behavior to change when that bug gets fixed.",
+      "parentUuid": "5ef37de8_4cea15ff",
+      "revId": "8a3dc735b7f813fba029fa9d796b3006d00d2366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d823ed66_a99fc0bb",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 4

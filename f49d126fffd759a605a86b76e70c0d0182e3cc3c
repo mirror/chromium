@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb55d28a_cedfb299",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7132,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T21:29:44Z",
+      "side": 1,
+      "message": "nit: reloads",
+      "range": {
+        "startLine": 7132,
+        "startChar": 63,
+        "endLine": 7132,
+        "endChar": 69
+      },
+      "revId": "f49d126fffd759a605a86b76e70c0d0182e3cc3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a9685c_8262e8ea",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7138,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-12T21:29:44Z",
+      "side": 1,
+      "message": "nit: Unload\n(No capital L)",
+      "range": {
+        "startLine": 7138,
+        "startChar": 56,
+        "endLine": 7138,
+        "endChar": 62
+      },
+      "revId": "f49d126fffd759a605a86b76e70c0d0182e3cc3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
