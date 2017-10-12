@@ -35,7 +35,7 @@ group("bindings") {
     "validator.js",
   ]
 
-  deps = [
+  data_deps = [
     ":new_bindings",
     "//mojo/public/interfaces/bindings:bindings_js__generator",
   ]
@@ -80,7 +80,7 @@ action("new_bindings") {
   args = rebase_path(new_bindings_js_files, root_build_dir)
   args += [ rebase_path(compiled_file, root_build_dir) ]
 
-  deps = [
+  data_deps = [
     "//mojo/public/interfaces/bindings:new_bindings_js__generator",
   ]
 }
