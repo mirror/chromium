@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46efdc5c_d5f1c891",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T00:56:17Z",
+      "side": 1,
+      "message": "Nice! Simple, elegant, reliable.",
+      "revId": "4d21aea0be9e761b342de41b825f109bcdeb61a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
