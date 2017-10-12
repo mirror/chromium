@@ -1802,47 +1802,107 @@ void PaintOpBuffer::ShrinkToFit() {
 
 PaintOpBuffer::FlatteningIterator::FlatteningIterator(
     const PaintOpBuffer* buffer,
-    const std::vector<size_t>* offsets)
-    : top_level_iter_(buffer, offsets) {
-  FlattenCurrentOpIfNeeded();
+    const std::vector<size_t>* offsets,
+    SkCanvas* canvas,
+    const PlaybackParams& params)
+    : canvas_(canvas),
+      top_level_iter_(buffer, offsets),
+      top_level_params_(params) {
+  restore_op_.type = static_cast<uint8_t>(PaintOpType::Restore);
+  save_op_.type = static_cast<uint8_t>(PaintOpType::Save);
+
+  // If offsets aren't passed, then top_level_iter is empty
+  // and we'll treat the "top level" one as a nested iterator.
+  if (!offsets) {
+    DCHECK(!top_level_iter_);
+    nested_->emplace_back(buffer, params, canvas_);
+    // To avoid the extra save/restore for this "top level" nested iterator
+    // adjust the save count accordingly.
+    nested_->back().save_count++;
+    current_op_ = nested_->back().iter ? *nested_->back().iter : nullptr;
+  } else {
+    current_op_ = top_level_iter_ ? *top_level_iter_ : nullptr;
+  }
+
+  if (!current_op_)
+    return;
+
+  // Match the behavior of operator++ when encountering a draw record.
+  // A DrawRecord is replaced with an emitted save.
+  if (current_op_->GetType() == PaintOpType::DrawRecord)
+    current_op_ = &save_op_;
 }
 
-void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
-  // At the top of the loop, the last nested iterator (or the top if no
-  // nested) is pointing at the current op.  Advance through iterators,
-  // flattening draw record ops as we go until this gets to a non
-  // DrawRecordOp (which could be the current op).
-  while (true) {
-    // If there aren't nested iterators and the top level iterator is
-    // at its end, then we're done with all ops.
-    if (nested_iter_.empty() && !top_level_iter_)
-      return;
+void PaintOpBuffer::FlatteningIterator::operator++() {
+  // If there aren't nested iterators and the top level iterator is
+  // at its end, then we're done with all ops.
+  if (nested_->empty() && !top_level_iter_)
+    return;
 
-    // If the nested iterator is not valid, then we've reached the end of
-    // whatever current iterator we're looping through.
-    if (!nested_iter_.empty() && !nested_iter_.back()) {
-      // Pop the current iterator.  Now, the last iterator is currently
-      // pointing at whatever DrawRecordOp created the iterator that was
-      // just popped, so increment it to go to the next op.
-      nested_iter_.pop_back();
-      if (nested_iter_.empty())
-        ++top_level_iter_;
-      else
-        ++nested_iter_.back();
-      continue;
-    }
+  const PaintOp* last_op;
+  if (nested_->empty())
+    last_op = *top_level_iter_;
+  else if (nested_->back().iter)
+    last_op = *nested_->back().iter;
+  else
+    last_op = nullptr;
+  // If the last op was a draw record, we have already emitted a save()
+  // for it.  So, grab the record itself to advance into.
+  const PaintOpBuffer* nested_buffer =
+      last_op && last_op->GetType() == PaintOpType::DrawRecord
+          ? static_cast<const DrawRecordOp*>(last_op)->record.get()
+          : nullptr;
 
-    PaintOp* op = **this;
-    DCHECK(op);
-    if (op->GetType() != PaintOpType::DrawRecord)
-      return;
-    // If the current op is a draw record, then push another iterator for that
-    // record on the stack, and loop again to see what's in this new record.
-    auto* record_op = static_cast<DrawRecordOp*>(op);
-    nested_iter_.push_back(Iterator(record_op->record.get()));
+  // Increment the current iterator.
+  if (nested_->empty())
+    ++top_level_iter_;
+  else if (nested_->back().iter)
+    ++nested_->back().iter;
+
+  // If the last op was a draw record, (aka an emitted save) the increment above
+  // will leave the previous iterator one past that so that when this new nested
+  // iterator is popped the previous iterator does not need to be incremented.
+  if (nested_buffer) {
+    nested_->emplace_back(
+        nested_buffer,
+        nested_->empty() ? top_level_params_ : nested_->back().params, canvas_);
   }
+
+  // If we're at the end of a nested iterator, issue restores as needed.
+  while (!nested_->empty() && !nested_->back().iter) {
+    // Because the NestedRecord stored the save count after the save() for the
+    // draw record, this needs to restore one past the recorded save count.
+    if (nested_->back().save_count <= canvas_->getSaveCount()) {
+      current_op_ = &restore_op_;
+      return;
+    }
+    nested_->pop_back();
+  }
+
+  // If there aren't nested iterators and the top level iterator is
+  // at its end, then we're done with all ops.
+  if (nested_->empty() && !top_level_iter_)
+    return;
+
+  DCHECK(nested_->empty() || nested_->back().iter);
+  DCHECK(top_level_iter_ || nested_->back().iter);
+
+  current_op_ = nested_->empty() ? *top_level_iter_ : *nested_->back().iter;
+  DCHECK(current_op_);
+  if (current_op_->GetType() == PaintOpType::DrawRecord)
+    current_op_ = &save_op_;
 }
 
 PaintOpBuffer::FlatteningIterator::~FlatteningIterator() = default;
+
+void PaintOpBuffer::FlatteningIterator::Raster() {
+  (*this)->Raster(
+      canvas_, nested_->empty() ? top_level_params_ : nested_->back().params);
+}
+
+void PaintOpBuffer::FlatteningIterator::RasterStateOpOnly() {
+  if ((*this)->AffectsCTM())
+    Raster();
+}
 
 }  // namespace cc

@@ -51,6 +51,7 @@
 
 #if !defined(OS_NACL)
 #include "cc/paint/display_item_list.h"  // nogncheck
+#include "third_party/skia/include/utils/SkNoDrawCanvas.h"
 #endif
 
 #if !defined(__native_client__)
@@ -7163,12 +7164,15 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
 
   cc::PaintOp::SerializeOptions options;
 
+  cc::PlaybackParams params(nullptr, SkMatrix::I());
+  SkNoDrawCanvas canvas(SkIRect::MakeXYWH(x, y, w, h));
+
   // TODO(enne): need to implement alpha folding optimization from POB.
   // TODO(enne): don't access private members of DisplayItemList.
   gfx::Rect playback_rect(x, y, w, h);
   std::vector<size_t> indices = list->rtree_.Search(playback_rect);
   for (cc::PaintOpBuffer::FlatteningIterator iter(&list->paint_op_buffer_,
-                                                  &indices);
+                                                  &indices, &canvas, params);
        iter; ++iter) {
     const cc::PaintOp* op = *iter;
     size_t size = op->Serialize(memory + written_bytes, free_bytes, options);
@@ -7183,6 +7187,9 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
 
       size = op->Serialize(memory + written_bytes, free_bytes, options);
     }
+
+    iter.RasterStateOpOnly();
+
     DCHECK_GE(size, 4u);
     DCHECK_EQ(size % cc::PaintOpBuffer::PaintOpAlign, 0u);
     DCHECK_LE(size, free_bytes);

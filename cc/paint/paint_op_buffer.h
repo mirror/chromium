@@ -10,6 +10,7 @@
 #include <string>
 #include <type_traits>
 
+#include "base/containers/stack_container.h"
 #include "base/debug/alias.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
@@ -88,9 +89,11 @@ enum class PaintOpType : uint8_t {
 CC_PAINT_EXPORT std::string PaintOpTypeToString(PaintOpType type);
 
 struct CC_PAINT_EXPORT PlaybackParams {
+  PlaybackParams() = default;
   PlaybackParams(ImageProvider* image_provider, const SkMatrix& original_ctm);
-  ImageProvider* image_provider;
-  const SkMatrix original_ctm;
+
+  ImageProvider* image_provider = nullptr;
+  SkMatrix original_ctm;
 };
 
 class CC_PAINT_EXPORT PaintOp {
@@ -108,6 +111,23 @@ class CC_PAINT_EXPORT PaintOp {
   bool IsDrawOp() const;
   bool IsPaintOpWithFlags() const;
   bool IsValid() const;
+
+  bool AffectsCTM() const {
+    switch (GetType()) {
+      case PaintOpType::Concat:
+      case PaintOpType::Restore:
+      case PaintOpType::Rotate:
+      case PaintOpType::Save:
+      case PaintOpType::SaveLayer:
+      case PaintOpType::SaveLayerAlpha:
+      case PaintOpType::Scale:
+      case PaintOpType::SetMatrix:
+      case PaintOpType::Translate:
+        return true;
+      default:
+        return false;
+    }
+  }
 
   struct SerializeOptions {
     ImageDecodeCache* decode_cache = nullptr;
@@ -840,7 +860,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     OffsetIterator(const PaintOpBuffer* buffer,
                    const std::vector<size_t>* offsets)
         : buffer_(buffer), ptr_(buffer_->data_.get()), offsets_(offsets) {
-      if (offsets->empty()) {
+      if (!offsets || offsets->empty()) {
         *this = end();
         return;
       }
@@ -943,35 +963,51 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   // Returns a stream of non-DrawRecord ops from a top level pob with indices.
   // Upon encountering DrawRecord ops, it returns ops from inside them
-  // without returning the DrawRecord op itself.  It does this recursively.
+  // without returning the DrawRecord op itself, along with synthesizing save
+  // and restore ops as needed.
+  //
+  // All ops should have either Raster or RasterStateOpOnly op called on them to
+  // keep the passed in canvas ctm and save count in sync with the iterator.
   class CC_PAINT_EXPORT FlatteningIterator {
    public:
     // Offsets and paint op buffer must come from the same DisplayItemList.
     FlatteningIterator(const PaintOpBuffer* buffer,
-                       const std::vector<size_t>* offsets);
+                       const std::vector<size_t>* offsets,
+                       SkCanvas* canvas,
+                       const PlaybackParams& params);
     ~FlatteningIterator();
 
-    PaintOp* operator->() const {
-      return nested_iter_.empty() ? *top_level_iter_ : *nested_iter_.back();
-    }
-    PaintOp* operator*() const { return operator->(); }
+    PaintOp* operator->() const { return current_op_; }
+    PaintOp* operator*() const { return current_op_; }
+    operator bool() const { return !nested_->empty() || top_level_iter_; }
 
-    FlatteningIterator& operator++() {
-      if (nested_iter_.empty())
-        ++top_level_iter_;
-      else
-        ++nested_iter_.back();
-      FlattenCurrentOpIfNeeded();
-      return *this;
-    }
+    void operator++();
 
-    operator bool() const { return top_level_iter_; }
+    void Raster();
+    void RasterStateOpOnly();
 
    private:
-    void FlattenCurrentOpIfNeeded();
+    struct NestedRecord {
+      NestedRecord(const PaintOpBuffer* buffer,
+                   const PlaybackParams& params,
+                   const SkCanvas* canvas)
+          : iter(buffer),
+            params(params.image_provider, canvas->getTotalMatrix()),
+            save_count(canvas->getSaveCount()) {}
+
+      PaintOpBuffer::Iterator iter;
+      PlaybackParams params;
+      int save_count = 0;
+    };
+
+    SkCanvas* canvas_;
+    PaintOp* current_op_;
+    SaveOp save_op_;
+    RestoreOp restore_op_;
 
     PaintOpBuffer::OffsetIterator top_level_iter_;
-    std::vector<Iterator> nested_iter_;
+    base::StackVector<NestedRecord, 3> nested_;
+    PlaybackParams top_level_params_;
   };
 
  private:
