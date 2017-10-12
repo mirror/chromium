@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c90fd3af_d0ad88bb",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-10-12T13:28:37Z",
+      "side": 1,
+      "message": "Would be better to have this logic in RestoreParsedStyleSheet() instead of LinkStyle?\n\nPerhaps with a better name than RestoreParsedStyleSheet. Something like (Create)StyleSheetContentsFromCache()?",
+      "revId": "561c638cd739aa7f6c98f5fe9cedb20c7e04eca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
