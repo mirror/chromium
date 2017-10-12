@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8747a48c_79eb0740",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-12T21:03:51Z",
+      "side": 1,
+      "message": "I am planning to add a \"Compatible Mode\" to this class to allow it works on Windows 7. I have verified most of the functionality should be workable on Windows 7.\nCurrent plan is to add a \"compatible_mode\" bool variable in GpuPreferences and a bool parameter in the constructor of MediaFoundationVideoEncodeAccelerator. If it\u0027s true, MediaFoundationVideoEncodeAccelerator does not test the OS version and logging several configuration errors instead of returning failure.\n\nSo without actively setting the \"compatible_mode\", the behavior keeps unchanged (in Chrome). But in Chromoting, we may prefer to use \"compatible_mode\", the performance of HW encoder is much better then VP8 / VP9.\n\nWhat do you think?",
+      "parentUuid": "7f8c3a8a_739df17b",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 62
+      },
+      "revId": "b2835de87d5776d3cdb1af993dfe3b4c7177e4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d74e111_ee467a1b",
         "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T20:16:54Z",
       "side": 1,
       "message": "Have you tested out this change? I know that YV12 is the actual format that we are using, but I remember earlier Intel HW would have these two somehow switched. That\u0027s why it landed this way.",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 45
+      },
+      "revId": "b2835de87d5776d3cdb1af993dfe3b4c7177e4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b3444d_0e2f480b",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-12T21:03:51Z",
+      "side": 1,
+      "message": "I have tested it on my machine with Intel HW.\nI thought it was a typo. If it\u0027s intentional, I will revert this change.",
+      "parentUuid": "5d74e111_ee467a1b",
       "range": {
         "startLine": 382,
         "startChar": 27,
