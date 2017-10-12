@@ -95,12 +95,12 @@ _java_primitive_to_boxed_type = {
 
 
 def NameToComponent(name):
-  # insert '_' between anything and a Title name (e.g, HTTPEntry2FooBar ->
-  # HTTP_Entry2_FooBar)
-  name = re.sub('([^_])([A-Z][^A-Z_]+)', r'\1_\2', name)
-  # insert '_' between non upper and start of upper blocks (e.g.,
-  # HTTP_Entry2_FooBar -> HTTP_Entry2_Foo_Bar)
-  name = re.sub('([^A-Z_])([A-Z])', r'\1_\2', name)
+  # insert '_' after blocks of uppercase characters.
+  # E.g., HTTPEntry9E2EFooBar -> HTTP_Entry9E2E_FooBar.
+  name = re.sub('([A-Z][0-9]*)(?=[A-Z][0-9]*[a-z])', r'\1_', name)
+  # insert '_' after blocks of lowercase characters.
+  # E.g., HTTPEntry9E2EFooBar -> HTTPEntry9_E2EFoo_Bar.
+  name = re.sub('([a-z][0-9]*)(?=[A-Z])', r'\1_', name)
   return [x.lower() for x in name.split('_')]
 
 def UpperCamelCase(name):
