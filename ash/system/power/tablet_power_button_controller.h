@@ -106,6 +106,9 @@ class ASH_EXPORT TabletPowerButtonController
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 
+  // Cancel the ongoing tablet power button behavior.
+  void CancelTabletPowerButton();
+
   // Overrides the tick clock used by |this| for testing.
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
