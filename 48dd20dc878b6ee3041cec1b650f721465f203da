@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4a3ba64_99298aff",
+        "filename": "chrome/browser/feature_engagement/feature_promo_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "What is the expected ownership? You have the destructor public here, which implies anyone can call the destructor, yet in subclasses the destructor is private. Be consistent, and definitely document ownership.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f3e84e_f812ed6d",
+        "filename": "chrome/browser/feature_engagement/feature_promo_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "If you\u0027re going to use a namespace, then I would expect everything in this file to be in the namespace (just like you have in feature_tracker.h)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3691bbb_6741e64c",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "I only opened this file to check on namespaces. I\u0027m assuming Tommy and/or Rob will provide feedback for this file. That said, please document ownership.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 3
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad3d157_e60fe3e1",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "Don\u0027t inline complex functions like this (see style guide). Same comment for ShowPromoBubble/ClosePromoBubble.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c8a424_721e547a",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "You should leave these pure virtual so that subclasses *must* implement them.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f439e483_1a11a34b",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "Why do you need to use the last active browser in these functions? Don\u0027t you have context, meaning the browser? If you don\u0027t, how do you know the last active browser is going to be right? For example, the profile may not be what you expected. Further I wouldn\u0027t expect the code here to look up the last active browser. If you really need the last active browser (which you need to be very careful if you do) I would expect chrome/browser/feature_engagement to be the one determining the right browser and passing it to these functions. To do otherwise means you need to duplicate logic like this in each of the platforms.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6694085_1a35defb",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "It\u0027s confusing to have these functions here. Maybe feature_promo_bubble_views?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24163a0_ef4815eb",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T16:45:25Z",
+      "side": 1,
+      "message": "Style guide says constructor/destructor before other functions.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
