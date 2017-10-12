@@ -106,6 +106,7 @@ TEST_F(FrameCaptionButtonContainerViewTest, ButtonVisibility) {
   FrameCaptionButtonContainerView container1(
       CreateTestWidget(MAXIMIZE_ALLOWED, MINIMIZE_ALLOWED));
   InitContainer(&container1);
+  container1.SetBoundsRect(gfx::Rect(container1.GetPreferredSize()));
   container1.Layout();
   FrameCaptionButtonContainerView::TestApi t1(&container1);
   EXPECT_TRUE(t1.minimize_button()->visible());
@@ -119,6 +120,7 @@ TEST_F(FrameCaptionButtonContainerViewTest, ButtonVisibility) {
   FrameCaptionButtonContainerView container2(
       CreateTestWidget(MAXIMIZE_DISALLOWED, MINIMIZE_ALLOWED));
   InitContainer(&container2);
+  container2.SetBoundsRect(gfx::Rect(container2.GetPreferredSize()));
   container2.Layout();
   FrameCaptionButtonContainerView::TestApi t2(&container2);
   EXPECT_TRUE(t2.minimize_button()->visible());
@@ -132,6 +134,7 @@ TEST_F(FrameCaptionButtonContainerViewTest, ButtonVisibility) {
   FrameCaptionButtonContainerView container3(
       CreateTestWidget(MAXIMIZE_DISALLOWED, MINIMIZE_DISALLOWED));
   InitContainer(&container3);
+  container3.SetBoundsRect(gfx::Rect(container3.GetPreferredSize()));
   container3.Layout();
   FrameCaptionButtonContainerView::TestApi t3(&container3);
   EXPECT_FALSE(t3.minimize_button()->visible());

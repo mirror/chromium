@@ -59,6 +59,10 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
   SkColor GetActiveFrameColor() const;
   SkColor GetInactiveFrameColor() const;
 
+  // Whether light caption images should be used. This is the case when the
+  // background of the frame is dark.
+  bool ShouldUseLightImages();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(DefaultHeaderPainterTest, TitleIconAlignment);
   FRIEND_TEST_ALL_PREFIXES(DefaultHeaderPainterTest, LightIcons);
@@ -75,10 +79,6 @@ class ASH_EXPORT DefaultHeaderPainter : public HeaderPainter,
 
   // Paints the header/content separator.
   void PaintHeaderContentSeparator(gfx::Canvas* canvas);
-
-  // Whether light caption images should be used. This is the case when the
-  // background of the frame is dark.
-  bool ShouldUseLightImages();
 
   // Update all the images in the caption buttons.
   void UpdateAllButtonImages();
