@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "705e4aed_1afd35df",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T15:11:02Z",
+      "side": 1,
+      "message": "it\u0027s pretty unusual for timing metrics to be linear. normally we have exponentially sized buckets, which allows better precision at lower ranges. I\u0027m a bit skeptical you really need the higher precision at higher values, and the downside of this approach is you won\u0027t be able to capture any data \u003e100s. I guess in your case that should be pretty rare at least.\nAnyway it seems fine, but it is more common for exponentially sized bins for this type of timing.",
+      "revId": "68723d911b1d39d966b99b72b3b02e64f498cc20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac72ac7_510f16d0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 31689,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-12T15:11:02Z",
+      "side": 1,
+      "message": "seconds",
+      "revId": "68723d911b1d39d966b99b72b3b02e64f498cc20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
