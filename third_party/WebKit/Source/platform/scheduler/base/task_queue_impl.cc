@@ -471,6 +471,15 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   base::AutoLock immediate_incoming_queue_lock(immediate_incoming_queue_lock_);
   state->BeginDictionary();
   state->SetString("name", GetName());
+  if (!main_thread_only().task_queue_manager) {
+    state->SetBoolean("unregistered", true);
+    state->EndDictionary();
+    return;
+  }
+  DCHECK(main_thread_only().time_domain);
+  DCHECK(main_thread_only().delayed_work_queue);
+  DCHECK(main_thread_only().immediate_work_queue);
+
   state->SetString(
       "task_queue_id",
       base::StringPrintf("%" PRIx64, static_cast<uint64_t>(
