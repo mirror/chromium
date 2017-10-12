@@ -1017,6 +1017,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="24" label="(Web app) User installed a web app"/>
 </enum>
 
+<enum name="AppBannersReportStatusDest">
+  <int value="0" label="None"/>
+  <int value="1" label="UMA Histogram"/>
+  <int value="2" label="Console"/>
+</enum>
+
 <enum name="AppBannersUserResponse">
   <int value="1" label="Native app banner was accepted by the user"/>
   <int value="2" label="Web app banner was accepted by the user"/>

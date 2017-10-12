@@ -75,6 +75,15 @@ enum BeforeInstallEvent {
   BEFORE_INSTALL_EVENT_MAX = 7,
 };
 
+// The destination to which InstallableStatusCode is logged.
+// This enum backs a UMA histogram, so it should be treated as append-only.
+enum ReportStatusDest {
+  NONE = 0,  // No destination; this should not occur.
+  UMA = 1,   // UMA histogram.
+  CONSOLE = 2,
+  COUNT,
+};
+
 extern const char kDismissEventHistogram[];
 extern const char kDisplayEventHistogram[];
 extern const char kInstallEventHistogram[];
@@ -83,6 +92,7 @@ extern const char kUserResponseHistogram[];
 extern const char kBeforeInstallEventHistogram[];
 extern const char kInstallableStatusCodeHistogram[];
 extern const char kInstallDisplayModeHistogram[];
+extern const char kReportStatusDestHistogram[];
 
 void TrackDismissEvent(int event);
 void TrackDisplayEvent(int event);
@@ -92,6 +102,7 @@ void TrackUserResponse(int event);
 void TrackBeforeInstallEvent(int event);
 void TrackInstallableStatusCode(InstallableStatusCode code);
 void TrackInstallDisplayMode(blink::WebDisplayMode display);
+void TrackReportStatusDest(ReportStatusDest dest);
 
 };  // namespace banners
 
