@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ab00ca_cdcda09e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T12:58:16Z",
+      "side": 1,
+      "message": "You might as well make this public and drop the friendness.",
+      "revId": "943718ed78f0b157b41666de32cc3cdf5d069184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4a6003_16c12173",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-12T12:58:16Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining why we are doing this.",
+      "revId": "943718ed78f0b157b41666de32cc3cdf5d069184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
