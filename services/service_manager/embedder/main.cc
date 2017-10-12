@@ -31,6 +31,10 @@
 #include "mojo/edk/embedder/configuration.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
+#include "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
+#include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/embedder/main_delegate.h"
 #include "services/service_manager/embedder/process_type.h"
 #include "services/service_manager/embedder/set_process_title.h"
@@ -73,6 +77,8 @@
 namespace service_manager {
 
 namespace {
+
+tracing::ChromeTraceEventAgent* g_chrome_trace_event_agent;
 
 // Maximum message size allowed to be read from a Mojo message pipe in any
 // service manager embedder process.
@@ -308,7 +314,26 @@ int RunService(MainDelegate* delegate) {
           return;
         }
 
-        ServiceContext context(std::move(service), std::move(request));
+        base::trace_event::TraceLog::GetInstance()->SetProcessName(
+            ("Service: " + service_name).c_str());
+
+        // Register to tracing.
+        mojom::ConnectorPtr connector_proxy;
+        auto connector_request = mojo::MakeRequest(&connector_proxy);
+        auto connector = base::MakeUnique<service_manager::Connector>(
+            std::move(connector_proxy));
+        g_chrome_trace_event_agent =
+            new tracing::ChromeTraceEventAgent(connector.get());
+
+        // Register to memory instrumentation.
+        memory_instrumentation::ClientProcessImpl::Config config(
+            connector.get(), resource_coordinator::mojom::kServiceName,
+            memory_instrumentation::mojom::ProcessType::OTHER);
+        memory_instrumentation::ClientProcessImpl::CreateInstance(config);
+
+        ServiceContext context(std::move(service), std::move(request),
+                               std::move(connector),
+                               std::move(connector_request));
         context.SetQuitClosure(run_loop.QuitClosure());
         run_loop.Run();
       },
