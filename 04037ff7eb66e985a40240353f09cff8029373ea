@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7df8b2e2_38ddb89e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T09:42:06Z",
+      "side": 1,
+      "message": "nit: let\u0027s keep top-level functions separated by an empty line.",
+      "revId": "04037ff7eb66e985a40240353f09cff8029373ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
