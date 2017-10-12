@@ -145,7 +145,7 @@ public class DownloadActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return TextUtils.equals("6.00 GB downloaded", mSpaceUsedDisplay.getText());
+                return TextUtils.equals("6.00 GB", mSpaceUsedDisplay.getText());
             }
         });
 
@@ -156,7 +156,7 @@ public class DownloadActivityTest {
         ThreadUtils.runOnUiThread(() -> mAdapter.onDownloadItemCreated(updateItem));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        Assert.assertEquals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("6.50 GB", mSpaceUsedDisplay.getText());
 
         // Mark one download as deleted on disk, which should prevent it from being counted.
         callCount = mAdapterObserver.onChangedCallback.getCallCount();
@@ -166,7 +166,7 @@ public class DownloadActivityTest {
         ThreadUtils.runOnUiThread(() -> mAdapter.onDownloadItemUpdated(deletedItem));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        Assert.assertEquals("5.50 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("5.50 GB", mSpaceUsedDisplay.getText());
 
         // Say that the offline page has been deleted.
         callCount = mAdapterObserver.onChangedCallback.getCallCount();
@@ -178,7 +178,7 @@ public class DownloadActivityTest {
                                 deletedPage.id));
         mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        Assert.assertEquals("512.00 MB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("512.00 MB", mSpaceUsedDisplay.getText());
     }
 
     /** Clicking on filters affects various things in the UI. */
@@ -189,7 +189,7 @@ public class DownloadActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return TextUtils.equals("6.00 GB downloaded", mSpaceUsedDisplay.getText());
+                return TextUtils.equals("6.00 GB", mSpaceUsedDisplay.getText());
             }
         });
 
@@ -210,7 +210,7 @@ public class DownloadActivityTest {
 
         // Filtering doesn't affect the total download size.
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
-        Assert.assertEquals("6.00 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("6.00 GB", mSpaceUsedDisplay.getText());
     }
 
     @Test
@@ -223,7 +223,7 @@ public class DownloadActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return TextUtils.equals("6.00 GB downloaded", mSpaceUsedDisplay.getText());
+                return TextUtils.equals("6.00 GB", mSpaceUsedDisplay.getText());
             }
         });
 
@@ -249,7 +249,7 @@ public class DownloadActivityTest {
                 1, mStubbedProvider.getDownloadDelegate().checkExternalCallback.getCallCount());
         Assert.assertFalse(mStubbedProvider.getSelectionDelegate().isSelectionEnabled());
         Assert.assertEquals(9, mAdapter.getItemCount());
-        Assert.assertEquals("0.65 KB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("0.65 KB", mSpaceUsedDisplay.getText());
     }
 
     @Test
@@ -282,7 +282,7 @@ public class DownloadActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return TextUtils.equals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
+                return TextUtils.equals("6.50 GB", mSpaceUsedDisplay.getText());
             }
         });
 
@@ -301,7 +301,7 @@ public class DownloadActivityTest {
         // Assert that items are temporarily removed from the adapter. The two selected items,
         // one duplicate item, and one date bucket should be removed.
         Assert.assertEquals(11, mAdapter.getItemCount());
-        Assert.assertEquals("1.00 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("1.00 GB", mSpaceUsedDisplay.getText());
 
         // Click "Undo" on the snackbar.
         callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
@@ -319,7 +319,7 @@ public class DownloadActivityTest {
                 0, mStubbedProvider.getOfflineContentProvider().deleteItemCallback.getCallCount());
         Assert.assertFalse(mStubbedProvider.getSelectionDelegate().isSelectionEnabled());
         Assert.assertEquals(15, mAdapter.getItemCount());
-        Assert.assertEquals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("6.50 GB", mSpaceUsedDisplay.getText());
     }
 
     @Test
@@ -350,7 +350,7 @@ public class DownloadActivityTest {
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return TextUtils.equals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
+                return TextUtils.equals("6.50 GB", mSpaceUsedDisplay.getText());
             }
         });
 
@@ -368,7 +368,7 @@ public class DownloadActivityTest {
 
         // Assert that the two items and their date bucket are temporarily removed from the adapter.
         Assert.assertEquals(12, mAdapter.getItemCount());
-        Assert.assertEquals("6.00 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("6.00 GB", mSpaceUsedDisplay.getText());
 
         // Click "Undo" on the snackbar.
         callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
@@ -381,7 +381,7 @@ public class DownloadActivityTest {
 
         // Assert that items are restored.
         Assert.assertEquals(15, mAdapter.getItemCount());
-        Assert.assertEquals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
+        Assert.assertEquals("6.50 GB", mSpaceUsedDisplay.getText());
     }
 
     @Test
