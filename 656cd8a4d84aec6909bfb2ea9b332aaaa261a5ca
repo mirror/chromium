@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c99ead9_2e3f8da1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/FilterSuggestionBuilder.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-10-12T23:20:43Z",
+      "side": 1,
+      "message": "It\u0027s not a good idea to use Object-based maps with user provided strings as keys. Can you please change it to Map?",
+      "revId": "656cd8a4d84aec6909bfb2ea9b332aaaa261a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
