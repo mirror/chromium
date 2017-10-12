@@ -366,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "170fb6f8_5b0b2d4d",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/locales.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "either kLocales or kCountryLocales.  The k prefix indicates it\u0027s a constant, because, you know, constant starts with a \u0027k\u0027.  Makes total sense, right? :)",
+      "parentUuid": "2cfa4abb_398f175f",
+      "revId": "41f9886dc49415bfdb1bdcf426298875610ed94d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8236fca4_776704bb",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
         "patchSetId": 4

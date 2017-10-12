@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a1b087_0c643fb0",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "nit: spaces between operators, so\nlet url \u003d\n    \u0027https://google.\u0027 + item.menuItemId + \u0027/search?q\u003d\u0027 + item.selectionText;",
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187a92c6_e68fd75f",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "nit: put else on the same line as the closing bracket:\nif (...) {\n  ...\n} else if (...) {\n  ...\n}",
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b20313_84c85740",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "do we need this?  Or could we just do\nchrome.storage.sync.get([\u0027removedContextMenu\u0027], function(list) {\n  let removed \u003d list.removedContextMenu || [];\n  let form ....\n});\n\n(and then also remove the `removed` declaration on line 6)",
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf8f651_e8b13658",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "nit: space between",
+      "range": {
+        "startLine": 19,
+        "startChar": 31,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37e1f25_846e87d1",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "nit: indentation off",
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7199f94f_fba9ffc7",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "nit: space between, and also indentation off at this line (should only be 2-space indented)",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15d88f3_1eee2a17",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-12T13:47:55Z",
+      "side": 1,
+      "message": "indentation off",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 7
+      },
+      "revId": "0b8dfd1916c5168519a6ac36f3015906fe1c0601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
