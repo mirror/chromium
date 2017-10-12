@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "df83e8b9_8eba2b2e",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T08:47:44Z",
+      "side": 1,
+      "message": "If you\u0027re okay with using \"Container\" in the components/arc/ C++ code, I\u0027d switch to that. AFAIK we don\u0027t use the term here though.\n\nUsing \"Instance\" as a UMA histogram name is probably not a good idea since \"Instance\" is a components/arc/ specific term and its meaning is probably unclear to PMs.",
+      "parentUuid": "a7231814_338dfbcf",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "813d78e2_3b2bec0d",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -70,6 +88,24 @@
       "writtenOn": "2017-10-12T07:55:29Z",
       "side": 1,
       "message": "Should this condition be checked \"before\" |was_running|, considering a following situation?\n- ARC is first boot then CRASH for some reason (then UMA is recorded here).\n- ARC is automatically rebooted, but then CRASHed again before Mojo connection is established (then UMA is recorded again).\n\nI think we\u0027d like to have corresponding START and \"either CRASH_EARLY or CRASH\"?\nWhat\u0027s the expected behavior here?",
+      "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd6ab70_7889bbdb",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-12T08:47:44Z",
+      "side": 1,
+      "message": "Will move this up as you suggested. Yes the UMA event sequence should match \u0027(START(CRASH_EARLY|CRASH)?)*\u0027.",
+      "parentUuid": "71f22f82_324612ce",
       "revId": "f724e187fc7b4b3606cf88300db357dff54e9a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
