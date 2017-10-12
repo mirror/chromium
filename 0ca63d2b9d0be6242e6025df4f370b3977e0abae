@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25e99d0_fb044912",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "for the given process\u0027 token.\nAlso I\u0027d add something like |process_token| is used to disambiguate GUIDs derived from the same name under different processes",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f87ab81_86e41b23",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "maybe s/guid_root/process_token/",
+      "range": {
+        "startLine": 74,
+        "startChar": 67,
+        "endLine": 74,
+        "endChar": 76
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c44d65_b2d777fc",
+        "filename": "base/trace_event/memory_allocator_dump_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "s/guid_root/process_token/",
+      "range": {
+        "startLine": 108,
+        "startChar": 19,
+        "endLine": 108,
+        "endChar": 28
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d45c3c_276ea82e",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "ditto s/guid_root/process_token/ here and below",
+      "range": {
+        "startLine": 240,
+        "startChar": 26,
+        "endLine": 240,
+        "endChar": 35
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec70b84d_1d7a48e5",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "Uh wait this has to be stable throughout all the process lifetime, not just for one PMD instance.\nI\u0027d probably just make this a public accesible field of MemoryDumpManager. Also, no need for Optional. UnguessableToken is nullable and has a boolean operator, so you can just say:\nif (!token) token \u003d UnguessableToken::Create();",
+      "range": {
+        "startLine": 241,
+        "startChar": 5,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bcc8d4e_86b1ef19",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-12T10:32:31Z",
+      "side": 1,
+      "message": "Uhm maybe I am misunderstanding the problem at this point.\nI thought the problem was collisions between processes, not between two PMDs?",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 51
+      },
+      "revId": "0ca63d2b9d0be6242e6025df4f370b3977e0abae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
