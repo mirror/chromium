@@ -34,6 +34,23 @@
       "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bca948_7a1a0e65",
+        "filename": "content/browser/gpu/browser_gpu_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-12T13:15:46Z",
+      "side": 1,
+      "message": "BrowserGpuChannelHostFactory creates a BrowserGpuMemoryBufferManager. Why do we need another one here? (we expect that there\u0027s a single instance, and we shouldn\u0027t need more)\n\n[1] https://cs.chromium.org/chromium/src/content/browser/gpu/browser_gpu_memory_buffer_manager.h?l\u003d39",
+      "revId": "201b2312589f15c2484d805c02474cedab1fa8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
