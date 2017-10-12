@@ -52,6 +52,23 @@
       "revId": "a425373819964c172521e5c786834e764619a2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be519cb_1e9dd5e0",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-12T15:52:43Z",
+      "side": 1,
+      "message": "It looks like this conversion is here because we are still doing \u0027upward\u0027[1] transformations of points using gfx::Point, but \u0027downward\u0027 transformations will now use gfx::PointF. I wonder if this loses precision unnecessarily because in some cases we are flipping from PointF to Point and then back to PointF again in a call chain, e.g. when RenderWidgetHostView::TransformPointToRootCoordSpaceF() is called. Would there be any complications  if you made TransformPointToRootCoordSpace also use PointF (or else maybe make RWHVBase::TransformPointToRootCoordSpace just call TransformPointToRootCoordSpaceF, and override the latter method in RWHVChildFrame?).\n\n[1] \u0027upward\u0027 \u003d\u003e converting a point from an OOPIF\u0027s coord space to root, \u0027downward\u0027 \u003d\u003e the inverse",
+      "revId": "a425373819964c172521e5c786834e764619a2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
