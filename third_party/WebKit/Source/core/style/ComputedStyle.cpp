@@ -1592,6 +1592,10 @@ Length ComputedStyle::LineHeight() const {
 }
 
 int ComputedStyle::ComputedLineHeight() const {
+  return static_cast<int>(ComputedLineHeightAsFloat());
+}
+
+float ComputedStyle::ComputedLineHeightAsFloat() const {
   const Length& lh = LineHeight();
 
   // Negative value means the line height is not set. Use the font's built-in
@@ -1600,7 +1604,7 @@ int ComputedStyle::ComputedLineHeight() const {
     return GetFont().PrimaryFont()->GetFontMetrics().LineSpacing();
 
   if (lh.IsPercentOrCalc())
-    return MinimumValueForLength(lh, LayoutUnit(ComputedFontSize())).ToInt();
+    return MinimumValueForLength(lh, LayoutUnit(ComputedFontSize()));
 
   return std::min(lh.Value(), LayoutUnit::Max().ToFloat());
 }

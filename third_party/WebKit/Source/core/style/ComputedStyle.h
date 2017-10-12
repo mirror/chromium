@@ -1388,6 +1388,9 @@ class ComputedStyle : public ComputedStyleBase,
   // Line-height utility functions.
   const Length& SpecifiedLineHeight() const;
   int ComputedLineHeight() const;
+  // This function only exists for getComputedStyle, layout is only performed
+  // with the int value
+  float ComputedLineHeightAsFloat() const;
   LayoutUnit ComputedLineHeightAsFixed() const;
 
   // Width/height utility functions.
