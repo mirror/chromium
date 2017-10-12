@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "902207e4_c5d1bd9e",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T20:32:10Z",
+      "side": 1,
+      "message": "Thanks for the offline discussion. It now makes sense. We want to skip event processing if shelf widget is fully visible to let the default event dispatching do its work. Let\u0027s add a comment to explain the situation.",
+      "parentUuid": "a8d33ad3_c4b0fa7b",
+      "range": {
+        "startLine": 330,
+        "startChar": 6,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb775db_deef29ea",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 4
@@ -101,6 +125,24 @@
       "side": 1,
       "message": "Sorry I am not quite understand the question here. I think CanStartFullscreenAppListDrag is about whether we can start dragging to show the app list, otherwise we should drag the shelf?",
       "parentUuid": "2eb775db_deef29ea",
+      "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cd7e3f_37cec051",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-12T20:32:10Z",
+      "side": 1,
+      "message": "No need to change since this function is skipped in SHELF_AUTO_HIDE_SHOWN state.\n\nI meant to differentiate the drag whether it is a vertical up to reveal the launcher or a horizontal drag to reorder the item. Right now,  CanStartFullscreenAppListDrag() tests only y offset and could return true to reveal launcher for a horizontal drag.",
+      "parentUuid": "3f523d97_8f990383",
       "revId": "b2340b228a3babea58d9a652250ad9cbb2313f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
