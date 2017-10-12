@@ -19,6 +19,7 @@ class EmptyOffsetMappingBuilder {
  public:
   EmptyOffsetMappingBuilder() = default;
   void Annotate(const void*) {}
+  void AnnotateRange(unsigned, unsigned, const void*) {}
   void AppendIdentityMapping(unsigned) {}
   void AppendCollapsedMapping(unsigned) {}
   void CollapseTrailingSpace(unsigned) {}

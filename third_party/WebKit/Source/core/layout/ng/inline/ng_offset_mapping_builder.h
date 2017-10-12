@@ -29,6 +29,9 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   // as its value.
   void Annotate(const LayoutText*);
 
+  // Annotate the offset range with the given node.
+  void AnnotateRange(unsigned start, unsigned end, const LayoutText*);
+
   // Append an identity offset mapping of the specified length with null
   // annotation to the builder.
   void AppendIdentityMapping(unsigned length);
