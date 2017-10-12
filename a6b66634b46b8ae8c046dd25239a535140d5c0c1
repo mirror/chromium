@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44e57d87_a42a3f9f",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "string.h for memcpy",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec32bc74_b29b5395",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "using the native supporting type UINT32 will be safer than accepting a bigger size type, and it allows us to remove following implicit cast of \"length \u003d size\".",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747311e3_956aeb24",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "should not have \"using\" in headers (https://google.github.io/styleguide/cppguide.html#Aliases)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687e331c_02dae54e",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "this looks meaningless since here is already in base::win namespace.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc13e8b_985e5f09",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "dup?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 64
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4582a9c8_d2522727",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "it\u0027s slightly better to move this to line 61",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1588c09f_0fb4a06d",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "string.h",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca283b7_437ea883",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "insert empty line between the namespace and TEST",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3c1c37_307466c4",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-12T10:41:55Z",
+      "side": 1,
+      "message": "using base::win::WrlStaticsFactor would worth considering since we have three users.",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
