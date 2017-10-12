@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d255cc3_e024b4d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1246640
+      },
+      "writtenOn": "2017-10-12T16:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73c767e_d005d5f5",
+      "revId": "6994c9004610af431143e44c6af552318536e0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c13cf5d1_228b8ed3",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 2
