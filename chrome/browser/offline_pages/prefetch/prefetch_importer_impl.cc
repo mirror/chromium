@@ -113,6 +113,8 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
   offline_page.original_url = original_url;
   offline_page.title = archive.title;
 
+  ongoing_import_offline_ids_.push_back(archive.offline_id);
+
   // Moves the file from download directory to offline archive directory. The
   // file move operation should be done on background thread.
   background_task_runner_->PostTask(
@@ -121,6 +123,10 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
                  base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
                  base::Bind(&PrefetchImporterImpl::OnMoveFileDone,
                             weak_ptr_factory_.GetWeakPtr(), offline_page)));
+}
+
+std::list<int64_t> PrefetchImporterImpl::GetOngoingImports() const {
+  return ongoing_import_offline_ids_;
 }
 
 void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
@@ -142,6 +148,7 @@ void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
 
 void PrefetchImporterImpl::OnPageAdded(AddPageResult result,
                                        int64_t offline_id) {
+  ongoing_import_offline_ids_.remove(offline_id);
   ReportPageImportResult(FromAddPageResult(result));
   NotifyImportCompleted(offline_id, result == AddPageResult::SUCCESS);
 }

@@ -34,6 +34,7 @@ class PrefetchImporterImpl : public PrefetchImporter {
 
   // PrefetchImporter implementation.
   void ImportArchive(const PrefetchArchiveInfo& archive) override;
+  std::list<int64_t> GetOngoingImports() const override;
 
  private:
   void OnMoveFileDone(const OfflinePageItem& offline_page,
@@ -42,6 +43,7 @@ class PrefetchImporterImpl : public PrefetchImporter {
 
   content::BrowserContext* context_;
   scoped_refptr<base::TaskRunner> background_task_runner_;
+  std::list<int64_t> ongoing_import_offline_ids_;
   base::WeakPtrFactory<PrefetchImporterImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchImporterImpl);

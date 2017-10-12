@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_IMPORTER_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_IMPORTER_H_
 
+#include <list>
+
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 
 namespace offline_pages {
@@ -21,6 +23,10 @@ class PrefetchImporter {
   // Imports the downloaded archive by moving the file into archive directory
   // and creating an entry in the offline metadata database.
   virtual void ImportArchive(const PrefetchArchiveInfo& info) = 0;
+
+  // Returns a list of offline ids of those imports that are still being
+  // processed.
+  virtual std::list<int64_t> GetOngoingImports() const = 0;
 
  protected:
   void NotifyImportCompleted(int64_t offline_id, bool success);

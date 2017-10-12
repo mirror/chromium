@@ -51,6 +51,9 @@ class TestPrefetchImporter : public PrefetchImporter {
   void ImportArchive(const PrefetchArchiveInfo& archive) override {
     archives_.push_back(archive);
   }
+  std::list<int64_t> GetOngoingImports() const override {
+    return std::list<int64_t>();
+  }
 
   const std::vector<PrefetchArchiveInfo>& archives() const { return archives_; }
 
