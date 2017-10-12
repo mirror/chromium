@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08304e04_7b3f9a91",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: BTW, you can do this inline at the class definition.",
+      "range": {
+        "startLine": 25,
+        "startChar": 55,
+        "endLine": 25,
+        "endChar": 78
+      },
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d09cb30_faa4c257",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: Not used?",
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d272e28e_37d3aa55",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2aa906_5ad3f1eb",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: Move to a file-level constexpr constant?",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 56
+      },
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450c3cd6_35152abf",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cee512_e7a09a67",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: \"ExtractOffHoursIntervalsFromProto\"?",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13bdafc_db84b18b",
+        "filename": "chrome/browser/chromeos/policy/off_hours/time_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: Still weird wrapping. Suggesting:\n\n  namespace policy {\n  namespace off_hours {\n\n  namespace {\n\n  constexpr base::TimeDelta kWeek \u003d base::TimeDelta::FromDays(7);\n\n  }  // namespace",
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943087cb_71bd1a36",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: Then add \" // namespace off_hours\" too.",
+      "revId": "f2c5fba7259fd2795fae30a0f4fca8b3be59526c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

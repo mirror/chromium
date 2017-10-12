@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18bfabc1_9a4080dd",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-12T15:53:08Z",
+      "side": 1,
+      "message": "nit: Remove this explicit namespace.",
+      "range": {
+        "startLine": 128,
+        "startChar": 14,
+        "endLine": 128,
+        "endChar": 25
+      },
+      "revId": "b31e8ad67d2538896ffb7728ee1cab74eec61c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
