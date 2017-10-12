@@ -70,6 +70,30 @@
       "revId": "890d7b73129bb09c0e0a74486791bed6be50d83d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fba8ba5_416e3b1b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T13:41:52Z",
+      "side": 1,
+      "message": "I\u0027ve noticed some problems with current approach when I tried to use this mechanism in throttling code. I\u0027ll upload a new CL soon.",
+      "parentUuid": "b26fd883_3d6afab1",
+      "range": {
+        "startLine": 323,
+        "startChar": 5,
+        "endLine": 323,
+        "endChar": 13
+      },
+      "revId": "890d7b73129bb09c0e0a74486791bed6be50d83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
