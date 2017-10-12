@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d866c0d9_0a0dda54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-12T10:45:09Z",
+      "side": 1,
+      "message": "You don\u0027t need to capitalize every word unless it is proper noun or\nsome specific technical term / symbol in source code (e.g. XML or\nContainerNode).\n\nAlso, I prefer starting with verb (imperative mood) - so I\u0027d write this as\nCheck if slot is in a shadow tree before building its distributed nodes\n.",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958ce697_e4488063",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-12T10:45:09Z",
+      "side": 1,
+      "message": "s/Shadow Tree/shadow tree/",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17dc0f9_4a41d7de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-12T10:45:09Z",
+      "side": 1,
+      "message": "s/Shadow Tree/shadow tree/\n\nUsually we don\u0027t use \"I\" as a subject in sentences in change description...\nStart with a verb here again, like\n\"Add a condition ...\"",
+      "revId": "9202c6f342627caacc2f08298516ea1374b9e164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
