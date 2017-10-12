@@ -179,28 +179,6 @@ public class OfflinePageBridgeTest {
     @Test
     @SmallTest
     @RetryOnFailure
-    public void testCheckPagesExistOffline() throws Exception {
-        // If we save a page, then it should exist in the result.
-        mActivityTestRule.loadUrl(mTestPage);
-        savePage(SavePageResult.SUCCESS, mTestPage);
-        Set<String> testCases = new HashSet<>();
-        testCases.add(mTestPage);
-
-        // Querying for a page that hasn't been saved should not affect the result.
-        testCases.add(mTestPage + "?foo=bar");
-
-        Set<String> pages = checkPagesExistOffline(testCases);
-
-        Assert.assertEquals(
-                "We only saved one page and queried for it, so the result should be one string.", 1,
-                pages.size());
-        Assert.assertTrue("The only page returned should be the page that was actually saved.",
-                pages.contains(mTestPage));
-    }
-
-    @Test
-    @SmallTest
-    @RetryOnFailure
     public void testGetRequestsInQueue() throws Exception {
         String url = "https://www.google.com/";
         String namespace = "custom_tabs";
