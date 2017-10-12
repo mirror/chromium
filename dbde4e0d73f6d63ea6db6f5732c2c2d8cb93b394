@@ -104,6 +104,24 @@
       "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf5eaea_1cb56d18",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-10-12T22:20:43Z",
+      "side": 1,
+      "message": "\u003e have the same delay as the icon in the tabstrip\n\nKeeping it there for the duration of the page load would have the benefit that if the site plays sound briefly and then stops, the user would still be able to find the setting. The tab indicator only shows up for a second or two after sound stops. It would be good to get thoughts from UX folks though.\n\n\u003e if the setting is in a non-default state it does always show up \n\nGreat! Sorry I didn\u0027t read it carefully enough :)",
+      "parentUuid": "bc18fd04_92ebd8e1",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
