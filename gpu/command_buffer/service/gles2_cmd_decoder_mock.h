@@ -42,12 +42,13 @@ class MockGLES2Decoder : public GLES2Decoder {
 
   base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
 
-  MOCK_METHOD5(Initialize,
-               bool(const scoped_refptr<gl::GLSurface>& surface,
-                    const scoped_refptr<gl::GLContext>& context,
-                    bool offscreen,
-                    const DisallowedFeatures& disallowed_features,
-                    const ContextCreationAttribHelper& attrib_helper));
+  MOCK_METHOD5(
+      Initialize,
+      gpu::ContextResult(const scoped_refptr<gl::GLSurface>& surface,
+                         const scoped_refptr<gl::GLContext>& context,
+                         bool offscreen,
+                         const DisallowedFeatures& disallowed_features,
+                         const ContextCreationAttribHelper& attrib_helper));
   MOCK_METHOD1(Destroy, void(bool have_context));
   MOCK_METHOD1(SetSurface, void(const scoped_refptr<gl::GLSurface>& surface));
   MOCK_METHOD0(ReleaseSurface, void());

@@ -303,11 +303,11 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   helper.context_type = gpu::gles2::CONTEXT_TYPE_OPENGLES2;
   helper.offscreen_framebuffer_size = gl_surface->GetSize();
 
-  if (!decoder->Initialize(gl_surface, gl_context.get(),
-                           gl_surface->IsOffscreen(),
-                           gpu::gles2::DisallowedFeatures(), helper)) {
+  auto result = decoder->Initialize(gl_surface, gl_context.get(),
+                                    gl_surface->IsOffscreen(),
+                                    gpu::gles2::DisallowedFeatures(), helper);
+  if (result != gpu::ContextResult::kSuccess)
     return false;
-  }
 
   std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_cmd_helper(
       new gpu::gles2::GLES2CmdHelper(command_buffer.get()));

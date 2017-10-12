@@ -3360,11 +3360,10 @@ error::Error GLES2DecoderPassthroughImpl::DoRequestExtensionCHROMIUM(
   FlushErrors();
 
   // Make sure newly enabled extensions are exposed and usable.
+  // TODO(???): If this can't affect the outcome, do we need to do it here?
   context_->ReinitializeDynamicBindings();
-  if (!feature_info_->Initialize(feature_info_->context_type(),
-                                 feature_info_->disallowed_features())) {
-    return error::kLostContext;
-  }
+  feature_info_->Initialize(feature_info_->context_type(),
+                            feature_info_->disallowed_features());
 
   return error::kNoError;
 }
