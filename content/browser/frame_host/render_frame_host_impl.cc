@@ -3313,6 +3313,18 @@ void RenderFrameHostImpl::CommitNavigation(
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type) ||
       IsRendererDebugURL(common_params.url));
 
+  // From now on, this process should be considered "tainted" for future
+  // process reuse decisions.  That is, a site requiring a dedicated process
+  // should not reuse this process, unless it's same-site with the URL we're
+  // committing.
+  //
+  // TODO(alexmos): If we're committing about:blank, and the process hasn't
+  // been used, it should be safe to keep the process mark as unused.  Some
+  // tests currently depend on this.  However, it might be best to fix those
+  // tests and mark the process as used uniformly.
+  if (common_params.url != GURL(url::kAboutBlankURL))
+    GetProcess()->SetIsUsed();
+
   // TODO(arthursonzogni): Consider using separate methods and IPCs for
   // javascript-url navigation. Excluding this case from the general one will
   // prevent us from doing inappropriate things with javascript-url.
