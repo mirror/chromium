@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fb9ef9_fc8139d3",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "maybe make \"6\" a constant so we know what it means?",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c83d7e_992b707a",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "I would put strlen(buffer) outside the loop since strlen is O(N).",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448abb34_b160f16c",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this, just use \u0027i\u0027. Alternatively, change \u0027i\u0027 to \u0027decimal_point_pos\u0027.",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9808b5f_d80825db",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "I would change the conditon to \"j \u003e decimal_point_pos \u0026\u0026 buffer[j] \u003d\u003d \u00270\u0027\". That way the body can just be \"buffer[j] \u003d \u0027\\0\u0027.",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2eafed2_91fbb73b",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "I think this is equivalent to \"if (buffer[i] \u003d\u003d \u0027.\u0027 \u0026\u0026 buffer[i + 1] \u003d\u003d \u0027\\0\u0027)\"? That way you don\u0027t have to find the length of the string again.",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a98c82_33ffe18d",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "This can just be \"buffer[i] \u003d \u0027\\0\u0027\".",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9069ba8a_97ac7fbf",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-12T23:41:35Z",
+      "side": 1,
+      "message": "can just go \"return String::Format(...)\".",
+      "revId": "1ed9efbf2019e9c0d53d1684e78f062748c1ab93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
