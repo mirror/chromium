@@ -70,6 +70,30 @@
       "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ef9e15_6b8320dd",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-12T22:39:58Z",
+      "side": 1,
+      "message": "Ok, so it\u0027s really just gmock you have an issue with? It\u0027s used pretty frequently in the chromium code base though, with about 25,000 instances of EXPECT_CALL, vs. about 20,000 a year ago, so it seems to still be actively used. Previous discussions on chromium-dev seem to be in favor if it, when used correctly and when applicable (such as in this case).\n\nSo I\u0027d suggest raising your concerns on chromium-dev. And if you have another mocking approach you\u0027d prefer, we can do that; something that moves the assertions from the FakeQOS methods to the tests themselves. But this is definitely a situation that calls for mocking.",
+      "parentUuid": "387a9944_e7f23d87",
+      "range": {
+        "startLine": 802,
+        "startChar": 6,
+        "endLine": 802,
+        "endChar": 19
+      },
+      "revId": "4a0ccf3fcec0b2e7427b4028ecc0209d6f9a8b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
