@@ -16,6 +16,24 @@
       "revId": "6294f4f27aa91225457ddeb1881c9e9aea307b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f04749_eaed8c14",
+        "filename": "third_party/WebKit/Source/core/css/FontSize.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-10-12T14:23:15Z",
+      "side": 1,
+      "message": "I\u0027ll have to get back to this once we settle on the OffscreenCanvas spec. But I\u0027ll make it a const for now. Thanks.",
+      "parentUuid": "9c70d746_ef2062c8",
+      "revId": "6294f4f27aa91225457ddeb1881c9e9aea307b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
