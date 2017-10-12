@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20dcd72_01bcc0b3",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-12T18:46:16Z",
+      "side": 1,
+      "message": "I personally don\u0027t like macros (and would prefer an inline function). But we have to keep in mind that zlib was supposed to be able to build with old compilers.\n\nSo I guess it is ok.",
+      "revId": "78acacb5b7a476ea6b28612222a833332f6bbd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a3f5fa_e0916193",
+        "filename": "third_party/zlib/inffast.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-12T18:46:16Z",
+      "side": 1,
+      "message": "On Intel will this map somehow to a wide load instruction?  (/me not Intel expert, just curious).",
+      "revId": "78acacb5b7a476ea6b28612222a833332f6bbd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7777ba_18306a18",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-12T18:46:16Z",
+      "side": 1,
+      "message": "Maybe we can remove this comments for the platforms we don\u0027t support (e.g. ppc and aarch64) in this patch.",
+      "revId": "78acacb5b7a476ea6b28612222a833332f6bbd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05a310f_474d2bce",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-12T18:46:16Z",
+      "side": 1,
+      "message": "This is interesting, did you test MSC?",
+      "revId": "78acacb5b7a476ea6b28612222a833332f6bbd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892998b6_a4c0037a",
+        "filename": "third_party/zlib/inffast.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-12T18:46:16Z",
+      "side": 1,
+      "message": "It may make sense to edit the paragraph to mention that loads will be performed in 8 bytes chunks?",
+      "revId": "78acacb5b7a476ea6b28612222a833332f6bbd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
