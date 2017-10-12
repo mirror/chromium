@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b539e7c7_bcfa9f79",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T22:57:18Z",
+      "side": 1,
+      "message": "I needed to read, \"Used to know when to do nothing in the \u0027tap\u0027 handler.\" several times to get-it. Maybe just, \"Used in the \u0027tap\u0027 handler\" instead? Or leave it to the reader to grep for the variable (to avoid the comment becoming stale).",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c265ca71_f5b4e113",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T22:57:18Z",
+      "side": 1,
+      "message": "(optional since this is not changing in this CL) this comment seems unnecessary since |this| is not attached in ready. Maybe remove it?",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a072e99_985db89c",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T22:57:18Z",
+      "side": 1,
+      "message": "Is there a guarantee that \u0027pointermove\u0027 will be called before each \u0027tap\u0027?",
+      "revId": "f24e3f3d6672f04ec60d65728195621f63ea4e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
