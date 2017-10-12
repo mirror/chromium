@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "7c0c3a1e_30693073",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T20:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb63323e_35df4102",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011a9151_3186d7e1",
         "filename": "chrome/test/data/webui/settings/site_data_test.js",
         "patchSetId": 3
@@ -341,6 +359,24 @@
       "writtenOn": "2017-10-12T19:19:38Z",
       "side": 1,
       "message": "Syntax error?",
+      "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b0bfc8_c4cc1283",
+        "filename": "chrome/test/data/webui/settings/test_local_data_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-12T20:46:12Z",
+      "side": 1,
+      "message": "It\u0027s valid syntax, but the comma is unnecessary (removing).\n\nDone.",
+      "parentUuid": "35e68a12_405652e3",
       "revId": "ca77211cf3d5e683e881b1a9f84f77210ad3265d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
