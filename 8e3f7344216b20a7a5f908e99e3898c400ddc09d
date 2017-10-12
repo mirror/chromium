@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1f2e9e5_632489f9",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-12T22:58:07Z",
+      "side": 1,
+      "message": "Added a new message to the NOTREACHED with the |hr| mentioned, keeping this one as it has possibly-useful hypotheses in the error message.",
+      "parentUuid": "71fb5e32_b0e06e3e",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8219ada0_6a0326a4",
         "filename": "base/win/win_util.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa82bbea_2960f92b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-12T22:58:07Z",
+      "side": 1,
+      "message": "Leaving untouched.",
+      "parentUuid": "fac19511_ba013c31",
+      "revId": "8e3f7344216b20a7a5f908e99e3898c400ddc09d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
