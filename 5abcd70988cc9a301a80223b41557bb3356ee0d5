@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0caa599_a6cf33a4",
+        "filename": "ash/shell.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "I can revert if the previous order was intended.",
+      "revId": "5abcd70988cc9a301a80223b41557bb3356ee0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

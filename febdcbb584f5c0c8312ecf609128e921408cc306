@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "249025e5_ecf16b0f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a953a5_247cd7de",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a40b70e_8ac41853",
         "filename": "ash/system/palette/palette_tray.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d091aeea_d716ea7a",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a40b70e_8ac41853",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e7a8d96_937721c4",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-12T15:54:24Z",
       "side": 1,
       "message": "You might be able to skip the PointerWatcher if you activate the bubble and then close on deactivate. Is there a particular reason to do it this way?",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e70cc70_0068cfdb",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this does, but it seems similar bubbles (shelf overflow, login and system) use pointer watcher to handle closing [1] , or in login\u0027s case, EventListener. Setting this to true does not seem to do anything from my eye tests at least.\n\n[1] https://cs.chromium.org/search/?q\u003dProcessPressedEvent\u0026type\u003dcs",
+      "parentUuid": "6e7a8d96_937721c4",
       "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c58d0c94_3220f7d8",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "It seems to work without, but I think its needed to make sure it overlaps and underlaps the same stuff as the other bubbles.",
+      "parentUuid": "2f839b2b_c1f2491c",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3680f1ff_fa8b0231",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d1da9bbd_12a85f50",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3680f1ff_fa8b0231",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0cbdf0_1a281c22",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468e6332_74a60412",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-12T20:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0cbdf0_1a281c22",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
