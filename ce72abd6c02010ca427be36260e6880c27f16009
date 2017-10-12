@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "27a27330_356dcea9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-12T18:05:44Z",
+      "side": 1,
+      "message": "\u003e That sounds like a bug in GetViableReferenceFrameIndex, rather than a bug in Decode. The comments describing GetViableReferenceFrameIndex don\u0027t seem to indicate that it will never return the required frame, and it\u0027s not clear why it wouldn\u0027t. Obviously Decode would prefer to return the required frame, rather than kNotFound. (No reason to call Decode on it just to return early.) Not only that, ClearCacheExceptFrame wants the same answer that Decode wants. We *want* it to return the required frame if it\u0027s FrameComplete, so that it gets passed to ClearCacheExceptTwoFrames and does not get cleared.\n\u003e \n\u003e The unfortunate part of this bug is that it\u0027s probably a very common case. If a frame has transparency it will depend on the frame before it, in which case GetViableReferenceFrameIndex *always* returns kNotFound, so we\u0027ll always be re-decoding the prior frame. Not only that, but this is recursive - if it depends on the frame directly before it, we\u0027ll have to redecode it, and so on.\n\u003e \n\u003e This seems like a very serious bug (unless there\u0027s something I\u0027m missing here?). I\u0027m guessing we don\u0027t have adequate performance testing (i.e. gifs with long dependency chains) to catch this. (Maybe this was responsible for crbug.com/758946 - using more memory to redecode old frames?)\n\nOkay, here\u0027s what I was missing - when we recursively call Decode(), we skip over initializing the frame (and startIncrementalDecode) due to the check for the FrameStatus. We\u0027ll go straight to incrementalDecode (as indicated in your commit message). That simply returns kSuccess if there\u0027s nothing more to decode. It still seems it would be better not to recurse, and fix ClearCacheExceptFrame, by making GetViableReferenceFrameIndex return what it claims to.\n\n\u003e \n\u003e I think we\u0027ve discussed the over-complexity of ClearCacheExceptFrame before, but it\u0027s relevant here as we figure out whether the GetViableReferenceFrameIndex bug actually hurts it. Currently, Blink essentially does the following:\n\u003e \n\u003e   if (!index || FrameIsCompleteAtIndex(index)) {\n\u003e     Decode(index);\n\u003e     ClearCacheExceptFrame(index);\n\u003e   }\n\u003e \n\u003e In the first case, the frame may be incomplete, and it is independent (since it\u0027s first). So ClearCacheExceptFrame won\u0027t clear it, and it doesn\u0027t search back for earlier frames.\n\u003e \n\u003e For later frames, they are either complete or contain an error. If there was an error, we don\u0027t need to keep earlier frames around, since we\u0027re done decoding. So it\u0027s okay that GetViableReferenceFrameIndex failed to keep the required frame around.\n\u003e \n\u003e If the frame is complete, ClearCacheExceptFrame does not check for earlier frames to keep around, since FrameStatusSufficientForSuccessors returns true. So it doesn\u0027t get exposed to the bug. But there is an exception - if the frame is DisposePrevious, we should have kept the required frame. Well, that\u0027s somewhat debatable - we really want to know the frame that index + 1 depends on, and save that if possible. It may be that the next frame is independent, in which case we don\u0027t need to save any frames. So the bug here is only a problem when:\n\u003e \n\u003e - index is DisposePrevious (complete and w/o error)\n\u003e - index + 1 depends on the same frame that index does\n\u003e \n\u003e In that case, we\u0027ll throw away the required frame and have to redecode it when we decode index + 1. Obviously, this is particularly bad if that means we have to start a long chain of decoding to decode that frame.",
+      "parentUuid": "0b2ec02c_a44c3b61",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "ce72abd6c02010ca427be36260e6880c27f16009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa152806_ea97faf5",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 1
