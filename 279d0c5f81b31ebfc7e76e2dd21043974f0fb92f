@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "410c966b_033a8920",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-12T19:13:55Z",
+      "side": 1,
+      "message": "Thoughts:  One could argue that if the total velocity is tiny, then there\u0027s no gesture at all, and we shouldn\u0027t assume it\u0027s a horizontal gesture.  Or, if the x component is tiny (like this should be an ApproximatelyEqual rather than \u003d\u003d 0), you could just infer that it must not be a horizontal gesture and return false.  It seems odd to fudge an X component, as then we\u0027re using atan to generate a bogus result.  My two cents, anyway.",
+      "parentUuid": "512df2f3_462bf3d0",
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8193407e_39df9911",
         "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
         "patchSetId": 1
@@ -81,6 +99,30 @@
       "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68d26a8_3c7ffac1",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-12T19:13:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65de5c5b_a8dcfe76",
+      "range": {
+        "startLine": 415,
+        "startChar": 45,
+        "endLine": 415,
+        "endChar": 49
+      },
+      "revId": "279d0c5f81b31ebfc7e76e2dd21043974f0fb92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
