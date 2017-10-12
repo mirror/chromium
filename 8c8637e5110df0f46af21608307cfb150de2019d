@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a58e0f7_7044477b",
+        "filename": "content/browser/android/synthetic_gesture_target_connector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T23:56:01Z",
+      "side": 1,
+      "message": "2017 (or do we keep it the same since it\u0027s essentially a rename)?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e240ddc6_893048af",
+        "filename": "content/browser/android/synthetic_gesture_target_connector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T23:56:01Z",
+      "side": 1,
+      "message": "Normally, we try to keep the java name the same as the C++.  If we can\u0027t, the difference is usually [Name].java and [name]_android.cc/h.  In this example, I\u0027d expect the java side to be called SyntheticGestureTargetConnector.java.\n\nI\u0027ll defer to folk that know this better than me though (jinsukkim@ and boliu@)",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d9c728_da24d84c",
+        "filename": "content/browser/android/synthetic_gesture_target_connector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-12T23:56:01Z",
+      "side": 1,
+      "message": "s/SyntheticGestureTargetAndroid/SyntheticGestureTargetConnector?\n\nhere and below?",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
