@@ -102,9 +102,8 @@ v8::Local<v8::String> StringCache::V8ExternalStringSlow(
   StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
       string_cache_.GetReference(string_impl);
   if (!cached_v8_string.IsEmpty()) {
-    last_string_impl_ = string_impl;
-    last_v8_string_ = cached_v8_string;
-    return last_v8_string_.NewLocal(isolate);
+    AddStringToFirstCache(cached_v8_string, string_impl);
+    return first_cache_[start_index_].v8_string.NewLocal(isolate);
   }
 
   return CreateStringAndInsertIntoCache(isolate, string_impl);
@@ -124,9 +123,8 @@ void StringCache::SetReturnValueFromStringSlow(
   StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
       string_cache_.GetReference(string_impl);
   if (!cached_v8_string.IsEmpty()) {
-    last_string_impl_ = string_impl;
-    last_v8_string_ = cached_v8_string;
-    last_v8_string_.SetReturnValue(return_value);
+    AddStringToFirstCache(cached_v8_string, string_impl);
+    first_cache_[start_index_].v8_string.SetReturnValue(return_value);
     return;
   }
 
@@ -149,15 +147,21 @@ v8::Local<v8::String> StringCache::CreateStringAndInsertIntoCache(
 
   string_impl->AddRef();
   wrapper.MarkIndependent();
-  string_cache_.Set(string_impl, std::move(wrapper), &last_v8_string_);
-  last_string_impl_ = string_impl;
+
+  int insert_index = GetInsertIndexForFirstCache();
+  string_cache_.Set(string_impl, std::move(wrapper),
+                    &first_cache_[insert_index].v8_string);
+  first_cache_[insert_index].string_impl = string_impl;
+  rotateCache(insert_index);
 
   return new_string;
 }
 
 void StringCache::InvalidateLastString() {
-  last_string_impl_ = nullptr;
-  last_v8_string_.Reset();
+  for (int i = 0; i < cache_size_; i++) {
+    first_cache_[i].string_impl = nullptr;
+    first_cache_[i].v8_string.Reset();
+  }
 }
 
 }  // namespace blink
