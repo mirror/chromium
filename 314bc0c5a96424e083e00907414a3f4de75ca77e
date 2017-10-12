@@ -16,6 +16,24 @@
       "revId": "314bc0c5a96424e083e00907414a3f4de75ca77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88c7181_e315e5dc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4216,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-12T17:56:02Z",
+      "side": 1,
+      "message": "Upload failed on me :(",
+      "parentUuid": "39e640e3_ec6db17c",
+      "revId": "314bc0c5a96424e083e00907414a3f4de75ca77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
