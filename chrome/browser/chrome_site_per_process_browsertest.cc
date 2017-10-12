@@ -668,7 +668,7 @@ class TestBrowserClientForSpellCheck : public ChromeContentBrowserClient {
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
-      content::AssociatedInterfaceRegistry* associated_registry,
+      blink::AssociatedInterfaceRegistry* associated_registry,
       content::RenderProcessHost* render_process_host) override {
     // Expose the default interfaces.
     ChromeContentBrowserClient::ExposeInterfacesToRenderer(
@@ -789,7 +789,7 @@ class TestBrowserClientForSpellCheckPanelHost
   // ContentBrowserClient overrides.
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
-      content::AssociatedInterfaceRegistry* associated_registry,
+      blink::AssociatedInterfaceRegistry* associated_registry,
       content::RenderProcessHost* render_process_host) override {
     hosts_.push_back(
         base::MakeUnique<TestSpellCheckPanelHost>(render_process_host));

@@ -9,10 +9,10 @@
 #include "content/child/web_url_loader_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/navigation_params.h"
-#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/test/mock_render_thread.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
