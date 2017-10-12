@@ -46,6 +46,30 @@
       "revId": "2f88f54bffd917ce97058cb04fa6ec7a603c0838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6317e04_bfc170a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-12T20:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecefdcec_7c4d7b2b",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 82
+      },
+      "revId": "2f88f54bffd917ce97058cb04fa6ec7a603c0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
