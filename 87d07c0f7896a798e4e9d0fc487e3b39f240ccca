@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "bc1927d4_ef294518",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T00:22:04Z",
+      "side": 1,
+      "message": "They kinda do cause \u0027progress\u0027 in a sense of advancing the state. But I\u0027ve added some comments to them.",
+      "parentUuid": "2fc8bb9e_7d760959",
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c20882c_95cf63f5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T00:22:04Z",
+      "side": 1,
+      "message": "Ack. The \u0027counts\u0027 for that UMA are kinda bogus without special processing (like, taking MAX per user and then average that?)",
+      "parentUuid": "5db7a899_0b67c03e",
+      "range": {
+        "startLine": 97,
+        "startChar": 23,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b0aa63_9b63e148",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab940f98_b9ccf3ba",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b0aa63_9b63e148",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -97,6 +163,24 @@
       "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108f4aed_66925c5c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-12T00:22:04Z",
+      "side": 1,
+      "message": "Between these recommendation, I lean to join Carlos\u0027 because I think AddUniqueUrlsTask should be run later to delete ZOMBIEs... The chances of Chrome to be killed now is probably slim because supposedly this happens when Chrome is in foreground.",
+      "parentUuid": "43d19873_34b577de",
+      "revId": "87d07c0f7896a798e4e9d0fc487e3b39f240ccca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
