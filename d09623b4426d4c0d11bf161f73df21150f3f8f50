@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7c8681df_26493802",
+        "filename": "components/translate/core/browser/translate_accept_languages.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-12T22:00:56Z",
+      "side": 1,
+      "message": "Thank you for the explanation. To me, it\u0027s a bit too much effort for something rather obvious, but if you like that way, it\u0027s fine.",
+      "parentUuid": "b93659f4_4493b4cb",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f4fcb6a_69b153a6",
         "filename": "components/translate/core/browser/translate_accept_languages_unittest.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Thanks for the questions, that\u0027s also 1 question I cared about. Currently it\u0027s only used in translate_prefs https://cs.chromium.org/search/?q\u003dCanBeAcceptLanguage\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI asked some people who work on \"accept language\" about the possibilities of language code format. One answer is we does not support \"en-us\". And based its original logic, \"zh-Hant\" is not supported either. So I just kept the same logic. \n\nIf you think there are some cases missing, I\u0027d like to fix them.",
       "parentUuid": "2f4fcb6a_69b153a6",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 70
+      },
+      "revId": "d09623b4426d4c0d11bf161f73df21150f3f8f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e2181d_62cba0cf",
+        "filename": "components/translate/core/browser/translate_accept_languages_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-12T22:00:56Z",
+      "side": 1,
+      "message": "Hmm... So, ToChromeLanguageSynonym does not take care of that. \n\nBecause these language codes are internal (as opposed to coming from outside), I think that\u0027s fine (for now).",
+      "parentUuid": "6cfea77b_16b58f4a",
       "range": {
         "startLine": 78,
         "startChar": 2,
