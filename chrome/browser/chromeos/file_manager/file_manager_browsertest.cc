@@ -318,6 +318,23 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
                                     "restoreGeometryMaximizedState")));
 
 #if defined(DISABLE_SLOW_FILESAPP_TESTS)
+#define MAYBE_ResizeColumn DISABLED_ResizeColumn
+#else
+#define MAYBE_ResizeColumn ResizeColumn
+#endif
+WRAPPED_INSTANTIATE_TEST_CASE_P(
+    MAYBE_ResizeColumn,
+    FileManagerBrowserTest,
+    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE, "resizeColumnByTouch"),
+                      TestParameter(NOT_IN_GUEST_MODE, "resizeColumnByMouse")));
+
+WRAPPED_INSTANTIATE_TEST_CASE_P(
+    MAYBE_Focus,
+    FileManagerBrowserTest,
+    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE,
+                                    "longTappingDetailTableHeaderKeepsFocus")));
+
+#if defined(DISABLE_SLOW_FILESAPP_TESTS)
 #define MAYBE_Traverse DISABLED_Traverse
 #else
 #define MAYBE_Traverse Traverse
