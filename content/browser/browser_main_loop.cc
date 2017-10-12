@@ -167,6 +167,7 @@
 #include <shellapi.h>
 
 #include "base/memory/memory_pressure_monitor_win.h"
+#include "base/memory/swap_thrashing_monitor.h"
 #include "content/common/sandbox_win.h"
 #include "net/base/winsock_init.h"
 #include "ui/base/l10n/l10n_util_win.h"
@@ -411,6 +412,7 @@ CreateWinMemoryPressureMonitor(const base::CommandLine& parsed_command_line) {
   // In absence of valid switches use the automatic defaults.
   return base::MakeUnique<base::win::MemoryPressureMonitor>();
 }
+
 #endif  // defined(OS_WIN)
 
 enum WorkerPoolType : size_t {
@@ -1612,6 +1614,8 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
 #elif defined(OS_WIN)
   memory_pressure_monitor_ =
       CreateWinMemoryPressureMonitor(parsed_command_line_);
+  base::SwapThrashingMonitor::SetInstance(
+      base::MakeUnique<base::SwapThrashingMonitor>());
 #endif
 
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator))
