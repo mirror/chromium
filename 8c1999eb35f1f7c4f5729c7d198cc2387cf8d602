@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "f717d20c_da469f55",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "I\u0027m a bit skeptical of this, since if I send a ptr to a deleted WebContents to ::FromWebContents, I\u0027m pretty sure it\u0027s going to deref it: https://cs.chromium.org/chromium/src/content/public/browser/web_contents_user_data.h?type\u003dcs\u0026q\u003dFromWebContents\u0026l\u003d45",
+      "parentUuid": "07327bf6_6c0b6a6b",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df06bc26_e4a57de0",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
@@ -85,6 +109,24 @@
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaeda11d_0b3e7179",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df06bc26_e4a57de0",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "4aad1d07_1cd622db",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3452179c_08ed1d2f",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360ac7e1_9326b572",
         "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
         "patchSetId": 4
@@ -116,6 +176,24 @@
       "writtenOn": "2017-10-12T08:44:28Z",
       "side": 1,
       "message": "FWIW, even if it is slightly slower, I would add an explicit `find()` call in a DCHECK instead of getting the returned value as the DCHECK() would only be compiled in debug builds but we would have to trust the compiler to not create the `insert_result` object.",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec67251b_a7cf68a1",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Well the thing that\u0027s really being checked is that the insert didn\u0027t fail, which can happen if the value already exists in the set. A find DCHECK wouldn\u0027t catch that case, but I can see the issue with potentially creating the std::pair on prod builds. I could do `bool insert_result \u003d players_.insert(player).second`, which would only keep a bool instead of a pair (if anything at all), WDYT?",
+      "parentUuid": "360ac7e1_9326b572",
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +223,30 @@
     },
     {
       "key": {
+        "uuid": "bc19e9d0_860d23c1",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10efb37f_3a2fb07b",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a40ecbb6_50d61d86",
         "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
         "patchSetId": 4
@@ -165,6 +267,30 @@
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21b37ea_c530b8a2",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40ecbb6_50d61d86",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +338,30 @@
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa31256_62df41d0",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-12T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75d64d2_f3ad0656",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
