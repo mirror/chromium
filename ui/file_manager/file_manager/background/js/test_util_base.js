@@ -46,7 +46,10 @@ function extractElementInfo(element, contentWindow, opt_styleNames) {
     imageHeight: Number(element.height),
     // These attributes are set in any element.
     renderedWidth: size.width,
-    renderedHeight: size.height
+    renderedHeight: size.height,
+    // These attributes are set in any element.
+    renderedX: size.x,
+    renderedY: size.y,
   };
 }
 
@@ -152,11 +155,27 @@ test.util.sync.getDocument_ = function(contentWindow, opt_iframeQuery) {
  */
 test.util.sync.getElement_ = function(
     contentWindow, targetQuery, opt_iframeQuery) {
-  var doc = test.util.sync.getDocument_(contentWindow, opt_iframeQuery);
-  if (!doc)
-    return null;
+  var target;
+  if (targetQuery === null) {
+    target = contentWindow.document.activeElement;
+  } else if (typeof targetQuery === 'string') {
+    var doc = test.util.sync.getDocument_(
+        contentWindow, opt_iframeQuery || undefined);
+    if (!doc)
+      return null;
 
-  var target = doc.querySelector(targetQuery);
+    target = doc.querySelector(targetQuery);
+  } else if (Array.isArray(targetQuery)) {
+    var doc = test.util.sync.getDocument_(
+        contentWindow, opt_iframeQuery || undefined);
+    if (!doc)
+      return null;
+
+    var elems = test.util.sync.deepQuerySelectorAll_(doc, targetQuery);
+    if (elems.length > 0)
+      target = elems[0];
+  }
+
   if (!target) {
     console.error('Target element for ' + targetQuery + ' not found.');
     return null;
@@ -346,21 +365,8 @@ test.util.sync.inputText = function(contentWindow, query, text) {
  */
 test.util.sync.sendEvent = function(
     contentWindow, targetQuery, event, opt_iframeQuery) {
-  var target;
-  if (targetQuery === null) {
-    target = contentWindow.document.activeElement;
-  } else if (typeof targetQuery === 'string') {
-    target =
-        test.util.sync.getElement_(contentWindow, targetQuery, opt_iframeQuery);
-  } else if (Array.isArray(targetQuery)) {
-    var doc = test.util.sync.getDocument_(
-        contentWindow, opt_iframeQuery || undefined);
-    if (doc) {
-      var elems = test.util.sync.deepQuerySelectorAll_(doc, targetQuery);
-      if (elems.length > 0)
-        target = elems[0];
-    }
-  }
+  var target =
+      test.util.sync.getElement_(contentWindow, targetQuery, opt_iframeQuery);
 
   if (!target)
     return false;
@@ -390,6 +396,36 @@ test.util.sync.fakeEvent = function(contentWindow,
       event[name] = opt_additionalProperties[name];
     }
   }
+  return test.util.sync.sendEvent(contentWindow, targetQuery, event);
+};
+
+/**
+ * Sends an fake touch event having the specified type to the target query.
+ *
+ * @param {Window} contentWindow Window to be tested.
+ * @param {string} targetQuery Query to specify the element.
+ * @param {string} eventType Type of event.
+ * @param {Object=} opt_additionalEventProperties Object contaning additional
+ *     event properties.
+ * @param {Object=} opt_additionalTouchProperties Object contaning additional
+ *     touch properties.
+ * @return {boolean} True if the event is sent to the target, false otherwise.
+ */
+test.util.sync.fakeTouchEvent = function(
+    contentWindow, targetQuery, eventType, opt_additionalEventProperties,
+    opt_additionalTouchProperties) {
+  var touchProperties = opt_additionalTouchProperties;
+  touchProperties.identifier = touchProperties.identifier || Date.now();
+  touchProperties.target =
+      test.util.sync.getElement_(contentWindow, targetQuery, undefined);
+  var touch = new Touch(touchProperties);
+
+  var eventProperties = opt_additionalEventProperties;
+  eventProperties.touches = [touch];
+  eventProperties.changedTouches = [touch];
+  eventProperties.targetTouches = [touch];
+
+  var event = new TouchEvent(eventType, eventProperties);
   return test.util.sync.sendEvent(contentWindow, targetQuery, event);
 };
 
