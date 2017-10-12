@@ -53,7 +53,8 @@
           "shape_detection::mojom::TextDetection",
           "storage::mojom::BlobRegistry",
           "ui::mojom::Gpu",
-          "viz::mojom::SharedBitmapAllocationNotifier"
+          "viz::mojom::SharedBitmapAllocationNotifier",
+          "viz::mojom::CompositingModeReporter"
         ],
         "geolocation_config": [
           "device::mojom::GeolocationConfig"
