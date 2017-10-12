@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "371d4015_00b25341",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32964965_a129c603",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6556d621_ee25211e",
         "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T00:29:13Z",
       "side": 1,
       "message": "Can you use a views::WidgetObserver or an aura::Window observer instead of this callback?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9bdfc9_9690b0ef",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "yes, I think I can.",
+      "parentUuid": "6556d621_ee25211e",
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4601efad_6c510615",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9ce5c90_13fcca76",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a573f007_18c318e6",
         "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_test_api.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d102c07_cef355e1",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_test_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a573f007_18c318e6",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0a7952ed_6a52bb89",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "306ef1d1_7353299f",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "168711ef_f41a97c8",
         "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9341e8_00793f8d",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "168711ef_f41a97c8",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e106c823_100fa598",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a62f1f_1a2d7969",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac27553_e8b4652b",
         "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a594a4_2da12c52",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac27553_e8b4652b",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c4d966f2_3af553b3",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe0554a_44959eee",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a85ff12_539de664",
         "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5ebdde_23c5c16f",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_controller_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a85ff12_539de664",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "1aeebfaf_cc0b2b16",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a2b129_486175df",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7825610a_e009a385",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
         "patchSetId": 10
@@ -217,6 +415,24 @@
       "writtenOn": "2017-10-12T00:29:13Z",
       "side": 1,
       "message": "Q: Why is this flipped for RTL? Is the icon in the other corner in RTL?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7adba1f_1cf3b284",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Yes, it\u0027s in the left top corner (rather than right top).",
+      "parentUuid": "7825610a_e009a385",
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "77118f93_55aec6e8",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f38620e_0a529e69",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a593372e_b440fd6d",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
         "patchSetId": 10
@@ -251,6 +485,24 @@
       "writtenOn": "2017-10-12T00:29:13Z",
       "side": 1,
       "message": "I\u0027m not too familiar with ink drop -- is the state !\u003d animating_to_state_ check required because show/hide animations could be triggered before the previous animation is complete?",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9398a48_febd2d28",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "yes, the animations can be triggered before the previous animation ended - in this case the\nprevious animation is aborted, and we\u0027ll see that event here.",
+      "parentUuid": "a593372e_b440fd6d",
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "083bd45f_3d6262de",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "The user can\u0027t change the window bounds, but the window is maximized by lock_window_state (which is set for the widget window when it\u0027s added to lock_action_handler_layout_manager).\n(if CanMaximize is false, the window bounds are not set as desired here)\n\nThough, I think we can do without resize.",
+      "parentUuid": "565ca7d0_b2814c16",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4e5d2dd_bf023db0",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
         "patchSetId": 10
@@ -288,6 +558,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703c5e41_6d4db296",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e5d2dd_bf023db0",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +596,24 @@
     },
     {
       "key": {
+        "uuid": "3a653915_2a6c5c5d",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "976d4cde_49828ee4",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5dd7d7_59cf4916",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
         "patchSetId": 10
@@ -325,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "c2ad6f7f_cdf73eed",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a5dd7d7_59cf4916",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fda671_7a5dc86d",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
         "patchSetId": 10
@@ -336,6 +660,24 @@
       "writtenOn": "2017-10-12T00:29:13Z",
       "side": 1,
       "message": "nit: \"as a View*\". I think the reason this method exists is because the test api doesn\u0027t know how to cast a NoteBackground to a view.",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df47cbb5_371cfdd4",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "yep, that\u0027s the reason :)",
+      "parentUuid": "80fda671_7a5dc86d",
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "d02da5aa_f86befde",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1aa5f3_56c4df81",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fdc1e1_6185975c",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
         "patchSetId": 10
@@ -376,6 +736,24 @@
     },
     {
       "key": {
+        "uuid": "7cb5de0c_59d69fd1",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62fdc1e1_6185975c",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b984fade_84d56035",
         "filename": "ash/lock_screen_action/lock_screen_action_background_view_test_api.h",
         "patchSetId": 10
@@ -390,6 +768,24 @@
       "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd90944_b7c22837",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view_test_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-12T02:50:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b984fade_84d56035",
+      "revId": "9c3fa5c5460636cf0e07b3a6c4046eedad78af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
