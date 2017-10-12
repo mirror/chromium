@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01bbbe4_d9ddace2",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:41:47Z",
+      "side": 1,
+      "message": "Somewhat orthogonal, but I feel like it would be nice if GPU process host better documented its thread restrictions?",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 70
+      },
+      "revId": "f375c40a4557d8b10f29234b0bec9bbddd51428d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa78d1fd_116c9629",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:41:47Z",
+      "side": 1,
+      "message": "Nit: please std::move() if this is going to be passed by value.\n\n(though most people pass repeating callbacks by const ref)",
+      "revId": "f375c40a4557d8b10f29234b0bec9bbddd51428d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7061ebb_e97bcdc8",
+        "filename": "ui/display/win/screen_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:41:47Z",
+      "side": 1,
+      "message": "What is this needed for?",
+      "revId": "f375c40a4557d8b10f29234b0bec9bbddd51428d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bdde91_cc4c0d79",
+        "filename": "ui/display/win/screen_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-12T20:41:47Z",
+      "side": 1,
+      "message": "Nit: please prefer using A \u003d B; over typedef B A;",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "f375c40a4557d8b10f29234b0bec9bbddd51428d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
