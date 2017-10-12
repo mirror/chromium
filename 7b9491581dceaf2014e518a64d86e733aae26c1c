@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6815335_4ee49165",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-12T00:48:04Z",
+      "side": 0,
+      "message": "reverted",
+      "parentUuid": "b5802080_8f89756c",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "111abfe8_542cd902",
         "filename": "gpu/command_buffer/common/capabilities.h",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0307f2d4_5311a4ee",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-12T00:48:04Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "111abfe8_542cd902",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94428d3_24436435",
         "filename": "gpu/command_buffer/common/capabilities.h",
         "patchSetId": 8
@@ -65,6 +101,24 @@
       "writtenOn": "2017-10-11T23:59:27Z",
       "side": 0,
       "message": "Ditto on these 2",
+      "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4447b6_22445039",
+        "filename": "gpu/command_buffer/common/capabilities.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-12T00:48:04Z",
+      "side": 0,
+      "message": "kbr can confirm, but if I remember correctly, at lease emulate_rgn_buffer_with_rgba isn\u0027t possible for a pure service side implementation.",
+      "parentUuid": "b94428d3_24436435",
       "revId": "7b9491581dceaf2014e518a64d86e733aae26c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
