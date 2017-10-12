@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790424ec_791e6fcb",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T20:15:06Z",
+      "side": 1,
+      "message": "Pull the lambda out of the for loop. Pass touch_device_identifier as a parameter, not as a capture.\n\nBasically, you\u0027re creating a function in the anonymous namespace, but it is defined inside this function instead.",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e377e0_5932e60d",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T20:15:06Z",
+      "side": 1,
+      "message": "fallback / non-internal -\u003e random display to make it very clear/explicit that the devices may get associated with a different display next time.",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a37cfdd_23b75489",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T20:15:06Z",
+      "side": 1,
+      "message": "Add comment about iterating device_it inside of the for loop.",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3844f03_94881a6a",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T20:15:06Z",
+      "side": 1,
+      "message": "Since we\u0027re no longer removing items from |displays| this log needs to be updated. Please run with VLOG(2) enabled and make sure logging still makes sense / is consistent.",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca99712f_689738ad",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-12T20:15:06Z",
+      "side": 1,
+      "message": "Call this unconditionally, remove comment.",
+      "revId": "934d31049278ae4189299109f1e3fe97c9f10e08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
