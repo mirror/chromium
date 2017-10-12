@@ -39,6 +39,9 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return children_;
   }
 
+  // Update VisualRect() for this object and all its descendants.
+  void UpdateVisualRect();
+
   // TODO(layout-dev): Implement when we have oveflow support.
   // TODO(eae): Switch to using NG geometry types.
   bool HasOverflowClip() const { return false; }
@@ -66,7 +69,13 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants();
+  // A context object used for UpdateVisualObject() and PopulateDescendants().
+  struct UpdateContext {
+    const LayoutObject* parent_box;
+    const NGPhysicalOffset offset_to_parent_box;
+  };
+  void UpdateVisualRect(const UpdateContext&);
+  void PopulateDescendants(const UpdateContext&);
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
