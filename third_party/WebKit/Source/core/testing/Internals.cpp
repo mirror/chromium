@@ -3445,7 +3445,7 @@ bool Internals::setScrollbarVisibilityInScrollableArea(Node* node,
     scrollable_area->SetScrollbarsHidden(!visible);
     scrollable_area->GetScrollAnimator().SetScrollbarsVisibleForTesting(
         visible);
-    return ScrollbarTheme::GetTheme().UsesOverlayScrollbars();
+    return scrollable_area->GetPageScrollbarTheme().UsesOverlayScrollbars();
   }
   return false;
 }
