@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce3552c_ff5e63ff",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-12T15:04:31Z",
+      "side": 1,
+      "message": "When would this not be true?",
+      "range": {
+        "startLine": 678,
+        "startChar": 2,
+        "endLine": 678,
+        "endChar": 45
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adec5b9b_cba661cb",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-12T15:04:31Z",
+      "side": 1,
+      "message": "nit: storing the per-file downloaded bytes, although we still cache the total.",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 80
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a9ec2c_1d40b975",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-12T15:04:31Z",
+      "side": 1,
+      "message": "nit: Cache of the downloaded...",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 36
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848df3d1_f507b97a",
+        "filename": "content/browser/background_fetch/background_fetch_registration_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-12T15:04:31Z",
+      "side": 1,
+      "message": "interesting: didn\u0027t know this wasn\u0027t always equivalent to \u003d default.",
+      "range": {
+        "startLine": 15,
+        "startChar": 76,
+        "endLine": 15,
+        "endChar": 78
+      },
+      "revId": "b8fbddccfc30f22598790037b392b51f01064eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
