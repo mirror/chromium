@@ -176,11 +176,8 @@ test("vr_common_unittests") {
     "service/vr_device_manager_unittest.cc",
     "test/animation_utils.cc",
     "test/animation_utils.h",
-    "test/constants.h",
     "test/fake_ui_element_renderer.cc",
     "test/fake_ui_element_renderer.h",
-    "test/gl_test_environment.cc",
-    "test/gl_test_environment.h",
     "test/gl_test_environment_unittest.cc",
     "test/mock_browser_interface.cc",
     "test/mock_browser_interface.h",
@@ -188,7 +185,6 @@ test("vr_common_unittests") {
     "test/mock_content_input_delegate.h",
     "test/paths.cc",
     "test/paths.h",
-    "test/run_all_unittests.cc",
     "test/ui_pixel_test.cc",
     "test/ui_pixel_test.h",
     "test/ui_scene_manager_test.cc",
@@ -201,20 +197,12 @@ test("vr_common_unittests") {
   ]
 
   deps = [
-    ":vr_common",
-    ":vr_test_pak",
-    "//base/test:test_support",
+    ":vr_test_support",
     "//components/security_state/core",
     "//components/toolbar:vector_icons",
-
-    # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
-    "//device/vr:fakes",
     "//mojo/common",
-    "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
-    "//skia",
     "//testing/gmock",
-    "//testing/gtest",
 
     # TODO(mthiesse): Figure out why these webrtc deps are necessary for compiling these tests.
     # Is a dependency missing from some other target?
@@ -224,7 +212,6 @@ test("vr_common_unittests") {
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//ui/gl",
-    "//ui/gl:test_support",
   ]
 
   if (is_android) {
@@ -234,6 +221,50 @@ test("vr_common_unittests") {
   data = [
     "test/data/",
     "$root_out_dir/vr_test.pak",
+  ]
+}
+
+test("vr_common_perftests") {
+  sources = [
+    "text_perftest.cc",
+  ]
+  deps = [
+    ":vr_test_support",
+    "//base/test:test_support",
+    "//testing/perf",
+  ]
+
+  if (is_android) {
+    deps += [ "//ui/android:ui_java" ]
+  }
+
+  data = [
+    "test/data/",
+    "$root_out_dir/vr_test.pak",
+  ]
+}
+
+config("vr_test_config") {
+}
+
+source_set("vr_test_support") {
+  testonly = true
+  sources = [
+    "test/constants.h",
+    "test/gl_test_environment.cc",
+    "test/gl_test_environment.h",
+    "test/run_all_unittests.cc",
+  ]
+  public_deps = [
+    ":vr_common",
+    ":vr_test_pak",
+    "//mojo/edk/system",
+    "//skia",
+    "//testing/gtest",
+    "//ui/gl:test_support",
+
+    # TODO(mthiesse, crbug.com/769373): Remove dependency on device/vr:fakes.
+    "//device/vr:fakes",
   ]
 }
 
