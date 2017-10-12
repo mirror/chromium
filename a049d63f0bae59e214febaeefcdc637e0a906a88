@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3449ae4_cb999df3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3376,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-12T16:14:54Z",
+      "side": 1,
+      "message": "minor nit: partially loaded document.",
+      "range": {
+        "startLine": 3376,
+        "startChar": 34,
+        "endLine": 3376,
+        "endChar": 38
+      },
+      "revId": "a049d63f0bae59e214febaeefcdc637e0a906a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6087c456_d05ea829",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3378,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-12T16:14:54Z",
+      "side": 1,
+      "message": "nit: The same condition is checked above too (same document navigation). Should we combine them into a single if check?",
+      "revId": "a049d63f0bae59e214febaeefcdc637e0a906a88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
