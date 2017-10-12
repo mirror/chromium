@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72efad7e_9daa5c42",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "No, that\u0027s not necessarily true — when TaskQueueManager gets deleted first, TaskQueueImpl becomes unregistered even with shutdown task runner.",
+      "parentUuid": "6aa7565c_1d47d708",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e48e7289_11aeb598",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66750e65_591791ee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Added a comment.\n\nIf |shutdown_task_runner_| is not provided, TaskQueue should be unregistered manually.",
+      "parentUuid": "e48e7289_11aeb598",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "71585f7b_aea8a7d2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32a37f47_c95b298f",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b39d507_5dd6cd0e",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9912254_43fcd408",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b39d507_5dd6cd0e",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 10
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "95e10458_7e9e3828",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "When TaskQueueManager is going away, we have to delete everything, so no guarantees here.",
+      "parentUuid": "da652602_8a7bf24c",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 27
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f5bb80_53e85fa9",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
@@ -125,6 +233,30 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4438f51c_6808eabe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f5bb80_53e85fa9",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "4f3b27a8_39e6e6bd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "UnregisterTaskQueue stops running all tasks (deletes task queue from selector etc), GracefullyShutdown just transfers ownership to TaskQueueManager and UnregisterTaskQueue will be called for this task queue when it becomes empty.",
+      "parentUuid": "ad0f7759_bddad663",
+      "range": {
+        "startLine": 166,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ca3f54_f17947b9",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 1
@@ -165,6 +321,24 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97058fc1_3bfeb150",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Great idea, thanks.",
+      "parentUuid": "b1ca3f54_f17947b9",
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +362,30 @@
       "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe8bb30_8bd93de5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-12T15:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7677c556_d900cfa6",
+      "range": {
+        "startLine": 3182,
+        "startChar": 29,
+        "endLine": 3182,
+        "endChar": 68
+      },
+      "revId": "dc475fed2ee23ed738000e884131b489bf9da7f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
