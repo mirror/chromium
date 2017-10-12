@@ -57529,6 +57529,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PDF.HasAttachment" enum="Boolean">
+  <owner>hnakashima@chromium.org</owner>
+  <summary>
+    Tracks documents opened in the PDF viewer with file attachments.
+  </summary>
+</histogram>
+
 <histogram name="PDF.IsFontSubstituted" enum="Boolean">
   <owner>npm@chromium.org</owner>
   <summary>

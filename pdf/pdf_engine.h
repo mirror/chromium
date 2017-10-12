@@ -61,6 +61,8 @@ class PDFEngine {
   struct DocumentFeatures {
     // Number of pages in document.
     size_t page_count;
+    // Number of files attached to document.
+    unsigned int attachment_count;
   };
 
   // The interface that's provided to the rendering engine.

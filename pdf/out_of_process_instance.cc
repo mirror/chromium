@@ -9,6 +9,7 @@
 
 #include <algorithm>  // for min/max()
 #include <cmath>      // for log() and pow()
+#include <iostream>
 #include <list>
 
 #include "base/logging.h"
@@ -1504,6 +1505,11 @@ void OutOfProcessInstance::DocumentLoadComplete(
   pp::PDF::SetContentRestriction(this, content_restrictions);
   HistogramCustomCounts("PDF.PageCount", document_features.page_count, 1,
                         1000000, 50);
+  std::cerr << "attachment_count " << document_features.attachment_count
+            << std::endl;
+
+  uma_.HistogramEnumeration("PDF.HasAttachment",
+                            document_features.attachment_count ? 1 : 0, 2);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
