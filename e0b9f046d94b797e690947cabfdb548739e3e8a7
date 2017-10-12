@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "61b02f2f_104a711c",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-12T17:18:29Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "bf7c60b9_d9702daf",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 77
+      },
+      "revId": "e0b9f046d94b797e690947cabfdb548739e3e8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "415d4d29_afd2cf8c",
         "filename": "chrome/browser/ui/startup/startup_browser_creator.h",
         "patchSetId": 4
