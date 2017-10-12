@@ -896,6 +896,11 @@ const char kOffMainThreadFetchDescription[] =
     "If enabled, the resource fetches from worker threads will not be blocked "
     "by the busy main thread.";
 
+const char kTabModalJsDialogName[] = "AutoDismissingDialogs";
+const char kTabModalJsDialogDescription[] =
+    "If enabled, the JavaScript dialog will be auto dismissable when switching"
+    " tab.";
+
 const char kOmniboxDisplayTitleForCurrentUrlName[] =
     "Include title for the current URL in the omnibox";
 const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
