@@ -14,6 +14,10 @@ class GURL;
 
 namespace media_router {
 
+constexpr char kCastPresentationUrlScheme[] = "cast";
+constexpr char kCastDialPresentationUrlScheme[] = "cast-dial";
+constexpr char kDialPresentationUrlScheme[] = "dial";
+
 // Helper library for protocol-specific media source object creation.
 // Returns MediaSource URI depending on the type of source.
 MediaSource MediaSourceForTab(int tab_id);
