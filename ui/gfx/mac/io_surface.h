@@ -10,6 +10,7 @@
 
 #include "base/mac/scoped_cftyperef.h"
 #include "ui/gfx/buffer_types.h"
+#include "ui/gfx/color_space.h"
 #include "ui/gfx/generic_shared_memory_id.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gfx_export.h"
@@ -55,6 +56,11 @@ using ScopedRefCountedIOSurfaceMachPort =
 // in-use counter while the scoper exists.
 using ScopedInUseIOSurface =
     base::ScopedTypeRef<IOSurfaceRef, internal::ScopedInUseIOSurfaceTraits>;
+
+// Helper function to set color space for given IOSurface. Color space must have
+// a corresponding ICC color profile, otherwise this does nothing.
+GFX_EXPORT void SetColorSpaceForIOSurface(IOSurfaceRef io_surface,
+                                          const ColorSpace& color_space);
 
 }  // namespace gfx
 
