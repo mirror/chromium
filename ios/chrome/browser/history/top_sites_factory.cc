@@ -4,7 +4,10 @@
 
 #include "ios/chrome/browser/history/top_sites_factory.h"
 
+#include <memory>
+
 #include "base/memory/singleton.h"
+#include "components/history/core/browser/default_top_sites_provider.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/top_sites_impl.h"
 #include "components/keyed_service/core/refcounted_keyed_service.h"
@@ -46,6 +49,7 @@ scoped_refptr<RefcountedKeyedService> TopSitesFactory::BuildServiceInstanceFor(
       ios::ChromeBrowserState::FromBrowserState(context);
   scoped_refptr<history::TopSitesImpl> top_sites(new history::TopSitesImpl(
       browser_state->GetPrefs(),
+      std::make_unique<history::DefaultTopSitesProvider>(),
       ios::HistoryServiceFactory::GetForBrowserState(
           browser_state, ServiceAccessType::EXPLICIT_ACCESS),
       history::PrepopulatedPageList(), base::Bind(CanAddURLToHistory)));
