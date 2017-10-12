@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8e8e62_91386f7c",
+        "filename": "ash/system/power/power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "This could use a comment explaining why getting an accelerometer update causes controllers to be constructed.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812d85db_adf77590",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "This comment isn\u0027t clear to me. Is it something like this?\n\nHandles power and lock button events. For clamshell mode, the lock button may lock the screen or shutdown. For tablet mode, the lock button may also take a screenshot.\n\n(Do we have devices that have both a lock button in upper-right and a power button on the side? What are the names of those two physical buttons?)",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e82c28_9f39dca6",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "nit: just screenshot_controller_for_test()",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f3720c_62d4056b",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "If these cannot be null, DCHECK them.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adf27db_c0ac1d4a",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Depending on \"Prepend\" to put your pre-target handler where you want it is dangerous, as someone else could Prepend in front of yours.\n\nIs it possible to do this in ash::Shell where all the other pretarget handlers are set up? (Perhaps you would need to separate out a pretarget handler object with a different lifetime.) Or put this next to other pretarget handler setup elsewhere?\n\nIf not, this needs to document why you are using prepend and what other handler you have to be in front of.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62bb916_b67f90f0",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "It would be better to get this from PowerButtonController. Perhaps you could add the boolean as a constructor parameter.\n\nIf you can\u0027t do that, rather than looking up the switch on every event, do it once in the constructor and cache the value in a const member variable.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8baa688_15001d8a",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "nit: I think it would be clearer to eliminate this local and just use |volume_key_pressed_|\n\nAlternately, this variable should be called |pressed| so there\u0027s less confusion with volume-down.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d90897_a6ec7d5c",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "I\u0027m having a hard time following the logic in this function. I think it\u0027s partly because there are too many variables here: |down|, |volume_down_*|, \"consumed\", \"stopped propagation\", etc.\n\nI think it would be clearer to have InterceptScreenshotChord() return a bool for whether or not it took an action, which might eliminate one member variable.\n\nI wonder if it would be clearer to track volume_up_pressed_ and volume_down_pressed_ separately, rather than having volume_key_pressed_ and volume_down_key_pressed_, which mixes some states.\n\nYou might be able to check event.stopped_propagation(), either here or in the test code. It would be nice to eliminate the need for the test observer.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910d261d_9b1acbc3",
+        "filename": "ash/system/power/power_button_screenshot_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "super nit: Remove the comment about who instantiates/owns this. That can be found from code search. Instead explain why the class exists, like \"...accelerator, holding volume-down plus lock, similar to Android phones.\"",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0322847_bd47f881",
+        "filename": "ash/system/power/power_button_screenshot_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Rather than having all these ForTesting() methods, please introduce a separate TestApi class that you can friend. It can have these sorts of methods, or just allow direct access to the timers for test code to call.\n\n(This class declaration has a very high ratio of test-support code to impl code.)",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f8b393_1e698121",
+        "filename": "ash/system/power/power_button_screenshot_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "The method naming and comments in this header file are nice -- brief and to the point.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e25b0e_d7ea4607",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Add a method to reset the screenshot count and use it above. Then this can EXPECT_EQ(0, ...) which is clearer.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a516947_8bb0be08",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Rather than making assertions about which events propagated, would it work to have a method in the test base class for LastKeyConsumed()?\n\nYou might be able to construct a ui::KeyEvent keyev(type, key_code, flags); then call EventGenerator::Dispatch() then check the stopped_propagation() flag.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284043fa_f3771c05",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Can Initialize() take a session_manager::SessionState, or a bool, instead of ash::LoginStatus? xiyuan is trying to get rid of ash::LoginStatus.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dde390f_e11f0ec6",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Nice coverage - very thorough.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2a8a3f_98bc41c5",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ada838_43483db0",
+        "filename": "chromeos/audio/cras_audio_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Can you eliminate this enum, since it only has one state?\n\nIf you want to do it later, can you add a TODO?",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cc530b_915beef5",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "nit: move this down (It is about DIPTest)",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157d3845_26f72a38",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "nit: move this down (It is about DIPTest)",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436591ad_cd13914b",
+        "filename": "testing/buildbot/filters/ash_unittests_mash.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-12T23:09:33Z",
+      "side": 1,
+      "message": "Please file a bug indicating what is broken and reference it above these tests.",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
