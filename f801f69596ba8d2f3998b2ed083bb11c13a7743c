@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "807e33d2_edb4e86c",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T21:11:13Z",
+      "side": 1,
+      "message": "Maybe mention in the comment that this is the easiest way to get the text to always align with the 1st column of the grid.",
+      "revId": "f801f69596ba8d2f3998b2ed083bb11c13a7743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d391323f_bdf3cd5e",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T21:11:13Z",
+      "side": 1,
+      "message": "Should this be !Array (and same question everywhere else in this file)?",
+      "revId": "f801f69596ba8d2f3998b2ed083bb11c13a7743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf034f5b_d84288d7",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 3
@@ -16,6 +50,23 @@
       "revId": "f801f69596ba8d2f3998b2ed083bb11c13a7743c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "727362dd_701d03b5",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-12T21:11:13Z",
+      "side": 1,
+      "message": "I had not noticed that we are still using paper-item here. We have tried to eliminate usage of paper-item and replace it with a simple div. Can you add a TODO for this?",
+      "revId": "f801f69596ba8d2f3998b2ed083bb11c13a7743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
