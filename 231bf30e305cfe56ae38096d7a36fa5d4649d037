@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aef33f3a_451a4e60",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-12T03:17:20Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this variable and can just call the function inline in line 83",
+      "revId": "231bf30e305cfe56ae38096d7a36fa5d4649d037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
