@@ -8,6 +8,7 @@
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
 #include "ui/base/ime/chromeos/ime_candidate_window_handler_interface.h"
 #include "ui/base/ime/input_method_delegate.h"
+#include "ui/base/ime/input_method_observer.h"
 #include "ui/base/ime/text_input_client.h"
 
 // This implementation of ui::TextInputClient sends all updates via mojo IPC to
@@ -15,6 +16,7 @@
 // ui::InputMethod::SetFocusedTextInputClient().
 class RemoteTextInputClient : public ui::TextInputClient,
                               public ui::internal::InputMethodDelegate,
+                              public ui::InputMethodObserver,
                               chromeos::IMECandidateWindowHandlerInterface {
  public:
   RemoteTextInputClient(ui::mojom::TextInputClientPtr remote_client,
@@ -22,7 +24,9 @@ class RemoteTextInputClient : public ui::TextInputClient,
                         ui::TextInputMode text_input_mode,
                         base::i18n::TextDirection text_direction,
                         int text_input_flags,
-                        gfx::Rect caret_bounds);
+                        gfx::Rect caret_bounds,
+                        gfx::Range text_range,
+                        base::string16 text_from_range);
   ~RemoteTextInputClient() override;
 
   void SetTextInputType(ui::TextInputType text_input_type);
@@ -50,7 +54,7 @@ class RemoteTextInputClient : public ui::TextInputClient,
   bool SetSelectionRange(const gfx::Range& range) override;
   bool DeleteRange(const gfx::Range& range) override;
   bool GetTextFromRange(const gfx::Range& range,
-                        base::string16* text) const override;
+                        const base::string16& text) const override;
   void OnInputMethodChanged() override;
   bool ChangeTextDirectionAndLayoutAlignment(
       base::i18n::TextDirection direction) override;
@@ -73,14 +77,27 @@ class RemoteTextInputClient : public ui::TextInputClient,
                        const gfx::Rect& composition_head) override;
   void OnCandidateWindowVisibilityChanged(bool visible) override;
 
+  void HasCompositionTextCallBack(bool has_composition_text);
+
+  // ui::InputMethodObserver:
+  void OnBlur() override;
+  void OnFocus() override;
+  void OnCaretBoundsChanged(const TextInputClient* client) override;
+  void OnTextInputStateChanged(const TextInputClient* client) override;
+  void OnInputMethodDestroyed(const ui::InputMethod* input_method) override;
+  void OnShowImeIfNeeded() override;
+
+  bool ImeEditingAllowed() const;
+
   ui::mojom::TextInputClientPtr remote_client_;
   ui::TextInputType text_input_type_;
   ui::TextInputMode text_input_mode_;
   base::i18n::TextDirection text_direction_;
   int text_input_flags_;
   gfx::Rect caret_bounds_;
-  std::deque<std::unique_ptr<base::OnceCallback<void(bool)>>>
-      pending_callbacks_;
+  bool has_composition_text_ = false;
+  gfx::Range text_range_;
+  base::string16 text_from_range_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteTextInputClient);
 };

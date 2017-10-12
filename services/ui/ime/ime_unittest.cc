@@ -45,6 +45,8 @@ class TestTextInputClient : public ui::mojom::TextInputClient {
     std::move(callback).Run(false);
   }
   void SetCandidateWindowVisible(bool visible) override {}
+  void SetSelectionRange(const gfx::Range& range) override {}
+  void DeleteRange(const gfx::Range& range) override {}
 
   mojo::Binding<ui::mojom::TextInputClient> binding_;
   std::unique_ptr<base::RunLoop> run_loop_;
