@@ -25,6 +25,7 @@
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 
 namespace {
@@ -133,7 +134,10 @@ std::string GetLinuxDistro() {
   argv.push_back("lsb_release");
   argv.push_back("-d");
   std::string output;
-  GetAppOutput(CommandLine(argv), &output);
+  {
+    ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+    GetAppOutput(CommandLine(argv), &output);
+  }
   if (output.length() > 0) {
     // lsb_release -d should return: Description:<tab>Distro Info
     const char field[] = "Description:\t";
