@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e99394a3_cdbbe041",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2304,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-13T13:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3c997c_1aacae34",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd9155b_ea7da1b3",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3b7232_a268e57c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-13T13:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd9155b_ea7da1b3",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ac2f02c3_67c3a17f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-13T13:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa83ce7_bf2fae39",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f9c08c_82a5d13e",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9b1f3ad0_9999ad10",
+        "filename": "net/http/http_auth_handler_ntlm_portable.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-13T13:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f9c08c_82a5d13e",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d93c6425_6b6f79e5",
         "filename": "net/http/http_auth_handler_ntlm_portable_unittest.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-20T18:11:20Z",
       "side": 1,
       "message": "You can use something like this: https://cs.chromium.org/chromium/src/components/certificate_reporting/error_report_unittest.cc?rcl\u003d844ad7f86cf81bd601adbf597664d4f1255ac6ef\u0026l\u003d64",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f4a416_98941ef6",
+        "filename": "net/http/http_auth_handler_ntlm_portable_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-10-13T13:48:52Z",
+      "side": 1,
+      "message": "I\u0027m going to add this additional test in a follow up CL.",
+      "parentUuid": "d93c6425_6b6f79e5",
       "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
