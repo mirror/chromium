@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5bdd38bc_f0e2e9cb",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T00:02:48Z",
+      "side": 1,
+      "message": "If `can_use_on_swarming_builders` is set to False, the tests will run locally. This is intentional (you can see all of the other tests do this as well), as we currently only have 1 swarming bot running 10.13.",
+      "parentUuid": "684a1d21_f8acecae",
+      "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cefb6803_85d2e1ee",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/mac.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74368dc_19291e4c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/mac.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T00:02:48Z",
+      "side": 1,
+      "message": "Whoops. You\u0027re right, that\u0027s what I meant to do. Will fix.",
+      "parentUuid": "cefb6803_85d2e1ee",
+      "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
