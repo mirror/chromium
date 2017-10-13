@@ -85,7 +85,7 @@ class MediaCodecBridge {
     }
 
     @MainDex
-    private static class DequeueOutputResult {
+    public static class DequeueOutputResult {
         private final int mStatus;
         private final int mIndex;
         private final int mFlags;
@@ -93,7 +93,7 @@ class MediaCodecBridge {
         private final long mPresentationTimeMicroseconds;
         private final int mNumBytes;
 
-        private DequeueOutputResult(int status, int index, int flags, int offset,
+        public DequeueOutputResult(int status, int index, int flags, int offset,
                 long presentationTimeMicroseconds, int numBytes) {
             mStatus = status;
             mIndex = index;
@@ -181,7 +181,7 @@ class MediaCodecBridge {
         }
     }
 
-    private MediaCodecBridge(MediaCodec mediaCodec, String mime, boolean adaptivePlaybackSupported,
+    public MediaCodecBridge(MediaCodec mediaCodec, String mime, boolean adaptivePlaybackSupported,
             BitrateAdjustmentTypes bitrateAdjustmentType) {
         assert mediaCodec != null;
         mMediaCodec = mediaCodec;
@@ -195,14 +195,14 @@ class MediaCodecBridge {
     @CalledByNative
     private static MediaCodecBridge create(
             String mime, int codecType, int direction, MediaCrypto mediaCrypto) {
+        if (direction == MediaCodecDirection.ENCODER) {
+            return MediaCodecEncoder.create(mime);
+        }
+
         MediaCodecUtil.CodecCreationInfo info = new MediaCodecUtil.CodecCreationInfo();
         try {
-            if (direction == MediaCodecDirection.ENCODER) {
-                info = MediaCodecUtil.createEncoder(mime);
-            } else {
-                // |codecType| only applies to decoders not encoders.
-                info = MediaCodecUtil.createDecoder(mime, codecType, mediaCrypto);
-            }
+            // |codecType| only applies to decoders not encoders.
+            info = MediaCodecUtil.createDecoder(mime, codecType, mediaCrypto);
         } catch (Exception e) {
             Log.e(TAG, "Failed to create MediaCodec: %s, codecType: %d, direction: %d", mime,
                     codecType, direction, e);
@@ -335,7 +335,7 @@ class MediaCodecBridge {
 
     /** Returns null if MediaCodec throws IllegalStateException. */
     @CalledByNative
-    private ByteBuffer getOutputBuffer(int index) {
+    public ByteBuffer getOutputBuffer(int index) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             try {
                 return mMediaCodec.getOutputBuffer(index);
@@ -453,7 +453,7 @@ class MediaCodecBridge {
     }
 
     @CalledByNative
-    private void releaseOutputBuffer(int index, boolean render) {
+    public void releaseOutputBuffer(int index, boolean render) {
         try {
             mMediaCodec.releaseOutputBuffer(index, render);
         } catch (IllegalStateException e) {
@@ -464,7 +464,7 @@ class MediaCodecBridge {
 
     @SuppressWarnings("deprecation")
     @CalledByNative
-    private DequeueOutputResult dequeueOutputBuffer(long timeoutUs) {
+    public DequeueOutputResult dequeueOutputBuffer(long timeoutUs) {
         MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
         int status = MediaCodecStatus.ERROR;
         int index = -1;
