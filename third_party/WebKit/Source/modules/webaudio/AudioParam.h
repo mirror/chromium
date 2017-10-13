@@ -162,9 +162,6 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
 
   float IntrinsicValue() const { return NoBarrierLoad(&intrinsic_value_); }
 
-  // Update any histograms with the given value.
-  void UpdateHistograms(float new_value);
-
  private:
   AudioParamHandler(BaseAudioContext&,
                     AudioParamType,

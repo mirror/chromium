@@ -171,7 +171,6 @@ void AudioParamHandler::SetIntrinsicValue(float new_value) {
 
 void AudioParamHandler::SetValue(float value) {
   SetIntrinsicValue(value);
-  UpdateHistograms(value);
 }
 
 float AudioParamHandler::SmoothedValue() {
@@ -322,28 +321,6 @@ int AudioParamHandler::ComputeQHistogramValue(float new_value) const {
   return static_cast<int>(4 * new_value + 0.5);
 }
 
-void AudioParamHandler::UpdateHistograms(float new_value) {
-  switch (param_type_) {
-    case kParamTypeBiquadFilterQLowpass: {
-      // The histogram for the Q value for a lowpass biquad filter.
-      DEFINE_STATIC_LOCAL(SparseHistogram, lowpass_q_histogram,
-                          ("WebAudio.BiquadFilter.Q.Lowpass"));
-
-      lowpass_q_histogram.Sample(ComputeQHistogramValue(new_value));
-    } break;
-    case kParamTypeBiquadFilterQHighpass: {
-      // The histogram for the Q value for a highpass biquad filter.
-      DEFINE_STATIC_LOCAL(SparseHistogram, highpass_q_histogram,
-                          ("WebAudio.BiquadFilter.Q.Highpass"));
-
-      highpass_q_histogram.Sample(ComputeQHistogramValue(new_value));
-    } break;
-    default:
-      // Nothing to do for all other types.
-      break;
-  }
-}
-
 // ----------------------------------------------------------------
 
 AudioParam::AudioParam(BaseAudioContext& context,
@@ -482,7 +459,6 @@ AudioParam* AudioParam::setValueAtTime(float value,
                                        ExceptionState& exception_state) {
   WarnIfOutsideRange("setValueAtTime value", value);
   Handler().Timeline().SetValueAtTime(value, time, exception_state);
-  Handler().UpdateHistograms(value);
   return this;
 }
 
@@ -495,11 +471,6 @@ AudioParam* AudioParam::linearRampToValueAtTime(
       value, time, Handler().IntrinsicValue(), Context()->currentTime(),
       exception_state);
 
-  // This is probably the best we can do for the histogram.  We don't want to
-  // run the automation to get all the values and use them to update the
-  // histogram.
-  Handler().UpdateHistograms(value);
-
   return this;
 }
 
@@ -511,11 +482,6 @@ AudioParam* AudioParam::exponentialRampToValueAtTime(
   Handler().Timeline().ExponentialRampToValueAtTime(
       value, time, Handler().IntrinsicValue(), Context()->currentTime(),
       exception_state);
-
-  // This is probably the best we can do for the histogram.  We don't want to
-  // run the automation to get all the values and use them to update the
-  // histogram.
-  Handler().UpdateHistograms(value);
 
   return this;
 }
