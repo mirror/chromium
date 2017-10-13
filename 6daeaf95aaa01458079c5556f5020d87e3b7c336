@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83adf0bc_49d965a3",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T23:33:02Z",
+      "side": 1,
+      "message": "I can see an objection from other reviewers to this one letter variable name. Maybe proxy_out to indicate it\u0027s an out parameter. I\u0027ll leave this as your call.",
+      "range": {
+        "startLine": 41,
+        "startChar": 67,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcb674d5_c9364451",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T23:33:02Z",
+      "side": 1,
+      "message": "I would go even further and say it is an error to call this and this is public because we use a constructor helper to create this object.",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4eecae_45bcbc62",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T23:33:02Z",
+      "side": 1,
+      "message": "Nit: Create()\nThis helps identify it as a function/method.",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f388c5d3_48ff2195",
+        "filename": "content/child/dwrite_font_proxy/font_fallback_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T23:33:02Z",
+      "side": 1,
+      "message": "Here too",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed865154_c169de44",
+        "filename": "ui/gfx/win/text_analysis_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T23:33:02Z",
+      "side": 1,
+      "message": "This looks like the last spot for Create().",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "6daeaf95aaa01458079c5556f5020d87e3b7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
