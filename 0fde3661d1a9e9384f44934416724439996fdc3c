@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "536de064_54d9c2d8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/paragraph_utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-13T18:48:54Z",
+      "side": 1,
+      "message": "This should probably be NodeGroupNode to be consistent. I guess\nthat\u0027s kind of ugly. Open to suggestions.",
+      "revId": "0fde3661d1a9e9384f44934416724439996fdc3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
