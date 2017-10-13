@@ -117,7 +117,7 @@ Console.ConsoleViewMessage = class {
     var formattedMessage = createElement('span');
     UI.appendStyle(formattedMessage, 'object_ui/objectValue.css');
     formattedMessage.className = 'source-code';
-    var anchorElement = this._buildMessageAnchor();
+    var anchorElement = Console.ConsoleViewMessage._buildMessageAnchor(this._message, this._linkifier);
     if (anchorElement)
       formattedMessage.appendChild(anchorElement);
     var badgeElement = this._buildMessageBadge();
@@ -275,7 +275,7 @@ Console.ConsoleViewMessage = class {
     UI.appendStyle(formattedMessage, 'object_ui/objectValue.css');
     formattedMessage.className = 'source-code';
 
-    var anchorElement = this._buildMessageAnchor();
+    var anchorElement = Console.ConsoleViewMessage._buildMessageAnchor(this._message, this._linkifier);
     if (anchorElement)
       formattedMessage.appendChild(anchorElement);
     var badgeElement = this._buildMessageBadge();
@@ -286,22 +286,27 @@ Console.ConsoleViewMessage = class {
   }
 
   /**
+   * @param {!ConsoleModel.ConsoleMessage} message
+   * @param {!Components.Linkifier} linkifier
    * @return {?Element}
    */
-  _buildMessageAnchor() {
+  static _buildMessageAnchor(message, linkifier) {
     var anchorElement = null;
-    if (this._message.source !== ConsoleModel.ConsoleMessage.MessageSource.Network || this._message.request) {
-      if (this._message.scriptId) {
-        anchorElement = this._linkifyScriptId(
-            this._message.scriptId, this._message.url || '', this._message.line, this._message.column);
-      } else if (this._message.stackTrace && this._message.stackTrace.callFrames.length) {
-        anchorElement = this._linkifyStackTraceTopFrame(this._message.stackTrace);
-      } else if (this._message.url && this._message.url !== 'undefined') {
-        anchorElement = this._linkifyLocation(this._message.url, this._message.line, this._message.column);
-      }
-    } else if (this._message.url) {
-      anchorElement =
-          Components.Linkifier.linkifyURL(this._message.url, {maxLength: Console.ConsoleViewMessage.MaxLengthForLinks});
+    var url = message.url;
+    if (message.source !== ConsoleModel.ConsoleMessage.MessageSource.Network || message.request) {
+      var target = message.runtimeModel() ? message.runtimeModel().target() : null;
+      if (!target)
+        return null;
+
+      var scriptId = message.scriptId;
+      if (scriptId)
+        anchorElement = linkifier.linkifyScriptLocation(target, scriptId, url || '', message.line, message.column);
+      else if (message.stackTrace)
+        anchorElement = linkifier.linkifyStackTraceTopFrame(target, message.stackTrace);
+      else if (url && url !== 'undefined')
+        anchorElement = linkifier.linkifyScriptLocation(target, null, url, message.line, message.column);
+    } else if (url) {
+      anchorElement = Components.Linkifier.linkifyURL(url, {maxLength: Console.ConsoleViewMessage.MaxLengthForLinks});
     }
 
     // Append a space to prevent the anchor text from being glued to the console message when the user selects and copies the console messages.
@@ -401,43 +406,6 @@ Console.ConsoleViewMessage = class {
 
     toggleElement._expandStackTraceForTest = expandStackTrace.bind(null, true);
     return toggleElement;
-  }
-
-  /**
-   * @param {string} url
-   * @param {number} lineNumber
-   * @param {number} columnNumber
-   * @return {?Element}
-   */
-  _linkifyLocation(url, lineNumber, columnNumber) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyScriptLocation(
-        this._message.runtimeModel().target(), null, url, lineNumber, columnNumber);
-  }
-
-  /**
-   * @param {!Protocol.Runtime.StackTrace} stackTrace
-   * @return {?Element}
-   */
-  _linkifyStackTraceTopFrame(stackTrace) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyStackTraceTopFrame(this._message.runtimeModel().target(), stackTrace);
-  }
-
-  /**
-   * @param {string} scriptId
-   * @param {string} url
-   * @param {number} lineNumber
-   * @param {number} columnNumber
-   * @return {?Element}
-   */
-  _linkifyScriptId(scriptId, url, lineNumber, columnNumber) {
-    if (!this._message.runtimeModel())
-      return null;
-    return this._linkifier.linkifyScriptLocation(
-        this._message.runtimeModel().target(), scriptId, url, lineNumber, columnNumber);
   }
 
   /**
