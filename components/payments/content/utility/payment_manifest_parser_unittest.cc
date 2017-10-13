@@ -197,6 +197,11 @@ TEST(PaymentManifestParserTest,
       "\"supported_origins\": \"+\"}");
 }
 
+TEST(PaymentManifestParserTest, InvalidCharacterInSupportedOrigin) {
+  ExpectUnableToParsePaymentMethodManifest(
+      R"({"supported_origins":["http:є"]})");
+}
+
 TEST(PaymentManifestParserTest,
      WellFormedPaymentMethodManifestWithAppsAndSomeSupportedOrigins) {
   ExpectParsedPaymentMethodManifest(
