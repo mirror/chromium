@@ -210,7 +210,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController) {
         nullptr /* loader_factory_getter */);
 
     ipc_sink()->ClearMessages();
-    container_ptr->SetController(attrs.active,
+    container_ptr->SetController(attrs.active.Clone(),
                                  std::vector<blink::mojom::WebFeature>(), true);
     base::RunLoop().RunUntilIdle();
     EXPECT_EQ(0UL, ipc_sink()->message_count());
@@ -248,7 +248,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController) {
     ASSERT_FALSE(client->was_set_controller_called());
 
     ipc_sink()->ClearMessages();
-    container_ptr->SetController(attrs.active,
+    container_ptr->SetController(attrs.active.Clone(),
                                  std::vector<blink::mojom::WebFeature>(), true);
     base::RunLoop().RunUntilIdle();
 
@@ -282,7 +282,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController_Null) {
   auto client = base::MakeUnique<MockWebServiceWorkerProviderClientImpl>();
   provider_impl->SetClient(client.get());
 
-  container_ptr->SetController(ServiceWorkerObjectInfo(),
+  container_ptr->SetController(blink::mojom::ServiceWorkerObjectInfo::New(),
                                std::vector<blink::mojom::WebFeature>(), true);
   base::RunLoop().RunUntilIdle();
 
