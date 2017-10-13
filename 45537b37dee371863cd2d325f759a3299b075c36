@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c136fc06_6fec5ad7",
+        "filename": "chrome/browser/media/router/media_router_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T17:40:41Z",
+      "side": 1,
+      "message": "Seems safe to call this inline.",
+      "revId": "45537b37dee371863cd2d325f759a3299b075c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a333ff43_1f16b53e",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T17:40:41Z",
+      "side": 1,
+      "message": "Nit: Define storage type?  This simplifies code that treats values numerically.",
+      "revId": "45537b37dee371863cd2d325f759a3299b075c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d059f821_88a479f6",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T17:40:41Z",
+      "side": 1,
+      "message": "Nit: Maybe kOther?",
+      "revId": "45537b37dee371863cd2d325f759a3299b075c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de32dbd6_00b0aba1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34202,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T17:40:41Z",
+      "side": 1,
+      "message": "Slightly prefer MediaRouter.PresentationRequest.AvailabilityUrlType; we may want to add another metric for presentations started by URL type in the future.",
+      "revId": "45537b37dee371863cd2d325f759a3299b075c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
