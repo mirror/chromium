@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e2628d_27f3559e",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T20:32:42Z",
+      "side": 1,
+      "message": "Please delete the newline between the two namespace openings.",
+      "revId": "59ad0325310689c24b7f3e0319e1f31a05a682fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8306485c_f0ca1d99",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T20:32:42Z",
+      "side": 1,
+      "message": "I don\u0027t believe that total is always required in the modifier, so you may want to check \"if (modifier \u0026\u0026 modifier-\u003etotal)\" above.",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 28
+      },
+      "revId": "59ad0325310689c24b7f3e0319e1f31a05a682fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd4a782_f24bbd80",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T20:32:42Z",
+      "side": 1,
+      "message": "std::vector\u003cPaymentItem\u003e display_items \u003d web_payment_request_.details.display_items;\n\nShould be equivalent.",
+      "revId": "59ad0325310689c24b7f3e0319e1f31a05a682fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c0f64e_0c2ee306",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T20:32:42Z",
+      "side": 1,
+      "message": "display_items.insert(display_items.back(), modifier-\u003eadditional_display_items.begin(), modifier-\u003eadditional_display_items.end());",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 5
+      },
+      "revId": "59ad0325310689c24b7f3e0319e1f31a05a682fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
