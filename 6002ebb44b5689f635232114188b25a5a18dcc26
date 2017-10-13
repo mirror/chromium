@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6074a1_154339d2",
+        "filename": "chromecast/base/cast_sys_info_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1241392
+      },
+      "writtenOn": "2017-10-13T23:08:22Z",
+      "side": 1,
+      "message": "// Generates device-model-id for assistant server.",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "6002ebb44b5689f635232114188b25a5a18dcc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
