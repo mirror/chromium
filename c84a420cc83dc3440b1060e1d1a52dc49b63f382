@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8f09a07_a5548423",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-13T15:16:20Z",
+      "side": 1,
+      "message": "If I don\u0027t have this part here, it will have compile error because it\u0027ll look for the float version ConvertPointToScreen and say type doesn\u0027t match. That\u0027s why I added \"aura::client::ScreenPositionClient::\" here.",
+      "parentUuid": "40ffc7a7_b8b2e756",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ab6daeb_92dffeb1",
         "filename": "ash/display/screen_position_controller.cc",
         "patchSetId": 9
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "aa122deb_b0c63f82",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-13T15:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dac5c770_787cde56",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f38ccbe7_eb632a09",
         "filename": "ui/aura/client/screen_position_client.h",
         "patchSetId": 9
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "1bbb73a5_af2ef83c",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-13T15:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f38ccbe7_eb632a09",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81dee088_04ef418c",
         "filename": "ui/compositor/dip_util.cc",
         "patchSetId": 9
@@ -84,6 +138,24 @@
       "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb707dd_3db168e2",
+        "filename": "ui/compositor/dip_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-13T15:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81dee088_04ef418c",
+      "revId": "c84a420cc83dc3440b1060e1d1a52dc49b63f382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
