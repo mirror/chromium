@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4bf75841_7dde6761",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T18:48:57Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to itroduce formatted documentation to networkingPrivate; we don\u0027t have it anywhere else there and it\u0027s now only used internally.",
+      "parentUuid": "09f83c3d_a374ba61",
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b33fc8_a75d1c12",
         "filename": "extensions/common/api/networking_onc.idl",
         "patchSetId": 6
@@ -114,6 +132,30 @@
       "side": 1,
       "message": "yeah, maybe just clarify that this is a note on an implementation detail.\nCan you  test whether putting it into HTML comments would hide it from the public documentation\n(you can use  chrome/common/extensions/docs/server2/preview.py to run the preview server)",
       "parentUuid": "cb8cd0d4_8617ea10",
+      "range": {
+        "startLine": 738,
+        "startChar": 7,
+        "endLine": 739,
+        "endChar": 49
+      },
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c371af00_7495c64d",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T18:48:57Z",
+      "side": 1,
+      "message": "I really don\u0027t think there is harm in this detail. I\u0027m also not convinced we have enough clients of networking.onc that look at the docs to spend too much time on formatting, but I may be a bit jaded :)",
+      "parentUuid": "212bd556_3a50f2a9",
       "range": {
         "startLine": 738,
         "startChar": 7,
