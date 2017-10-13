@@ -15,6 +15,7 @@
 
 #if defined(OS_LINUX)
 #include "base/file_descriptor_posix.h"
+#include "base/files/scoped_file.h"
 #endif
 
 namespace gfx {
@@ -57,7 +58,12 @@ struct GFX_EXPORT NativePixmapHandle {
 // Returns an instance of |handle| which can be sent over IPC. This duplicates
 // the file-handles, so that the IPC code take ownership of them, without
 // invalidating |handle|.
-NativePixmapHandle CloneHandleForIPC(const NativePixmapHandle& handle);
+GFX_EXPORT NativePixmapHandle
+CloneHandleForIPC(const NativePixmapHandle& handle);
+
+// Returns a vector of files from |handle|, taking ownership of them.
+GFX_EXPORT std::vector<base::ScopedFD> TakeFilesFromHandle(
+    const NativePixmapHandle& handle);
 #endif
 
 }  // namespace gfx

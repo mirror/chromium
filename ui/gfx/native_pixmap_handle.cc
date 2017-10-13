@@ -46,6 +46,14 @@ NativePixmapHandle CloneHandleForIPC(const NativePixmapHandle& handle) {
   clone.planes = handle.planes;
   return clone;
 }
+
+std::vector<base::ScopedFD> TakeFilesFromHandle(
+    const NativePixmapHandle& handle) {
+  std::vector<base::ScopedFD> scoped_fds;
+  for (auto& fd : handle.fds)
+    scoped_fds.emplace_back(fd.fd);
+  return scoped_fds;
+}
 #endif  // defined(OS_LINUX)
 
 }  // namespace gfx
