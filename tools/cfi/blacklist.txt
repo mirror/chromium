@@ -1,3 +1,5 @@
+[cfi-unrelated-cast|cfi-derived-cast]
+
 # e.g. RolloverProtectedTickClock
 fun:*MutableInstance*
 
@@ -66,6 +68,8 @@ src:*wtf/PartitionAllocator.h*
 
 #############################################################################
 # Methods disabled due to perf considerations.
+
+[cfi-vcall]
 
 # Skia
 
