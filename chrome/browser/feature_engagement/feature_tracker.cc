@@ -8,6 +8,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -43,6 +45,10 @@ bool FeatureTracker::IsObserving() {
 
 bool FeatureTracker::ShouldShowPromo() {
   return GetTracker()->ShouldTriggerHelpUI(*feature_);
+}
+
+Browser* FeatureTracker::GetBrowser() {
+  return chrome::FindBrowserWithProfile(profile_);
 }
 
 Tracker* FeatureTracker::GetTracker() const {
