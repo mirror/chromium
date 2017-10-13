@@ -20,6 +20,10 @@
 // relinquished.
 - (void)reparentToolbarController;
 
+// Triggers the tools menu button animation of the ToolbarController owned by
+// the object that conforms to this protocol.
+- (void)triggerToolsMenuButtonAnimation;
+
 @optional
 // Returns the height of the toolbar owned by the implementing class.
 - (CGFloat)toolbarHeight;
