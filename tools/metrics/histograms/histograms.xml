@@ -67018,6 +67018,89 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="RendererScheduler.ExpectedQueueingTime.CompositorQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a compositor task
+    queue. See MainThreadTaskQueue::QueueType. Recorded as often as the total
+    expected queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.DefaultLoadingQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a default loading
+    task queue. See MainThreadTaskQueue::QueueType. Recorded as often as the
+    total expected queueing time in
+    RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.DefaultQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a default task queue.
+    See MainThreadTaskQueue::QueueType. Recorded as often as the total expected
+    queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.FrameLoadingQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a frame loading task
+    queue. See MainThreadTaskQueue::QueueType. Recorded as often as the total
+    expected queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.FramePausableQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a frame pausable task
+    queue. See MainThreadTaskQueue::QueueType. Recorded as often as the total
+    expected queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.FrameThrottleableQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a frame throttleable
+    task queue. See MainThreadTaskQueue::QueueType. Recorded as often as the
+    total expected queueing time in
+    RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.OtherQueue" units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a task queue that is
+    not among the other options from
+    RendererScheduler.ExpectedQueueingTime.*Queue. See
+    MainThreadTaskQueue::QueueType. Recorded as often as the total expected
+    queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
+<histogram name="RendererScheduler.ExpectedQueueingTime.UnthrottledQueue"
+    units="ms">
+  <owner>npm@chromium.org</owner>
+  <summary>
+    Expected queueing time for events which were queued on a unthrottled task
+    queue. See MainThreadTaskQueue::QueueType. Recorded as often as the total
+    expected queueing time in RendererScheduler.ExpectedTaskQueueingDuration.
+  </summary>
+</histogram>
+
 <histogram name="RendererScheduler.ExpectedQueueingTimeWhenQueueingTime"
     units="ms">
   <owner>tdresser@chromium.org</owner>
