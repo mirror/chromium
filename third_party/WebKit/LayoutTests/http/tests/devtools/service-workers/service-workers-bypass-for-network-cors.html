@@ -1,0 +1,126 @@
+<html>
+<head>
+<script src="../../inspector/inspector-test.js"></script>
+<script src="../../inspector/service-workers/service-workers-test.js"></script>
+<script>
+let service_worker;
+let frame;
+
+function initializeServiceWorker(script, scope) {
+  return navigator.serviceWorker.register(script, {scope: scope})
+    .then(reg => waitForActivated(reg.installing));
+}
+
+function waitForActivated(worker) {
+  service_worker = worker;
+  if (worker.state === 'activated')
+    return Promise.resolve();
+  if (worker.state === 'redundant')
+    return Promise.reject(new Error('The worker is redundant'));
+  return new Promise(resolve => {
+      worker.addEventListener('statechange', () => {
+          if (worker.state === 'activated')
+            resolve();
+        });
+    });
+}
+
+function loadIframe(url) {
+  let callback;
+  let promise = new Promise((fulfill) => callback = fulfill);
+  frame = document.createElement('iframe');
+  frame.src = url;
+  frame.onload = callback;
+  document.body.appendChild(frame);
+  return promise;
+}
+
+function takeInterceptedRequests() {
+  return new Promise((resolve) => {
+      let channel = new MessageChannel();
+      channel.port1.onmessage = msg => { resolve(JSON.stringify(msg.data)); };
+      service_worker.postMessage({port: channel.port2}, [channel.port2]);
+    });
+}
+
+function fetchInIframe(url) {
+  return frame.contentWindow.fetch(url, {mode: 'cors'}).then((r) => r.text());
+}
+function xhrInIframe(url) {
+  return frame.contentWindow.xhr(url);
+}
+function corsImageInIframe(url) {
+  return frame.contentWindow.load_cors_image(url);
+}
+
+function test() {
+  const scriptURL = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-workers-bypass-for-network-cors-worker.js';
+  const scope = 'http://127.0.0.1:8000/devtools/service-workers/resources/service-workers-bypass-for-network-cors-iframe.html';
+  const target = 'http://localhost:8000/devtools/service-workers/resources/service-workers-bypass-for-network-cors-target.php';
+
+  function dumpInterceptedRequests() {
+    return TestRunner.callFunctionInPageAsync('takeInterceptedRequests', [])
+      .then((data) => {
+        TestRunner.addResult('Intercepted requests:');
+        JSON.parse(data.value).forEach((request) => {
+          TestRunner.addResult(' url: ' + request.url);
+          TestRunner.addResult(' mode: ' + request.mode);
+        });
+      });
+  }
+
+  function testCorsRequests(index) {
+    TestRunner.addResult('CORS fetch(): ' + index);
+    return TestRunner.callFunctionInPageAsync(
+        'fetchInIframe', [target + '?type=txt&fetch' + index])
+      .then((data) => {
+        if (data.value !== 'hello') {
+          TestRunner.addResult('fetch response miss match: ' + data.value);
+        }
+        TestRunner.addResult('CORS XHR: ' + index);
+        return TestRunner.callFunctionInPageAsync(
+            'xhrInIframe', [target + '?type=txt&xhr' + index]);
+      })
+      .then((data) => {
+        if (data.value !== 'hello') {
+          TestRunner.addResult('XHR response miss match: ' + data.value);
+        }
+        TestRunner.addResult('CORS image: ' + index);
+        return TestRunner.callFunctionInPageAsync(
+            'corsImageInIframe', [target + '?type=img&img' + index]);
+      });
+  }
+
+  TestRunner.callFunctionInPageAsync('initializeServiceWorker', [scriptURL, scope])
+      .then(() => {
+        TestRunner.addResult('Loading an iframe.');
+        return TestRunner.callFunctionInPageAsync('loadIframe', [scope]);
+      })
+      .then(() => {
+        TestRunner.addResult('The iframe loaded.');
+        return testCorsRequests('1');
+      })
+      .then(() => {
+        TestRunner.addResult('Enable bypassServiceWorker');
+        Common.settings.settingForTest('bypassServiceWorker').set(true);
+        return testCorsRequests('2');
+      })
+      .then(() => {
+        TestRunner.addResult('Disable bypassServiceWorker');
+        Common.settings.settingForTest('bypassServiceWorker').set(false);
+        return testCorsRequests('3');
+      })
+      .then(() => {
+        return dumpInterceptedRequests();
+      })
+      .then(() => {
+        TestRunner.completeTest();
+      });
+}
+
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests "Bypass for network" checkbox works with CORS requests. crbug.com/771742</p>
+</body>
+</html>
