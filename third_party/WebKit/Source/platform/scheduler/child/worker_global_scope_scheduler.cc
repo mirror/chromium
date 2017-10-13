@@ -22,7 +22,7 @@ WorkerGlobalScopeScheduler::~WorkerGlobalScopeScheduler() {
 }
 
 void WorkerGlobalScopeScheduler::Dispose() {
-  unthrottled_task_runner_->GetTaskQueue()->UnregisterTaskQueue();
+  unthrottled_task_runner_->GetTaskQueue()->ShutdownTaskQueue();
 #if DCHECK_IS_ON()
   is_disposed_ = true;
 #endif

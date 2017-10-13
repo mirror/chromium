@@ -47,7 +47,7 @@ class AutoAdvancingVirtualTimeDomainTest : public ::testing::Test {
   }
 
   void TearDown() override {
-    task_queue_->UnregisterTaskQueue();
+    task_queue_->ShutdownTaskQueue();
     manager_->UnregisterTimeDomain(auto_advancing_time_domain_.get());
   }
 
