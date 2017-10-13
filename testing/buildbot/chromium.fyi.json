@@ -12556,6 +12556,11 @@
       }
     ]
   },
+  "Fuchsia ARM64": {
+    "additional_compile_targets": [
+      "base_unittests"
+    ]
+  },
   "Headless Linux (dbg)": {
     "additional_compile_targets": [
       "headless_lib",
