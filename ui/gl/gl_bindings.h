@@ -406,6 +406,14 @@ typedef void (*OSMESAproc)();
 // Forward declare EGL types.
 typedef uint64_t EGLuint64CHROMIUM;
 
+// Forward declare Android-specific types.
+#if defined(OS_ANDROID)
+extern "C" {
+// See <android/hardware_buffer.h> as of NDK platform level 26.
+typedef struct AHardwareBuffer AHardwareBuffer;
+}
+#endif
+
 #include "gl_bindings_autogen_gl.h"
 #include "gl_bindings_autogen_osmesa.h"
 
