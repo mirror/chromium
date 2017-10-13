@@ -177,3 +177,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo, false)
 
 // Default enable all cubic fixes in QUIC Cubic by default.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, false)
+
+// If true, enable QUIC v43.
+QUIC_FLAG(bool, FLAGS_quic_enable_version_43, false)
