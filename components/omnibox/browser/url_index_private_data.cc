@@ -481,6 +481,34 @@ void URLIndexPrivateData::Clear() {
 
 URLIndexPrivateData::~URLIndexPrivateData() {}
 
+// A helper class for several word ID list set-intersections below. O(n)
+// set-intersection is like a merge of sorted lists, except that it only
+// includes elements which are in the other list.  This class implements the
+// predicate parameter for an erase-if algorithm, managing an iterator into the
+// list to be compared to, advancing it as necessary to keep up with the list to
+// be editted.  Being erase-if oriented, it returns false for matches.
+template <typename Container>
+class flag_differences {
+ public:
+  flag_differences(const Container& c) : container_(c), i(container_.begin()) {}
+
+  bool operator()(const typename Container::value_type& x) {
+    while (i != container_.end() && *i < x)
+      ++i;
+    if (i == container_.end())
+      return true;
+    if (*i == x) {
+      ++i;
+      return false;
+    }
+    return true;
+  }
+
+ private:
+  const Container& container_;
+  typename Container::const_iterator i;
+};
+
 HistoryIDVector URLIndexPrivateData::HistoryIDsFromWords(
     const String16Vector& unsorted_words) {
   // This histogram name reflects the historic name of this function.
@@ -507,8 +535,9 @@ HistoryIDVector URLIndexPrivateData::HistoryIDsFromWords(
     if (iter == words.begin()) {
       history_ids = {term_history_set.begin(), term_history_set.end()};
     } else {
-      history_ids = base::STLSetIntersection<HistoryIDVector>(history_ids,
-                                                              term_history_set);
+      // set-intersection
+      base::EraseIf(history_ids,
+                    flag_differences<HistoryIDSet>(term_history_set));
     }
   }
   return history_ids;
@@ -596,9 +625,12 @@ HistoryIDSet URLIndexPrivateData::HistoryIDsForTerm(
         return HistoryIDSet();
       }
       // Or there may not have been a prefix from which to start.
-      word_id_set = prefix_chars.empty() ? std::move(leftover_set)
-                                         : base::STLSetIntersection<WordIDSet>(
-                                               word_id_set, leftover_set);
+      if (prefix_chars.empty()) {
+        word_id_set = std::move(leftover_set);
+      } else {
+        // set-intersection
+        base::EraseIf(word_id_set, flag_differences<WordIDSet>(leftover_set));
+      }
     }
 
     // We must filter the word list because the resulting word set surely
@@ -655,8 +687,8 @@ WordIDSet URLIndexPrivateData::WordIDSetForTermChars(
     if (c_iter == term_chars.begin()) {
       word_id_set = char_word_id_set;
     } else {
-      word_id_set =
-          base::STLSetIntersection<WordIDSet>(word_id_set, char_word_id_set);
+      // set-intersection
+      base::EraseIf(word_id_set, flag_differences<WordIDSet>(char_word_id_set));
     }
   }
   return word_id_set;
