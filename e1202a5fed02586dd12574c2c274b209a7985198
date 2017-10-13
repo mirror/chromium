@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4cf481_1f09f2b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-13T22:51:11Z",
+      "side": 1,
+      "message": "should this be !isStableBuild",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "e1202a5fed02586dd12574c2c274b209a7985198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc453ec_032d7470",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-13T22:51:11Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 184,
+        "startChar": 31,
+        "endLine": 184,
+        "endChar": 48
+      },
+      "revId": "e1202a5fed02586dd12574c2c274b209a7985198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
