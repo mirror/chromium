@@ -48,6 +48,7 @@
 #include "third_party/WebKit/public/platform/WebRTCSessionDescriptionRequest.h"
 #include "third_party/WebKit/public/platform/WebRTCVoidRequest.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/webrtc/api/rtceventlogoutput.h"
 #include "third_party/webrtc/pc/mediasession.h"
 
 using webrtc::DataChannelInterface;
@@ -1009,6 +1010,21 @@ class RTCPeerConnectionHandler::Observer
     native_peer_connection_ = native_peer_connection;
   }
 
+  // TODO(eladalon): !!!
+  // When an RTC event is sent back from PeerConnection, it arrives here.
+  bool OnRtcEventLogWrite(const std::string& output) {
+    if (!main_thread_->BelongsToCurrentThread()) {
+      main_thread_->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &RTCPeerConnectionHandler::Observer::OnRtcEventLogWrite,
+              this));
+    } else if (handler_) {
+      handler_->OnRtcEventLogWrite(output);
+    }
+    return true;  // TODO(eladalon): !!! Something with the weak pointer, maybe?
+  }
+
  protected:
   friend class base::RefCountedThreadSafe<RTCPeerConnectionHandler::Observer>;
   virtual ~Observer() {}
@@ -1871,9 +1887,21 @@ void RTCPeerConnectionHandler::StartEventLog(IPC::PlatformFileForTransit file,
       IPC::PlatformFileForTransitToPlatformFile(file), max_file_size_bytes);
 }
 
+void RTCPeerConnectionHandler::StartEventLog(/* TODO(eladalon): !!! */) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  native_peer_connection_->StartRtcEventLog(
+      base::MakeUnique<ProxyRtcEventLogOutput>());
+}
+
 void RTCPeerConnectionHandler::StopEventLog() {
   DCHECK(thread_checker_.CalledOnValidThread());
   native_peer_connection_->StopRtcEventLog();
+}
+
+bool RTCPeerConnectionHandler::OnRtcEventLogWrite(const std::string& output) {
+  peer_connection_observer_
+  // TODO(eladalon): !!! Change threads.
+  return true;
 }
 
 blink::WebRTCDataChannelHandler* RTCPeerConnectionHandler::CreateDataChannel(

@@ -180,8 +180,13 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Start recording an event log.
   void StartEventLog(IPC::PlatformFileForTransit file,
                      int64_t max_file_size_bytes);
+  void StartEventLog(/* TODO(eladalon): !!! */);
   // Stop recording an event log.
   void StopEventLog();
+
+  // TODO(eladalon): !!!
+  // When an RTC event is sent back from PeerConnection, it arrives here.
+  bool OnRtcEventLogWrite(const std::string& output);
 
  protected:
   webrtc::PeerConnectionInterface* native_peer_connection() {
