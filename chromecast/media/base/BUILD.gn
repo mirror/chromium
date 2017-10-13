@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//chromecast/chromecast.gni")
+import("//testing/test.gni")
 
 source_set("key_systems") {
   sources = [
@@ -79,5 +80,31 @@ source_set("media_codec_support") {
   deps = [
     "//base",
     "//media",
+  ]
+}
+
+source_set("slew_volume") {
+  sources = [
+    "slew_volume.cc",
+    "slew_volume.h",
+  ]
+  deps = [
+    "//base",
+    "//media:shared_memory_support",
+  ]
+}
+
+test("cast_media_base_unittests") {
+  sources = [
+    "slew_volume_unittests.cc",
+  ]
+
+  deps = [
+    ":slew_volume",
+    "//base",
+    "//base/test:run_all_unittests",
+    "//media:shared_memory_support",
+    "//testing/gmock",
+    "//testing/gtest",
   ]
 }
