@@ -71,7 +71,7 @@ TEST_F(ShelfControllerTest, IntializesAppListItemDelegate) {
   EXPECT_TRUE(model->GetShelfItemDelegate(ShelfID(kAppListId)));
 }
 
-TEST_F(ShelfControllerTest, ShelfModelChangesWithoutSync) {
+TEST_F(ShelfControllerTest, ModelChangesWithoutSync) {
   ShelfController* controller = Shell::Get()->shelf_controller();
   if (controller->should_synchronize_shelf_models())
     return;
@@ -106,7 +106,7 @@ TEST_F(ShelfControllerTest, ShelfModelChangesWithoutSync) {
   EXPECT_EQ(0u, observer.removed_count());
 }
 
-TEST_F(ShelfControllerTest, ShelfModelChangesWithSync) {
+TEST_F(ShelfControllerTest, ModelChangesWithSync) {
   ShelfController* controller = Shell::Get()->shelf_controller();
   if (!controller->should_synchronize_shelf_models())
     return;
@@ -158,7 +158,7 @@ TEST_F(ShelfControllerTest, ShelfModelChangesWithSync) {
   EXPECT_EQ(1u, observer.removed_count());
 }
 
-TEST_F(ShelfControllerTest, ShelfItemImageSync) {
+TEST_F(ShelfControllerTest, ItemImageSync) {
   ShelfController* controller = Shell::Get()->shelf_controller();
   if (!controller->should_synchronize_shelf_models())
     return;
@@ -215,17 +215,8 @@ TEST_F(ShelfControllerTest, ShelfItemImageSync) {
   EXPECT_FALSE(controller->model()->items()[index].image.isNull());
 }
 
-class ShelfControllerPrefsTest : public AshTestBase {
- public:
-  ShelfControllerPrefsTest() = default;
-  ~ShelfControllerPrefsTest() override = default;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(ShelfControllerPrefsTest);
-};
-
 // Ensure shelf settings are updated on preference changes.
-TEST_F(ShelfControllerPrefsTest, ShelfRespectsPrefs) {
+TEST_F(ShelfControllerTest, RespectsPrefs) {
   Shelf* shelf = GetPrimaryShelf();
   EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, shelf->alignment());
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
@@ -240,7 +231,7 @@ TEST_F(ShelfControllerPrefsTest, ShelfRespectsPrefs) {
 }
 
 // Ensure shelf settings are updated on per-display preference changes.
-TEST_F(ShelfControllerPrefsTest, ShelfRespectsPerDisplayPrefs) {
+TEST_F(ShelfControllerTest, RespectsPerDisplayPrefs) {
   UpdateDisplay("1024x768,800x600");
   base::RunLoop().RunUntilIdle();
   const int64_t id1 = GetPrimaryDisplay().id();
@@ -266,8 +257,49 @@ TEST_F(ShelfControllerPrefsTest, ShelfRespectsPerDisplayPrefs) {
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, shelf2->auto_hide_behavior());
 }
 
+// Uninitialized local shelf prefs should inherit synced values.
+TEST_F(ShelfControllerTest, LocalPrefsInitializedBySyncedPrefs) {
+  // Simulate the syncing of prefs from usage on another device.
+  PrefService* prefs =
+      Shell::Get()->session_controller()->GetLastActiveUserPrefService();
+  prefs->SetString(prefs::kShelfAlignment, "Left");
+  prefs->SetString(prefs::kShelfAutoHideBehavior, "Always");
+
+  // Local prefs init to synced values; see shelf_controller.cc's InitLocalPref.
+  EXPECT_EQ("Left", prefs->GetString(prefs::kShelfAlignmentLocal));
+  EXPECT_EQ("Always", prefs->GetString(prefs::kShelfAutoHideBehaviorLocal));
+
+  // The shelf should respect the local prefs changing to match synced prefs.
+  Shelf* shelf = GetPrimaryShelf();
+  EXPECT_EQ(SHELF_ALIGNMENT_LEFT, shelf->alignment());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, shelf->auto_hide_behavior());
+}
+
+// Synced values should not clobber customized local shelf prefs.
+TEST_F(ShelfControllerTest, SyncedPrefsDoNotOverwriteLocalPrefs) {
+  // Simulate user changes to local shelf preferences (eg. via context menu).
+  PrefService* prefs =
+      Shell::Get()->session_controller()->GetLastActiveUserPrefService();
+  const int64_t id = GetPrimaryDisplay().id();
+  SetShelfAlignmentPref(prefs, id, SHELF_ALIGNMENT_RIGHT);
+  SetShelfAutoHideBehaviorPref(prefs, id, SHELF_AUTO_HIDE_BEHAVIOR_NEVER);
+
+  // Simulate the syncing of prefs from usage on another device.
+  prefs->SetString(prefs::kShelfAlignment, "Left");
+  prefs->SetString(prefs::kShelfAutoHideBehavior, "Always");
+
+  // The customized local prefs should retain their existing values.
+  EXPECT_EQ("Right", prefs->GetString(prefs::kShelfAlignmentLocal));
+  EXPECT_EQ("Never", prefs->GetString(prefs::kShelfAutoHideBehaviorLocal));
+
+  // The shelf should respect the local prefs, not synced prefs.
+  Shelf* shelf = GetPrimaryShelf();
+  EXPECT_EQ(SHELF_ALIGNMENT_RIGHT, shelf->alignment());
+  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
+}
+
 // Ensure shelf settings are correct after display swap, see crbug.com/748291
-TEST_F(ShelfControllerPrefsTest, ShelfSettingsValidAfterDisplaySwap) {
+TEST_F(ShelfControllerTest, SettingsValidAfterDisplaySwap) {
   // Simulate adding an external display at the lock screen.
   GetSessionControllerClient()->RequestLockScreen();
   UpdateDisplay("1024x768,800x600");
@@ -342,7 +374,7 @@ TEST_F(ShelfControllerPrefsTest, ShelfSettingsValidAfterDisplaySwap) {
             GetShelfForDisplay(external_display_id)->auto_hide_behavior());
 }
 
-TEST_F(ShelfControllerPrefsTest, ShelfSettingsInTabletMode) {
+TEST_F(ShelfControllerTest, SettingsInTabletMode) {
   Shelf* shelf = GetPrimaryShelf();
   PrefService* prefs =
       Shell::Get()->session_controller()->GetLastActiveUserPrefService();
