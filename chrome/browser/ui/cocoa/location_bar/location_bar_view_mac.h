@@ -24,6 +24,7 @@
 @class AutocompleteTextField;
 class CommandUpdater;
 class ContentSettingDecoration;
+class FindBarDecoration;
 class KeywordHintDecoration;
 class LocationBarDecoration;
 class ManagePasswordsDecoration;
@@ -75,6 +76,7 @@ class LocationBarViewMac : public LocationBar,
   void UpdateContentSettingsIcons() override;
   void UpdateManagePasswordsIconAndBubble() override;
   void UpdateSaveCreditCardIcon() override;
+  void UpdateFindBarIconVisibility() override;
   void UpdateBookmarkStarVisibility() override;
   void UpdateZoomViewVisibility() override;
   void UpdateLocationBarVisibility(bool visible, bool animate) override;
@@ -263,6 +265,9 @@ class LocationBarViewMac : public LocationBar,
 
   // Save credit card icon on the right side of the omnibox.
   std::unique_ptr<SaveCreditCardDecoration> save_credit_card_decoration_;
+
+  // Find bar icon next to the bookmark star when the find bar is visible.
+  std::unique_ptr<FindBarDecoration> find_bar_decoration_;
 
   // Bookmark star right of page actions.
   std::unique_ptr<StarDecoration> star_decoration_;

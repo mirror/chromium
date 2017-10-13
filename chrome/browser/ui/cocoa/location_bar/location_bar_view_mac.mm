@@ -30,6 +30,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field.h"
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_cell.h"
 #import "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.h"
+#import "chrome/browser/ui/cocoa/location_bar/find_bar_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/manage_passwords_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h"
@@ -100,6 +101,7 @@ LocationBarViewMac::LocationBarViewMac(AutocompleteTextField* field,
       page_info_decoration_(new PageInfoBubbleDecoration(this)),
       save_credit_card_decoration_(
           new SaveCreditCardDecoration(command_updater)),
+      find_bar_decoration_(new FindBarDecoration()),
       star_decoration_(new StarDecoration(command_updater)),
       translate_decoration_(new TranslateDecoration(command_updater)),
       zoom_decoration_(new ZoomDecoration(this)),
@@ -197,6 +199,8 @@ void LocationBarViewMac::UpdateSaveCreditCardIcon() {
   save_credit_card_decoration_->SetVisible(enabled);
   OnDecorationsChanged();
 }
+
+void LocationBarViewMac::UpdateFindBarIconVisibility() {}
 
 void LocationBarViewMac::UpdateBookmarkStarVisibility() {
   star_decoration_->SetVisible(IsStarEnabled());
@@ -344,6 +348,7 @@ void LocationBarViewMac::Layout() {
   [cell addLeadingDecoration:selected_keyword_decoration_.get()];
   [cell addLeadingDecoration:page_info_decoration_.get()];
   [cell addTrailingDecoration:star_decoration_.get()];
+  [cell addTrailingDecoration:find_bar_decoration_.get()];
   [cell addTrailingDecoration:translate_decoration_.get()];
   [cell addTrailingDecoration:zoom_decoration_.get()];
   [cell addTrailingDecoration:save_credit_card_decoration_.get()];
