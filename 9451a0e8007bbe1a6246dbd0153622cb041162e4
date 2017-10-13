@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac335141_f446b768",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "If the virtual keyboard is opened from the status area, |change_work_area| is true [1], because the keyboard is set to be locked (sticky mode). Layout() will be called in the end.\n\nIf the virtual keyboard is opened because of a password input focus, keyboard is not set to be locked (non-sticky mode).\n\n\n\n[1] https://cs.chromium.org/chromium/src/ash/shelf/shelf_layout_manager.cc?l\u003d455",
+      "parentUuid": "224d7cbe_7f665d8e",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d30c62_024bc0a0",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "31e661c7_9debef4d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d9c59b_f7e38355",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eed58b8_56fcfe15",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bc51c9_173675b2",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "This patch crashes at startup, because by the time |AddedToWidget| is called, primary_auth_ is still null.\n\nIn addition, it can no longer handle the \u0027virtual keyboard opening from the status area\u0027 case: the animation is very jarring because the user view starts from the incorrect position. We should fix the source reason (detailed in the other comment) if we don\u0027t want to force a pre DoLayout().",
+      "parentUuid": "0eed58b8_56fcfe15",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "3dc02ac7_c832baa8",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c76327_80e4f1a2",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d217ca4_c83d0d0f",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -101,6 +173,24 @@
       "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfc16e1_6b8e2cf0",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d217ca4_c83d0d0f",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "8ce8304b_fdef3146",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32e56267_ec959e4b",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6d71a9c_265b514b",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -135,6 +243,24 @@
       "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259232e7_cdc9bab3",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d71a9c_265b514b",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "2bcb1d7b_c74e630c",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a1fec3_bf138b04",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ecf3a1d_096dce1c",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 3
@@ -166,6 +310,24 @@
       "writtenOn": "2017-10-13T16:50:41Z",
       "side": 1,
       "message": "I suspect animating the root layer will cause a lot of overdraw, please check using --ui-show-paint-rects. We need to avoid overdraw to maintain good animation performance on low-end devices.",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e381c9b1_ee65cfd6",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-10-13T23:19:54Z",
+      "side": 1,
+      "message": "Does the green box indicate overdraw?.. If so, there\u0027s no difference before and after commenting out setup_layer(this). In both cases, the user image gets the green box \u0027blink\u0027, I think it\u0027s because of the animated avatar.",
+      "parentUuid": "2ecf3a1d_096dce1c",
       "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
