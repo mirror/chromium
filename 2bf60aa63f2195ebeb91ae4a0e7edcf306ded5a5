@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "1091d8b4_983ff589",
+        "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-13T01:49:26Z",
+      "side": 1,
+      "message": "So, there used to be one JavaScriptDialog() file, but then the whole Mac/Views split nightmare. Sigh.\n\nThe ctor for JSDialog on desktop needs to have the popunder_preventer_, while you don\u0027t need that on mobile, so that definitely needs to be different.\n\nWe might be able to clean things up a bit, but much if not all of the mess is Mac/Views and that\u0027s hard to reconcile right now.",
+      "parentUuid": "796090b4_59bb1a85",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 79,
+        "endChar": 62
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40d947a8_9a7ca2f2",
         "filename": "chrome/browser/ui/android/javascript_dialog_android.cc",
         "patchSetId": 1
