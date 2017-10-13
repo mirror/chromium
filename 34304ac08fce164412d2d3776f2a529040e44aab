@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d43f318_174333ff",
+        "filename": "base/logging.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-13T19:13:09Z",
+      "side": 1,
+      "message": "Sorry for the big block of macro mess, but doing this in one #if  and repeating further down the code was very unreadable.",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "34304ac08fce164412d2d3776f2a529040e44aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
