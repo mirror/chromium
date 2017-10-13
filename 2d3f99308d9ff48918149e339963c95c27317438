@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "525b669d_e81dc0fe",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T17:54:55Z",
+      "side": 1,
+      "message": "(I am not sure if calling a user callback on a different thread can be a problem.)",
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0a9d17_576c0e70",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T17:54:55Z",
+      "side": 1,
+      "message": "Per offline discussion, I have changed NCT::GetConnectionType() to be async. This is because NCT can\u0027t return CONNECTION_UNKNOWN when connection type is not yet initialized (when we haven\u0027t heard back from Network Service). CONNECTION_UNKNOWN has special meaning in NetInfo API.",
+      "revId": "2d3f99308d9ff48918149e339963c95c27317438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
