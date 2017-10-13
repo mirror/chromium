@@ -104,6 +104,75 @@
     },
     {
       "key": {
+        "uuid": "64de0435_b586eb9d",
+        "filename": "net/url_request/redirect_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T17:26:10Z",
+      "side": 1,
+      "message": "nit:  const GURL original_url(\"...\"); is preferred.",
+      "range": {
+        "startLine": 16,
+        "startChar": 34,
+        "endLine": 16,
+        "endChar": 39
+      },
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3784707_0e733371",
+        "filename": "net/url_request/redirect_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T17:26:10Z",
+      "side": 1,
+      "message": "These should use the kConstantNamingScheme (Both GURL and the strings).  Also, I think const char kFoo[] is more common than const std::string, though not sure it really matters.  If you use strings, should probably include \u003cstring\u003e.",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4252f19d_50e3d174",
+        "filename": "net/url_request/redirect_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T17:26:10Z",
+      "side": 1,
+      "message": "Do we need this one?  It\u0027s always just !expected_clear_body.  I also think the name isn\u0027t clear.  Fine with keeping it if we can come up with a clearer name.",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5d7d7e5_e059833b",
         "filename": "net/url_request/redirect_util_unittest.cc",
         "patchSetId": 9
@@ -115,6 +184,29 @@
       "writtenOn": "2017-10-13T16:11:25Z",
       "side": 1,
       "message": "ifshould -\u003e if should ? (or \u0027if the header should not exist\u0027 ?)",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae062bd3_b491e8e0",
+        "filename": "net/url_request/redirect_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T17:26:10Z",
+      "side": 1,
+      "message": "optional:  May be more readable if you go with\n\n\"POST\" /* new_method */,\n\nDue to the weird indentation.  Up to you, though.",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 33
+      },
       "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
