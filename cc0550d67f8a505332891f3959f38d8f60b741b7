@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22579dd1_6f6df7ff",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T18:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b85269_67960a3b",
+      "revId": "cc0550d67f8a505332891f3959f38d8f60b741b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22b34e22_2e08cd76",
         "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1e8fa146_0b3239e5",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T18:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b34e22_2e08cd76",
+      "revId": "cc0550d67f8a505332891f3959f38d8f60b741b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b361a3c5_8ce5ea68",
         "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T18:11:21Z",
       "side": 1,
       "message": "I\u0027m just curious: do you expect this to be hit a lot? If not, maybe just connect to the controller each time?\n\n(Unfortunately we don\u0027t have a good heuristic for when one is preferable over the other...)",
+      "revId": "cc0550d67f8a505332891f3959f38d8f60b741b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98967fa8_9fbe9f65",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T18:23:29Z",
+      "side": 1,
+      "message": "Not a lot, but every time the set of available note-taking apps is becoming empty/nonempty, and also on profile changes.",
+      "parentUuid": "b361a3c5_8ce5ea68",
       "revId": "cc0550d67f8a505332891f3959f38d8f60b741b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
