@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3fa453c_2680f632",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-13T23:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294c28ca_0140d8b6",
+      "revId": "d7526c7019016f8277add0fca838e02a0cdc3ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47d98bb_cf06ea31",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d7526c7019016f8277add0fca838e02a0cdc3ccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca19734_a5a3497e",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-10-13T23:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47d98bb_cf06ea31",
+      "revId": "d7526c7019016f8277add0fca838e02a0cdc3ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
