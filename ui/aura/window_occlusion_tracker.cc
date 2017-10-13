@@ -102,6 +102,14 @@ void WindowOcclusionTracker::Track(Window* window) {
     g_tracker->TrackedWindowAddedToRoot(window);
 }
 
+void WindowOcclusionTracker::RecomputeWindowOcclusionStatesForTesting() {
+  for (auto& root_window_pair : g_tracker->root_windows_) {
+    SkRegion occluded_region;
+    g_tracker->RecomputeWindowOcclusionStatesImpl(
+        root_window_pair.first, gfx::Transform(), nullptr, &occluded_region);
+  }
+}
+
 WindowOcclusionTracker::WindowOcclusionTracker() = default;
 
 WindowOcclusionTracker::~WindowOcclusionTracker() = default;

@@ -54,6 +54,10 @@ class AURA_EXPORT WindowOcclusionTracker : public ui::LayerAnimationObserver,
   // Start tracking the occlusion state of |window|.
   static void Track(Window* window);
 
+  // Recomputes occlusion states for all root windows, even if they are not
+  // dirty.
+  static void RecomputeWindowOcclusionStatesForTesting();
+
  private:
   WindowOcclusionTracker();
   ~WindowOcclusionTracker() override;

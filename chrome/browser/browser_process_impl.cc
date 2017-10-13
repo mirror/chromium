@@ -182,6 +182,11 @@
 #include "chrome/browser/android/physical_web/physical_web_data_source_android.h"
 #endif
 
+#include "base/trace_event/trace_event.h"
+#include "chrome/browser/ui/browser_commands.h"
+#include "chrome/browser/ui/browser_list.h"
+#include "ui/aura/window_occlusion_tracker.h"
+
 #if (defined(OS_WIN) || defined(OS_LINUX)) && !defined(OS_CHROMEOS)
 // How often to check if the persistent instance of Chrome needs to restart
 // to install an update.
@@ -201,6 +206,47 @@ using content::BrowserThread;
 using content::ChildProcessSecurityPolicy;
 using content::PluginService;
 using content::ResourceDispatcherHost;
+
+namespace {
+
+constexpr int kNumWindows = 50;
+constexpr int kNumIterations = 40000;
+
+void RunOcclusionTrackingBenchmark() {
+  base::TimeTicks start = base::TimeTicks::Now();
+  for (int i = 0; i < kNumIterations; ++i) {
+    aura::WindowOcclusionTracker::RecomputeWindowOcclusionStatesForTesting();
+  }
+  base::TimeDelta duration = base::TimeTicks::Now() - start;
+  LOG(ERROR) << "Window occlusion tracking takes "
+             << duration.InMicroseconds() / kNumIterations
+             << " us per iteration (" << kNumWindows << " windows, "
+             << kNumIterations << " iterations).";
+
+  size_t num_windows = BrowserList::GetInstance()->size();
+  for (int i = num_windows - 1; i >= 0; --i) {
+    if (i < static_cast<int>(BrowserList::GetInstance()->size()))
+      BrowserList::GetInstance()->get(i)->window()->Close();
+  }
+}
+
+void StartOcclusionTrackingBenchmark() {
+  // Create windows.
+  for (int i = 0; i < kNumWindows; ++i) {
+    if (i != 0) {
+      Browser* current_browser = BrowserList::GetInstance()->GetLastActive();
+      chrome::NewWindow(current_browser);
+    }
+    base::RunLoop().RunUntilIdle();
+    Browser* new_browser = BrowserList::GetInstance()->GetLastActive();
+    new_browser->window()->SetBounds(gfx::Rect(i, i, 300, 300));
+  }
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::BindOnce(&RunOcclusionTrackingBenchmark),
+      base::TimeDelta::FromSeconds(10));
+}
+
+}  // namespace
 
 rappor::RapporService* GetBrowserRapporService() {
   if (g_browser_process != nullptr)
@@ -1142,6 +1188,10 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
         base::WrapUnique(new base::DefaultTickClock()), local_state(),
         system_request_context());
   }
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::BindOnce(&StartOcclusionTrackingBenchmark),
+      base::TimeDelta::FromSeconds(30));
 }
 
 void BrowserProcessImpl::CreateIconManager() {
