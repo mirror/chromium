@@ -146,6 +146,24 @@
       "revId": "3799baf98040fd21eb1328e8bb855797966d0445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebde025_e722d628",
+        "filename": "third_party/WebKit/LayoutTests/loader/image-loader-clone-leak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-10-13T06:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b23ed0_47673aa1",
+      "revId": "3799baf98040fd21eb1328e8bb855797966d0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
