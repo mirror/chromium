@@ -83,8 +83,10 @@
 
 namespace {
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<content::ShellCrashReporterClient>::Leaky
     g_shell_crash_client = LAZY_INSTANCE_INITIALIZER;
+#endif
 
 #if defined(OS_WIN)
 // If "Content Shell" doesn't show up in your list of trace providers in
@@ -156,6 +158,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 #endif  // OS_MACOSX
 
   InitLogging(command_line);
+#if !defined(OS_FUCHSIA)
   if (command_line.HasSwitch(switches::kCheckLayoutTestSysDeps)) {
     // If CheckLayoutSystemDeps succeeds, we don't exit early. Instead we
     // continue and try to load the fonts in BlinkTestPlatformInitialize
@@ -165,6 +168,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
       return true;
     }
   }
+#endif
 
   if (command_line.HasSwitch(switches::kRunLayoutTest)) {
     EnableBrowserLayoutTestMode();
@@ -237,10 +241,12 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     media::RemoveProprietaryMediaTypesAndCodecsForTests();
 #endif
 
+#if !defined(OS_FUCHSIA)
     if (!BlinkTestPlatformInitialize()) {
       *exit_code = 1;
       return true;
     }
+#endif
   }
 
   content_client_.reset(base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -263,7 +269,9 @@ void ShellMainDelegate::PreSandboxStartup() {
     std::string process_type =
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kProcessType);
+#if !defined(OS_FUCHSIA)
     crash_reporter::SetCrashReporterClient(g_shell_crash_client.Pointer());
+#endif
 #if defined(OS_MACOSX)
     base::mac::DisableOSCrashDumps();
     breakpad::InitCrashReporter(process_type);
@@ -275,7 +283,7 @@ void ShellMainDelegate::PreSandboxStartup() {
         breakpad::InitCrashReporter(process_type);
       else
         breakpad::InitNonBrowserCrashReporterForAndroid(process_type);
-#else
+#elif !defined(OS_FUCHSIA)
       breakpad::InitCrashReporter(process_type);
 #endif
     }
@@ -315,7 +323,8 @@ int ShellMainDelegate::RunProcess(
              : ShellBrowserMain(main_function_params, browser_runner_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 void ShellMainDelegate::ZygoteForked() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
