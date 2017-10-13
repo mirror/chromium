@@ -9,17 +9,26 @@
 #include "base/bind.h"
 #include "base/guid.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/browser/download/download_service_factory.h"
+#include "chrome/browser/offline_items_collection/offline_content_aggregator_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/download/public/download_params.h"
 #include "components/download/public/download_service.h"
+#include "components/offline_items_collection/core/offline_content_aggregator.h"
+#include "components/offline_items_collection/core/offline_item.h"
 #include "content/public/browser/background_fetch_response.h"
 #include "content/public/browser/browser_thread.h"
 
 BackgroundFetchDelegateImpl::BackgroundFetchDelegateImpl(Profile* profile)
     : download_service_(
           DownloadServiceFactory::GetInstance()->GetForBrowserContext(profile)),
-      weak_ptr_factory_(this) {}
+      offline_content_aggregator_(
+          offline_items_collection::OfflineContentAggregatorFactory::
+              GetForBrowserContext(profile)),
+      weak_ptr_factory_(this) {
+  offline_content_aggregator_->RegisterProvider("background_fetch", this);
+}
 
 BackgroundFetchDelegateImpl::~BackgroundFetchDelegateImpl() {}
 
@@ -31,13 +40,89 @@ void BackgroundFetchDelegateImpl::Shutdown() {
   }
 }
 
+BackgroundFetchDelegateImpl::JobDetails::JobDetails(const std::string& title,
+                                                    const url::Origin& origin,
+                                                    int completed_parts,
+                                                    int total_parts)
+    : title(title),
+      origin(origin),
+      completed_parts(completed_parts),
+      total_parts(total_parts) {}
+
+BackgroundFetchDelegateImpl::JobDetails::~JobDetails() {}
+
+offline_items_collection::OfflineItem
+BackgroundFetchDelegateImpl::CreateOfflineItem(const std::string& job_id,
+                                               const JobDetails& details) {
+  offline_items_collection::OfflineItem item(
+      offline_items_collection::ContentId("background_fetch", job_id));
+
+  if (details.total_parts > 0) {
+    item.progress.value = details.completed_parts;
+    item.progress.max = details.total_parts;
+    item.progress.unit =
+        offline_items_collection::OfflineItemProgressUnit::PERCENTAGE;
+  }
+  if (details.title.empty()) {
+    item.title = details.origin.Serialize();
+  } else {
+    item.title = base::StringPrintf("%s (%s)", details.title.c_str(),
+                                    details.origin.Serialize().c_str());
+  }
+  item.description = "More detailed item: " + item.title;
+  item.is_transient = true;
+  item.state = (details.completed_parts == details.total_parts)
+                   ? offline_items_collection::OfflineItemState::COMPLETE
+                   : offline_items_collection::OfflineItemState::IN_PROGRESS;
+  // TODO(delphick): Set item.is_off_the_record in incognito mode.
+  return item;
+}
+
+void BackgroundFetchDelegateImpl::CreateDownloadJob(
+    const std::string& job_id,
+    const std::string& title,
+    const url::Origin& origin,
+    int completed_parts,
+    int total_parts,
+    const std::vector<std::string>& current_guids) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  LOG(ERROR) << "CreateDownloadJob: " << job_id;
+
+  DCHECK(job_details_map_.find(job_id) == job_details_map_.end());
+
+  job_details_map_.emplace(
+      job_id, JobDetails(title, origin, completed_parts, total_parts));
+
+  for (auto guid : current_guids) {
+    DCHECK(file_download_job_map_.find(guid) == file_download_job_map_.end());
+    file_download_job_map_.emplace(guid, job_id);
+  }
+
+  offline_items_collection::OfflineItem item =
+      CreateOfflineItem(job_id, job_details_map_.find(job_id)->second);
+
+  LOG(ERROR) << "OnItemsAdded: " << item.id.name_space << ":" << item.id.id;
+  for (auto* observer : observers_) {
+    observer->OnItemsAdded({item});
+  }
+}
+
 void BackgroundFetchDelegateImpl::DownloadUrl(
+    const std::string& job_id,
     const std::string& guid,
     const std::string& method,
     const GURL& url,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     const net::HttpRequestHeaders& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  LOG(ERROR) << "DownloadUrl: " << job_id;
+
+  DCHECK(job_details_map_.find(job_id) != job_details_map_.end());
+  DCHECK(file_download_job_map_.find(guid) == file_download_job_map_.end());
+
+  file_download_job_map_.emplace(guid, job_id);
 
   download::DownloadParams params;
   params.guid = guid;
@@ -108,11 +193,24 @@ void BackgroundFetchDelegateImpl::OnDownloadSucceeded(
     uint64_t size) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  const std::string& job_id = file_download_job_map_[guid];
+  JobDetails& job_details = job_details_map_.find(job_id)->second;
+  ++job_details.completed_parts;
+
+  offline_items_collection::OfflineItem item =
+      CreateOfflineItem(job_id, job_details);
+
+  LOG(ERROR) << "OnItemUpdated: " << item.id.name_space << ":" << item.id.id;
+  for (auto* observer : observers_)
+    observer->OnItemUpdated(item);
+
   if (client()) {
     client()->OnDownloadComplete(
         guid, std::make_unique<content::BackgroundFetchResult>(
                   base::Time::Now(), path, size));
   }
+
+  file_download_job_map_.erase(guid);
 }
 
 void BackgroundFetchDelegateImpl::OnDownloadReceived(
@@ -147,4 +245,73 @@ void BackgroundFetchDelegateImpl::OnDownloadReceived(
     case StartResult::COUNT:
       NOTREACHED();
   }
+}
+
+bool BackgroundFetchDelegateImpl::AreItemsAvailable() {
+  return true;
+}
+
+void BackgroundFetchDelegateImpl::OpenItem(
+    const offline_items_collection::ContentId& id) {}
+
+void BackgroundFetchDelegateImpl::RemoveItem(
+    const offline_items_collection::ContentId& id) {
+  NOTIMPLEMENTED();
+}
+
+void BackgroundFetchDelegateImpl::CancelDownload(
+    const offline_items_collection::ContentId& id) {
+  NOTIMPLEMENTED();
+}
+
+void BackgroundFetchDelegateImpl::PauseDownload(
+    const offline_items_collection::ContentId& id) {
+  NOTIMPLEMENTED();
+}
+
+void BackgroundFetchDelegateImpl::ResumeDownload(
+    const offline_items_collection::ContentId& id,
+    bool has_user_gesture) {
+  NOTIMPLEMENTED();
+}
+
+const offline_items_collection::OfflineItem*
+BackgroundFetchDelegateImpl::GetItemById(
+    const offline_items_collection::ContentId& id) {
+  for (auto& item : items_) {
+    if (item.id == id) {
+      return &item;
+    }
+  }
+  return nullptr;
+}
+
+BackgroundFetchDelegateImpl::OfflineItemList
+BackgroundFetchDelegateImpl::GetAllItems() {
+  OfflineItemList item_list;
+  for (auto& entry : job_details_map_)
+    item_list.push_back(CreateOfflineItem(entry.first, entry.second));
+  return item_list;
+}
+
+void BackgroundFetchDelegateImpl::GetVisualsForItem(
+    const offline_items_collection::ContentId& id,
+    const VisualsCallback& callback) {
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   base::BindOnce(callback, id, nullptr));
+}
+
+void BackgroundFetchDelegateImpl::AddObserver(Observer* observer) {
+  observers_.insert(observer);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          [](Observer* observer, BackgroundFetchDelegateImpl* provider) {
+            observer->OnItemsAvailable(provider);
+          },
+          observer, this));
+}
+
+void BackgroundFetchDelegateImpl::RemoveObserver(Observer* observer) {
+  observers_.erase(observer);
 }
