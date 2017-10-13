@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09f83c3d_a374ba61",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T18:16:03Z",
+      "side": 1,
+      "message": "Can you do the same for networking_private?\n\nActually, it might be the time to start removing networking_private.idl, and use networking_onc.idl to generate bindings (I\u0027ll file myself a bug for it).",
+      "parentUuid": "6312bf01_aae08c31",
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b33fc8_a75d1c12",
         "filename": "extensions/common/api/networking_onc.idl",
         "patchSetId": 6
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Without this comment someone like me is going to come along and try to make it an enum again :P",
       "parentUuid": "f1b33fc8_a75d1c12",
+      "range": {
+        "startLine": 738,
+        "startChar": 7,
+        "endLine": 739,
+        "endChar": 49
+      },
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212bd556_3a50f2a9",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T18:16:03Z",
+      "side": 1,
+      "message": "yeah, maybe just clarify that this is a note on an implementation detail.\nCan you  test whether putting it into HTML comments would hide it from the public documentation\n(you can use  chrome/common/extensions/docs/server2/preview.py to run the preview server)",
+      "parentUuid": "cb8cd0d4_8617ea10",
       "range": {
         "startLine": 738,
         "startChar": 7,
@@ -160,6 +202,24 @@
       "side": 1,
       "message": "I\u0027ll add a TODO, but it\u0027s an edge case that only occurs if the connection is started elsewhere (e.g. Shill auto connect) while the dialog is open. We will update the network status in the dialog when it changes.",
       "parentUuid": "2d86ae01_82650642",
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc853522_d1c6e811",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T18:16:03Z",
+      "side": 1,
+      "message": "Sounds good",
+      "parentUuid": "9814b2f0_cf935288",
       "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
