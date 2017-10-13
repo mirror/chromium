@@ -598,7 +598,7 @@ TEST_F(TabControllerTest, DeadKeyPressed) {
   [controller setAction:@selector(selectTab:)];
 
   EXPECT_FALSE([target selected]);
-  NSEvent* deadKeyEvent = [NSEvent keyEventWithType:NSKeyUp
+  NSEvent* deadKeyEvent = [NSEvent keyEventWithType:NSKeyDown
                                            location:NSZeroPoint
                                       modifierFlags:0
                                           timestamp:0
@@ -608,10 +608,10 @@ TEST_F(TabControllerTest, DeadKeyPressed) {
                         charactersIgnoringModifiers:@""
                                           isARepeat:NO
                                             keyCode:30];
-  [controller keyUp:deadKeyEvent];
+  [controller keyDown:deadKeyEvent];
   EXPECT_FALSE([target selected]);
 
-  NSEvent* enterEvent = [NSEvent keyEventWithType:NSKeyUp
+  NSEvent* enterEvent = [NSEvent keyEventWithType:NSKeyDown
                                          location:NSZeroPoint
                                     modifierFlags:0
                                         timestamp:0
@@ -621,7 +621,7 @@ TEST_F(TabControllerTest, DeadKeyPressed) {
                       charactersIgnoringModifiers:@"\n"
                                         isARepeat:NO
                                           keyCode:30];
-  [controller keyUp:enterEvent];
+  [controller keyDown:enterEvent];
   EXPECT_TRUE([target selected]);
 }
 
