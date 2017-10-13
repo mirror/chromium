@@ -16,6 +16,23 @@
       "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5f2044_9f3a8d7b",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-13T15:00:48Z",
+      "side": 1,
+      "message": "Good that we\u0027re going down this road, but I think the biggest benefit is not duplicating the deps.  These deps also apply to the UI testapp, and 772551 tracks unifying the list.  Can there be a lib or source set that lists the test-supporting deps, and a \"vr_unittest_support\" that adds the unit test specifics on top of that (if needed)?",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
