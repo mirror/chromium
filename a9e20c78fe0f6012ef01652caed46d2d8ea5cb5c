@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2d6d034_4595f832",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-13T15:47:25Z",
+      "side": 1,
+      "message": "This is very specific logic: \"only allow generation for users who are using NORMAL_ENCRYPTION\" and doesn\u0027t really belong here.\n\nWhy isn\u0027t this restriction in password_manager::ManualPasswordGenerationEnabled()?",
+      "range": {
+        "startLine": 1528,
+        "startChar": 7,
+        "endLine": 1531,
+        "endChar": 51
+      },
+      "revId": "a9e20c78fe0f6012ef01652caed46d2d8ea5cb5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
