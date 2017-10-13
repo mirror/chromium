@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5004aac1_90d18610",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrInputTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T16:26:35Z",
+      "side": 1,
+      "message": "This is not the right thing to do for instrumentation tests. If you override a feature in ChromeFeatureList, the native side will not see that, so native code might behave in the wrong way. This is why setTestFeatures() should (at least at the moment) only be used in local JUnit tests, where there is no native code (even if the feature is only checked on the Java side like in this case -- if we were to allow this, it would make it far too easy for someone else to break something). Sorry if the existing code / documentation is not very explicit on this.\n\nWhat you want to do for an instrumentation test instead for now is add an --enable-features or --disable-features command line flag on the test (via the @CommandLineFlags.Add() annotation), because command line arguments do affect features on the native side. We\u0027re also working on making it easier to force feature state in instrumentation tests, so that the code will automatically Do The Right Thing for each kind of test.",
+      "revId": "63ec64e0ce2719b1c5e481a77dd567ac7532af38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
