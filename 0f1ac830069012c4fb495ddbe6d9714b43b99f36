@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4189b81_16f889ab",
+        "filename": "components/prefs/pref_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T10:20:02Z",
+      "side": 1,
+      "message": "Small nit: _raw, to avoid confusing with WeakPtr?",
+      "range": {
+        "startLine": 77,
+        "startChar": 29,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "0f1ac830069012c4fb495ddbe6d9714b43b99f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
