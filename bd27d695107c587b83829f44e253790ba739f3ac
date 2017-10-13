@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729821bb_187abb3c",
+        "filename": "content/child/loader/cors_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T13:02:02Z",
+      "side": 1,
+      "message": "Can you probably use TestURLLoaderClient in content/public/test/test_url_loader_client.{h,cc} instead?",
+      "revId": "bd27d695107c587b83829f44e253790ba739f3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
