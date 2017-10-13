@@ -285,7 +285,7 @@ void AppendTextTransformedOffsetMapping<NGOffsetMappingBuilder>(
 // for condition checking and branching.
 template <typename OffsetMappingBuilder>
 LayoutBox* CollectInlinesInternal(
-    LayoutNGBlockFlow* block,
+    LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
@@ -374,7 +374,7 @@ LayoutBox* CollectInlinesInternal(
 
 }  // namespace
 
-NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
+NGInlineNode::NGInlineNode(LayoutBlockFlow* block)
     : NGLayoutInputNode(block, kInline) {
   DCHECK(block);
   if (!block->HasNGInlineNodeData())
@@ -436,7 +436,7 @@ const NGOffsetMappingResult& NGInlineNode::ComputeOffsetMappingIfNeeded() {
 void NGInlineNode::CollectInlines() {
   DCHECK(Data().text_content_.IsNull());
   DCHECK(Data().items_.IsEmpty());
-  LayoutNGBlockFlow* block = GetLayoutBlockFlow();
+  LayoutBlockFlow* block = GetLayoutBlockFlow();
   block->WillCollectInlines();
   NGInlineNodeData* data = MutableData();
   NGInlineItemsBuilder builder(&data->items_);
@@ -647,7 +647,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
     NGLayoutResult* layout_result) {
-  LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
+  LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
   const Vector<NGInlineItem>& items = Data().items_;
@@ -655,7 +655,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   GetLayoutTextOffsets(&text_offsets);
 
   NGBoxStrut border_padding = ComputeBorders(constraint_space, Style()) +
-                              ComputePadding(constraint_space, Style());
+                              ComputePadding(constraint_space, Style()) +
+                              GetTableCellIntrinsicPadding(box_);
 
   FontBaseline baseline_type =
       IsHorizontalWritingMode(constraint_space.WritingMode())
@@ -790,11 +791,13 @@ Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node, unsigned offset) {
   const LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
   if (!layout_object || !layout_object->IsInline())
     return WTF::nullopt;
-  LayoutNGBlockFlow* ng_block_flow = layout_object->EnclosingNGBlockFlow();
-  if (!ng_block_flow)
+  // FIXME: This removes the use of EnclosingNGBlockFlow()
+  LayoutBox* box = layout_object->EnclosingBox();
+  DCHECK(box);
+  if (!box || !box->IsLayoutNGMixin())
     return WTF::nullopt;
-  DCHECK(ng_block_flow->ChildrenInline());
-  return NGInlineNode(ng_block_flow);
+  DCHECK(box->ChildrenInline());
+  return NGInlineNode(ToLayoutBlockFlow(box));
 }
 
 const NGOffsetMappingUnit* NGInlineNode::GetMappingUnitForDOMOffset(
