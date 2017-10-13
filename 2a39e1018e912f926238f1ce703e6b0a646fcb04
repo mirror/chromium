@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fff90dc6_1dcbb7e7",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T04:18:56Z",
+      "side": 1,
+      "message": "It actually works like you think it should: frame_ refers to B here, and GetProxyToParent() returns the proxy for the *child* frame in A\u0027s renderer.  It\u0027s just a confusingly named function, and we should really find a better name for it. :/  What it\u0027s supposed to mean is: given a frame, find a proxy for that frame in its parent\u0027s SiteInstance/process.  The parent frame\u0027s SiteInstance is A in this case, so it looks up a proxy for that process - but the proxy/RemoteFrame is for that same frame and not its parent.\n\nIn short:\nProcess A: \nLocalFrame (F1)\n|\nRemoteFrame (F2)\n\nProcess B:\nRemoteFrame (F3)\n|\nLocalFrame (F4)\n\nIn your example, F4 starts the scroll, then we call ScrollRectToVisibleInParentFrame on F4, which goes up to the browser.  There, GetProxyToParent gets us F2, and we send it the message which arrives here.  Its owner_element is an element in F1\u0027s Document, and that\u0027s where we continue to scroll.  Hope this helps :)",
+      "parentUuid": "ce8c7b52_46a78c5c",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 354,
+        "endChar": 58
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3d061e3_e1b7e40e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
