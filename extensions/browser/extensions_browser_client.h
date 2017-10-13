@@ -12,12 +12,15 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "content/public/browser/bluetooth_chooser.h"
+#include "content/public/common/resource_type.h"
 #include "extensions/browser/extension_event_histogram_value.h"
 #include "extensions/browser/extension_prefs_observer.h"
 #include "extensions/common/view_type.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "ui/base/page_transition_types.h"
 
 class ExtensionFunctionRegistry;
+class GURL;
 class PrefService;
 
 namespace base {
@@ -28,7 +31,9 @@ class ListValue;
 
 namespace content {
 class BrowserContext;
+class NavigationUIData;
 class RenderFrameHost;
+class ResourceContext;
 class WebContents;
 }
 
@@ -110,6 +115,11 @@ class ExtensionsBrowserClient {
       content::BrowserContext* context) = 0;
 #endif
 
+  // Returns a map of information about installed extensions relevant to the
+  // given |context|. Called on the IO thread.
+  virtual InfoMap* GetExtensionInfoMap(
+      content::ResourceContext* resource_context);
+
   // Returns true if |context| corresponds to a guest session.
   virtual bool IsGuestSession(content::BrowserContext* context) const = 0;
 
@@ -139,10 +149,14 @@ class ExtensionsBrowserClient {
   // request coming from renderer A to access a resource in an extension running
   // in renderer B. For example, Chrome overrides this to provide support for
   // webview and dev tools. Called on the IO thread.
-  virtual bool AllowCrossRendererResourceLoad(net::URLRequest* request,
-                                              bool is_incognito,
-                                              const Extension* extension,
-                                              InfoMap* extension_info_map) = 0;
+  virtual bool AllowCrossRendererResourceLoad(
+      const GURL& url,
+      content::ResourceType resource_type,
+      ui::PageTransition page_transition,
+      int child_id,
+      bool is_incognito,
+      const Extension* extension,
+      InfoMap* extension_info_map) = 0;
 
   // Returns the PrefService associated with |context|.
   virtual PrefService* GetPrefServiceForContext(
@@ -261,8 +275,8 @@ class ExtensionsBrowserClient {
   // Returns true if activity logging is enabled for the given |context|.
   virtual bool IsActivityLoggingEnabled(content::BrowserContext* context);
 
-  virtual ExtensionNavigationUIData* GetExtensionNavigationUIData(
-      net::URLRequest* request);
+  virtual const ExtensionNavigationUIData* GetExtensionNavigationUIData(
+      const content::NavigationUIData* navigation_ui_data);
 
   // Returns a delegate that provides kiosk mode functionality.
   virtual KioskDelegate* GetKioskDelegate() = 0;
