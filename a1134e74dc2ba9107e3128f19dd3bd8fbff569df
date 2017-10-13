@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f38b354c_838b4374",
+        "filename": "tools/clang/value_cleanup/ValueCleanup.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T09:33:37Z",
+      "side": 1,
+      "message": "Yeah, strictly speaking this is not necessary, it just adds a bunch of noise to the output, e.g. like this: \n\n[actual edits]\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d BEGIN EDITS \u003d\u003d\u003d\u003d\n\u003d\u003d\u003d\u003d END EDITS \u003d\u003d\u003d\u003d\n[some more edits]\n\n\nThe python script applying the edits of course doesn\u0027t care, it\u0027s just a bit more convenient to manually inspect the changes that will be applied. I\u0027m not feeling too strongly about this, though. What do you think?",
+      "parentUuid": "3cdc84db_b1f7d633",
+      "revId": "a1134e74dc2ba9107e3128f19dd3bd8fbff569df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "249ef4ee_14e58cfc",
         "filename": "tools/clang/value_cleanup/tests/value-get-type-original.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a1134e74dc2ba9107e3128f19dd3bd8fbff569df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e541757_2785cbac",
+        "filename": "tools/clang/value_cleanup/tests/value-get-type-original.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T09:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249ef4ee_14e58cfc",
+      "revId": "a1134e74dc2ba9107e3128f19dd3bd8fbff569df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
