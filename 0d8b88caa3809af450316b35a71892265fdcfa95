@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "691fac4a_cef9a353",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T17:53:23Z",
+      "side": 1,
+      "message": "nit: Maybe a little more readable as:\n    var videoConstraints \u003d {\n      width: {ideal: CAPTURE_SIZE.width},\n      height: {ideal: CAPTURE_SIZE.height},\n    };\n    navigator.webkitGetUserMedia(\n        {video: videoConstraints}, successCallback, errorCallback);\n?\n\nAlso, at some point we should migrate this to something like:\n\n    navigator.mediaDevices.getUserMedia({video: videoConstraints})\n        .then(function(stream) {\n          // success callback\n        })\n        .catch(function(err) {\n          // error callback\n        });\n\nBut maybe not in this CL.",
+      "revId": "0d8b88caa3809af450316b35a71892265fdcfa95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
