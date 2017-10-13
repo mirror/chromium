@@ -58,7 +58,10 @@ class ShellExtensionsBrowserClient : public ExtensionsBrowserClient {
       const base::FilePath& directory_path,
       const std::string& content_security_policy,
       bool send_cors_header) override;
-  bool AllowCrossRendererResourceLoad(net::URLRequest* request,
+  bool AllowCrossRendererResourceLoad(const GURL& url,
+                                      content::ResourceType resource_type,
+                                      ui::PageTransition page_transition,
+                                      int child_id,
                                       bool is_incognito,
                                       const Extension* extension,
                                       InfoMap* extension_info_map) override;
@@ -94,8 +97,8 @@ class ShellExtensionsBrowserClient : public ExtensionsBrowserClient {
   bool IsMinBrowserVersionSupported(const std::string& min_version) override;
   ExtensionWebContentsObserver* GetExtensionWebContentsObserver(
       content::WebContents* web_contents) override;
-  ExtensionNavigationUIData* GetExtensionNavigationUIData(
-      net::URLRequest* request) override;
+  const ExtensionNavigationUIData* GetExtensionNavigationUIData(
+      const content::NavigationUIData* navigation_ui_data) override;
   KioskDelegate* GetKioskDelegate() override;
   bool IsLockScreenContext(content::BrowserContext* context) override;
   std::string GetApplicationLocale() override;
