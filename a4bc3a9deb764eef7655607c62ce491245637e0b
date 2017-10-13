@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfd9a2ea_52a9b962",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T14:59:42Z",
+      "side": 1,
+      "message": "Thinking about it, we should make a new runtime flag for this, since we can\u0027t really ship it without an intent, and at least a draft of a spec.\n\nWould it make sense to add an experimental runtime flag for FeaturePolicyJavaScriptInterface, and make it dependent on FeaturePolicy?",
+      "range": {
+        "startLine": 209,
+        "startChar": 20,
+        "endLine": 209,
+        "endChar": 33
+      },
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0dffce_8d7c1d28",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T14:59:42Z",
+      "side": 1,
+      "message": "This interface should probably be under the same RuntimeEnabled flag as the member on Document and Iframe.",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d77189_eeb34df8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T14:59:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure how my initial comment on this line got deleted, but it did, somehow :(\n\nNode::GetDocument(), as far as I understand, retrieves the document that contains this node -- in this case, the document that contains the \u003ciframe\u003e element itself. It doesn\u0027t get the document which is inside the frame. That means that calling policy() on a frame, like:\n\nvar frame \u003d document.querySelector(\u0027iframe\u0027);\nframe.policy();\n\nwill actually return the policy for the document instead. I still need to write it into the spec, but iframe.policy() should return the policy for that frame (or more properly, the container policy, not including any declared policy that came with the framed document).",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19862874_80cfeaef",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.idl",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T14:59:42Z",
+      "side": 1,
+      "message": "This should be under the same runtime flag as Document.policy, if that changes.",
+      "revId": "a4bc3a9deb764eef7655607c62ce491245637e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
