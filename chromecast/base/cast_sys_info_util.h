@@ -9,12 +9,16 @@
 #include <string>
 #include <vector>
 
-
 namespace chromecast {
 
 class CastSysInfo;
 
 std::unique_ptr<CastSysInfo> CreateSysInfo();
+
+// Generates device-model-id for assistant server.
+std::string GetDeviceModelId(const std::string& manufacturer,
+                             const std::string& product_name,
+                             const std::string& device_model);
 
 }  // namespace chromecast
 
