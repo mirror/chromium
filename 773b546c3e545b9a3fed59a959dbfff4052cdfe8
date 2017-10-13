@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83fc229_6ff2eabd",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-13T00:03:47Z",
+      "side": 1,
+      "message": "This line looks redundant with line 815.",
+      "revId": "773b546c3e545b9a3fed59a959dbfff4052cdfe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
