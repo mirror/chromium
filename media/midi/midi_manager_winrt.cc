@@ -46,6 +46,7 @@ using namespace ABI::Windows::Storage::Streams;
 
 using base::win::ScopedComPtr;
 using base::win::ScopedHString;
+using base::win::WrlStaticsFactory;
 using mojom::PortState;
 using mojom::Result;
 
@@ -61,28 +62,6 @@ std::ostream& operator<<(std::ostream& os, const PrintHr& phr) {
      << std::uppercase << std::setfill('0') << std::setw(8) << phr.hr << ")";
   os.flags(ff);
   return os;
-}
-
-// Factory functions that activate and create WinRT components. The caller takes
-// ownership of the returning ComPtr.
-template <typename InterfaceType, base::char16 const* runtime_class_id>
-ScopedComPtr<InterfaceType> WrlStaticsFactory() {
-  ScopedComPtr<InterfaceType> com_ptr;
-
-  ScopedHString class_id_hstring = ScopedHString::Create(runtime_class_id);
-  if (!class_id_hstring.is_valid()) {
-    com_ptr = nullptr;
-    return com_ptr;
-  }
-
-  HRESULT hr = base::win::RoGetActivationFactory(class_id_hstring.get(),
-                                                 IID_PPV_ARGS(&com_ptr));
-  if (FAILED(hr)) {
-    VLOG(1) << "RoGetActivationFactory failed: " << PrintHr(hr);
-    com_ptr = nullptr;
-  }
-
-  return com_ptr;
 }
 
 template <typename T>
@@ -115,25 +94,6 @@ std::string GetNameString(IDeviceInformation* info) {
     return std::string();
   }
   return ScopedHString(result).GetAsUTF8();
-}
-
-HRESULT GetPointerToBufferData(IBuffer* buffer, uint8_t** out) {
-  ScopedComPtr<Windows::Storage::Streams::IBufferByteAccess> buffer_byte_access;
-
-  HRESULT hr = buffer->QueryInterface(IID_PPV_ARGS(&buffer_byte_access));
-  if (FAILED(hr)) {
-    VLOG(1) << "QueryInterface failed: " << PrintHr(hr);
-    return hr;
-  }
-
-  // Lifetime of the pointing buffer is controlled by the buffer object.
-  hr = buffer_byte_access->Buffer(out);
-  if (FAILED(hr)) {
-    VLOG(1) << "Buffer failed: " << PrintHr(hr);
-    return hr;
-  }
-
-  return S_OK;
 }
 
 // Checks if given DeviceInformation represent a Microsoft GS Wavetable Synth
@@ -699,7 +659,8 @@ class MidiManagerWinrt::MidiInPortManager final
               }
 
               uint8_t* p_buffer_data = nullptr;
-              hr = GetPointerToBufferData(buffer.Get(), &p_buffer_data);
+              hr = base::win::GetPointerToBufferData(buffer.Get(),
+                                                     &p_buffer_data);
               if (FAILED(hr))
                 return hr;
 
@@ -897,32 +858,13 @@ void MidiManagerWinrt::SendOnComThread(uint32_t port_index,
     return;
   }
 
-  auto buffer_factory =
-      WrlStaticsFactory<IBufferFactory,
-                        RuntimeClass_Windows_Storage_Streams_Buffer>();
-  if (!buffer_factory)
-    return;
-
   ScopedComPtr<IBuffer> buffer;
-  HRESULT hr = buffer_factory->Create(static_cast<UINT32>(data.size()),
-                                      buffer.GetAddressOf());
+  HRESULT hr = base::win::CreateIBufferFromData(
+      data.data(), static_cast<UINT32>(data.size()), &buffer);
   if (FAILED(hr)) {
-    VLOG(1) << "Create failed: " << PrintHr(hr);
+    VLOG(1) << "CreateIBufferFromData failed: " << PrintHr(hr);
     return;
   }
-
-  hr = buffer->put_Length(static_cast<UINT32>(data.size()));
-  if (FAILED(hr)) {
-    VLOG(1) << "put_Length failed: " << PrintHr(hr);
-    return;
-  }
-
-  uint8_t* p_buffer_data = nullptr;
-  hr = GetPointerToBufferData(buffer.Get(), &p_buffer_data);
-  if (FAILED(hr))
-    return;
-
-  std::copy(data.begin(), data.end(), p_buffer_data);
 
   hr = port->handle->SendBuffer(buffer.Get());
   if (FAILED(hr)) {
