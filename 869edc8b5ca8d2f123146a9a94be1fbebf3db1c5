@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb33fbb6_8d68a22b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "slightly prefer: \"The list of intercepted request URLs.\"",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb81be77_ffa99751",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "nit: extra space after (",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb28018f_450c62c4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "maybe: \"To prevent interference from previous tests, take the intercepted URLs from the service worker.\" ?",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cced2aa6_a58f165d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 20
+      },
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f6acd0_a6e00cde",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "nit: extra indent",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ff751c_9144f896",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "nit: add comment/link about how the spec says 20?",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94f8337_91569976",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/redirected-response.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:11:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "869edc8b5ca8d2f123146a9a94be1fbebf3db1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
