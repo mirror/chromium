@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf61eef_fa413eec",
+        "filename": "content/common/sandbox_init_gpu_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Rather than forcing the intentional leak at the callsite, how about doing it in set_broker_process()?",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf2ce40_c9a03136",
+        "filename": "content/common/sandbox_init_gpu_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Comment plz. Maybe just file-level to explain what these are.",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9be34e_8995b883",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857b64f5_f9325b2e",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09b4f15_ad806675",
+        "filename": "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c532a3_27c5d6b1",
+        "filename": "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02aa544_8411c4f4",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-13T15:01:16Z",
+      "side": 1,
+      "message": "If you take my suggestion of accepting a unique_ptr in set_broker_process(), add a comment here as well stating that this object is intentionally leaked as a global.",
+      "revId": "ef6ecb938dd91914d08aa313b7edb394045ffda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
