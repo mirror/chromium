@@ -22,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Browser;
 import android.util.SparseArray;
-
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -32,14 +31,12 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
 import android.webkit.GeolocationPermissions;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
@@ -50,7 +47,6 @@ import org.chromium.base.Log;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -406,6 +402,7 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
         // takes a list of permissions, grant() is actually all-or-nothing. If there are any
         // requested permissions not included in the granted permissions, all will be denied.
         PermissionRequest request = mPendingRequests.get(requestCode);
+        mPendingRequests.delete(requestCode);
         for (String webkitPermission : request.getResources()) {
             if (!canGrant(webkitPermission)) {
                 request.deny();
@@ -413,7 +410,6 @@ public class WebViewBrowserActivity extends Activity implements PopupMenu.OnMenu
             }
         }
         request.grant(request.getResources());
-        mPendingRequests.delete(requestCode);
     }
 
     public void loadUrlFromUrlBar(View view) {
