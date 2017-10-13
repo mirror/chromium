@@ -34,6 +34,18 @@ typedef enum {
 
 @property(nonatomic, strong) OmniboxTextFieldIOS* textField;
 
+// Leading view.
+- (void)setLeadingButtonHidden:(BOOL)hidden;
+- (void)setLeadingButtonEnabled:(BOOL)enabled;
+
+@property(nonatomic, strong) UIButton* leadingButton;
+@property(nonatomic, assign) BOOL incognito;
+
+- (void)setPlaceholderImage:(int)imageId;
+
+- (void)fadeInLeadingButton;
+- (void)fadeOutLeadingButton;
+
 @end
 
 // UITextField subclass to allow for adjusting borders.
@@ -84,19 +96,6 @@ typedef enum {
 // on older version of iOS.
 - (NSString*)markedText;
 
-// Display a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)showPlaceholderImage;
-
-// Hide a placeholder image. There is no iOS concept of placeholder images,
-// circumventing it by using leftView property of UITextField and controlling
-// its visibility programatically.
-- (void)hidePlaceholderImage;
-
-// Select which placeholder image to display.
-- (void)setPlaceholderImage:(int)imageId;
-
 // Initial touch on the Omnibox triggers a "pre-edit" state. The current
 // URL is shown without any insertion point. First character typed replaces
 // the URL. A second touch turns on the insertion point. |preEditStaticLabel|
@@ -105,9 +104,6 @@ typedef enum {
 - (void)enterPreEditState;
 - (void)exitPreEditState;
 - (BOOL)isPreEditing;
-
-// Enable or disable the padlock button.
-- (void)enableLeftViewButton:(BOOL)isEnabled;
 
 // Returns the current selected text range as an NSRange.
 - (NSRange)selectedNSRange;
