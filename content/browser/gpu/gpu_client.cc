@@ -14,8 +14,10 @@
 
 namespace content {
 
-GpuClient::GpuClient(int render_process_id)
-    : render_process_id_(render_process_id), weak_factory_(this) {
+GpuClient::GpuClient(int client_process_id, bool is_privileged_client)
+    : client_process_id_(client_process_id),
+      is_privileged_client_(is_privileged_client),
+      weak_factory_(this) {
   bindings_.set_connection_error_handler(
       base::Bind(&GpuClient::OnError, base::Unretained(this)));
 }
@@ -35,7 +37,7 @@ void GpuClient::OnError() {
   BrowserGpuMemoryBufferManager* gpu_memory_buffer_manager =
       BrowserGpuMemoryBufferManager::current();
   if (gpu_memory_buffer_manager)
-    gpu_memory_buffer_manager->ProcessRemoved(render_process_id_);
+    gpu_memory_buffer_manager->ProcessRemoved(client_process_id_);
 }
 
 void GpuClient::OnEstablishGpuChannel(
@@ -47,7 +49,7 @@ void GpuClient::OnEstablishGpuChannel(
   if (status == GpuProcessHost::EstablishChannelStatus::GPU_ACCESS_DENIED) {
     // GPU access is not allowed. Notify the client immediately.
     DCHECK(!channel.mojo_handle.is_valid());
-    callback.Run(render_process_id_, mojo::ScopedMessagePipeHandle(), gpu_info,
+    callback.Run(client_process_id_, mojo::ScopedMessagePipeHandle(), gpu_info,
                  gpu_feature_info);
     return;
   }
@@ -61,7 +63,7 @@ void GpuClient::OnEstablishGpuChannel(
   DCHECK(channel.mojo_handle.is_valid());
   mojo::ScopedMessagePipeHandle channel_handle;
   channel_handle.reset(channel.mojo_handle);
-  callback.Run(render_process_id_, std::move(channel_handle), gpu_info,
+  callback.Run(client_process_id_, std::move(channel_handle), gpu_info,
                gpu_feature_info);
 }
 
@@ -81,13 +83,13 @@ void GpuClient::EstablishGpuChannel(
     return;
   }
 
-  bool preempts = false;
-  bool allow_view_command_buffers = false;
-  bool allow_real_time_streams = false;
+  bool preempts = is_privileged_client_;
+  bool allow_view_command_buffers = is_privileged_client_;
+  bool allow_real_time_streams = is_privileged_client_;
   host->EstablishGpuChannel(
-      render_process_id_,
+      client_process_id_,
       ChildProcessHostImpl::ChildProcessUniqueIdToTracingProcessId(
-          render_process_id_),
+          client_process_id_),
       preempts, allow_view_command_buffers, allow_real_time_streams,
       base::Bind(&GpuClient::OnEstablishGpuChannel, weak_factory_.GetWeakPtr(),
                  callback));
@@ -126,7 +128,7 @@ void GpuClient::CreateGpuMemoryBuffer(
 
   BrowserGpuMemoryBufferManager::current()
       ->AllocateGpuMemoryBufferForChildProcess(
-          id, size, format, usage, render_process_id_,
+          id, size, format, usage, client_process_id_,
           base::Bind(&GpuClient::OnCreateGpuMemoryBuffer,
                      weak_factory_.GetWeakPtr(), callback));
 }
@@ -136,7 +138,7 @@ void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
   DCHECK(BrowserGpuMemoryBufferManager::current());
 
   BrowserGpuMemoryBufferManager::current()->ChildProcessDeletedGpuMemoryBuffer(
-      id, render_process_id_, sync_token);
+      id, client_process_id_, sync_token);
 }
 
 }  // namespace content
