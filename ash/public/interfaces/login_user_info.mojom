@@ -17,9 +17,29 @@ enum MultiProfileUserBehavior {
   OWNER_PRIMARY_ONLY = 3,
 };
 
+// Easy unlock icon choices.
+enum EasyUnlockIconId {
+  // No icon shown.
+  NONE,
+  // The user has clicked the easy unlock icon and disabled easy unlock for this
+  // login/lock session.
+  HARDLOCKED,
+  // Phone could not be found.
+  LOCKED,
+  // Phone found, but it is not unlocked.
+  LOCKED_TO_BE_ACTIVATED,
+  // Phone found, but it is too far away.
+  LOCKED_WITH_PROXIMITY_HINT,
+  // Phone found and unlocked. The user can click to dismiss the login/lock
+  // screen.
+  UNLOCKED,
+  // Scanning for phone.
+  SPINNER,
+};
+
 // Information about the custom icon in the user pod.
-struct UserPodCustomIconOptions {
-  string id;
+struct EasyUnlockIconOptions {
+  EasyUnlockIconId id;
   mojo.common.mojom.String16 tooltip;
   bool autoshow_tooltip;
   mojo.common.mojom.String16 aria_label;
