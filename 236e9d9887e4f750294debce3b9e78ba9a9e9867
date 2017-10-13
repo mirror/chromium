@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2808ab0_c409fa42",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T21:37:59Z",
+      "side": 1,
+      "message": "What do you need to wait for? The part of the response to be processed? If yes, then can\u0027t you add a \u003cscript\u003e tag that sends a domAutomationController message or just changes the title, which you have a waiter for.",
+      "revId": "236e9d9887e4f750294debce3b9e78ba9a9e9867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
