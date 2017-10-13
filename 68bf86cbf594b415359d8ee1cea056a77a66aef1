@@ -16,6 +16,24 @@
       "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe3e461_54a6cca9",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-13T20:26:22Z",
+      "side": 1,
+      "message": "I think Jonathan has been testing this locally and experienced an issue similar to what I had when asserting \"is_clang\": https://chromium-review.googlesource.com/c/chromium/src/+/700974/3/build/config/coverage/coverage.gni\n\nEither way he will re-check it next week (OOO now).",
+      "parentUuid": "6bbeca1f_d02434d6",
+      "revId": "68bf86cbf594b415359d8ee1cea056a77a66aef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
