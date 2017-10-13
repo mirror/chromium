@@ -16,6 +16,24 @@
       "revId": "bdd3b4128adb6c41961f9d81b9922509b186f5dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b0c1e0_9500ee95",
+        "filename": "gpu/command_buffer/service/gpu_preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-13T17:53:43Z",
+      "side": 1,
+      "message": "Take the second road. Thanks for the suggestion.",
+      "parentUuid": "e1c23f6b_4c8c9617",
+      "revId": "bdd3b4128adb6c41961f9d81b9922509b186f5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
