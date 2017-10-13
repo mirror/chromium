@@ -158,6 +158,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
  protected:
   MainThreadTaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl,
+                      const Spec& spec,
                       const QueueCreationParams& params,
                       RendererSchedulerImpl* renderer_scheduler);
 
