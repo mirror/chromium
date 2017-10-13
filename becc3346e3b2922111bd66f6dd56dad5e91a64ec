@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "15a6c95d_444896a4",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-13T19:58:05Z",
+      "side": 1,
+      "message": "nit: slightly prefer:\n\nif (!this.prefs) {\n  // Log error?\n  return;\n}\nif (!this.prefs.arc.enabled.value ||\n    !this.prefs.arc.voice_interaction_value_prop.accepted.value) {\n   return;\n}\n\nsettings.navigateTo(settings.routes.GOOGLE_ASSISTANT);",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 67
+      },
+      "revId": "becc3346e3b2922111bd66f6dd56dad5e91a64ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efc93b92_952b51ad",
         "filename": "chrome/browser/resources/settings/search_page/search_page.js",
         "patchSetId": 2
