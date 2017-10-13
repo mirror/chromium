@@ -22,6 +22,30 @@
       "revId": "98fb82e217968efeb2df5b60015611496f524b40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9422446b_cbbc031d",
+        "filename": "base/nix/xdg_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-13T18:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f90bf2f8_1a944550",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "98fb82e217968efeb2df5b60015611496f524b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
