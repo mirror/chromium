@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ab51354_b171322f",
+        "filename": "components/autofill/content/browser/content_autofill_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": "I\u0027m going with the pattern in autofill_agent to not cache for other command line flags.",
+      "parentUuid": "c272478e_ce38dda7",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7401fdd7_f5292431",
         "filename": "components/autofill/content/browser/content_autofill_driver.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T18:31:08Z",
       "side": 1,
       "message": "can/should this decision be made on the other side of this call?",
+      "range": {
+        "startLine": 122,
+        "startChar": 22,
+        "endLine": 122,
+        "endChar": 51
+      },
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6688ed_a43e3309",
+        "filename": "components/autofill/content/browser/content_autofill_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": "Good catch! Moved to renderer, so I don\u0027t have to touch mojo stuff",
+      "parentUuid": "7401fdd7_f5292431",
       "range": {
         "startLine": 122,
         "startChar": 22,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "dbf0a083_68caa8db",
+        "filename": "components/autofill/content/renderer/form_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": "applied first suggestion. For second suggestion, is returning Stringpiece better than std::string?",
+      "parentUuid": "5423515e_e61cb1f7",
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fbb6206_ff78a587",
         "filename": "components/autofill/content/renderer/form_cache.h",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-13T18:31:08Z",
       "side": 1,
       "message": "add a note on ownership.\n\nweakptr?",
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc269634_cca88465",
+        "filename": "components/autofill/content/renderer/form_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s practical to change blink::WebLocalFrame to have a weak_ptr_factory at this point, if this is what you mean?",
+      "parentUuid": "1fbb6206_ff78a587",
       "revId": "7f623a920f7114d02715c91c53b7e09053890023",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "442171c5_1058a0fe",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": ":D Yes",
+      "parentUuid": "46e684c8_be9da2d5",
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1a82c21_012f51ee",
         "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
         "patchSetId": 4
@@ -110,6 +212,24 @@
       "writtenOn": "2017-10-13T18:31:08Z",
       "side": 1,
       "message": "since you\u0027re ultimately making copies of the input params, I would suggest you take them by value instead and then std::move them along into their final locations.\n\ni.e., take message and node by value here, and std::move them in the call to the overloaded Send().\n\nIn the overloaded send, also take them by value and std::move them into the LogEntry constructor in the push_back.\n\nAt the call-site for Send() std::move the message and node into the param list (unless you need them after the call) and you can get this down to zero or at least minimal copies.",
+      "revId": "7f623a920f7114d02715c91c53b7e09053890023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42b5719_f54914df",
+        "filename": "components/autofill/content/renderer/page_form_analyser_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T20:05:41Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "a1a82c21_012f51ee",
       "revId": "7f623a920f7114d02715c91c53b7e09053890023",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
