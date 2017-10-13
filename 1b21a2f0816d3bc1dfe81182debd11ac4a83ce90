@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "64394f12_e75174b0",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Will be fixed when we actually have vr stuff built into product.  I\u0027ll reference 773882 here.",
+      "parentUuid": "2cfbb527_908d66ec",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f023207_6c009a5d",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc96087_4e57ec3c",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f023207_6c009a5d",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "49d0e172_0a580ddd",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2fa6776_1b2a2295",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cca53b2b_78e98403",
         "filename": "chrome/browser/vr/ui_pixeltest.cc",
         "patchSetId": 2
@@ -84,6 +138,24 @@
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5251ff39_6c26f4e4",
+        "filename": "chrome/browser/vr/ui_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca53b2b_78e98403",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +205,54 @@
     },
     {
       "key": {
+        "uuid": "945282ef_7b71ef7d",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56edf64b_86522fc4",
+      "range": {
+        "startLine": 8,
+        "startChar": 39,
+        "endLine": 8,
+        "endChar": 46
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16b8fb1a_618200ec",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6a1b3d_446602f2",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "558cb32e_728ff0b3",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 2
@@ -147,6 +267,24 @@
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75af9b0_b24321e0",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558cb32e_728ff0b3",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +334,54 @@
     },
     {
       "key": {
+        "uuid": "27d5b30a_ebdf244e",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74ab1946_414c8401",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63005076_f953ad34",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e91f9e_ffa90df1",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c662d7_20ac28e8",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 2
@@ -210,6 +396,24 @@
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bb5a75_7cd8155b",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c662d7_20ac28e8",
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +437,30 @@
       "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b380b36_d706de8f",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-13T22:13:58Z",
+      "side": 1,
+      "message": "src\\ui\\gfx\\BUILD.gn is definitely android only (we may want similar logic in windows vr for fallback fonts at some point, but that will be when we support more browser support).\n\nsrc/device/BUILD.gn is similarly ok for now - we\u0027ll want to enable vr device unittests when we check in devices that work on windows",
+      "parentUuid": "f3c073ce_4ddafe80",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "1b21a2f0816d3bc1dfe81182debd11ac4a83ce90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
