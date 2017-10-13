@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd0ee13_912942bc",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-13T14:32:09Z",
+      "side": 1,
+      "message": "Can you comment on where these values come from? Feels strange that they wouldn\u0027t be multiples of 45 degrees.",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "8b246416091a9dd9ed59b13abd19d8914c4d7080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767c223e_d8d19ae6",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-13T14:32:09Z",
+      "side": 1,
+      "message": "nit: no need for c-style variable declaration. (just do float x \u003d ...; float y \u003d ...; etc)",
+      "range": {
+        "startLine": 409,
+        "startChar": 2,
+        "endLine": 409,
+        "endChar": 28
+      },
+      "revId": "8b246416091a9dd9ed59b13abd19d8914c4d7080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
