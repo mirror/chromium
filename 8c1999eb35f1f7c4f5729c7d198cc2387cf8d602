@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "84e4b3c4_581a3a8f",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T17:59:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1097524f_4523e368",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 3
+      },
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df06bc26_e4a57de0",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 4
@@ -407,6 +431,24 @@
       "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6306e5_f94db2e9",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T17:59:40Z",
+      "side": 1,
+      "message": "Discussed offline and fixed",
+      "parentUuid": "703dbdab_d9f04747",
+      "revId": "8c1999eb35f1f7c4f5729c7d198cc2387cf8d602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
