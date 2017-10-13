@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffee1ad7_e09c6750",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-13T05:53:56Z",
+      "side": 1,
+      "message": "Was this change from true -\u003e false deliberate?",
+      "revId": "7f1cf81096f71aef91954ac55caddba959106b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
