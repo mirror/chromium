@@ -1321,6 +1321,7 @@ jumbo_source_set("unit_tests") {
     "animation/AnimationTestHelper.cpp",
     "animation/AnimationTestHelper.h",
     "animation/CompositorAnimationsTest.cpp",
+    "animation/CompositorMutatorImplTest.cpp",
     "animation/DocumentTimelineTest.cpp",
     "animation/EffectInputTest.cpp",
     "animation/EffectStackTest.cpp",
