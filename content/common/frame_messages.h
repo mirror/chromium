@@ -1464,6 +1464,11 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_VisibilityChanged, bool /* visible */)
 // Sets or unsets the inert bit on a remote frame.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_SetIsInert, bool /* inert */)
 
+// Toggles render throttling on a remote frame.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_UpdateRenderThrottlingStatus,
+                    bool /* isThrottled */,
+                    bool /* subtreeThrottled */)
+
 // Indicates that this frame recieved a user gesture, so that the state can be
 // propagated to any remote frames.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_SetHasReceivedUserGesture)
