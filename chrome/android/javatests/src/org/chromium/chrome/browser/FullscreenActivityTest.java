@@ -6,8 +6,6 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Intent;
-import android.provider.Browser;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.UiThreadTestRule;
@@ -20,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.Callback;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
@@ -68,44 +67,6 @@ public class FullscreenActivityTest {
     }
 
     /**
-     * Manually moves a Tab from a ChromeTabbedActivity to a FullscreenActivity and back.
-     */
-    @Test
-    @MediumTest
-    public void testTransfer() throws Throwable {
-        final Tab tab = mActivityTestRule.getActivity().getActivityTab();
-
-        moveTabToActivity(mActivity, tab, FullscreenActivity.class);
-        waitForActivity(FullscreenActivity.class);
-
-        final FullscreenActivity fullscreenActivity =
-                (FullscreenActivity) ApplicationStatus.getLastTrackedFocusedActivity();
-        Assert.assertEquals(tab.getId(), fullscreenActivity.getActivityTab().getId());
-
-        moveTabToActivity(fullscreenActivity, tab, ChromeTabbedActivity.class);
-        waitForActivity(ChromeTabbedActivity.class);
-    }
-
-    /**
-     * Manually moves the Tab to an Activity.
-     */
-    private void moveTabToActivity(final Activity fromActivity, final Tab tab,
-            final Class<? extends ChromeActivity> targetClass) throws Throwable {
-        mUiThreadTestRule.runOnUiThread(() -> {
-            Intent intent = new Intent(fromActivity, targetClass);
-            intent.putExtra(
-                    IntentHandler.EXTRA_PARENT_COMPONENT, fromActivity.getComponentName());
-            intent.putExtra(Browser.EXTRA_APPLICATION_ID, fromActivity.getPackageName());
-
-            if (targetClass == FullscreenActivity.class) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-
-            tab.detachAndStartReparenting(intent, null, null);
-        });
-    }
-
-    /**
      * Waits for an Activity of the given class to be started and for it to have a Tab.
      * @return The Activity.
      */
@@ -121,41 +82,6 @@ public class FullscreenActivityTest {
             }
         });
         return (T) ApplicationStatus.getLastTrackedFocusedActivity();
-    }
-
-    /**
-     * Toggles fullscreen to check FullscreenActivity has been started.
-     */
-    @Test
-    @MediumTest
-    public void testFullscreen() throws Throwable {
-        Activity original = mActivity;
-
-        FullscreenActivity fullscreenActivity = enterFullscreen();
-        DOMUtils.exitFullscreen(fullscreenActivity.getCurrentContentViewCore().getWebContents());
-
-        ChromeTabbedActivity activity = waitForActivity(ChromeTabbedActivity.class);
-
-        // Ensure we haven't started a new ChromeTabbedActivity, https://crbug.com/729805,
-        // https://crbug.com/729932.
-        Assert.assertSame(original, activity);
-    }
-
-    /**
-     * Enters fullscreen then presses the back button to exit.
-     */
-    @Test
-    @MediumTest
-    public void testExitOnBack() throws Throwable {
-        Activity original = mActivity;
-        final FullscreenActivity fullscreenActivity = enterFullscreen();
-        mUiThreadTestRule.runOnUiThread(() -> fullscreenActivity.onBackPressed());
-
-        ChromeTabbedActivity activity = waitForActivity(ChromeTabbedActivity.class);
-
-        // Ensure we haven't started a new ChromeTabbedActivity, https://crbug.com/729805,
-        // https://crbug.com/729932.
-        Assert.assertSame(original, activity);
     }
 
     /**
@@ -187,6 +113,54 @@ public class FullscreenActivityTest {
         });
 
         return fullscreenActivity;
+    }
+
+    /**
+     * Enters then exits fullscreen, ensuring that FullscreenActivity is started, that
+     * the original ChromeTabbedActivity is brough back to the foreground and that the Tab remains
+     * active throughout.
+     * @param exit A Callback to exit fullscreen.
+     */
+    private void testFullscreenAndExit(Callback<ChromeActivity> exit) throws Throwable {
+        Activity original = mActivity;
+        Tab tab = mActivity.getActivityTab();
+
+        FullscreenActivity fullscreenActivity = enterFullscreen();
+        Assert.assertSame(tab, fullscreenActivity.getActivityTab());
+
+        exit.onResult(fullscreenActivity);
+
+        ChromeTabbedActivity activity = waitForActivity(ChromeTabbedActivity.class);
+
+        // Ensure we haven't started a new ChromeTabbedActivity, https://crbug.com/729805,
+        // https://crbug.com/729932.
+        Assert.assertSame(original, activity);
+        Assert.assertSame(tab, mActivity.getActivityTab());
+    }
+
+    /**
+     * Toggles fullscreen to check FullscreenActivity has been started.
+     */
+    @Test
+    @MediumTest
+    public void testFullscreen() throws Throwable {
+        testFullscreenAndExit(activity ->
+                DOMUtils.exitFullscreen(activity.getCurrentContentViewCore().getWebContents()));
+    }
+
+    /**
+     * Enters fullscreen then presses the back button to exit.
+     */
+    @Test
+    @MediumTest
+    public void testExitOnBack() throws Throwable {
+        testFullscreenAndExit(activity -> {
+            try {
+                mUiThreadTestRule.runOnUiThread(() -> activity.onBackPressed());
+            } catch (Throwable t) {
+                throw new RuntimeException(t);
+            }
+        });
     }
 
     /**
@@ -233,13 +207,10 @@ public class FullscreenActivityTest {
 
         Assert.assertEquals(0, monitor.getHits());
 
-        // Launch a ChromeTabbedActivity2 to go foreground and put the FullscreenActivity in the
-        // background.
+        // Move Chrome to the background.
         mUiThreadTestRule.runOnUiThread(() -> {
-            Intent intent = new Intent(mActivity, ChromeTabbedActivity2.class);
-            mActivity.startActivity(intent);
+            mActivity.moveTaskToBack(true);
         });
-        waitForActivity(ChromeTabbedActivity2.class);
 
         // Wait for the Tab to leave fullscreen.
         CriteriaHelper.pollUiThread(new Criteria() {
