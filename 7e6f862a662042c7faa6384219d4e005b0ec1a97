@@ -22,6 +22,30 @@
       "revId": "7e6f862a662042c7faa6384219d4e005b0ec1a97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6790f5_cb43a7e5",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T22:20:54Z",
+      "side": 1,
+      "message": "The first non-discard frame should still end up at the correct time if it\u0027s \u003e 0; these frames are entirely discarded, so it doesn\u0027t matter what their timestamp is. If there were multiple of these in a row though we could end up with confusion in the dropped frame set since the timestamps would all be zero though, so I\u0027ve pulled up the workaround below that adds 1us to the last timestamp.\n\nAlso, the code below is still necessary unfortunately. ffmpeg seems to be only using this for video, while the code below is primarily for chained ogg files and tests fail if it\u0027s removed.",
+      "parentUuid": "fd9add1e_904f634c",
+      "range": {
+        "startLine": 512,
+        "startChar": 34,
+        "endLine": 512,
+        "endChar": 51
+      },
+      "revId": "7e6f862a662042c7faa6384219d4e005b0ec1a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
