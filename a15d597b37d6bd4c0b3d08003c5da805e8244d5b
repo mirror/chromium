@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1054d924_d1626f2b",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/ruleset_matcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-13T05:51:34Z",
+      "side": 1,
+      "message": "nit: change to ASSERT_TRUE, here and below.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5d2d08_b2a46ae7",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-13T05:51:34Z",
+      "side": 1,
+      "message": "Do you have context regarding this?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "a15d597b37d6bd4c0b3d08003c5da805e8244d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

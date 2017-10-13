@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00348e1b_f5c9b729",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/ruleset_matcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-13T05:51:34Z",
+      "side": 1,
+      "message": "Will add extensive end to end tests in subsequent CLs, once the other parts of ruleset loading land.",
+      "range": {
+        "startLine": 85,
+        "startChar": 18,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "95e3fcc11de24caf664170f2b5e5464295034585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
