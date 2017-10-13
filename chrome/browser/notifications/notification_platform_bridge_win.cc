@@ -7,6 +7,7 @@
 #include <activation.h>
 #include <windows.ui.notifications.h>
 #include <wrl/client.h>
+#include <wrl/event.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <memory>
 #include <set>
@@ -17,6 +18,7 @@
 #include "base/strings/string16.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_template_builder.h"
@@ -36,6 +38,15 @@ using base::win::ScopedHString;
 using message_center::RichNotificationData;
 
 namespace {
+
+typedef winfoundtn::ITypedEventHandler<winui::Notifications::ToastNotification*,
+                                       IInspectable*>
+    ToastActivatedHandler;
+
+typedef winfoundtn::ITypedEventHandler<
+    winui::Notifications::ToastNotification*,
+    winui::Notifications::ToastDismissedEventArgs*>
+    ToastDismissedHandler;
 
 // Templated wrapper for winfoundtn::GetActivationFactory().
 template <unsigned int size, typename T>
@@ -114,10 +125,110 @@ NotificationPlatformBridge* NotificationPlatformBridge::Create() {
   return new NotificationPlatformBridgeWin();
 }
 
+// Handler for Notification events from Windows. Special care is needed since
+// callback may occur at any time, including at shut down! To handle this:
+// - A static singleton |toast_event_handler_| is used throughout. As a result,
+//   constructor must be trivial.
+// - Operations related to NotificationPlatformBridgeWin need to be posted on
+//   UI thread.
+class ToastEventHandler {
+ public:
+  enum EventType {
+    EVENT_TYPE_ACTIVATED,
+    EVENT_TYPE_DISMISSED,
+  };
+
+  ToastEventHandler() = default;
+
+  // This callback is invoked the notification toast is clicked. This can occur
+  // at any time.
+  HRESULT OnActivated(winui::Notifications::IToastNotification* notification,
+                      IInspectable* /* inspectable */) {
+    PostHandlerOnUIThread(EVENT_TYPE_ACTIVATED, notification);
+    return S_OK;
+  }
+
+  HRESULT OnDismissed(
+      winui::Notifications::IToastNotification* notification,
+      winui::Notifications::IToastDismissedEventArgs* /* args */) {
+    PostHandlerOnUIThread(EVENT_TYPE_DISMISSED, notification);
+    return S_OK;
+  }
+
+ private:
+  void PostHandlerOnUIThread(
+      EventType type,
+      winui::Notifications::IToastNotification* notification) {
+    // TODO(chengx): extract profile id and notification id from |notification|
+    std::string profile_id = "";
+    std::string notification_id = "";
+
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&ToastEventHandler::HandleOnUIThread, type, profile_id,
+                   notification_id));
+  }
+
+  static void HandleOnUIThread(EventType type,
+                               const std::string& profile_id,
+                               const std::string& notification_id) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+    if (!g_browser_process)
+      return;
+
+    NotificationPlatformBridge* notification_bridge =
+        g_browser_process->notification_platform_bridge();
+
+    if (!notification_bridge)
+      return;
+
+    NotificationPlatformBridgeWin* notification_bridge_win =
+        static_cast<NotificationPlatformBridgeWin*>(notification_bridge);
+
+    switch (type) {
+      case EVENT_TYPE_ACTIVATED: {
+        notification_bridge_win->OnClickEvent(profile_id, notification_id);
+        break;
+      }
+      case EVENT_TYPE_DISMISSED: {
+        notification_bridge_win->OnCloseEvent(profile_id, notification_id);
+        break;
+      }
+    }
+  }
+};
+
+struct NotificationData {
+  NotificationData(NotificationCommon::Type notification_type,
+                   const std::string& notification_id,
+                   const std::string& profile_id,
+                   bool is_incognito,
+                   const GURL& origin_url)
+      : notification_type(notification_type),
+        notification_id(notification_id),
+        profile_id(profile_id),
+        is_incognito(is_incognito),
+        origin_url(origin_url) {}
+
+  // Same parameters used by NotificationPlatformBridge::Display().
+  NotificationCommon::Type notification_type;
+  const std::string notification_id;
+  const std::string profile_id;
+  const bool is_incognito;
+
+  // A copy of the origin_url from the underlying message_center::Notification.
+  // Used to pass back to NotificationDisplayService.
+  const GURL origin_url;
+};
+
 NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
   com_functions_initialized_ = base::win::ResolveCoreWinRTDelayload() &&
                                ScopedHString::ResolveCoreWinRTStringDelayload();
 }
+
+// static
+ToastEventHandler NotificationPlatformBridgeWin::toast_event_handler_;
 
 NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() = default;
 
@@ -161,6 +272,21 @@ void NotificationPlatformBridgeWin::Display(
     return;
   }
 
+  // Add event handlers
+  auto activated_handler = mswr::Callback<ToastActivatedHandler>(
+      &toast_event_handler_, &ToastEventHandler::OnActivated);
+  EventRegistrationToken activated_token;
+  hr = toast->add_Activated(activated_handler.Get(), &activated_token);
+  if (FAILED(hr))
+    return;
+
+  auto dismissed_handler = mswr::Callback<ToastDismissedHandler>(
+      &toast_event_handler_, &ToastEventHandler::OnDismissed);
+  EventRegistrationToken dismissed_token;
+  hr = toast->add_Dismissed(dismissed_handler.Get(), &dismissed_token);
+  if (FAILED(hr))
+    return;
+
   hr = notifier->Show(toast.Get());
   if (FAILED(hr))
     LOG(ERROR) << "Unable to display the notification";
@@ -188,4 +314,18 @@ void NotificationPlatformBridgeWin::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   std::move(callback).Run(com_functions_initialized_);
+}
+
+void NotificationPlatformBridgeWin::OnClickEvent(
+    const std::string& profile_id,
+    const std::string& notification_id) {
+  // TODO(chengx): implement
+  MessageBoxW(NULL, L"OnClickEvent()", L"Title", MB_OK);
+}
+
+void NotificationPlatformBridgeWin::OnCloseEvent(
+    const std::string& profile_id,
+    const std::string& notification_id) {
+  // TODO(chengx): implement
+  MessageBoxW(NULL, L"OnCloseEvent()", L"Title", MB_OK);
 }

@@ -10,10 +10,13 @@
 #include "base/macros.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 
+class ToastEventHandler;
+
 // Implementation of the NotificationPlatformBridge for Windows 10 Anniversary
 // Edition and beyond, delegating display of notifications to the Action Center.
 class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
  public:
+  friend ToastEventHandler;
   NotificationPlatformBridgeWin();
   ~NotificationPlatformBridgeWin() override;
 
@@ -35,6 +38,17 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
  private:
   // Whether the required functions from combase.dll have been loaded.
   bool com_functions_initialized_;
+
+  // Handler for toast event callback.
+  static ToastEventHandler toast_event_handler_;
+
+  // Called when toast notification gets clicked.
+  void OnClickEvent(const std::string& profile_id,
+                    const std::string& notification_id);
+
+  // Called when toast notification gets closed.
+  void OnCloseEvent(const std::string& profile_id,
+                    const std::string& notification_id);
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };
