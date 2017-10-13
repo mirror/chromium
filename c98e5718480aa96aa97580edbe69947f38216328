@@ -16,6 +16,24 @@
       "revId": "c98e5718480aa96aa97580edbe69947f38216328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e439d8f7_560381d8",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-13T14:17:34Z",
+      "side": 1,
+      "message": "The salt is random and is 128 bits long.\nHere is how it\u0027s generated:\nhttps://cs.chromium.org/chromium/src/content/browser/browser_context.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d575\n\nAssuming the RNG generates bits uniformly at random, the probability that the second salt is the same as the first one is 1/2^128.",
+      "parentUuid": "0b5b2f09_53f44c17",
+      "revId": "c98e5718480aa96aa97580edbe69947f38216328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
