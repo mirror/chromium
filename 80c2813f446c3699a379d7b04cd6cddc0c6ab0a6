@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62a678be_543059b0",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "What happens if this is removed? I would expect transparent (no background) to be the default, but perhaps there\u0027s a default menu style that adds a bg color.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7dfb1ad_b40207f9",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_nav_menu_item.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c127dc7_d6e49b20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Can we wrap these both in an initBottomNav() call that sets the bottom nav height then calls #initializeMenu()?",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 539,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1df08e7_8a97ea2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "nit: add a blank line after this assert",
+      "range": {
+        "startLine": 551,
+        "startChar": 9,
+        "endLine": 551,
+        "endChar": 48
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a496ae3_3d824687",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "nit: blank line after this one",
+      "range": {
+        "startLine": 288,
+        "startChar": 8,
+        "endLine": 288,
+        "endChar": 14
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa1a6a02_67ece6d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "nit: comment formatting\n\n/**\n * Get the background..",
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e2d1ec_f971d8c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Let\u0027s store this as a class variable and set it in #initializeMenuView()",
+      "range": {
+        "startLine": 519,
+        "startChar": 7,
+        "endLine": 521,
+        "endChar": 24
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5eaf4b9_fa795899",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Typically inflating views and setting variables would happen in the 3-param constructor and this method would just call this(context, null);\n\nHowever, if the other two constructor aren\u0027t used, maybe we can just remove them.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12064090_690fd76c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Does this work if you use TintedDrawable#constructTintedDrawable() instead?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 56
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc668e4c_0961cfac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "nit: remove \"of forked\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a3dae5_01ecdead",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "This just moved from the third_party class?",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a80b20_cb3827a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Is this class primarily needed for this override?",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 5
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41793fcc_7f370a2d",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "Should we remove this @hide now that we have a class extending this?",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4580454f_c499c6d9",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "What would we need to keep to make this class still functional? Since this is in the third_party directory, it\u0027d be nice if others could use it without extending and adding custom implementation.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16a33eb_fd93af1a",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "These two public methods should have a description",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9642c7_0ff21155",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T16:46:08Z",
+      "side": 1,
+      "message": "nit: add a description for this\n\n\nInstead of making this abstract, could it have a default implementation so that this class doesn\u0027t have to be abstract?",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 73
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
