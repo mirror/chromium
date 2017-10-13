@@ -37,12 +37,16 @@ class _TestObject(object):
         self.call_count = 0
 
     @memoized
-    def memoized_add_one(self, argument):
+    def memoized_add_one(self, argument, arg2=0):
         self.call_count += 1
         return argument + 1
 
 
 class MemoizedTest(unittest.TestCase):
+
+    def test_kwargs(self):
+        test = _TestObject()
+        test.memoized_add_one(1, arg2=1)
 
     def test_multiple_identical_calls(self):
         # When a function is called multiple times with identical arguments,
