@@ -47,7 +47,8 @@ class PermissionSelectorRow {
   PermissionSelectorRow(Profile* profile,
                         const GURL& url,
                         const PageInfoUI::PermissionInfo& permission,
-                        views::GridLayout* layout);
+                        views::GridLayout* layout,
+                        const int column_id);
   virtual ~PermissionSelectorRow();
 
   void AddObserver(PermissionSelectorRowObserver* observer);
