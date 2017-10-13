@@ -1,0 +1,323 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "543bedb5_dc8a9849",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "With your latest change (not sure if it landed), you should only need to enable the feature kServiceWorkerPaymentApps, right?",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ae33b7_8791a3e5",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Can you use something like base::BindOnce(\u0026base::RunLoop::Quit, base::Unretained(\u0026run_loop))",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b739be75_48841ad7",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Can these be straight members? Looks like you don\u0027t need to reset them...",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946fc6cd_e72469a1",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "can you have a test for InstallPaymentAppForMethod(\"garbage\");",
+      "range": {
+        "startLine": 230,
+        "startChar": 1,
+        "endLine": 230,
+        "endChar": 43
+      },
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c560dc_c738a0aa",
+        "filename": "chrome/browser/payments/service_worker_payment_app_factory_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Can you\n\n(1) Install two apps that support different origins\n(2) Install two apps that support the same origin",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15f2f8f_4d94325b",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "See here for how to erase in-place (I think it should work)\n\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_manager.cc?rcl\u003dfcb81e0e7b9ccbd7e3b8a78b2d71667523b72621\u0026l\u003d664",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56641bb_2794887f",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Consider making private + friend to better unit-test this",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 34
+      },
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898bff7e_a5095f74",
+        "filename": "components/payments/content/service_worker_payment_app_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Mention that |verifier_| will run the callback if everything was good (BTW, should it? Perhaps it should be in OnPaymentAppsVerifierFinishedUsingResources (renamed OnPaymentsAppsSuccessfullyVerified).\n\nI\u0027m fine either way...",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa4bc50_67461643",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Can you describe the arguments, especially payment_method_identifiers_set and the difference between callback and finished_using_resources_callback",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c47f53_b76a868c",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "passing a std::unique_ptr would usually tell me that ownership is transferred to this class... please add a comment to that effect...",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e00ea8_b53ceea2",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "I would prefer private and friend the test class, what do you think?",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e64ee57_c0906017",
+        "filename": "components/payments/content/service_worker_payment_app_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "\u003d false?",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b348c16d_860d1f2b",
+        "filename": "components/payments/core/test_payment_manifest_downloader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Can you add a comment to this block, I don\u0027t know what it does exactly. Rewrites the URL for the test server?",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f08c2b_1672f2fc",
+        "filename": "components/payments/core/test_payment_manifest_downloader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "can you be a little more clear with respect to \"everything\"?",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67cce1a_1773a2dd",
+        "filename": "components/payments/core/test_payment_manifest_downloader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "Add a comment, perhaps along the lines of the big comment block you have on lines 43-53",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc659e47_dab9902f",
+        "filename": "components/test/data/payments/alicepay.com/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "should you also check that it\u0027s not already installed? just to be safe...\n\nnavigator.serviceWorker.getRegistration(\u0027app.js\u0027).then(function(registration) {\n        if (registration) {\n           // oh oh! problem.\n        }\n});",
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7467adbf_c02546cf",
+        "filename": "components/test/data/payments/alicepay.com/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T16:31:04Z",
+      "side": 1,
+      "message": "would recommend a value like 123456, because if we test for it later, 0 may well be a default value in the C++ code or something.",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "bdc72a3f14342d4012a62daeefcac7a4b8c89511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
