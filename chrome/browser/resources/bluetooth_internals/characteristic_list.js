@@ -68,6 +68,13 @@ cr.define('characteristic_list', function() {
     __proto__: ExpandableListItem.prototype,
 
     /**
+     * Helper function to create the ShowAll button Id.
+     */
+    createShowAllButtonId: function() {
+      return 'show-all-properties-' + this.info.id;
+    },
+
+    /**
      * Decorates the element as a characteristic list item. Creates and caches
      * two fieldsets for displaying property values.
      * @override
@@ -88,6 +95,7 @@ cr.define('characteristic_list', function() {
       this.propertiesFieldSet_.setPropertyDisplayNames(
           PROPERTIES_PROPERTY_NAMES);
       var Property = interfaces.BluetoothDevice.Property;
+      this.propertiesFieldSet_.showAll = false;
       this.propertiesFieldSet_.setObject({
         broadcast: (this.info.properties & Property.BROADCAST) > 0,
         read: (this.info.properties & Property.READ) > 0,
@@ -147,6 +155,18 @@ cr.define('characteristic_list', function() {
 
       var propertiesHeader = document.createElement('h4');
       propertiesHeader.textContent = 'Properties';
+
+      var propertiesBtn = document.createElement('button');
+      propertiesBtn.textContent = 'Show All';
+      propertiesBtn.id = this.createShowAllButtonId();
+      propertiesBtn.classList.add('show-all-properties');
+      propertiesBtn.addEventListener('click', () => {
+        this.propertiesFieldSet_.showAll = !this.propertiesFieldSet_.showAll;
+        propertiesBtn.textContent =
+            this.propertiesFieldSet_.showAll ? 'Hide' : 'Show all';
+        this.propertiesFieldSet_.redraw();
+      });
+      propertiesHeader.appendChild(propertiesBtn);
 
       var propertiesDiv = document.createElement('div');
       propertiesDiv.classList.add('flex');
