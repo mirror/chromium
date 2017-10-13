@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27968efa_b7f7f198",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T20:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0370be_93eab698",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6e9aa37_c4ec81e3",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T19:43:09Z",
       "side": 1,
       "message": "We should clear the suggestions when I clear the console (or navigate and do not preserve log).",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2370b6d1_1657757b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T20:30:49Z",
+      "side": 1,
+      "message": "Done, introduced\n- clear() on UI.FilterSuggestionBuilder\n- clearSuggestionBuilder() on ConsoleViewFilter",
+      "parentUuid": "b6e9aa37_c4ec81e3",
       "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70702dd4_84e689d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SuggestBox.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T20:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53eaef26_88ddd9c8",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +177,24 @@
       "side": 1,
       "message": "I can imagine how slow this is :)\n\nAlso, are there any other ToolbarInputs which are going to break?",
       "parentUuid": "aff8b6cf_78ef46df",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dea30c_02ed06ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T20:30:49Z",
+      "side": 1,
+      "message": "We can definitely invest in performance in future patches!\n\nChecked others inputs in Coverage, Application Panel, they seem fine.  Only Console\u0027s ToolbarInput is using completions for now.",
+      "parentUuid": "b75bf6a8_9ebd8789",
       "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
