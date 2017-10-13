@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34605a0f_5f9c7aa4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SuggestBox.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T18:34:50Z",
+      "side": 1,
+      "message": "Just a copy paste % rename \"Network\" \u003e \"UI.SuggestBox\".\n\nWhy is this in SuggestBox instead of say, TextUtils?\nIt\u0027s nice to have JSDoc @return {!UI.SuggestBox.Suggestions}, and text_utils/ module doesn\u0027t depend on ui/.",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa50e176_90cd21f5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T18:34:50Z",
+      "side": 1,
+      "message": "TextPrompt\u0027s default stop characters include colon `:`, which I don\u0027t want.  Thus, the space ` ` stop character is explicitly passed here.",
+      "range": {
+        "startLine": 592,
+        "startChar": 72,
+        "endLine": 592,
+        "endChar": 75
+      },
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff8b6cf_78ef46df",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-13T18:34:50Z",
+      "side": 1,
+      "message": "Allows us to see the console update when you \"arrow\" down through the suggestions.",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
