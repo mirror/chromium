@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ada06aa_6d1cf166",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "nit: should this be a DCHECK or are there valid use cases of calling ++ when at end? Also should we DCHECK or clear current_op here?",
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da413ff_3da6f5bb",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr here instead of the else case, so it\u0027s clear that everything is totally initialized.",
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d50b6e_7fa317e0",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "Can you leave a note that the \"else\" case is handled below in the while loop? It\u0027s not immediately obvious. Alternatively maybe save nested-\u003eback().iter as a reference so that we can push a new nested without invalidating that. Although I\u0027m not sure what the StackVector iterator validity is like, so maybe bad idea. A comment is fine I think.",
+      "range": {
+        "startLine": 1857,
+        "startChar": 2,
+        "endLine": 1860,
+        "endChar": 27
+      },
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d206c565_6c6c7eed",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "Hmm this block is a bit awkward :( Like I thought we could emit a save and pop immediately instead of relying on save count to see if we already issued a restore, but I can see how that complicates things since you don\u0027t know to advance or not on the next iteration. Injecting ops is awkward...",
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b09c366_a7208e8b",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "Should this clear the current op?",
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c9c796_94965476",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "nit \u003d SkMatrix::I()?",
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef5fe96_9267738b",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7167,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-13T00:19:51Z",
+      "side": 1,
+      "message": "nit: this should be the default",
+      "range": {
+        "startLine": 7167,
+        "startChar": 28,
+        "endLine": 7167,
+        "endChar": 51
+      },
+      "revId": "e89be84ed55986a54e5407a9ce1b3a917de56f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
