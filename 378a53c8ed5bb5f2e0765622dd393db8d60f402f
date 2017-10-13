@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2558ef0e_4a6ce49a",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-13T02:54:46Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "80597bd6_285b1628",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "053f2a59_0da8e825",
         "filename": "chrome/browser/permissions/permission_request_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T23:27:33Z",
       "side": 1,
       "message": "Should we check GetContentSettingsType here instead?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2961832a_227832c3",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-13T02:54:46Z",
+      "side": 1,
+      "message": "I thought it was nicer to have it up top, since it makes it clearer that none of this will do anything. If you feel strongly about it I can change it.",
+      "parentUuid": "053f2a59_0da8e825",
       "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b37dab9_7f330aa5",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-13T02:54:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea7c0c54_b6db247f",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c4b55b_4337bbb8",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5dde1032_9fbd147f",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-13T02:54:46Z",
+      "side": 1,
+      "message": "Same as the other location, let me know if you feel strongly.",
+      "parentUuid": "c1c4b55b_4337bbb8",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7116261_eda54456",
         "filename": "chrome/browser/permissions/permission_uma_util.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-12T23:27:33Z",
       "side": 1,
       "message": "Hmm, one thing to consider is that this is going to record 2 ignores for mic+camera whereas it looks like for accepted/denied/shown we only display 1 for mic+camera?",
+      "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf1c23f_664ff479",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-10-13T02:54:46Z",
+      "side": 1,
+      "message": "This is actually consistent.... the metrics that count once are Permissions.Prompt.Accepted/Denied (type -\u003e count, can be \"multiple\"), but we don\u0027t have Permissions.Prompt.Ignored. This code is for logging prior ignore/dismiss count, which for other actions is also split up separately into mic/camera.",
+      "parentUuid": "a7116261_eda54456",
       "revId": "378a53c8ed5bb5f2e0765622dd393db8d60f402f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
