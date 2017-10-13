@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cee8bb3_b2fd9e1d",
+        "filename": "components/translate/ios/browser/js_translate_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-13T08:48:41Z",
+      "side": 1,
+      "message": "optional: check also the other bound, allowing for a pretty large error. Example:\nEXPECT_LE(timeElapsedInSeconds, intervalInSeconds + 20);",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 11
+      },
+      "revId": "2ce6a722035aaaac35bd674b9dbf566fde46222e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
