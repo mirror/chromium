@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94e7e3a1_4118ad17",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Ah yeah, good point.",
+      "parentUuid": "639bd581_b961774e",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6efafbda_bc4c1487",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908b02b8_44c6e86a",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efafbda_bc4c1487",
+      "range": {
+        "startLine": 202,
+        "startChar": 5,
+        "endLine": 202,
+        "endChar": 10
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6532782_b1facb57",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4fd8cf4_a4bcca4b",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0372859c_f8fee748",
         "filename": "chrome/browser/installable/installable_data.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e182d2_a2314865",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0372859c_f8fee748",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "95c763d3_44b70903",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Done. I think it\u0027s worth keeping so that things are referenced as params and callback rather than first and second.",
+      "parentUuid": "a39186d7_a60ea2ac",
+      "range": {
+        "startLine": 181,
+        "startChar": 1,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40e90554_f48d4ef4",
         "filename": "chrome/browser/installable/installable_params.h",
         "patchSetId": 8
@@ -160,6 +280,30 @@
       "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46508808_d1f41744",
+        "filename": "chrome/browser/installable/installable_params.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-13T05:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40e90554_f48d4ef4",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 65
+      },
+      "revId": "3f31e78ba69713236b7fb57f130ec58551ae4025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
