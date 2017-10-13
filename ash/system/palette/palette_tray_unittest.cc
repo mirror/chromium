@@ -17,6 +17,7 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/palette/palette_tray_test_api.h"
 #include "ash/system/palette/palette_utils.h"
 #include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/palette/test_palette_delegate.h"
@@ -69,7 +70,7 @@ class PaletteTrayTest : public AshTestBase {
 
     palette_tray_ =
         StatusAreaWidgetTestHelper::GetStatusAreaWidget()->palette_tray();
-    test_api_ = std::make_unique<PaletteTray::TestApi>(palette_tray_);
+    test_api_ = std::make_unique<PaletteTrayTestApi>(palette_tray_);
 
     // Set the test palette delegate here, since this requires an instance of
     // shell to be available.
@@ -95,7 +96,7 @@ class PaletteTrayTest : public AshTestBase {
 
   PaletteTray* palette_tray_ = nullptr;  // not owned
 
-  std::unique_ptr<PaletteTray::TestApi> test_api_;
+  std::unique_ptr<PaletteTrayTestApi> test_api_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PaletteTrayTest);
