@@ -9,6 +9,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/ui/page_info/permission_menu_model.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/page_info/non_accessible_image_view.h"
 #include "chrome/browser/ui/views/page_info/page_info_bubble_view.h"
@@ -25,6 +26,14 @@
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
+
+namespace {
+
+// The text context / style of the |PermissionSelectorRow| combobox and label.
+constexpr int kFontContext = views::style::CONTEXT_LABEL;
+constexpr int kFontStyle = views::style::STYLE_PRIMARY;
+
+}  // namespace
 
 namespace internal {
 
@@ -226,20 +235,27 @@ PermissionSelectorRow::PermissionSelectorRow(
     Profile* profile,
     const GURL& url,
     const PageInfoUI::PermissionInfo& permission,
-    views::GridLayout* layout)
+    views::GridLayout* layout,
+    const int column_id)
     : profile_(profile), icon_(NULL), menu_button_(NULL), combobox_(NULL) {
+  ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
+  const int kListItemPadding =
+      layout_provider->GetDistanceMetric(DISTANCE_CONTROL_LIST_VERTICAL) / 2;
+  const int kComboboxHeight = layout_provider->GetControlHeightForFont(
+      kFontContext, kFontStyle, views::Combobox::GetFontList());
+  layout->AddPaddingRow(0, kListItemPadding);
+  layout->StartRow(1, column_id, kComboboxHeight);
+
   // Create the permission icon.
   icon_ = new NonAccessibleImageView();
   const gfx::Image& image = PageInfoUI::GetPermissionIcon(permission);
   icon_->SetImage(image.ToImageSkia());
-  layout->AddView(icon_, 1, 1, views::GridLayout::CENTER,
-                  views::GridLayout::CENTER);
+  layout->AddView(icon_);
   // Create the label that displays the permission type.
   label_ =
       new views::Label(PageInfoUI::PermissionTypeToUIString(permission.type),
                        CONTEXT_BODY_TEXT_LARGE);
-  layout->AddView(label_, 1, 1, views::GridLayout::LEADING,
-                  views::GridLayout::CENTER);
+  layout->AddView(label_);
   // Create the menu model.
   menu_model_.reset(new PermissionMenuModel(
       profile, url, permission,
@@ -263,16 +279,34 @@ PermissionSelectorRow::PermissionSelectorRow(
   base::string16 reason =
       PageInfoUI::PermissionDecisionReasonToUIString(profile, permission, url);
   if (!reason.empty()) {
-    layout->StartRow(1, 1);
+    layout->StartRow(1, column_id);
     layout->SkipColumns(1);
     views::Label* permission_decision_reason = new views::Label(reason);
     permission_decision_reason->SetEnabledColor(
         PageInfoUI::GetPermissionDecisionTextColor());
-    // Long labels should span the remaining width of the row.
-    views::ColumnSet* column_set = layout->GetColumnSet(1);
+
+    views::ColumnSet* column_set = layout->GetColumnSet(column_id);
     DCHECK(column_set);
-    layout->AddView(permission_decision_reason, column_set->num_columns() - 2,
-                    1, views::GridLayout::LEADING, views::GridLayout::CENTER);
+    // Long labels should span the remaining width of the row (minus the end
+    // margin). This includes the permission label, combobox, and space between
+    // them (3 columns total).
+    const int kColumnSpan = 3;
+    layout->AddView(permission_decision_reason, kColumnSpan, 1,
+                    views::GridLayout::LEADING, views::GridLayout::CENTER);
+
+    // Match the amount of padding above the |label_| text here by calculating
+    // the full height of this |PermissionSelectorRow| and subtracting the line
+    // height. Note it is assumed the combobox is the tallest part of the row.
+    if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+      const int kTotalTextPadding =
+          kListItemPadding * 2 + kComboboxHeight -
+          views::style::GetLineHeight(kFontContext, kFontStyle);
+      layout->AddPaddingRow(0, kTotalTextPadding / 2);
+    } else {
+      layout->AddPaddingRow(0, kListItemPadding);
+    }
+  } else {
+    layout->AddPaddingRow(0, kListItemPadding);
   }
 }
 
