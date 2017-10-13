@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "cee4433b_88ad1726",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "429b0746_4db07ac1",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b48d3_0486e0a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "Generate",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a605c0_2b539c3c",
         "filename": "components/language/content/util/BUILD.gn",
         "patchSetId": 18
@@ -41,6 +88,69 @@
         "startChar": 8,
         "endLine": 3,
         "endChar": 32
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b4b4d9_aadc25b8",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "What do you mean by this comment?",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 6,
+        "endChar": 68
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd78c5d9_84ef1f59",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "From \"gn help action\":\n\n\u003e  It is recommended you put inputs to your script in the \"sources\" variable,\n\u003e  and stuff like other Python files required to run your script in the \"inputs\"\n\u003e  variable.\n\nSo I would recommend splitting this in two lists, using \"inputs\" and \"sources\":\n\n  inputs \u003d [ \"template/language_code_locator.cpp.tmpl\" ]\n  sources \u003d [ \"adminregionsdata.csv\" ]",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdcb7bc_8e4ae355",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "I would use $target_gen_dir as this is simpler:\n\n  outputs \u003d [ \"$target_gen_dir/language_code_locator.cc\" ],\n\nBTW, it looks like Chromium seems to prefer .cc to .cpp when naming C++ source files:\n\n  $ find chrome components -name \u0027*.cpp\u0027 -o -name \u0027*.cc\u0027|sed \u0027s:^.*\\.:.:\u0027|sort|uniq -c\n  11450 .cc\n     6 .cpp",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 78
       },
       "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -65,6 +175,247 @@
         "endLine": 19,
         "endChar": 16
       },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e36585_e79002e5",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "4b3e36cd_8e5db18b",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0a55f9_d6c28f4f",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "You can use \"get_target_outputs\" instead of listing explicitly the output of the other target:\n\n  sources \u003d [ \"language_code_locator.h\" ] +\n      get_target_outputs(\":make_s2_language_locator\")",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edfeaa7_1753e9ee",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "Please add a here doc summarizing what this script does, something like:\n\n  \"\"\"Generate c++ structure mapping position to region from .csv input.\"\"\"",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851a370f_280b647f",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "Since you are already using os.path.join() to create the path, avoid using strings that hard-code path separators and name of the parent directory.\n\n  os.path.join(\n      os.path.dirname(__file__),\n      os.path.pardir,\n      os.path.pardir,\n      os.path.pardir,\n      os.path.pardir,\n      \u0027third_party\u0027)\n\nOr you can also pass the path to the script on the command-line (this will require delaying importing the module until the code using it is invoked though).",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f89358_9b82102d",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "style: avoid abbreviations, so this variable should probably be called LANGUAGE_FIELD (the same remark applies to other variables or function, e.g. \"language_districts\", \"language_code\", ...).",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ab15ca_827c36cc",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "style: this should be named ExtractCellIds\n\n\u003e  Use CamelCase() method and function names instead of unix_hacker_style() names.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf61481_4a6573fa",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "style: avoid code at the top-level of the script, instead use function\n\nA common pattern is to have a Main() function that parse arguments and then invoke one or more helper function to implement the script functionality. This allows to re-use part of the script by importing it from another script.\n\n  def Main():\n    parser \u003d argparse.ArgumentParser()\n    parser.add_argument(\n        \u0027--frobinate\u0027, default\u003dFalse, action\u003d\u0027store_true\u0027,\n        help\u003d\u0027enable frobination\u0027)\n    args \u003d parser.parse_args()\n\n    DoSomething(args.frobinate)\n\n  if __name__ \u003d\u003d \u0027__main\u0027:\n    Main()",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b8545e_46630949",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "Please use argparse instead of parsing command-line yourself. It is more flexible, it is standard and support both positional and named parameters, and does automatically generate documentation.\n\n  parser \u003d argparse.ArgumentParser()\n  parser.add_argument(\n      \u0027--output\u0027, \u0027-o\u0027, required\u003dTrue,\n      help\u003d\u0027path to the generate c++ file\u0027)\n  parser.add_argument(\n      \u0027--template\u0027, \u0027-t\u0027, required\u003dTrue,\n      help\u003d\u0027path to the template used to generate c++ file\u0027)\n  parser.add_argument(\n      \u0027--input\u0027, \u0027-i\u0027, required\u003dTrue,\n      help\u003d\u0027path to the input .csv file\u0027)\n  args \u003d parser.parse_args()\n\nNote that I\u0027ve used named argument as I generally prefer using them except when the script takes a variable number of file path. This is a personal preference that I developed because I find it make it easier to add extra parameters to the script without having to change all invocations.\n\nIf you want to use positional arguments, then use an argument name that does not start by a \u0027-\u0027, so for example (note that \u0027required\u003dTrue\u0027 has been removed as positional arguments are always required to be present):\n\n  parser.add_argument(\n      \u0027input\u0027, help\u003d\u0027path to the input .csv file\u0027)\n\nIn both case, the arguments will be available as \"args.output\", \"args.template\", \"args.input; argparse will add an extra \"--help\" argument and present an error message if some arguments are missing.",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3056ad11_fb13336c",
+        "filename": "components/language/content/util/convert_s2_cell.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "Move all the code below in one or more function. I think we could have two helper functions, one to parse the input, another to generate the output:\n\n  def ParseInputCsv(input_path):\n    ...\n\n  def GenerateCpp(data, template_path, output_path):\n    ...",
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f137f9f9_6e7d936d",
+        "filename": "components/language/content/util/language_code_locator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "style: avoid abbreviations, so \"latitude\", \"longitude\", \"district_languages_\", ...",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e241712_c00e321f",
+        "filename": "components/language/content/util/language_code_locator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "//base/containers/README.md recommends to avoid using std::unordered_map and instead to prefer using std::map or base::flat_map (that has better performance if it can be constructor from a std::vector which is the case here).",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2541bdcd_c0cc132a",
+        "filename": "components/language/content/util/template/language_code_locator.cpp.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T13:13:52Z",
+      "side": 1,
+      "message": "It looks like all this could go into a real c++ file if you use an helper function to do the generation and only generate the code for the helper function:\n\nSo the non-generated c++ file would contain something like:\n\n  // Copyright 2017 The Chromium Authors. All rights reserved.\n  // Use of this source code is governed by a BSD-style license that can be\n  // found in the LICENSE file.\n\n  #include \"components/language/content/util/language_code_locator.h\"\n\n  #include \"base/strings/string_split.h\"\n  #include \"third_party/s2cellid/src/s2/s2cellid.h\"\n  #include \"third_party/s2cellid/src/s2/s2latlng.h\"\n\n  namespace language {\n  namespace internal {\n  extern std::unordered_map\u003cuint64_t, std::string\u003e GenerateDistrictLanguageMapping();\n  }  // namespace internal\n\n  LanguageCodeLocator::LanguageCodeLocator()\n    : district_language_(GenerateDistrictLanguageMapping()) {}\n\n  LanguageCodeLocator::~LanguageCodeLocator() {}\n\n  std::vector\u003cstd::string\u003e LanguageCodeLocator::GetLanguageCode(\n      double lat, double lng) const {\n    S2CellId current_cell(S2LatLng::FromDegrees(lat, lng));\n    while (current_cell.level() \u003e 0) {\n      auto search \u003d district_lang_.find(current_cell.id());\n      if (search !\u003d district_lang_.end()) {\n          return base::SplitString(\n              search-\u003esecond, \";\", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);\n      }\n      current_cell \u003d current_cell.parent();\n    }\n    return {};\n  }\n  }  // namespace language\n\nAnd the template would only contain the implementation of the GenerateDistrictLanguageMapping function:\n\n  // Copyright 2017 The Chromium Authors. All rights reserved.\n  // Use of this source code is governed by a BSD-style license that can be\n  // found in the LICENSE file.\n\n  #include \u003cstring\u003e\n  #include \u003cunordered_map\u003e\n\n\n  namespace language {\n  namespace internal {\n  std::unordered_map\u003cuint64_t, std::string\u003e GenerateDistrictLanguageMapping() {\n    return {\n    {% set c \u003d 1 %}\n    {% for cell_lang_pair in cell_lang_pairs -%}\n      { {{cell_lang_pair[0]}}ull, \"{{cell_lang_pair[1]}}\" },\n      {% set c \u003d c + 1%}\n    {%- endfor %}\n    };\n  }\n  }  // namespace internal\n  }  // namespace language",
       "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
