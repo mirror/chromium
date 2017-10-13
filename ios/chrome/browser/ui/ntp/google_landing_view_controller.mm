@@ -702,6 +702,10 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
   [_headerView reparentToolbarController];
 }
 
+- (void)triggerToolsMenuButtonAnimation {
+  [_headerView triggerToolsMenuButtonAnimation];
+}
+
 #pragma mark - UICollectionView Methods.
 
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView

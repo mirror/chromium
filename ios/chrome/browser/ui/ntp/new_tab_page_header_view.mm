@@ -84,6 +84,10 @@
   }
 }
 
+- (void)triggerToolsMenuButtonAnimation {
+  [_toolbarController triggerToolsMenuButtonAnimation];
+}
+
 - (void)addToolbarWithReadingListModel:(ReadingListModel*)readingListModel
                             dispatcher:(id)dispatcher {
   DCHECK(!_toolbarController);

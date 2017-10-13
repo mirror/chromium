@@ -20,6 +20,8 @@
 // relinquished.
 - (void)reparentToolbarController;
 
+- (void)triggerToolsMenuButtonAnimation;
+
 @optional
 // Returns the height of the toolbar owned by the implementing class.
 - (CGFloat)toolbarHeight;
