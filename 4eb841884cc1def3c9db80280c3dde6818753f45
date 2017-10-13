@@ -46,6 +46,30 @@
       "revId": "4eb841884cc1def3c9db80280c3dde6818753f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cc1b2f_8a53379e",
+        "filename": "third_party/WebKit/Source/core/style/CounterValue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T00:17:23Z",
+      "side": 1,
+      "message": "It all uses the same underlying code, and in these cases will compile down to exactly the same thing. That stated, the variadics can produce more efficient code in some rare corner cases, and generally have a more ergonomic API. So, they are prefered over the operator overloads, and probably would have been the only API if we had supported variadics when I originally wrote the CheckedNumeric templates.\n\nAll of the important context should actually be in the API docs. Let me know if you notice any omissions:\nhttps://chromium.googlesource.com/chromium/src.git/+/lkcr/base/numerics/README.md#CheckedNumeric_in-checked_math_h",
+      "parentUuid": "bc0cdc69_0f4d1fd6",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "4eb841884cc1def3c9db80280c3dde6818753f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
