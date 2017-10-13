@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba84746b_da13061c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Common.UIString(\u0027Errors\u0027). Same below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37055320_0a53ebfb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "for (var filter of filters) {\n  var group \u003d new ...;\n  this._tree.appendChild(group);\n  this._groups.push(group);\n}",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ea34b3_3633bcba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Don\u0027t do this. You\u0027ll steal focus when opening console.",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b760b78_b37010f5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "if (!this._enabled || !this._selectedTreeElement)\n  return true;",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca84f7c_6483b50d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Console.ConsoleSidebar.URLGroupTreeElement",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09a4cbc_7466c726",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "- Console.ConsoleSidebar.FilterTreeElement\n- do not extend",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a20a70_f8517011",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Why not this._filter.applyFilter?",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3eaf3f1_0c789769",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "- Instead of constructing a filter every time, let\u0027s construct it when user selects a tree item instead (by copying from parent and adding url).\n- Introduce ConsoleFilter.clone, and then just add a url filter to it.",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abda6dcd_b9986a98",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Let\u0027s just not show levels when your experiment is on.",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90742069_50f5a782",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:40:31Z",
+      "side": 1,
+      "message": "Let\u0027s move tests which need this experiment to console-sidebar/",
+      "revId": "2182f44894a6a069328174279414e922c1612579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
