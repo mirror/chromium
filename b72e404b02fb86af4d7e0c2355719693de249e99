@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e36ef4d4_b134bb5d",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "effective_frame_policy() ?",
+      "range": {
+        "startLine": 377,
+        "startChar": 18,
+        "endLine": 377,
+        "endChar": 49
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd61ce7_67699bcb",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "nit: sandbox flag and allow updates -\u003e \"sandbox\" and \"allow\" attribute updates\n(just to make it clearer that this is talking about iframe attributes)",
+      "range": {
+        "startLine": 209,
+        "startChar": 42,
+        "endLine": 209,
+        "endChar": 72
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939a4e20_b5fb7de2",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "It\u0027s not immediately obvious why \"src\" is here now.  Perhaps clarify that it affects the container policy, as you do below for effective_frame_policy()?",
+      "range": {
+        "startLine": 218,
+        "startChar": 71,
+        "endLine": 218,
+        "endChar": 74
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a753ad_f6f2a6c0",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "I see that this will change to active_sandbox_flags() in the third CL, which is great!  This is ok in the meantime.",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 69
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925972aa_ef37e6ae",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "I thought whether it\u0027s worth maintaining a convenience method to access these, but since there are only two uses outside tests and since most usage will probably want active_sandbox_flags(), this is probably fine.",
+      "range": {
+        "startLine": 948,
+        "startChar": 25,
+        "endLine": 948,
+        "endChar": 61
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a85983c_c94f95c1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4051,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "effective_frame_policy()?",
+      "range": {
+        "startLine": 4050,
+        "startChar": 10,
+        "endLine": 4051,
+        "endChar": 23
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247248f8_5244ff5a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4202,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "nit: move () to effective_frame_policy",
+      "range": {
+        "startLine": 4202,
+        "startChar": 11,
+        "endLine": 4202,
+        "endChar": 49
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90328c4_8eef7742",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "Was this intended to be \"container\"?  Are there plans for feature policy to be inherited for window.open?",
+      "range": {
+        "startLine": 699,
+        "startChar": 43,
+        "endLine": 699,
+        "endChar": 48
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a52eb2e_fdc3f3c8",
+        "filename": "content/common/frame_replication_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T18:08:54Z",
+      "side": 1,
+      "message": "nit: CommitPendingFramePolicy",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
