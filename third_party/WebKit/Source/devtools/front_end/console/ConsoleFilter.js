@@ -53,7 +53,7 @@ Console.ConsoleFilter = class {
    * @return {boolean}
    */
   applyFilter(viewMessage) {
-    var visible = this._shouldBeVisible(viewMessage);
+    var visible = this.shouldBeVisible(viewMessage);
     var message = viewMessage.consoleMessage();
     var skipCounters =
         (message.type === ConsoleModel.ConsoleMessage.MessageType.Command ||
@@ -67,7 +67,7 @@ Console.ConsoleFilter = class {
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  _shouldBeVisible(viewMessage) {
+  shouldBeVisible(viewMessage) {
     var message = viewMessage.consoleMessage();
     if (this.executionContext &&
         (this.executionContext.runtimeModel !== message.runtimeModel() ||

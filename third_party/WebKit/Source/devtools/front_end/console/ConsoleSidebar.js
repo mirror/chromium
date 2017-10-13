@@ -45,6 +45,12 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._groups.forEach(group => group.onMessageAdded(message));
   }
 
+  resetCounters() {
+    if (!this._enabled)
+      return;
+    this._groups.forEach(group => group.resetCounters());
+  }
+
   clear() {
     if (!this._enabled)
       return;
@@ -58,8 +64,9 @@ Console.ConsoleSidebar = class extends UI.VBox {
   applyFilters(viewMessage) {
     if (!this._enabled)
       return true;
+    this._groups.forEach(group => group.applyFilter(viewMessage));
     if (this._selectedTreeElement)
-      return this._selectedTreeElement.applyFilter(viewMessage);
+      return this._selectedTreeElement.shouldBeVisible(viewMessage);
     return true;
   }
 
@@ -87,14 +94,33 @@ Console.SidebarItem = class extends UI.TreeElement {
     this._filter = filter;
     if (tooltip)
       this.tooltip = tooltip;
+    this._countElement = this.listItemElement.createChild('span');
+  }
+
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   */
+  applyFilter(viewMessage) {
+    this._filter.applyFilter(viewMessage);
+    this._updateCounters();
   }
 
   /**
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  applyFilter(viewMessage) {
-    return this._filter.applyFilter(viewMessage);
+  shouldBeVisible(viewMessage) {
+    return this._filter.shouldBeVisible(viewMessage);
+  }
+
+  _updateCounters() {
+    var totalCount = this._filter.errorCount + this._filter.warningCount + this._filter.infoCount;
+    this._countElement.textContent = totalCount > 0 ? totalCount : '';
+  }
+
+  resetCounters() {
+    this._filter.resetCounters();
+    this._updateCounters();
   }
 };
 
@@ -107,6 +133,45 @@ Console.SidebarLevelByUrlGroup = class extends Console.SidebarItem {
     this.setExpandable(true);
     /** @type {!Map<string, !Console.SidebarItem>} */
     this._urlItems = new Map();
+    this._updateCounters();
+  }
+
+  /**
+   * @override
+   */
+  _updateCounters() {
+    var totalCount = this._filter.errorCount + this._filter.warningCount + this._filter.infoCount;
+    this._countElement.textContent = totalCount > 0 ? totalCount : '';
+
+    var titleText = `${totalCount ? totalCount : 'No'} ${this._filter.name}`;
+    if (this._filter.name !== ConsoleModel.ConsoleMessage.MessageLevel.Info &&
+        this._filter.name !== ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
+      titleText += `${totalCount !== 1 ? 's' : ''}`;
+    this.title = titleText;
+  }
+
+  /**
+   * @override
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   */
+  applyFilter(viewMessage) {
+    var message = viewMessage.consoleMessage();
+    var childMatch = this._urlItems.get(/** @type {string} */ (message.url));
+    if (childMatch)
+      childMatch.applyFilter(viewMessage);
+
+    this._filter.applyFilter(viewMessage);
+    this._updateCounters();
+  }
+
+  /**
+   * @override
+   */
+  resetCounters() {
+    this._filter.resetCounters();
+    this._updateCounters();
+    for (var child of this.children())
+      child.resetCounters();
   }
 
   /**
