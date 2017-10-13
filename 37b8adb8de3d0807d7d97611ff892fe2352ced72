@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "45c56168_2ebd30b8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T18:50:31Z",
+      "side": 1,
+      "message": "Hmm... I guess the copy is unavoidable due to the thread hop. Oh well! Thanks for poking at this.",
+      "parentUuid": "951b5175_114de5f2",
+      "revId": "37b8adb8de3d0807d7d97611ff892fe2352ced72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b3c412_80ca0079",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 10
