@@ -10,6 +10,8 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/network/network_context.h"
+#include "content/network/throttling/network_conditions.h"
+#include "content/network/throttling/throttling_controller.h"
 #include "content/public/common/content_switches.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/log/file_net_log_observer.h"
