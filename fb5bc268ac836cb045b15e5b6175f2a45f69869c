@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "526c88f3_6340eb42",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:44Z",
+      "side": 1,
+      "message": "Sure, done. (Although I had to define a transparent comparator for some of the unittests, which pass a char* into the map functions, to be happy.)",
+      "parentUuid": "b834ee5f_4349c3d1",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b57a13_e05ff9ca",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d740d7_954e6715",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b57a13_e05ff9ca",
+      "range": {
+        "startLine": 89,
+        "startChar": 71,
+        "endLine": 89,
+        "endChar": 78
+      },
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1312db7b_34688150",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:44Z",
+      "side": 1,
+      "message": "Done. (I think it\u0027s standard enough that a string comparison is lexicographical.)",
+      "parentUuid": "4063660e_ec8d39e0",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c333e6b3_489ee0c0",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "bf308d50_8af17ef0",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:44Z",
+      "side": 1,
+      "message": "Done (and for a couple of other tests).",
+      "parentUuid": "c333e6b3_489ee0c0",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a10ff10e_e418f357",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 1
@@ -96,6 +180,24 @@
       "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd60e24_2a6e744b",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10ff10e_e418f357",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
