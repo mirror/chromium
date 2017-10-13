@@ -948,8 +948,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
   // We may not find a frame_entry in some cases; ignore the PageState if so.
   // TODO(creis): Remove the "if" once https://crbug.com/522193 is fixed.
   if (frame_entry) {
-    frame_entry->SetPageState(params.page_state);
-    frame_entry->set_redirect_chain(params.redirects);
+    DCHECK(params.page_state == frame_entry->page_state());
   }
 
   // When a navigation in the main frame is blocked, it will display an error
@@ -1155,7 +1154,9 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
     FrameNavigationEntry* frame_entry = new FrameNavigationEntry(
         rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
         params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
-        params.url, params.referrer, params.method, params.post_id);
+        params.url, params.referrer, params.redirects, params.page_state,
+        params.method, params.post_id);
+
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
         frame_entry, true, rfh->frame_tree_node(),
         delegate_->GetFrameTree()->root());
@@ -1256,11 +1257,14 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
   new_entry->SetIsOverridingUserAgent(params.is_overriding_user_agent);
 
   // Update the FrameNavigationEntry for new main frame commits.
+  // TODO(creis): Use AddOrUpdate?  Or FNE constructor?
   FrameNavigationEntry* frame_entry =
       new_entry->GetFrameEntry(rfh->frame_tree_node());
   frame_entry->set_frame_unique_name(rfh->frame_tree_node()->unique_name());
   frame_entry->set_item_sequence_number(params.item_sequence_number);
   frame_entry->set_document_sequence_number(params.document_sequence_number);
+  frame_entry->set_redirect_chain(params.redirects);
+  frame_entry->SetPageState(params.page_state);
   frame_entry->set_method(params.method);
   frame_entry->set_post_id(params.post_id);
 
@@ -1517,7 +1521,9 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
   scoped_refptr<FrameNavigationEntry> frame_entry(new FrameNavigationEntry(
       rfh->frame_tree_node()->unique_name(), params.item_sequence_number,
       params.document_sequence_number, rfh->GetSiteInstance(), nullptr,
-      params.url, params.referrer, params.method, params.post_id));
+      params.url, params.referrer, params.redirects, params.page_state,
+      params.method, params.post_id));
+
   std::unique_ptr<NavigationEntryImpl> new_entry =
       GetLastCommittedEntry()->CloneAndReplace(
           frame_entry.get(), is_same_document, rfh->frame_tree_node(),
