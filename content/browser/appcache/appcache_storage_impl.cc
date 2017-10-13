@@ -75,9 +75,11 @@ bool DeleteGroupAndRelatedRecords(
   return success;
 }
 
+}  // namespace
+
 // Destroys |database|. If there is appcache data to be deleted
 // (|force_keep_session_state| is false), deletes session-only appcache data.
-void ClearSessionOnlyOrigins(
+void AppCacheStorageImpl::ClearSessionOnlyOrigins(
     AppCacheDatabase* database,
     scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy,
     bool force_keep_session_state) {
@@ -132,8 +134,6 @@ void ClearSessionOnlyOrigins(
     }  // for each group
   }  // for each origin
 }
-
-}  // namespace
 
 // DatabaseTask -----------------------------------------
 

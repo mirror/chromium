@@ -127,6 +127,11 @@ class AppCacheStorageImpl : public AppCacheStorage {
   void LazilyCommitLastAccessTimes();
   void OnLazyCommitTimer();
 
+  static void ClearSessionOnlyOrigins(
+      AppCacheDatabase* database,
+      scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy,
+      bool force_keep_session_state);
+
   // Sometimes we can respond without having to query the database.
   bool FindResponseForMainRequestInGroup(
       AppCacheGroup* group,  const GURL& url, Delegate* delegate);
