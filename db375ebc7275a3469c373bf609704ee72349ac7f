@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46775807_054a9046",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: reference crbug.com/756539",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccf8aa7_59dbbeec",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "Isn\u0027t this unnecessary?",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd024d52_32880cfd",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: please use nullptr per google c++ guidelines. [1]\n\n[1] https://google.github.io/styleguide/cppguide.html#0_and_nullptr/NULL",
+      "range": {
+        "startLine": 17,
+        "startChar": 37,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff863b48_6c5dfaae",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "I am not sure if this test is really adding much value.\nThe underlying logic is a trivial call to new CompositorMutatorImpl.",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef271417_d6273cbc",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: I think this is in fact a Mock object (as opposed to just\nan empty one). Given that the test is using it to verify interactions.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941f6bab_2532088c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "I think it is better to keep this on the stack.\nSimilarly with other usage of EmptyCompositorAnimator in other tests.",
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d26064_d5efec8c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: need to be snake case. Also I think something like test_time_value is more descriptive.",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e64dce_5c9f09a4",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "Seems redundant when test count is 0.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3293a0ae_1744e08d",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: s/mutationis/mutation is/",
+      "range": {
+        "startLine": 93,
+        "startChar": 30,
+        "endLine": 93,
+        "endChar": 40
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e74ad2_288e3113",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "not need to check anim2 here given it is not registered at all.",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad7590b_a357b5b8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 20
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cc6633_263436e1",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "nit: s/Empty/Mock/",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 34
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9fe339_44db1614",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "I don\u0027t really understand why this is needed.",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 16
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61655dd_2d6560b5",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "Is this needed? Can we just pass in nullptr to our parent.",
+      "range": {
+        "startLine": 130,
+        "startChar": 40,
+        "endLine": 130,
+        "endChar": 60
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3343d8_4a5fcbe9",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "This assertion is redundant when we are asserting the notifications to be exactly 2.\nI suggest removing .WasNotfied altogether and just verifying the count.",
+      "range": {
+        "startLine": 161,
+        "startChar": 2,
+        "endLine": 161,
+        "endChar": 37
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d39be76_68663f6b",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImplTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-10-13T18:20:57Z",
+      "side": 1,
+      "message": "s/(CompositorMutatorClient*)0/nullptr/",
+      "range": {
+        "startLine": 187,
+        "startChar": 21,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "db375ebc7275a3469c373bf609704ee72349ac7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
