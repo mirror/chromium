@@ -22,6 +22,30 @@
       "revId": "2ce6a722035aaaac35bd674b9dbf566fde46222e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742dbce3_d00b957d",
+        "filename": "components/translate/ios/browser/js_translate_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-13T09:58:03Z",
+      "side": 1,
+      "message": "As explained above this wouldn\u0027t work. Instead I\u0027ve measured the time with NSDate and compared to that.",
+      "parentUuid": "4cee8bb3_b2fd9e1d",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 11
+      },
+      "revId": "2ce6a722035aaaac35bd674b9dbf566fde46222e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
