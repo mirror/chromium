@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0deb178b_9d4e0323",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:50:46Z",
+      "side": 1,
+      "message": "Whenever using pixel dimensions, good to check against nonstandard display resolutions (e.g. on a ChromeOS device) and also non-standard zoom levels (75%, 125%, etc.)",
+      "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dcba2b_813edab2",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-13T23:50:46Z",
+      "side": 1,
+      "message": "Presumably this won\u0027t be shown until we push extension changes to populate mirroringExtraData?",
+      "revId": "c33e230d5d4c6a240ad2a05a4b9aa2d8aae5fc74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
