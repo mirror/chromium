@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad6c36c8_5e6c1c2a",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-13T21:40:56Z",
+      "side": 1,
+      "message": "Who is going to change the opacity back when going from PEEKING to FULL? And what about dragging app list while syncing?\n\nI don\u0027t think we should put this in AppListItemView. It looks like we hide apps in AppsGridView [1]. We should probably put similar logic in AppsGridView::OnListItemAdded [2].\n\n[1]: https://cs.chromium.org/chromium/src/ui/app_list/views/apps_grid_view.cc?rcl\u003d31363f832b6dcb9440d4f045a1c3c49aef7d9953\u0026l\u003d950\n[2]: https://cs.chromium.org/chromium/src/ui/app_list/views/apps_grid_view.cc?rcl\u003d31363f832b6dcb9440d4f045a1c3c49aef7d9953\u0026l\u003d2531",
+      "revId": "e574a3d4a739f61e5a42d84f0ba028baca43576d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
