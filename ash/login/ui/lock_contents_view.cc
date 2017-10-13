@@ -169,12 +169,18 @@ LockContentsView::LockContentsView(
     LoginDataDispatcher* data_dispatcher)
     : NonAccessibleView(kLockContentsViewName),
       data_dispatcher_(data_dispatcher),
-      display_observer_(this) {
+      display_observer_(this),
+      keyboard_controller_observer_(this) {
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
   Shell::Get()->lock_screen_controller()->AddLockScreenAppsFocusObserver(this);
   Shell::Get()->system_tray_notifier()->AddSystemTrayFocusObserver(this);
-  error_bubble_ = std::make_unique<LoginBubble>();
+  Shell::Get()->AddShellObserver(this);
+  // TODO(crbug.com/648733): Virtual keyboard is not supported in mash.
+  if (keyboard::KeyboardController::GetInstance()) {
+    keyboard_controller_observer_.Add(
+        keyboard::KeyboardController::GetInstance());
+  }
 
   // We reuse the focusable state on this view as a signal that focus should
   // switch to the system tray. LockContentsView should otherwise not be
@@ -190,6 +196,8 @@ LockContentsView::LockContentsView(
       new NoteActionLaunchButton(initial_note_action_state, data_dispatcher_);
   AddChildView(note_action_);
 
+  error_bubble_ = std::make_unique<LoginBubble>();
+
   OnLockScreenNoteStateChanged(initial_note_action_state);
 }
 
@@ -198,6 +206,7 @@ LockContentsView::~LockContentsView() {
   Shell::Get()->lock_screen_controller()->RemoveLockScreenAppsFocusObserver(
       this);
   Shell::Get()->system_tray_notifier()->RemoveSystemTrayFocusObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
 }
 
 void LockContentsView::Layout() {
@@ -216,7 +225,8 @@ void LockContentsView::Layout() {
 }
 
 void LockContentsView::AddedToWidget() {
-  DoLayout();
+  LayoutAuth(CurrentActiveAuthUserView(), CurrentInactiveAuthUserView(),
+             false /*animate*/, true /*is_display_size_changing*/);
 
   // Focus the primary user when showing the UI. This will focus the password.
   if (primary_auth_)
@@ -282,7 +292,8 @@ void LockContentsView::OnUsersChanged(
   else if (users.size() >= 7)
     CreateHighDensityLayout(users);
 
-  LayoutAuth(primary_auth_, opt_secondary_auth_, false /*animate*/);
+  LayoutAuth(primary_auth_, opt_secondary_auth_, false /*animate*/,
+             false /*is_display_size_changing*/);
 
   // Auth user may be the same if we already built lock screen.
   OnAuthUserChanged();
@@ -307,13 +318,15 @@ void LockContentsView::OnPinEnabledForUserChanged(const AccountId& user,
   if (primary_auth_->current_user()->basic_user_info->account_id ==
           state->account_id &&
       primary_auth_->auth_methods() != LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(primary_auth_, nullptr, true /*animate*/);
+    LayoutAuth(primary_auth_, nullptr, true /*animate*/,
+               false /*is_display_size_changing*/);
   } else if (opt_secondary_auth_ &&
              opt_secondary_auth_->current_user()->basic_user_info->account_id ==
                  state->account_id &&
              opt_secondary_auth_->auth_methods() !=
                  LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(opt_secondary_auth_, nullptr, true /*animate*/);
+    LayoutAuth(opt_secondary_auth_, nullptr, true /*animate*/,
+               false /*is_display_size_changing*/);
   }
 }
 
@@ -357,7 +370,32 @@ void LockContentsView::OnDisplayMetricsChanged(const display::Display& display,
   if ((changed_metrics & DISPLAY_METRIC_ROTATION) == 0)
     return;
 
-  DoLayout();
+  LayoutAuth(CurrentActiveAuthUserView(), CurrentInactiveAuthUserView(),
+             false /*animate*/, true /*is_display_size_changing*/);
+}
+
+void LockContentsView::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+  if (keyboard_bounds_ == new_bounds)
+    return;
+
+  keyboard_bounds_ = new_bounds;
+  if (user_views_.size() >= 5) {
+    // TODO: Handle 6+ user case.
+    return;
+  }
+
+  LayoutAuth(CurrentActiveAuthUserView(), CurrentInactiveAuthUserView(),
+             true /*animate*/, true /*is_display_size_changing*/);
+}
+
+void LockContentsView::OnKeyboardClosed() {
+  keyboard_controller_observer_.Remove(
+      keyboard::KeyboardController::GetInstance());
+}
+
+void LockContentsView::OnKeyboardControllerCreated() {
+  keyboard_controller_observer_.Add(
+      keyboard::KeyboardController::GetInstance());
 }
 
 void LockContentsView::FocusNextWidget(bool reverse) {
@@ -489,19 +527,6 @@ void LockContentsView::CreateHighDensityLayout(
       kHighDensityHorizontalPaddingRightOfUserListPortraitDp));
 }
 
-void LockContentsView::DoLayout() {
-  bool landscape = ShouldShowLandscape(GetWidget());
-  for (auto& action : rotation_actions_)
-    action.Run(landscape);
-
-  const display::Display& display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(
-          GetWidget()->GetNativeWindow());
-  SetPreferredSize(display.size());
-  SizeToPreferredSize();
-  Layout();
-}
-
 views::View* LockContentsView::MakeOrientationViewWithWidths(int landscape,
                                                              int portrait) {
   auto* view = new MultiSizedView(gfx::Size(landscape, kNonEmptyHeightDp),
@@ -519,12 +544,14 @@ void LockContentsView::AddRotationAction(const OnRotate& on_rotate) {
 void LockContentsView::SwapPrimaryAndSecondaryAuth(bool is_primary) {
   if (is_primary &&
       primary_auth_->auth_methods() == LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/);
+    LayoutAuth(primary_auth_, opt_secondary_auth_, true /*animate*/,
+               false /*is_display_size_changing*/);
     OnAuthUserChanged();
   } else if (!is_primary && opt_secondary_auth_ &&
              opt_secondary_auth_->auth_methods() ==
                  LoginAuthUserView::AUTH_NONE) {
-    LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/);
+    LayoutAuth(opt_secondary_auth_, primary_auth_, true /*animate*/,
+               false /*is_display_size_changing*/);
     OnAuthUserChanged();
   }
 }
@@ -551,30 +578,57 @@ LockContentsView::UserState* LockContentsView::FindStateForUser(
 
 void LockContentsView::LayoutAuth(LoginAuthUserView* to_update,
                                   LoginAuthUserView* opt_to_hide,
-                                  bool animate) {
-  // Capture animation metadata before we changing state.
+                                  bool animate,
+                                  bool is_display_size_changing) {
+  // Capture animation metadata before changing state.
   if (animate) {
     to_update->CaptureStateForAnimationPreLayout();
     if (opt_to_hide)
       opt_to_hide->CaptureStateForAnimationPreLayout();
+    // The user views (in small or extra small style) needs animation when
+    // virtual keyboard is being shown/hidden.
+    if (is_display_size_changing) {
+      for (LoginUserView* user_view : user_views_)
+        user_view->CaptureStateForAnimationPreLayout();
+    }
   }
 
   // Update auth methods for |to_update|. Disable auth on |opt_to_hide|.
   uint32_t to_update_auth = LoginAuthUserView::AUTH_PASSWORD;
+  bool has_virtual_keyboard = !keyboard_bounds_.IsEmpty();
   if (FindStateForUser(to_update->current_user()->basic_user_info->account_id)
-          ->show_pin)
+          ->show_pin &&
+      !has_virtual_keyboard) {
     to_update_auth |= LoginAuthUserView::AUTH_PIN;
+  }
   to_update->SetAuthMethods(to_update_auth);
   if (opt_to_hide)
     opt_to_hide->SetAuthMethods(LoginAuthUserView::AUTH_NONE);
 
+  if (is_display_size_changing) {
+    bool landscape = ShouldShowLandscape(GetWidget());
+    for (auto& action : rotation_actions_)
+      action.Run(landscape);
+
+    const display::Display& display =
+        display::Screen::GetScreen()->GetDisplayNearestWindow(
+            GetWidget()->GetNativeWindow());
+    SetPreferredSize(
+        gfx::Size(display.size().width(),
+                  display.size().height() - keyboard_bounds_.height()));
+    SizeToPreferredSize();
+  }
   Layout();
 
   // Apply animations.
-  if (animate) {
+  if (is_display_size_changing) {
     to_update->ApplyAnimationPostLayout();
     if (opt_to_hide)
       opt_to_hide->ApplyAnimationPostLayout();
+    if (is_display_size_changing) {
+      for (LoginUserView* user_view : user_views_)
+        user_view->ApplyAnimationPostLayout();
+    }
   }
 }
 
@@ -586,19 +640,20 @@ void LockContentsView::SwapToAuthUser(int user_index) {
 
   view->UpdateForUser(previous_auth_user, true /*animate*/);
   primary_auth_->UpdateForUser(new_auth_user);
-  LayoutAuth(primary_auth_, nullptr, true /*animate*/);
+  LayoutAuth(primary_auth_, nullptr, true /*animate*/,
+             false /*is_display_size_changing*/);
   OnAuthUserChanged();
 }
 
 void LockContentsView::OnAuthUserChanged() {
   Shell::Get()->lock_screen_controller()->OnFocusPod(
-      CurrentAuthUserView()->current_user()->basic_user_info->account_id);
+      CurrentActiveAuthUserView()->current_user()->basic_user_info->account_id);
 
   // Reset unlock attempt when the auth user changes.
   unlock_attempt_ = 0;
 }
 
-LoginAuthUserView* LockContentsView::CurrentAuthUserView() {
+LoginAuthUserView* LockContentsView::CurrentActiveAuthUserView() {
   if (opt_secondary_auth_ &&
       opt_secondary_auth_->auth_methods() != LoginAuthUserView::AUTH_NONE) {
     DCHECK(primary_auth_->auth_methods() == LoginAuthUserView::AUTH_NONE);
@@ -606,6 +661,11 @@ LoginAuthUserView* LockContentsView::CurrentAuthUserView() {
   }
 
   return primary_auth_;
+}
+
+LoginAuthUserView* LockContentsView::CurrentInactiveAuthUserView() {
+  return CurrentActiveAuthUserView() == primary_auth_ ? opt_secondary_auth_
+                                                      : primary_auth_;
 }
 
 void LockContentsView::ShowErrorMessage() {
@@ -627,7 +687,7 @@ void LockContentsView::ShowErrorMessage() {
 
   error_bubble_->ShowErrorBubble(
       base::UTF8ToUTF16(error_text),
-      CurrentAuthUserView()->password_view() /*anchor_view*/);
+      CurrentActiveAuthUserView()->password_view() /*anchor_view*/);
 }
 
 }  // namespace ash

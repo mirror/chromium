@@ -13,12 +13,14 @@
 #include "ash/login/lock_screen_apps_focus_observer.h"
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "ash/login/ui/non_accessible_view.h"
+#include "ash/shell_observer.h"
 #include "ash/system/system_tray_focus_observer.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/scoped_observer.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/screen.h"
+#include "ui/keyboard/keyboard_controller_observer.h"
 #include "ui/views/view.h"
 
 namespace views {
@@ -45,7 +47,9 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
                                     public LockScreenAppsFocusObserver,
                                     public LoginDataDispatcher::Observer,
                                     public SystemTrayFocusObserver,
-                                    public display::DisplayObserver {
+                                    public display::DisplayObserver,
+                                    public keyboard::KeyboardControllerObserver,
+                                    public ShellObserver {
  public:
   // TestApi is used for tests to get internal implementation details.
   class ASH_EXPORT TestApi {
@@ -88,6 +92,13 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t changed_metrics) override;
 
+  // keyboard::KeyboardControllerObserver:
+  void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
+  void OnKeyboardClosed() override;
+
+  // ShellObserver:
+  void OnKeyboardControllerCreated() override;
+
  private:
   struct UserState {
     explicit UserState(AccountId account_id);
@@ -110,10 +121,6 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // 7+ users.
   void CreateHighDensityLayout(
       const std::vector<mojom::LoginUserInfoPtr>& users);
-
-  // Lay out the entire view. This is called when the view is attached to a
-  // widget and when the screen is rotated.
-  void DoLayout();
 
   // Creates a new view with |landscape| and |portrait| preferred sizes.
   // |landscape| and |portrait| specify the width of the preferred size; the
@@ -138,7 +145,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // |to_update| will show a password prompt.
   void LayoutAuth(LoginAuthUserView* to_update,
                   LoginAuthUserView* opt_to_hide,
-                  bool animate);
+                  bool animate,
+                  bool is_display_size_changing);
 
   // Make the user at |user_index| the auth user. We pass in the index because
   // the actual user may change.
@@ -147,8 +155,11 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // Called after the auth user change has taken place.
   void OnAuthUserChanged();
 
-  // Get the LoginAuthUserView of the current auth user.
-  LoginAuthUserView* CurrentAuthUserView();
+  // Get the LoginAuthUserView of the current active auth user.
+  LoginAuthUserView* CurrentActiveAuthUserView();
+
+  // Get the LoginAuthUserView of the current inactive auth user.
+  LoginAuthUserView* CurrentInactiveAuthUserView();
 
   // Opens an error bubble to indicate authentication failure.
   void ShowErrorMessage();
@@ -180,6 +191,9 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   std::vector<OnRotate> rotation_actions_;
 
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_controller_observer_;
 
   std::unique_ptr<LoginBubble> error_bubble_;
   int unlock_attempt_ = 0;
@@ -187,6 +201,9 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // Whether a lock screen app is currently active (i.e. lock screen note action
   // state is reported as kActive by the data dispatcher).
   bool lock_screen_apps_active_ = false;
+
+  // Cached virtual keyboard bounds.
+  gfx::Rect keyboard_bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(LockContentsView);
 };
