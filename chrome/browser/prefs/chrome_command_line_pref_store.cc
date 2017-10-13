@@ -70,6 +70,9 @@ const CommandLinePrefStore::BooleanSwitchToPreferenceMapEntry
          prefs::kWebKitAllowRunningInsecureContent, true},
         {switches::kAllowCrossOriginAuthPrompt,
          prefs::kAllowCrossOriginAuthPrompt, true},
+#if defined(OS_POSIX)
+        {switches::kNtlmV2Enabled, prefs::kNtlmV2Enabled, true},
+#endif
         {switches::kDisablePrintPreview, prefs::kPrintPreviewDisabled, true},
 #if defined(OS_CHROMEOS)
         {chromeos::switches::kEnableTouchpadThreeFingerClick,
