@@ -825,8 +825,12 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
 
 - (void)showSigninUIForMode:(profiles::BubbleViewMode)mode {
   if (SigninViewController::ShouldShowModalSigninForMode(mode)) {
-    browser_->signin_view_controller()->ShowModalSignin(mode, browser_,
-                                                        accessPoint_);
+    if (signin::IsAccountConsistencyDiceEnabled()) {
+      chrome::ShowBrowserSigninForDice(browser_);
+    } else {
+      browser_->signin_view_controller()->ShowModalSignin(mode, browser_,
+                                                          accessPoint_);
+    }
   } else {
     [self initMenuContentsWithView:mode];
   }
