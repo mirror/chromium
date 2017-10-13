@@ -22,6 +22,30 @@
       "revId": "5cf20f01eb4110592986c820a162aca5d65bc442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274f2b9d_87b752e8",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 0,
+      "message": "The comment is moved to WebFeaturePolicy, just like IsFeatureEnabledForOrigin.",
+      "parentUuid": "d53aa8bb_7f1139f1",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 21
+      },
+      "revId": "5cf20f01eb4110592986c820a162aca5d65bc442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

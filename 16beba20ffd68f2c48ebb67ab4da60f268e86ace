@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb788394_6098a292",
+        "filename": "breakpad/src",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a16001_aa5a2267",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d85a95_6152afaf",
         "filename": "build/config/gclient_args.gni",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209a8e95_e03f2041",
+        "filename": "build/config/gclient_args.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d85a95_6152afaf",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "82b43e63_537cef03",
+        "filename": "content/child/blink_platform_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcebeccc_55475a6d",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6986a65b_80225f8f",
         "filename": "content/common/feature_policy/feature_policy.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c898fb_867f325f",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I added the comments in WebFeaturePolicy.",
+      "parentUuid": "6986a65b_80225f8f",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e1ebbd87_9a0cdbea",
+        "filename": "content/common/feature_policy/feature_policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "I will add the comment. Returning a WebParsedFeaturePolicyDeclaration can make the implementation of the caller a bit messy and hard to understand.",
+      "parentUuid": "0b082153_745ab26c",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db7d918d_ac6fcdea",
         "filename": "sdch/open-vcdiff",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2bf22a_da2e82fa",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db7d918d_ac6fcdea",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "6be44348_2b7e814f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3db06d_62508fd9",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 54
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "979d5f7e_5404edba",
         "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633130e7_69178d9e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "979d5f7e_5404edba",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "52c67d26_0022da31",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy/policy.php",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "It is not significant, this is just to test it works regardless of the slash.",
+      "parentUuid": "b327a759_6d1ef577",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bde7309e_ac951a31",
         "filename": "third_party/WebKit/Source/core/dom/Document.idl",
         "patchSetId": 6
@@ -175,6 +343,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e365f911_6363ba12",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde7309e_ac951a31",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "54f2cb32_b6ad9758",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f2c76e_720ea77d",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 75
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51bea409_aef7e057",
         "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
         "patchSetId": 6
@@ -224,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "5e198213_d5380521",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "I think undefined feature and invalid origin should both emit warnings. So I will move this block out of the if block.\n\nThanks",
+      "parentUuid": "51bea409_aef7e057",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 5
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a33d5b_58339fac",
         "filename": "third_party/WebKit/Source/core/dom/Policy.h",
         "patchSetId": 6
@@ -238,6 +472,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767e7883_3b754750",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9a33d5b_58339fac",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "b2aa6271_1a05d662",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f59626b_1296d758",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f44a1e51_6f7a8fa8",
         "filename": "third_party/WebKit/Source/core/dom/Policy.h",
         "patchSetId": 6
@@ -272,6 +542,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7c4a28_64f3d6be",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44a1e51_6f7a8fa8",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +586,30 @@
     },
     {
       "key": {
+        "uuid": "9aedc26f_6ab110c4",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78bd1ba9_00ab82aa",
+      "range": {
+        "startLine": 36,
+        "startChar": 24,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8ab2bb_a1ec6f9d",
         "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
         "patchSetId": 6
@@ -315,6 +627,24 @@
     },
     {
       "key": {
+        "uuid": "bc0e115c_9299175d",
+        "filename": "third_party/WebKit/Source/core/dom/Policy.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8ab2bb_a1ec6f9d",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8872d8a2_558dd11d",
         "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
         "patchSetId": 6
@@ -329,6 +659,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34da102_c823cce1",
+        "filename": "third_party/WebKit/Source/devtools/devtools-node-modules",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8872d8a2_558dd11d",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +703,30 @@
     },
     {
       "key": {
+        "uuid": "7825ac08_f8f10e84",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a3fd86_fe68d4ed",
+      "range": {
+        "startLine": 304,
+        "startChar": 9,
+        "endLine": 304,
+        "endChar": 20
+      },
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abc47b27_8e89348c",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 6
@@ -369,6 +741,24 @@
       "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3bc637_4bd8ffc0",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-10-13T14:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc47b27_8e89348c",
+      "revId": "16beba20ffd68f2c48ebb67ab4da60f268e86ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
