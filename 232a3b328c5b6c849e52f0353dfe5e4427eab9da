@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b524dd05_42f6761a",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "The delegate doesn\u0027t get created in Incognito mode at the moment so no.",
+      "parentUuid": "ec000abd_1d7ba44e",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296246dd_afc254cc",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992a9fe4_d9793484",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296246dd_afc254cc",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4faff3ce_703b49ef",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc1795c_63e85eba",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e867c2_6ac4953e",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e9f5132_631c491f",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e867c2_6ac4953e",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76caa0a9_13d551e5",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1896da3b_26814079",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76caa0a9_13d551e5",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "b343ae18_e5062ad4",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68dd39a3_67f53ebf",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 251,
+        "endChar": 16
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba07b4a_8fb52e9e",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "f44e3c75_dd33701d",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "We still want to cancel the download though so not sure how we can avoid this nesting.",
+      "parentUuid": "cba07b4a_8fb52e9e",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a386d71_2a4abbec",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 10
@@ -141,6 +273,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ed9600_99fe072d",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "This needs to be done in the ServerWorkerRequest first (which you said you\u0027d do just now).",
+      "parentUuid": "5a386d71_2a4abbec",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "a906a147_191571cc",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "It\u0027s just a value type and that\u0027s just a convenience function to keep part of it in sync.\n\nI may revisit this decision next week:)",
+      "parentUuid": "962877df_db4d1197",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 8
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93b4fc8_d22cd02b",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 10
@@ -187,6 +361,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c970c869_5c1f4ba2",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93b4fc8_d22cd02b",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 59
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +428,72 @@
     },
     {
       "key": {
+        "uuid": "9cbbfb10_19c91184",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "I dislike conflating it with the Controller construction though. I\u0027ll take a look next week.",
+      "parentUuid": "c30af2d3_88fbcb71",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c18a129_cae6f782",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "I dislike it being lumped in with the JobController construction because it obscures it.",
+      "parentUuid": "c30af2d3_88fbcb71",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350bfed3_28f66ce1",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "there\u0027s a TODO in BackgroundFetchDelegateProxy::Abort(), which I was using to remind me to do this.",
+      "parentUuid": "d58501e7_8939208b",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77abe282_8eb4e590",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 10
@@ -247,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "0501bd45_dfa1581b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77abe282_8eb4e590",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbbbaac7_3df84ce7",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 10
@@ -261,6 +543,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b713d6_cf00a409",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbbaac7_3df84ce7",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -333,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "ea6de5d2_1112fd17",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "451599fe_72eec476",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6b7113_4ab09af5",
         "filename": "content/public/browser/background_fetch_delegate.h",
         "patchSetId": 10
@@ -353,6 +677,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9472d310_9eecb11a",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6b7113_4ab09af5",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -402,6 +750,30 @@
     },
     {
       "key": {
+        "uuid": "09fe530e_1601681f",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd61fb26_56466acc",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d744f0f1_1961dbb9",
         "filename": "content/public/browser/background_fetch_response.h",
         "patchSetId": 10
@@ -416,6 +788,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62d8d10_92bcbffd",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to an enum class.\n\nThese are just copies of the entries in the DownloadService (which I can\u0027t use in content) and so match their names. I agree NETWORK is uninformative.",
+      "parentUuid": "d744f0f1_1961dbb9",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -442,6 +832,30 @@
     },
     {
       "key": {
+        "uuid": "58c18f00_b5fafb60",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae4862d0_a41370b7",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87462e92_065a2a65",
         "filename": "content/public/browser/background_fetch_response.h",
         "patchSetId": 10
@@ -456,6 +870,24 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4354cce2_56f01187",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T16:24:55Z",
+      "side": 1,
+      "message": "this matches the enum in components/download/public/client.h",
+      "parentUuid": "87462e92_065a2a65",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
