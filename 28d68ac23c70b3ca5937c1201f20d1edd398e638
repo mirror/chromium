@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "6bbf53c7_2bd2f602",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6989df80_47be713b",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248a83e5_ecbb5fd9",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5

@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ea3035_2fefffa8",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "Do we need this test anymore?  After all, we\u0027re running fixup again below and check that output for validity.\n\nMaybe it\u0027s needed to enforce the similar logic that we talked about before in AutocompleteInput here:\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/autocomplete_input.cc?sq\u003dpackage:chromium\u0026l\u003d141-146\nBut if so, I think the reason for the check for input should be clearly stated.\n\nIs it something like?\nIf AutocompleteInput didn\u0027t construct a canonical URL, it must have a reason.  Do not attempt to look up the canonical URL or otherwise interpret input text as a URL to see if that URL has been visited.",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 24
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c607489a_6cd750e2",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "comment, something like:\nIterate over all prefixes from shortest (the empty one) to longest.\n(In other words, be clear why the rbegin is there.)",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050df2fd_40c661d2",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "Probably should check to see if the URL return is_valid() before passing it to GetRowForUrl.",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7029f5_cec5126a",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "nit: URL\n(It\u0027s just surprising when you use different capitalizations in the same sentence.)",
+      "range": {
+        "startLine": 993,
+        "startChar": 68,
+        "endLine": 993,
+        "endChar": 71
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a534661f_6171a4db",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "\u003e I understand now. I think crbug.com/104638 would take care of this in a better structured way,\n\u003e but I added an extra check in CanFindInstranetURL to take care of the \"www.\" condition.\n\nIs there a test that hits this code?",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61c3728_09517ac6",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "I had a lot of comments on this block.  How about simply replacing it with the following:\n    // For URL-what-you-typed exists in history tests.\n    {\"https://wytih/\", \"What you typed in history main\", 1, 1, 80},\n    {\"https://www.wytih/\", \"What you typed in history www main\", 2, 2, 80},\n    {\"https://www.wytih/page\", \"What you typed in history www page\", 3, 3, 80},\n    {\"ftp://wytih/file\", \"What you typed in history ftp file\", 4, 4, 80},\n    {\"https://www.wytih/file\", \"What you typed in history www file\", 5, 5, 80},",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cfb450_463dd694",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "files -\u003e file\nin this whole green block, as I suggested that change above.\n(I suggested that change because the code does not actually require that the two URLs have different path components as far as I can tell.)",
+      "range": {
+        "startLine": 657,
+        "startChar": 62,
+        "endLine": 657,
+        "endChar": 67
+      },
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2c7a9f_d0651330",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "Can you please double-check that these tests fail before your history_url_provider.cc change?  It\u0027s not obvious to me.",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ef180f_bc50d5f2",
+        "filename": "components/omnibox/browser/url_prefix.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T19:47:12Z",
+      "side": 1,
+      "message": "In a separate changelist, I think you may want to swap the order of the http and https entries.  This should allow the default what-you-typed match to be more often the secure one rather than the insecure one if both have been visited.\n\nI glanced around briefly and didn\u0027t see anything that I think would be a problem with this suggestion.  (You should verify.)\n\nIf you don\u0027t plan on following up on this, please file a bug so we don\u0027t lose the idea.  I\u0027m on a minor quest to make the omnibox more often suggest the secure version of sites.",
+      "revId": "87d6d5c6bda606ea5580b1ebaa629e605c89898a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
