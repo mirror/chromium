@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adc4ffc5_107615d2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-13T18:09:30Z",
+      "side": 1,
+      "message": "Task queue is a task runner, so yes. The caveat here is that some of the queues serve as shutdown task runners. The problem is with transferring ownership of a TaskQueueImpl. It\u0027s transferred via base::Passed and tied to a task in a shutdown task queue. When shutdown task queue is unregistered, all tasks are cancelled and TaskQueueImpls owned by these tasks are destroyed. So we need to unregister queues with async deletion before unregistering shutdown task queues. \n\nThe contract is that TaskQueueManager can be deleted at any moment, so we need to do cleanup for task queues.\n\nIt\u0027s also not just about modifying the container, it\u0027s about use-after-free for these TaskQueueImpls.",
+      "parentUuid": "8e07e1ba_72cf0d4b",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 68
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a1117f_5fac25a3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e7c9d504_fe390d30",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-13T18:09:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a1117f_5fac25a3",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472d7bbb_c61fe785",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66660fe_77f29dfe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-13T18:09:30Z",
+      "side": 1,
+      "message": "Nah. We need to make sure that one of the queues with async deletion will be destroyed before shutdown task queue. The probability of this increases exponentially with number of task queues involved and virtually guaranteed when we have a hundred of them.",
+      "parentUuid": "472d7bbb_c61fe785",
+      "range": {
+        "startLine": 3186,
+        "startChar": 17,
+        "endLine": 3186,
+        "endChar": 19
+      },
+      "revId": "9e3980730ccb98a1289066e1771ffbb9e783be07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
