@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dca1719e_9f6c4184",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-13T18:42:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25185b0f_0336efd2",
+      "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89a65bb2_bbe925c5",
         "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bb7399_4c023d6d",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-10-13T18:42:01Z",
+      "side": 1,
+      "message": "Verified that we can actually solve the problem by directly call updateScreenSize() here.",
+      "parentUuid": "89a65bb2_bbe925c5",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 50
+      },
+      "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
