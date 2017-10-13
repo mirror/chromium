@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7da28aee_3f1b6814",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T07:53:51Z",
+      "side": 1,
+      "message": "nit: Could you utilize early-return style to reduce indentation?\n\nif (!placeholder)\n  return;\nplaceholder-\u003eSetShadowPseudoId(AtomicString(\n  suggested_value_.IsEmpty()\n    ? \"-webkit-input-suggested\"\n    : \"-webkit-input-placeholder\"));",
+      "revId": "aabd6446b81c465b5fdb7b950faa090250cf2868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
