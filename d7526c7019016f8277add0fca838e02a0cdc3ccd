@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "294c28ca_0140d8b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T00:37:24Z",
+      "side": 1,
+      "message": "nit: Let\u0027s also straighten this out a bit.  The basic format should be:\n-----\n\u003ctitle, one line, ideally \u003c\u003d72 chars\u003e\n\n\u003csummary, ideally wrapped at 72 chars\u003e\n\nBug: \u003cbug\u003e[here this can be `None`, or we could file a bug for adding more docs]\n---------\n\nFor instance, maybe:\n---------\nAdd a sample extension for event pages and the contextMenus API\n\nAdd a sample extension that demonstrates the usage of event pages and\nutilizes the contextMenus API. The extension allows the user to search\ngoogle with a different country locale. Additionally, demonstrates\nusage of an options page and browserAction.\n\nBug: None\n---------\n\n(feel free to wordsmith; just an example)",
+      "revId": "d7526c7019016f8277add0fca838e02a0cdc3ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47d98bb_cf06ea31",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T00:37:24Z",
+      "side": 1,
+      "message": "nit: indentation off.  Line continuations have an extra indent of 4 spaces.  So in this case,\n\nlet url \u003d\n    \u0027https://google.\u0027 + item.menuItemId + \u0027/search?q\u003d\u0027 + item.selectionText;",
+      "revId": "d7526c7019016f8277add0fca838e02a0cdc3ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
