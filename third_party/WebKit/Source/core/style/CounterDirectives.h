@@ -27,6 +27,7 @@
 
 #include <memory>
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/RefPtr.h"
@@ -49,7 +50,7 @@ class CounterDirectives {
   // maps, or by using a container that held two generic Directive objects.
 
   bool IsReset() const { return is_reset_set_; }
-  int ResetValue() const { return reset_value_; }
+  int ResetValue() const { return reset_value_.ValueOrDie(); }
   void SetResetValue(int value) {
     reset_value_ = value;
     is_reset_set_ = true;
@@ -81,16 +82,16 @@ class CounterDirectives {
   bool IsDefined() const { return IsReset() || IsIncrement(); }
 
   int CombinedValue() const {
-    DCHECK(is_reset_set_ || !reset_value_);
+    DCHECK(is_reset_set_ || !ResetValue());
     DCHECK(is_increment_set_ || !increment_value_);
-    // FIXME: Shouldn't allow overflow here.
-    return reset_value_ + increment_value_;
+    return (reset_value_ + increment_value_)
+        .ValueOrDefault(reset_value_.ValueOrDie());
   }
 
  private:
   bool is_reset_set_;
   bool is_increment_set_;
-  int reset_value_;
+  CheckedNumeric<int> reset_value_;
   int increment_value_;
 };
 

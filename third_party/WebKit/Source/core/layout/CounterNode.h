@@ -22,6 +22,7 @@
 #ifndef CounterNode_h
 #define CounterNode_h
 
+#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/RefCounted.h"
@@ -49,8 +50,8 @@ class CounterNode : public RefCounted<CounterNode> {
   ~CounterNode();
   bool ActsAsReset() const { return has_reset_type_ || !parent_; }
   bool HasResetType() const { return has_reset_type_; }
-  int Value() const { return value_; }
-  int CountInParent() const { return count_in_parent_; }
+  int Value() const { return value_.ValueOrDie(); }
+  int CountInParent() const { return count_in_parent_.ValueOrDie(); }
   LayoutObject& Owner() const { return owner_; }
   void AddLayoutObject(LayoutCounter*);
   void RemoveLayoutObject(LayoutCounter*);
@@ -85,8 +86,8 @@ class CounterNode : public RefCounted<CounterNode> {
   void Recount();
 
   bool has_reset_type_;
-  int value_;
-  int count_in_parent_;
+  CheckedNumeric<int> value_;
+  CheckedNumeric<int> count_in_parent_;
   LayoutObject& owner_;
   LayoutCounter* root_layout_object_;
 

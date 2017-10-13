@@ -142,11 +142,14 @@ CounterNode* CounterNode::PreviousInPreOrder() const {
 }
 
 int CounterNode::ComputeCountInParent() const {
-  int increment = ActsAsReset() ? 0 : value_;
-  if (previous_sibling_)
-    return previous_sibling_->count_in_parent_ + increment;
+  int increment = ActsAsReset() ? 0 : Value();
+  if (previous_sibling_) {
+    return (previous_sibling_->count_in_parent_ + increment)
+        .ValueOrDefault(previous_sibling_->count_in_parent_.ValueOrDie());
+  }
   DCHECK_EQ(parent_->first_child_, this);
-  return parent_->value_ + increment;
+  return (parent_->value_ + increment)
+      .ValueOrDefault(parent_->value_.ValueOrDie());
 }
 
 void CounterNode::AddLayoutObject(LayoutCounter* value) {
@@ -221,7 +224,7 @@ void CounterNode::ResetThisAndDescendantsLayoutObjects() {
 
 void CounterNode::Recount() {
   for (CounterNode* node = this; node; node = node->next_sibling_) {
-    int old_count = node->count_in_parent_;
+    int old_count = node->CountInParent();
     int new_count = node->ComputeCountInParent();
     if (old_count == new_count)
       break;
