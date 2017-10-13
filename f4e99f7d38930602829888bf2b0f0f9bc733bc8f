@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "0cde9989_cfaf2a36",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ffcaf0b_56471d93",
+      "range": {
+        "startLine": 2158,
+        "startChar": 54,
+        "endLine": 2158,
+        "endChar": 60
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "973b8838_7b54793d",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 4
@@ -140,6 +164,78 @@
     },
     {
       "key": {
+        "uuid": "9dfce7b1_0d9de405",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f68fc8_4fb1995f",
+      "range": {
+        "startLine": 2159,
+        "startChar": 40,
+        "endLine": 2159,
+        "endChar": 42
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c47bb50_0c805fd1",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f9855c_a486f55e",
+      "range": {
+        "startLine": 2159,
+        "startChar": 3,
+        "endLine": 2159,
+        "endChar": 8
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "531d44c9_f9fc4a3f",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "973b8838_7b54793d",
+      "range": {
+        "startLine": 2159,
+        "startChar": 19,
+        "endLine": 2159,
+        "endChar": 23
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d586ec_a2de6fca",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 4
@@ -151,6 +247,30 @@
       "writtenOn": "2017-10-10T14:00:59Z",
       "side": 1,
       "message": "Is there already a test checking that cross-domain autofill in iframes does not happen if the domains are not PSL-related? If not, could you please add such test?",
+      "range": {
+        "startLine": 2162,
+        "startChar": 23,
+        "endLine": 2162,
+        "endChar": 50
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80551309_d20b714d",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Surely I will add such test once this test gets into final shape.",
+      "parentUuid": "a5d586ec_a2de6fca",
       "range": {
         "startLine": 2162,
         "startChar": 23,
@@ -234,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "52de5673_f97761c6",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2189,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Te above code is giving this error:\n\nERROR : [18737:18737:1013/175950.810109:INFO:CONSOLE(1)] \"Uncaught SecurityError: Failed to read the \u0027contentDocument\u0027 property from \u0027HTMLIFrameElement\u0027: Blocked a frame with origin \"http://www.foo.com:60935\" from accessing a frame with origin \"http://abc.foo.com:60935\". Protocols, domains, and ports must match.\", source: http://www.foo.com:60935/password/password_form_in_crosssite_iframe.html (1)\n\n\nI tried to check other iframe test cases but all are using add passwords through navigation , I could not figure out the reason though.",
+      "parentUuid": "cdb4c098_d8ed38a1",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2189,
+        "endChar": 38
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3287dffe_1c666e8c",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 4
@@ -254,6 +398,30 @@
       "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a7b624_5fc8c8e4",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2193,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-13T12:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3287dffe_1c666e8c",
+      "range": {
+        "startLine": 2193,
+        "startChar": 2,
+        "endLine": 2193,
+        "endChar": 73
+      },
+      "revId": "f4e99f7d38930602829888bf2b0f0f9bc733bc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
