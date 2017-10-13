@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba98dbd_e8ac79cf",
+        "filename": "third_party/WebKit/Source/core/animation/animatable/AnimatableValueKeyframe.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-13T03:06:06Z",
+      "side": 1,
+      "message": "Looks like this wasn\u0027t done.\n\nWe can delete the code.",
+      "revId": "3dc40cdf9cba4b329dc6abf41c5f7a8d2365e6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
