@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "307d43e1_a4b16ddb",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-13T18:50:13Z",
+      "side": 0,
+      "message": "Yes. It is no longer needed. It may happen that the internal display is not active currently but the internal touch device is present.",
+      "parentUuid": "e5e48732_7ed902de",
+      "revId": "35aa56bd9a4c8f6a889289c57be1ef3492b8f972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9b0348_d6990ac6",
         "filename": "ui/display/manager/managed_display_info.cc",
         "patchSetId": 11

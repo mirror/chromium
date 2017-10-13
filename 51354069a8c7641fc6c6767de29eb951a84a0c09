@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "7d27add5_7ccfd5c1",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-13T18:50:13Z",
+      "side": 1,
+      "message": "Lets keep the remove_if(). Less boiler plate code.",
+      "parentUuid": "88119237_a3169706",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f042bcf5_a346b09b",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 17
@@ -84,6 +102,24 @@
       "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83707d5_e16510a1",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-10-13T18:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f042bcf5_a346b09b",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
