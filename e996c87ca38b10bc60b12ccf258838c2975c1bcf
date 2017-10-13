@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f35bab_72ff9c7f",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-10-13T18:58:05Z",
+      "side": 1,
+      "message": "Hm, this looks like as if it should be in url_constants.cc somewhere...\n\nIf you hardcode here, the risk is that the URL will change at some point, but nobody will realize there\u0027s a reference here that needs updating.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 75
+      },
+      "revId": "e996c87ca38b10bc60b12ccf258838c2975c1bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
