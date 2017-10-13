@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e45ed8f_a54686de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-13T15:43:09Z",
+      "side": 1,
+      "message": "nit: \"Make WaylandKayboard notify keyboard modifiers\" would be more idiomatic English.",
+      "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fcc068_9a4cbb9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-13T15:43:09Z",
+      "side": 1,
+      "message": "nit: space before (",
+      "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b52e51_76948f17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-13T15:43:09Z",
+      "side": 1,
+      "message": "nit: start sentence at \", which\"",
+      "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe65820_1c21c7e6",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-13T15:43:09Z",
+      "side": 1,
+      "message": "My recollection is that this code is relying on undefined compiler behaviour about promotion and bit ops and I\u0027d expect that it wouldn\u0027t necessarily work on (for example) a big endian arm device.\n\nMaybe you could make the conversion to int explicit and make sure that the masking does not alter any unanticipated portion of flags_?",
+      "revId": "eb4c503511ca110fcc0db03464cb5271f3abf592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
