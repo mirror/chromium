@@ -43,6 +43,10 @@ void Init(const Configuration& configuration) {
   DCHECK_EQ(expected_size, sizeof(thunks));
 
   internal::g_configuration = configuration;
+  // crbug.com/774143. Not that we cannot make g_core a unique pointer for now
+  // since we do not want to delete it at shutdown; it causes crashes.
+  if (internal::g_core)
+    delete internal::g_core;
   internal::g_core = new Core;
 }
 
