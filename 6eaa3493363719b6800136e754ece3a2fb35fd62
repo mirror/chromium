@@ -34,6 +34,24 @@
       "revId": "6eaa3493363719b6800136e754ece3a2fb35fd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333f3dc3_221a9b4f",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-10-13T09:10:41Z",
+      "side": 1,
+      "message": "Yes, a test would be good so we not run into this regression again.\n\nI prefer to have tests that tell us what\u0027s the cursor for each element (not the UA stylesheet). I actually prefer to keep the UA stylesheet slim, when we can (because it is exposed to web developers and we don\u0027t wanna interfere with their page CSS if don\u0027t really have to). What do you think nainar@ ?",
+      "parentUuid": "559b13b1_6307cdbd",
+      "revId": "6eaa3493363719b6800136e754ece3a2fb35fd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
