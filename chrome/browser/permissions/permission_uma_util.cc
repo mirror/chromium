@@ -238,6 +238,8 @@ const char PermissionUmaUtil::kPermissionsPromptShownGesture[] =
     "Permissions.Prompt.Shown.Gesture";
 const char PermissionUmaUtil::kPermissionsPromptShownNoGesture[] =
     "Permissions.Prompt.Shown.NoGesture";
+const char PermissionUmaUtil::kPermissionsPromptReshown[] =
+    "Permissions.Prompt.Reshown";
 const char PermissionUmaUtil::kPermissionsPromptAccepted[] =
     "Permissions.Prompt.Accepted";
 const char PermissionUmaUtil::kPermissionsPromptAcceptedGesture[] =
@@ -443,7 +445,8 @@ void PermissionUmaUtil::RecordSafeBrowsingResponse(
 }
 
 void PermissionUmaUtil::PermissionPromptShown(
-    const std::vector<PermissionRequest*>& requests) {
+    const std::vector<PermissionRequest*>& requests,
+    bool is_reshow) {
   DCHECK(!requests.empty());
 
   PermissionRequestType permission_prompt_type =
@@ -455,15 +458,21 @@ void PermissionUmaUtil::PermissionPromptShown(
     permission_gesture_type = requests[0]->GetGestureType();
   }
 
-  RecordPermissionPromptShown(permission_prompt_type, permission_gesture_type);
+  if (is_reshow) {
+    PERMISSION_BUBBLE_TYPE_UMA(kPermissionsPromptReshown,
+                               permission_prompt_type);
+  } else {
+    RecordPermissionPromptShown(permission_prompt_type,
+                                permission_gesture_type);
 
-  UMA_HISTOGRAM_ENUMERATION(kPermissionsPromptRequestsPerPrompt,
-                            requests.size(), 10);
+    UMA_HISTOGRAM_ENUMERATION(kPermissionsPromptRequestsPerPrompt,
+                              requests.size(), 10);
 
-  if (requests.size() > 1) {
-    for (const auto* request : requests) {
-      PERMISSION_BUBBLE_TYPE_UMA(kPermissionsPromptMergedBubbleTypes,
-                                 request->GetPermissionRequestType());
+    if (requests.size() > 1) {
+      for (const auto* request : requests) {
+        PERMISSION_BUBBLE_TYPE_UMA(kPermissionsPromptMergedBubbleTypes,
+                                   request->GetPermissionRequestType());
+      }
     }
   }
 }

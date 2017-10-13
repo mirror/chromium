@@ -58311,6 +58311,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Permissions.Prompt.Reshown" enum="PermissionRequestType">
+  <owner>dominickn@chromium.org</owner>
+  <owner>kcarattini@chromium.org</owner>
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Tracks how many times permission prompts are re-shown due to switching tabs
+    away from an active prompt and back.
+  </summary>
+</histogram>
+
 <histogram name="Permissions.Prompt.Shown" enum="PermissionRequestType">
   <owner>dominickn@chromium.org</owner>
   <owner>kcarattini@chromium.org</owner>

@@ -95,6 +95,7 @@ class PermissionUmaUtil {
   static const char kPermissionsPromptShown[];
   static const char kPermissionsPromptShownGesture[];
   static const char kPermissionsPromptShownNoGesture[];
+  static const char kPermissionsPromptReshown[];
   static const char kPermissionsPromptAccepted[];
   static const char kPermissionsPromptAcceptedGesture[];
   static const char kPermissionsPromptAcceptedNoGesture[];
@@ -159,8 +160,12 @@ class PermissionUmaUtil {
   // - the above metrics don't always add up (e.g. sum of
   //   granted+denied+dismissed+ignored is not equal to requested), so it is
   //   unclear from those metrics alone how many prompts are seen by users.
+  //
+  // Desktop hides and re-shows prompts on tab switching. Re-shows are logged
+  // into a separate histogram.
   static void PermissionPromptShown(
-      const std::vector<PermissionRequest*>& requests);
+      const std::vector<PermissionRequest*>& requests,
+      bool is_reshow);
 
   static void PermissionPromptResolved(
       const std::vector<PermissionRequest*>& requests,

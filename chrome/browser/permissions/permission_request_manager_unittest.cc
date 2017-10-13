@@ -532,6 +532,7 @@ TEST_F(PermissionRequestManagerTest, UMAForSimpleAcceptedGestureBubble) {
       PermissionUmaUtil::kPermissionsPromptAcceptedNoGesture, 0);
   histograms.ExpectUniqueSample("Permissions.Engagement.Accepted.Quota",
                                 kTestEngagementScore, 1);
+  histograms.ExpectTotalCount(PermissionUmaUtil::kPermissionsPromptReshown, 0);
 }
 
 TEST_F(PermissionRequestManagerTest, UMAForSimpleDeniedNoGestureBubble) {
@@ -637,6 +638,7 @@ TEST_F(PermissionRequestManagerTest, UMAForMergedAcceptedBubble) {
   histograms.ExpectUniqueSample(
       "Permissions.Engagement.Accepted.AudioAndVideoCapture",
       kTestEngagementScore, 1);
+  histograms.ExpectTotalCount(PermissionUmaUtil::kPermissionsPromptReshown, 0);
 }
 
 TEST_F(PermissionRequestManagerTest, UMAForMergedDeniedBubble) {
@@ -691,4 +693,32 @@ TEST_F(PermissionRequestManagerTest, UMAForIgnores) {
   NavigateAndCommit(GURL("http://www.google.com/"));
   histograms.ExpectUniqueSample("Permissions.Engagement.Ignored.Geolocation", 0,
                                 1);
+}
+
+TEST_F(PermissionRequestManagerTest, UMAForTabSwitching) {
+  base::HistogramTester histograms;
+
+  manager_->AddRequest(&request1_);
+  WaitForBubbleToBeShown();
+  histograms.ExpectUniqueSample(
+      PermissionUmaUtil::kPermissionsPromptShown,
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
+      1);
+
+  MockTabSwitchAway();
+  histograms.ExpectTotalCount(PermissionUmaUtil::kPermissionsPromptReshown, 0);
+
+  MockTabSwitchBack();
+  histograms.ExpectUniqueSample(
+      PermissionUmaUtil::kPermissionsPromptReshown,
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
+      1);
+#if defined(OS_ANDROID)
+  histograms.ExpectTotalCount(PermissionUmaUtil::kPermissionsPromptReshown, 0);
+#else
+  histograms.ExpectUniqueSample(
+      PermissionUmaUtil::kPermissionsPromptShown,
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
+      1);
+#endif
 }
