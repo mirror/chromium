@@ -154,7 +154,6 @@ class StatelessConnectionTerminator {
     collector_.SaveStatelessRejectFrameData(iov, 0, reject.length());
     while (offset < iovec.iov_len) {
       QuicFrame frame;
-      UniqueStreamBuffer data;
       if (!creator_.ConsumeData(kCryptoStreamId, iov, offset, offset,
                                 /*fin=*/false,
                                 /*needs_full_padding=*/true, &frame)) {
