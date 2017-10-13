@@ -209,6 +209,18 @@ if (!is_android && !is_mac) {
           "//chrome/app/version_assembly:version_assembly_manifest",
         ]
 
+        if (enable_native_notifications) {
+          sources += [
+            "app/chrome_native_notification_prep_win.cc",
+            "app/chrome_native_notification_prep_win.h",
+          ]
+
+          libs = [
+            "Pathcch.lib",
+            "runtimeobject.lib",
+          ]
+        }
+
         if (win_console_app) {
           defines += [ "WIN_CONSOLE_APP" ]
         } else {
