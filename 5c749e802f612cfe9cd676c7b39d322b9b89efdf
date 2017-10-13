@@ -16,6 +16,24 @@
       "revId": "5c749e802f612cfe9cd676c7b39d322b9b89efdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88047b81_0bede5c3",
+        "filename": "ash/wm/lock_state_controller_test_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T21:39:10Z",
+      "side": 1,
+      "message": "I prefer the test API code to be very short, if possible. So I guess I prefer the style in this file.\n\nIn general I don\u0027t want to have to look at test API code at all. I want to read the test code, and read the class under test. It\u0027s OK if the tests are verbose, if that makes it possible to read them top-to-bottom.\n\nFor example, I would be OK with replacing real_shutdown_timer_is_running() with just a getter for real_shutdown_timer_, then copy/pasting this everywhere in tests:\n\ntest_api.real_shutdown_timer_.IsRunning();\n\n(Don\u0027t actually do that in this CL, it\u0027s just an example of how I think about thes e things.)",
+      "parentUuid": "52bfd40f_7d5c2e40",
+      "revId": "5c749e802f612cfe9cd676c7b39d322b9b89efdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
