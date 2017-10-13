@@ -62,6 +62,24 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f3cb7a_b5ece079",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T19:29:23Z",
+      "side": 1,
+      "message": "If we are going to use types outside of this file, it would be nice to:\n1) Add comments at the definitions of those types, saying that non-backward-compat changes to those types will require forking them, and pointing people to here.\n\n2) For each of those types, have a separate unittest to deserialize (from stored bytes) and verify all fields have expected values.\n\nUsing a \"fork-on-write\" approach slows down people touching those types, but at least with (1)\u0026(2) we are less likely to have compatibility issues in the field.\n\nWDYT? Thanks!",
+      "parentUuid": "0375db7b_995642f2",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
