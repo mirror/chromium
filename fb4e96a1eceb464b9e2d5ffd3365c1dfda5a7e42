@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a05f2a9e_0ca27522",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkCloneableMessage.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-13T20:14:40Z",
+      "side": 1,
+      "message": "Other name suggestions are welcome? I have to somehow distinguish the types in WebKit/common from the types in WebKit/Source/core/, and both use the same blink namespace...",
+      "parentUuid": "689c2448_a20d7c0c",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0880a683_70f9028f",
         "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.h",
         "patchSetId": 18
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "f4d52d4e_4c4f145b",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-13T20:14:40Z",
+      "side": 1,
+      "message": "Currently it uses MessagePortChannel::ReleaseHandles which, being in common, deals with std::vectors. But that method is pretty trivial, so I now just duplicated that implementation here, getting rid of the std::vectors.",
+      "parentUuid": "0880a683_70f9028f",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368532d9_fd686252",
         "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
         "patchSetId": 18
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-13T19:06:22Z",
       "side": 1,
       "message": "I\u0027m curious if the static cast is required to make it compile.",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c1b1c0_ecdedec5",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-13T20:14:40Z",
+      "side": 1,
+      "message": "The alternative would be explicitly specifying the template parameter of data.ReadMessage. Not sure what would be preferable...",
+      "parentUuid": "368532d9_fd686252",
       "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "10afc0e3_6af8e0f2",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-13T20:14:40Z",
+      "side": 1,
+      "message": "Hmm? out-\u003eports is a different type (std::vector\u003cblink::MessagePortChannel\u003e). To deserialize directly into that I\u0027d need some kind of mojo::internal::Deserialize version that doesn\u0027t currently exist.",
+      "parentUuid": "1ccd5535_8505fc58",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f560bea_b1f1f95a",
         "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
         "patchSetId": 18
@@ -101,6 +173,24 @@
       "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6172f2e_41f54745",
+        "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-13T20:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f560bea_b1f1f95a",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
