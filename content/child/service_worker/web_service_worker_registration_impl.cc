@@ -24,8 +24,8 @@ namespace {
 class HandleImpl : public blink::WebServiceWorkerRegistration::Handle {
  public:
   explicit HandleImpl(
-      const scoped_refptr<WebServiceWorkerRegistrationImpl>& registration)
-      : registration_(registration) {}
+      scoped_refptr<WebServiceWorkerRegistrationImpl> registration)
+      : registration_(std::move(registration)) {}
   ~HandleImpl() override {}
 
   blink::WebServiceWorkerRegistration* Registration() override {
@@ -52,18 +52,31 @@ WebServiceWorkerRegistrationImpl::QueuedTask::~QueuedTask() {}
 
 WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info)
-    : info_(std::move(info)), proxy_(nullptr) {
+    : handle_id_(info->handle_id),
+      info_(std::move(info)),
+      proxy_(nullptr),
+      binding_(this) {
   DCHECK(info_);
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
             info_->handle_id);
+  DCHECK(info_->host_ptr_info.is_valid());
+  DCHECK(info_->request.is_pending());
+
+  binding_.Bind(std::move(info_->request));
+  binding_.set_connection_error_handler(
+      base::Bind(&WebServiceWorkerRegistrationImpl::OnConnectionError,
+                 base::Unretained(this)));
+
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
-  dispatcher->AddServiceWorkerRegistration(info_->handle_id, this);
+  dispatcher->AddServiceWorkerRegistration(handle_id_, this);
 }
 
 void WebServiceWorkerRegistrationImpl::SetInstalling(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (!info_)
+    return;
   if (proxy_)
     proxy_->SetInstalling(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -72,6 +85,8 @@ void WebServiceWorkerRegistrationImpl::SetInstalling(
 
 void WebServiceWorkerRegistrationImpl::SetWaiting(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (!info_)
+    return;
   if (proxy_)
     proxy_->SetWaiting(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -80,6 +95,8 @@ void WebServiceWorkerRegistrationImpl::SetWaiting(
 
 void WebServiceWorkerRegistrationImpl::SetActive(
     const scoped_refptr<WebServiceWorkerImpl>& service_worker) {
+  if (!info_)
+    return;
   if (proxy_)
     proxy_->SetActive(WebServiceWorkerImpl::CreateHandle(service_worker));
   else
@@ -87,6 +104,8 @@ void WebServiceWorkerRegistrationImpl::SetActive(
 }
 
 void WebServiceWorkerRegistrationImpl::OnUpdateFound() {
+  if (!info_)
+    return;
   if (proxy_)
     proxy_->DispatchUpdateFoundEvent();
   else
@@ -95,6 +114,7 @@ void WebServiceWorkerRegistrationImpl::OnUpdateFound() {
 
 void WebServiceWorkerRegistrationImpl::SetProxy(
     blink::WebServiceWorkerRegistrationProxy* proxy) {
+  DCHECK(info_);
   proxy_ = proxy;
   RunQueuedTasks();
 }
@@ -114,6 +134,37 @@ void WebServiceWorkerRegistrationImpl::RunQueuedTasks() {
   queued_tasks_.clear();
 }
 
+void WebServiceWorkerRegistrationImpl::Attach(
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
+  if (info_)
+    return;
+  DCHECK(info);
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
+            info->handle_id);
+  DCHECK_EQ(handle_id_, info->handle_id);
+  DCHECK(info->host_ptr_info.is_valid());
+  DCHECK(!info->request.is_pending());
+  info_ = std::move(info);
+}
+
+void WebServiceWorkerRegistrationImpl::DetachAndMaybeDestroy() {
+  proxy_ = nullptr;
+  queued_tasks_.clear();
+  // This will close the Mojo connection of interface
+  // ServiceWorkerRegistrationObjectHost to the remote
+  // content::ServiceWorkerRegistrationHandle instance in the browser process,
+  // which will get destroyed if all Mojo connections to it have been broken.
+  // Then, destruction of content::ServiceWorkerRegistrationHandle will close
+  // the Mojo connection of interface ServiceWorkerRegistrationObject to |this|,
+  // which will then get destroyed by the connection error handler
+  // OnConnectionError().
+  info_ = nullptr;
+}
+
+void WebServiceWorkerRegistrationImpl::OnConnectionError() {
+  delete this;
+}
+
 blink::WebServiceWorkerRegistrationProxy*
 WebServiceWorkerRegistrationImpl::Proxy() {
   return proxy_;
@@ -126,6 +177,7 @@ blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
 void WebServiceWorkerRegistrationImpl::Update(
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) {
+  DCHECK(info_->host_ptr_info.is_valid());
   WebServiceWorkerProviderImpl* provider_impl =
       static_cast<WebServiceWorkerProviderImpl*>(provider);
   ServiceWorkerDispatcher* dispatcher =
@@ -138,6 +190,7 @@ void WebServiceWorkerRegistrationImpl::Update(
 void WebServiceWorkerRegistrationImpl::Unregister(
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebServiceWorkerUnregistrationCallbacks> callbacks) {
+  DCHECK(info_->host_ptr_info.is_valid());
   WebServiceWorkerProviderImpl* provider_impl =
       static_cast<WebServiceWorkerProviderImpl*>(provider);
   ServiceWorkerDispatcher* dispatcher =
@@ -151,6 +204,7 @@ void WebServiceWorkerRegistrationImpl::EnableNavigationPreload(
     bool enable,
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebEnableNavigationPreloadCallbacks> callbacks) {
+  DCHECK(info_->host_ptr_info.is_valid());
   WebServiceWorkerProviderImpl* provider_impl =
       static_cast<WebServiceWorkerProviderImpl*>(provider);
   ServiceWorkerDispatcher* dispatcher =
@@ -164,6 +218,7 @@ void WebServiceWorkerRegistrationImpl::EnableNavigationPreload(
 void WebServiceWorkerRegistrationImpl::GetNavigationPreloadState(
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebGetNavigationPreloadStateCallbacks> callbacks) {
+  DCHECK(info_->host_ptr_info.is_valid());
   WebServiceWorkerProviderImpl* provider_impl =
       static_cast<WebServiceWorkerProviderImpl*>(provider);
   ServiceWorkerDispatcher* dispatcher =
@@ -177,6 +232,7 @@ void WebServiceWorkerRegistrationImpl::SetNavigationPreloadHeader(
     const blink::WebString& value,
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebSetNavigationPreloadHeaderCallbacks> callbacks) {
+  DCHECK(info_->host_ptr_info.is_valid());
   WebServiceWorkerProviderImpl* provider_impl =
       static_cast<WebServiceWorkerProviderImpl*>(provider);
   ServiceWorkerDispatcher* dispatcher =
@@ -194,17 +250,23 @@ int64_t WebServiceWorkerRegistrationImpl::RegistrationId() const {
 // static
 std::unique_ptr<blink::WebServiceWorkerRegistration::Handle>
 WebServiceWorkerRegistrationImpl::CreateHandle(
-    const scoped_refptr<WebServiceWorkerRegistrationImpl>& registration) {
+    scoped_refptr<WebServiceWorkerRegistrationImpl> registration) {
   if (!registration)
     return nullptr;
-  return std::make_unique<HandleImpl>(registration);
+  return std::make_unique<HandleImpl>(std::move(registration));
+}
+
+// static
+void WebServiceWorkerRegistrationImpl::Destruct(
+    const WebServiceWorkerRegistrationImpl* x) {
+  const_cast<WebServiceWorkerRegistrationImpl*>(x)->DetachAndMaybeDestroy();
 }
 
 WebServiceWorkerRegistrationImpl::~WebServiceWorkerRegistrationImpl() {
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   if (dispatcher)
-    dispatcher->RemoveServiceWorkerRegistration(info_->handle_id);
+    dispatcher->RemoveServiceWorkerRegistration(handle_id_);
 }
 
 }  // namespace content
