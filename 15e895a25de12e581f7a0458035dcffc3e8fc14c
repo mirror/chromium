@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f224dca_e050452d",
+        "filename": "media/filters/decoder_stream_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T21:34:11Z",
+      "side": 1,
+      "message": "Done. We clear [begin, target] in OnDecodeDone now.",
+      "parentUuid": "e67c3b79_20d99049",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 15
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a149b69f_b8d0edfd",
         "filename": "media/filters/decoder_stream_traits.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8e48f94c_133f1f54",
+        "filename": "media/filters/decoder_stream_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T21:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a149b69f_b8d0edfd",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 15
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c90ff0e5_c911c44d",
         "filename": "media/filters/decoder_stream_traits.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T21:34:39Z",
       "side": 1,
       "message": "Return value should be documented.",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "15e895a25de12e581f7a0458035dcffc3e8fc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb61674_5af5ecd8",
+        "filename": "media/filters/decoder_stream_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T21:34:11Z",
+      "side": 1,
+      "message": "Gave it a clearly named enum.",
+      "parentUuid": "c90ff0e5_c911c44d",
       "range": {
         "startLine": 58,
         "startChar": 7,
