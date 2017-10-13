@@ -557,9 +557,13 @@ FileGrid.prototype.decorateThumbnail_ = function(li, entry) {
   if (!isDirectory) {
     var active_checkmark = li.ownerDocument.createElement('div');
     active_checkmark.className = 'checkmark active';
+    active_checkmark.setAttribute('role', 'checkbox');
+    active_checkmark.setAttribute('aria-checked', true);
     frame.appendChild(active_checkmark);
     var inactive_checkmark = li.ownerDocument.createElement('div');
     inactive_checkmark.className = 'checkmark inactive';
+    inactive_checkmark.setAttribute('role', 'checkbox');
+    inactive_checkmark.setAttribute('aria-checked', false);
     frame.appendChild(inactive_checkmark);
   }
 
