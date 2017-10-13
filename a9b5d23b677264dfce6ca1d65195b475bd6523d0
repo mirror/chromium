@@ -1,0 +1,939 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f1a04a_9d001ddd",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "When you switch to a task scheduler, repackage the methods which run on the encoder task runner into a inner class that you can pass to the task scheduler for deletion here.\n\nI.e. you would have something like std::unique_ptr\u003cVaapiEncoder\u003e class, with NotifyErrorFromEncoderThread and EncodeTask. Then during destruction you just say task_scheduler_-\u003eDeleteSoon(FROM_HERE, VaapiEncoder.release());\n\nThis would also improve tear down time since you\u0027re not waiting for Thread::Join() here anymore.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ec4ab8_ea04b0d0",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Function calls like this can\u0027t be elided in non debug, so you might wrap this in #if !defined(NDEBUG).",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc74d194_048ba485",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "As noted in header this should be by value.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0088346_b7646320",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819ca217_6ace46ff",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Can the above method return a zero sized vector?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b3417e_bcbed3ef",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Seems you create and destroy this a bunch, worth keeping one cached that only gets recreated when size changes?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5375042_34f1b5ad",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "No {} necessary for single line if -- up to you though.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd9a283_9bfad5f9",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Inner class will need to own this when switching to task runner.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a62829_f1ae0ff7",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": ".get() not necessary.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe10823a_335f0352",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Instead this becomes something like:\n\nblocking_task_runner_ \u003d base::CreateSequencedTaskRunnerWithTraits({base::MayBlock(), base::TaskPriority::USER_BLOCKING});\n\nNot sure if you need user blocking since I don\u0027t know what you\u0027re using this for.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4c9546_9e4251ce",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e556b9_5a2c62c9",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Is anything else using the jpeg trace event? Probably fine, but just curious.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5573a894_ff557516",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "As noted in header, stick it in the encode request? Again seems only used for debug, but compiler can\u0027t elide function calls. and ::Now() at high frequency isn\u0027t cheap.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750b7250_49e039b9",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Switch Unretained to hold inner class with task scheduler.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273eeed3_31c04125",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Pass by value nowadays and use std::move where needed. Also this should be tagged explicit since it has only one parameter.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0543b8ac_23db4170",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto, pass by value.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b206ab_b97f1d16",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Just use a const EncodeRequest\u0026 directly if ownership isn\u0027t changing hands. If it is, pass by value instead.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73377dc_2ef61591",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "This should be down with the weak_this_factory_. WeakPtr/WeakPtrFactory must always be the first destructed class members.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc20c97a_8a52091f",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Don\u0027t generate threads like this anymore. Instead use a task scheduler:\n\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9efe78_4be7509a",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Bind into EncodeRequest structure?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a05b200_ce5cbae5",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Why std::array vs static const [] ? Seems this will be a static initializer?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251a77fb_837db738",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Prefer using JPEGHeader \u003d xxxx nowadays. Per c++11 recs, prefer std::vector over std::array:\n\nhttps://chromium-cpp.appspot.com/",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d823461_3505d848",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Just pass const gfx::Size\u0026 coded_size since that\u0027s all that\u0027s being used. Prefer the smallest scoping possible when passing.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2587ec8_3e13733d",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Unnecessary since zero\u0027d? Ditto for others, but up to you. See also my comment below on allowing the tooling to catch accidental uninitialized values.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ca7ad2_02eb6d73",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "If you expect to fill every value remove this so accidental uninitalized values are caught by tooling.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fef9e4_301669d6",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fa23f3_35fe4b5a",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded3ce64_aa707ebe",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto, just pass gfx::Size coded size.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cbbf26_88305a52",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Don\u0027t write one byte at a time like this, store this all as a static const[] and memcpy it in all at once.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8893f717_501dd688",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Prefer size_t or a fixed uint64_t type to \"unsigned int\"",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c79169b_b5bc361e",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Again, just memcpy these 4 values in.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb14caa8_2f09563e",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Just use a uint8_t instead of unsigned int above? Just need the std::max then or a if (!value) value \u003d 1.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6680688f_cb3e132e",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Does memcpy(header + idx, {0xFF, 0x00, 0x11, 8, ... }, #N) work?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81b8f72_d07f065d",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "just if (!i) ?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc714c9_78934372",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "memcpy.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f13283_8c760a80",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "memcpy",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ecd677_31bb2aba",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "memcpy.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937eca32_f050f8f9",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "if !i ?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea95fb23_dc34a1a3",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Looks like this can just be gfx::Size.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17940415_9151482d",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Multiline if requires {}",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3062030d_90f59418",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Multiline if requires {}",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d03559_0cd84eeb",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ec25c7_5fb5cd8e",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Again prefer a fixed sized type to unsigned int; or just use size_t",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f564f65_074704f3",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto on multiline if",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eff2dbf_12d5d6ba",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Ditto on multiline if",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3176d4ed_da2cb358",
+        "filename": "media/gpu/vaapi_jpeg_encoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Just end with \"return vaapi_wrapper-\u003eExecuteAndDestroyPendingBuffers(surface_id)\"",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ea8486_6aeabe2a",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Collections of static methods are preferred to be in namespaces instead of classes:\n\nhttps://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ce9337_cc7159dc",
+        "filename": "media/gpu/vaapi_jpeg_encoder.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "By-value.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fa1d73_5e89f4fd",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8391a116_f7dbedb1",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Remove default in favor or explicit listing?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699f0468_47fef3e4",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "nullptr.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888625b0_618874b6",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "This is a really weird pattern, but I see it used elsewhere in this file, so it\u0027s okay I guess, but why do you need to unlock to write to the shared memory?",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b652332_4419aad0",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "if !src",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a4e9ed_ff7587cb",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Should be by-value, but since the surrounding code is still const\u0026 this one is fine.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9258a8_548656a1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 32590,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-13T18:04:44Z",
+      "side": 1,
+      "message": "Do you expect this to be the same as VAJDADecoderFailure? If so, seems fine to reuse.",
+      "revId": "a9b5d23b677264dfce6ca1d65195b475bd6523d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
