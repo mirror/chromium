@@ -36,6 +36,11 @@ void CreateNoteAction::OnEnable() {
 }
 
 views::View* CreateNoteAction::CreateView() {
+  // |palette_delegate| can be null in some tests. This is a temporary fix,
+  // since |palette_delegate| is going away (see http://crbug.com/773698,
+  // http://crbug.com/761120)
+  if (!Shell::Get()->palette_delegate())
+    return nullptr;
   if (!Shell::Get()->palette_delegate()->HasNoteApp())
     return nullptr;
 
