@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "885ca574_d3e758cf",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T17:24:20Z",
+      "side": 1,
+      "message": "See other comment",
+      "parentUuid": "45a0981a_5dd45390",
+      "range": {
+        "startLine": 844,
+        "startChar": 14,
+        "endLine": 844,
+        "endChar": 15
+      },
+      "revId": "ef1c493cd3ee70d017148a3003f552a50d546cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35bfcb58_5915e31f",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ef1c493cd3ee70d017148a3003f552a50d546cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9591bd79_0487e60b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T17:24:20Z",
+      "side": 1,
+      "message": "Yep, though some of that got changed to be more consistent with the UI that already exists for other settings. I\u0027ve just now double-checked and they want \"for a specific site\" and lowercase sound. Updating strings now",
+      "parentUuid": "35bfcb58_5915e31f",
+      "range": {
+        "startLine": 847,
+        "startChar": 18,
+        "endLine": 847,
+        "endChar": 38
+      },
+      "revId": "ef1c493cd3ee70d017148a3003f552a50d546cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
