@@ -23,6 +23,7 @@
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/file_manager/path_util.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
+#include "chrome/browser/chromeos/note_taking_controller_client.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/pref_names.h"
@@ -395,6 +396,9 @@ NoteTakingHelper::NoteTakingHelper()
                                  ->has_instance()) {
     UpdateAndroidApps();
   }
+
+  note_taking_controller_client_ =
+      base::MakeUnique<NoteTakingControllerClient>(this);
 }
 
 NoteTakingHelper::~NoteTakingHelper() {
