@@ -73,6 +73,54 @@
     },
     {
       "key": {
+        "uuid": "4f816a11_23489456",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Done - I agree it helps with the readability.",
+      "parentUuid": "9ce73ae1_6d414d82",
+      "range": {
+        "startLine": 523,
+        "startChar": 45,
+        "endLine": 523,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "016ce66a_a1f71832",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce73ae1_6d414d82",
+      "range": {
+        "startLine": 523,
+        "startChar": 45,
+        "endLine": 523,
+        "endChar": 0
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3f6574_2709b958",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 13
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "grumble something something goto fail",
       "parentUuid": "81e72c7a_bfffd562",
+      "range": {
+        "startLine": 1510,
+        "startChar": 8,
+        "endLine": 1510,
+        "endChar": 11
+      },
+      "revId": "1f40ba9929342fb82538ecbd10255cbe723ac368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "867a16f1_75020b47",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Yeah I couldn\u0027t agree more. Maybe one day we\u0027ll change the style guide?",
+      "parentUuid": "464dfd73_70cb2577",
       "range": {
         "startLine": 1510,
         "startChar": 8,

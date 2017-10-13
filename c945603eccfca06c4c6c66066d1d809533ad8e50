@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d57f7a1_27192b59",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "We do fetch them on ios (see comment on the .mm file), but chrome/browser/** isn\u0027t compiled on ios so there\u0027s no need to deal with it here.",
+      "parentUuid": "9e1f74f8_f6534e7e",
+      "revId": "c945603eccfca06c4c6c66066d1d809533ad8e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e8eb2fd_4ca1d2ab",
         "filename": "components/component_updater/crl_set_component_installer.cc",
         "patchSetId": 15
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "7ddfd9c3_0a5722cd",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Indeed, we are. If you\u0027d prefer not to, I\u0027d rather open a separate bug and tackle that in a second CL (keeping this as a refactoring).",
+      "parentUuid": "7862ef0a_882b3c72",
+      "revId": "c945603eccfca06c4c6c66066d1d809533ad8e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e82332f_7bf09017",
         "filename": "net/ssl/ssl_config_service.cc",
         "patchSetId": 15
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "2e86e629_c3b97343",
+        "filename": "net/ssl/ssl_config_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e82332f_7bf09017",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "c945603eccfca06c4c6c66066d1d809533ad8e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "887f5c15_bf4258a8",
         "filename": "net/ssl/ssl_config_service.cc",
         "patchSetId": 15
@@ -96,6 +156,30 @@
       "revId": "c945603eccfca06c4c6c66066d1d809533ad8e50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd9966f_9431007b",
+        "filename": "net/ssl/ssl_config_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-13T17:19:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "887f5c15_bf4258a8",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 12
+      },
+      "revId": "c945603eccfca06c4c6c66066d1d809533ad8e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
