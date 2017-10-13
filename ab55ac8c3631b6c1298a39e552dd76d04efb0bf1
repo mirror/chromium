@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46cfd90a_2aa2dd72",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-13T04:19:56Z",
+      "side": 1,
+      "message": "The Worklet spec[1] refers to the \"fetch a module worker script graph\" algorithm in the HTML spec[2].\n\nThis algorithm doesn\u0027t take a #script-fetch-options and instead internally constructs it, so maybe we don\u0027t have to update the Worklet spec.\n\n[1] https://drafts.css-houdini.org/worklets/#fetch-a-worklet-script\n\"1. Fetch a module worker script graph given moduleURLRecord, outsideSettings, \"script\", credentialOptions, and insideSettings.\"\n\n[2] https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree",
+      "range": {
+        "startLine": 112,
+        "startChar": 53,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "ab55ac8c3631b6c1298a39e552dd76d04efb0bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
