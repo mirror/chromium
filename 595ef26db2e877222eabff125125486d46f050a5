@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef92d926_a64247a3",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-13T16:43:38Z",
+      "side": 1,
+      "message": "performClick: is documented as \"Simulates the user clicking the button with the pointer.\" though? it seems like it\u0027s intended to be called, not overridden, unless I\u0027m misunderstanding the documentation somehow. Is there a guarantee somewhere that appkit will call it? If not, I don\u0027t want to depend on that behavior.",
+      "parentUuid": "bf07cba7_db98efc5",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7de23fcf_1110d53c",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T23:57:34Z",
       "side": 1,
       "message": "I don\u0027t think controls normally respond to return/enter. In dialogs, for instance, return/enter clicks the default button regardless of which button is key. It\u0027s common for a dialog to have a button other than the default one be key by default, so that space performs one action (e.g. \"don\u0027t save\") and enter performs another (e.g. \"save\").",
+      "revId": "595ef26db2e877222eabff125125486d46f050a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8568fb5c_63ed9919",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-10-13T16:43:38Z",
+      "side": 1,
+      "message": "Indeed, they don\u0027t. I\u0027m on the fence about whether the tabs should. Safari\u0027s tabs don\u0027t. What do you think?",
+      "parentUuid": "7de23fcf_1110d53c",
       "revId": "595ef26db2e877222eabff125125486d46f050a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
