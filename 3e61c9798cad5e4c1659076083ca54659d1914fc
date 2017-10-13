@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28de357f_d8a48d6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "Phone number (and email if applicable) are the last fields of the address.",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af004b6_db7928a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "If it\u0027s never null, then remove the check.",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8358558e_af18a318",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "I think PaymentRequest has not much to do with this, so I would recommend a specific AutofillPreferenceObserverForTest or something like that.",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74199757_b019dfcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragment.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "Hmm, is this pattern used elsewhere, to set a static?",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c7a99a_2e5cc4ae",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "Is this shared by all the tests? I\u0027m confused.",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8e94e1_5e5aee7e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "Can we test the validation? Entering incomplete data and trying to save. Also, I\u0027m thinking email/phone should probably be optional in the Autofill editor, what do you think? Feel free to do as a follow-up",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd6220e_a1ae26b1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfilesFragmentTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "Would choose a name like John Doe because \"Added Profile\" may be confusing to some readers",
+      "range": {
+        "startLine": 78,
+        "startChar": 43,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d64ce3_6b3d5a20",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillTestRule.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "mPreferenceUpdate",
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abb056f_46125163",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/autofill/AutofillTestRule.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T18:44:44Z",
+      "side": 1,
+      "message": "please remove references to PaymentRequest",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "3e61c9798cad5e4c1659076083ca54659d1914fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
