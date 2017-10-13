@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f5a649cc_25b41e70",
+        "filename": "ash/system/palette/palette_welcome_bubble.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-13T02:02:48Z",
+      "side": 1,
+      "message": "That works but it\u0027s slightly different. Deactivate gets run when OnWidgetActivationChanges, which is only when you click another widget which takes the focus. It won\u0027t work if you click the shelf for example or if there was no app open, the background.\n\nOr at least that\u0027s what my experiments showed :-P",
+      "parentUuid": "3f73bc06_3837b09e",
+      "revId": "febdcbb584f5c0c8312ecf609128e921408cc306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f839b2b_c1f2491c",
         "filename": "ash/system/palette/palette_welcome_bubble.cc",
         "patchSetId": 8
