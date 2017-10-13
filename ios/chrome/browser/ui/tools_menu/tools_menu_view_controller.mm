@@ -600,6 +600,9 @@ NS_INLINE void AnimateInViews(NSArray* views,
         if ([menuItem tag] == TOOLS_SETTINGS_ITEM) {
           [self.dispatcher
               showSettingsFromViewController:self.baseViewController];
+        } else if ([menuItem tag] == TOOLS_REPORT_AN_ISSUE) {
+          [self.dispatcher
+              showReportAnIssueFromViewController:self.baseViewController];
         } else {
           [menuItem executeCommandWithDispatcher:self.dispatcher];
         }
