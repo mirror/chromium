@@ -59,6 +59,14 @@ class ASH_EXPORT LoginUserView : public views::Button,
   // Set if the view must be opaque.
   void SetForceOpaque(bool force_opaque);
 
+  // Captures any metadata about the current view state that will be used for
+  // animation.
+  void CaptureStateForAnimationPreLayout();
+
+  // Applies animation based on current layout state compared to the most
+  // recently captured state.
+  void ApplyAnimationPostLayout();
+
   const mojom::LoginUserInfoPtr& current_user() const { return current_user_; }
 
   // views::Button:
@@ -105,6 +113,10 @@ class ASH_EXPORT LoginUserView : public views::Button,
   // True if the view must be opaque (ie, opacity = 1) regardless of input
   // state.
   bool force_opaque_ = false;
+  // The cached starting position before a layout, for animation purpose.
+  int cached_start_y_coordinate_ = 0;
+  // A flag indicating if |cached_start_y_coordinate_| is the most recent value.
+  bool waiting_for_animation_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LoginUserView);
 };
