@@ -13,6 +13,7 @@ const char kAboutBlankWithHashPath[] = "blank/";
 
 const char kAboutScheme[] = "about";
 const char kBlobScheme[] = "blob";
+const char kChromeScheme[] = "chrome";
 const char kContentScheme[] = "content";
 const char kContentIDScheme[] = "cid";
 const char kDataScheme[] = "data";

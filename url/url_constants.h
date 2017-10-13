@@ -18,6 +18,7 @@ URL_EXPORT extern const char kAboutBlankWithHashPath[];
 
 URL_EXPORT extern const char kAboutScheme[];
 URL_EXPORT extern const char kBlobScheme[];
+URL_EXPORT extern const char kChromeScheme[];
 // The content scheme is specific to Android for identifying a stored file.
 URL_EXPORT extern const char kContentScheme[];
 URL_EXPORT extern const char kContentIDScheme[];
