@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a664df_f0851b14",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T13:48:54Z",
+      "side": 1,
+      "message": "nit: s/const/constexpr/ x2",
+      "revId": "0da695c7f599c932d7efe1292dd53d19d4470e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd081d7_867d9147",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T13:48:54Z",
+      "side": 1,
+      "message": "Can you please point out this and the below change in the CL description?",
+      "revId": "0da695c7f599c932d7efe1292dd53d19d4470e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
