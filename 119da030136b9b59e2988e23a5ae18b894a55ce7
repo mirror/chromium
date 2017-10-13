@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7d4e6b2_d33683be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T21:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8d22f7_66122024",
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b851032d_d5bdd8a7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea993f84_64b79e50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T21:55:52Z",
+      "side": 1,
+      "message": "We can\u0027t access the int/flags from API \u003c 24. \n\nAlso due to the way the logic is structured, the cases are:\n- try to detach, don\u0027t kill.\n- try to detach, if that doesn\u0027t work, kill notification.\n- don\u0027t try to detach, just kill notification.\n\n(Will update the javadoc)",
+      "parentUuid": "b851032d_d5bdd8a7",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 64
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "54c71b39_5c345ee2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T21:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0aff979_7948e701",
+      "range": {
+        "startLine": 234,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 56
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d1598f8_e90d9f3b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30dcd29_b6599493",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-10-13T21:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1598f8_e90d9f3b",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 61
+      },
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
