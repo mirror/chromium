@@ -2732,6 +2732,7 @@ split_static_library("browser") {
     deps += [
       "//ash",
       "//chrome/browser/chromeos",
+      "//media/gpu:gpu",
       "//services/ui/public/cpp/input_devices",
       "//services/ui/public/cpp/input_devices:input_device_controller",
       "//ui/ozone",

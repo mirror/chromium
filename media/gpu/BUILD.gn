@@ -108,6 +108,7 @@ component("gpu") {
   # Only local test code, GPU-related IPC code in the media layer, and
   # media-related content code should access //media/gpu.
   visibility = [
+    "//chrome/browser:browser",
     "//chrome/gpu:*",
     "//content/gpu:*",
     "//content/renderer:*",

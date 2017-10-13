@@ -3,6 +3,7 @@ include_rules = [
   "+cc/paint",
   "+chrome/app",
   "+chrome/chrome_watcher",
+  "+chrome/gpu",
   "+chrome/grit",
   "+chrome/install_static",
   "+chrome/installer/util",
@@ -35,6 +36,7 @@ include_rules = [
   "+media/audio", # For media audio hang monitor.
   "+media/base",  # For media switches
   "+media/cdm/cdm_paths.h",
+  "+media/gpu",
   "+media/midi",  # For midi switches
   "+media/mojo",  # For mojo media services.
   "+ppapi/c",  # For various types.
