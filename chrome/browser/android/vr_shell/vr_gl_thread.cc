@@ -11,7 +11,6 @@
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/toolbar_state.h"
-#include "chrome/browser/vr/ui.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 namespace vr_shell {
@@ -23,17 +22,21 @@ VrGLThread::VrGLThread(
     bool initially_web_vr,
     bool web_vr_autopresentation_expected,
     bool in_cct,
+    bool browsing_disabled,
     bool reprojected_rendering,
     bool daydream_support)
     : base::android::JavaHandlerThread("VrShellGL"),
       weak_vr_shell_(weak_vr_shell),
       main_thread_task_runner_(std::move(main_thread_task_runner)),
       gvr_api_(gvr_api),
-      initially_web_vr_(initially_web_vr),
-      web_vr_autopresentation_expected_(web_vr_autopresentation_expected),
-      in_cct_(in_cct),
       reprojected_rendering_(reprojected_rendering),
-      daydream_support_(daydream_support) {}
+      daydream_support_(daydream_support) {
+  ui_initial_state_.in_cct = in_cct;
+  ui_initial_state_.in_web_vr = initially_web_vr;
+  ui_initial_state_.web_vr_autopresentation_expected =
+      web_vr_autopresentation_expected;
+  ui_initial_state_.browsing_disabled = browsing_disabled;
+}
 
 VrGLThread::~VrGLThread() {
   Stop();
@@ -44,14 +47,8 @@ base::WeakPtr<VrShellGl> VrGLThread::GetVrShellGl() {
 }
 
 void VrGLThread::Init() {
-  vr::UiInitialState ui_initial_state;
-  ui_initial_state.in_cct = in_cct_;
-  ui_initial_state.in_web_vr = initially_web_vr_;
-  ui_initial_state.web_vr_autopresentation_expected =
-      web_vr_autopresentation_expected_;
-
   vr_shell_gl_ =
-      base::MakeUnique<VrShellGl>(this, this, ui_initial_state, gvr_api_,
+      base::MakeUnique<VrShellGl>(this, this, ui_initial_state_, gvr_api_,
                                   reprojected_rendering_, daydream_support_);
 
   browser_ui_ = vr_shell_gl_->GetBrowserUiWeakPtr();

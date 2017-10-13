@@ -124,6 +124,7 @@ VrShell::VrShell(JNIEnv* env,
                  bool for_web_vr,
                  bool web_vr_autopresentation_expected,
                  bool in_cct,
+                 bool browsing_disabled,
                  VrShellDelegate* delegate,
                  gvr_context* gvr_api,
                  bool reprojected_rendering,
@@ -147,7 +148,7 @@ VrShell::VrShell(JNIEnv* env,
 
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
-      for_web_vr, web_vr_autopresentation_expected, in_cct,
+      for_web_vr, web_vr_autopresentation_expected, in_cct, browsing_disabled,
       reprojected_rendering_, HasDaydreamSupport(env));
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
@@ -864,6 +865,7 @@ jlong Init(JNIEnv* env,
            jboolean for_web_vr,
            jboolean web_vr_autopresentation_expected,
            jboolean in_cct,
+           jboolean browsing_disabled,
            jlong gvr_api,
            jboolean reprojected_rendering,
            jfloat display_width_meters,
@@ -872,7 +874,7 @@ jlong Init(JNIEnv* env,
            jint display_pixel_height) {
   return reinterpret_cast<intptr_t>(new VrShell(
       env, obj, reinterpret_cast<ui::WindowAndroid*>(window_android),
-      for_web_vr, web_vr_autopresentation_expected, in_cct,
+      for_web_vr, web_vr_autopresentation_expected, in_cct, browsing_disabled,
       VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
       reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering,
       display_width_meters, display_height_meters, display_width_pixels,

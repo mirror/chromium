@@ -64,8 +64,8 @@ public abstract class ChromeFeatureList {
     public static boolean isEnabled(String featureName) {
         if (sTestFeatures != null) {
             Boolean enabled = sTestFeatures.get(featureName);
-            if (enabled == null) throw new IllegalArgumentException(featureName);
-            return enabled;
+            // Fall back to defaults if a feature isn't explicitly set.
+            if (enabled != null) return enabled;
         }
 
         assert isInitialized();
