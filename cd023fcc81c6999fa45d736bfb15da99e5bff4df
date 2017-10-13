@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014b3640_0f6175e5",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T20:15:21Z",
+      "side": 1,
+      "message": "Can you delete this TODO and remove the wording that refers to Linux and Mac on line 72? It\u0027s not applicable any more (this condition has nothing to do with desktop Linux vs Mac, only mobile vs. desktop).",
+      "revId": "cd023fcc81c6999fa45d736bfb15da99e5bff4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
