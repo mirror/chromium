@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27af62e_c0cda515",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-13T14:50:51Z",
+      "side": 1,
+      "message": "This is not safe. The context provider that was provided to the constructor could be stale.  For example if the source context was lost, then restored.  Instead of storing a long lived reference to the original context provider, you should pass a context provider along with the SkImage.  Otherwise, the code will not be able to survive a GPU context reset.",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 16
+      },
+      "revId": "e7add2ddf828471330d845192285dbefd2a902ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86487b2_792900a5",
+        "filename": "third_party/WebKit/public/platform/WebCanvasCaptureHandler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-13T14:50:51Z",
+      "side": 1,
+      "message": "On the blink side, instead of passing around sk_sp\u003cSkImage\u003e, you should use RefPtr\u003cStaticBitmapImage\u003e, which bundles the SkImage with the context provider that was used to generate the images GPU resources, if any. Then, at the blink/chromium boundary, you can extract the SkImage and the context provider for passing to chromium code.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "e7add2ddf828471330d845192285dbefd2a902ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
