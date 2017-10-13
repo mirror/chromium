@@ -2859,7 +2859,13 @@
             ],
             "experiments": [
                 {
-                    "name": "On"
+                    "name": "NewCleanerUIExperiment",
+                    "params": {
+                        "Seed": "20171002"
+                    },
+                    "enable_features": [
+                        "InBrowserCleanerUI"
+                    ]
                 }
             ]
         }
