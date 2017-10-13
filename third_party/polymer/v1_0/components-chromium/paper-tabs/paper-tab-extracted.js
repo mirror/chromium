@@ -22,7 +22,8 @@ Polymer({
       },
 
       hostAttributes: {
-        role: 'tab'
+        role: 'tab',
+        'aria-selected': 'false'
       },
 
       listeners: {
