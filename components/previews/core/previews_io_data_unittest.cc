@@ -35,6 +35,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -76,20 +77,21 @@ class TestPreviewsUIService : public PreviewsUIService {
                           io_task_runner,
                           std::move(previews_opt_out_store),
                           is_enabled_callback,
-                          std::move(logger)),
-        type_(PreviewsType::NONE) {}
+                          std::move(logger)) {}
 
-  // Return the passed in url.
-  GURL url() const { return url_; }
+  // Expose passed in LogPreviewDecision parameters.
+  std::vector<PreviewsEligibilityReason> decision_reasons() {
+    return decision_reasons_;
+  }
+  std::vector<GURL> decision_urls() { return decision_urls_; }
+  std::vector<PreviewsType> decision_types() { return decision_types_; }
+  std::vector<base::Time> decision_times() { return decision_times_; }
 
-  // Return the passed in opt_out.
-  bool opt_out() const { return opt_out_; }
-
-  // Return the passed in type.
-  PreviewsType type() const { return type_; }
-
-  // Return the passed in time.
-  base::Time time() const { return time_; }
+  // Expose passed in LogPreviewsNavigation parameters.
+  std::vector<GURL> navigation_urls() { return navigation_urls_; }
+  std::vector<bool> navigation_opt_outs() { return navigation_opt_outs_; }
+  std::vector<base::Time> navigation_times() { return navigation_times_; }
+  std::vector<PreviewsType> navigation_types() { return navigation_types_; }
 
  private:
   // PreviewsUIService:
@@ -97,16 +99,33 @@ class TestPreviewsUIService : public PreviewsUIService {
                             PreviewsType type,
                             bool opt_out,
                             base::Time time) override {
-    url_ = url;
-    opt_out_ = opt_out;
-    type_ = type;
-    time_ = base::Time(time);
+    navigation_urls_.push_back(url);
+    navigation_opt_outs_.push_back(opt_out);
+    navigation_types_.push_back(type);
+    navigation_times_.push_back(time);
   }
 
-  GURL url_;
-  bool opt_out_;
-  PreviewsType type_;
-  base::Time time_;
+  void LogPreviewsDecisionMade(PreviewsEligibilityReason reason,
+                               const GURL& url,
+                               base::Time time,
+                               PreviewsType type) override {
+    decision_reasons_.push_back(reason);
+    decision_urls_.push_back(GURL(url));
+    decision_times_.push_back(time);
+    decision_types_.push_back(type);
+  }
+
+  // Passed in LogPreviewDecision parameters.
+  std::vector<PreviewsEligibilityReason> decision_reasons_;
+  std::vector<GURL> decision_urls_;
+  std::vector<PreviewsType> decision_types_;
+  std::vector<base::Time> decision_times_;
+
+  // Passed in LogPreviewsNavigation parameters.
+  std::vector<GURL> navigation_urls_;
+  std::vector<bool> navigation_opt_outs_;
+  std::vector<base::Time> navigation_times_;
+  std::vector<PreviewsType> navigation_types_;
 };
 
 class TestPreviewsIOData : public PreviewsIOData {
@@ -313,7 +332,6 @@ TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenNetworkQualityFast) {
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_3G);
-
   base::HistogramTester histogram_tester;
   EXPECT_FALSE(
       io_data()->ShouldAllowPreview(*CreateRequest(), PreviewsType::OFFLINE));
@@ -524,10 +542,46 @@ TEST_F(PreviewsIODataTest, LogPreviewNavigationPassInCorrectParams) {
   io_data()->LogPreviewNavigation(url, opt_out, type, time);
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_EQ(url, ui_service()->url());
-  EXPECT_EQ(opt_out, ui_service()->opt_out());
-  EXPECT_EQ(type, ui_service()->type());
-  EXPECT_EQ(time, ui_service()->time());
+  EXPECT_THAT(ui_service()->navigation_urls(), ::testing::ElementsAre(url));
+  EXPECT_THAT(ui_service()->navigation_opt_outs(),
+              ::testing::ElementsAre(opt_out));
+  EXPECT_THAT(ui_service()->navigation_types(), ::testing::ElementsAre(type));
+  EXPECT_THAT(ui_service()->navigation_times(), ::testing::ElementsAre(time));
+}
+
+TEST_F(PreviewsIODataTest, LogPreviewsDecisionMadePassInCorrectParams) {
+  InitializeUIService();
+  PreviewsEligibilityReason reason(
+      PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE);
+  GURL url("http://www.url_a.com/url_a");
+  base::Time time = base::Time::Now();
+  PreviewsType type = PreviewsType::OFFLINE;
+
+  io_data()->LogPreviewsDecisionMade(reason, url, time, type);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_THAT(ui_service()->decision_reasons(), ::testing::ElementsAre(reason));
+  EXPECT_THAT(ui_service()->decision_urls(), ::testing::ElementsAre(url));
+  EXPECT_THAT(ui_service()->decision_types(), ::testing::ElementsAre(type));
+  EXPECT_THAT(ui_service()->decision_times(), ::testing::ElementsAre(time));
+}
+
+TEST_F(PreviewsIODataTest, ShouldAllowPreviewAtECTCallsLogDecisionMade) {
+  InitializeUIService();
+  CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled", {});
+
+  auto expected_reason = PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE;
+  auto expected_type = PreviewsType::LOFI;
+
+  io_data()->ShouldAllowPreviewAtECT(*CreateRequest(), expected_type,
+                                     net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
+                                     {});
+  base::RunLoop().RunUntilIdle();
+  // Testing correct log method is called.
+  EXPECT_THAT(ui_service()->decision_reasons(),
+              ::testing::Contains(expected_reason));
+  EXPECT_THAT(ui_service()->decision_types(),
+              ::testing::Contains(expected_type));
 }
 
 }  // namespace
