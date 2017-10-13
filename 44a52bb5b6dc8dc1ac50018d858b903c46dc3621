@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c5bf88_6a246f98",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23\n\u003e\u003e The block from line 511 to line 518 looks the same as the block from line 536 to\n\u003e\u003e line 548, can you put them in one helper function like: File\n\u003e\u003e createPendingUpdateFile()?\n\u003e\u003e\n\u003e\u003e If returning a File object doesn\u0027t work for the assumption in line 524, you can\n\u003e\u003e simply return a string in the helper function.",
+      "revId": "44a52bb5b6dc8dc1ac50018d858b903c46dc3621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

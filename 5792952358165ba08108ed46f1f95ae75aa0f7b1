@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933997aa_4a502b4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23 You can remove this function now.\n\nThis is called from WebApkUpdateManager#updateNow()",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4702435f_fd385629",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23 You can remove this too.\n\nThis is called from WebApkUpdateManager#scheduleUpdate()",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102b4f8f_11ad6877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23\n\u003e\u003e It is worthy mentioning that: the scheduled task will update all WebAPKs that\n\u003e\u003e are out-of-date. It is possible that multiple background tasks are created when\n\u003e\u003e there are multiple webapks are launched and need to be updated, and it is fine\n\u003e\u003e since the background tasks will be executed one by one.\n\nAdded sentence \"Will update multiple ...\"",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc88dc7_b3807442",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23\n\u003e\u003e Nit: add a new line here, and remove line 326.\n\nDone",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f372d0b1_0d17d596",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23\n\u003e\u003e Nit: add a new line here.\n\nDone",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2069868a_a5539ac3",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-13T18:34:39Z",
+      "side": 1,
+      "message": "\u003e\u003e Xi Han 2017/09/11 15:24:23\n\u003e\u003e The block from line 511 to line 518 looks the same as the block from line 536 to\n\u003e\u003e line 548, can you put them in one helper function like: File\n\u003e\u003e createPendingUpdateFile()?\n\u003e\u003e\n\u003e\u003e If returning a File object doesn\u0027t work for the assumption in line 524, you can\n\u003e\u003e simply return a string in the helper function.\n\nThe block of code isn\u0027t doing just one thing. Most of the lines of code are verifying state instead of modifying state. I did shorten the block of code though.\n\nGiven that this test is all about checking that the file is deleted, I think that checking for the file\u0027s existence in a very explicit way is important\n\n1) I introduced onGotDifferentData() which does\nManifestData manifestData \u003d defaultManifestData();\nmanifestData.name \u003d DIFFERENT_NAME;\nonGotManifestData(updateManager, manifestData);\n\n2) I moved writeRandomTextToFile() into TestWebApkUpdateManager#storeWebApkUpdateRequestToFile()\n\n3) I moved ShadowApplication.getInstance().runBackgroundTasks(); into tryCompletingUpdate()",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
