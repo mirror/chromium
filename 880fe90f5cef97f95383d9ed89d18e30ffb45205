@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea2afebc_bcbdd7f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 1,
+      "message": "This can be\n\nBug: 718694, 769158\n\nAlso can you add a paragraph or two mentioning\n\nThis is for https://docs.google.com/document/d/1oSQM3GEMTL1raWLYv8S6_Yyt93FF2zQbANI4bKJ6LDs/edit?pli\u003d1#heading\u003dh.2st2zzoz32x8\nand that we plan to reuse NetworkLocationRequest from there, and a different \"setting\" and/or \"chrome_policy\" field will be appropriate depending on the caller.",
+      "revId": "880fe90f5cef97f95383d9ed89d18e30ffb45205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7db840_bcb288c9",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 1,
+      "message": "Looks like the convention for the partial name would be more like:\n\nnetwork_location_provider",
+      "range": {
+        "startLine": 234,
+        "startChar": 38,
+        "endLine": 234,
+        "endChar": 46
+      },
+      "revId": "880fe90f5cef97f95383d9ed89d18e30ffb45205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c158ec05_682d877c",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 1,
+      "message": "Spelling",
+      "range": {
+        "startLine": 248,
+        "startChar": 53,
+        "endLine": 248,
+        "endChar": 78
+      },
+      "revId": "880fe90f5cef97f95383d9ed89d18e30ffb45205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401eeab6_b8842b70",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 1,
+      "message": "I think this can be a forward declaration in \n\nnamespace net {\n}\n\ninstead?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "880fe90f5cef97f95383d9ed89d18e30ffb45205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

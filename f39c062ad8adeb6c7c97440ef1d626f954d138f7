@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5382f68_dc885abc",
+        "filename": "device/geolocation/network_location_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 0,
+      "message": "We do need to change the \"sender\" too",
+      "range": {
+        "startLine": 134,
+        "startChar": 10,
+        "endLine": 134,
+        "endChar": 45
+      },
+      "revId": "f39c062ad8adeb6c7c97440ef1d626f954d138f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111cd47d_e322b5f7",
+        "filename": "device/geolocation/network_location_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-13T01:02:13Z",
+      "side": 0,
+      "message": "Are we able to keep the cookies_allowed stuff in this file and only leave the setting and chrome_policy to the caller to pass in?",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "f39c062ad8adeb6c7c97440ef1d626f954d138f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
