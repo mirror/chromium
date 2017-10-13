@@ -865,6 +865,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (BOOL)shouldRegisterKeyboardCommands;
 // Adds the given url to the reading list.
 - (void)addToReadingListURL:(const GURL&)URL title:(NSString*)title;
+// Returns the ToolbarOwner for the current Tab's native content. Returns nil if
+// the current tab is not displaying native content or that native content does
+// have a ToolbarOwner.
+- (id<ToolbarOwner>)toolbarOwnerForNativeContent;
 @end
 
 class InfoBarContainerDelegateIOS
@@ -2247,7 +2251,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
                   anchorPoint:toolsButtonAnchor];
   // Only trigger the tools menu button animation if the bubble is shown.
   if (self.incognitoTabTipBubblePresenter) {
-    [_toolbarCoordinator triggerToolsMenuButtonAnimation];
+    [self triggerToolsMenuButtonAnimation];
   }
 }
 
@@ -2669,6 +2673,17 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // If the current native controller is showing a GLIF view (e.g. the NTP
     // when there is no doodle), use that GLIFControllerOwner.
     return [currentNativeController logoAnimationControllerOwner];
+  }
+  return nil;
+}
+
+- (id<ToolbarOwner>)toolbarOwnerForNativeContent {
+  Tab* currentTab = [_model currentTab];
+  if (currentTab && UrlHasChromeScheme(currentTab.lastCommittedURL)) {
+    id nativeController = [self nativeControllerForTab:currentTab];
+    if ([nativeController conformsToProtocol:@protocol(ToolbarOwner)]) {
+      return static_cast<id<ToolbarOwner>>(nativeController);
+    }
   }
   return nil;
 }
@@ -4667,15 +4682,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
   ToolbarController* relinquishedToolbarController = nil;
   if ([_toolbarCoordinator view].hidden) {
-    Tab* currentTab = [_model currentTab];
-    if (currentTab && UrlHasChromeScheme(currentTab.lastCommittedURL)) {
-      // Use the native content controller's toolbar when the BVC's is hidden.
-      id nativeController = [self nativeControllerForTab:currentTab];
-      if ([nativeController conformsToProtocol:@protocol(ToolbarOwner)]) {
-        relinquishedToolbarController =
-            [nativeController relinquishedToolbarController];
-        _relinquishedToolbarOwner = nativeController;
-      }
+    id<ToolbarOwner> owner = [self toolbarOwnerForNativeContent];
+    if (owner) {
+      relinquishedToolbarController = [owner relinquishedToolbarController];
+      _relinquishedToolbarOwner = owner;
     }
   } else {
     relinquishedToolbarController = _toolbarCoordinator.webToolbarController;
@@ -4704,6 +4714,17 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     _isToolbarControllerRelinquished = NO;
   }
+}
+
+- (void)triggerToolsMenuButtonAnimation {
+  if ([_toolbarCoordinator view].hidden) {
+    id<ToolbarOwner> owner = [self toolbarOwnerForNativeContent];
+    if (owner) {
+      [owner triggerToolsMenuButtonAnimation];
+    }
+    return;
+  }
+  [_toolbarCoordinator triggerToolsMenuButtonAnimation];
 }
 
 #pragma mark - TabModelObserver methods

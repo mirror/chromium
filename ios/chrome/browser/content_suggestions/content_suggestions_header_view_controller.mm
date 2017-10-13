@@ -379,6 +379,10 @@ const CGFloat kHintLabelSidePadding = 12;
   [self.headerView reparentToolbarController];
 }
 
+- (void)triggerToolsMenuButtonAnimation {
+  [self.headerView triggerToolsMenuButtonAnimation];
+}
+
 #pragma mark - LogoAnimationControllerOwnerOwner
 
 - (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
