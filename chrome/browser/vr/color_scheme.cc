@@ -66,6 +66,11 @@ void InitializeColorSchemes() {
   normal_scheme.dimmer_outer = 0xE6000000;
   normal_scheme.splash_screen_background = SK_ColorBLACK;
   normal_scheme.splash_screen_text_color = 0xA6FFFFFF;
+  normal_scheme.spinner_background = SK_ColorBLACK;
+  normal_scheme.spinner_color = 0xFFF3F3F3;
+  normal_scheme.timeout_message_background =
+      normal_scheme.permanent_warning_foreground;
+  normal_scheme.timeout_message_foreground = normal_scheme.spinner_color;
 
   gColorSchemes[ColorScheme::kModeFullscreen] =
       gColorSchemes[ColorScheme::kModeNormal];

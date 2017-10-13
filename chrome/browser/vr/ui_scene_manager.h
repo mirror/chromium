@@ -80,6 +80,14 @@ struct UiInitialState;
 //       kSplashScreenTransientParent
 //         kSplashScreenText
 //           kSplashScreenBackground
+//       kWebVrTimeoutSpinner
+//         kWebVrTimeoutSpinnerBackground
+//       kWebVrTimeoutMessage
+//         kWebVrTimeoutMessageLayout
+//           kWebVrTimeoutMessageIcon
+//           kWebVrTimeoutMessageText
+//           kWebVrTimeoutExitButton
+//             kWebVrTimeoutExitButtonText
 //
 // TODO(vollick): The above hierarchy is complex, brittle, and would be easier
 // to manage if it were specified in a declarative format.
@@ -130,7 +138,7 @@ class UiSceneManager {
   void CreateWebVRExitWarning();
   void CreateSystemIndicators();
   void CreateContentQuad(ContentInputDelegate* delegate);
-  void CreateSplashScreen();
+  void CreateSplashScreen(Model* model);
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
   void CreateViewportAwareRoot();

@@ -231,18 +231,19 @@ class UiElement : public cc::AnimationTarget {
       const gfx::Point3F& world_point) const;
 
   // cc::AnimationTarget
-  void NotifyClientFloatAnimated(float opacity,
-                                 int transform_property_id,
+  void NotifyClientFloatAnimated(float value,
+                                 int target_property_id,
                                  cc::Animation* animation) override;
   void NotifyClientTransformOperationsAnimated(
       const cc::TransformOperations& operations,
-      int transform_property_id,
+      int target_property_id,
       cc::Animation* animation) override;
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
-                                int transform_property_id,
+                                int target_property_id,
                                 cc::Animation* animation) override;
 
   void SetTransitionedProperties(const std::set<TargetProperty>& properties);
+  void SetTransitionDuration(base::TimeDelta delta);
 
   void AddAnimation(std::unique_ptr<cc::Animation> animation);
   void RemoveAnimation(int animation_id);

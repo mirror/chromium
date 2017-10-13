@@ -15,6 +15,9 @@ enum TargetProperty {
   BACKGROUND_COLOR,
   FOREGROUND_COLOR,
   GRID_COLOR,
+  SPINNER_ANGLE_START,
+  SPINNER_ANGLE_SWEEP,
+  SPINNER_ROTATION,
 };
 
 }  // namespace vr
