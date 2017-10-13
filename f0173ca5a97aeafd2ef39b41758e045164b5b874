@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff15640_41794214",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "looks like this and line 13 aren\u0027t needed here and can go in the .cc file",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcc517f_07dcf4fb",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "nit: I think you can forward declare chrome_browser_ssl::SSLErrorAssistantConfig and move the #include to the .cc file\n(https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes)",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873baad4_ba8201d3",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "ditto, I think you can forward declare net::SSLInfo, since you only use a reference to SSLInfo in the declarations here",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207cc051_d8654ef4",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "I thiiiink this struct could go in an anonymous namespace in the .cc file. Does it compile if you forward-declare it here and put the definition in the .cc?",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3d069e_dbb09fb9",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "nit: I think this constructor should probably not be inlined, per https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-code-in-headers",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95883697_cb819dbe",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "I think it would be good to have some basic unit tests for this class on its own. If you create a ssl_error_assistant_unittest.cc, you could have a few tests that set some dummy data with SetErrorAssistantProto and check that ShouldDisplayCaptivePortalInterstitial and MatchKnownMITMSoftware work as expected.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afc2c9d_fd825e7f",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "nit: let\u0027s call this IsKnownCaptivePortalCertificate instead. Theoretically this could be used one day for things other than displaying the captive portal interstitial, and there are ways that the captive portal interstitial can be displayed even if this returns false, so I think it\u0027s more clear to call this IsKnownCaptivePortalCert.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db2d8ff_31dc0f61",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "nit: should be a ref (missing \u0026)",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa536226_02691636",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "nit: should be a ref (missing \u0026)",
+      "range": {
+        "startLine": 49,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 48
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053cbe2c_078fd8af",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:27:14Z",
+      "side": 1,
+      "message": "ditto here about keeping it named IsKnownCaptivePortalCert",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 45
+      },
+      "revId": "f0173ca5a97aeafd2ef39b41758e045164b5b874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
