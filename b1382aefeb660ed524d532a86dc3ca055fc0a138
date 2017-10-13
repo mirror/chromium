@@ -22,6 +22,30 @@
       "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac77b591_e92e70e2",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-13T21:17:55Z",
+      "side": 1,
+      "message": "...and early-exit in the loop in IntersectionObserverController::ComputeTrackedIntersectionObservations()?",
+      "parentUuid": "841fbd74_46a23cb2",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
