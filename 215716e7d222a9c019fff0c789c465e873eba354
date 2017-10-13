@@ -16,6 +16,24 @@
       "revId": "215716e7d222a9c019fff0c789c465e873eba354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0afb15_445ce713",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-13T22:27:39Z",
+      "side": 0,
+      "message": "Hmm, I don\u0027t know how that snuck into this patch.",
+      "parentUuid": "8802a1c3_f96d0242",
+      "revId": "215716e7d222a9c019fff0c789c465e873eba354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
