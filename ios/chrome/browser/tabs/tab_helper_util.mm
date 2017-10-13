@@ -12,6 +12,7 @@
 #include "components/history/core/browser/top_sites.h"
 #import "components/history/ios/browser/web_state_top_sites_observer.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/language/ios/browser/language_detection_controller.h"
 #import "components/signin/ios/browser/account_consistency_service.h"
 #import "ios/chrome/browser/autofill/autofill_tab_helper.h"
 #import "ios/chrome/browser/autofill/form_input_accessory_view_tab_helper.h"
@@ -23,6 +24,7 @@
 #include "ios/chrome/browser/history/history_tab_helper.h"
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #import "ios/chrome/browser/infobars/infobar_manager_impl.h"
+#import "ios/chrome/browser/language/chrome_ios_language_detection_driver.h"
 #import "ios/chrome/browser/passwords/password_tab_helper.h"
 #import "ios/chrome/browser/passwords/passwords_ui_delegate_impl.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
@@ -70,6 +72,8 @@ void AttachTabHelpers(web::WebState* web_state) {
   PagePlaceholderTabHelper::CreateForWebState(web_state, tab);
   CaptivePortalDetectorTabHelper::CreateForWebState(web_state);
   HistoryTabHelper::CreateForWebState(web_state);
+  language::LanguageDetectionController::CreateForWebState(web_state);
+  CreateChromeIOSLanguageDetectionClient(web_state);
 
   ReadingListModel* model =
       ReadingListModelFactory::GetForBrowserState(browser_state);

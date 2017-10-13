@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_TRANSLATE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
-#define COMPONENTS_TRANSLATE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
+#ifndef COMPONENTS_LANGUAGE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
+#define COMPONENTS_LANGUAGE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
 
 #include <stddef.h>
 
@@ -17,4 +17,4 @@
 base::string16 GetStringByClippingLastWord(const base::string16& contents,
                                            size_t length);
 
-#endif  // COMPONENTS_TRANSLATE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
+#endif  // COMPONENTS_LANGUAGE_IOS_BROWSER_STRING_CLIPPING_UTIL_H_
