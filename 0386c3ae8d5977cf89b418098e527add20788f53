@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8c8619_8691abfd",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:58:16Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/url/url_constants.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d24",
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419aa5ac_a32adcda",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:58:16Z",
+      "side": 1,
+      "message": "no HTTPS:// ?",
+      "range": {
+        "startLine": 124,
+        "startChar": 65,
+        "endLine": 124,
+        "endChar": 74
+      },
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccd230d_3254a35f",
+        "filename": "components/payments/content/utility/payment_manifest_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:58:16Z",
+      "side": 1,
+      "message": "should you split test cases? Feels like this one fails both for \"http\" and for the invalid char.",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
