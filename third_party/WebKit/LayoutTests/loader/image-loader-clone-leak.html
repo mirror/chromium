@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<img class="img" src="">
+<script>
+test(() => {
+  window.onload = function() {
+      document.cloneNode(1);
+  }
+}, 'document.cloneNode with non-existing img should not cause memory leak.');
+</script>
