@@ -24,6 +24,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/extension_host.h"
@@ -460,7 +461,12 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
   EXPECT_TRUE(content::ExecuteScript(new_web_contents, script));
   observer.Wait();
 
-  EXPECT_EQ(observer.last_navigation_url(), blocked_url);
+  if (content::IsBrowserSideNavigationEnabled()) {
+    EXPECT_EQ(observer.last_navigation_url(),
+              GURL("chrome-error://ERR_BLOCKED_BY_CLIENT"));
+  } else {
+    EXPECT_EQ(observer.last_navigation_url(), blocked_url);
+  }
   EXPECT_FALSE(observer.last_navigation_succeeded());
 
   // Very subtle check for content/ internal functionality :(.

@@ -11,6 +11,8 @@
 #include "base/stl_util.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/extensions/chrome_test_extension_loader.h"
+#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/media/webrtc/media_stream_device_permissions.h"
@@ -32,6 +34,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "extensions/common/extension.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class MediaStreamDevicesControllerTest : public WebRtcTestBase {
@@ -715,7 +718,23 @@ IN_PROC_BROWSER_TEST_F(MediaStreamDevicesControllerTest,
 
 IN_PROC_BROWSER_TEST_F(MediaStreamDevicesControllerTest,
                        ExtensionRequestMicCam) {
-  InitWithUrl(GURL("chrome-extension://test-page"));
+  // Create a test extension and navigate to it.
+  extensions::TestExtensionDir extension_dir_;
+  extension_dir_.WriteManifest(R"(
+      {
+        "manifest_version": 2,
+        "name": "debugger",
+        "version": "0.1"
+      }
+  )");
+  extension_dir_.WriteFile(
+      "foo.html", "<!DOCTYPE HTML>\n<html><body>Hello world!</body></html>");
+  extensions::ChromeTestExtensionLoader loader(browser()->profile());
+  scoped_refptr<const extensions::Extension> extension =
+      loader.LoadExtension(extension_dir_.UnpackedPath());
+  ASSERT_TRUE(extension);
+  InitWithUrl(extension->GetResourceURL("foo.html"));
+
   // Test that a prompt is required.
   prompt_factory()->set_response_type(PermissionRequestManager::ACCEPT_ALL);
   RequestPermissions(

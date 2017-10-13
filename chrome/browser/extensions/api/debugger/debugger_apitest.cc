@@ -14,6 +14,7 @@
 #include "chrome/browser/extensions/api/debugger/debugger_api.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
+#include "chrome/browser/extensions/test_extension_dir.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -22,6 +23,9 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/infobars/core/infobar.h"
 #include "components/infobars/core/infobar_delegate.h"
+#include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
@@ -57,6 +61,7 @@ class DebuggerApiTest : public ExtensionApiTest {
 
   // A basic extension with the debugger permission.
   scoped_refptr<const Extension> extension_;
+  TestExtensionDir extension_dir_;
 };
 
 void DebuggerApiTest::SetUpCommandLine(base::CommandLine* command_line) {
@@ -67,16 +72,21 @@ void DebuggerApiTest::SetUpCommandLine(base::CommandLine* command_line) {
 
 void DebuggerApiTest::SetUpOnMainThread() {
   ExtensionApiTest::SetUpOnMainThread();
-  extension_ =
-      ExtensionBuilder()
-          .SetManifest(
-              DictionaryBuilder()
-                  .Set("name", "debugger")
-                  .Set("version", "0.1")
-                  .Set("manifest_version", 2)
-                  .Set("permissions", ListBuilder().Append("debugger").Build())
-                  .Build())
-          .Build();
+
+  extension_dir_.WriteManifest(R"(
+      {
+        "manifest_version": 2,
+        "name": "debugger",
+        "permissions": ["debugger"],
+        "version": "0.1"
+      }
+  )");
+
+  extension_dir_.WriteFile(
+      "foo.html", "<!DOCTYPE HTML>\n<html><body>Hello world!</body></html>");
+
+  extension_ = LoadExtension(extension_dir_.UnpackedPath());
+  ASSERT_TRUE(extension_);
 }
 
 testing::AssertionResult DebuggerApiTest::RunAttachFunction(
@@ -84,6 +94,10 @@ testing::AssertionResult DebuggerApiTest::RunAttachFunction(
   ui_test_utils::NavigateToURL(browser(), url);
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_EQ(url, web_contents->GetLastCommittedURL());
+  EXPECT_EQ(
+      content::PAGE_TYPE_NORMAL,
+      web_contents->GetController().GetLastCommittedEntry()->GetPageType());
 
   // Attach by tabId.
   int tab_id = SessionTabHelper::IdForTab(web_contents);
@@ -169,19 +183,15 @@ IN_PROC_BROWSER_TEST_F(DebuggerApiTest,
   const Extension* another_extension = LoadExtension(path);
   ASSERT_TRUE(another_extension);
 
-  GURL other_ext_url =
-      GURL(base::StringPrintf("chrome-extension://%s/popup.html",
-                              another_extension->id().c_str()));
+  GURL other_ext_url = another_extension->GetResourceURL("popup.html");
 
   // This extension should not be able to access another extension.
   EXPECT_TRUE(RunAttachFunction(
       other_ext_url, manifest_errors::kCannotAccessExtensionUrl));
 
   // This extension *should* be able to debug itself.
-  EXPECT_TRUE(RunAttachFunction(
-                  GURL(base::StringPrintf("chrome-extension://%s/foo.html",
-                                          extension()->id().c_str())),
-                  std::string()));
+  EXPECT_TRUE(RunAttachFunction(extension()->GetResourceURL("foo.html"),
+                                std::string()));
 
   // Append extensions on chrome urls switch. The extension should now be able
   // to debug any extension.
