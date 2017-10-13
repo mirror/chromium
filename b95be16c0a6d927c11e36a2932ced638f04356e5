@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019380d6_d8f0018d",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T06:43:21Z",
+      "side": 1,
+      "message": "nit: %s/contenteditable\u003d\"true\"/contenteditable/\n\nSince \"true\" is default value if present, we don\u0027t need to have |\u003d\"true\"|.",
+      "revId": "b95be16c0a6d927c11e36a2932ced638f04356e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07dc4b43_1438db3f",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T06:43:21Z",
+      "side": 1,
+      "message": "nit: Just \u0027InsertOrderedList\u0027",
+      "revId": "b95be16c0a6d927c11e36a2932ced638f04356e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a710783_7f6c964c",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T06:43:21Z",
+      "side": 1,
+      "message": "\u0027InsertOrderedList\u0027",
+      "revId": "b95be16c0a6d927c11e36a2932ced638f04356e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f75e6ee_91b7cfe1",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T06:43:21Z",
+      "side": 1,
+      "message": "\u0027InsertOrderedList\u0027",
+      "revId": "b95be16c0a6d927c11e36a2932ced638f04356e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
