@@ -70,6 +70,30 @@
       "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d43898e_f3acccd2",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-13T23:55:37Z",
+      "side": 1,
+      "message": "Ok, studying this code some more, I have a hypothesis:\n\n* Create IntersectionObserver with explicit root Element in an iframe.\n\n* Move root Element to main frame\u0027s Document.\n\n* IntersectionObserver::TrackingDocument() and IntersectionObserver::delegate_-\u003eGetExecutionContext() are now out of sync (main frame\u0027s document and iframe\u0027s document, respectively).\n\n* ElementIntersectionObserverData::ActivateValidIntersectionObservers puts the IntersectionObserver in TrackingDocument()s IntersectionObserverController.\n\n* Detach the iframe\n\n* When IntersectionObserverController::ComputeTrackedIntersectionObservations() is called, it eventually processes the mismatched IntersectionObserver. Because IntersectionObserverDelegate doesn\u0027t clear its ExecutionContext* on detach, it processes normally until IntersectionObserver::EnqueueIntersectionObserverEntry(). At this point, it calls   ScheduleIntersectionObserverForDelivery on the wrong, detached IntersectionObserverController.\n\n* IntersectionObserverController\u0027s ExecutionContext *does* get cleared on detach. ScheduleIntersectionObserverForDelivery() now calls PostTaskToDeliverObservations() when GetExecutionContext() is null.\n\nI will try to write a test case that does this on Monday. Please yelp if you think I\u0027m missing something and this sequence is not possible.",
+      "parentUuid": "312da8ec_1841c8eb",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
