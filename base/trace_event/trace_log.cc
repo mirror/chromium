@@ -1579,6 +1579,7 @@ void TraceLog::SetProcessSortIndex(int sort_index) {
 
 void TraceLog::SetProcessName(const char* process_name) {
   AutoLock lock(lock_);
+  DCHECK(process_name_.empty() || process_name_ == process_name);
   process_name_ = process_name;
 }
 
