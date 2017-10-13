@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ca154a67_99ac8c98",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-13T18:05:03Z",
+      "side": 1,
+      "message": "Is there a reason not to use const\u0026?",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 56
+      },
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fae526a_99b6d0b5",
         "filename": "extensions/renderer/content_watcher.cc",
         "patchSetId": 3
@@ -13,6 +36,47 @@
       "writtenOn": "2017-10-12T19:12:11Z",
       "side": 1,
       "message": "This was just ported, but I can\u0027t see any reason these could be WebStrings - am I missing something?",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9424d549_52774bae",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-13T18:05:03Z",
+      "side": 1,
+      "message": "WebString doesn\u0027t have \u003c operator?",
+      "parentUuid": "8fae526a_99b6d0b5",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94fca2e8_17fa6743",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-13T18:05:03Z",
+      "side": 1,
+      "message": "This looks bad since matching_selectors() doesn\u0027t return const vector\u0026. Make it so?",
+      "range": {
+        "startLine": 116,
+        "startChar": 45,
+        "endLine": 116,
+        "endChar": 65
+      },
       "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
