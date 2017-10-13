@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c989476e_b32db9b0",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T17:37:13Z",
+      "side": 1,
+      "message": "See other comment, the order should not have changed.\n\nUltimately SRD to resolve after the events fire (https://github.com/w3c/webrtc-pc/issues/1508), but with the way connect_pcs() is set up this will give a false-positive due to connect_pcs() resolving several event loops later.",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4625e7e_e0032851",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T17:37:13Z",
+      "side": 1,
+      "message": "nit: There\u0027s a naming mix between pc_a/pc_b and pc/pc2 (prefer pc1 to pc if you have pc2). I suggest using the same names everywhere, and caller/callee might be better names.",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efdfd40_a3b4e00c",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ontrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T17:37:13Z",
+      "side": 1,
+      "message": "Chaining the events like this obscures what we want to test, which is the order between SRD resolving and the events firing. Even if each operation would immediately resolve, each then() will occur in the next event loop. Creating an answer and setting remote description with the answer makes connect_pcs() resolve much later.\n\nWe only care about setting the remote description of pc_b, this test does not require answering. I think this should be:\n\npc_a create offer\npc_a setLocalDescription\npc_b setRemoteDescription\n\nSetting the local description is enough to make adding and removing of remote tracks/streams possible and the IDs to be retained between create offers.\nThere is no need to answer.",
+      "revId": "009da222f66670a49d44402be08a49ed70fede13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
