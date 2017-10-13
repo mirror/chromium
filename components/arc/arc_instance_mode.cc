@@ -25,4 +25,9 @@ std::ostream& operator<<(std::ostream& os, ArcInstanceMode mode) {
   return os;
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         base::Optional<ArcInstanceMode> mode) {
+  return mode.has_value() ? (os << mode.value()) : (os << "(nullopt)");
+}
+
 }  // namespace arc

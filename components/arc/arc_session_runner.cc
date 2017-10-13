@@ -60,11 +60,6 @@ bool IsRestartNeeded(base::Optional<ArcInstanceMode> target_mode,
   return false;
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         base::Optional<ArcInstanceMode> mode) {
-  return mode.has_value() ? (os << mode.value()) : (os << "(nullopt)");
-}
-
 // Returns true if the request to start/upgrade ARC instance is allowed
 // operation.
 bool IsRequestAllowed(const base::Optional<ArcInstanceMode>& current_mode,
@@ -206,17 +201,9 @@ void ArcSessionRunner::StartArcSession() {
     arc_session_ = factory_.Run();
     arc_session_->AddObserver(this);
   } else {
-    DCHECK(arc_session_->IsForLoginScreen());
+    DCHECK_EQ(ArcInstanceMode::MINI_INSTANCE, arc_session_->GetTargetMode());
   }
-
-  switch (target_mode_.value()) {
-    case ArcInstanceMode::MINI_INSTANCE:
-      arc_session_->StartForLoginScreen();
-      break;
-    case ArcInstanceMode::FULL_INSTANCE:
-      arc_session_->Start();
-      break;
-  }
+  arc_session_->Start(target_mode_.value());
 }
 
 void ArcSessionRunner::RestartArcSession() {
@@ -237,7 +224,8 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason,
 
   // The observers should be agnostic to the existence of the limited-purpose
   // instance.
-  const bool notify_observers = !arc_session_->IsForLoginScreen();
+  const bool notify_observers =
+      arc_session_->GetTargetMode() == ArcInstanceMode::FULL_INSTANCE;
 
   arc_session_->RemoveObserver(this);
   arc_session_.reset();
@@ -269,8 +257,8 @@ void ArcSessionRunner::EmitLoginPromptVisibleCalled() {
   }
 
   // Since 'login-prompt-visible' Upstart signal starts all Upstart jobs the
-  // container may depend on such as cras, EmitLoginPromptVisibleCalled() is the
-  // safe place to start the container for login screen.
+  // instance may depend on such as cras, EmitLoginPromptVisibleCalled() is the
+  // safe place to start a mini instance.
   DCHECK(!arc_session_);
   RequestStart(ArcInstanceMode::MINI_INSTANCE);
 }
