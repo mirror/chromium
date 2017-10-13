@@ -272,6 +272,25 @@ class CORE_EXPORT EventHandler final
   void ClearDragState();
 
  private:
+  enum NoCursorChangeType { kNoCursorChange };
+
+  class OptionalCursor {
+   public:
+    OptionalCursor(NoCursorChangeType) : is_cursor_change_(false) {}
+    OptionalCursor(const Cursor& cursor)
+        : is_cursor_change_(true), cursor_(cursor) {}
+
+    bool IsCursorChange() const { return is_cursor_change_; }
+    const Cursor& GetCursor() const {
+      DCHECK(is_cursor_change_);
+      return cursor_;
+    }
+
+   private:
+    bool is_cursor_change_;
+    Cursor cursor_;
+  };
+
   WebInputEventResult HandleMouseMoveOrLeaveEvent(
       const WebMouseEvent&,
       const Vector<WebMouseEvent>&,
@@ -414,6 +433,8 @@ class CORE_EXPORT EventHandler final
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, InputFieldsCanStartSelection);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, ImagesCannotStartSelection);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, AnchorTextCannotStartSelection);
+  FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
+                           EditableAnchorTextCanStartSelection);
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest,
                            ReadOnlyInputDoesNotInheritUserSelect);
 };
