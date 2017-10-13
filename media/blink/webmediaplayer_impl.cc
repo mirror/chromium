@@ -600,6 +600,7 @@ void WebMediaPlayerImpl::Play() {
 }
 
 void WebMediaPlayerImpl::Pause() {
+  LOG(ERROR) << "MDW PAUSE!";
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 

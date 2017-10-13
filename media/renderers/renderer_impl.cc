@@ -26,6 +26,9 @@
 #include "media/base/video_renderer.h"
 #include "media/base/wall_clock_time_source.h"
 
+#undef DVLOG
+#define DVLOG(level) LOG(ERROR)
+
 namespace media {
 
 // See |video_underflow_threshold_|.

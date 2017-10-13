@@ -103,7 +103,7 @@
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackState.h"
 
 #ifndef BLINK_MEDIA_LOG
-#define BLINK_MEDIA_LOG DVLOG(3)
+#define BLINK_MEDIA_LOG LOG(ERROR) << __func__
 #endif
 
 #ifndef LOG_MEDIA_EVENTS

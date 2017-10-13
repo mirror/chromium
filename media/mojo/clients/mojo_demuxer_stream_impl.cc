@@ -22,7 +22,7 @@ MojoDemuxerStreamImpl::MojoDemuxerStreamImpl(
     mojo::InterfaceRequest<mojom::DemuxerStream> request)
     : binding_(this, std::move(request)),
       stream_(stream),
-      weak_factory_(this) {}
+      weak_factory_(this) { CHECK(false) << "MDW do NOT land this!!"; }
 
 MojoDemuxerStreamImpl::~MojoDemuxerStreamImpl() {}
 
