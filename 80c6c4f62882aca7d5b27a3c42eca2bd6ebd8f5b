@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2ed6a53b_46b23938",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-13T02:44:49Z",
+      "side": 1,
+      "message": "Have you tried parsing the additional descriptors? Usually it has that information, and in particular, if there is an additional white point descriptor and you don\u0027t parse it, the gamma in the base block might be different (and wrong).",
+      "parentUuid": "f5a1fd88_9995c487",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97607c1_10f3a855",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 7
