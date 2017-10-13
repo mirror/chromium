@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5bddff5_e16784e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T09:04:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a482441_fded6ee6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b27653ea_a9ab2e29",
         "filename": "tools/clang/value_cleanup/ListValueRewriter.cpp",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-05T16:58:24Z",
       "side": 1,
       "message": "Should these matchers just be removed?",
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a232ca_e25d5448",
+        "filename": "tools/clang/value_cleanup/ListValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T09:04:54Z",
+      "side": 1,
+      "message": "Done, I just nuked the whole sub folder now, as all of the currently existing matchers and tests are obsolete. However, it is kind of silly that I will recreate the folder in https://crrev.com/c/702454. Maybe these two CLs should just be merged?",
+      "parentUuid": "b27653ea_a9ab2e29",
       "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -92,6 +134,24 @@
       "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079c0e2a_d2484fda",
+        "filename": "tools/clang/value_cleanup/tests/list-value-append-original.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T09:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f545f7d2_485624f4",
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
