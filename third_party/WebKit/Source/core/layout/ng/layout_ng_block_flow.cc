@@ -307,6 +307,14 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
   cached_result_ = layout_result;
 }
 
+void LayoutNGBlockFlow::ComputeLocalVisualRectForInlineChildrenIfNeeded() const {
+  if (!HasNGInlineNodeData())
+    return;
+
+  DCHECK(CurrentFragment());
+  CurrentFragment()->ComputeLocalVisualRectForInlineChildren();
+}
+
 void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
                                     const LayoutPoint& paint_offset) const {
   // TODO(eae): This logic should go in Paint instead and it should drive the
