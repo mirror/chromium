@@ -22,6 +22,30 @@
       "revId": "2ba28ee0a66f850640827f7afb0567ac9ac121c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d4d9ae_1d73b10b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-13T17:23:07Z",
+      "side": 1,
+      "message": "Yes, if there is a theme specified for the page, it would be emphasize. So should I add some more tests for that case?",
+      "parentUuid": "3dda7f65_16162204",
+      "range": {
+        "startLine": 740,
+        "startChar": 16,
+        "endLine": 740,
+        "endChar": 41
+      },
+      "revId": "2ba28ee0a66f850640827f7afb0567ac9ac121c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
