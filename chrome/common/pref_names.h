@@ -684,6 +684,7 @@ extern const char kAuthNegotiateDelegateWhitelist[];
 extern const char kGSSAPILibraryName[];
 extern const char kAuthAndroidNegotiateAccountType[];
 extern const char kAllowCrossOriginAuthPrompt[];
+extern const char kNtlmV2Enabled[];
 
 extern const char kBuiltInDnsClientEnabled[];
 
