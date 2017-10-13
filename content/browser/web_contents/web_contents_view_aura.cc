@@ -90,6 +90,19 @@ WebContentsView* CreateWebContentsView(
   return rv;
 }
 
+gfx::Point GetScreenLocationFromEvent(const aura::Window& window,
+                                      const ui::LocatedEvent& event) {
+  const aura::Window* root = window.GetRootWindow();
+  aura::client::ScreenPositionClient* spc =
+      aura::client::GetScreenPositionClient(root);
+  if (!spc)
+    return event.root_location();
+
+  gfx::Point screen_location(event.root_location());
+  spc->ConvertPointToScreen(root, &screen_location);
+  return screen_location;
+}
+
 namespace {
 
 WebContentsViewAura::RenderWidgetHostViewCreateFunction
@@ -1229,7 +1242,7 @@ int WebContentsViewAura::OnDragUpdated(const ui::DropTargetEvent& event) {
   if (!IsValidDragTarget(target_rwh))
     return ui::DragDropTypes::DRAG_NONE;
 
-  gfx::Point screen_pt = event.root_location();
+  gfx::Point screen_pt = GetScreenLocationFromEvent(*window_, event);
   if (target_rwh != current_rwh_for_drag_.get()) {
     if (current_rwh_for_drag_) {
       gfx::Point transformed_leave_point = event.location();
