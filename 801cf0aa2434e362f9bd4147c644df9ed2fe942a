@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4636716_cd770e76",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-13T14:14:25Z",
+      "side": 1,
+      "message": "Can we still use event.root_location(), but use ScreenPositionClient to convert it to screen-space?",
+      "revId": "801cf0aa2434e362f9bd4147c644df9ed2fe942a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
