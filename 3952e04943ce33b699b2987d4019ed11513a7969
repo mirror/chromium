@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b98e2364_a9fea0dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-13T19:38:16Z",
+      "side": 1,
+      "message": "I don\u0027t know under what circumstances this wouldn\u0027t be there for non-compact infobars, if ever. But this CL still makes it less error-prone.",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "3952e04943ce33b699b2987d4019ed11513a7969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
