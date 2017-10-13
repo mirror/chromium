@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5826abd0_e247d4ff",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "nit:\n\u0027service worker clients contexts(\u0027 -\u003e\n\u0027service worker client contexts (\u0027\n\nCurrently dedicated worker is not a service worker client, maybe we should drop from this comment?  (In the similar comment in the other file we don\u0027t have dedicated worker)",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394d179b_cb3d5140",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "This method is to return a scoped_refptr, can we use base::MakeRefCounted\u003c\u003e here instead?",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3efa4d_a4e1113e",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7124677a_7f42ead0",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "nit: no { } for single-body for consistency",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885e446d_1b1941b2",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "I slightly prefer using main_thread_task_runner or io_task_runner to indicate what task runner we\u0027re passing here, given that we have comment like this to clarify how it\u0027s used-- wdyt?  Also maybe also briefly explain that why we need the task runner here. E.g.\n\n|io_task_runner| is used to bind |host_for_global_scope_|, as we it\u0027s a channel-associated interface and needs to be bound on either main- or IO thread.",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf13266_8f639acd",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "nit: host_for_client -\u003e host_for_client_",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec23688f_d14c7a80",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "binds -\u003e bind",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c64e63f_390ea716",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:36:34Z",
+      "side": 1,
+      "message": "Maybe this comment can be shortened a bit?\n\n// |host_for_global_scope_| is for service worker execution contexts. It is\n// used on the worker thread but bound on the IO thread, because it\u0027s a channel-\n// associated interface which can be bound only on the main or IO thread.",
+      "revId": "11a2e0d85cb71b9af37527989d2bc57143439eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
