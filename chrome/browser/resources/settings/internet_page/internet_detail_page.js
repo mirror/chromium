@@ -541,8 +541,9 @@ Polymer({
   enableConnect_: function(networkProperties, defaultNetwork, globalPolicy) {
     if (!this.showConnect_(networkProperties, globalPolicy))
       return false;
-    if (networkProperties.Type == CrOnc.Type.CELLULAR &&
-        CrOnc.isSimLocked(networkProperties)) {
+    if ((networkProperties.Type == CrOnc.Type.CELLULAR) &&
+        (CrOnc.isSimLocked(networkProperties) ||
+         this.get('Cellular.Scanning', networkProperties))) {
       return false;
     }
     if (networkProperties.Type == CrOnc.Type.VPN && !defaultNetwork)
@@ -1013,7 +1014,7 @@ Polymer({
    */
   showCellularSim_: function(networkProperties) {
     return networkProperties.Type == CrOnc.Type.CELLULAR &&
-        this.get('Cellular.Family', this.networkProperties) != 'CDMA';
+      !!this.Cellular && this.Cellular.Family != 'CDMA';
   },
 
   /**
