@@ -657,7 +657,7 @@ TEST_F(QuartcSessionTest, GetStats) {
   ASSERT_TRUE(client_peer_->IsCryptoHandshakeConfirmed());
   ASSERT_TRUE(server_peer_->IsCryptoHandshakeConfirmed());
 
-  QuartcSessionStats stats = client_peer_->GetStats();
+  QuartcSessionStats stats = server_peer_->GetStats();
   EXPECT_GT(stats.bandwidth_estimate_bits_per_second, 0);
 }
 
