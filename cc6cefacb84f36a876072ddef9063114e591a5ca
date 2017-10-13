@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3e8df80_c08a4240",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-13T20:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c12d6f7_49f888fa",
+      "range": {
+        "startLine": 175,
+        "startChar": 14,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac55c09_4f148322",
         "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T18:24:09Z",
       "side": 1,
       "message": "nit: Is the bug reference necessary (is there more work planned here so it is a TODO)?",
+      "range": {
+        "startLine": 224,
+        "startChar": 37,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26a669c_d6c818dd",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-13T20:08:17Z",
+      "side": 1,
+      "message": "Removed. We want to make it easier but no planned work.",
+      "parentUuid": "aac55c09_4f148322",
       "range": {
         "startLine": 224,
         "startChar": 37,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "88ca9cdc_47be1c2c",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-13T20:08:17Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ebf706a0_c5503fdc",
+      "range": {
+        "startLine": 482,
+        "startChar": 22,
+        "endLine": 482,
+        "endChar": 28
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "320f94a9_698871f0",
         "filename": "ash/wm/overview/scoped_transform_overview_window.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-13T18:56:58Z",
       "side": 1,
       "message": "nit: move this out of anonymous namespace. it\u0027s confusing to forward declare something in that namespace. or maybe you can store ui::LayerObserver pointers in the vector below so you don\u0027t need this forward declare here",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147f1df2_e4b7b9d4",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-13T20:08:17Z",
+      "side": 1,
+      "message": "The ui::LayerObserver dtor is protected so I cannot declare with it.\nI will move the LayerCachingAndFilteringObserver out of anonymous namespace.\n\nI will put another cl for window switcher to use trilinear filtering and caching RS. If it turns out I need to reuse the LayerCachingAndFilteringObserver in window switcher, I will further refactor this observer to its owner .h file.",
+      "parentUuid": "320f94a9_698871f0",
       "range": {
         "startLine": 34,
         "startChar": 0,
