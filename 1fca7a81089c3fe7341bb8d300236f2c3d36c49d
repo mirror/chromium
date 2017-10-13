@@ -22,6 +22,30 @@
       "revId": "1fca7a81089c3fe7341bb8d300236f2c3d36c49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f280f2f7_3835027e",
+        "filename": "ios/chrome/browser/autofill/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-10-13T12:33:29Z",
+      "side": 1,
+      "message": "Upstream version is automatically generated. \nBut the automation cannot be done on iOS (It requires a build step that does not run on iOS).",
+      "parentUuid": "00d5c98a_39598580",
+      "range": {
+        "startLine": 138,
+        "startChar": 13,
+        "endLine": 138,
+        "endChar": 35
+      },
+      "revId": "1fca7a81089c3fe7341bb8d300236f2c3d36c49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
