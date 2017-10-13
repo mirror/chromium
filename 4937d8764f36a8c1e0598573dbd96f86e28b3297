@@ -39,6 +39,24 @@
       "revId": "4937d8764f36a8c1e0598573dbd96f86e28b3297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102f4225_01f4f2f9",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-lifetime.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-13T06:24:13Z",
+      "side": 1,
+      "message": "The test will create a datachannel in createPeerConnectionAndDataChannel, and initiate connection. When the PC is connected and datachannel open, it sends a message across the DC. Receiving the message terminates the test (in dataChannelMessage).\n\nMy guess would be that if the PC is garbage collected early, the test will time out, because the \"connected\" event is never fired. Explicitly calling \"gc()\" should (I think) make that deterministic. If garbage collection is more random, failure might be flaky.\n\nSuccess should be deterministic, so that\u0027s OK.",
+      "parentUuid": "e888adcd_707853e5",
+      "revId": "4937d8764f36a8c1e0598573dbd96f86e28b3297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
