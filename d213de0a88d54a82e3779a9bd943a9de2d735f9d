@@ -22,6 +22,30 @@
       "revId": "d213de0a88d54a82e3779a9bd943a9de2d735f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b11abae_25827173",
+        "filename": "chrome/android/java/res/color/dark_mode_tint.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T09:26:28Z",
+      "side": 1,
+      "message": "Yeah, sure. Done.",
+      "parentUuid": "cb7365b6_32a45bcb",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "d213de0a88d54a82e3779a9bd943a9de2d735f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
