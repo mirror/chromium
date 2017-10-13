@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75b3f51f_3ac0c0f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T17:24:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c869e722_d815dfda",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5195a36a_8e6940f4",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "ce788a5c12d976753571015ec800db93eb28381e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d027f99_d5718154",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T17:24:30Z",
+      "side": 1,
+      "message": "I\u0027ve added the check here after hearing that error pages commit in a wrong process without PlzNavigate, but that this is fixed with PlzNavigate.  I have not verified that claim (other than making sure that the tryjobs are green when the current CL is limited to PlzNavigate).  FWIW, the trybots are green (even the renderer_initiated* test steps) even without a PlzNavigate-specific exception, so maybe it is not needed after all?\n\nWDYT?  If trybots are green, then it should be okay to enable the change both for PlzNavigate and for the old, renderer-initiated navigations code, right?",
+      "parentUuid": "5195a36a_8e6940f4",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1f9bb664_ed23a54d",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T17:24:30Z",
+      "side": 1,
+      "message": "I talked with Alex earlier today and tried putting together https://chromium-review.googlesource.com/714336.  I\u0027ve put these changes into a separate, dependent, follow-up CL because 1) Alex thinks the current CL can still be landable as-is + 2) there are some test changes and problems in the other CL that I should look closer into.",
+      "parentUuid": "ecb7cfc6_3ae3b576",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf43cecb_43113098",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "ce788a5c12d976753571015ec800db93eb28381e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a5cefc_f5e9a623",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T17:24:30Z",
+      "side": 1,
+      "message": "This is a good point.  OTOH,\n1) this \"foot in the door\" would only happen/regress for CWS (today [before this CL] CanCommitURL only pays attention to CWS and permits all the other URLs)\n2) the \"foot in the door\" can be avoided by looking at GetLastCommittedOrigin rather than GetLastCommittedURL.  Arguably, security decisions should be based on the origin, rather than on the URL (main reason is that the origin can be unique;  also - URL can be tricky [compared to origins] to work with for filesystem and blob schemes).\n\nSo - I think it might still be okay to land the current CL as-is (after fixing the known view-source problem)?  WDYT?",
+      "parentUuid": "cf43cecb_43113098",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
