@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da089af6_635eb0a6",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleMapTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-13T01:56:39Z",
+      "side": 1,
+      "message": "auto* for a raw ptr\n\nSee: https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Do-not-use-auto-to-deduce-a-raw-pointer",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 8
+      },
+      "revId": "dd28240cdaea73ec71808c0df905a250abab9313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebcce2d_c51a6756",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImplTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-13T01:56:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 6
+      },
+      "revId": "dd28240cdaea73ec71808c0df905a250abab9313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46b41d2_38eab8bc",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImplTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-13T01:56:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 6
+      },
+      "revId": "dd28240cdaea73ec71808c0df905a250abab9313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291d3776_f732aa37",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-13T01:56:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 8
+      },
+      "revId": "dd28240cdaea73ec71808c0df905a250abab9313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
