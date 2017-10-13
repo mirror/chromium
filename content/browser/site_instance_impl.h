@@ -158,7 +158,8 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // Returns true if pages loaded from |url| ought to be handled only by a
   // renderer process isolated from other sites. If --site-per-process is on the
   // command line, this is true for all sites. In other site isolation modes,
-  // only a subset of sites will require dedicated processes.
+  // only a subset of sites will require dedicated processes. See notes about
+  // the difference from ShouldLockToOrigin below.
   static bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
                                               const GURL& url);
 
@@ -168,10 +169,10 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // false for certain special cases where an origin lock can't be applied even
   // when |site_url| requires a dedicated process (e.g., with
   // --site-per-process).  Examples of those cases include <webview> guests,
-  // WebUI, single-process mode, or extensions where a process is currently
-  // allowed to be reused for different extensions.  Most of these special
-  // cases should eventually be removed, and this function should become
-  // equivalent to DoesSiteRequireDedicatedProcess().
+  // single-process mode, or extensions where a process is currently allowed to
+  // be reused for different extensions.  Most of these special cases should
+  // eventually be removed, and this function should become equivalent to
+  // DoesSiteRequireDedicatedProcess().
   static bool ShouldLockToOrigin(BrowserContext* browser_context,
                                  RenderProcessHost* host,
                                  GURL site_url);
