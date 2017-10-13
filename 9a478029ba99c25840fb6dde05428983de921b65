@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a14731a_f6abbef2",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T23:09:50Z",
+      "side": 1,
+      "message": "Makes sense, but AFAICT the RenderFrameHost doesn\u0027t expose its delegate",
+      "parentUuid": "43595b5d_56d608ba",
+      "range": {
+        "startLine": 35,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "399c7198_13c817a9",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 6
