@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fe25f1_d969b0f8",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:59:15Z",
+      "side": 1,
+      "message": "Keep the test conditional as in the other CL, don\u0027t enable PlzNavigate explicitly.",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4ca4a2_a9ec6ad5",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:59:15Z",
+      "side": 1,
+      "message": "What is this waiting for? NavigateToURL waits for load stopped event, so there should not be a need to wait any further than that.",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a520682_69e0b9df",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:59:15Z",
+      "side": 1,
+      "message": "Why not just return the body content as a string, then it can be put into EXPECT_EQ with body_text_content. It will also avoid having to introduce these two new constants.",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2356c63c_a6365779",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:59:15Z",
+      "side": 1,
+      "message": "nit: Align the comment with the ones above it.",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319f4fef_c02e6c0b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:59:15Z",
+      "side": 1,
+      "message": "If the code is structured like this, we don\u0027t allow embedders to provide alternative content for interstitial pages. Is this how things work today? If we do allow customization of interstitials from outside of content/, is there a explicit decision not to?",
+      "revId": "7b3dc07bd33f24f585a77cd32200ca6290434d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
