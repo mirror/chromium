@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "83fc2e2a_8a35c0ec",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T17:45:23Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure I\u0027m following you.  I wasn\u0027t suggesting an execute method, just moving the arguments that are common to the various methods that initiate the request to the constructor instead of as arguments to (e.g.) DownloadToTempFile.",
+      "parentUuid": "82ebda64_8c0a4a45",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f588c26b_e46125b2",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 3
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "CreateTempFile always uses the same temp directory on a given system, so if multiple tests are run in parallel, or anything else left something in that directory, that doesn\u0027t work.  If we took a temp directory (Made with CreateTempDirectory()), and then called CreateTempFile using that directory, we could do that, but that changes the API, and if something wants a temp file, presumably it prefers it in \"the\" temp directory.",
       "parentUuid": "f588c26b_e46125b2",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7103546_8a290efb",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T17:45:23Z",
+      "side": 1,
+      "message": "Ah, bummer.  Ok.",
+      "parentUuid": "7dc24ebd_229f126a",
       "range": {
         "startLine": 256,
         "startChar": 16,
