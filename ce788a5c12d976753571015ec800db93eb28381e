@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "18dab201_f19f1ca8",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-13T18:47:35Z",
+      "side": 1,
+      "message": "I think this says more that we don\u0027t have test coverage for the case that an error page loads in the wrong process.  :)  (At the very least for extensions, where this kill would likely kick in.)\n\nI just confirmed that we\u0027d likely have problems in non-PlzNavigate.  I ran with --disable-browser-side-navigation and --site-per-process, and I did a renderer-initiated navigation to a cross-site invalid domain.  The error page for that failed (not blocked) navigation committed in the previous site\u0027s process, unlike what happens with PlzNavigate.\n\nSounds like we should keep this PlzNavigate check.  Can you just update the comment to mention error pages for failed navigations?  (I want to distinguish between blocked navigations, which you handle elsewhere.)",
+      "parentUuid": "6d027f99_d5718154",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecb7cfc6_3ae3b576",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 8
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "c9f678e0_e6dc3da7",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-13T18:47:35Z",
+      "side": 1,
+      "message": "Nice!  I\u0027m excited to see us making progress on that part.  Agreed that it\u0027s ok to land this CL first.",
+      "parentUuid": "1f9bb664_ed23a54d",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf43cecb_43113098",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -148,6 +184,24 @@
       "side": 1,
       "message": "This is a good point.  OTOH,\n1) this \"foot in the door\" would only happen/regress for CWS (today [before this CL] CanCommitURL only pays attention to CWS and permits all the other URLs)\n2) the \"foot in the door\" can be avoided by looking at GetLastCommittedOrigin rather than GetLastCommittedURL.  Arguably, security decisions should be based on the origin, rather than on the URL (main reason is that the origin can be unique;  also - URL can be tricky [compared to origins] to work with for filesystem and blob schemes).\n\nSo - I think it might still be okay to land the current CL as-is (after fixing the known view-source problem)?  WDYT?",
       "parentUuid": "cf43cecb_43113098",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43739ffb_2ed07837",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-13T18:47:35Z",
+      "side": 1,
+      "message": "Yes, I think that makes sense, with the plan to avoid the need for this when we change the committed URL for blocked navigations.",
+      "parentUuid": "66a5cefc_f5e9a623",
       "revId": "ce788a5c12d976753571015ec800db93eb28381e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
