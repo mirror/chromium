@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "bc20d5d3_b98dec17",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c89eab_ca25a50d",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39ff4560_20b9cfd9",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "As discussed in person, leaving this here, ifdef\u0027ed.",
+      "parentUuid": "d162f239_32ac37e5",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af3fb68a_01970adf",
         "filename": "components/payments/core/strings_util.h",
         "patchSetId": 2
@@ -57,6 +93,30 @@
       "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d0cb06_aab35f9f",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af3fb68a_01970adf",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +155,42 @@
     },
     {
       "key": {
+        "uuid": "0f50a8bb_b81f9d37",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "mardini@ said these should be title-cased.",
+      "parentUuid": "7d063c47_6a3834bf",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e534293a_6ba6b493",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f880dec3_bc27f437",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed830c0f_7494d763",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 2
@@ -118,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ff3424e1_9277f945",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed830c0f_7494d763",
+      "range": {
+        "startLine": 18,
+        "startChar": 135,
+        "endLine": 18,
+        "endChar": 164
+      },
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39cbc752_91902e98",
         "filename": "ios/chrome/browser/ui/payments/payment_request_collection_view_detail_item.h",
         "patchSetId": 2
@@ -138,6 +258,30 @@
       "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156db5da_47f46319",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_collection_view_detail_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-13T18:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cbc752_91902e98",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
