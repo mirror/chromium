@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0579b57_ed84d704",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T19:03:19Z",
+      "side": 1,
+      "message": "comment nit: Let\u0027s provide some context on how this fits into the big picture. Something like: \n\n// Comparison predicate to order keys in a dictionary as required by the Client-to-Authenticator Protocol (CTAP) spec 2.0.\n\n(And potentially promote the comment block from below to the class comment afterwards.)",
+      "revId": "12a8e99e1c0b6d0ea28095704d290e15bd5a8019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
