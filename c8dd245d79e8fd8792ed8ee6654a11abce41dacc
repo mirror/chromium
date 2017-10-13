@@ -16,6 +16,24 @@
       "revId": "c8dd245d79e8fd8792ed8ee6654a11abce41dacc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c637481c_2b4ae95a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-13T15:08:27Z",
+      "side": 1,
+      "message": "Excellent question.  The ifs are removed from SpdySession::UnclaimedPushedStreamContainer, that is the essence of this CL.",
+      "parentUuid": "1efe0b27_fda4b0ae",
+      "revId": "c8dd245d79e8fd8792ed8ee6654a11abce41dacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
