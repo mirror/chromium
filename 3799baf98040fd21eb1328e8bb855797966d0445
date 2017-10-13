@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ff557f_ee3a803a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-13T05:52:26Z",
+      "side": 1,
+      "message": "Test: third_party/WebKit/LayoutTests/loader/image-loader-clone-leak.html",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "3799baf98040fd21eb1328e8bb855797966d0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd173e75_071ac32e",
+        "filename": "third_party/WebKit/LayoutTests/loader/image-loader-clone-leak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-13T05:52:26Z",
+      "side": 1,
+      "message": "s/1/true",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "3799baf98040fd21eb1328e8bb855797966d0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030def1d_d29fc56c",
+        "filename": "third_party/WebKit/LayoutTests/loader/image-loader-clone-leak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-13T05:52:26Z",
+      "side": 1,
+      "message": "test() will finish before onload called. How about:\n\npromise_test(() \u003d\u003e {\n  return new Promise(resolve \u003d\u003e {\n    window.addEventListener(\u0027load\u0027, () \u003d\u003e resolve);\n  }).then(() \u003d\u003e {\n    document.cloneNode(true);  \n  });\n}, ...",
+      "revId": "3799baf98040fd21eb1328e8bb855797966d0445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
