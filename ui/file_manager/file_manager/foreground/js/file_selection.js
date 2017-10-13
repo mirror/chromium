@@ -201,8 +201,10 @@ FileSelectionHandler.prototype.__proto__ = cr.EventTarget.prototype;
 
 /**
  * Update the UI when the selection model changes.
+ * @param {Event=} opt_changeEvent Event with change info.
  */
-FileSelectionHandler.prototype.onFileSelectionChanged = function() {
+FileSelectionHandler.prototype.onFileSelectionChanged = function(
+    opt_changeEvent) {
   var indexes = this.listContainer_.selectionModel.selectedIndexes;
   var entries = indexes.map(function(index) {
     return /** @type {!Entry} */ (
@@ -238,7 +240,14 @@ FileSelectionHandler.prototype.onFileSelectionChanged = function() {
       this.updateFileSelectionAsync_(selection);
   }.bind(this), updateDelay);
 
-  cr.dispatchSimpleEvent(this, FileSelectionHandler.EventType.CHANGE);
+  if (opt_changeEvent && opt_changeEvent.type == 'change') {
+    var event =
+        new Event(FileSelectionHandler.EventType.CHANGE, opt_changeEvent);
+    event.changes = opt_changeEvent.changes;
+    this.dispatchEvent(event);
+  } else {
+    cr.dispatchSimpleEvent(this, FileSelectionHandler.EventType.CHANGE);
+  }
 };
 
 /**
