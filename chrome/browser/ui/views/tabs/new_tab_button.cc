@@ -26,12 +26,6 @@
 #include "ui/views/win/hwnd_util.h"
 #endif
 
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
-#include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
-#endif
-
 namespace {
 
 sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
@@ -54,11 +48,7 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
 }  // namespace
 
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
-    : views::ImageButton(listener),
-      tab_strip_(tab_strip),
-      new_tab_promo_(nullptr),
-      destroyed_(nullptr),
-      new_tab_promo_observer_(this) {
+    : views::ImageButton(listener), tab_strip_(tab_strip), destroyed_(nullptr) {
   set_animate_on_state_change(true);
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   set_triggerable_event_flags(triggerable_event_flags() |
@@ -78,33 +68,6 @@ int NewTabButton::GetTopOffset() {
   const int kNewTabButtonBottomOffset = 4;
   return Tab::GetMinimumInactiveSize().height() - kNewTabButtonBottomOffset -
          GetLayoutSize(NEW_TAB_BUTTON).height();
-}
-
-// static
-void NewTabButton::ShowPromoForLastActiveBrowser() {
-  BrowserView* browser = static_cast<BrowserView*>(
-      BrowserList::GetInstance()->GetLastActive()->window());
-  browser->tabstrip()->new_tab_button()->ShowPromo();
-}
-
-// static
-void NewTabButton::CloseBubbleForLastActiveBrowser() {
-  BrowserView* browser = static_cast<BrowserView*>(
-      BrowserList::GetInstance()->GetLastActive()->window());
-  browser->tabstrip()->new_tab_button()->CloseBubble();
-}
-
-void NewTabButton::ShowPromo() {
-  DCHECK(!new_tab_promo_);
-  // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  new_tab_promo_ = NewTabPromoBubbleView::CreateOwned(this);
-  new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
-  SchedulePaint();
-}
-
-void NewTabButton::CloseBubble() {
-  if (new_tab_promo_)
-    new_tab_promo_->CloseBubble();
 }
 
 #if defined(OS_WIN)
@@ -177,7 +140,7 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
   const SkColor stroke_color =
-      new_tab_promo_observer_.IsObservingSources()
+      prominent_color_needed_
           ? color_utils::AlphaBlend(
                 SK_ColorBLACK,
                 GetNativeTheme()->GetSystemColor(
@@ -205,19 +168,6 @@ bool NewTabButton::GetHitTestMask(gfx::Path* mask) const {
                 tab_strip_->SizeTabButtonToTopOfTabStrip(), &border);
   mask->addPath(border, SkMatrix::MakeScale(1 / scale));
   return true;
-}
-
-void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-  feature_engagement::NewTabTrackerFactory::GetInstance()
-      ->GetForProfile(tab_strip_->controller()->GetProfile())
-      ->OnPromoClosed();
-#endif
-  new_tab_promo_observer_.Remove(widget);
-  new_tab_promo_ = nullptr;
-  // When the promo widget is destroyed, the NewTabButton needs to be
-  // recolored.
-  SchedulePaint();
 }
 
 gfx::Rect NewTabButton::GetVisibleBounds() {
@@ -284,7 +234,7 @@ void NewTabButton::PaintFill(bool pressed,
     const ui::ThemeProvider* tp = GetThemeProvider();
     bool custom_image;
     const int bg_id = tab_strip_->GetBackgroundResourceId(&custom_image);
-    if (custom_image && !new_tab_promo_observer_.IsObservingSources()) {
+    if (custom_image && !prominent_color_needed_) {
       // For custom tab backgrounds the background starts at the top of the tab
       // strip. Otherwise the background starts at the top of the frame.
       const int offset_y =
@@ -307,7 +257,7 @@ void NewTabButton::PaintFill(bool pressed,
       DCHECK(succeeded);
     } else {
       const SkColor color =
-          new_tab_promo_observer_.IsObservingSources()
+          prominent_color_needed_
               ? GetNativeTheme()->GetSystemColor(
                     ui::NativeTheme::kColorId_ProminentButtonColor)
               : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB);
