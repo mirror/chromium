@@ -34,6 +34,23 @@
       "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26a89b0_c18b0632",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T21:57:27Z",
+      "side": 1,
+      "message": "Nit: let\u0027s just omit this, since that\u0027s the default value of a string anyway. I guess it\u0027s not as expensive as it used to be, since we don\u0027t use copy-on-write strings anymore, but it\u0027s still not free either.",
+      "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
