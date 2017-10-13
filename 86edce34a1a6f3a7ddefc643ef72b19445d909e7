@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf22bcb_38bb4120",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-13T16:19:29Z",
+      "side": 1,
+      "message": "are subclasses required to call the base implementation? maybe the parent class should be refactored such that the method being overridden is no-op instead?",
+      "revId": "86edce34a1a6f3a7ddefc643ef72b19445d909e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
