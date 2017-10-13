@@ -1408,6 +1408,7 @@ leveldb::Status OpenDB(const leveldb_env::Options& options,
   if (options.env && leveldb_chrome::IsMemEnv(options.env)) {
     // Zero size cache to prevent cache hits.
     static leveldb::Cache* s_empty_cache = leveldb::NewLRUCache(0);
+
     Options mem_options = options;
     mem_options.block_cache = s_empty_cache;
     mem_options.write_buffer_size = 0;  // minimum size.

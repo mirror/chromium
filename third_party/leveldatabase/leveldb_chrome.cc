@@ -133,4 +133,10 @@ leveldb::Env* NewMemEnv(leveldb::Env* base_env) {
   return new ChromeMemEnv(base_env);
 }
 
+bool ParseFileName(const std::string& filename,
+                   uint64_t* number,
+                   leveldb::FileType* type) {
+  return leveldb::ParseFileName(filename, number, type);
+}
+
 }  // namespace leveldb_chrome
