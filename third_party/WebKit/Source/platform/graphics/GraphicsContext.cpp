@@ -544,26 +544,8 @@ void GraphicsContext::DrawLine(const IntPoint& point1, const IntPoint& point2) {
   int length = SkScalarRoundToInt(disp.Width() + disp.Height());
   PaintFlags flags(ImmutableState()->StrokeFlags(length));
 
-  if (StrokeData::StrokeIsDashed(width, GetStrokeStyle())) {
-    // Do a rect fill of our endpoints.  This ensures we always have the
-    // appearance of being a border. We then draw the actual dotted/dashed
-    // line.
-    SkRect r1, r2;
-    r1.set(p1.X(), p1.Y(), p1.X() + width, p1.Y() + width);
-    r2.set(p2.X(), p2.Y(), p2.X() + width, p2.Y() + width);
-
-    if (is_vertical_line) {
-      r1.offset(-width / 2, 0);
-      r2.offset(-width / 2, -width);
-    } else {
-      r1.offset(0, -width / 2);
-      r2.offset(-width, -width / 2);
-    }
-    PaintFlags fill_flags;
-    fill_flags.setColor(flags.getColor());
-    DrawRect(r1, fill_flags);
-    DrawRect(r2, fill_flags);
-  } else if (GetStrokeStyle() == kDottedStroke) {
+  if (GetStrokeStyle() == kDottedStroke &&
+      !StrokeData::StrokeIsDashed(width, GetStrokeStyle())) {
     // We draw thick dotted lines with 0 length dash strokes and round endcaps,
     // producing circles. The endcaps extend beyond the line's endpoints,
     // so move the start and end in.
@@ -1284,16 +1266,6 @@ void GraphicsContext::AdjustLineToPixelBoundaries(FloatPoint& p1,
   // pass us (y1+y2)/2, e.g., (50+53)/2 = 103/2 = 51 when we want 51.5.  It is
   // always true that an even width gave us a perfect position, but an odd width
   // gave us a position that is off by exactly 0.5.
-  if (StrokeData::StrokeIsDashed(stroke_width, pen_style)) {
-    if (p1.X() == p2.X()) {
-      p1.SetY(p1.Y() + stroke_width);
-      p2.SetY(p2.Y() - stroke_width);
-    } else {
-      p1.SetX(p1.X() + stroke_width);
-      p2.SetX(p2.X() - stroke_width);
-    }
-  }
-
   if (static_cast<int>(stroke_width) % 2) {  // odd
     if (p1.X() == p2.X()) {
       // We're a vertical line.  Adjust our x.
