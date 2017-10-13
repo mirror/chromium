@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "eaf9688c_94cf11c5",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-13T07:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce39ff61_61c87d0c",
+      "range": {
+        "startLine": 323,
+        "startChar": 26,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0000a3fd_b1b3b04e",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-13T07:37:29Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cClickActivator\u003e is a member of NotificationViewMD, so I think we can\u0027t move this to anonymous namespace (or forward declaration of anonymous namespace would happen in notification_view_md.h).",
+      "parentUuid": "e45f1458_9f6af4c4",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4aa918_40ddee9c",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40291210_2494a852",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-13T07:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b4aa918_40ddee9c",
+      "range": {
+        "startLine": 337,
+        "startChar": 21,
+        "endLine": 337,
+        "endChar": 22
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e69e28de_0b918ed6",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-13T07:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16d31f0_48366ce1",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 1
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b20de75_5a190321",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15a6f0f_7e833697",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-13T07:37:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b20de75_5a190321",
+      "range": {
+        "startLine": 440,
+        "startChar": 2,
+        "endLine": 440,
+        "endChar": 21
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
