@@ -51,6 +51,24 @@
       "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273f08be_7e5d8c7b",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-13T15:11:05Z",
+      "side": 1,
+      "message": "That\u0027s what I meant.  The point is to have one set of test deps, and not have a near-duplicate set over in the testapp build config.",
+      "parentUuid": "6c0cceab_dbb836bb",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
