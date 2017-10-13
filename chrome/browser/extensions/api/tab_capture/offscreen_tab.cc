@@ -151,8 +151,11 @@ void OffscreenTab::Start(const GURL& start_url,
            << initial_size.ToString() << " for start_url=" << start_url_.spec();
 
   // Create the WebContents to contain the off-screen tab's page.
-  offscreen_tab_web_contents_.reset(
-      WebContents::Create(WebContents::CreateParams(profile_.get())));
+  WebContents::CreateParams params(profile_.get());
+  if (!optional_presentation_id.empty())
+    params.is_presentation_receiver = true;
+
+  offscreen_tab_web_contents_.reset(WebContents::Create(params));
   offscreen_tab_web_contents_->SetDelegate(this);
   WebContentsObserver::Observe(offscreen_tab_web_contents_.get());
 
