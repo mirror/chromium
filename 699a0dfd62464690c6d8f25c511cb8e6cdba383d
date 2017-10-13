@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3349c40c_e9a3c9e0",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-13T19:19:59Z",
+      "side": 1,
+      "message": "I didn\u0027t want to convert the NSURL back to a GURL, but looking back I think that it\u0027s confusing so I moved this into viewDidLoad.",
+      "parentUuid": "a86feb9d_ebb8a497",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cef0e6e_56c3946f",
         "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f4cc896_e3062233",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-13T19:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cef0e6e_56c3946f",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1594e6dc_cf0f2187",
         "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e00f74_abc78b9a",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-10-13T19:19:59Z",
+      "side": 1,
+      "message": "The AppBar stretches itself it\u0027s top background color and I put the label on that. Maybe we could add a title to the App Bar like \"Log In\", but I was going to ask that in UI review.",
+      "parentUuid": "1594e6dc_cf0f2187",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
