@@ -135,7 +135,8 @@ viz::SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
       render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
   surface_draw_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
                             surface_info.id(), fallback_surface_id,
-                            default_background_color_);
+                            default_background_color_,
+                            stretch_content_to_fill_bounds_);
 
   return surface_draw_quad;
 }
