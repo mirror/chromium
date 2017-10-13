@@ -494,3 +494,23 @@ if (is_linux) {
     ]
   }
 }
+
+fuzzer_test("javascript_parser_proto_fuzzer") {
+  sources = [
+    "javascript_parser_proto_fuzzer.cc",
+    "javascript_parser_proto_to_string.cc",
+    "javascript_parser_proto_to_string.h",
+  ]
+  deps = [
+    ":javascript_parser_proto",
+    "//third_party/libprotobuf-mutator",
+    "//v8:v8",
+    "//v8:v8_libplatform",
+  ]
+}
+
+proto_library("javascript_parser_proto") {
+  sources = [
+    "javascript_parser.proto",
+  ]
+}
