@@ -16,6 +16,24 @@
       "revId": "6edd5ad29a317d84caa776e225dcf1fbf430ffde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d32df4_eecac4d8",
+        "filename": "testing/buildbot/chromium.win.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T23:06:41Z",
+      "side": 1,
+      "message": "We chatted offline to clarify, but, for the record: if you don\u0027t specify a dimension, you get the default values (set in swarming/api.py), which, in this case, is \"Windows-7-SP1\", which is what we want, since we\u0027re only adding this to bots running tests on Win7.\n\nThe way I did this also means that we\u0027re getting the same configuration by default that all of the other tests are getting (since none of them are setting dimensions, either).",
+      "parentUuid": "459295b1_10adb8a0",
+      "revId": "6edd5ad29a317d84caa776e225dcf1fbf430ffde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
