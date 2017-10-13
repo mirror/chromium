@@ -945,7 +945,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   web::NavigationManager::WebLoadParams params(reloadURL);
   params.referrer = lastNonRedirectItem->GetReferrer();
-  params.transition_type = ui::PAGE_TRANSITION_RELOAD;
+  params.transition_type = lastNonRedirectItem->GetTransitionType();
 
   switch (userAgentType) {
     case web::UserAgentType::DESKTOP:
