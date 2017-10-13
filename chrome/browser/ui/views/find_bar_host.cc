@@ -7,16 +7,20 @@
 #include <algorithm>
 
 #include "build/build_config.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/find_bar_view.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/features/features.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/views/border.h"
 #include "ui/views/focus/external_focus_tracker.h"
 #include "ui/views/widget/root_view.h"
 #include "ui/views/widget/widget.h"
@@ -262,6 +266,18 @@ gfx::Rect FindBarHost::GetDialogPosition(gfx::Rect avoid_overlapping_rect) {
   if (widget_bounds.IsEmpty())
     return gfx::Rect();
 
+  // If the location bar is present and visible, adjust the widget_bounds by the
+  // size of the find bar drop-shadow border to align with it properly.
+  Browser* browser =
+      chrome::FindBrowserWithWebContents(find_bar_controller_->web_contents());
+
+  if (browser && browser->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR)) {
+    gfx::Insets insets =
+        view()->border()->GetInsets() -
+        gfx::Insets(0, BackgroundWith1PxBorder::kLocationBarBorderThicknessDip);
+    widget_bounds.Inset(-insets);
+  }
+
   // Ask the view how large an area it needs to draw on.
   gfx::Size prefsize = view()->GetPreferredSize();
 
@@ -344,6 +360,8 @@ void FindBarHost::OnVisibilityChanged() {
     visible_bounds = host()->GetWindowBoundsInScreen();
   browser_view()->immersive_mode_controller()->OnFindBarVisibleBoundsChanged(
       visible_bounds);
+
+  find_bar_controller_->FindBarVisiblityChanged();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
