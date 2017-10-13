@@ -29,7 +29,7 @@ struct WebRequestData {
   WebRequestData(net::URLRequest* request, RequestStage stage);
   WebRequestData(net::URLRequest* request,
                  RequestStage stage,
-                 ExtensionNavigationUIData* navigation_ui_data,
+                 const ExtensionNavigationUIData* navigation_ui_data,
                  const net::HttpResponseHeaders* original_response_headers);
   ~WebRequestData();
 
@@ -39,7 +39,7 @@ struct WebRequestData {
   RequestStage stage;
   // Additional information about requests that is not
   // available in all request stages.
-  ExtensionNavigationUIData* navigation_ui_data;
+  const ExtensionNavigationUIData* navigation_ui_data;
   const net::HttpResponseHeaders* original_response_headers;
 };
 

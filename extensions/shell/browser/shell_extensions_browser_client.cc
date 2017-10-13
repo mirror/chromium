@@ -127,13 +127,17 @@ ShellExtensionsBrowserClient::MaybeCreateResourceBundleRequestJob(
 }
 
 bool ShellExtensionsBrowserClient::AllowCrossRendererResourceLoad(
-    net::URLRequest* request,
+    const GURL& url,
+    content::ResourceType resource_type,
+    ui::PageTransition page_transition,
+    int child_id,
     bool is_incognito,
     const Extension* extension,
     InfoMap* extension_info_map) {
   bool allowed = false;
   if (url_request_util::AllowCrossRendererResourceLoad(
-          request, is_incognito, extension, extension_info_map, &allowed)) {
+          url, resource_type, page_transition, child_id, is_incognito,
+          extension, extension_info_map, &allowed)) {
     return allowed;
   }
 
@@ -256,18 +260,14 @@ ShellExtensionsBrowserClient::GetExtensionWebContentsObserver(
   return ShellExtensionWebContentsObserver::FromWebContents(web_contents);
 }
 
-ExtensionNavigationUIData*
+const ExtensionNavigationUIData*
 ShellExtensionsBrowserClient::GetExtensionNavigationUIData(
-    net::URLRequest* request) {
-  const content::ResourceRequestInfo* info =
-      content::ResourceRequestInfo::ForRequest(request);
-  if (!info)
+    const content::NavigationUIData* navigation_ui_data) {
+  if (!navigation_ui_data)
     return nullptr;
-  ShellNavigationUIData* navigation_data =
-      static_cast<ShellNavigationUIData*>(info->GetNavigationUIData());
-  if (!navigation_data)
-    return nullptr;
-  return navigation_data->GetExtensionNavigationUIData();
+  const auto* data =
+      static_cast<const ShellNavigationUIData*>(navigation_ui_data);
+  return data->GetExtensionNavigationUIData();
 }
 
 KioskDelegate* ShellExtensionsBrowserClient::GetKioskDelegate() {

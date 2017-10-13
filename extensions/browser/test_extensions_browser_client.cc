@@ -132,7 +132,10 @@ TestExtensionsBrowserClient::MaybeCreateResourceBundleRequestJob(
 }
 
 bool TestExtensionsBrowserClient::AllowCrossRendererResourceLoad(
-    net::URLRequest* request,
+    const GURL& url,
+    content::ResourceType resource_type,
+    ui::PageTransition page_transition,
+    int child_id,
     bool is_incognito,
     const Extension* extension,
     InfoMap* extension_info_map) {
