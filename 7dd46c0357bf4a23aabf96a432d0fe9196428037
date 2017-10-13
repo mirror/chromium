@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85362875_731b6035",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:40:41Z",
+      "side": 1,
+      "message": "I believe that we don\u0027t usually do direct compares to nullptr (although I\u0027m a fan), so maybe just !proxy_service",
+      "range": {
+        "startLine": 497,
+        "startChar": 6,
+        "endLine": 497,
+        "endChar": 19
+      },
+      "revId": "7dd46c0357bf4a23aabf96a432d0fe9196428037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbeb5b19_94966987",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:40:41Z",
+      "side": 1,
+      "message": "Is it too ugly to merge this if into the one below it?",
+      "revId": "7dd46c0357bf4a23aabf96a432d0fe9196428037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790c74c1_a6205eeb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:40:41Z",
+      "side": 1,
+      "message": "This doesn\u0027t consider if there are no proxies in the list. Also, maybe we should consider PAC scripts, etc (although those may be non-deterministic).",
+      "revId": "7dd46c0357bf4a23aabf96a432d0fe9196428037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
