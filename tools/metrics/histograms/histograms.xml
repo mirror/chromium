@@ -50229,6 +50229,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="NewTabPage.TileFaviconType" enum="FaviconType">
+  <owner>mastiz@chromium.org</owner>
+  <summary>
+    The favicon type that chosen to represent a most visited tile display on the
+    new tab page. Note that these values don't involve an actual icon being
+    displayed (see NewTabPage.TileType).
+  </summary>
+</histogram>
+
 <histogram name="NewTabPage.TileOfflineAvailable" enum="MostVisitedTileIndex">
   <owner>treib@chromium.org</owner>
   <summary>
@@ -100928,6 +100937,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="NewTabPage.MostVisitedAge"/>
   <affected-histogram name="NewTabPage.SuggestionsImpression"/>
   <affected-histogram name="NewTabPage.SuggestionsImpressionAge"/>
+  <affected-histogram name="NewTabPage.TileFaviconType"/>
   <affected-histogram name="NewTabPage.TileTitle"/>
   <affected-histogram name="NewTabPage.TileTitleClicked"/>
   <affected-histogram name="NewTabPage.TileType"/>
