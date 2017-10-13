@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6211d604_195f2255",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T06:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8b00e7_cb8679f4",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9194c0cf_10067606",
         "filename": "media/video/jpeg_encode_accelerator.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c01103_f820f267",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T06:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9194c0cf_10067606",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7715bcd7_3dba4fa5",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T06:15:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59061c34_c81b4d72",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d3c1b5_6131e56e",
         "filename": "media/video/jpeg_encode_accelerator.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-12T16:26:14Z",
       "side": 1,
       "message": "This is not necessary, just mark it a virtual ~ as you do with your subclasses?",
+      "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02679a2c_c304c914",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T06:15:35Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand. Mark what as virtual? I tried making ~JpegEncodeAccelerator() as virtual without being pure virtual, and/or mark the destructor in subclass as virtual. None of them can make linker happy.",
+      "parentUuid": "b0d3c1b5_6131e56e",
       "revId": "6cf8b9cc08c6886f2543a032ed966a0188b9ca6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
