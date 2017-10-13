@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc93b92_952b51ad",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T19:50:39Z",
+      "side": 1,
+      "message": "nit: group this with other Tap_ methods",
+      "revId": "becc3346e3b2922111bd66f6dd56dad5e91a64ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008f1f8b_be3e7033",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/google_assistant_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-13T19:50:39Z",
+      "side": 1,
+      "message": "nit: no blank line, or separate all methods.",
+      "revId": "becc3346e3b2922111bd66f6dd56dad5e91a64ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
