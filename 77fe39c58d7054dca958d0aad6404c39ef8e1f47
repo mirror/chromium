@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90c504d4_b1031fd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2d8178_1bafd275",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "632dcf3e_7be96c0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "1129a905_a9a2b7eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "632dcf3e_7be96c0b",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 46
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3f41273_b1621608",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f1e288_34f122c1",
+      "range": {
+        "startLine": 66,
+        "startChar": 25,
+        "endLine": 66,
+        "endChar": 32
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c4e7dca_a21cdf88",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
         "patchSetId": 9
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "82ee0c7a_aa0aa67b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c4e7dca_a21cdf88",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e27e67a_dd565fea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
         "patchSetId": 9
@@ -99,6 +189,30 @@
       "writtenOn": "2017-09-11T15:26:48Z",
       "side": 1,
       "message": "I don\u0027t understand this comment. Cached where? Updated how? And I would avoid using \"new\" if the profile is an existing profile (if I\u0027m understanding correctly).",
+      "range": {
+        "startLine": 212,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 35
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f697b488_473aeb1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "I don\u0027t like the choice of word for \u0027cache\u0027 neither, but used it since it\u0027s used for all the fields. Will changed it to retrieved.",
+      "parentUuid": "5e27e67a_dd565fea",
       "range": {
         "startLine": 212,
         "startChar": 15,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "a5a6e2f9_d737e5c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2707bffe_1cf883a3",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5733b87f_0b6abab2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
         "patchSetId": 9
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "ec02ee4d_d9b761f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5733b87f_0b6abab2",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "161707d8_06bf27d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
         "patchSetId": 9
@@ -156,6 +306,30 @@
       "writtenOn": "2017-09-11T15:26:48Z",
       "side": 1,
       "message": "mDeleteRunnable should always be non-null here, no?",
+      "range": {
+        "startLine": 198,
+        "startChar": 24,
+        "endLine": 198,
+        "endChar": 47
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4463b28_e6490bdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "161707d8_06bf27d1",
       "range": {
         "startLine": 198,
         "startChar": 24,
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "e505262d_fd745187",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3356eb71_5edddceb",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4c941f_5b8d87ab",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
         "patchSetId": 9
@@ -202,6 +400,30 @@
       "writtenOn": "2017-09-11T15:26:48Z",
       "side": 1,
       "message": "is there a case where mGUID is non-null?",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7630acb8_02419f9f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Did you mean null? It should be non-null, since it\u0027s when there is already a profile.",
+      "parentUuid": "2b4c941f_5b8d87ab",
       "range": {
         "startLine": 45,
         "startChar": 20,
@@ -228,6 +450,24 @@
       "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3422227d_6cca21b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillProfileEditorPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-10-13T18:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1247d0_88b51549",
+      "revId": "77fe39c58d7054dca958d0aad6404c39ef8e1f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
