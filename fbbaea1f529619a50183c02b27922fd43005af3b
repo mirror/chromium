@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0ecd640_93f1aec3",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T22:51:27Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "fbbaea1f529619a50183c02b27922fd43005af3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
