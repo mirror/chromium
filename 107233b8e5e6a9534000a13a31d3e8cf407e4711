@@ -22,6 +22,30 @@
       "revId": "107233b8e5e6a9534000a13a31d3e8cf407e4711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9225b97_0e8e62ec",
+        "filename": "components/viz/service/gl/gpu_service_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-13T19:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c04d496_70d93c19",
+      "range": {
+        "startLine": 154,
+        "startChar": 7,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "107233b8e5e6a9534000a13a31d3e8cf407e4711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
