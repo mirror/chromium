@@ -200,6 +200,24 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c8b9c0_ab4c1078",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T22:18:35Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion here. At least we make them aware that those types are used by this feature. And then they should be able to figure out who to talk to.",
+      "parentUuid": "fab8684a_efd840e4",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
