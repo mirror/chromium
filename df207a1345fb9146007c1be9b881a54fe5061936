@@ -25,6 +25,114 @@
     },
     {
       "key": {
+        "uuid": "d1abbfa2_1e91dd5b",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "nit: Suggest to use const CanonicalCookie\u0026 here instead of passing the domain string.",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bb11ad_e2e7cff6",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "nit: Can we use cookie.IsDomainCookie() here or add a comment?",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d063d8c_a50fa2c4",
+        "filename": "content/network/cookie_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "Also BrowsingDataFilterBuilderImpl are doing this check first before calling GetDomainAndRegistry. As discussed, might be worth checking to see if the order matters.",
+      "range": {
+        "startLine": 73,
+        "startChar": 54,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e07b6d_07091ef9",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "This 4u is a magic number in the context of this test. I prefer adding these test cookies only when needed rather than doing that as a default and cleaning those up.",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb79924_0a245fed",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "nit: there are four cookies. I\u0027d rephrase this comment to be clearer.\n\nProbably worth mentioning/annotating that foo_host.com is the host cookie and .foo_host.com is the domain cookie.",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0045c347_3b64d361",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "nit: Same here with \"Private\". Maybe use \"private registry\" to be explicit.",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b788c66_6457b2f8",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -48,6 +156,23 @@
     },
     {
       "key": {
+        "uuid": "7c0de531_49b7d2fb",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "nit: s/BrowsingDataFilterBuilder/BrowsingDataFilterBuilderImpl.\nI don\u0027t see any call places in BrowsingDataFilterBuilder. It\u0027d save me a codesearch if this directly mentions the impl class :)",
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea01203c_1d536218",
         "filename": "content/network/cookie_manager_impl_unittest.cc",
         "patchSetId": 2
@@ -65,6 +190,23 @@
         "endLine": 968,
         "endChar": 19
       },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ac17c3_5e60feeb",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T19:42:49Z",
+      "side": 1,
+      "message": "Should there be a double slash after http:?",
       "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
