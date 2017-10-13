@@ -439,6 +439,14 @@ ObjectPaintInvalidatorWithContext::ComputePaintInvalidationReason() {
     background_obscuration_changed = true;
   }
 
+  if (!object_.ShouldCheckForPaintInvalidation() &&
+      !(context_.subtree_flags &
+        ~PaintInvalidatorContext::kSubtreeVisualRectUpdate)) {
+    // We just need to update visual rect. No paint invalidation is needed.
+    DCHECK(!background_obscuration_changed);
+    return PaintInvalidationReason::kNone;
+  }
+
   if (context_.subtree_flags &
       PaintInvalidatorContext::kSubtreeFullInvalidation)
     return PaintInvalidationReason::kSubtree;
