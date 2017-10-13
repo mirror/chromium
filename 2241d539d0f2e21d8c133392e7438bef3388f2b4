@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "429b0746_4db07ac1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-13T12:16:09Z",
+      "side": 1,
+      "message": "nit: Could you give a more transparent CL description, i.e. one where the top line indicates the feature that this is for and the description gives a quick overview/summary of the high-level purpose of the code being added?",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a605c0_2b539c3c",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-13T12:16:09Z",
+      "side": 1,
+      "message": "Sylvain, could you review the python/BUILD.gn/code generation being done here?",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 32
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3e36cd_8e5db18b",
+        "filename": "components/language/content/util/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-13T12:16:09Z",
+      "side": 1,
+      "message": "You can collapse this all down to just //components/language and add a README.md that it\u0027s built on all platforms but iOS due to iOS not currently supporting //device/geolocation. Could you file a bug for bringing up //device/geolocation and //components/language on iOS and CC all the relevant parties? (all the folks on this CL + noyau@ + whoever else would be interested from the translate side).",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "2241d539d0f2e21d8c133392e7438bef3388f2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
