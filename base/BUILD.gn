@@ -44,6 +44,11 @@ declare_args() {
   # (file, function, line). False means only the program counter (and currently
   # file name) is saved.
   enable_location_source = true
+
+  # Unsafe developer build. Has developer-friendly features that compromise
+  # security measures like sandboxing or ASLR.
+  # IMPORTANT: Unsafe developer builds should never be distributed to end users.
+  is_unsafe_developer_build = !is_official_build
 }
 
 if (is_android) {
@@ -63,6 +68,13 @@ config("base_flags") {
 config("base_implementation") {
   defines = [ "BASE_IMPLEMENTATION" ]
   configs = [ "//build/config/compiler:wexit_time_destructors" ]
+}
+
+config("unsafe_developer_build") {
+  defines = []
+  if (is_unsafe_developer_build) {
+    defines += [ "UNSAFE_DEVELOPER_BUILD" ]
+  }
 }
 
 if (is_win) {
@@ -1104,6 +1116,7 @@ component("base") {
   configs += [
     ":base_flags",
     ":base_implementation",
+    ":unsafe_developer_build",
     "//build/config:precompiled_headers",
   ]
 
