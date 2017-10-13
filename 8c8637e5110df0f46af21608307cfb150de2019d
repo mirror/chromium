@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0b6da978_66de5da4",
+        "filename": "content/browser/android/synthetic_gesture_target_connector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-13T00:28:55Z",
+      "side": 1,
+      "message": "I guess this was renamed to clarify that the class is not inherited from SGT. I agree with tedchoc@ and suggest that the Java class be renamed as well.",
+      "parentUuid": "e240ddc6_893048af",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9d9c728_da24d84c",
         "filename": "content/browser/android/synthetic_gesture_target_connector.cc",
         "patchSetId": 8
@@ -65,6 +89,23 @@
         "endLine": 31,
         "endChar": 54
       },
+      "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea9f4cd_99cfd8fa",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-10-13T00:28:55Z",
+      "side": 1,
+      "message": "Not my turf... but why is this necessary now? unique_ptr was already taking care of the lifetime.",
       "revId": "8c8637e5110df0f46af21608307cfb150de2019d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
