@@ -16,6 +16,24 @@
       "revId": "a1e20d859ed482a0d948a934f10299f8cc269cd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae999e81_271c17b0",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGL2RenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-13T00:05:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a0ddb76f_84a41cc0",
+      "revId": "a1e20d859ed482a0d948a934f10299f8cc269cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
