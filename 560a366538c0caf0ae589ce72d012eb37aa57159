@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66ca74f8_7632a184",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T18:02:02Z",
+      "side": 1,
+      "message": "\u003e Can you add a comment outlining the logic here?\n\u003e \n\u003e Thinking about this more, I think this makes sense assuming the code for previous session data will actually record the previous client id and not reset it with the current one. (Can you double check that?)\n\u003e \n\u003e If it does indeed report it with the previous client id, then I agree this makes sense - since then we\u0027re reporting data from previous session which was in the *cloned install* state. (This current session is no longer in that state because we executed the code to reset the client id.)\n\nI looked at the code.  It appears we reset the client-id early in the process.\n*Thus, all \"previous stability logs\" are logged with the regenerated client id.*\nThis doesn\u0027t seem right to me.\n\nI see several choices:\n1. Make all previous stability logs be logged with the previous client id.\n  (a) Do this in this same changelist as this one.\n  (b) Do this a separate changelist.  (I can imagine there might be surprises that could happen when landing that change.)\n2. Don\u0027t make previous stability logs be logged with the previous client id.  (Continue current behavior with respect to client id.)\n  (a) But still tag the previous stability logs as coming from a cloned install.  I think this makes sense, as the data is coming from a cloned install.  True, the client id doesn\u0027t come from that install, but the stability data reflect what was happening in a cloned install.\n  (b) And don\u0027t tag the previous stability data as coming from a cloned install.  (Abandon this changelist.)\n\nLet me know your preference.\n\nI\u0027m inclined to do 1(b).",
+      "parentUuid": "7df90886_af7047fb",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b415fb3_36abcd95",
         "filename": "components/metrics/metrics_state_manager.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "075d7797_f3acbf93",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T18:02:02Z",
+      "side": 1,
+      "message": "\u003e I find this name hard to parse. How about: metrics_ids_were_reset_?\n\nThat\u0027s a better name.  Done throughout.",
+      "parentUuid": "4b415fb3_36abcd95",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8539aad_df0a20a6",
         "filename": "components/metrics/metrics_state_manager.cc",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be45bffb_4d102b66",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T18:02:02Z",
+      "side": 1,
+      "message": "\u003e Nit: Preserve newline above this.\n\nThere was no newline above it.  I\u0027ll add one.",
+      "parentUuid": "f8539aad_df0a20a6",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 54
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
