@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0361d086_3e0e77f3",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:05:31Z",
+      "side": 1,
+      "message": "nit: put in an anonymous namespace at the top",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 75
+      },
+      "revId": "cb45d57b5da97ddac102c13bee57f7072d5d906a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b809c8_37307a77",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:05:31Z",
+      "side": 1,
+      "message": "Could this just be `if (!input_events-\u003einput_events()-\u003ecredit_card_field_edited)`?\n\n(here and below)",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "cb45d57b5da97ddac102c13bee57f7072d5d906a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e2d163_df06eb21",
+        "filename": "components/autofill/content/browser/content_autofill_driver.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:05:31Z",
+      "side": 1,
+      "message": "nit: use curly braces when there\u0027s a multi-line condition",
+      "range": {
+        "startLine": 188,
+        "startChar": 33,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "cb45d57b5da97ddac102c13bee57f7072d5d906a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d098e8_39531ff7",
+        "filename": "components/autofill/core/browser/test_autofill_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-13T11:05:31Z",
+      "side": 1,
+      "message": "nit: no need to duplicate the comment",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 11
+      },
+      "revId": "cb45d57b5da97ddac102c13bee57f7072d5d906a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
