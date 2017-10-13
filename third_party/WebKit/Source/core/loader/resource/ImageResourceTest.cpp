@@ -32,6 +32,7 @@
 
 #include <memory>
 #include "core/loader/resource/MockImageResourceObserver.h"
+#include "platform/HTTPNames.h"
 #include "platform/SharedBuffer.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/graphics/BitmapImage.h"
@@ -1417,7 +1418,7 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPostRequest) {
   KURL test_url(kParsedURLString, kTestURL);
   ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
   ResourceRequest resource_request(test_url);
-  resource_request.SetHTTPMethod("POST");
+  resource_request.SetHTTPMethod(HTTPNames::POST);
   FetchParameters params(resource_request);
   params.SetAllowImagePlaceholder();
   ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
