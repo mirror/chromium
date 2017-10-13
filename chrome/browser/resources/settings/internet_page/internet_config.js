@@ -18,6 +18,22 @@ Polymer({
      */
     networkingPrivate: Object,
 
+    /** @private */
+    shareAllowEnable_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('shareNetworkAllowEnable');
+      }
+    },
+
+    /** @private */
+    shareDefault_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('shareNetworkDefault');
+      }
+    },
+
     /**
      * The GUID when an existing network is being configured. This will be
      * empty when configuring a new network.
@@ -26,10 +42,10 @@ Polymer({
     guid_: String,
 
     /** @private */
-    enableConnect_: String,
+    enableConnect_: Boolean,
 
     /** @private */
-    enableSave_: String,
+    enableSave_: Boolean,
 
     /**
      * The current properties if an existing network is being configured, or
@@ -91,18 +107,38 @@ Polymer({
         this.i18n('OncType' + this.networkProperties_.Type);
   },
 
+  /**
+   * @return {boolean}
+   * @private
+   */
+  isConfigured_: function() {
+    var source = this.networkProperties_.Source;
+    return !!this.guid_ && !!source && source != CrOnc.Source.NONE;
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getSaveOrConnectLabel_: function() {
+    return this.i18n(this.isConfigured_() ? 'save' : 'networkButtonConnect');
+  },
+
+  /**
+   * @return {boolean}
+   * @private
+   */
+  getSaveOrConnectEnabled_: function() {
+    return this.isConfigured_() ? this.enableSave_ : this.enableConnect_;
+  },
+
   /** @private */
   onCancelTap_: function() {
     this.close_();
   },
 
   /** @private */
-  onSaveTap_: function() {
-    this.$.networkConfig.saveOrConnect();
-  },
-
-  /** @private */
-  onConnectTap_: function() {
+  onSaveOrConnectTap_: function() {
     this.$.networkConfig.saveOrConnect();
   },
 });
