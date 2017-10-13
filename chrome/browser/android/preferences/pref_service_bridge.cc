@@ -130,6 +130,12 @@ browsing_data::ClearBrowsingDataTab ToTabEnum(jint clear_browsing_data_tab) {
 // Native JNI methods
 // ----------------------------------------------------------------------------
 
+static jboolean GetBoolean(JNIEnv* env,
+                           const JavaParamRef<jobject>& obj,
+                           const JavaParamRef<jstring>& j_pref_name) {
+  return GetPrefService()->GetBoolean(ConvertJavaStringToUTF8(j_pref_name));
+}
+
 static jboolean IsContentSettingManaged(JNIEnv* env,
                                         const JavaParamRef<jobject>& obj,
                                         int content_settings_type) {
@@ -580,11 +586,6 @@ static void SetLastClearBrowsingDataTab(JNIEnv* env,
 static void MigrateBrowsingDataPreferences(JNIEnv* env,
                                            const JavaParamRef<jobject>& obj) {
   browsing_data::MigratePreferencesToBasic(GetOriginalProfile()->GetPrefs());
-}
-
-static jboolean CanDeleteBrowsingHistory(JNIEnv* env,
-                                         const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->GetBoolean(prefs::kAllowDeletingBrowserHistory);
 }
 
 static void SetAutoplayEnabled(JNIEnv* env,

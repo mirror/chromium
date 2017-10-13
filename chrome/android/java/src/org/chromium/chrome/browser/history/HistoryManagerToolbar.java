@@ -95,7 +95,8 @@ public class HistoryManagerToolbar extends SelectableListToolbar<HistoryItem> {
         // be added back until the user refreshes the history UI. This could happen if the user is
         // signed in to an account that cannot remove browsing history or has incognito disabled and
         // signs out.
-        if (!PrefServiceBridge.getInstance().canDeleteBrowsingHistory()) {
+        if (!PrefServiceBridge.getInstance().getBoolean(
+                    PrefServiceBridge.ALLOW_DELETING_BROWSER_HISTORY)) {
             getMenu().removeItem(R.id.selection_mode_delete_menu_id);
         }
         if (!PrefServiceBridge.getInstance().isIncognitoModeEnabled()) {

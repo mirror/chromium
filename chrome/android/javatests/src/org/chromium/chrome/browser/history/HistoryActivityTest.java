@@ -65,7 +65,6 @@ import org.chromium.ui.test.util.UiRestriction;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -678,50 +677,37 @@ public class HistoryActivityTest {
     }
 
     private void signInToSupervisedAccount() throws Exception {
-        // Set supervised user.
-        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
-                return Profile.getLastUsedProfile().isChild()
-                        && !PrefServiceBridge.getInstance().canDeleteBrowsingHistory()
-                        && !PrefServiceBridge.getInstance().isIncognitoModeEnabled();
-            }
-        }));
-
-        // Sign in to account.
+        // Sign in to account. Note that if supervised user is set before sign in, the supervised
+        // user setting will be reset.
         SigninTestUtil.setUpAuthForTest(InstrumentationRegistry.getInstrumentation());
         final Account account = SigninTestUtil.addTestAccount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                SigninManager.get(mActivityTestRule.getActivity()).onFirstRunCheckDone();
-                SigninManager.get(mActivityTestRule.getActivity())
-                        .addSignInStateObserver(mTestObserver);
-                SigninManager.get(mActivityTestRule.getActivity()).signIn(account, null, null);
-            }
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            SigninManager.get(mActivityTestRule.getActivity()).onFirstRunCheckDone();
+            SigninManager.get(mActivityTestRule.getActivity())
+                    .addSignInStateObserver(mTestObserver);
+            SigninManager.get(mActivityTestRule.getActivity()).signIn(account, null, null);
         });
 
-        mTestObserver.onSigninStateChangedCallback.waitForCallback(0, 1,
-                SyncTestUtil.TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        mTestObserver.onSigninStateChangedCallback.waitForCallback(
+                0, 1, SyncTestUtil.TIMEOUT_MS, TimeUnit.MILLISECONDS);
         Assert.assertEquals(account, SigninTestUtil.getCurrentAccount());
 
-        // Preference changes associate with a supervised user being signed in happen
-        // asynchronously after #onSignInStateChange() has been called. Poll until the
-        // preferences are changed, then update the UI.
-        // TODO(twellington): Remove this once HistoryAdapter has been updated to properly listen
-        // for preference changes (crbug.com/767238).
+        // Wait for recycler view changes after sign in.
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
-                return !PrefServiceBridge.getInstance().canDeleteBrowsingHistory();
+                return !mRecyclerView.isAnimating();
             }
-        }, CriteriaHelper.DEFAULT_MAX_TIME_TO_POLL, 1000);
-
-
-        ThreadUtils.runOnUiThreadBlocking(() -> {
-            mAdapter.onSignInStateChange();
         });
+
+        // Set supervised user.
+        Assert.assertTrue(ThreadUtils.runOnUiThreadBlocking(() -> {
+            PrefServiceBridge.getInstance().setSupervisedUserId("ChildAccountSUID");
+            return Profile.getLastUsedProfile().isChild()
+                    && !PrefServiceBridge.getInstance().getBoolean(
+                               PrefServiceBridge.ALLOW_DELETING_BROWSER_HISTORY)
+                    && !PrefServiceBridge.getInstance().isIncognitoModeEnabled();
+        }));
 
         // Wait until animator finish removing history item delete icon
         // TODO(twellington): Figure out a better way to do this (e.g. listen for RecyclerView
