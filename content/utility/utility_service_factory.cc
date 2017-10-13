@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/trace_event/trace_log.h"
 #include "content/child/child_process.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/content_client.h"
@@ -20,6 +21,7 @@
 #include "media/media_features.h"
 #include "services/data_decoder/data_decoder_service.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/shape_detection_service.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
@@ -97,6 +99,13 @@ UtilityServiceFactory::UtilityServiceFactory()
     : network_registry_(base::MakeUnique<service_manager::BinderRegistry>()) {}
 
 UtilityServiceFactory::~UtilityServiceFactory() {}
+
+void UtilityServiceFactory::CreateService(
+    service_manager::mojom::ServiceRequest request,
+    const std::string& name) {
+  base::trace_event::TraceLog::GetInstance()->SetProcessName(
+      ("Service: " + name).c_str());
+}
 
 void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   GetContentClient()->utility()->RegisterServices(services);
