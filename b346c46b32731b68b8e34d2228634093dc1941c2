@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14104ef7_cdd2fbb8",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:32:09Z",
+      "side": 1,
+      "message": "optional/style: To cover all |stop_reason| conditions how about:\n\nif (restart_after_crash_count)\n  return nullopt;\n\nswitch (stop_reason) {\n  case SHUTDOWN:\n  case LOW_DISK_SPACE:\n    return nullopt;  // We don\u0027t record.\n  case GENERIC_BOOT_FAILURE: return ...;\n  case CRASH:\n    return was_running ? ... ;\n}\n\nNOTREACHED();\nreturn nullopt;",
+      "revId": "b346c46b32731b68b8e34d2228634093dc1941c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2e1a22_8a2febd0",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:32:09Z",
+      "side": 1,
+      "message": "nit/optional: I think you can drop make_optional here and below?",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "b346c46b32731b68b8e34d2228634093dc1941c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ed5871_319ad825",
+        "filename": "components/arc/arc_session_runner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:32:09Z",
+      "side": 1,
+      "message": "Could you add LOW_DISK_SPACE case, too?",
+      "revId": "b346c46b32731b68b8e34d2228634093dc1941c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
