@@ -46,6 +46,10 @@ def main():
   if sys.platform != 'win32':
     return
 
+  # Skip checking because Fall Creators Update causes errors
+  # c:/src/depot_tools/win_tools-2_7_6_bin/python/bin/python.exe ../../build/win/message_compiler.py environment.x86 -h gen/remoting/host/win -r gen/remoting/host/win -u gen/remoting/host/win/remoting_host_messages.mc
+  return
+
   # On Windows, run mc.exe on the input and check that its outputs are
   # identical to the checked-in outputs.
 
