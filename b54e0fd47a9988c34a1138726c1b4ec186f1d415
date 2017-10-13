@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e11aac_fc37051a",
+        "filename": "third_party/WebKit/Source/platform/wtf/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T12:15:24Z",
+      "side": 1,
+      "message": "How hard would it be to fix the problem? I\u0027m not a big fan of jumbo_excluded_sources :)",
+      "revId": "b54e0fd47a9988c34a1138726c1b4ec186f1d415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
