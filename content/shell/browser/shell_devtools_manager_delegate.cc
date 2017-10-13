@@ -170,6 +170,13 @@ void ShellDevToolsManagerDelegate::StartHttpHandler(
   DevToolsAgentHost::StartRemoteDebuggingServer(
       CreateSocketFactory(), frontend_url, browser_context->GetPath(),
       base::FilePath());
+
+  const char* env_p = std::getenv("NODE_CHANNEL_FD");
+  if (env_p) {
+    int handle = std::stoi(env_p);
+    if (handle > 0)
+      DevToolsAgentHost::StartRemoteDebuggingPipeHandler(handle);
+  }
 }
 
 // static
