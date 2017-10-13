@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5356a54a_175dbfd9",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61509e2_e20c7e92",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc5288b2_49447280",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T21:40:13Z",
       "side": 1,
       "message": "I think this is a fine API, but in trying to evaluate the API I did a bit of brainstorming about what other APIs would look like, specifically around the backoff/delay that you mention, and I wanted to share that just FYI.\n\nFirst of all, I\u0027m a pretty strong believer in not putting in interface methods unless there\u0027s an identified consumer for them.  I presume the consumers for this are in the space of URLFetcher consumers, but I don\u0027t know that space well.  If that space is covered by max_retries \u0026 retry_mode, feel absolutely free to stop reading now.\n\nIf it isn\u0027t, I find myself wondering about an alternative interface, which is a callback that takes an enum k5XX, kNetworkChanged + number of tries so far, and returns a bool (try again/don\u0027t) and a delay until the trying again should happen.  That interface seems only a bit more complex than this one, but allows for semi-arbitrary backoff/delay semantics.",
+      "range": {
+        "startLine": 166,
+        "startChar": 15,
+        "endLine": 166,
+        "endChar": 30
+      },
+      "revId": "1bceed42288a543a80c9a3baaf0b85ed2606e727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fce6c24_ee27d8b4",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "The the extent of my knowledge, it\u0027s only the print service that delays retries...So the question is:  Are other consumers all interested in doing their own (arbitrary) backoff, should we implement some sort of standard backoff, or should we implement no backoff, and let the consumers do that themselves, if they really want to.\n\nIf we want to leave it in the hands of consumers, I think your suggestion makes a lot of sense.",
+      "parentUuid": "dc5288b2_49447280",
       "range": {
         "startLine": 166,
         "startChar": 15,

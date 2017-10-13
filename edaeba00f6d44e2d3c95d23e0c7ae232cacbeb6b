@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20f65c5b_fdb30fed",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "Am I missing something?  Looks right to me, both in \"FileWriter\" and \"file\".  Ctrl-F file seems to confirm its spelled right.  Or is there some other file I\u0027m missing?",
+      "parentUuid": "41386cef_947a8635",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 11
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18818e28_4f6efe3c",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff97105_77dcf84d",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "But it doesn\u0027t delete any previously created file (Or if something else created a file, we don\u0027t delete the file) - paranoia about that is the reason this bool exists.  Maybe just owns_file_, which I had before, but then I removed it before re-adding a bool that does the same thing?",
+      "parentUuid": "18818e28_4f6efe3c",
+      "range": {
+        "startLine": 516,
+        "startChar": 9,
+        "endLine": 516,
+        "endChar": 22
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f962b790_623abe9f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "Done.  I agree the naming was pretty confusing.",
+      "parentUuid": "9ec151fc_89d0710f",
+      "range": {
+        "startLine": 602,
+        "startChar": 7,
+        "endLine": 602,
+        "endChar": 20
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4052393_01946db5",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-13T21:40:13Z",
       "side": 1,
       "message": "I don\u0027t see the need for the callback having the ability to delete this to be part of the interface contract (either based on what you\u0027re currently doing or a random guess at future uses; it seems like PrepareToRetry will almost always be followed by retrying).  What drove putting this in?\n\n(To be clear, this is all implementation, and I don\u0027t care a lot about \"Best Possible Interface Contract\" that\u0027s completely contained within an implementation.  But this seems an unneeded complexity for the BodyHandler subclasses to have to be aware of/work around.)",
+      "range": {
+        "startLine": 719,
+        "startChar": 15,
+        "endLine": 719,
+        "endChar": 18
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4cc002_99b7dd2a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "I was mostly thinking that when we retry, we discover the URLLoaderFactory is dead, invoke the client\u0027s callback, and then it destroys us...Though now that I think about it, I\u0027m not sure this case is handled properly.  I\u0027ll add a test where the new URLLoaderFactory dies before the retry (Normally, the old one would die, too, but the old one could give us a result before dying), and see how things work out.\n\nThat\u0027s the only case I was thinking about when I added the comment.",
+      "parentUuid": "f4052393_01946db5",
       "range": {
         "startLine": 719,
         "startChar": 15,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "35c851d5_aae04baa",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "So you\u0027re suggesting I duplicate values in Initialize() and in an initializer list?  That makes me nervous - I\u0027m concerned that a new value will be added, but it won\u0027t be set in both places.  With most of the initialization here, both on creation and on retry, I think that\u0027s at least a little less likely to happen.  Or am I misunderstanding you?",
+      "parentUuid": "b06680cd_4bccafb6",
+      "range": {
+        "startLine": 846,
+        "startChar": 26,
+        "endLine": 846,
+        "endChar": 36
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be508654_e809afdf",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "83061e41_f3a14d3e",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "There were a couple reasons - per style guide, StartInternal should take a const ResourceRequest\u0026, but I don\u0027t want to duplicate it.  It also seems a bit weird to pass pointers to class members back to ourselves.  Anyhow, I\u0027ve switched (And made StartInternal takes a const ResourceRequest*).",
+      "parentUuid": "be508654_e809afdf",
+      "range": {
+        "startLine": 912,
+        "startChar": 5,
+        "endLine": 912,
+        "endChar": 24
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6201a851_9a7508f5",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 8
@@ -160,6 +304,30 @@
       "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbaf4b2c_616ab7ab",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T22:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6201a851_9a7508f5",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 14
+      },
+      "revId": "edaeba00f6d44e2d3c95d23e0c7ae232cacbeb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
