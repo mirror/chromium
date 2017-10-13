@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "bae8ffcd_67058ab7",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-13T17:53:43Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood.\n\nI wanted to avoid dangling unowned URLLoaderFactory pointers - admittedly, this was when the API was create a factory on demand, and I wanted to avoid having consumers worry about lifetimes of the URLLoaderFactory.  Now we provide a shared URLLoaderFactory, so it\u0027s less of a concern.\n\nAnd I also wanted to avoid copying ResourceRequests (Or having an unowned pointer to one).  ResourceRequests can include upload bodies, so copying them can be pretty expensive.  Of course, I\u0027m thinking of switching these to take std::unique_ptrs\u003cResourceRequest\u003e, since otherwise, I have to copy them, anyways, to retry requests...",
+      "parentUuid": "83fc2e2a_8a35c0ec",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "57e6fd7020349c3accd8e20c001e403166fff92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f588c26b_e46125b2",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 3
