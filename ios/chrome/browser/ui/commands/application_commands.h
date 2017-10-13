@@ -75,8 +75,9 @@
 // Shows the Save Passwords settings UI.
 - (void)showSavePasswordsSettings;
 
-// Shows the Report an Issue UI.
-- (void)showReportAnIssue;
+// Shows the Report an Issue UI, presenting from |baseViewController|.
+- (void)showReportAnIssueFromViewController:
+    (UIViewController*)baseViewController;
 
 // Opens the |command| URL.
 - (void)openURL:(OpenUrlCommand*)command;
