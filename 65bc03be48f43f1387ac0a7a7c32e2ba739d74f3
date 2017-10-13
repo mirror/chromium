@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "00acbbf6_35ef673d",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-13T00:57:31Z",
+      "side": 1,
+      "message": "Unfortunately that doesn\u0027t work because then the WRL code can\u0027t access it. If there is some black-magic method to make it work I\u0027m all ears because it\u0027s clearly the right idea, it just doesn\u0027t seem to work.",
+      "parentUuid": "e2c8c417_a600f9d4",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "65bc03be48f43f1387ac0a7a7c32e2ba739d74f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57a29d54_8c2d491d",
         "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win_unittest.cc",
         "patchSetId": 1
