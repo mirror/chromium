@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb29b65_70129cdf",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 12561,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-13T18:15:36Z",
+      "side": 1,
+      "message": "This looks fine; we\u0027re waiting on a V8 roll and once that lands we\u0027ll be able to build all the other targets except content_unittests.",
+      "revId": "7ea69fffc04a6c79ae710cbf8b2c7c11ca54c840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b2ad91_cc969d73",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-13T18:15:36Z",
+      "side": 1,
+      "message": "nit: In the human-friendly names above, we seem to use ARM64 rather than arm64. (e.g. look at Android Cronet).",
+      "revId": "7ea69fffc04a6c79ae710cbf8b2c7c11ca54c840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
