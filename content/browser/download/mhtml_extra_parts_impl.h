@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_DOWNLOAD_MHTML_EXTRA_PARTS_IMPL_H_
 #define CONTENT_BROWSER_DOWNLOAD_MHTML_EXTRA_PARTS_IMPL_H_
 
+#include "base/memory/weak_ptr.h"
 #include "content/public/browser/mhtml_extra_parts.h"
 
 namespace content {
@@ -17,8 +18,11 @@ struct MHTMLExtraDataPart {
   std::string body;
 
   MHTMLExtraDataPart();
-  ~MHTMLExtraDataPart();
   MHTMLExtraDataPart(const MHTMLExtraDataPart& other);
+  MHTMLExtraDataPart(MHTMLExtraDataPart&& other);
+  MHTMLExtraDataPart& operator=(const MHTMLExtraDataPart& other);
+  MHTMLExtraDataPart& operator=(MHTMLExtraDataPart&& other);
+  ~MHTMLExtraDataPart();
 };
 
 // Class used as a data object for WebContents UserData to represent an MHTML
@@ -35,6 +39,8 @@ class MHTMLExtraPartsImpl : public content::MHTMLExtraParts {
   // Return the vector of parts to be serialized.
   const std::vector<MHTMLExtraDataPart>& parts() const { return parts_; }
 
+  base::WeakPtr<MHTMLExtraPartsImpl> AsWeakPtr();
+
   // Return the number of extra parts added.
   int64_t size() override;
 
@@ -46,6 +52,8 @@ class MHTMLExtraPartsImpl : public content::MHTMLExtraParts {
 
  private:
   std::vector<MHTMLExtraDataPart> parts_;
+
+  base::WeakPtrFactory<MHTMLExtraPartsImpl> weak_ptr_factory_;
 };
 
 }  // namespace content
