@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df23e173_e34895c1",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T16:48:59Z",
+      "side": 1,
+      "message": "Maybe something like:\nPossible values are\n  \u003cul\u003e\n     \u003cli\u003e\u003ccode\u003eNone\u003c/code\u003e\u003c/li\u003e\n     \u003cli\u003e\u003ccode\u003eDevice\u003c/code\u003e\u003c/li\u003e\n      ...\n  \u003c/ul\u003e",
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b33fc8_a75d1c12",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T16:48:59Z",
+      "side": 1,
+      "message": "I\u0027d take this out of the public API documentation",
+      "range": {
+        "startLine": 738,
+        "startChar": 7,
+        "endLine": 739,
+        "endChar": 49
+      },
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e00c97_7aca5960",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T16:48:59Z",
+      "side": 1,
+      "message": "$(ref:)",
+      "range": {
+        "startLine": 912,
+        "startChar": 27,
+        "endLine": 912,
+        "endChar": 40
+      },
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d86ae01_82650642",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T16:48:59Z",
+      "side": 1,
+      "message": "do we eventually want add logic to close the dialog once the network is connected, or add some indication to the user the network connect is in progress?\n(and maybe show error when if the network connection status changes to \u0027NotConceted\u0027).",
+      "revId": "d2627c3b1621c9284bda064e64bcc10fdddc1812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
