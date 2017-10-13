@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de00f537_bc0208de",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/compositorworker/animation-worklet-visual-update.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T21:36:05Z",
+      "side": 1,
+      "message": "Curious: what does this do and how would a WPT for this work differently? (Since I\u0027m assuming this is a Blink LayoutTest extension.)",
+      "revId": "eb5c105a26a2a3b0fd5ee19f254cbe191335f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6270e946_95a28d3e",
+        "filename": "third_party/WebKit/Source/platform/animation/CompositorAnimationPlayer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-13T21:36:05Z",
+      "side": 1,
+      "message": "Nit; is there meant to be an empty line here?",
+      "revId": "eb5c105a26a2a3b0fd5ee19f254cbe191335f708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
