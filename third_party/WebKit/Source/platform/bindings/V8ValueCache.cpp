@@ -91,9 +91,9 @@ static v8::Local<v8::String> MakeExternalString(v8::Isolate* isolate,
   return new_string;
 }
 
-v8::Local<v8::String> StringCache::V8ExternalStringSlow(
-    v8::Isolate* isolate,
-    StringImpl* string_impl) {
+v8::Local<v8::String> StringCache::V8ExternalString(v8::Isolate* isolate,
+                                                    StringImpl* string_impl) {
+  DCHECK(string_impl);
   RUNTIME_CALL_TIMER_SCOPE(isolate,
                            RuntimeCallStats::CounterId::kV8ExternalStringSlow);
   if (!string_impl->length())
@@ -102,17 +102,16 @@ v8::Local<v8::String> StringCache::V8ExternalStringSlow(
   StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
       string_cache_.GetReference(string_impl);
   if (!cached_v8_string.IsEmpty()) {
-    last_string_impl_ = string_impl;
-    last_v8_string_ = cached_v8_string;
-    return last_v8_string_.NewLocal(isolate);
+    return cached_v8_string.NewLocal(isolate);
   }
 
   return CreateStringAndInsertIntoCache(isolate, string_impl);
 }
 
-void StringCache::SetReturnValueFromStringSlow(
+void StringCache::SetReturnValueFromString(
     v8::ReturnValue<v8::Value> return_value,
     StringImpl* string_impl) {
+  DCHECK(string_impl);
   RUNTIME_CALL_TIMER_SCOPE(
       return_value.GetIsolate(),
       RuntimeCallStats::CounterId::kSetReturnValueFromStringSlow);
@@ -124,9 +123,7 @@ void StringCache::SetReturnValueFromStringSlow(
   StringCacheMapTraits::MapType::PersistentValueReference cached_v8_string =
       string_cache_.GetReference(string_impl);
   if (!cached_v8_string.IsEmpty()) {
-    last_string_impl_ = string_impl;
-    last_v8_string_ = cached_v8_string;
-    last_v8_string_.SetReturnValue(return_value);
+    cached_v8_string.SetReturnValue(return_value);
     return;
   }
 
@@ -149,15 +146,13 @@ v8::Local<v8::String> StringCache::CreateStringAndInsertIntoCache(
 
   string_impl->AddRef();
   wrapper.MarkIndependent();
-  string_cache_.Set(string_impl, std::move(wrapper), &last_v8_string_);
-  last_string_impl_ = string_impl;
+
+  StringCacheMapTraits::MapType::PersistentValueReference v8_string;
+  string_cache_.Set(string_impl, std::move(wrapper), &v8_string);
 
   return new_string;
 }
 
-void StringCache::InvalidateLastString() {
-  last_string_impl_ = nullptr;
-  last_v8_string_.Reset();
-}
+void StringCache::InvalidateLastString() {}
 
 }  // namespace blink
