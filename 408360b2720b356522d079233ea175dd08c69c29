@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d002ec65_13cb54bf",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T18:41:43Z",
+      "side": 1,
+      "message": "Sorry made the change at wrong place. fixed it thanks!",
+      "parentUuid": "8a6f8410_ef2dd5e5",
+      "range": {
+        "startLine": 1324,
+        "startChar": 7,
+        "endLine": 1324,
+        "endChar": 20
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac32ea8_fb7d5833",
         "filename": "third_party/leveldatabase/env_chromium.cc",
         "patchSetId": 4
@@ -259,6 +283,30 @@
       "revId": "408360b2720b356522d079233ea175dd08c69c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14757829_7440016e",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T18:41:43Z",
+      "side": 1,
+      "message": "Hm, i was just debating between changing the visitor and having the variable in mdp protected by tracker lock. You are right this looks better.",
+      "parentUuid": "1486e91b_a55d443b",
+      "range": {
+        "startLine": 284,
+        "startChar": 39,
+        "endLine": 284,
+        "endChar": 67
+      },
+      "revId": "408360b2720b356522d079233ea175dd08c69c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
