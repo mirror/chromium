@@ -1,0 +1,398 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91ad6af6_300bf273",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236ae46e_a4bcfca6",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 341,
+        "startChar": 37,
+        "endLine": 341,
+        "endChar": 41
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24b4d74_f79d3c4c",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "s/base::Bind/base::BindOnce/\n\nMaybe rename to OnArcTimerMethod() to be consistent with above CallMethod()s?",
+      "range": {
+        "startLine": 356,
+        "startChar": 44,
+        "endLine": 356,
+        "endChar": 73
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6013f8_41cb3bd5",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "You can inline ARC_TIMER_RESULT_FAILURE here so you don\u0027t need cast.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23eec1e6_648453f0",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "You\u0027d need to handle an error where |result| cannot be read.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7b3c79_3d6bc2b3",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Looks not end of namespace?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c72ef31_03908cf5",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "We\u0027re migrating Callback to OnceCallback (crbug.com/739622).\nSo, could you use\n\nusing ArcTimerCallback \u003d\n  base::OnceCallback\u003cvoid(ArcTimerResult result)\u003e;\n\ninstead?\nI\u0027ll migrate others, so I don\u0027t think typedef/using diff is not big problem for transition period. Dan, WDYT?\n\n\nBTW, ArcTimerResult looks not defined yet...?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e09d57_88cc2822",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "2",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3bc51a_3233fb2a",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Can be mojom.common.mojom.TimeDelta instead?\nYou actually convert it in powerd, IIUC.",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fae51c1_e685e4e6",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "2",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a2304b_af60f821",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Can be typemap?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecf59f5_ed303318",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Could you use switch for enum to check the coverage is enough?\ncf) Please find ARC++ style guide.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb23f4c_75800980",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Please use BindOnce here, too. Ditto for below.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16dd0dc_72296e41",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Now it should be OnceCallbac already? Could you rebase?",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b0f726_fae3888f",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284c85e1_73002638",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "close(2) is still called at the end of ScopedFD you created below, if FD is not -1.",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a33023_0cf09d20",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e23725_324996b5",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "Please do not add anonymous namespace in a header.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ae7582_46a06478",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "constexpr is missing.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc80047b_e4f8398f",
+        "filename": "components/arc/timer/arc_timer_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T04:06:31Z",
+      "side": 1,
+      "message": "nit/style: An emptyline is needed just before this line.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
