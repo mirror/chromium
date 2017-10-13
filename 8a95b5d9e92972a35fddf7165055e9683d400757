@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8737b79_33c37cf2",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b9fbe81_a29a99fc",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 18
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5733c826_bc54d572",
         "filename": "chromecast/media/cma/backend/BUILD.gn",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-13T05:47:14Z",
       "side": 1,
       "message": "why does this need to be a separate source_set? Why not just move the contents into cast_backend_unittests?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2c4078_1bf284cb",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "Because there are various dependencies on cast_alsa_cma_backend_unittests (see my comments below) and I\u0027d like to resolve them in a separate CL. Having two aliases for the same tests (cast_alsa_cma_backend_unittests and cast_backed_unittest) will allow to keep buildbots running without update buildbot config in this CL.",
+      "parentUuid": "5733c826_bc54d572",
       "range": {
         "startLine": 144,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c989af3f_e0d6f019",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7673210_b36d08f3",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 28
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fc9db6_937fe5f8",
         "filename": "chromecast/media/cma/backend/BUILD.gn",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-13T05:47:14Z",
       "side": 1,
       "message": "please remove",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 1
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27049b79_e7b02378",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "buildbot configs still reference this target, see testing/buildbot/chromium.linux.json . I agree that we don\u0027t need this target, but I kept it for now to keep the bots running. I will remove it from here and will update bot configs in a separate CL. Are there any dependencies on this name outside of chromium repo?",
+      "parentUuid": "e1fc9db6_937fe5f8",
       "range": {
         "startLine": 182,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "96776ef1_6f4d2cac",
+        "filename": "chromecast/media/cma/backend/alsa/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "Yes. Will move them in a separate CL. This one is already big enough.",
+      "parentUuid": "2b3104a4_6e4a7f89",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91ab7316_2a4ca023",
         "filename": "chromecast/media/cma/backend/alsa/audio_decoder_alsa.h",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-13T05:47:14Z",
       "side": 1,
       "message": "Fix include guards everywhere",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fee6613_52d770f8",
+        "filename": "chromecast/media/cma/backend/alsa/audio_decoder_alsa.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "I\u0027m not moving this file in this CL. \nI\u0027ll send you a separate CL today to move and rename AudioDecoderAlsa. BTW do you have suggestions for the new name? My current plan is AudioDecoderForMixer (because it outputs data to the StreamMixer). Let me know if you have other suggestions.",
+      "parentUuid": "91ab7316_2a4ca023",
       "range": {
         "startLine": 5,
         "startChar": 8,
@@ -160,6 +304,30 @@
       "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688aadae_eb7c0e95",
+        "filename": "chromecast/media/cma/backend/stream_mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-13T17:46:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e18d38bc_b1db462a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
