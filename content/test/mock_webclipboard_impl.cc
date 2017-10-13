@@ -106,15 +106,8 @@ blink::WebBlobInfo MockWebClipboardImpl::ReadImage(
           bitmap, false /* discard_transparency */, &output)) {
     return blink::WebBlobInfo();
   }
-  const WebString& uuid = WebString::FromASCII(base::GenerateGUID());
-  std::unique_ptr<blink::WebBlobRegistry::Builder> blob_builder(
-      blink::Platform::Current()->GetBlobRegistry()->CreateBuilder(
-          uuid, blink::WebString()));
-  blob_builder->AppendData(blink::WebThreadSafeData(
-      reinterpret_cast<char*>(output.data()), output.size()));
-  blob_builder->Build();
-  return blink::WebBlobInfo(
-      uuid, WebString::FromASCII(ui::Clipboard::kMimeTypePNG), output.size());
+  return CreateBlobFromData(output,
+                            WebString::FromASCII(ui::Clipboard::kMimeTypePNG));
 }
 
 blink::WebImage MockWebClipboardImpl::ReadRawImage(
