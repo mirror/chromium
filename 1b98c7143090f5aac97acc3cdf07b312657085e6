@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b430e0_f8b41142",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 90621,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T17:12:17Z",
+      "side": 1,
+      "message": "Please bug a date in the obsolete message.\nditto below",
+      "revId": "1b98c7143090f5aac97acc3cdf07b312657085e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
