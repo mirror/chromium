@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad705291_84af832e",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T16:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e00de50e_9df8c531",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9d961d_88b6a2b1",
         "filename": "ash/shell.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355b333c_0e84d0c9",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T16:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e9d961d_88b6a2b1",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e65d5597_cd7f02e1",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T16:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9536de_048ffda0",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f52b133_2fa883e7",
         "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-13T01:28:02Z",
       "side": 1,
       "message": "Aside: It\u0027s unfortunate that we have to duplicate this logic from PaletteDelegateChromeOS. Chrome\u0027s AccessibilityManager does something similar. I wish there was a way to consolidate this \"active user profile changed\" logic somewhere.",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9d4afa_5d202dce",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T16:36:16Z",
+      "side": 1,
+      "message": "Profile handling code in PaletteDelegateChromeOS will go away with the rest of the class. But yes there are more NotificationObserver implementations that are very similar but not identical to this one.",
+      "parentUuid": "7f52b133_2fa883e7",
       "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583b8041_508052ef",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-13T16:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625e8a60_f39db58c",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
