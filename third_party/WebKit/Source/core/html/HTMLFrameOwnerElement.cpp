@@ -37,6 +37,7 @@
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebCachePolicy.h"
 
@@ -305,14 +306,51 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     request.SetCachePolicy(WebCachePolicy::kBypassingCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  if (RuntimeEnabledFeatures::LazyFrameLoadingEnabled() &&
+      !(url.IsAboutBlankURL() || url.IsAboutSrcdocURL() || url.IsEmpty() ||
+        url.IsLocalFile() || url.IsNull()) &&
+      url.IsValid() && url.ProtocolIsInHTTPFamily()) {
+    LOG(WARNING) << "Deferred frame: url=" << (const String&)url;
+
+    deferred_resource_request_ = request;
+    deferred_child_load_type_ = child_load_type;
+
+    visibility_observer_ = new ElementVisibilityObserver(
+        this,
+        WTF::Bind(&HTMLFrameOwnerElement::FrameVisible,
+                  WrapWeakPersistent(this), WrapWeakPersistent(child_frame)));
+    visibility_observer_->Start();
+  } else {
+    LOG(WARNING) << "Did not defer frame: url=" << (const String&)url;
+
+    child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
+                               child_load_type);
+  }
   return true;
+}
+
+void HTMLFrameOwnerElement::FrameVisible(LocalFrame* local_frame,
+                                         bool is_visible) {
+  if (!is_visible)
+    return;
+
+  visibility_observer_->Stop();
+  visibility_observer_.Clear();
+
+  if (local_frame) {
+    LOG(WARNING) << "Loading now-visible frame: url="
+                 << (const String&)deferred_resource_request_.Url();
+
+    local_frame->Loader().Load(
+        FrameLoadRequest(&GetDocument(), deferred_resource_request_),
+        deferred_child_load_type_);
+  }
 }
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
+  visitor->Trace(visibility_observer_);
   HTMLElement::Trace(visitor);
   FrameOwner::Trace(visitor);
 }
