@@ -31,6 +31,10 @@ class Widget;
 
 namespace ash {
 
+namespace {
+class LayerCachingAndFilteringObserver;
+}
+
 class ScopedOverviewAnimationSettings;
 class WindowSelectorItem;
 
@@ -193,6 +197,10 @@ class ASH_EXPORT ScopedTransformOverviewWindow : public ui::EventHandler {
 
   // A widget that holds the content for the minimized window.
   std::unique_ptr<views::Widget> minimized_widget_;
+
+  // The layers we requested caching render surface and trilinear filtering.
+  std::vector<std::unique_ptr<LayerCachingAndFilteringObserver>>
+      cached_and_filtered_layers_;
 
   base::WeakPtrFactory<ScopedTransformOverviewWindow> weak_ptr_factory_;
 
