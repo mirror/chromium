@@ -52,6 +52,24 @@
       "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852841c5_f24750ea",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-13T00:20:01Z",
+      "side": 1,
+      "message": "Yeah, I suppose this is probably fine as a short-term workaround, but +CC sky@ for thoughts, and we should ultimately find the root cause. Add a TODO with a bug filed for the underlying defect, and please attempt to recreate that defect with a minimialized test case (write a patch that demonstrates the defect with a very simple BoxLayout and/or GridLayout that has a multi-line label and a control beneath it).",
+      "parentUuid": "6b5abe52_f31c26c6",
+      "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
