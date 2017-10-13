@@ -341,6 +341,12 @@ void AppListItemView::PaintButtonContents(gfx::Canvas* canvas) {
   if (apps_grid_view_->IsDraggedView(this))
     return;
 
+  // When apps and folders are added to the model via sync on first time profile
+  // load, their opacity is set to 100% and they become visible in PEEKING
+  // state. Set the opacity to 0 so they are not visible.
+  if (apps_grid_view_->model()->state_fullscreen() == AppListView::PEEKING)
+    layer()->SetOpacity(0);
+
   gfx::Rect rect(GetContentsBounds());
   if (apps_grid_view_->IsSelectedView(this)) {
     if (is_fullscreen_app_list_enabled_) {
