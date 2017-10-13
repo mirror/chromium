@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "d16122bb_362f8d21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "Can you please run try bots? I don\u0027t think patch set #1 compiles.....",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac99571_8ee75bca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "Two commit messages are mixed up. Please re-format.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e093fb0a_3eee9f7a",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "nit: I believe you can remove the qualifier.",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 34
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91ad6af6_300bf273",
         "filename": "chromeos/dbus/power_manager_client.cc",
         "patchSetId": 1
@@ -13,6 +70,23 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "Unused.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4151f4a2_5a438525",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "Is the reformatting L143-274 intentional? If not, can you revert?\n\nAh this is from https://chromium-review.googlesource.com/c/chromium/src/+/714881 maybe??? I think you should use \u0027git branch --set-upstream-to\u003dyour_git_cl_format_branch\u0027 to not mix them up.\n\nhttp://dev.chromium.org/developers/how-tos/get-the-code/working-with-branches",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +133,23 @@
         "endLine": 341,
         "endChar": 41
       },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e176ad93_36345fd1",
+        "filename": "chromeos/dbus/power_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "nullptr",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +230,23 @@
     },
     {
       "key": {
+        "uuid": "28b9e5b0_e0f65fc5",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "not really sure, but using default ctor/dtor might not compile (because of the chromium style checker.) if that is the case, please switch to a class with out-of-line ctor/dtor.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c72ef31_03908cf5",
         "filename": "chromeos/dbus/power_manager_client.h",
         "patchSetId": 1
@@ -150,6 +258,40 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "We\u0027re migrating Callback to OnceCallback (crbug.com/739622).\nSo, could you use\n\nusing ArcTimerCallback \u003d\n  base::OnceCallback\u003cvoid(ArcTimerResult result)\u003e;\n\ninstead?\nI\u0027ll migrate others, so I don\u0027t think typedef/using diff is not big problem for transition period. Dan, WDYT?\n\n\nBTW, ArcTimerResult looks not defined yet...?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92889770_6a608bcc",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "using",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22329f6b_ecac1d71",
+        "filename": "chromeos/dbus/power_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "same",
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -478,6 +620,74 @@
     },
     {
       "key": {
+        "uuid": "e7163a9b_f1e538ff",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600a874b_925edd38",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "\u003cutility\u003e is missing (for std::move)",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d92050_a4465958",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "nit: remove, you already included this in your own header.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24725b1e_0008a47c",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "nit: newline between L18\u002619.",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80a2304b_af60f821",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 1
@@ -489,6 +699,29 @@
       "writtenOn": "2017-10-13T04:06:31Z",
       "side": 1,
       "message": "Can be typemap?",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b56eaf_abe9e0ed",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "C",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 23
+      },
       "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -598,6 +831,23 @@
     },
     {
       "key": {
+        "uuid": "08211f1e_7f601dbc",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "base/memory/weak_ptr.h\n\nis missing",
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f16dd0dc_72296e41",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 1
@@ -632,6 +882,30 @@
       "writtenOn": "2017-10-13T16:11:54Z",
       "side": 1,
       "message": "Members should go after methods.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 43
+      },
+      "revId": "2aea03d490406645e5c1c0b9c2c2a16a7616aff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54045ede_0335ada5",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T23:52:17Z",
+      "side": 1,
+      "message": "(but before weak_ptr_factory_)",
+      "parentUuid": "db2059cf_25e7d95b",
       "range": {
         "startLine": 53,
         "startChar": 0,
