@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1f529f08_e49161e4",
+        "filename": "ui/chromeos/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-13T20:41:04Z",
+      "side": 1,
+      "message": "candidate_window_view.cc still needs to include \"mojo/public/cpp/bindings/type_converter.h\"",
+      "parentUuid": "bf95eeea_5a086593",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "580403fc_4677856d",
         "filename": "ui/chromeos/ime/candidate_window_view.cc",
         "patchSetId": 14
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8c60e32c_c36f25a9",
+        "filename": "ui/chromeos/ime/candidate_window_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-13T20:41:04Z",
+      "side": 1,
+      "message": "I removed this change.",
+      "parentUuid": "bd406022_e638b5f4",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 56
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d934b68e_0e9d25a1",
         "filename": "ui/chromeos/ime/candidate_window_view.h",
         "patchSetId": 14
@@ -139,6 +187,30 @@
       "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb07d73_781caa0f",
+        "filename": "ui/chromeos/ime/candidate_window_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-13T20:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d934b68e_0e9d25a1",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 23
+      },
+      "revId": "69dfd51eabc380c251ba630883757bd54cbe4995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

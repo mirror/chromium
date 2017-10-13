@@ -70,6 +70,30 @@
       "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1161c3_2abf8602",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-13T20:41:04Z",
+      "side": 0,
+      "message": "Thanks a lot for the suggestion Scott. I use kInvalidDisplayId for mus property in the new patch and verify that active window is called [1] when CandidateWindowView() is first created \n\n[1] https://cs.chromium.org/chromium/src/ash/shell.cc?type\u003dcs\u0026l\u003d1226",
+      "parentUuid": "f4732238_ee2be14e",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "f044b6b0c1dbc43f4c5f42bfa72c03671c9a22f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
