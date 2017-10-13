@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46838009_7c6f5245",
+        "filename": "chrome/browser/ui/search/instant_extended_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T11:13:25Z",
+      "side": 1,
+      "message": "This will follow shortly in another CL, for ease of reviewing.",
+      "range": {
+        "startLine": 74,
+        "startChar": 39,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "b4666d70dc2bfc9c1da9633504b586bb74904263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5ca7fbb_aa93a874",
+        "filename": "chrome/browser/ui/search/instant_extended_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T11:13:25Z",
+      "side": 1,
+      "message": "The tests seem to pass consistently on my machine now, but this sure sounds like it\u0027d be racy. Hence keeping the re-enabling for another CL. (Longer-term, it might be better to check that the theme actually got applied, instead of checking for the onthemechange event.)",
+      "revId": "b4666d70dc2bfc9c1da9633504b586bb74904263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
