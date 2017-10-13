@@ -163,6 +163,24 @@
       "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdd8fa8_0d7ddc71",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-13T06:20:57Z",
+      "side": 1,
+      "message": "(No need to block on this, but I\u0027ll later see about getting you all an OBJ_obj2txt and OBJ_txt2obj that uses size_t and doesn\u0027t pull in that monster OID table...)",
+      "parentUuid": "c00ab7cd_e7f09de6",
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
