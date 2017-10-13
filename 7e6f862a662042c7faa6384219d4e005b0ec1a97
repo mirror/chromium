@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd9add1e_904f634c",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T21:47:34Z",
+      "side": 1,
+      "message": "Do we still want to do the rest of the processing below in this case? It seems like it might make more sense just to leave these as negative (but keep the always-increasing feature), so that if the first non-discard frame is at time 0 it will actually end up with that timestamp.\n\nIt might be that the sum-of-microseconds is so small that this is not worth thinking about.",
+      "range": {
+        "startLine": 512,
+        "startChar": 34,
+        "endLine": 512,
+        "endChar": 51
+      },
+      "revId": "7e6f862a662042c7faa6384219d4e005b0ec1a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
