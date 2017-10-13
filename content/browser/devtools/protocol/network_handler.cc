@@ -47,6 +47,7 @@
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_response_headers.h"
+#include "net/http/http_util.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -651,7 +652,6 @@ NetworkHandler::NetworkHandler(const std::string& host_id)
       host_(nullptr),
       enabled_(false),
       interception_enabled_(false),
-      throttling_enabled_(false),
       host_id_(host_id),
       weak_factory_(this) {
   static bool have_configured_service_worker_context = false;
@@ -695,6 +695,7 @@ Response NetworkHandler::Disable() {
   SetRequestInterceptionEnabled(false, Maybe<protocol::Array<String>>(),
                                 Maybe<protocol::Array<String>>());
   SetNetworkConditions(nullptr);
+  extra_headers_.clear();
   return Response::FallThrough();
 }
 
@@ -848,6 +849,25 @@ Response NetworkHandler::SetUserAgentOverride(const std::string& user_agent) {
     return Response::InvalidParams("Invalid characters found in userAgent");
   }
   user_agent_ = user_agent;
+  return Response::FallThrough();
+}
+
+Response NetworkHandler::SetExtraHTTPHeaders(
+    std::unique_ptr<protocol::Network::Headers> headers) {
+  std::map<std::string, std::string> new_headers;
+  std::unique_ptr<protocol::DictionaryValue> object = headers->toValue();
+  for (size_t i = 0; i < object->size(); ++i) {
+    auto entry = object->at(i);
+    std::string value;
+    if (!entry.second->asString(&value))
+      return Response::InvalidParams("Invalid header value, string expected");
+    if (!net::HttpUtil::IsValidHeaderName(entry.first))
+      return Response::InvalidParams("Invalid header name");
+    if (!net::HttpUtil::IsValidHeaderValue(value))
+      return Response::InvalidParams("Invalid header value");
+    new_headers.insert(std::make_pair(entry.first, value));
+  }
+  extra_headers_.swap(new_headers);
   return Response::FallThrough();
 }
 
@@ -1216,11 +1236,12 @@ bool NetworkHandler::ShouldCancelNavigation(
   return true;
 }
 
-bool NetworkHandler::AppendDevToolsHeaders(net::HttpRequestHeaders* headers) {
+void NetworkHandler::AppendDevToolsHeaders(net::HttpRequestHeaders* headers) {
   headers->SetHeader(kDevToolsEmulateNetworkConditionsClientId, host_id_);
   if (!user_agent_.empty())
     headers->SetHeader(net::HttpRequestHeaders::kUserAgent, user_agent_);
-  return throttling_enabled_ || !user_agent_.empty();
+  for (auto& entry : extra_headers_)
+    headers->SetHeader(entry.first, entry.second);
 }
 
 void NetworkHandler::SetNetworkConditions(
@@ -1230,7 +1251,6 @@ void NetworkHandler::SetNetworkConditions(
   StoragePartition* partition = process_->GetStoragePartition();
   mojom::NetworkContext* context = partition->GetNetworkContext();
   context->SetNetworkConditions(host_id_, std::move(conditions));
-  throttling_enabled_ = !!conditions;
 }
 
 }  // namespace protocol
