@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028ce5ad_1e6c80ec",
+        "filename": "extensions/renderer/content_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 0,
+      "message": "That\u0027s a scary-sounding comment; is this talking about iframe reparenting which was removed in https://bugs.webkit.org/show_bug.cgi?id\u003d81590?  Happy to see this gone. :)",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "aa5306329a841818b63279811e798eeb7423bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ef40f1_4bee7ecd",
+        "filename": "extensions/renderer/content_watcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 0,
+      "message": "Seems there\u0027s some important info here, such as about the activeTab permission - would it make sense to transfer that over to the new helper?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "aa5306329a841818b63279811e798eeb7423bff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

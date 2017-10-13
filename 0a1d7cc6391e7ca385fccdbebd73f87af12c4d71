@@ -60,6 +60,63 @@
     },
     {
       "key": {
+        "uuid": "598872a0_18806a3f",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 1,
+      "message": "Any reason this couldn\u0027t just be a (private) member of FrameContentWatcher?  We only ever call it on the frame associated with FrameContentWatcher.",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0d77d1_6f96bd23",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 1,
+      "message": "I think can be simplified to just GetSecurityOrigin()",
+      "range": {
+        "startLine": 102,
+        "startChar": 43,
+        "endLine": 102,
+        "endChar": 76
+      },
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a292db14_047cb248",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 1,
+      "message": "It seems like today we send OnWatchChanges to all renderer processes, including those with OOPIFs, given what UpdateRenderersWatchedCssSelectors does.  I was thinking whether that might be extra work given my sanity check below, since only renderers where the top frame is local can actually send ExtensionHostMsg_OnWatchedPageChange.  But I think it isn\u0027t: if we have two frames, A(B), and A navigates to B, we\u0027ll need to start sending CSS updates from B at that point, and there also won\u0027t be a new process created, so DeclarativeContentCssConditionTracker::Observe won\u0027t retrigger OnWatchChanged for B.  So I think we\u0027re all good here - does this sound about right?",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94fca2e8_17fa6743",
         "filename": "extensions/renderer/content_watcher.cc",
         "patchSetId": 3
@@ -97,6 +154,24 @@
       "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b862e2_1face6f7",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T22:49:40Z",
+      "side": 1,
+      "message": "Ack.  I thought whether this message has a problem with OOPIFs today, but it seems like not -- we only send back the matches for frames that are same-origin with the top frame, and only when the top frame is local (implied because it must be same-origin with |changed_frame|).  So we\u0027d only send this message through a RenderView that has a local main frame and is not swapped out, hence it should work. :)\n\nDoes that sound about right, and we shouldn\u0027t need to send back CSS updates from an OOPIF, given present semantics of this API?",
+      "parentUuid": "ea2bb85f_8041385c",
+      "revId": "0a1d7cc6391e7ca385fccdbebd73f87af12c4d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
