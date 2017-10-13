@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28770538_f59d455d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac6d8a5d_cdf7f8d0",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cf06fe3_84942ac9",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4c378807_c489182f",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cf06fe3_84942ac9",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bcdf010_8a3cf4ec",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-13T00:17:16Z",
       "side": 1,
       "message": "oshima, do you think this is safe? I would ask derat but he\u0027s OOO.\n\nThis makes me nervous, as it\u0027s a significant change to code we\u0027ve had forever. Does it affect what happens when you hold down the power button (the animations I mean)?\n\ntbarzic, if you\u0027re pretty sure this is safe, can you also update the comments in ash/public/cpp/shell_window_ids.h? Also, you might be able to get rid of LockScreenContainersContainer, since it might only have LockScreenContainer as a child.\n\nThis is the output of Ctrl-Alt-Shift-W today:\n\n   ScreenRotationContainer (0x2db31d63e140) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n      WallpaperContainer (0x2db31d63e280) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n      NonLockScreenContainersContainer (0x2db31d63e3c0) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         UnparentedControlContainer (0x2db31d792500) type\u003d0  0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         DefaultContainer (0x2db31d792640) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         AlwaysOnTopContainer (0x2db31d792780) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         AppListContainer (0x2db31d7928c0) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         ShelfContainer (0x2db31d792a00) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n            ShelfWidget (0x2db31d799c80) type\u003d2  0,720 1024x48 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         PanelContainer (0x2db31d792b40) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         ShelfBubbleContainer (0x2db31d792c80) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         SystemModalContainer (0x2db31d792dc0) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n      LockScreenWallpaperContainer (0x2db31d367640) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         WallpaperView (0x2db31dc328c0) type\u003d2  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n      LockScreenContainersContainer (0x2db31d1de000) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         LockScreenContainer (0x2db31d792000) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n            WebUILoginView (0x2db31dc32780) type\u003d2 [active]  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n               NativeViewHostAuraClip (0x2db31e5c2028) type\u003d3  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n                  WebContentsViewAura (0x2db31dc32a00) type\u003d3  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n                     RenderWidgetHostViewAura (0x2db31e66e140) type\u003d3  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         LockActionHandlerContainer (0x2db31d792140) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         LockSystemModalContainer (0x2db31d792280) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n      LockScreenRelatedContainersContainer (0x2db31d7923c0) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n         StatusContainer (0x2db31d799140) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n            StatusAreaWidget (0x2db31d799dc0) type\u003d2  visible 921,720 103x48 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         SettingBubbleContainer (0x2db31d799280) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         VirtualKeyboardParentContainer (0x2db31d7993c0) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         MenuContainer (0x2db31d799500) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         DragImageAndTooltipContainer (0x2db31d799640) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n         OverlayContainer (0x2db31d799780) type\u003d0  visible 0,0 1024x768 [snapped] , subpixel offset\u003d[0.000000 0.000000]\n      MouseCursorContainer (0x2db31d7998c0) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]\n      PowerButtonAnimationContainer (0x2db31d799a00) type\u003d0  visible 0,0 1024x768, subpixel offset\u003d[0.000000 0.000000]",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb879938_942d9de2",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "I *think* it should be OK, but yeah, it makes me little nervous :/\n\nLet me revert the code that requires these to be in lock screen related container, and try\nto implement something that won\u0027t require showing background over the shelf (oshima suggested\nfading out the shelf while this animation is in progress).\n\n(and hope UX is fine with it :) )",
+      "parentUuid": "0bcdf010_8a3cf4ec",
       "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d68f51fa_a2dd2c37",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c9f8b47_ad30dc38",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6210ebd4_3ba24fde",
         "filename": "ash/wm/lock_action_handler_layout_manager.cc",
         "patchSetId": 10
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ff4ae6fd_da7301cc",
+        "filename": "ash/wm/lock_action_handler_layout_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6210ebd4_3ba24fde",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f1e5b4_85dfa430",
         "filename": "ash/wm/lock_action_handler_layout_manager.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c55a4c_cb03ccb3",
+        "filename": "ash/wm/lock_action_handler_layout_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T01:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f1e5b4_85dfa430",
+      "revId": "5b0c05bf148aa31f8ee66c671d59f1b87fa11a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
