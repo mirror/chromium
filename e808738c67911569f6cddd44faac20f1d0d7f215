@@ -34,6 +34,24 @@
       "revId": "e808738c67911569f6cddd44faac20f1d0d7f215",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f50f8717_422865a6",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T17:06:24Z",
+      "side": 1,
+      "message": "That\u0027s correct — despite the poor documentation, overriding needsPanelToBecomeKey to return false includes the view in the key view loop if full keyboard access is on, and doesn\u0027t otherwise. If you want it to be stated more explicitly in the docs, I\u0027m OK with leaving this as-is.",
+      "parentUuid": "7ff96a85_25fa1acc",
+      "revId": "e808738c67911569f6cddd44faac20f1d0d7f215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
