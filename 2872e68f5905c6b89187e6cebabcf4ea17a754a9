@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "532671f1_224df815",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:46:19Z",
+      "side": 1,
+      "message": "This code setting feels a bit confusing to me... could it be better if we do something like following?\n\nServiceWorkerRemoteProviderEndpoint PrepareServiceWorkerProviderHost(const GURL\u0026 document_url) {\n  ServiceWorkerRemoteProviderEndpoint remote_endpoint;\n  CreateProviderHostInternal(document_url, \u0026remote_endpoints);\n  return remote_endpoints;\n}\n\nServiceWorkerProviderHost* CreateProviderHost(const GURL\u0026 document_url) {\n  remote_endpoints_.emplace_back();\n  return CreateProviderHostInternal(document_url, \u0026remote_endpoints_.back());\n}\n\nServiceWorkerProviderHost* CreateProviderHostInternal(\n    const GURL\u0026 document_url, ServiceWorkerRemoteProviderEndpoint* remote_endpoint) {\n  // do everything what CreateProviderHost used to do with the remote_endpoint\n  return host_raw;\n}",
+      "revId": "2872e68f5905c6b89187e6cebabcf4ea17a754a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a915b8b_3761d7ad",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:46:19Z",
+      "side": 1,
+      "message": "Now that we\u0027re moving everything could we try to unify SendRegister and Register here, given that they seem to have almost identical code? (Ditto for {Send,}GetRegistration[s])",
+      "revId": "2872e68f5905c6b89187e6cebabcf4ea17a754a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcd19c11_b4c478e6",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 2
