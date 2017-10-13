@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88035e14_b7781c7f",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:33:08Z",
+      "side": 1,
+      "message": "looks like we are aligning by \u003d",
+      "revId": "d63a44a6e0c4fea469e30e607a112ef38bb3241a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

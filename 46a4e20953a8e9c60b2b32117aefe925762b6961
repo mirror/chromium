@@ -107,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "404dd7a5_1abdc52a",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:33:08Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "46a4e20953a8e9c60b2b32117aefe925762b6961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f9c08c_82a5d13e",
         "filename": "net/http/http_auth_handler_ntlm_portable.cc",
         "patchSetId": 1
