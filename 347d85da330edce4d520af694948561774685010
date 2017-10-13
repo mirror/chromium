@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6760b32_075b38eb",
+        "filename": "build/android/pylib/results/presentation/test_results_presentation.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-13T21:56:51Z",
+      "side": 1,
+      "message": "nit: local result detail can have a feedback link too",
+      "revId": "347d85da330edce4d520af694948561774685010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba18de2c_1d28a0d6",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-13T21:56:51Z",
+      "side": 1,
+      "message": "do we want to have an option to save each page with unique name for run comparison?",
+      "revId": "347d85da330edce4d520af694948561774685010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
