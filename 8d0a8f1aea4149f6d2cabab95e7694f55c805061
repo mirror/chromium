@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f326f6a_ba5b739f",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Better move this to the beginning, before the body of the constructor, because these members\u0027 initialization doesn\u0027t depend on anything else:\n\n  : timer_(...), clock_(...) {",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5fa34c_7dc947f1",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: It\u0027s worth documenting in a comment that |timer_clock| is passed unowned, and its lifetime has to exceed the lifetime of DeviceOffHoursController.",
+      "range": {
+        "startLine": 80,
+        "startChar": 43,
+        "endLine": 80,
+        "endChar": 54
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc78a89_d0e94048",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Please add a comment on how this clock is used inside the class. Also worth adding something around \"exists for testing purposes\".",
+      "range": {
+        "startLine": 128,
+        "startChar": 31,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8067fab9_477b66fe",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Normally the tests use the same namespace as the code they are testing - which will be \"policy::off_hours\" in this case. Could you switch onto it in this file and the other test file in this CL?",
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cc6948_1d654c48",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: The Style Guide recommends to name enum values in the \"kFooBar\" style: https://google.github.io/styleguide/cppguide.html#Enumerator_Names\n\nOr maybe kill this enum at all, in favor of the enums from em::WeeklyTimeProto? You can do the \"using\" trick to make them shorter to write.",
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138ef45a_34d37baa",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: s/Tag/PolicyTag/\n(ditto for the next line)",
+      "range": {
+        "startLine": 56,
+        "startChar": 30,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238f80f0_21f77d91",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "It\u0027s forbidden by the Style Guide to have such global constants with nontrivial constructors. Either use a plain array (\"const int kDefaultIgnoredPolicies[] \u003d {\") or, for example, move this constant inside some function.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483d9e27_1f79b2ed",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Seems that the unique_ptr\u003c\u003e is not needed here anymore?",
+      "range": {
+        "startLine": 294,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 62
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504e9a89_5227e2e5",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Maybe do \"using base::TimeDelta\" to save the space here a little bit?",
+      "range": {
+        "startLine": 373,
+        "startChar": 31,
+        "endLine": 373,
+        "endChar": 46
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd55f477_65a6c199",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_policy_applier_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-13T20:28:30Z",
+      "side": 1,
+      "message": "nit: Can this be omitted?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "8d0a8f1aea4149f6d2cabab95e7694f55c805061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
