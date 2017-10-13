@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be9d6e1_29d75fdb",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T05:15:44Z",
+      "side": 1,
+      "message": "can this be:\n\nbase::AdaptCallbackForRepeating(base::BindOnce(",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee2af0a_d9c986f1",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T05:15:44Z",
+      "side": 1,
+      "message": "Let\u0027s go \"Adopt\" -\u003e \"Create\" here, since it\u0027s not the Rgistration that\u0027s being adopted.",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620f031f_7bcae7f4",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T05:15:44Z",
+      "side": 1,
+      "message": "nit: don\u0027t use else after an if () { return; }",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a11dfd2_1d66177f",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T05:15:44Z",
+      "side": 1,
+      "message": "empty blank line here as lines 127-137 only apply to |host_for_global_scope_|",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c020c7d7_cdca42c5",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T05:15:44Z",
+      "side": 1,
+      "message": "make more clear this sentence is about |host_for_global_scope_|:\n// |host_for_global_scope_| is for service worker execution contexts. It is bound on the...\n\nand then line 141 should similarly be:\n// |host_for_client_| is for service worker clients (document, shared worker). It is bound on the...",
+      "revId": "01619e5834b5bc56728ff33e7e3ce5711609d1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
