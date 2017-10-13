@@ -30,6 +30,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field.h"
 #import "chrome/browser/ui/cocoa/location_bar/autocomplete_text_field_cell.h"
 #import "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.h"
+#import "chrome/browser/ui/cocoa/location_bar/find_bar_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/keyword_hint_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/manage_passwords_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h"
@@ -100,6 +101,7 @@ LocationBarViewMac::LocationBarViewMac(AutocompleteTextField* field,
       page_info_decoration_(new PageInfoBubbleDecoration(this)),
       save_credit_card_decoration_(
           new SaveCreditCardDecoration(command_updater)),
+      find_bar_decoration_(new FindBarDecoration()),
       star_decoration_(new StarDecoration(command_updater)),
       translate_decoration_(new TranslateDecoration(command_updater)),
       zoom_decoration_(new ZoomDecoration(this)),
@@ -196,6 +198,11 @@ void LocationBarViewMac::UpdateSaveCreditCardIcon() {
   save_credit_card_decoration_->SetIcon(IsLocationBarDark());
   save_credit_card_decoration_->SetVisible(enabled);
   OnDecorationsChanged();
+}
+
+void LocationBarViewMac::UpdateFindBarIconVisibility() {
+  if (RefreshFindBarDecoration())
+    OnDecorationsChanged();
 }
 
 void LocationBarViewMac::UpdateBookmarkStarVisibility() {
@@ -344,6 +351,7 @@ void LocationBarViewMac::Layout() {
   [cell addLeadingDecoration:selected_keyword_decoration_.get()];
   [cell addLeadingDecoration:page_info_decoration_.get()];
   [cell addTrailingDecoration:star_decoration_.get()];
+  [cell addTrailingDecoration:find_bar_decoration_.get()];
   [cell addTrailingDecoration:translate_decoration_.get()];
   [cell addTrailingDecoration:zoom_decoration_.get()];
   [cell addTrailingDecoration:save_credit_card_decoration_.get()];
@@ -607,6 +615,15 @@ bool LocationBarViewMac::RefreshContentSettingsDecorations() {
   for (const auto& decoration : content_setting_decorations_)
     icons_updated |= decoration->UpdateFromWebContents(web_contents);
   return icons_updated;
+}
+
+bool LocationBarViewMac::RefreshFindBarDecoration() {
+  if (!find_bar_decoration_)
+    return false;
+  const bool was_visible = find_bar_decoration_->IsVisible();
+  find_bar_decoration_->SetVisible(
+      browser_->GetFindBarController()->find_bar()->IsFindBarVisible());
+  return was_visible != find_bar_decoration_->IsVisible();
 }
 
 void LocationBarViewMac::UpdateTranslateDecoration() {
