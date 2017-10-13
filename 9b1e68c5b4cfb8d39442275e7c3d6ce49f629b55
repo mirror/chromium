@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d76f07e_7adac5d9",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:44:57Z",
+      "side": 1,
+      "message": "Just double checking... this is never ever nullptr, right?",
+      "range": {
+        "startLine": 354,
+        "startChar": 39,
+        "endLine": 354,
+        "endChar": 46
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7b790e_90300dc3",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:44:57Z",
+      "side": 1,
+      "message": "The function name DidInteractWithNonsecureCreditCardInput and DidEditCreditCardFieldInInsecureContext have slightly different meaning. Does it make sense to make them the same?",
+      "range": {
+        "startLine": 357,
+        "startChar": 11,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c384c3f_412fc6ac",
+        "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:44:57Z",
+      "side": 1,
+      "message": "main_rfh()? here and below",
+      "range": {
+        "startLine": 475,
+        "startChar": 54,
+        "endLine": 475,
+        "endChar": 64
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6727bee_409794ef",
+        "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-13T15:44:57Z",
+      "side": 1,
+      "message": "Nit, should this block go on line 474 for clarity?",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 481,
+        "endChar": 34
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
