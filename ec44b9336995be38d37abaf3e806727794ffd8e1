@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb173c87_dad9514a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/Snackbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-13T22:37:17Z",
+      "side": 1,
+      "message": "It doesn\u0027t need to be, but I think this is to make setting multiple properties easier when combined with Snackbar#make?",
+      "parentUuid": "96522461_08dd21d2",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 20
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73a1330c_a0d257d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f7086d60_f7ed81cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-13T22:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a1330c_a0d257d2",
+      "range": {
+        "startLine": 273,
+        "startChar": 30,
+        "endLine": 273,
+        "endChar": 35
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b009a4_94600df2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6526c37b_af0dde01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-13T22:37:17Z",
+      "side": 1,
+      "message": "I moved the block to handle both non-CH and CH cases.",
+      "parentUuid": "79b009a4_94600df2",
+      "range": {
+        "startLine": 278,
+        "startChar": 7,
+        "endLine": 278,
+        "endChar": 9
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
