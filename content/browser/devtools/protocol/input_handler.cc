@@ -16,6 +16,7 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/renderer_host/input/touch_emulator.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/input/synthetic_pinch_gesture_params.h"
 #include "content/common/input/synthetic_smooth_scroll_gesture_params.h"
 #include "content/common/input/synthetic_tap_gesture_params.h"
@@ -247,6 +248,7 @@ InputHandler::InputHandler()
       host_(nullptr),
       input_queued_(false),
       page_scale_factor_(1.0),
+      device_scale_factor_(1.0),
       last_id_(0),
       weak_factory_(this) {}
 
@@ -304,6 +306,7 @@ void InputHandler::Wire(UberDispatcher* dispatcher) {
 void InputHandler::OnSwapCompositorFrame(
     const viz::CompositorFrameMetadata& frame_metadata) {
   page_scale_factor_ = frame_metadata.page_scale_factor;
+  device_scale_factor_ = frame_metadata.device_scale_factor;
   scrollable_viewport_size_ = frame_metadata.scrollable_viewport_size;
 }
 
@@ -685,6 +688,11 @@ Response InputHandler::EmulateTouchFromMouseEvent(const std::string& type,
             button_modifiers,
         GetEventTimestamp(timestamp));
     event.reset(mouse_event);
+  }
+
+  if (IsUseZoomForDSFEnabled()) {
+    x /= device_scale_factor_;
+    y /= device_scale_factor_;
   }
 
   mouse_event->SetPositionInWidget(x, y);

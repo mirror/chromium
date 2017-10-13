@@ -154,6 +154,7 @@ class InputHandler : public DevToolsDomainHandler,
   base::circular_deque<std::unique_ptr<DispatchMouseEventCallback>>
       pending_mouse_callbacks_;
   float page_scale_factor_;
+  float device_scale_factor_;
   gfx::SizeF scrollable_viewport_size_;
   int last_id_;
   bool ignore_input_events_ = false;

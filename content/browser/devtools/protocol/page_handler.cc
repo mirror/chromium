@@ -29,6 +29,7 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
+#include "content/common/content_switches_internal.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -702,8 +703,11 @@ void PageHandler::InnerSwapCompositorFrame() {
   // http://crbug.com/73362
   viz::CompositorFrameMetadata& metadata = last_compositor_frame_metadata_;
 
-  gfx::SizeF viewport_size_dip = gfx::ScaleSize(
-      metadata.scrollable_viewport_size, metadata.page_scale_factor);
+  float dip_scale_for_viewport = metadata.page_scale_factor;
+  if (IsUseZoomForDSFEnabled())
+    dip_scale_for_viewport /= metadata.device_scale_factor;
+  gfx::SizeF viewport_size_dip =
+      gfx::ScaleSize(metadata.scrollable_viewport_size, dip_scale_for_viewport);
   gfx::SizeF screen_size_dip =
       gfx::ScaleSize(gfx::SizeF(view->GetPhysicalBackingSize()),
                      1 / metadata.device_scale_factor);
@@ -779,16 +783,16 @@ void PageHandler::ScreencastFrameEncoded(viz::CompositorFrameMetadata metadata,
     return;
   }
 
-  gfx::SizeF screen_size_dip =
-      gfx::ScaleSize(gfx::SizeF(view->GetPhysicalBackingSize()),
-                     1 / metadata.device_scale_factor);
+  gfx::SizeF screen_size = gfx::SizeF(view->GetPhysicalBackingSize());
+  if (!IsUseZoomForDSFEnabled())
+    screen_size = gfx::ScaleSize(screen_size, 1 / metadata.device_scale_factor);
   std::unique_ptr<Page::ScreencastFrameMetadata> param_metadata =
       Page::ScreencastFrameMetadata::Create()
           .SetPageScaleFactor(metadata.page_scale_factor)
           .SetOffsetTop(metadata.top_controls_height *
                         metadata.top_controls_shown_ratio)
-          .SetDeviceWidth(screen_size_dip.width())
-          .SetDeviceHeight(screen_size_dip.height())
+          .SetDeviceWidth(screen_size.width())
+          .SetDeviceHeight(screen_size.height())
           .SetScrollOffsetX(metadata.root_scroll_offset.x())
           .SetScrollOffsetY(metadata.root_scroll_offset.y())
           .SetTimestamp(timestamp.ToDoubleT())
