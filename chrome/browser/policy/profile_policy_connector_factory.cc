@@ -43,6 +43,13 @@ ProfilePolicyConnector* ProfilePolicyConnectorFactory::GetForBrowserContext(
 }
 
 // static
+const ProfilePolicyConnector*
+ProfilePolicyConnectorFactory::GetForBrowserContext(
+    const content::BrowserContext* context) {
+  return GetInstance()->GetForBrowserContextInternal(context);
+}
+
+// static
 std::unique_ptr<ProfilePolicyConnector>
 ProfilePolicyConnectorFactory::CreateForBrowserContext(
     content::BrowserContext* context,
@@ -86,6 +93,18 @@ ProfilePolicyConnectorFactory::GetForBrowserContextInternal(
   // Get the connector for the original Profile, so that the incognito Profile
   // gets managed settings from the same PolicyService.
   content::BrowserContext* const original_context =
+      chrome::GetBrowserContextRedirectedInIncognito(context);
+  const ConnectorMap::const_iterator it = connectors_.find(original_context);
+  CHECK(it != connectors_.end());
+  return it->second;
+}
+
+const ProfilePolicyConnector*
+ProfilePolicyConnectorFactory::GetForBrowserContextInternal(
+    const content::BrowserContext* context) {
+  // Get the connector for the original Profile, so that the incognito Profile
+  // gets managed settings from the same PolicyService.
+  const content::BrowserContext* const original_context =
       chrome::GetBrowserContextRedirectedInIncognito(context);
   const ConnectorMap::const_iterator it = connectors_.find(original_context);
   CHECK(it != connectors_.end());

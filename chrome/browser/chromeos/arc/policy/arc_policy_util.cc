@@ -13,7 +13,7 @@
 namespace arc {
 namespace policy_util {
 
-bool IsAccountManaged(Profile* profile) {
+bool IsAccountManaged(const Profile* profile) {
   return policy::ProfilePolicyConnectorFactory::GetForBrowserContext(profile)
       ->IsManaged();
 }
