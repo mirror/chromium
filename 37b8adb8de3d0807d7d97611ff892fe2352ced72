@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc0c007_d134dc9b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T07:20:15Z",
+      "side": 1,
+      "message": "Also add DCHECK(IsHostToRunningServiceWorker());",
+      "revId": "37b8adb8de3d0807d7d97611ff892fe2352ced72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b3c412_80ca0079",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T07:20:15Z",
+      "side": 1,
+      "message": "Could you also add a comment like \n\n// For provider hosts that are hosting a running service worker.",
+      "revId": "37b8adb8de3d0807d7d97611ff892fe2352ced72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a46c86f_b71c3ef7",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T07:20:15Z",
+      "side": 1,
+      "message": "Also add here that this is only used for providers for hosting running service workers.",
+      "revId": "37b8adb8de3d0807d7d97611ff892fe2352ced72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
