@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b664193_34d48281",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "Should `HasOverflowButton()` be a DCHECK because, really, if we want those to be in the overflow menu... :)",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a17ae08_f3bd2f44",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "Do we really want this? This is meant to hide the duration for live streams. What is it going to show?",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add70ef3_a2851939",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "This is going to be simpler indeed but what we will do if the element is like 100px wide?",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04b43e2_79653c32",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "Maybe this could be in MediaControlElementsHelper as it technically has not much to do with MediaControlElementBase.",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630eaee4_8f0aa9ce",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "`MediaControlInputElement::UpdateDisplayType();`?",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63f7d1d_c2adb511",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlModernPlayButtonElement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-10-13T09:41:36Z",
+      "side": 1,
+      "message": "s/override/final/ -- same can be done above.",
+      "revId": "219ac43fe77a0ebed70984da1548fc481ec0e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
