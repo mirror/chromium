@@ -105,6 +105,39 @@ base::string16 GetShippingAddressSectionString(
   }
 }
 
+base::string16 GetChooseShippingAddressButtonString(
+    PaymentShippingType shipping_type) {
+  switch (shipping_type) {
+    case PaymentShippingType::DELIVERY:
+      return l10n_util::GetStringUTF16(
+          IDS_PAYMENTS_CHOOSE_DELIVERY_ADDRESS_LABEL);
+    case PaymentShippingType::PICKUP:
+      return l10n_util::GetStringUTF16(
+          IDS_PAYMENTS_CHOOSE_PICKUP_ADDRESS_LABEL);
+    case PaymentShippingType::SHIPPING:
+      return l10n_util::GetStringUTF16(
+          IDS_PAYMENTS_CHOOSE_SHIPPING_ADDRESS_LABEL);
+    default:
+      NOTREACHED();
+      return base::string16();
+  }
+}
+
+base::string16 GetAddShippingAddressButtonString(
+    PaymentShippingType shipping_type) {
+  switch (shipping_type) {
+    case PaymentShippingType::DELIVERY:
+      return l10n_util::GetStringUTF16(IDS_PAYMENTS_ADD_DELIVERY_ADDRESS_LABEL);
+    case PaymentShippingType::PICKUP:
+      return l10n_util::GetStringUTF16(IDS_PAYMENTS_ADD_PICKUP_ADDRESS_LABEL);
+    case PaymentShippingType::SHIPPING:
+      return l10n_util::GetStringUTF16(IDS_PAYMENTS_ADD_SHIPPING_ADDRESS_LABEL);
+    default:
+      NOTREACHED();
+      return base::string16();
+  }
+}
+
 base::string16 GetShippingOptionSectionString(
     PaymentShippingType shipping_type) {
   switch (shipping_type) {
@@ -114,6 +147,23 @@ base::string16 GetShippingOptionSectionString(
       return l10n_util::GetStringUTF16(IDS_PAYMENTS_PICKUP_OPTION_LABEL);
     case PaymentShippingType::SHIPPING:
       return l10n_util::GetStringUTF16(IDS_PAYMENTS_SHIPPING_OPTION_LABEL);
+    default:
+      NOTREACHED();
+      return base::string16();
+  }
+}
+
+base::string16 GetChooseShippingOptionButtonString(
+    PaymentShippingType shipping_type) {
+  switch (shipping_type) {
+    case PaymentShippingType::DELIVERY:
+      return l10n_util::GetStringUTF16(
+          IDS_PAYMENTS_CHOOSE_DELIVERY_OPTION_LABEL);
+    case PaymentShippingType::PICKUP:
+      return l10n_util::GetStringUTF16(IDS_PAYMENTS_CHOOSE_PICKUP_OPTION_LABEL);
+    case PaymentShippingType::SHIPPING:
+      return l10n_util::GetStringUTF16(
+          IDS_PAYMENTS_CHOOSE_SHIPPING_OPTION_LABEL);
     default:
       NOTREACHED();
       return base::string16();

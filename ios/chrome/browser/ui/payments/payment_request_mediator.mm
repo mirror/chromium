@@ -25,10 +25,12 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_detail_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_footer_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
+#import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payment_method_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
 #import "ios/chrome/browser/ui/payments/cells/price_item.h"
+#import "ios/chrome/browser/ui/payments/payment_request_collection_view_detail_item.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -144,16 +146,22 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
-  item.text = base::SysUTF16ToNSString(
-      GetShippingAddressSectionString(self.paymentRequest->shipping_type()));
+  PaymentRequestCollectionViewDetailItem* item =
+      [[PaymentRequestCollectionViewDetailItem alloc] init];
   if (self.paymentRequest->shipping_profiles().empty()) {
-    item.detailText = [l10n_util::GetNSString(IDS_ADD)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = base::SysUTF16ToNSString(GetAddShippingAddressButtonString(
+        self.paymentRequest->shipping_type()));
+    // TODO(crbug.com/774499): change this to a '+';
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else if (!profile) {
-    item.detailText = [l10n_util::GetNSString(IDS_CHOOSE)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = base::SysUTF16ToNSString(GetChooseShippingAddressButtonString(
+        self.paymentRequest->shipping_type()));
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else {
+    item.text = base::SysUTF16ToNSString(
+        GetShippingAddressSectionString(self.paymentRequest->shipping_type()));
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   }
   return item;
@@ -173,13 +181,16 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
+  PaymentRequestCollectionViewDetailItem* item =
+      [[PaymentRequestCollectionViewDetailItem alloc] init];
   item.text = base::SysUTF16ToNSString(
       GetShippingOptionSectionString(self.paymentRequest->shipping_type()));
 
   if (!option) {
-    item.detailText = [l10n_util::GetNSString(IDS_CHOOSE)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = base::SysUTF16ToNSString(GetChooseShippingOptionButtonString(
+        self.paymentRequest->shipping_type()));
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else {
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   }
@@ -224,15 +235,20 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
+  PaymentRequestCollectionViewDetailItem* item =
+      [[PaymentRequestCollectionViewDetailItem alloc] init];
   item.text =
       l10n_util::GetNSString(IDS_PAYMENT_REQUEST_PAYMENT_METHOD_SECTION_NAME);
   if (self.paymentRequest->payment_methods().empty()) {
-    item.detailText = [l10n_util::GetNSString(IDS_ADD)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = l10n_util::GetNSString(IDS_ADD_PAYMENT_METHOD);
+    // TODO(crbug.com/774499): change this to a '+';
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else if (!paymentMethod) {
-    item.detailText = [l10n_util::GetNSString(IDS_CHOOSE)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = l10n_util::GetNSString(IDS_CHOOSE_PAYMENT_METHOD);
+    item.text = @"Choose Payment Method";
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else {
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   }
@@ -266,14 +282,18 @@ using ::payment_request_util::GetShippingSectionTitle;
     return item;
   }
 
-  CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
+  PaymentRequestCollectionViewDetailItem* item =
+      [[PaymentRequestCollectionViewDetailItem alloc] init];
   item.text = l10n_util::GetNSString(IDS_PAYMENTS_CONTACT_DETAILS_LABEL);
   if (self.paymentRequest->contact_profiles().empty()) {
-    item.detailText = [l10n_util::GetNSString(IDS_ADD)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = l10n_util::GetNSString(IDS_PAYMENT_REQUEST_ADD_CONTACT_INFO);
+    // TODO(crbug.com/774499): change this to a '+';
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else if (!profile) {
-    item.detailText = [l10n_util::GetNSString(IDS_CHOOSE)
-        uppercaseStringWithLocale:[NSLocale currentLocale]];
+    item.text = l10n_util::GetNSString(IDS_PAYMENT_REQUEST_CHOOSE_CONTACT_INFO);
+    item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
+    item.isCallToAction = YES;
   } else {
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
   }

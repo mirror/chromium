@@ -12,6 +12,12 @@
     <message name="IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL" desc="The title for the section that lets the user select the method of payment. Sentence-cased." formatter_data="android_java">
       Payment method
     </message>
+    <message name="IDS_CHOOSE_PAYMENT_METHOD" desc="The title for the button that lets the user select the method of payment. Sentence-cased." formatter_data="android_java">
+      Choose payment method
+    </message>
+    <message name="IDS_ADD_PAYMENT_METHOD" desc="The title for the button that lets the user add a method of payment. Sentence-cased." formatter_data="android_java">
+      Add payment method
+    </message>
     <message name="IDS_PAYMENTS_CONTACT_DETAILS_LABEL" desc="The title for the section that lets the user select how they can be contacted. Sentence-cased." formatter_data="android_java">
       Contact info
     </message>
@@ -63,14 +69,29 @@
     <message name="IDS_PAYMENT_REQUEST_CONTACT_INFO_SECTION_NAME" desc="The name of the Contact Info section in the Payment Sheet of the Payment Request dialog. Sentence-cased.">
       Contact info
     </message>
+    <message name="IDS_PAYMENT_REQUEST_CHOOSE_CONTACT_INFO" desc="The name of the Choose Contact Info button in the Payment Sheet of the Payment Request dialog. Sentence-cased.">
+      Choose contact info
+    </message>
+    <message name="IDS_PAYMENT_REQUEST_ADD_CONTACT_INFO" desc="The name of the Add Contact Info button in the Payment Sheet of the Payment Request dialog. Sentence-cased.">
+      Add contact info
+    </message>
     <message name="IDS_PAYMENTS_SHIPPING_SUMMARY_LABEL" desc="The title for the section of shipping information. Shipping is used for packages and things that are mailed. In American English, 'shipping' is differentiated from 'delivery'. 'Delivery' is used, for example, for food delivery. Sentence-cased." formatter_data="android_java">
       Shipping
     </message>
     <message name="IDS_PAYMENTS_SHIPPING_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where the product should be shipped. Shipping is typically used for packages. Sentence-cased." formatter_data="android_java">
       Shipping address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_SHIPPING_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where the product should be shipped. Shipping is typically used for packages. Sentence-cased." formatter_data="android_java">
+      Choose shipping address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_SHIPPING_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where the product should be shipped. Shipping is typically used for packages. Sentence-cased." formatter_data="android_java">
+      Add shipping address
+    </message>
     <message name="IDS_PAYMENTS_SHIPPING_OPTION_LABEL" desc="The title for the section that lets the user select how the product should be shipped. Shipping is typically used for packages. Sentence-cased." formatter_data="android_java">
       Shipping method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_SHIPPING_OPTION_LABEL" desc="The title for the button that lets the user select how the product should be shipped. Shipping is typically used for packages. Sentence-cased." formatter_data="android_java">
+      Choose shipping method
     </message>
   </if>  <!-- not use_titlecase -->
   <!-- General Titles, Title-Cased -->
@@ -80,6 +101,12 @@
     </message>
     <message name="IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL" desc="The title for the section that lets the user select the method of payment. Title-Cased.">
       Payment Method
+    </message>
+    <message name="IDS_CHOOSE_PAYMENT_METHOD" desc="The title for the button that lets the user select the method of payment. Title-Cased.">
+      Choose Payment Method
+    </message>
+    <message name="IDS_ADD_PAYMENT_METHOD" desc="The title for the button that lets the user add a method of payment. Title-Cased.">
+      Add Payment Method
     </message>
     <message name="IDS_PAYMENTS_CONTACT_DETAILS_LABEL" desc="The title for the section that lets the user select how they can be contacted. Title-Cased.">
       Contact Info
@@ -132,14 +159,29 @@
     <message name="IDS_PAYMENT_REQUEST_CONTACT_INFO_SECTION_NAME" desc="The name of the Contact Info section in the Payment Sheet of the Payment Request dialog. Title-Cased.">
       Contact Info
     </message>
+    <message name="IDS_PAYMENT_REQUEST_CHOOSE_CONTACT_INFO" desc="The name of the Choose Contact Info button in the Payment Sheet of the Payment Request dialog. Title-Cased.">
+      Choose Contact Info
+    </message>
+    <message name="IDS_PAYMENT_REQUEST_ADD_CONTACT_INFO" desc="The name of the Add Contact Info button in the Payment Sheet of the Payment Request dialog. Title-Cased.">
+      Add Contact Info
+    </message>
     <message name="IDS_PAYMENTS_SHIPPING_SUMMARY_LABEL" desc="The title for the section of shipping information. Shipping is used for packages and things that are mailed. In American English, 'shipping' is differentiated from 'delivery'. 'Delivery' is used, for example, for food delivery. Title-Cased.">
       Shipping
     </message>
     <message name="IDS_PAYMENTS_SHIPPING_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where the product should be shipped. Shipping is typically used for packages. Title-Cased.">
       Shipping Address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_SHIPPING_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where the product should be shipped. Shipping is typically used for packages. Title-Cased.">
+      Choose Shipping Address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_SHIPPING_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where the product should be shipped. Shipping is typically used for packages. Title-Cased.">
+      Add Shipping Address
+    </message>
     <message name="IDS_PAYMENTS_SHIPPING_OPTION_LABEL" desc="The title for the section that lets the user select how the product should be shipped. Shipping is typically used for packages. Title-Cased.">
       Shipping Method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_SHIPPING_OPTION_LABEL" desc="The title for the button that lets the user select how the product should be shipped. Shipping is typically used for packages. Title-Cased.">
+      Choose Shipping Method
     </message>
   </if>  <!-- use_titlecase -->
 
@@ -151,8 +193,17 @@
     <message name="IDS_PAYMENTS_DELIVERY_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Sentence-cased." formatter_data="android_java">
       Delivery address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_DELIVERY_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Sentence-cased." formatter_data="android_java">
+      Choose delivery address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_DELIVERY_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Sentence-cased." formatter_data="android_java">
+      Add delivery address
+    </message>
     <message name="IDS_PAYMENTS_DELIVERY_OPTION_LABEL" desc="The title for the section that lets the user select how the product should be delivered. Delivery is commonly faster than shipping. For example, it might be used for food delivery. Sentence-cased." formatter_data="android_java">
       Delivery method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_DELIVERY_OPTION_LABEL" desc="The title for the button that lets the user select how the product should be delivered. Delivery is commonly faster than shipping. For example, it might be used for food delivery. Sentence-cased." formatter_data="android_java">
+      Choose delivery method
     </message>
   </if>  <!-- not use_titlecase -->
   <!-- Delivery Titles, Title-Cased -->
@@ -163,8 +214,17 @@
     <message name="IDS_PAYMENTS_DELIVERY_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Title-Cased.">
       Delivery Address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_DELIVERY_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Title-Cased.">
+      Choose Delivery Address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_DELIVERY_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where the product should be delivered. In English, 'delivery' is differentiated from 'shipping.'  For example, 'delivery' might be used for meals or meal items or items that need to be immediately sent to a recipient. Title-Cased.">
+      Add Delivery Address
+    </message>
     <message name="IDS_PAYMENTS_DELIVERY_OPTION_LABEL" desc="The title for the section that lets the user select how the product should be delivered. Delivery is commonly faster than shipping. For example, it might be used for food delivery. Title-Cased.">
       Delivery Method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_DELIVERY_OPTION_LABEL" desc="The title for the button that lets the user select how the product should be delivered. Delivery is commonly faster than shipping. For example, it might be used for food delivery. Title-Cased.">
+      Choose Delivery Method
     </message>
   </if>  <!-- use_titlecase -->
 
@@ -176,8 +236,17 @@
     <message name="IDS_PAYMENTS_PICKUP_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Sentence-cased." formatter_data="android_java">
       Pickup address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_PICKUP_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Sentence-cased." formatter_data="android_java">
+      Choose pickup address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_PICKUP_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Sentence-cased." formatter_data="android_java">
+      Add pickup address
+    </message>
     <message name="IDS_PAYMENTS_PICKUP_OPTION_LABEL" desc="The title for the section that lets the user select how their service item should be picked up. This item can be laundry to be cleaned, for example. 'Pickup' functions as an adjective. Sentence-cased." formatter_data="android_java">
       Pickup method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_PICKUP_OPTION_LABEL" desc="The title for the button that lets the user select how their service item should be picked up. This item can be laundry to be cleaned, for example. 'Pickup' functions as an adjective. Sentence-cased." formatter_data="android_java">
+      Choose pickup method
     </message>
   </if>  <!-- not use_titlecase -->
   <!-- Pickup Titles, Title-Cased -->
@@ -188,8 +257,17 @@
     <message name="IDS_PAYMENTS_PICKUP_ADDRESS_LABEL" desc="The title for the section that lets the user select the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Title-Cased.">
       Pickup Address
     </message>
+    <message name="IDS_PAYMENTS_CHOOSE_PICKUP_ADDRESS_LABEL" desc="The title for the button that lets the user select the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Title-Cased.">
+      Choose Pickup Address
+    </message>
+    <message name="IDS_PAYMENTS_ADD_PICKUP_ADDRESS_LABEL" desc="The title for the button that lets the user add the address where a service item should be picked up. For example, the pickup address is where a laundry service picks up a customer’s items to be laundered. 'Pickup' functions as an adjective. Title-Cased.">
+      Add Pickup Address
+    </message>
     <message name="IDS_PAYMENTS_PICKUP_OPTION_LABEL" desc="The title for the section that lets the user select how their service item should be picked up. This item can be laundry to be cleaned, for example. 'Pickup' functions as an adjective. Title-Cased.">
       Pickup Method
+    </message>
+    <message name="IDS_PAYMENTS_CHOOSE_PICKUP_OPTION_LABEL" desc="The title for the button that lets the user select how their service item should be picked up. This item can be laundry to be cleaned, for example. 'Pickup' functions as an adjective. Title-Cased.">
+      Choose Pickup Method
     </message>
   </if>  <!-- use_titlecase -->
 
