@@ -16,7 +16,9 @@ TriggeredProfileResetter::TriggeredProfileResetter(Profile* profile)
 TriggeredProfileResetter::~TriggeredProfileResetter() {}
 
 bool TriggeredProfileResetter::HasResetTrigger() {
+#if DCHECK_IS_ON()
   DCHECK(activate_called_);
+#endif  // DCHECK_IS_ON()
   return has_reset_trigger_;
 }
 

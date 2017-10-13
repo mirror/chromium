@@ -1,0 +1,46 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/jumbo.gni")
+import("//build/split_static_library.gni")
+
+template("content_source_set") {
+  jumbo_source_set(target_name) {
+    forward_variables_from(invoker, "*")
+  }
+}
+
+template("content_component") {
+  if (is_component_build) {
+    if (defined(invoker.split_count)) {
+      target_type = "split_static_library"
+    } else {
+      target_type = "static_library"
+    }
+  } else {
+    target_type = "source_set"
+    if (defined(invoker.split_count)) {
+      assert(invoker.split_count > 0)  # Avoid not-user variable warning.
+    }
+  }
+  target("jumbo_" + target_type, target_name) {
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("content_source_set") {
+  # This sets the default list of configs when the content_source_set target
+  # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
+  # is the list normally applied to static libraries and source sets.
+  configs = default_compiler_configs
+}
+
+set_defaults("content_component") {
+  # This sets the default list of configs when the content_source_set target
+  # is defined. The default_compiler_configs comes from BUILDCONFIG.gn and
+  # is the list normally applied to static libraries and source sets.
+
+  ### FIXME: CHECK THAT WE SHOULD NOT USE COMPONENT DEFAULTS
+  configs = default_compiler_configs
+}

@@ -37,9 +37,9 @@ namespace {
 // if more items are locked. That is, locked items ignore this limit.
 // Depending on the memory state of the system, we limit the amount of items
 // differently.
-const size_t kNormalMaxItemsInCache = 1000;
-const size_t kThrottledMaxItemsInCache = 100;
-const size_t kSuspendedMaxItemsInCache = 0;
+const size_t kSIDNormalMaxItemsInCache = 1000;
+const size_t kSIDThrottledMaxItemsInCache = 100;
+const size_t kSIDSuspendedMaxItemsInCache = 0;
 
 // If the size of the original sized image breaches kMemoryRatioToSubrect but we
 // don't need to scale the image, consider caching only the needed subrect.
@@ -90,13 +90,13 @@ class AutoDrawWithImageFinished {
   const DecodedDrawImage& decoded_draw_image_;
 };
 
-class ImageDecodeTaskImpl : public TileTask {
+class ImageDecodeTaskImpl2 : public TileTask {
  public:
-  ImageDecodeTaskImpl(SoftwareImageDecodeCache* cache,
-                      const SoftwareImageDecodeCache::ImageKey& image_key,
-                      const DrawImage& image,
-                      SoftwareImageDecodeCache::DecodeTaskType task_type,
-                      const ImageDecodeCache::TracingInfo& tracing_info)
+  ImageDecodeTaskImpl2(SoftwareImageDecodeCache* cache,
+                       const SoftwareImageDecodeCache::ImageKey& image_key,
+                       const DrawImage& image,
+                       SoftwareImageDecodeCache::DecodeTaskType task_type,
+                       const ImageDecodeCache::TracingInfo& tracing_info)
       : TileTask(true),
         cache_(cache),
         image_key_(image_key),
@@ -106,7 +106,7 @@ class ImageDecodeTaskImpl : public TileTask {
 
   // Overridden from Task:
   void RunOnWorkerThread() override {
-    TRACE_EVENT2("cc", "ImageDecodeTaskImpl::RunOnWorkerThread", "mode",
+    TRACE_EVENT2("cc", "ImageDecodeTaskImpl2::RunOnWorkerThread", "mode",
                  "software", "source_prepare_tiles_id",
                  tracing_info_.prepare_tiles_id);
     devtools_instrumentation::ScopedImageDecodeTask image_decode_task(
@@ -122,7 +122,7 @@ class ImageDecodeTaskImpl : public TileTask {
   }
 
  protected:
-  ~ImageDecodeTaskImpl() override {}
+  ~ImageDecodeTaskImpl2() override {}
 
  private:
   SoftwareImageDecodeCache* cache_;
@@ -131,7 +131,7 @@ class ImageDecodeTaskImpl : public TileTask {
   SoftwareImageDecodeCache::DecodeTaskType task_type_;
   const ImageDecodeCache::TracingInfo tracing_info_;
 
-  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImpl);
+  DISALLOW_COPY_AND_ASSIGN(ImageDecodeTaskImpl2);
 };
 
 SkSize GetScaleAdjustment(const ImageDecodeCacheKey& key) {
@@ -196,7 +196,7 @@ SoftwareImageDecodeCache::SoftwareImageDecodeCache(
       at_raster_decoded_images_(ImageMRUCache::NO_AUTO_EVICT),
       locked_images_budget_(locked_memory_limit_bytes),
       color_type_(color_type),
-      max_items_in_cache_(kNormalMaxItemsInCache) {
+      max_items_in_cache_(kSIDNormalMaxItemsInCache) {
   // In certain cases, ThreadTaskRunnerHandle isn't set (Android Webview).
   // Don't register a dump provider in these cases.
   if (base::ThreadTaskRunnerHandle::IsSet()) {
@@ -315,7 +315,7 @@ SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
   // Actually create the task. RefImage will account for memory on the first
   // ref.
   RefImage(key);
-  existing_task = base::MakeRefCounted<ImageDecodeTaskImpl>(
+  existing_task = base::MakeRefCounted<ImageDecodeTaskImpl2>(
       this, key, image, task_type, tracing_info);
   return TaskResult(existing_task);
 }
@@ -1206,13 +1206,13 @@ void SoftwareImageDecodeCache::OnMemoryStateChange(base::MemoryState state) {
     base::AutoLock hold(lock_);
     switch (state) {
       case base::MemoryState::NORMAL:
-        max_items_in_cache_ = kNormalMaxItemsInCache;
+        max_items_in_cache_ = kSIDNormalMaxItemsInCache;
         break;
       case base::MemoryState::THROTTLED:
-        max_items_in_cache_ = kThrottledMaxItemsInCache;
+        max_items_in_cache_ = kSIDThrottledMaxItemsInCache;
         break;
       case base::MemoryState::SUSPENDED:
-        max_items_in_cache_ = kSuspendedMaxItemsInCache;
+        max_items_in_cache_ = kSIDSuspendedMaxItemsInCache;
         break;
       case base::MemoryState::UNKNOWN:
         NOTREACHED();

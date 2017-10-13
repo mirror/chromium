@@ -44,7 +44,9 @@ bool IsDisabledByFieldTrial() {
 }  // namespace
 
 void TriggeredProfileResetter::Activate() {
+#if DCHECK_IS_ON()
   activate_called_ = true;
+#endif  // DCHECK_IS_ON()
 
   // System profiles don't contain user settings and bail out if we're not in
   // the field trial.

@@ -30,7 +30,6 @@
 #include "net/disk_cache/simple/simple_util.h"
 #include "third_party/zlib/zlib.h"
 
-using base::File;
 using base::FilePath;
 using base::Time;
 
@@ -88,9 +87,9 @@ bool CanOmitEmptyFile(int file_index) {
 }
 
 bool TruncatePath(const FilePath& filename_to_truncate) {
-  File file_to_truncate;
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  base::File file_to_truncate;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   file_to_truncate.Initialize(filename_to_truncate, flags);
   if (!file_to_truncate.IsValid())
     return false;
@@ -395,7 +394,7 @@ void SimpleSynchronousEntry::WriteData(const EntryOperationData& in_entry_op,
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
-    File::Error error;
+    base::File::Error error;
     if (!MaybeCreateFile(file_index, FILE_REQUIRED, &error)) {
       RecordWriteResult(cache_type_, SYNC_WRITE_RESULT_LAZY_CREATE_FAILURE);
       Doom();
@@ -846,17 +845,17 @@ SimpleSynchronousEntry::~SimpleSynchronousEntry() {
 
 bool SimpleSynchronousEntry::MaybeOpenFile(
     int file_index,
-    File::Error* out_error) {
+    base::File::Error* out_error) {
   DCHECK(out_error);
 
   FilePath filename = GetFilenameFromFileIndex(file_index);
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   files_[file_index].Initialize(filename, flags);
   *out_error = files_[file_index].error_details();
 
   if (CanOmitEmptyFile(file_index) && !files_[file_index].IsValid() &&
-      *out_error == File::FILE_ERROR_NOT_FOUND) {
+      *out_error == base::File::FILE_ERROR_NOT_FOUND) {
     empty_file_omitted_[file_index] = true;
     return true;
   }
@@ -867,7 +866,7 @@ bool SimpleSynchronousEntry::MaybeOpenFile(
 bool SimpleSynchronousEntry::MaybeCreateFile(
     int file_index,
     FileRequired file_required,
-    File::Error* out_error) {
+    base::File::Error* out_error) {
   DCHECK(out_error);
 
   if (CanOmitEmptyFile(file_index) && file_required == FILE_NOT_REQUIRED) {
@@ -876,8 +875,8 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   }
 
   FilePath filename = GetFilenameFromFileIndex(file_index);
-  int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_CREATE | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   files_[file_index].Initialize(filename, flags);
 
   // It's possible that the creation failed because someone deleted the
@@ -885,7 +884,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
   // If so, we would keep failing for a while until periodic index snapshot
   // re-creates the cache dir, so try to recover from it quickly here.
   if (!files_[file_index].IsValid() &&
-      files_[file_index].error_details() == File::FILE_ERROR_NOT_FOUND &&
+      files_[file_index].error_details() == base::File::FILE_ERROR_NOT_FOUND &&
       !base::DirectoryExists(path_)) {
     if (base::CreateDirectory(path_))
       files_[file_index].Initialize(filename, flags);
@@ -899,7 +898,7 @@ bool SimpleSynchronousEntry::MaybeCreateFile(
 
 bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    File::Error error;
+    base::File::Error error;
     if (!MaybeOpenFile(i, &error)) {
       // TODO(juliatuttle,gavinp): Remove one each of these triplets of
       // histograms. We can calculate the third as the sum or difference of the
@@ -934,7 +933,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
       continue;
     }
 
-    File::Info file_info;
+    base::File::Info file_info;
     bool success = files_[i].GetInfo(&file_info);
     base::Time file_last_modified;
     if (!success) {
@@ -980,7 +979,7 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
 
 bool SimpleSynchronousEntry::CreateFiles(SimpleEntryStat* out_entry_stat) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
-    File::Error error;
+    base::File::Error error;
     if (!MaybeCreateFile(i, FILE_NOT_REQUIRED, &error)) {
       // TODO(juliatuttle,gavinp): Remove one each of these triplets of
       // histograms. We can calculate the third as the sum or difference of the
@@ -1454,13 +1453,13 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
 
   FilePath filename = path_.AppendASCII(
       GetSparseFilenameFromEntryHash(entry_hash_));
-  int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   sparse_file_.Initialize(filename, flags);
   if (sparse_file_.IsValid())
     return ScanSparseFile(out_sparse_data_size);
 
-  return sparse_file_.error_details() == File::FILE_ERROR_NOT_FOUND;
+  return sparse_file_.error_details() == base::File::FILE_ERROR_NOT_FOUND;
 }
 
 bool SimpleSynchronousEntry::CreateSparseFile() {
@@ -1468,8 +1467,8 @@ bool SimpleSynchronousEntry::CreateSparseFile() {
 
   FilePath filename = path_.AppendASCII(
       GetSparseFilenameFromEntryHash(entry_hash_));
-  int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
-              File::FLAG_SHARE_DELETE;
+  int flags = base::File::FLAG_CREATE | base::File::FLAG_READ | base::File::FLAG_WRITE |
+              base::File::FLAG_SHARE_DELETE;
   sparse_file_.Initialize(filename, flags);
   if (!sparse_file_.IsValid())
     return false;

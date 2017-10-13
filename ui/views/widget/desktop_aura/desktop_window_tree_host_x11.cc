@@ -474,7 +474,7 @@ void DesktopWindowTreeHostX11::Close() {
 }
 
 void DesktopWindowTreeHostX11::CloseNow() {
-  if (xwindow_ == None)
+  if (xwindow_ == X11Constants::None)
     return;
 
   ReleaseCapture();
@@ -512,7 +512,7 @@ void DesktopWindowTreeHostX11::CloseNow() {
   if (ui::PlatformEventSource::GetInstance())
     ui::PlatformEventSource::GetInstance()->RemovePlatformEventDispatcher(this);
   XDestroyWindow(xdisplay_, xwindow_);
-  xwindow_ = None;
+  xwindow_ = X11Constants::None;
 
   desktop_native_widget_aura_->OnHostClosed();
 }
@@ -755,11 +755,11 @@ void DesktopWindowTreeHostX11::Activate() {
     // TODO(thomasanderson): if another chrome window is active, specify that in
     // data.l[2].  The EWMH spec claims this may make the WM more likely to
     // service our _NET_ACTIVE_WINDOW request.
-    xclient.xclient.data.l[2] = None;
+    xclient.xclient.data.l[2] = X11Constants::None;
     xclient.xclient.data.l[3] = 0;
     xclient.xclient.data.l[4] = 0;
 
-    XSendEvent(xdisplay_, x_root_window_, False,
+    XSendEvent(xdisplay_, x_root_window_, X11Constants::False,
                SubstructureRedirectMask | SubstructureNotifyMask, &xclient);
   } else {
     XRaiseWindow(xdisplay_, xwindow_);
@@ -812,7 +812,7 @@ bool DesktopWindowTreeHostX11::IsActive() const {
 void DesktopWindowTreeHostX11::Maximize() {
   if (HasWMSpecProperty("_NET_WM_STATE_FULLSCREEN")) {
     // Unfullscreen the window if it is fullscreen.
-    SetWMSpecState(false, gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"), None);
+    SetWMSpecState(false, gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"), X11Constants::None);
 
     // Resize the window so that it does not have the same size as a monitor.
     // (Otherwise, some window managers immediately put the window back in
@@ -866,7 +866,7 @@ bool DesktopWindowTreeHostX11::HasCapture() const {
 
 void DesktopWindowTreeHostX11::SetAlwaysOnTop(bool always_on_top) {
   is_always_on_top_ = always_on_top;
-  SetWMSpecState(always_on_top, gfx::GetAtom("_NET_WM_STATE_ABOVE"), None);
+  SetWMSpecState(always_on_top, gfx::GetAtom("_NET_WM_STATE_ABOVE"), X11Constants::None);
 }
 
 bool DesktopWindowTreeHostX11::IsAlwaysOnTop() const {
@@ -874,7 +874,7 @@ bool DesktopWindowTreeHostX11::IsAlwaysOnTop() const {
 }
 
 void DesktopWindowTreeHostX11::SetVisibleOnAllWorkspaces(bool always_visible) {
-  SetWMSpecState(always_visible, gfx::GetAtom("_NET_WM_STATE_STICKY"), None);
+  SetWMSpecState(always_visible, gfx::GetAtom("_NET_WM_STATE_STICKY"), X11Constants::None);
 
   int new_desktop = 0;
   if (always_visible) {
@@ -896,9 +896,8 @@ void DesktopWindowTreeHostX11::SetVisibleOnAllWorkspaces(bool always_visible) {
   xevent.xclient.data.l[2] = 0;
   xevent.xclient.data.l[3] = 0;
   xevent.xclient.data.l[4] = 0;
-  XSendEvent(xdisplay_, x_root_window_, False,
-             SubstructureRedirectMask | SubstructureNotifyMask,
-             &xevent);
+  XSendEvent(xdisplay_, x_root_window_, X11Constants::False,
+             SubstructureRedirectMask | SubstructureNotifyMask, &xevent);
 }
 
 bool DesktopWindowTreeHostX11::IsVisibleOnAllWorkspaces() const {
@@ -920,8 +919,8 @@ bool DesktopWindowTreeHostX11::SetWindowTitle(const base::string16& title) {
                   utf8str.size());
   XTextProperty xtp;
   char* c_utf8_str = const_cast<char*>(utf8str.c_str());
-  if (Xutf8TextListToTextProperty(xdisplay_, &c_utf8_str, 1,
-                                  XUTF8StringStyle, &xtp) == Success) {
+  if (Xutf8TextListToTextProperty(xdisplay_, &c_utf8_str, 1, XUTF8StringStyle,
+                                  &xtp) == X11Constants::Success) {
     XSetWMName(xdisplay_, xwindow_, &xtp);
     XFree(xtp.value);
   }
@@ -1012,7 +1011,7 @@ void DesktopWindowTreeHostX11::SetFullscreen(bool fullscreen) {
 
   if (unmaximize_and_remaximize)
     Restore();
-  SetWMSpecState(fullscreen, gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"), None);
+  SetWMSpecState(fullscreen, gfx::GetAtom("_NET_WM_STATE_FULLSCREEN"), X11Constants::None);
   if (unmaximize_and_remaximize)
     Maximize();
 
@@ -1271,7 +1270,7 @@ void DesktopWindowTreeHostX11::SetCapture() {
 
   // If the pointer is already in |xwindow_|, we will not get a crossing event
   // with a mode of NotifyGrab, so we must record the grab state manually.
-  has_pointer_grab_ |= !GrabPointer(xwindow_, true, None);
+  has_pointer_grab_ |= !GrabPointer(xwindow_, true, X11Constants::None);
 }
 
 void DesktopWindowTreeHostX11::ReleaseCapture() {
@@ -1293,7 +1292,7 @@ void DesktopWindowTreeHostX11::SetCursorNative(gfx::NativeCursor cursor) {
 
 void DesktopWindowTreeHostX11::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
-  XWarpPointer(xdisplay_, None, x_root_window_, 0, 0, 0, 0,
+  XWarpPointer(xdisplay_, X11Constants::None, x_root_window_, 0, 0, 0, 0,
                bounds_in_pixels_.x() + location_in_pixels.x(),
                bounds_in_pixels_.y() + location_in_pixels.y());
 }
@@ -1333,25 +1332,25 @@ void DesktopWindowTreeHostX11::InitX11Window(
   unsigned long attribute_mask = CWBackPixmap | CWBitGravity;
   XSetWindowAttributes swa;
   memset(&swa, 0, sizeof(swa));
-  swa.background_pixmap = None;
+  swa.background_pixmap = X11Constants::None;
   swa.bit_gravity = NorthWestGravity;
 
   ::Atom window_type;
   switch (params.type) {
     case Widget::InitParams::TYPE_MENU:
-      swa.override_redirect = True;
+      swa.override_redirect = X11Constants::True;
       window_type = gfx::GetAtom("_NET_WM_WINDOW_TYPE_MENU");
       break;
     case Widget::InitParams::TYPE_TOOLTIP:
-      swa.override_redirect = True;
+      swa.override_redirect = X11Constants::True;
       window_type = gfx::GetAtom("_NET_WM_WINDOW_TYPE_TOOLTIP");
       break;
     case Widget::InitParams::TYPE_POPUP:
-      swa.override_redirect = True;
+      swa.override_redirect = X11Constants::True;
       window_type = gfx::GetAtom("_NET_WM_WINDOW_TYPE_NOTIFICATION");
       break;
     case Widget::InitParams::TYPE_DRAG:
-      swa.override_redirect = True;
+      swa.override_redirect = X11Constants::True;
       window_type = gfx::GetAtom("_NET_WM_WINDOW_TYPE_DND");
       break;
     default:
@@ -1360,7 +1359,7 @@ void DesktopWindowTreeHostX11::InitX11Window(
   }
   // An in-activatable window should not interact with the system wm.
   if (!activatable_)
-    swa.override_redirect = True;
+    swa.override_redirect = X11Constants::True;
 
   if (swa.override_redirect)
     attribute_mask |= CWOverrideRedirect;
@@ -1713,9 +1712,8 @@ void DesktopWindowTreeHostX11::SetWMSpecState(bool enabled,
   xclient.xclient.data.l[3] = 1;
   xclient.xclient.data.l[4] = 0;
 
-  XSendEvent(xdisplay_, x_root_window_, False,
-             SubstructureRedirectMask | SubstructureNotifyMask,
-             &xclient);
+  XSendEvent(xdisplay_, x_root_window_, X11Constants::False,
+             SubstructureRedirectMask | SubstructureNotifyMask, &xclient);
 }
 
 bool DesktopWindowTreeHostX11::HasWMSpecProperty(const char* property) const {
@@ -1833,7 +1831,8 @@ void DesktopWindowTreeHostX11::ResetWindowRegion() {
     // If the window has system borders, the mask must be set to null (not a
     // rectangle), because several window managers (eg, KDE, XFCE, XMonad) will
     // not put borders on a window with a custom shape.
-    XShapeCombineMask(xdisplay_, xwindow_, ShapeBounding, 0, 0, None, ShapeSet);
+    XShapeCombineMask(xdisplay_, xwindow_, ShapeBounding, 0, 0,
+                      X11Constants::None, ShapeSet);
   } else {
     // Conversely, if the window does not have system borders, the mask must be
     // manually set to a rectangle that covers the whole window (not null). This
@@ -2166,9 +2165,7 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
           XEvent reply_event = *xev;
           reply_event.xclient.window = x_root_window_;
 
-          XSendEvent(xdisplay_,
-                     reply_event.xclient.window,
-                     False,
+          XSendEvent(xdisplay_, reply_event.xclient.window, X11Constants::False,
                      SubstructureRedirectMask | SubstructureNotifyMask,
                      &reply_event);
         }

@@ -6,8 +6,9 @@ import("//build/split_static_library.gni")  # When someone uses that target_type
 
 declare_args() {
   # If true, use a jumbo build (files compiled together) to speed up
-  # compilation.
-  use_jumbo_build = false
+  # compilation. Enabled by default for everything official builds and
+  # Android+gcc builds because of a warning that prevents builds.
+  use_jumbo_build = !is_official_build && !(is_android && !is_clang)
 
   # A target to exclude from jumbo builds, for optimal round trip time
   # when frequently changing a single cpp file.
@@ -21,7 +22,8 @@ declare_args() {
   # Higher numbers than 100 does not reduce wall clock compile times
   # even for 4 cores or less so no reason to go (much) higher than 100.
   # 100 uses 8% less total CPU than 50 when compiling content and 10%
-  # less wall clock when compiling with 4 cores.
+  # less wall clock when compiling with 4 cores but content is extreme so
+  # the total negative effect of 50 is smaller.
   jumbo_file_merge_limit = 100
 }
 
@@ -47,6 +49,14 @@ declare_args() {
 #      If set to a list of files, those files will not be merged with
 #      the rest. This can be necessary if merging the files causes
 #      compilation issues and fixing the issues is impractical.
+#
+#   jumbo_gen_dir
+#      If set, this overrides the default location for the generated
+#      jumbo files. This can be needed if the default location is too
+#      deep for the build tools. By default the location is based on
+#      the first file in sources. (Might not be neeeded one Chromium
+#      has the fix for
+#      https://github.com/ninja-build/ninja/issues/1161.
 template("internal_jumbo_target") {
   use_jumbo_build_for_target = use_jumbo_build
   if (defined(invoker.always_build_jumbo) && invoker.always_build_jumbo) {
@@ -70,7 +80,9 @@ template("internal_jumbo_target") {
     invoker_sources = []
   }
 
-  if (invoker_sources != []) {
+  if (defined(invoker.jumbo_gen_dir)) {
+    gen_target_dir = invoker.jumbo_gen_dir
+  } else if (invoker_sources != []) {
     gen_target_dir = get_path_info(invoker_sources[0], "gen_dir")
     assert(excluded_sources != [] || true)  # Prevent "unused variable".
 
@@ -106,7 +118,9 @@ template("internal_jumbo_target") {
     next_chunk_start = 0
     next_chunk_number = 1
     foreach(source_file, invoker_sources) {
-      if (get_path_info(source_file, "extension") != "h") {
+      # Iterate over files, counting them. Exclude headers and assembler files.
+      if (get_path_info(source_file, "extension") != "h" &&
+          get_path_info(source_file, "extension") != "S") {
         if (current_file_index == next_chunk_start) {
           jumbo_files += [ "$gen_target_dir/" + target_name + "_jumbo_" +
                            next_chunk_number + ".cc" ]
@@ -190,9 +204,10 @@ template("internal_jumbo_target") {
       sources = jumbo_files + excluded_sources
 
       # Need to keep the headers in sources so that dependency checks
-      # work.
+      # work, and we don't want to touch assembler files.
       foreach(source_file, invoker_sources) {
-        if (get_path_info(source_file, "extension") == "h") {
+        if (get_path_info(source_file, "extension") == "h" ||
+            get_path_info(source_file, "extension") == "S") {
           sources += [ source_file ]
         }
       }
