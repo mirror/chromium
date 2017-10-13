@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "02747a4e_f36b9ac5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-13T04:43:54Z",
+      "side": 1,
+      "message": "Thanks Sylvain.  I\u0027ve done the moving.  With some slightly change. PTAL.\n\nopenUrl in the completion block has a little delay (feels like 0.1~0.2s) because it waits for the finish of dismissal animation.  may be we want to prevent it if possible?",
+      "parentUuid": "73e6d6a7_2fc89e0d",
+      "range": {
+        "startLine": 203,
+        "startChar": 8,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "374915f62acd661c956dec7411a47b814356aa6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "207a252a_726671de",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 1
@@ -63,6 +87,24 @@
       "revId": "374915f62acd661c956dec7411a47b814356aa6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a906140_40279081",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-10-13T04:43:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207a252a_726671de",
+      "revId": "374915f62acd661c956dec7411a47b814356aa6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
