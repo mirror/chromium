@@ -16,6 +16,91 @@
       "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689c2448_a20d7c0c",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkCloneableMessage.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T19:06:22Z",
+      "side": 1,
+      "message": "Just curious, but why do these need to all be prefixed with Blink?",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0880a683_70f9028f",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkTransferableMessageStructTraits.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T19:06:22Z",
+      "side": 1,
+      "message": "I\u0027m just wondering: how come this can\u0027t use WTF::Vector directly, given that this (should) be the Blink variant?",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368532d9_fd686252",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T19:06:22Z",
+      "side": 1,
+      "message": "I\u0027m curious if the static cast is required to make it compile.",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccd5535_8505fc58",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T19:06:22Z",
+      "side": 1,
+      "message": "This can just be read directly into out-\u003eports, as |out| is never used on failure anyway.",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f560bea_b1f1f95a",
+        "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T19:06:22Z",
+      "side": 1,
+      "message": "Nit: update this comment",
+      "revId": "fb4e96a1eceb464b9e2d5ffd3365c1dfda5a7e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
