@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "634cc50a_cfde0c04",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-13T23:00:32Z",
+      "side": 1,
+      "message": "Good catch, done. Also changed these to use FromMilliSecondsD.",
+      "parentUuid": "dbd231c0_fb354692",
+      "revId": "87c17d5d5d221639c56772577c7c0d751af24113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3787dcba_d196f088",
         "filename": "ui/gfx/animation/slide_animation.h",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-11T00:30:12Z",
       "side": 1,
       "message": "nit: s/ because/,\nThe latter part of the sentence doesn\u0027t explain why the default value of 1 has no effect.",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "87c17d5d5d221639c56772577c7c0d751af24113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db4720c_8f7559cd",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-13T23:00:32Z",
+      "side": 1,
+      "message": "You\u0027re right. Thanks!",
+      "parentUuid": "3787dcba_d196f088",
       "range": {
         "startLine": 71,
         "startChar": 41,
@@ -56,6 +98,24 @@
       "revId": "87c17d5d5d221639c56772577c7c0d751af24113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e45c6e_0b22741b",
+        "filename": "ui/gfx/animation/slide_animation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-13T23:00:32Z",
+      "side": 1,
+      "message": "Done for both test cases.",
+      "parentUuid": "f25a346e_a6e90cc2",
+      "revId": "87c17d5d5d221639c56772577c7c0d751af24113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
