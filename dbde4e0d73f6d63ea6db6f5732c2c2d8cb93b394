@@ -158,6 +158,24 @@
       "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b01fd2d_81cada66",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T00:40:44Z",
+      "side": 1,
+      "message": "In anticipation of the decision to show the setting if the site was ever audible, I\u0027ve added the necessary code to do that so we can get review done while we wait (easily undone if it gets nixed)",
+      "parentUuid": "bb0a3628_e80c0e37",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
