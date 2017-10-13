@@ -1,0 +1,223 @@
+Tests how Target domain works with workers.
+Getting workers
+{
+    id : <number>
+    result : {
+        workers : [
+        ]
+    }
+}
+Starting worker...
+Getting workers + subscribe
+{
+    id : <number>
+    result : {
+        workers : [
+            [0] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+        ]
+    }
+}
+Starting worker...
+{
+    method : Target.targetCreated
+    params : {
+        targetInfo : {
+            attached : false
+            targetId : <string>
+            title : <string>
+            type : worker
+            url : <string>
+        }
+    }
+}
+Getting workers + autoattach
+{
+    id : <number>
+    result : {
+        workers : [
+            [0] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+            [1] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+        ]
+    }
+}
+Attaching to worker
+{
+    method : Target.attachedToTarget
+    params : {
+        sessionId : <string>
+        targetInfo : {
+            attached : true
+            targetId : <string>
+            title : <string>
+            type : worker
+            url : <string>
+        }
+        waitingForDebugger : false
+    }
+}
+Detaching from worker
+{
+    method : Target.detachedFromTarget
+    params : {
+        sessionId : <string>
+        targetId : <string>
+    }
+}
+Destroying worker...
+Starting worker...
+{
+    method : Target.attachedToTarget
+    params : {
+        sessionId : <string>
+        targetInfo : {
+            attached : true
+            targetId : <string>
+            title : <string>
+            type : worker
+            url : <string>
+        }
+        waitingForDebugger : false
+    }
+}
+Detaching from worker
+{
+    method : Target.detachedFromTarget
+    params : {
+        sessionId : <string>
+        targetId : <string>
+    }
+}
+Getting workers + autoattach + subscribe
+{
+    id : <number>
+    result : {
+        workers : [
+            [0] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+            [1] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+        ]
+    }
+}
+Starting worker...
+{
+    method : Target.targetCreated
+    params : {
+        targetInfo : {
+            attached : false
+            targetId : <string>
+            title : <string>
+            type : worker
+            url : <string>
+        }
+    }
+}
+{
+    method : Target.attachedToTarget
+    params : {
+        sessionId : <string>
+        targetInfo : {
+            attached : true
+            targetId : <string>
+            title : <string>
+            type : worker
+            url : <string>
+        }
+        waitingForDebugger : false
+    }
+}
+Detaching from worker
+{
+    method : Target.detachedFromTarget
+    params : {
+        sessionId : <string>
+        targetId : <string>
+    }
+}
+Getting workers
+{
+    id : <number>
+    result : {
+        workers : [
+            [0] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+            [1] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+            [2] : {
+                attached : false
+                targetId : <string>
+                title : <string>
+                type : worker
+                url : <string>
+            }
+        ]
+    }
+}
+Destroying worker...
+{
+    method : Target.targetDestroyed
+    params : {
+        targetId : <string>
+    }
+}
+Destroying worker...
+{
+    method : Target.targetDestroyed
+    params : {
+        targetId : <string>
+    }
+}
+Destroying worker...
+{
+    method : Target.targetDestroyed
+    params : {
+        targetId : <string>
+    }
+}
+Getting workers
+{
+    id : <number>
+    result : {
+        workers : [
+        ]
+    }
+}
+

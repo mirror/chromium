@@ -28,28 +28,52 @@ function handleLoad()
 
 
 async function test() {
-  var workerCount = 0;
+  setTimeout(() => TestRunner.completeTest(), 5000);
+  var resolve, promise, workerCount;
+
+  workerCount = 0;
+  promise = new Promise(f => resolve = f);
   var observer = {
     targetAdded(target) {
       if (!TestRunner.isDedicatedWorker(target))
         return;
-      workerCount++;
-      TestRunner.addResult('Added worker: ' + workerCount);
-      if (workerCount === 2) {
-        TestRunner.addResult('Done.');
-        TestRunner.completeTest();
-      }
+      TestRunner.addResult('Found worker');
+      if (++workerCount === 2)
+        resolve();
     },
-
     targetRemoved() {}
   };
-
-  await TestRunner.TargetAgent.setAutoAttach(false, false);
-  // Debugger should not crash when autoconnecting is immediately followed by termination.
-
   SDK.targetManager.observeTargets(observer);
-  TestRunner.TargetAgent.setAutoAttach(true, true);
+  await promise;
+  SDK.targetManager.unobserveTargets(observer);
+
+  await TestRunner.TargetAgent.getWorkers(false, false, false);
+
+  workerCount = 0;
+  promise = new Promise(f => resolve = f);
+  observer = {
+    targetAdded(target) {
+    },
+    targetRemoved() {
+      if (!TestRunner.isDedicatedWorker(target))
+        return;
+      TestRunner.addResult('Worker removed');
+      if (++workerCount === 2)
+        resolve();
+    }
+  };
+  SDK.targetManager.observeTargets(observer);
+  for (var target of SDK.targetManager.targets()) {
+    if (TestRunner.isDedicatedWorker(target))
+      await TestRunner.TargetAgent.detachFromTarget(undefined, target.id());
+  }
+  await promise;
+  SDK.targetManager.unobserveTargets(observer);
+
+  // Debugger should not crash when autoconnecting is immediately followed by termination.
+  await TestRunner.TargetAgent.getWorkers(false, true, true);
   TestRunner.addResult('Worker inspection enabled');
+  TestRunner.completeTest();
 };
 
 </script>

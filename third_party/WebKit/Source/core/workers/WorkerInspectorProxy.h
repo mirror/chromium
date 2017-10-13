@@ -43,6 +43,7 @@ class CORE_EXPORT WorkerInspectorProxy final
                                    const String& message,
                                    std::unique_ptr<SourceLocation>);
 
+  bool HasConnectedInspector();
   void ConnectToInspector(int session_id, const String&, PageInspector*);
   void DisconnectFromInspector(int session_id, PageInspector*);
   void SendMessageToInspector(int session_id, const String& message);
