@@ -194,6 +194,11 @@ scoped_refptr<AutofillWebDataService> AutofillClientIOS::GetDatabase() {
       browser_state_, ServiceAccessType::EXPLICIT_ACCESS);
 }
 
+void AutofillClientIOS::DidInteractWithNonsecureCreditCardInput(
+    content::RenderFrameHost* rfh) {
+  web_state_->OnCreditCardInputShownOnHttp();
+}
+
 bool AutofillClientIOS::IsContextSecure() {
   // This implementation differs slightly from other platforms. Other platforms'
   // implementations check for the presence of active mixed content, but because
