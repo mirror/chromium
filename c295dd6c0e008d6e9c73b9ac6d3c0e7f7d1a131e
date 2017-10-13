@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "266ba31a_d3c65be2",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-13T21:35:08Z",
+      "side": 1,
+      "message": "I was thinking something like\n\n #define ProtectedMemoryMemberCall(mem, member) \\\n            /* static_assert on mem type here */   \\\n            ProtectedPtr::Create(mem-\u003emember).Call\n ProtectedMemoryMemberCall(memory, member)(...)\n\nThe invocation of Call on the newly constructed object means that callers can not accidentally assign ProtectedPtrs with auto thinking they\u0027re referencing a function pointer, like\n\n auto NotAFnPtr \u003d ProtectedMember(...); // Actually a ProtectedPtr.\n // Long attacker controlled delay\n NotAFnPtr(...)",
+      "parentUuid": "dc140543_fb3526ff",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
