@@ -501,9 +501,12 @@ Persistence.FileSystemWorkspaceBinding.FileSystem = class extends Workspace.Proj
    * @param {string} path
    * @param {?string} name
    * @param {string} content
+   * @param {boolean=} createFolders
    * @return {!Promise<?Workspace.UISourceCode>}
    */
-  async createFile(path, name, content) {
+  async createFile(path, name, content, createFolders) {
+    if (createFolders)
+      await this._fileSystem.createFoldersIfNotExist(path);
     var filePath = await new Promise(resolve => this._fileSystem.createFile(path, name, resolve));
     if (!filePath)
       return null;

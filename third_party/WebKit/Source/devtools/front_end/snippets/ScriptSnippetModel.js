@@ -577,9 +577,10 @@ Snippets.SnippetsProject = class extends Bindings.ContentProviderBasedProject {
    * @param {string} url
    * @param {?string} name
    * @param {string} content
+   * @param {boolean=} createFolders
    * @return {!Promise<?Workspace.UISourceCode>}
    */
-  createFile(url, name, content) {
+  createFile(url, name, content, createFolders) {
     return /** @type {!Promise<?Workspace.UISourceCode>} */ (Promise.resolve(this._model.createScriptSnippet(content)));
   }
 

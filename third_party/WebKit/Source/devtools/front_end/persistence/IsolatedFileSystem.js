@@ -175,6 +175,36 @@ Persistence.IsolatedFileSystem = class {
   }
 
   /**
+   * @param {string} folderPath
+   * @return {!Promise<boolean>}
+   */
+  async createFoldersIfNotExist(folderPath) {
+    var paths = folderPath.split('/');
+    var activePath = '';
+    for (var path of paths) {
+      activePath = activePath + '/' + path;
+      var success = await this._innerCreateFolderIfNeeded(activePath);
+      if (!success)
+        return false;
+    }
+    return true;
+  }
+
+  /**
+   * @param {string} path
+   * @return {!Promise<boolean>}
+   */
+  _innerCreateFolderIfNeeded(path) {
+    return new Promise(resolve => {
+      this._domFileSystem.root.getDirectory(path, {create: true}, resolve.bind(true), error => {
+        var errorMessage = Persistence.IsolatedFileSystem.errorMessage(error);
+        console.error(errorMessage + ' trying to create directory \'' + path + '\'');
+        resolve(false);
+      });
+    });
+  }
+
+  /**
    * @param {string} path
    * @param {?string} name
    * @param {function(?string)} callback
