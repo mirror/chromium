@@ -22,6 +22,30 @@
       "revId": "a4ae2659bbc45e1ae2bb787ad40e4ee89f39418d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916eaaf3_e02efa67",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16565,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-13T16:45:01Z",
+      "side": 1,
+      "message": "I agree that Observed is slightly better, but Observer is consistent with the similar existent kLongTaskObserver. Should I still used Observed?",
+      "parentUuid": "fe2c6b8c_fb429fa3",
+      "range": {
+        "startLine": 16565,
+        "startChar": 45,
+        "endLine": 16565,
+        "endChar": 46
+      },
+      "revId": "a4ae2659bbc45e1ae2bb787ad40e4ee89f39418d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
