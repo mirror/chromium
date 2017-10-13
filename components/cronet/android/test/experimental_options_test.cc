@@ -39,7 +39,8 @@ void WriteToHostCacheOnNetworkThread(jlong jcontext_adapter,
   CHECK(address.AssignFromIPLiteral(address_string));
   net::AddressList address_list =
       net::AddressList::CreateFromIPAddress(address, 0);
-  net::HostCache::Entry entry(net::OK, address_list);
+  net::HostCache::Entry entry(net::HostCache::Entry::SOURCE_UNKNOWN, net::OK,
+                              address_list);
   cache->Set(key1, entry, base::TimeTicks::Now(),
              base::TimeDelta::FromSeconds(1));
   cache->Set(key2, entry, base::TimeTicks::Now(),
