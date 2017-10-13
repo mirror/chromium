@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bddcc5e_981ef515",
+        "filename": "components/domain_reliability/context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:07:36Z",
+      "side": 1,
+      "message": "At first blush it seems we should invoke CallUploadAllowedCallback directly rather than go through the upload scheduler. That way the scheduler\u0027s accounting won\u0027t have to deal with tasks that won\u0027t ever do anything.\n\nHow do we deal with the UploadAllowedCallback taking an arbitrarily long time WRT to the delay thresholds?",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344df493_96b5c602",
+        "filename": "components/domain_reliability/context.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:07:36Z",
+      "side": 1,
+      "message": "Is there an expectation that this callback will complete \"quickly\"?",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93e43cd_6066471e",
+        "filename": "components/domain_reliability/service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:07:36Z",
+      "side": 1,
+      "message": "Are these types correct?",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
