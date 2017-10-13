@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8140ce7_46cd912d",
+        "filename": "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T00:27:28Z",
+      "side": 1,
+      "message": "Nit: You can call this Create to make this more in line with other factory functions around Chrome. Apply to the rest of the change.",
+      "range": {
+        "startLine": 398,
+        "startChar": 43,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "65bc03be48f43f1387ac0a7a7c32e2ba739d74f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa715f0_787dcf88",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T00:27:28Z",
+      "side": 1,
+      "message": "For functions, the export annotation comes before the return type. Apply to the rest of the change.",
+      "range": {
+        "startLine": 41,
+        "startChar": 17,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "65bc03be48f43f1387ac0a7a7c32e2ba739d74f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c8c417_a600f9d4",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T00:27:28Z",
+      "side": 1,
+      "message": "Make the constructor private.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "65bc03be48f43f1387ac0a7a7c32e2ba739d74f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a29d54_8c2d491d",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T00:27:28Z",
+      "side": 1,
+      "message": "Might be useful to EXPECT_TRUE(collection_.Get())",
+      "range": {
+        "startLine": 32,
+        "startChar": 40,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "65bc03be48f43f1387ac0a7a7c32e2ba739d74f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
