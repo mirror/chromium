@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb0370be_93eab698",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T19:43:09Z",
+      "side": 1,
+      "message": "Put this right next to sidebar (line 449).",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e9aa37_c4ec81e3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T19:43:09Z",
+      "side": 1,
+      "message": "We should clear the suggestions when I clear the console (or navigate and do not preserve log).",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34605a0f_5f9c7aa4",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/SuggestBox.js",
         "patchSetId": 2
@@ -13,6 +47,24 @@
       "writtenOn": "2017-10-13T18:34:50Z",
       "side": 1,
       "message": "Just a copy paste % rename \"Network\" \u003e \"UI.SuggestBox\".\n\nWhy is this in SuggestBox instead of say, TextUtils?\nIt\u0027s nice to have JSDoc @return {!UI.SuggestBox.Suggestions}, and text_utils/ module doesn\u0027t depend on ui/.",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53eaef26_88ddd9c8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/SuggestBox.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T19:43:09Z",
+      "side": 1,
+      "message": "Move it to a separate file and call UI.FilterSuggestionBuilder.",
+      "parentUuid": "34605a0f_5f9c7aa4",
       "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +105,24 @@
       "writtenOn": "2017-10-13T18:34:50Z",
       "side": 1,
       "message": "Allows us to see the console update when you \"arrow\" down through the suggestions.",
+      "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75bf6a8_9ebd8789",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T19:43:09Z",
+      "side": 1,
+      "message": "I can imagine how slow this is :)\n\nAlso, are there any other ToolbarInputs which are going to break?",
+      "parentUuid": "aff8b6cf_78ef46df",
       "revId": "3120d3de0b9c31d62d60be4be65357c1df0d9cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
