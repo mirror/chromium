@@ -60,6 +60,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/compositor/gpu_process_transport_factory.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/compositor/viz_process_transport_factory.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
@@ -1411,10 +1412,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
 #if BUILDFLAG(ENABLE_VULKAN)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableVulkan)) {
+  if (parsed_command_line_.HasSwitch(switches::kEnableVulkan))
     gpu::InitializeVulkan();
-  }
 #endif
 
   // Initialize the GPU shader cache. This needs to be initialized before
@@ -1437,40 +1436,44 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       is_mus) {
     established_gpu_channel = always_uses_gpu = false;
   }
-  gpu::GpuChannelEstablishFactory* factory =
-      GetContentClient()->browser()->GetGpuChannelEstablishFactory();
-  if (!factory) {
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    factory = BrowserGpuChannelHostFactory::instance();
-  }
-#if !defined(OS_ANDROID)
-  if (!is_mus) {
-    // TODO(kylechar): Remove flag along with surface sequences.
-    // See https://crbug.com/676384.
-    auto surface_lifetime_type =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableSurfaceReferences)
-            ? viz::SurfaceManager::LifetimeType::SEQUENCES
-            : viz::SurfaceManager::LifetimeType::REFERENCES;
-    frame_sink_manager_impl_ =
-        std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
 
+  if (!is_mus) {
     host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
 
-    // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
-    // Gpu process, instead get the mojo pointer from the Gpu process.
-    surface_utils::ConnectWithLocalFrameSinkManager(
-        host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
-  }
-#endif
+    if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
+      // TODO(kylechar): Remove this comment when --enable-viz path works.
+      auto transport_factory =
+          std::make_unique<VizProcessTransportFactory>(GetResizeTaskRunner());
+      transport_factory->ConnectHostFrameSinkManager();
+      ImageTransportFactory::SetFactory(std::move(transport_factory));
+    } else {
+      gpu::GpuChannelEstablishFactory* factory =
+          GetContentClient()->browser()->GetGpuChannelEstablishFactory();
+      if (!factory) {
+        BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
+        factory = BrowserGpuChannelHostFactory::instance();
+      }
+      DCHECK(factory);
 
-  DCHECK(factory);
-  if (!is_mus) {
-    ImageTransportFactory::SetFactory(
-        std::make_unique<GpuProcessTransportFactory>(GetResizeTaskRunner()));
-    ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
-        factory);
+      ImageTransportFactory::SetFactory(
+          std::make_unique<GpuProcessTransportFactory>(GetResizeTaskRunner()));
+      ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
+          factory);
+
+      // TODO(kylechar): Remove flag along with surface sequences.
+      // See https://crbug.com/676384.
+      auto surface_lifetime_type =
+          parsed_command_line_.HasSwitch(switches::kDisableSurfaceReferences)
+              ? viz::SurfaceManager::LifetimeType::SEQUENCES
+              : viz::SurfaceManager::LifetimeType::REFERENCES;
+      frame_sink_manager_impl_ =
+          std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+
+      surface_utils::ConnectWithLocalFrameSinkManager(
+          host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
+    }
   }
+
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
