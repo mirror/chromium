@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf23555_04fc010f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T23:11:00Z",
+      "side": 1,
+      "message": "it should be private.",
+      "revId": "7d9eadb5fd83d1c6f1bf3583310a1a1025a6516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a995a430_1367afd2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T23:11:00Z",
+      "side": 1,
+      "message": "You should probably never remove filesystems. And should not create them lazily. Instead, listen to the workspace projectadded/removed here and create / remove corresponding nodes.",
+      "revId": "7d9eadb5fd83d1c6f1bf3583310a1a1025a6516d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
