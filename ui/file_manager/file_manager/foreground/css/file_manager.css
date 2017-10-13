@@ -1229,7 +1229,7 @@ body[type='full-page'] .detail-name .detail-icon {
   background-position: center;
   background-repeat: no-repeat;
   height: 36px;
-  opacity: 0;
+  display: none;
   position: absolute;
   top: 2px;
   transition: opacity 220ms ease;
@@ -1250,20 +1250,21 @@ body[type='full-page'] .detail-name .detail-icon {
 
 body.selecting .thumbnail-grid .checkmark.inactive,
 .thumbnail-grid .thumbnail-item:hover .checkmark.inactive {
+  display: block;
   opacity: 0.6;
 }
 
 body.check-select .thumbnail-grid .thumbnail-item .checkmark.inactive {
-  opacity: 1;
+  display: block;
 }
 
 body.check-select .thumbnail-grid .thumbnail-item[selected]
     .checkmark.inactive {
-  opacity: 0;
+  display: none;
 }
 
 body.check-select .thumbnail-grid .thumbnail-item[selected] .checkmark.active {
-  opacity: 1;
+  display: block;
 }
 
 .thumbnail-grid .img-container {
