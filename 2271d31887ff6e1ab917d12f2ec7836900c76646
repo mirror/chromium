@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a9a10b9_d336f309",
+        "filename": "ash/system/palette/palette_tray_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T19:31:05Z",
+      "side": 1,
+      "message": "optional: For these inline getters I\u0027m OK with just palette_tool_manager(). Style guide says that hacker_style() is OK for things that are almost free.",
+      "revId": "2271d31887ff6e1ab917d12f2ec7836900c76646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac051a4_264ba8ef",
+        "filename": "ash/system/palette/palette_tray_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T19:31:05Z",
+      "side": 1,
+      "message": "if you do decided to change the others I would keep this one as-is, since it has a different \"concept\" than just checking the member.",
+      "revId": "2271d31887ff6e1ab917d12f2ec7836900c76646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cceee70_98d77849",
+        "filename": "ash/system/palette/palette_tray_test_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T19:31:05Z",
+      "side": 1,
+      "message": "optional nit: In a world where owned objects are stored in unique_ptr\u003c\u003e I don\u0027t think comments like \"not owned\" are very useful. By default raw pointers are unowned, and it\u0027s OK to just comment on the exceptions.\n\n(Sometimes we add these comments in Views code, since objects there are often owned by the views view hierarchy.)",
+      "revId": "2271d31887ff6e1ab917d12f2ec7836900c76646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
