@@ -16,6 +16,24 @@
       "revId": "37af615339d7dee00a14fc17fe241b86bbd30cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518cd7a9_f3b1c64e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4622,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T22:04:11Z",
+      "side": 1,
+      "message": "I would like to move this into a test-only observer in a follow-up patch. I\u0027ve been discussing this with haraken@ because for LayoutTests we have code to automatically only activate bindings used for tests when tests are running but have no similar mechanism for browser_tests.\n\nThis logic mimics the behavior of the old bindings which included test functions with the regular interface.",
+      "parentUuid": "0c854b4a_8d04c642",
+      "revId": "37af615339d7dee00a14fc17fe241b86bbd30cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

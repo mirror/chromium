@@ -16,6 +16,24 @@
       "revId": "24fba7b46d793b9ff2f1f6b664a216ac582a7c16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81f6f9a_21838dc9",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 6651,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-13T22:04:11Z",
+      "side": 0,
+      "message": "It became \"world_id \u003d\u003d 0\" in DidCreateScriptContext() but looking at it again these mean different things and so we need both conditions.",
+      "parentUuid": "7944657b_72610f64",
+      "revId": "24fba7b46d793b9ff2f1f6b664a216ac582a7c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
