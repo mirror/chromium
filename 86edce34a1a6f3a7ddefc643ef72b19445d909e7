@@ -52,6 +52,24 @@
       "revId": "86edce34a1a6f3a7ddefc643ef72b19445d909e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a6068c_0fe040a2",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T19:11:56Z",
+      "side": 1,
+      "message": "I added comments for Base*ResourceThrottle.\n\nIn the ideal world, BaseResourceThrottle (and all subclasses) will go away in the next quarter, BaseParallelResourceThrottle (and all subclasses) will go away in two quarters. So spending a lot of effort (such as convincing content owners to make cancel virtual) may not be worthwhile. \n\nWDYT? Thanks!",
+      "parentUuid": "e0a31d36_5d86de63",
+      "revId": "86edce34a1a6f3a7ddefc643ef72b19445d909e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
