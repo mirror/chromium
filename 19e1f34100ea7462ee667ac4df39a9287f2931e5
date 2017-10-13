@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed0b62a5_966e41fb",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "yes!",
+      "parentUuid": "964e2559_e1582b5f",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1c383a_ab893792",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b406e728_5892d96e",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1c383a_ab893792",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6180d4c4_7650d9c1",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "I fixed the bad message part.\nWith the current implementation we still send an IPC to browser even if a site sets the same value to a key. LocalStorageCachedArea::SetItem does not check if the old value is same as new. The current code would do exactly the same as what the previous code did in case of only one client. Am I missing something?\n\nAlso what is the best way to handle the error? I made the code so that the new value is actually added to the db, but the notifications will be wrong if the message was not consistent.\nI am not sure what is a better way to handle the error?",
+      "parentUuid": "13d057a0_73d0f386",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5995fd98_8e537a0b",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6da544_458dada5",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5995fd98_8e537a0b",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "de46f296_f7dc7d17",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce30d384_a59b6eb8",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 10
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f6f1410_fd57fdcc",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2017-09-27T21:48:05Z",
       "side": 1,
       "message": "nit: here too probably makes more sense to BadMessage rather than DCHECK",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4038aa2_01b56a54",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Same issue here as above. How to handle the error?",
+      "parentUuid": "8f6f1410_fd57fdcc",
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "9256ca1f_cfde6d31",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533edd81_09f2c26e",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e3394f2_6209d5d4",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -138,6 +270,24 @@
       "writtenOn": "2017-09-27T21:48:05Z",
       "side": 1,
       "message": "wait, it\u0027s not allowed to call Get when there are no cached values? I guess that sort of makes sense, but that should be documented very clearly in the .mojom file, and such a precondition should be not be checked with a DCHECK but either with a BadMessage failure, or by updating the Get API to somehow be able to indicate that getting failed because there is no cache.\n\nOr Get should just be changed to set desired_load_state_ to KEYS_AND_VALUES, after which the IsMapReloadNeeded would result in just making it work, I think? It doesn\u0027t seem unreasonable to just always keep values cached if Get is actually being used...",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d418e921_0bb11d78",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "I documented at Get() saying it is only used for testing and it can return false because of implementation details. Do you think it\u0027s fine for a testing method to have a slightly undefined behavior?",
+      "parentUuid": "0e3394f2_6209d5d4",
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "bf603940_f1b5b8d6",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d3ac71_ba865a80",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9f1911_a492537a",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -175,6 +343,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fa04db_00127c46",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab9f1911_a492537a",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "db1dbddd_699a644f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3d0f00_7934fde8",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09daf3a1_7f7aba60",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "e576f598_40740d85",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09daf3a1_7f7aba60",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9544a61f_513d3fd9",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -223,6 +445,30 @@
       "writtenOn": "2017-09-27T21:48:05Z",
       "side": 1,
       "message": "do you actually care about commit_batches_in_flight_? It seems it should be safe to unload even with in-flight commits?",
+      "range": {
+        "startLine": 621,
+        "startChar": 37,
+        "endLine": 621,
+        "endChar": 62
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3914d22b_48be8472",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "When commit is in flight, we clear the map and if some event causes reload we will try a read after write. I am not sure about the guarantees of LevelDBDatabase since it might also make IPC because it is service. Can I remove it?",
+      "parentUuid": "9544a61f_513d3fd9",
       "range": {
         "startLine": 621,
         "startChar": 37,
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "d84214b3_56e6a824",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf0fc8e_614598b9",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea7b814_5a82c856",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -266,6 +530,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46510786_f61b70d0",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Sorry was not sure how the map would behave if the keys are removed using iterator and multiple keys end up having same values. It seems to work!",
+      "parentUuid": "eea7b814_5a82c856",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "899dfcd3_2afe4f85",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc8bd3b_ac6a0038",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6755d2a7_80e0d799",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 1
@@ -303,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "265610e0_be088b07",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6755d2a7_80e0d799",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61a2434_63ec946c",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 1
@@ -317,6 +635,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d7c036_a2f56a15",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61a2434_63ec946c",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +679,30 @@
     },
     {
       "key": {
+        "uuid": "06f555da_e4f74304",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36302f34_3d0255cf",
+      "range": {
+        "startLine": 159,
+        "startChar": 13,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "761d80f4_cd44fdeb",
         "filename": "content/browser/leveldb_wrapper_impl.h",
         "patchSetId": 1
@@ -363,6 +723,30 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e445013_7d9d52d9",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761d80f4_cd44fdeb",
+      "range": {
+        "startLine": 161,
+        "startChar": 53,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +773,30 @@
     },
     {
       "key": {
+        "uuid": "16d46bbe_5b31ad67",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1848bc4b_37b23191",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 163,
+        "endChar": 53
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00be118b_eafff06e",
         "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
         "patchSetId": 1
@@ -403,6 +811,24 @@
       "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975cc86e_bc558faa",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T23:34:40Z",
+      "side": 1,
+      "message": "removed these changes after rebase.",
+      "parentUuid": "00be118b_eafff06e",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
