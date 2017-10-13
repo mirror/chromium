@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f5f2f98_f1969cbe",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e31028_0e8009af",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929b5825_ac9848f3",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81099383_68054901",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929b5825_ac9848f3",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "482dbbdd_8b228712",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "I think we should leave it as |has_error|, because the argument is tightly connected to the error flag in a method that invokes it.",
+      "parentUuid": "f6aa7ada_832a2884",
+      "range": {
+        "startLine": 245,
+        "startChar": 49,
+        "endLine": 245,
+        "endChar": 58
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9065eba7_4e9fe7f8",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cd316f_a57690cc",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9065eba7_4e9fe7f8",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 17
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "48261b09_34890aa0",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Because when we reach this update method, the compression process is no longer running, therefore we should not display text like: \u0027Please wait, packing...\u0027.",
+      "parentUuid": "c12b9016_750e3ee4",
+      "range": {
+        "startLine": 757,
+        "startChar": 42,
+        "endLine": 757,
+        "endChar": 53
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d163b6_807ed353",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "795bfb2c_bc4a9797",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Because when the last compressor will get released, we unload naclModule and it will become an undefine reference.",
+      "parentUuid": "b2d163b6_807ed353",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88f8460e_ebc9cc8c",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f265a8_f6459acd",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-13T04:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f8460e_ebc9cc8c",
+      "range": {
+        "startLine": 564,
+        "startChar": 33,
+        "endLine": 564,
+        "endChar": 50
+      },
+      "revId": "5da95a0a89c61cc589037cc970c46c8e95cecb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
