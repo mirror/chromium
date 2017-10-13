@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e737d62_bea436a3",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-13T13:31:43Z",
+      "side": 1,
+      "message": "Please address this (the TODO) in a follow-up CL.",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914d090b_7fdfaa99",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-13T13:31:43Z",
+      "side": 1,
+      "message": "Okay, looking at this, I don\u0027t see why TopPresentedViewController is needed. \n\nThis object (the coordinator) knows if it\u0027s presented a VC or not. If it has, then that VC should present (and a DCHECK that that VC isn\u0027t already presenting is warranted). If it hasn\u0027t, then self.baseViewController should present. Right?",
+      "range": {
+        "startLine": 138,
+        "startChar": 15,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e688f7_029ca2cd",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-10-13T13:31:43Z",
+      "side": 1,
+      "message": "Please add the same TODO from line 135 here, and fix it ASAP.",
+      "range": {
+        "startLine": 155,
+        "startChar": 44,
+        "endLine": 155,
+        "endChar": 74
+      },
+      "revId": "ce5dabb9d35a6c54aa1c0e99e89a1e0a29ba44ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
