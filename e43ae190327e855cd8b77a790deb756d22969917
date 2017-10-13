@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "940f8c0b_5d5ae43d",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "Hum, after discussion this has been removed entirely. I won\u0027t implement the listener things for now, I\u0027ll focus on the detection and metrics part.",
+      "parentUuid": "b0c561e5_cd70788e",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0eeb39e_12c0f4ff",
         "filename": "base/memory/swap_thrashing_listener.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e43ae190327e855cd8b77a790deb756d22969917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934d6d80_083520af",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "I\u0027ve renamed these to *_NONE, *_SUSPECTED and *_CONFIRMED. I\u0027ve also described the SwapThrashingMonitor class as a state-based class.",
+      "parentUuid": "a0eeb39e_12c0f4ff",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43feca61_cc7b9644",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "I love addressing comments by deleting code.",
+      "parentUuid": "82a1e5d7_ea626bde",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5de2199_24bae616",
         "filename": "base/memory/swap_thrashing_listener.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e43ae190327e855cd8b77a790deb756d22969917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc06f293_f3c42dbc",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "Observing individual processes is something that I\u0027ll look at later. Right now I prefer to focus on the general signal and on investigating how this affect performances.\n\nI like the idea of adding a thrashiness signal in the TaskGroup in TaskManager though, will keep that in mind.",
+      "parentUuid": "f5de2199_24bae616",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1ab43129_942733b6",
+        "filename": "base/memory/swap_thrashing_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "Gone!",
+      "parentUuid": "55ec2d94_c094499e",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d57a5a7_00dd3ece",
         "filename": "base/memory/swap_thrashing_monitor_win.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "e43ae190327e855cd8b77a790deb756d22969917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f5104_4f5ff873",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "I\u0027ll need to keep experimenting with this to find a good value, probably something between 3 and 5 seconds.",
+      "parentUuid": "6d57a5a7_00dd3ece",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6d8de89b_d1a4b141",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "Ha, this code was by no mean complete :), I\u0027ve removed it and added a NOTIMPLEMENTED() call for now.",
+      "parentUuid": "64841f0d_a7c015af",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef271827_57deb2b6",
         "filename": "base/memory/swap_thrashing_monitor_win.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "e43ae190327e855cd8b77a790deb756d22969917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7b41bd_c5fbe05c",
+        "filename": "base/memory/swap_thrashing_monitor_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-10-13T08:01:01Z",
+      "side": 1,
+      "message": "Added a comment, but I wouldn\u0027t worry too much about this :)",
+      "parentUuid": "ef271827_57deb2b6",
+      "revId": "e43ae190327e855cd8b77a790deb756d22969917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
