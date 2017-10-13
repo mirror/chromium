@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bf79c1b_c39bcb0b",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T07:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e1f4a7_2930e9ca",
+      "revId": "bf6d98801af59eab03464978c170d458caeb0349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7024b1a_3b912992",
         "filename": "device/u2f/u2f_hid_device.h",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "bf6d98801af59eab03464978c170d458caeb0349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b1da04_403a0918",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T07:54:15Z",
+      "side": 1,
+      "message": "Done, moved it down next to the other static function. Do you mind pointing me to the relevant style guide section? I was unable to find it.",
+      "parentUuid": "b7024b1a_3b912992",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "bf6d98801af59eab03464978c170d458caeb0349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

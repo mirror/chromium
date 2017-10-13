@@ -16,6 +16,24 @@
       "revId": "e5cdfce054ad177f6897fb2941703bff88827f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbfd6674_7fae88db",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-13T07:54:15Z",
+      "side": 1,
+      "message": "I removed the Reset method, since Reilly suggested this as well. However, I decided not to introduce the DCHECK, as it would still be possible to change the delegate by explicitly invoking the destructor of the delegate you want to remove.",
+      "parentUuid": "0563a914_e47ed848",
+      "revId": "e5cdfce054ad177f6897fb2941703bff88827f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
