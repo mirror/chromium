@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec000abd_1d7ba44e",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "Will this crash in Incognito?",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296246dd_afc254cc",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc1795c_63e85eba",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: DCHECK(!job_details_map_.count(job_id));",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e867c2_6ac4953e",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: const auto\u0026",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76caa0a9_13d551e5",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: dito",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dd39a3_67f53ebf",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "Maybe just use a TODO? Below too.\n\nNOTIMPLEMENTED(), through a compile-time policy setting, can mean NOTREACHED(), i.e. DCHECK().",
+      "range": {
+        "startLine": 251,
+        "startChar": 2,
+        "endLine": 251,
+        "endChar": 16
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba07b4a_8fb52e9e",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: early-abort would really help avoid nesting here.",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a386d71_2a4abbec",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "This should probably be a base::Optional\u003cstd::string\u003e, so that we can decide on the string to use in //chrome when the developer hasn\u0027t provided one. (That\u0027s a UI-level feature.)",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58501e7_8939208b",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "Should we have a TODO somewhere for hooking this up with Abort()?",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77abe282_8eb4e590",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: job_id. elsewhere too.",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbbaac7_3df84ce7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "nit: prefer !controller_map_.count(guid) over \"\u003d\u003d 0\"",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d744f0f1_1961dbb9",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "Prefer using an enum class. BackgroundFetchResult::NETWORK does not sound like a failure to me.",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87462e92_065a2a65",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-13T15:55:21Z",
+      "side": 1,
+      "message": "TIMEOUT",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
