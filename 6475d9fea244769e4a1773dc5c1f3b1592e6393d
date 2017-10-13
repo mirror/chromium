@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4aeefa_e10c39d0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "I think forward-declaring it should be enough.",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41c6c6d_705ce657",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "Can\u0027t this one be implemented here, inline? I think it\u0027s just GetNGInlineNodeData() !\u003d nullptr?",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c99608f_c1a17ccd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "A general remark about this approach: It\u0027s somewhat intrusive here in legacy layout, but in my opinion it\u0027s more elegant than cramming it all into a separate class, or duplicating it in all NG LayoutObject classes.",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d8a10e_c0c7ec60",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "Also DCHECK that it\u0027s an object that has the mixin?",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d39bcc_db867382",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "Why not keep it?",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317cfd96_ffeb09d8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "Neat!",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f026590e_775a6fe3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_mixin.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "BASE - Base?",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52779578_58990987",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_mixin.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be exported?",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3d8ca8_a016d34c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-13T11:17:07Z",
+      "side": 1,
+      "message": "I think the need for this could be eliminated if you include GetTableCellIntrinsicPadding() in CalculateBorderScrollbarPadding().",
+      "revId": "6475d9fea244769e4a1773dc5c1f3b1592e6393d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
