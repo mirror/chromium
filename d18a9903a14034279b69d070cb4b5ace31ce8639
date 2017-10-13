@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9693f38_4d36bd4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "This wording doesn\u0027t seem right to me. In this case, there *is* a viable prior frame; GetViableReferenceFrameIndex just failed to return it.",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e7dbb2_b93302eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "I don\u0027t follow this hypothetical situation. If we last called startIncrementalDecode on frame 5, we have the following possibilities:\n- 5 is complete, so GetViableReferenceFrameIndex would have (correctly) returned 5\n- 5 had an error, in which case we\u0027re not going to decode 6\n- 5 had only partial data when we decided to decode it (unlike the way Blink behaves). So 5 is partial, and 4 is complete. (Note that we\u0027d need another deviation from how Blink behaves in order for 4 to remain complete - currently, Blink calls ClearCacheExceptFrame after each call to DecodeFrameBufferAtIndex. In this patch, ClearCacheExceptFrame(5) at this point would call GetViableReferenceFrameIndex(5), which would return 4. But ImageDecoder::FrameStatusSufficientForSuccessors(5) would return true (note that kFramePartial is sufficient for successors). So 4 would not be saved.) We recursively call Decode(4). We skip down to incrementalDecode(), because 4 is complete. incrementalDecode *continues decoding 5* (arguably wasting time because we\u0027re not going to display it). If 5 had an error, we call SetFailed(). We wouldn\u0027t have done that had we just stuck with 4. But if 5 decodes successfully, we\u0027ll still copy 4 and then decode 6 (correctly).",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae4bf7e_5ed049d3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "This seems awkward to me. It is possible that viable_reference_frame_index indicates a frame that is empty (if it\u0027s the required frame). In that case, we may be \"preserving\" an empty frame.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884e607e_b6bd65a0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "I\u0027ve commented further about this on GetViableReferenceFrameIndex itself, but briefly: \"viable_reference_frame_index \u003d\u003d kNotFound\" does not sound like \"is independent\" to me.",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 227,
+        "endChar": 49
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3c35eb_cc0fcbf2",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "This statement is always true. If these two were equal, we would have taken the first branch.",
+      "range": {
+        "startLine": 233,
+        "startChar": 10,
+        "endLine": 233,
+        "endChar": 51
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33467f22_1fd14438",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-13T15:22:31Z",
+      "side": 1,
+      "message": "The contract for this method has changed in a way that I find odd. It didn\u0027t quite fulfill its old contract, but the idea was:\n\n- only call for a frame that is not independent\n- returns a complete frame that can be used as the starting point to decode, *or* kNotFound if it did \"not find\" such a frame\n\nNow you can call it for an independent frame. If it is independent, return kNotFound. If there is a frame from (required_frame, dependent_frame) that is complete (and not disposePrevious), return it. Otherwise, return |required_frame|, whether complete or not.\n\n(Note that the comment in the header file sounds like it follows the former contract. The name also sounds more like the former to me.)",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 52
+      },
+      "revId": "d18a9903a14034279b69d070cb4b5ace31ce8639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
