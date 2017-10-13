@@ -34,7 +34,7 @@ class BASE_EXPORT ShardedAllocationRegister {
     size_t count;
   };
 
-  ShardedAllocationRegister();
+  explicit ShardedAllocationRegister(const char* allocator_name);
 
   // This class must be enabled before calling Insert() or Remove(). Once the
   // class is enabled, it's okay if Insert() or Remove() is called [due to
@@ -76,7 +76,12 @@ class BASE_EXPORT ShardedAllocationRegister {
     AllocationRegister allocation_register;
     Lock lock;
   };
+  static constexpr size_t HistogramNumSlots = 1024;
+  using Histogram = uint64_t[HistogramNumSlots];
+  std::unique_ptr<Histogram[]> histograms_;
   std::unique_ptr<RegisterAndLock[]> allocation_registers_;
+
+  const char* allocator_name_;
 
   // This member needs to be checked on every allocation and deallocation [fast
   // path] when heap profiling is enabled. Using a lock here causes significant

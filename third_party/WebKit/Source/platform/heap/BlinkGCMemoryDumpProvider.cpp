@@ -109,7 +109,8 @@ void BlinkGCMemoryDumpProvider::ClearProcessDumpForCurrentGC() {
 }
 
 BlinkGCMemoryDumpProvider::BlinkGCMemoryDumpProvider()
-    : current_process_memory_dump_(new base::trace_event::ProcessMemoryDump(
+    : allocation_register_("blink_gc"),
+      current_process_memory_dump_(new base::trace_event::ProcessMemoryDump(
           nullptr,
           {base::trace_event::MemoryDumpLevelOfDetail::DETAILED})) {}
 

@@ -4,6 +4,11 @@
 
 #include "base/trace_event/sharded_allocation_register.h"
 
+#include <inttypes.h>
+
+#include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/trace_event.h"
+#include "base/trace_event/trace_event_argument.h"
 #include "base/trace_event/trace_event_memory_overhead.h"
 #include "build/build_config.h"
 
@@ -22,13 +27,25 @@ const size_t ShardCount = 64;
 const size_t ShardCount = 16;
 #endif
 
-ShardedAllocationRegister::ShardedAllocationRegister() : enabled_(false) {}
+#define TRUNC_SIZE(s) std::min((s), HistogramNumSlots - 1)
+
+ShardedAllocationRegister::ShardedAllocationRegister(const char* allocator_name)
+    : enabled_(false) {
+  char name[32];
+  sprintf(name, "ALLOCATOR %s", allocator_name);
+  // Need a long lived string for tracing.
+  allocator_name_ = strdup(name);
+}
 
 ShardedAllocationRegister::~ShardedAllocationRegister() = default;
 
 void ShardedAllocationRegister::SetEnabled() {
   if (!allocation_registers_)
     allocation_registers_.reset(new RegisterAndLock[ShardCount]);
+  if (!histograms_) {
+    histograms_.reset(new Histogram[ShardCount]);
+    memset(histograms_.get(), 0, sizeof(Histogram) * ShardCount);
+  }
   base::subtle::Release_Store(&enabled_, 1);
 }
 
@@ -43,6 +60,7 @@ bool ShardedAllocationRegister::Insert(const void* address,
   size_t index = hasher(address) % ShardCount;
   RegisterAndLock& ral = allocation_registers_[index];
   AutoLock lock(ral.lock);
+  histograms_[index][TRUNC_SIZE(size)]++;
   return ral.allocation_register.Insert(address, size, context);
 }
 
@@ -84,6 +102,8 @@ ShardedAllocationRegister::UpdateAndReturnsMetrics(MetricsMap& map) const {
   OutputMetrics output_metrics;
   output_metrics.size = 0;
   output_metrics.count = 0;
+  Histogram total_hist = {};
+  uint64_t total_num_allocs = 0;
   for (size_t i = 0; i < ShardCount; ++i) {
     RegisterAndLock& ral = allocation_registers_[i];
     AutoLock lock(ral.lock);
@@ -94,8 +114,43 @@ ShardedAllocationRegister::UpdateAndReturnsMetrics(MetricsMap& map) const {
 
       output_metrics.size += alloc_size.size;
       output_metrics.count++;
+      const size_t trunc_sz = TRUNC_SIZE(alloc_size.size);
+      const uint64_t num_allocs = histograms_[i][trunc_sz];
+      histograms_[i][trunc_sz] = 0;  // Reset for next snapshot
+      total_hist[trunc_sz] += num_allocs;
+      total_num_allocs += num_allocs;
     }
   }
+
+  ////// compute histogram string
+  std::unique_ptr<char[]> hist_str(new char[64 * (HistogramNumSlots + 1)]);
+  char* w = &hist_str[0];
+  uint64_t cumulative = 0;
+  w += sprintf(
+      w, "Size                                         #        %%     CDF\n");
+  for (size_t sz = 0; sz < HistogramNumSlots; sz++) {
+    const uint64_t n = total_hist[sz];
+    cumulative += n;
+    if (n == 0)
+      continue;
+    double ratio = 1.0 * n / total_num_allocs;
+    char hbar[26];
+    memset(hbar, ' ', sizeof(hbar));
+    const size_t nbars = static_cast<size_t>(ratio * sizeof(hbar) - 1);
+    memset(hbar, '*', nbars);
+    hbar[sizeof(hbar) - 1] = '\0';
+    w += sprintf(w, "%-4zu: [%s] %12" PRIu64 "  %6.2f %%  %6.2f %%\n", sz, hbar,
+                 n, ratio * 100, cumulative * 100.0 / total_num_allocs);
+  }
+  *w = '\0';
+  auto hist_obj = std::make_unique<TracedValue>();
+  hist_obj->SetString("h", &hist_str[0]);
+  TRACE_COUNTER1(MemoryDumpManager::kTraceCategory, allocator_name_,
+                 total_num_allocs);
+  TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(MemoryDumpManager::kTraceCategory,
+                                      allocator_name_, TRACE_ID_LOCAL(this),
+                                      std::move(hist_obj));
+  ///////////////////////////////
   return output_metrics;
 }
 

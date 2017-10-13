@@ -189,7 +189,7 @@ MallocDumpProvider* MallocDumpProvider::GetInstance() {
 }
 
 MallocDumpProvider::MallocDumpProvider()
-    : tid_dumping_heap_(kInvalidThreadId) {}
+    : allocation_register_("malloc"), tid_dumping_heap_(kInvalidThreadId) {}
 
 MallocDumpProvider::~MallocDumpProvider() {}
 
