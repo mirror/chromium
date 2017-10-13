@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "9e6e0af3_5941e2ae",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T22:36:23Z",
+      "side": 1,
+      "message": "That\u0027s fair. Done.",
+      "parentUuid": "d3e3f988_449218ec",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 44
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "517febcd_b05dbd0d",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 9
