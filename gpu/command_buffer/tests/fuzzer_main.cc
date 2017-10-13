@@ -140,7 +140,7 @@ class CommandBufferSetup {
 #else   // defined(GPU_FUZZER_USE_STUB)
     surface_ = new gl::GLSurfaceStub;
     InitContext();
-    gl::GLSurfaceTestSupport::InitializeOneOffWithMockBindings();
+    gl::GLSurfaceTestSupport::InitializeOneOffWithStubBindings();
 #endif  // defined(GPU_FUZZER_USE_STUB)
   }
 
