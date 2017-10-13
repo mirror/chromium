@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6754e9c_235d8474",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-13T00:31:02Z",
+      "side": 1,
+      "message": "Dunno if this is actually needed; it was from LinkStyle.cpp:105.",
+      "revId": "155e878f193fac3af3a99bf54f2e905b1ed906e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31574668_5e05ef1e",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResourceTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-13T00:31:02Z",
+      "side": 1,
+      "message": "Added new test for the non-media query case.",
+      "revId": "155e878f193fac3af3a99bf54f2e905b1ed906e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
