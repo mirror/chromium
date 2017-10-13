@@ -505,14 +505,15 @@ static const CGFloat kTabElementYOrigin = 6;
   [[target_ dragController] maybeStartDrag:event forTab:tab];
 }
 
-- (void)keyUp:(NSEvent*)event {
-  // Ignore dead keys.
-  if ([[event characters] length] == 0)
-    return;
-
-  unichar keyChar = [[event characters] characterAtIndex:0];
-  if (keyChar == '\r' || keyChar == '\n')
-    [self selectTab:self];
+- (void)keyDown:(NSEvent*)event {
+  if ([[event characters] length] > 0) {
+    unichar keyChar = [[event characters] characterAtIndex:0];
+    if (keyChar == '\r' || keyChar == '\n' || keyChar == ' ') {
+      [self selectTab:self];
+      return;
+    }
+  }
+  [super keyDown:event];
 }
 
 @end
