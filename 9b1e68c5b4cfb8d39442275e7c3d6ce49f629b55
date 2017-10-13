@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90a43bab_4908b0f9",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-13T16:53:42Z",
+      "side": 1,
+      "message": "No, there should be no circumstance where GetOrCreateForWebContents could return nullptr. Either the factory already existed and is returned, or a new one is created and returned. I could add a CHECK() if you like?",
+      "parentUuid": "6d76f07e_7adac5d9",
+      "range": {
+        "startLine": 354,
+        "startChar": 39,
+        "endLine": 354,
+        "endChar": 46
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7b790e_90300dc3",
         "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fc686112_4863d8b2",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-13T16:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7b790e_90300dc3",
+      "range": {
+        "startLine": 357,
+        "startChar": 11,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c384c3f_412fc6ac",
         "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-13T15:44:57Z",
       "side": 1,
       "message": "main_rfh()? here and below",
+      "range": {
+        "startLine": 475,
+        "startChar": 54,
+        "endLine": 475,
+        "endChar": 64
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcceb3c_7042b113",
+        "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-13T16:53:42Z",
+      "side": 1,
+      "message": "Fixed here. Below, there shouldn\u0027t be ANY calls to the function with any value, so I think that one should not be changed?",
+      "parentUuid": "7c384c3f_412fc6ac",
       "range": {
         "startLine": 475,
         "startChar": 54,
@@ -91,6 +163,30 @@
       "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d12a46_151ebcea",
+        "filename": "components/autofill/content/browser/content_autofill_driver_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-13T16:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6727bee_409794ef",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 481,
+        "endChar": 34
+      },
+      "revId": "9b1e68c5b4cfb8d39442275e7c3d6ce49f629b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
