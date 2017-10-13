@@ -16,6 +16,7 @@
 namespace blink {
 class ComputedStyle;
 class Length;
+class LayoutObject;
 class NGConstraintSpace;
 class NGBlockNode;
 class NGLayoutInputNode;
@@ -142,6 +143,9 @@ CORE_EXPORT void ApplyAutoMargins(const ComputedStyle& child_style,
 CORE_EXPORT LayoutUnit ConstrainByMinMax(LayoutUnit length,
                                          Optional<LayoutUnit> min,
                                          Optional<LayoutUnit> max);
+
+// Returns intrinsic padding if this is a table cell.
+NGBoxStrut GetTableCellIntrinsicPadding(const LayoutObject*);
 
 NGBoxStrut CalculateBorderScrollbarPadding(
     const NGConstraintSpace& constraint_space,

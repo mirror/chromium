@@ -219,6 +219,9 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
 
   child_available_size_ = adjusted_size;
 
+  NGBoxStrut intrinsic_padding =
+      GetTableCellIntrinsicPadding(Node().GetLayoutObject());
+
   // Anonymous constraint spaces are auto-sized. Don't let that affect
   // block-axis percentage resolution.
   if (ConstraintSpace().IsAnonymous())
@@ -238,8 +241,9 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
 
   // If we are resuming from a break token our start border and padding is
   // within a previous fragment.
-  intrinsic_block_size_ =
-      BreakToken() ? LayoutUnit() : border_scrollbar_padding_.block_start;
+  intrinsic_block_size_ = BreakToken() ? LayoutUnit()
+                                       : border_scrollbar_padding_.block_start +
+                                             intrinsic_padding.block_start;
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
 
@@ -367,8 +371,10 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   intrinsic_block_size_ += border_scrollbar_padding_.block_end;
 
   // Recompute the block-axis size now that we know our content size.
-  size.block_size = ComputeBlockSizeForFragment(ConstraintSpace(), Style(),
-                                                intrinsic_block_size_);
+  size.block_size = ComputeBlockSizeForFragment(
+                        ConstraintSpace(), Style(),
+                        intrinsic_block_size_ - intrinsic_padding.block_start) +
+                    intrinsic_padding.block_start + intrinsic_padding.block_end;
   container_builder_.SetBlockSize(size.block_size);
 
   // Non-empty blocks always know their position in space.

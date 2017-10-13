@@ -130,8 +130,8 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
     return RunOldLayout(constraint_space);
   }
   RefPtr<NGLayoutResult> layout_result;
-  if (box_->IsLayoutNGBlockFlow()) {
-    layout_result = ToLayoutNGBlockFlow(box_)->CachedLayoutResult(
+  if (box_->IsLayoutBlockFlow()) {
+    layout_result = ToLayoutBlockFlow(box_)->CachedLayoutResult(
         constraint_space, break_token);
     if (layout_result)
       return layout_result;
@@ -139,9 +139,9 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
 
   layout_result =
       LayoutWithAlgorithm(Style(), *this, box_, constraint_space, break_token);
-  if (box_->IsLayoutNGBlockFlow()) {
-    ToLayoutNGBlockFlow(box_)->SetCachedLayoutResult(
-        constraint_space, break_token, layout_result);
+  if (box_->IsLayoutBlockFlow()) {
+    ToLayoutBlockFlow(box_)->SetCachedLayoutResult(constraint_space,
+                                                   break_token, layout_result);
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
@@ -234,7 +234,7 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
 }
 
 NGLayoutInputNode NGBlockNode::FirstChild() {
-  auto* block = ToLayoutNGBlockFlow(box_);
+  auto* block = ToLayoutBlockFlow(box_);
   auto* child = GetLayoutObjectForFirstChildNode(block);
   if (!child)
     return nullptr;
@@ -244,7 +244,7 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGBlockFlow())
+  if (!box_->IsLayoutNGMixin())
     return false;
 
   return RuntimeEnabledFeatures::LayoutNGEnabled();
@@ -517,8 +517,8 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
             .ClampNegativeToZero());
   }
 
-  if (box_->IsLayoutNGBlockFlow() && box_->NeedsLayout()) {
-    ToLayoutNGBlockFlow(box_)->LayoutBlockFlow::UpdateBlockLayout(true);
+  if (box_->IsLayoutNGMixin() && box_->NeedsLayout()) {
+    ToLayoutBlockFlow(box_)->LayoutBlockFlow::UpdateBlockLayout(true);
   } else {
     box_->ForceLayout();
   }

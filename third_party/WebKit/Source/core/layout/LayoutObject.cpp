@@ -79,6 +79,7 @@
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/layout_ng_list_item.h"
+#include "core/layout/ng/layout_ng_table_cell.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/svg/SVGResources.h"
@@ -213,6 +214,8 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
+      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+        return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
       return new LayoutTableCaption(element);
@@ -676,10 +679,10 @@ LayoutBoxModelObject* LayoutObject::EnclosingBoxModelObject() const {
   return nullptr;
 }
 
-LayoutNGBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
+LayoutBlockFlow* LayoutObject::EnclosingNGBlockFlow() const {
   LayoutBox* box = EnclosingBox();
   DCHECK(box);
-  return box->IsLayoutNGBlockFlow() ? ToLayoutNGBlockFlow(box) : nullptr;
+  return box->IsLayoutNGMixin() ? ToLayoutBlockFlow(box) : nullptr;
 }
 
 LayoutBox* LayoutObject::EnclosingScrollableBox() const {
