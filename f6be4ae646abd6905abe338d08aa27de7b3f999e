@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "972a801a_32f17ad1",
+        "filename": "testing/buildbot/chromium.win.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T18:31:23Z",
+      "side": 1,
+      "message": "\"x86-86\" isn\u0027t a valid CPU type :).",
+      "revId": "f6be4ae646abd6905abe338d08aa27de7b3f999e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b28c4d_76dfe0bf",
+        "filename": "testing/buildbot/chromium.win.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T18:31:23Z",
+      "side": 1,
+      "message": "This is a 64-bit bot; we\u0027re not currently running the layout tests on Win10 x64, so this may or may not work right. I\u0027d skip it for now.",
+      "revId": "f6be4ae646abd6905abe338d08aa27de7b3f999e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
