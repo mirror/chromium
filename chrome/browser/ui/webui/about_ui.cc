@@ -94,31 +94,28 @@ using content::WebContents;
 
 namespace {
 
-const char kCreditsJsPath[] = "credits.js";
-const char kStatsJsPath[] = "stats.js";
-const char kStringsJsPath[] = "strings.js";
+constexpr char kCreditsJsPath[] = "credits.js";
+constexpr char kStatsJsPath[] = "stats.js";
+constexpr char kStringsJsPath[] = "strings.js";
 
 #if defined(OS_CHROMEOS)
 
-const char kKeyboardUtilsPath[] = "keyboard_utils.js";
+constexpr char kKeyboardUtilsPath[] = "keyboard_utils.js";
 
-// chrome://terms falls back to offline page after kOnlineTermsTimeoutSec.
-const int kOnlineTermsTimeoutSec = 7;
-
-// Helper class that fetches the online Chrome OS terms. Empty string is
-// returned once fetching failed or exceeded |kOnlineTermsTimeoutSec|.
-class ChromeOSOnlineTermsHandler : public net::URLFetcherDelegate {
+// Helper class to check whether the online Chrome OS terms is available by
+// sending a HEAD request. If the request fails or times out, online terms
+// page is assumed not accessible and the offline terms page will be used.
+// |kOnlineTermsTimeoutSec|.
+class ChromeOSOnlineTermsChecker : public net::URLFetcherDelegate {
  public:
-  typedef base::Callback<void (ChromeOSOnlineTermsHandler*)> FetchCallback;
+  using Callback = base::OnceCallback<void(const GURL&)>;
 
-  explicit ChromeOSOnlineTermsHandler(const FetchCallback& callback,
-                                      const std::string& locale)
-      : fetch_callback_(callback) {
-    std::string eula_URL = base::StringPrintf(chrome::kOnlineEulaURLPath,
-                                              locale.c_str());
-    eula_fetcher_ =
-        net::URLFetcher::Create(0 /* ID used for testing */, GURL(eula_URL),
-                                net::URLFetcher::GET, this);
+  ChromeOSOnlineTermsChecker(Callback callback, const std::string& locale)
+      : callback_(std::move(callback)) {
+    eula_fetcher_ = net::URLFetcher::Create(
+        0 /* ID used for testing */,
+        GURL(base::StringPrintf(chrome::kOnlineEulaURLPath, locale.c_str())),
+        net::URLFetcher::HEAD, this);
     eula_fetcher_->SetRequestContext(
         g_browser_process->system_request_context());
     eula_fetcher_->AddExtraRequestHeader("Accept: text/html");
@@ -126,29 +123,19 @@ class ChromeOSOnlineTermsHandler : public net::URLFetcherDelegate {
                                 net::LOAD_DO_NOT_SAVE_COOKIES |
                                 net::LOAD_DISABLE_CACHE);
     eula_fetcher_->Start();
-    // Abort the download attempt if it takes longer than one minute.
-    download_timer_.Start(FROM_HERE,
-                          base::TimeDelta::FromSeconds(kOnlineTermsTimeoutSec),
-                          this,
-                          &ChromeOSOnlineTermsHandler::OnDownloadTimeout);
-  }
 
-  void GetResponseResult(std::string* response_string) {
-    std::string mime_type;
-    if (!eula_fetcher_ ||
-        !eula_fetcher_->GetStatus().is_success() ||
-        eula_fetcher_->GetResponseCode() != 200 ||
-        !eula_fetcher_->GetResponseHeaders()->GetMimeType(&mime_type) ||
-        mime_type != "text/html" ||
-        !eula_fetcher_->GetResponseAsString(response_string)) {
-      response_string->clear();
-    }
+    // Limits the request to kOnlineTermsTimeoutSec. When it times out, the
+    // offline terms page will be used.
+    constexpr int kOnlineTermsTimeoutSec = 7;
+    request_timer_.Start(FROM_HERE,
+                         base::TimeDelta::FromSeconds(kOnlineTermsTimeoutSec),
+                         this, &ChromeOSOnlineTermsChecker::OnRequestTimeout);
   }
 
  private:
-  // Prevents allocation on the stack. ChromeOSOnlineTermsHandler should be
+  // Prevents allocation on the stack. ChromeOSOnlineTermsChecker should be
   // created by 'operator new'. |this| takes care of destruction.
-  ~ChromeOSOnlineTermsHandler() override {}
+  ~ChromeOSOnlineTermsChecker() override = default;
 
   // net::URLFetcherDelegate:
   void OnURLFetchComplete(const net::URLFetcher* source) override {
@@ -156,27 +143,38 @@ class ChromeOSOnlineTermsHandler : public net::URLFetcherDelegate {
       NOTREACHED() << "Callback from foreign URL fetcher";
       return;
     }
-    fetch_callback_.Run(this);
+    std::move(callback_).Run(GetCheckedOnlineEulaUrl());
     delete this;
   }
 
-  void OnDownloadTimeout() {
+  void OnRequestTimeout() {
     eula_fetcher_.reset();
-    fetch_callback_.Run(this);
+    std::move(callback_).Run(GURL());
     delete this;
   }
 
-  // Timer that enforces a timeout on the attempt to download the
-  // ChromeOS Terms.
-  base::OneShotTimer download_timer_;
+  GURL GetCheckedOnlineEulaUrl() const {
+    std::string mime_type;
+    if (!eula_fetcher_ || !eula_fetcher_->GetStatus().is_success() ||
+        eula_fetcher_->GetResponseCode() != 200 ||
+        !eula_fetcher_->GetResponseHeaders()->GetMimeType(&mime_type) ||
+        mime_type != "text/html") {
+      return GURL();
+    }
 
-  // |fetch_callback_| called when fetching succeeded or failed.
-  FetchCallback fetch_callback_;
+    return eula_fetcher_->GetOriginalURL();
+  }
+
+  // Timer that enforces a timeout on the online terms page check.
+  base::OneShotTimer request_timer_;
+
+  // |callback_| called when the HEAD request succeeded or failed.
+  Callback callback_;
 
   // Helper to fetch online eula.
   std::unique_ptr<net::URLFetcher> eula_fetcher_;
 
-  DISALLOW_COPY_AND_ASSIGN(ChromeOSOnlineTermsHandler);
+  DISALLOW_COPY_AND_ASSIGN(ChromeOSOnlineTermsChecker);
 };
 
 class ChromeOSTermsHandler
@@ -211,24 +209,30 @@ class ChromeOSTermsHandler
           base::BindOnce(&ChromeOSTermsHandler::LoadOemEulaFileAsync, this),
           base::BindOnce(&ChromeOSTermsHandler::ResponseOnUIThread, this));
     } else {
-      // Try to load online version of ChromeOS terms first.
-      // ChromeOSOnlineTermsHandler object destroys itself.
-      new ChromeOSOnlineTermsHandler(
-          base::Bind(&ChromeOSTermsHandler::OnOnlineEULAFetched, this),
+      // Check the online version of ChromeOS terms first.
+      // ChromeOSOnlineTermsChecker object destroys itself.
+      new ChromeOSOnlineTermsChecker(
+          base::Bind(&ChromeOSTermsHandler::OnOnlineEULAChecked, this),
           locale_);
     }
   }
 
-  void OnOnlineEULAFetched(ChromeOSOnlineTermsHandler* loader) {
+  void OnOnlineEULAChecked(const GURL& online_eula_url) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    loader->GetResponseResult(&contents_);
-    if (contents_.empty()) {
+    if (!online_eula_url.is_valid()) {
       // Load local ChromeOS terms from the file.
       base::PostTaskWithTraitsAndReply(
           FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
           base::BindOnce(&ChromeOSTermsHandler::LoadEulaFileAsync, this),
           base::BindOnce(&ChromeOSTermsHandler::ResponseOnUIThread, this));
     } else {
+      // This class serves chrome://terms, which runs in a privileged context
+      // with webui bindings. Hence, the unsafe online contents should not
+      // be served directly. Instead, redirect to load the online pages in a
+      // proper context.
+      contents_ =
+          base::StringPrintf("<meta http-equiv=\"refresh\" content=\"0; %s\">",
+                             online_eula_url.spec().c_str());
       ResponseOnUIThread();
     }
   }
@@ -780,14 +784,17 @@ bool AboutUIHTMLSource::ShouldAddContentSecurityPolicy() const {
   return content::URLDataSource::ShouldAddContentSecurityPolicy();
 }
 
-bool AboutUIHTMLSource::ShouldDenyXFrameOptions() const {
+std::string AboutUIHTMLSource::GetAccessControlAllowOriginForOrigin(
+    const std::string& origin) const {
 #if defined(OS_CHROMEOS)
-  if (source_name_ == chrome::kChromeUITermsHost) {
-    // chrome://terms page is embedded in iframe to chrome://oobe.
-    return false;
+  // Allow chrome://oobe to load chrome://terms via XHR.
+  if (source_name_ == chrome::kChromeUITermsHost &&
+      base::StartsWith(chrome::kChromeUIOobeURL, origin,
+                       base::CompareCase::SENSITIVE)) {
+    return origin;
   }
 #endif
-  return content::URLDataSource::ShouldDenyXFrameOptions();
+  return content::URLDataSource::GetAccessControlAllowOriginForOrigin(origin);
 }
 
 AboutUI::AboutUI(content::WebUI* web_ui, const std::string& name)

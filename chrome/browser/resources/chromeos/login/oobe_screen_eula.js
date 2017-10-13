@@ -9,7 +9,60 @@
 login.createScreen('EulaScreen', 'eula', function() {
   var CONTEXT_KEY_USAGE_STATS_ENABLED = 'usageStatsEnabled';
 
+  /**
+   * Load text/html contents from the given url into the given webview. Loaded
+   * data is set to webview via data url so that it is properly sandboxed.
+   *
+   * @param {!WebView} webview Webview element to host the terms.
+   * @param {!string} url URL to load terms contents.
+   */
+  function loadUrlToWebview(webview, url) {
+    assert(webview.tagName === 'WEBVIEW');
+
+    var onError = function() {
+      webview.src = 'about:blank';
+    };
+
+    var setContents = function(contents) {
+      webview.src =
+          'data:text/html;charset=utf-8,' + encodeURIComponent(contents);
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.setRequestHeader('Accept', 'text/html');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState != 4)
+        return;
+      if (xhr.status != 200) {
+        onError();
+        return;
+      }
+
+      var contentType = xhr.getResponseHeader('Content-Type');
+      if (contentType && !/text\/html/.test(contentType)) {
+        onError();
+        return;
+      }
+
+      setContents(xhr.response);
+    };
+    xhr.ontimeout = onError;
+
+    try {
+      xhr.send();
+    } catch (e) {
+      onError();
+    }
+  }
+
   return {
+    /**
+     * Tracks OEM Eula url so that it could be properly reloaded.
+     * @type {?string}
+     */
+    oemEulaUrl_: null,
+
     /** @override */
     decorate: function() {
       $('eula-chrome-credits-link').hidden = true;
@@ -27,6 +80,9 @@ login.createScreen('EulaScreen', 'eula', function() {
           .addEventListener('click', function(event) {
             $('popup-overlay').hidden = true;
           });
+
+      $('cros-eula-frame')
+          .addEventListener('contentload', this.onFrameLoad.bind(this));
 
       var self = this;
       $('usage-stats').addEventListener('click', function(event) {
@@ -64,11 +120,9 @@ login.createScreen('EulaScreen', 'eula', function() {
      * @param {object} data Screen init payload.
      */
     onBeforeShow: function() {
-      this.setMDMode_();
       $('eula').classList.add('eula-loading');
-      $('cros-eula-frame').onload = this.onFrameLoad;
       $('accept-button').disabled = true;
-      $('cros-eula-frame').src = 'chrome://terms';
+      this.updateLocalizedContent();
     },
 
     /**
@@ -143,16 +197,45 @@ login.createScreen('EulaScreen', 'eula', function() {
     updateLocalizedContent: function() {
       this.setMDMode_();
 
-      $('oobe-eula-md').updateLocalizedContent();
+      // Reload the terms contents.
+      if (!$('oobe-eula-md').hidden)
+        $('oobe-eula-md').updateLocalizedContent();
 
-      // Force iframes to refresh. It's only available method because we have
-      // no access to iframe.contentWindow.
-      if ($('cros-eula-frame').src) {
-        $('cros-eula-frame').src = $('cros-eula-frame').src;
+      if (!$('oobe-eula').hidden) {
+        this.loadEulaToWebview_($('cros-eula-frame'));
+        if (this.oemEulaUrl_)
+          loadUrlToWebview($('oem-eula-frame'), this.oemEulaUrl_);
       }
-      if ($('oem-eula-frame').src) {
-        $('oem-eula-frame').src = $('oem-eula-frame').src;
+    },
+
+    /**
+     * Sets url for OEM Eula. Oem Eula UI is hidden if the url is null or empty.
+     * @param {?string} oemEulaUrl The URL for OEM Eula.
+     */
+    setOemEulaUrl: function(oemEulaUrl) {
+      this.oemEulaUrl_ = oemEulaUrl;
+
+      if (this.oemEulaUrl_) {
+        loadUrlToWebview($('oem-eula-frame'), this.oemEulaUrl_);
+        $('eulas').classList.remove('one-column');
+      } else {
+        $('eulas').classList.add('one-column');
       }
+    },
+
+    /**
+     * Load terms contents into the given webview. The contents is fetched via
+     * XHR then put into a data url to pass to the webview. Webview is used as
+     * a sandbox for both online and local contents and data url is used so that
+     * webview never needs to have the privileged webui bindings.
+     *
+     * @param {!WebView} webview Webview element to host the terms.
+     */
+    loadEulaToWebview_: function(webview) {
+      assert(webview.tagName === 'WEBVIEW');
+
+      /** @type {string} */ var TERMS_URL = 'chrome://terms';
+      loadUrlToWebview(webview, TERMS_URL);
     },
   };
 });
