@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "108c1662_e8cee849",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-13T20:24:40Z",
+      "side": 1,
+      "message": "Yes! I do not like seeing console errors.",
+      "parentUuid": "dc87735e_b46cba9c",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd714f5b_ac358ebe",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
         "patchSetId": 1
