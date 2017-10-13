@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49fa3960_380a9dc7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/quick_open/FilteredListWidget.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T19:32:04Z",
+      "side": 0,
+      "message": "You should be reusing Sources.FilePathScoreFunction instead. Otherwise your sorting does not have a scorer.",
+      "revId": "1fa1eff47a519f8637f10ad65c0d81eef01597c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

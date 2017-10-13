@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff47444_71655a71",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T19:32:04Z",
+      "side": 1,
+      "message": "Why do you unconditionally show filter section?",
+      "revId": "dd28ca37e6215710898bcfddcbb515ff32bf44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568884c4_e9157e0b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T19:32:04Z",
+      "side": 1,
+      "message": "What is this behavior about?",
+      "revId": "dd28ca37e6215710898bcfddcbb515ff32bf44a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
