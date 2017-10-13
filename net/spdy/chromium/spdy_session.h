@@ -238,8 +238,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   typedef base::TimeTicks (*TimeFunc)(void);
 
   // Container class for unclaimed pushed streams on a SpdySession.  Guarantees
-  // that |spdy_session_.pool_| gets notified every time a stream is pushed or
-  // an unclaimed pushed stream is claimed.
+  // that the Http2PushPromiseIndex instance belonging to SpdySessionPool gets
+  // notified every time a stream is pushed by the server or an unclaimed pushed
+  // stream is claimed.
   class UnclaimedPushedStreamContainer {
    public:
     struct PushedStreamInfo {

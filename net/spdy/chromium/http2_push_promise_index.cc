@@ -25,7 +25,6 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     return base::WeakPtr<SpdySession>();
   }
 
-  DCHECK(url.SchemeIsCryptographic());
   for (WeakSessionList::iterator it = url_it->second.begin();
        it != url_it->second.end();) {
     base::WeakPtr<SpdySession> spdy_session = *it;
@@ -57,7 +56,6 @@ void Http2PushPromiseIndex::RegisterUnclaimedPushedStream(
     const GURL& url,
     base::WeakPtr<SpdySession> spdy_session) {
   DCHECK(!url.is_empty());
-  DCHECK(url.SchemeIsCryptographic());
 
   // Use lower_bound() so that if key does not exists, then insertion can use
   // its return value as a hint.
@@ -77,7 +75,6 @@ void Http2PushPromiseIndex::UnregisterUnclaimedPushedStream(
     const GURL& url,
     SpdySession* spdy_session) {
   DCHECK(!url.is_empty());
-  DCHECK(url.SchemeIsCryptographic());
 
   UnclaimedPushedStreamMap::iterator url_it =
       unclaimed_pushed_streams_.find(url);
