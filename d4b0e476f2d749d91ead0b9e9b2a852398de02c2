@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ce7171b4_17b0bb44",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T00:12:47Z",
+      "side": 1,
+      "message": "So it will still do the isolate step, but won\u0027t upload to isolate server, and it will still do the swarming step and collection parts, but all locally? (I think that\u0027s what it looks like on https://build.chromium.org/p/chromium.fyi/builders/Chromium%20Mac%2010.13/builds/271)\n\n(Just asking for my own curiosity)",
+      "parentUuid": "5bdd38bc_f0e2e9cb",
+      "revId": "d4b0e476f2d749d91ead0b9e9b2a852398de02c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cefb6803_85d2e1ee",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/mac.py",
         "patchSetId": 1
