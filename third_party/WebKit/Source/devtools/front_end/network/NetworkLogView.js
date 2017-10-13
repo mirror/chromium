@@ -133,7 +133,7 @@ Network.NetworkLogView = class extends UI.VBox {
     filterBar.addFilter(this._resourceCategoryFilterUI);
 
     this._filterParser = new TextUtils.FilterParser(Network.NetworkLogView._searchKeys);
-    this._suggestionBuilder = new Network.FilterSuggestionBuilder(
+    this._suggestionBuilder = new UI.SuggestBox.FilterSuggestionBuilder(
         Network.NetworkLogView._searchKeys, Network.NetworkLogView._sortSearchValues);
     this._resetSuggestionBuilder();
 
