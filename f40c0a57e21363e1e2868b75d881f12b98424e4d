@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67f90ecd_b4c05bbd",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T01:02:45Z",
+      "side": 1,
+      "message": "I was trying to avoid having a bunch of one-off whateverAnim variables. I just remembered a better pattern that Elly suggested — switched to it.",
+      "parentUuid": "8ba8b4db_f06f4b91",
+      "range": {
+        "startLine": 196,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209436bd_27d79a7f",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7c6c32_df0fa113",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T01:02:45Z",
+      "side": 1,
+      "message": "I had reasons but they aren\u0027t good. Changed.",
+      "parentUuid": "209436bd_27d79a7f",
+      "range": {
+        "startLine": 323,
+        "startChar": 24,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d21fd8d6_6673cad6",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T01:02:45Z",
+      "side": 1,
+      "message": "Thoughts on the current naming?",
+      "parentUuid": "ed647b7d_116ecb7b",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 22
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f8d2a27_5b4efa15",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6cbc825b_dd4d9346",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T01:02:45Z",
+      "side": 1,
+      "message": "It represents that the view exists but hasn\u0027t been added to the window yet. Its sublayers haven\u0027t been created either, so it doesn\u0027t make sense to run animations. Added a comment, lmk what you think.",
+      "parentUuid": "6f8d2a27_5b4efa15",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 19
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7dd521_5a940d1c",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e979a4b1_9026c49c",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-13T01:02:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7dd521_5a940d1c",
+      "range": {
+        "startLine": 374,
+        "startChar": 32,
+        "endLine": 374,
+        "endChar": 0
+      },
+      "revId": "f40c0a57e21363e1e2868b75d881f12b98424e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
