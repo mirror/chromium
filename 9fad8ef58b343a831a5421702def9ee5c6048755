@@ -45,6 +45,30 @@
       "revId": "9fad8ef58b343a831a5421702def9ee5c6048755",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4991539d_a341ce75",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-13T15:47:06Z",
+      "side": 1,
+      "message": "Rohit and I talked about this and we didn\u0027t want to pass a VC into the view layer.",
+      "parentUuid": "410a47cd_76569384",
+      "range": {
+        "startLine": 600,
+        "startChar": 30,
+        "endLine": 600,
+        "endChar": 49
+      },
+      "revId": "9fad8ef58b343a831a5421702def9ee5c6048755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
