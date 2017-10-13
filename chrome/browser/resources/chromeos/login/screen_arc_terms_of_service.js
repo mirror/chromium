@@ -219,6 +219,9 @@ login.createScreen('ArcTermsOfServiceScreen', 'arc-tos', function() {
         this.reloadPlayStoreToS();
       }
 
+      window.requestAnimationFrame(function() {
+        Oobe.getInstance().updateScreenSize(this);
+      }.bind(this));
     },
 
     /**
