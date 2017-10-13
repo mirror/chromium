@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1efe0b27_fda4b0ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-13T14:39:21Z",
+      "side": 1,
+      "message": "I think I am missing something. This CL only removes the url.SchemeIsCryptographic() checks. I don\u0027t see the call places which actually *register* and *unregister*  push streams. Shouldn\u0027t those callplaces be modified given that the checks are removed?",
+      "revId": "c8dd245d79e8fd8792ed8ee6654a11abce41dacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
