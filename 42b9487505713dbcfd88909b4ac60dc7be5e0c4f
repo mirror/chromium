@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c4c130_e626d25a",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-13T22:03:15Z",
+      "side": 1,
+      "message": "Let make this more general: _CheckNoUncomittedFiles, this way we can also later simplify the _CheckPerfJsonUpToDate by just always execute tools/perf/generate_perf_data.\n\nDoing this also simplify your code as you no longer need to care whether the uncommitted files contain generate_system_health_csv. As long as there are uncommitted files, this check should fail.",
+      "revId": "42b9487505713dbcfd88909b4ac60dc7be5e0c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
