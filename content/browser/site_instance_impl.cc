@@ -453,12 +453,6 @@ bool SiteInstanceImpl::ShouldLockToOrigin(BrowserContext* browser_context,
   if (site_url.SchemeIs(content::kGuestScheme))
     return false;
 
-  // TODO(creis, nick) https://crbug.com/510588 Chrome UI pages use the same
-  // site (chrome://chrome), so they can't be locked because the site being
-  // loaded doesn't match the SiteInstance.
-  if (site_url.SchemeIs(content::kChromeUIScheme))
-    return false;
-
   // TODO(creis, nick): Until we can handle sites with effective URLs at the
   // call sites of ChildProcessSecurityPolicy::CanAccessDataForOrigin, we
   // must give the embedder a chance to exempt some sites to avoid process
