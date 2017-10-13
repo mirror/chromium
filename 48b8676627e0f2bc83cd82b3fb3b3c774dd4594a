@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1724e24_a8fc268f",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-13T18:52:21Z",
+      "side": 1,
+      "message": "I know this is a test but please don\u0027t use innerHTML to set text content. Use innerText or createTextNode\n\nel.appendChild(document.createTextNode(\u0027YouWebTorrentVa\u0027));",
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b1b7c0_1790d0c4",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-13T18:52:21Z",
+      "side": 1,
+      "message": "Move outside of loop.",
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a408ed_35817823",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/mac-system-ui-trak.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-13T18:52:21Z",
+      "side": 1,
+      "message": "This element is never used.",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "48b8676627e0f2bc83cd82b3fb3b3c774dd4594a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
