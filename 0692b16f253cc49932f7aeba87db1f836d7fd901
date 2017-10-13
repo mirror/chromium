@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f66875d7_afa171be",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "Should this file be in Tools/Scripts, like check-webkit-style and so on?",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311b969e_8141fe71",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -54,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "14fa2071_5f34f6e1",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: I don\u0027t usually see trailing commas in one-line lists.",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13f83230_f2969bd5",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
@@ -65,6 +99,126 @@
       "writtenOn": "2017-10-13T08:30:15Z",
       "side": 1,
       "message": "This is actually used outside webgl as well, so maybe this should just be a global exception? It seems OK to allow this one generically anyway.",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edecf154_769893b9",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly.",
+      "parentUuid": "13f83230_f2969bd5",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3689c0c_b02f09fb",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: .. -\u003e .",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd21537_0cad7b3d",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: all comments are notes; this can just say \"If a particular key...\".",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a449210_a1531ca5",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: factor this common logic into a little function, to dedupe?\n\n_UNMATCHABLE_RE \u003d re.compile(r\u0027.^\u0027)\ndef _join_and_compile_regexp(regexp_list):\n    if regexp_list:\n        return re.compile(\u0027(?:%s)$\u0027 % \u0027|\u0027.join(regexp_list))\n    else:\n        return _UNMATCHABLE_RE\n\nand then you can just use it like:\n\nentry[\u0027allowed\u0027] \u003d _join_and_compile_regexp(entry.get(\u0027allowed\u0027))",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130361d6_216857aa",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "Mutating this in-place seems a little surprising. Having found the definition of _CONFIG, I would have expected the type of the patterns to be string, not a re pattern. Maybe make this a function from the raw data to the compiled form, or similar?",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8f7dbc_32afbb19",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "Mind echoing the comment in the CL description here, for posterity? (At least in summary, so it\u0027s clearer to someone looking at the code in the future.)",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2819ed33_8592094e",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: sorted already supports reversing: sorted(configs, key\u003dlambda x: len(x[\u0027path\u0027]), reverse\u003dTrue)\n\nnit: the reuse of a variable to hold data of a different format is mildly confusing. Maybe just reuse configs when sorting (at which point you can do so in-place), and then return?\n\n    configs.sort(key\u003dlambda x: len(x[\u0027path\u0027]), reverse\u003dTrue)\n    return [entry[\u0027config\u0027] for entry in configs]\n\nIt\u0027s even a little more concise if you put len(path) in |configs| instead (here assuming \"from operator import itemgetter\"), but I don\u0027t think the difference matters much.\n\n    configs.sort(key\u003ditemgetter(\u0027relevance\u0027), reverse\u003dTrue)\n    return [entry[\u0027config\u0027] for entry in configs]",
       "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
