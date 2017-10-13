@@ -550,7 +550,7 @@ class TabStripModel {
   Profile* profile_;
 
   // True if all tabs are currently being closed via CloseAllTabs.
-  bool closing_all_;
+  bool closing_all_ = false;
 
   // An object that determines where new Tabs should be inserted and where
   // selection should move when a Tab is closed.
@@ -560,9 +560,6 @@ class TabStripModel {
   base::ObserverList<TabStripModelObserver> observers_;
 
   ui::ListSelectionModel selection_model_;
-
-  // TODO(sky): remove this; used for debugging 291265.
-  bool in_notify_;
 
   base::WeakPtrFactory<TabStripModel> weak_factory_;
 
