@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ccdf711_061c3f36",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-13T04:39:34Z",
+      "side": 1,
+      "message": "None of the surrounding code has this comment. I\u0027m inclined to be consistent and not add the comment. I also think the boolean is rather obvious in this context.",
+      "range": {
+        "startLine": 770,
+        "startChar": 60,
+        "endLine": 770,
+        "endChar": 72
+      },
+      "revId": "eab9552a09d352cf1f945376f90eeeb566c3e8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
