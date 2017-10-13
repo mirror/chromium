@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "51e4f13f_8cef8bb1",
+        "filename": "ios/chrome/browser/ui/main/main_containing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-13T18:08:59Z",
+      "side": 1,
+      "message": "A lot of the code in BVC\u0027s overridden -presentVC: doesn\u0027t seem like it belongs in BVC. It looks like it should be in mainController or elsewhere. However, it shouldn\u0027t hold up this CL. I\u0027m fine with this, given the legacy reasons.",
+      "parentUuid": "87d0ecaf_320233a9",
+      "range": {
+        "startLine": 79,
+        "startChar": 3,
+        "endLine": 79,
+        "endChar": 50
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0380ee2_64cd4fcc",
         "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.h",
         "patchSetId": 3
@@ -187,6 +211,30 @@
     },
     {
       "key": {
+        "uuid": "4df8c79c_732d3ff4",
+        "filename": "ios/chrome/browser/ui/main/main_presenting_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-13T18:08:59Z",
+      "side": 1,
+      "message": "I don\u0027t recall why I wrote this comment. Lol.\nFor some reason I thought it called [super dismissVC]. Pls disregard.",
+      "parentUuid": "d0830bb7_2bb2204e",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 1
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7517ffb_7d751a75",
         "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
         "patchSetId": 3
@@ -203,6 +251,29 @@
         "startChar": 57,
         "endLine": 19,
         "endChar": 77
+      },
+      "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5c6b36_1543585d",
+        "filename": "ios/chrome/browser/ui/main/view_controller_swapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-13T18:08:59Z",
+      "side": 1,
+      "message": "For the same reason that marq@ mentioned, perhaps remove \"swaps in and\" here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 11
       },
       "revId": "8df70736b7e887a56ce9d40651173a7521b80bf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
