@@ -20,6 +20,16 @@ namespace device {
 namespace {
 
 const char kTestServiceName[] = "device_unittests";
+const char kTestGeolocationApiKey[] = "";
+
+// Simple request context producer that immediately produces a nullptr
+// URLRequestContextGetter.
+void NullRequestContextProducer(
+    base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
+        response_callback) {
+  std::move(response_callback)
+      .Run(scoped_refptr<net::URLRequestContextGetter>(nullptr));
+}
 
 // The test service responsible to package Device Service.
 class ServiceTestClient : public service_manager::test::ServiceTestClient,
@@ -50,11 +60,15 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
 #if defined(OS_ANDROID)
       device_service_context_.reset(new service_manager::ServiceContext(
           CreateDeviceService(file_task_runner_, io_task_runner_,
+                              base::Bind(&NullRequestContextProducer),
+                              kTestGeolocationApiKey,
                               wake_lock_context_callback_, nullptr),
           std::move(request)));
 #else
       device_service_context_.reset(new service_manager::ServiceContext(
-          CreateDeviceService(file_task_runner_, io_task_runner_),
+          CreateDeviceService(file_task_runner_, io_task_runner_,
+                              base::Bind(&NullRequestContextProducer),
+                              kTestGeolocationApiKey),
           std::move(request)));
 #endif
     }
