@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549d1ffb_9207d995",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:35:14Z",
+      "side": 1,
+      "message": "If you are going with default here, I\u0027d use the one from kClientSidePreviewsFieldTrial instead (what offline does). I\u0027m not sure why this would be tied to either though, so if there is a specific reason for having the same threshold as client lofi, it should be fine.",
+      "revId": "5ff5465680135c2ab0e3de6f9d78dde619598940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84e27eb_651c203c",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:35:14Z",
+      "side": 1,
+      "message": "I\u0027d just add a param along with the feature with a default of 0\n\nreturn GetFieldTrialParamByFeatureAsInt(features::kNoScriptPreview, kVersion,\n                                          0);",
+      "revId": "5ff5465680135c2ab0e3de6f9d78dde619598940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b717e4ff_b62f81c8",
+        "filename": "components/previews/core/previews_experiments.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T18:35:14Z",
+      "side": 1,
+      "message": "nit: add comments, or feel free to re-order the file to:\n\n// Whether the preview type is enabled.\nIsXEnabled\nIsYEnabled\nIsZEnabled\n\n// The blacklist version of each preview type.\nXVersion\nYVersion\nZVersion",
+      "revId": "5ff5465680135c2ab0e3de6f9d78dde619598940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
