@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "ash/accessibility/accessibility_delegate.h"
+#include "ash/login/lock_screen_controller.h"
 #include "ash/message_center/message_center_bubble.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
@@ -587,6 +588,11 @@ void WebNotificationTray::ClickedOutsideBubble() {
 }
 
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
+  Shell::Get()
+      ->lock_screen_controller()
+      ->metrics()
+      ->RecordUserClickEventOnLockScreen(
+          LoginMetricsRecorder::LockScreenUserClickTarget::kNotificationTray);
   if (message_center_bubble())
     CloseBubble();
   else
