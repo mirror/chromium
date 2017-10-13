@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/MinMaxSize.h"
+#include "core/layout/ng/inline/ng_line_box_fragment_builder.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"

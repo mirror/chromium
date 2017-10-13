@@ -15,6 +15,7 @@ class NGBlockNode;
 class NGBlockBreakToken;
 class NGBreakToken;
 class NGConstraintSpace;
+class NGFragmentBuilder;
 struct NGLogicalSize;
 
 class CORE_EXPORT NGPageLayoutAlgorithm
