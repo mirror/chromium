@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264c314a_9747df23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T21:26:26Z",
+      "side": 1,
+      "message": "That\u0027s not what this patch does though, right?",
+      "revId": "1bca948c3fbd111888800de38f7c5ccbdaa68ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb7b47d_6e0c1c7a",
+        "filename": "tools/cfi/blacklist.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T21:26:26Z",
+      "side": 1,
+      "message": "I think some of these Windows lines (34-39) are for cross-DSO calls, so they\u0027d also need to be in the cfi-vcall blacklist. Perhaps create a separate block in this file for cross-DSO calls, we can put the Windows lines there as well as the new icall lines you\u0027re adding in the other patch.",
+      "revId": "1bca948c3fbd111888800de38f7c5ccbdaa68ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
