@@ -10,17 +10,18 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
+#include "content/public/browser/background_fetch_response.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
 
 class BackgroundFetchDelegate;
 class BackgroundFetchJobController;
-struct BackgroundFetchResponse;
 
 // Proxy class for passing messages between BackgroundFetchJobControllers on the
 // IO thread and BackgroundFetchDelegate on the UI thread.
@@ -55,10 +56,18 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
 
   ~BackgroundFetchDelegateProxy();
 
+  void CreateDownloadJob(const std::string& jobId,
+                         const std::string& title,
+                         const url::Origin& origin,
+                         int completed_parts,
+                         int total_parts,
+                         const std::vector<std::string>& current_guids);
+
   // Requests that the download manager start fetching |request|.
   // Should only be called from the Controller (on the IO
   // thread).
-  void StartRequest(base::WeakPtr<Controller> job_controller,
+  void StartRequest(const std::string& jobId,
+                    base::WeakPtr<Controller> job_controller,
                     const url::Origin& origin,
                     scoped_refptr<BackgroundFetchRequestInfo> request);
 
@@ -76,12 +85,12 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  private:
   class Core;
 
-  // Called when the given download identified by |guid| has been completed.
-  // Should only be called on the IO thread.
+  // Called wen the download identified by |guid| has completed. This includes
+  // failure cases. Should only be called on the IO thread.
   void OnDownloadComplete(const std::string& guid,
                           std::unique_ptr<BackgroundFetchResult> result);
 
-  // Called when progerss has been made for the download identified by |guid|.
+  // Called when progress has been made for the download identified by |guid|.
   // Should only be called on the IO thread.
   void OnDownloadUpdated(const std::string& guid, uint64_t bytes_downloaded);
 
