@@ -6,6 +6,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/pref_service_factory.h"
@@ -42,9 +43,7 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
 class IOSChromeIOThreadTest : public PlatformTest {
  public:
   IOSChromeIOThreadTest()
-      : loop_(base::MessageLoop::TYPE_IO),
-        ui_thread_(web::WebThread::UI, &loop_),
-        io_thread_(web::WebThread::IO, &loop_) {
+      : thread_bundle_(web::TestWebThreadBundle::REAL_IO_THREAD) {
     net::URLRequestFailedJob::AddUrlHandler();
   }
 
@@ -53,9 +52,7 @@ class IOSChromeIOThreadTest : public PlatformTest {
   }
 
  private:
-  base::MessageLoop loop_;
-  web::TestWebThread ui_thread_;
-  web::TestWebThread io_thread_;
+  web::TestWebThreadBundle thread_bundle_;
 };
 
 TEST_F(IOSChromeIOThreadTest, AssertNoUrlRequests) {
