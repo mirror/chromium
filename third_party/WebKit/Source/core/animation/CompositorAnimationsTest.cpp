@@ -59,6 +59,7 @@
 
 namespace blink {
 
+/*
 class AnimationCompositorAnimationsTest : public ::testing::Test {
  protected:
   RefPtr<TimingFunction> linear_timing_function_;
@@ -1332,5 +1333,6 @@ TEST_F(AnimationCompositorAnimationsTest,
   element->SetLayoutObject(nullptr);
   LayoutObjectProxy::Dispose(layout_object);
 }
+*/
 
 }  // namespace blink

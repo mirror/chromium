@@ -17,6 +17,7 @@
 
 namespace blink {
 
+/*
 class AnimationEffectStackTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
@@ -210,5 +211,6 @@ TEST_F(AnimationEffectStackTest, ForwardsFillDiscarding) {
   EXPECT_EQ(GetDoubleValue(interpolations, CSSPropertyFontSize), 3);
   EXPECT_EQ(1u, SampledEffectCount());
 }
+*/
 
 }  // namespace blink
