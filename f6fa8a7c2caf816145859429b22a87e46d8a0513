@@ -53,6 +53,234 @@
     },
     {
       "key": {
+        "uuid": "5d456980_025a2219",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2747,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Should we DCHECK also that pending_interfaces_ is not bound or invalid?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30f5fe5_5e443232",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2897,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Since we will be skipping a security check, is there any other way to judge whether this is running in a unit test environment?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a77f525_aed7bd7b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "nit: is?",
+      "range": {
+        "startLine": 2898,
+        "startChar": 57,
+        "endLine": 2898,
+        "endChar": 59
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7581293_3b048828",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2934,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Let\u0027s put this parameter to be before the routing ids, as this way it splits them and makes code of callers a bit harder to read. It will also keep similarly typed arguments together.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab832ed_cd50a9a3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "nit: child frame",
+      "range": {
+        "startLine": 271,
+        "startChar": 51,
+        "endLine": 271,
+        "endChar": 56
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5089198b_d4060c7a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "nit: renderer process.",
+      "range": {
+        "startLine": 272,
+        "startChar": 21,
+        "endLine": 272,
+        "endChar": 29
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f2315f_a5f07735",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Is this instance of the word \"pipe\" needed here? It makes the sentence hard to read.",
+      "range": {
+        "startLine": 661,
+        "startChar": 37,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9010dafd_b665c782",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "nit: reset instead of re-furbished?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c7bc09_a9b941d3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "The word pending here is a bit strange. It doesn\u0027t appear in the naming of the parameter, so if we want to convey this notion of pending, it is best to be in the name of the parameter. Otherwise it requires always reading this full comment to understand the intended behavior.",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad30021d_c6bc4f36",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Why is this optional?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7862c05b_d243206c",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "nit: interfaces_provider?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cb2566_2a0b2f31",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T22:26:31Z",
+      "side": 1,
+      "message": "Why do we need to add these? It doesn\u0027t seem desirable for CreateParams to be copiable, is it?",
+      "revId": "f6fa8a7c2caf816145859429b22a87e46d8a0513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "120915d1_86b7ee03",
         "filename": "content/test/test_render_frame.cc",
         "patchSetId": 19
