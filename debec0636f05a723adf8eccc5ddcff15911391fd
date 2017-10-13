@@ -22,6 +22,30 @@
       "revId": "debec0636f05a723adf8eccc5ddcff15911391fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f88e80a_00f1e249",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 22
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-10-13T17:20:43Z",
+      "side": 1,
+      "message": "SG. I will prepare a separate CL to fix this. Maybe also worthwhile to fix the descriptions in UMA, too.",
+      "parentUuid": "c50a13f1_071a8b3b",
+      "range": {
+        "startLine": 1440,
+        "startChar": 30,
+        "endLine": 1440,
+        "endChar": 32
+      },
+      "revId": "debec0636f05a723adf8eccc5ddcff15911391fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
