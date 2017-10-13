@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a36a9c5_63c8d18d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-13T12:18:08Z",
+      "side": 1,
+      "message": "note: This fix should not be needed.",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b628cb_c7d58a49",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-13T12:18:08Z",
+      "side": 1,
+      "message": "note: This fix should not be needed.",
+      "revId": "19aaad22117e1bb44c1c3d1a26f23bc01b3475f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
