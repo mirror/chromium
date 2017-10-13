@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e9238b_900c3477",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T22:14:16Z",
+      "side": 1,
+      "message": "This is a limitation by the webrtc layer, a bug is filed.",
+      "revId": "d43749e32d9e54ac079659d7b6f2feab6d10dcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0e8099c_7cc9e2da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T22:14:16Z",
+      "side": 1,
+      "message": "This is a limitation by the webrtc layer, a bug is filed.",
+      "revId": "d43749e32d9e54ac079659d7b6f2feab6d10dcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2164d382_8c4c69a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T22:14:16Z",
+      "side": 1,
+      "message": "This is a known difference, we changed the spec as a result to discussion around implementing this.",
+      "revId": "d43749e32d9e54ac079659d7b6f2feab6d10dcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f019f7db_dcacd029",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-setRemoteDescription-tracks.https-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-13T22:14:16Z",
+      "side": 1,
+      "message": "Our implementation is expected to remove receivers until we have transceiver / unified plan support.",
+      "revId": "d43749e32d9e54ac079659d7b6f2feab6d10dcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
