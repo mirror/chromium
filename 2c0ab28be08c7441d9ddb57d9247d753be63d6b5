@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa260bcb_a6e2958a",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-13T19:56:32Z",
+      "side": 0,
+      "message": "So happy to see this line deleted.",
+      "revId": "2c0ab28be08c7441d9ddb57d9247d753be63d6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dee9223_238b78fd",
         "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
         "patchSetId": 2
@@ -31,6 +48,23 @@
       "side": 0,
       "message": "These two tests covered the no-elision-available workaround, which is being removed.  I think keep the test would be more confusing than helpful.",
       "parentUuid": "9dee9223_238b78fd",
+      "revId": "2c0ab28be08c7441d9ddb57d9247d753be63d6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573e0df9_26e88580",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-13T19:56:32Z",
+      "side": 0,
+      "message": "Maybe change names of these tests to \"Elision\" and \"LongPaths\" and check that we don\u0027t hit unsupported modes with these URLs (i.e., EXPECT_EQ(kCount, ...))",
       "revId": "2c0ab28be08c7441d9ddb57d9247d753be63d6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
