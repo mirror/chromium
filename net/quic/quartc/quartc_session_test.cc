@@ -661,6 +661,18 @@ TEST_F(QuartcSessionTest, GetStats) {
   EXPECT_GT(stats.bandwidth_estimate_bits_per_second, 0);
 }
 
+TEST_F(QuartcSessionTest, CloseConnection) {
+  CreateClientAndServerSessions();
+  StartHandshake();
+  ASSERT_TRUE(client_peer_->IsCryptoHandshakeConfirmed());
+  ASSERT_TRUE(server_peer_->IsCryptoHandshakeConfirmed());
+
+  client_peer_->CloseConnection("Connection closed by client");
+  EXPECT_FALSE(client_peer_->session_delegate()->connected());
+  RunTasks();
+  EXPECT_FALSE(server_peer_->session_delegate()->connected());
+}
+
 }  // namespace
 
 }  // namespace net
