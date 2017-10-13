@@ -103,7 +103,7 @@ public class DownloadForegroundServiceManager {
         // Stop the foreground service.
         // In the pending case, this will stop the foreground immediately after it was started.
         if (!isActive(downloadUpdate.mDownloadStatus)) {
-            stopAndUnbindService(downloadUpdate.mDownloadStatus == DownloadStatus.CANCEL);
+            stopAndUnbindService(downloadUpdate.mDownloadStatus);
             cleanDownloadUpdateQueue();
             return;
         }
@@ -221,25 +221,36 @@ public class DownloadForegroundServiceManager {
     /** Helper code to stop and unbind service. */
 
     @VisibleForTesting
-    void stopAndUnbindService(boolean isCancelled) {
+    void stopAndUnbindService(DownloadStatus downloadStatus) {
         mIsServiceBound = false;
 
         if (mBoundService != null) {
-            stopAndUnbindServiceInternal(isCancelled);
+            // Pause: only try to detach, do not kill notification.
+            // Complete/failed: try to detach, if that doesn't work, kill.
+            // Cancel: don't even try to detach, just kill.
+            boolean detachNotification = downloadStatus == DownloadStatus.PAUSE
+                    || downloadStatus == DownloadStatus.COMPLETE
+                    || downloadStatus == DownloadStatus.FAIL;
+            boolean killNotification = downloadStatus == DownloadStatus.CANCEL
+                    || downloadStatus == DownloadStatus.COMPLETE
+                    || downloadStatus == DownloadStatus.FAIL;
+
+            stopAndUnbindServiceInternal(detachNotification, killNotification);
             mBoundService = null;
         }
 
-        // If the download isn't cancelled,  need to relaunch the notification so it is no longer
+        // If the download is completed,  need to relaunch the notification so it is no longer
         // pinned to the foreground service.
-        if (!isCancelled && Build.VERSION.SDK_INT < 24) {
+        if ((downloadStatus == DownloadStatus.COMPLETE || downloadStatus == DownloadStatus.FAIL)
+                && Build.VERSION.SDK_INT < 24) {
             relaunchPinnedNotification();
         }
         mPinnedNotificationId = INVALID_NOTIFICATION_ID;
     }
 
     @VisibleForTesting
-    void stopAndUnbindServiceInternal(boolean isCancelled) {
-        mBoundService.stopDownloadForegroundService(isCancelled);
+    void stopAndUnbindServiceInternal(boolean detachNotification, boolean killNotification) {
+        mBoundService.stopDownloadForegroundService(detachNotification, killNotification);
         ContextUtils.getApplicationContext().unbindService(mConnection);
         DownloadForegroundServiceObservers.removeObserver(
                 DownloadNotificationServiceObserver.class);
