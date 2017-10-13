@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bee209e_b6cc02e3",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36ef4d4_b134bb5d",
+      "range": {
+        "startLine": 377,
+        "startChar": 18,
+        "endLine": 377,
+        "endChar": 49
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd61ce7_67699bcb",
         "filename": "content/browser/frame_host/frame_tree_node.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdbcd95_28fadaaa",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd61ce7_67699bcb",
+      "range": {
+        "startLine": 209,
+        "startChar": 42,
+        "endLine": 209,
+        "endChar": 72
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "75397b36_bd545be0",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "939a4e20_b5fb7de2",
+      "range": {
+        "startLine": 218,
+        "startChar": 71,
+        "endLine": 218,
+        "endChar": 74
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a753ad_f6f2a6c0",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6929449d_ccb2f869",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Yes, I left that here so that this CL can be essentially just a refactoring.",
+      "parentUuid": "69a753ad_f6f2a6c0",
+      "range": {
+        "startLine": 190,
+        "startChar": 31,
+        "endLine": 190,
+        "endChar": 69
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c685776f_8d93b23a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "That was my thought as well; almost all usage was in tests, and it\u0027s easy enough to define convenience methods or macros there if it gets really ugly.",
+      "parentUuid": "925972aa_ef37e6ae",
+      "range": {
+        "startLine": 948,
+        "startChar": 25,
+        "endLine": 948,
+        "endChar": 61
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a85983c_c94f95c1",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00693a74_9cd9000e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4051,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a85983c_c94f95c1",
+      "range": {
+        "startLine": 4050,
+        "startChar": 10,
+        "endLine": 4051,
+        "endChar": 23
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ff41e495_beee2fbf",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4202,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247248f8_5244ff5a",
+      "range": {
+        "startLine": 4202,
+        "startChar": 11,
+        "endLine": 4202,
+        "endChar": 49
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a90328c4_8eef7742",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 7
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "8e85f230_9d96ec00",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Yes, and yes. I need to write it into the spec, but I don\u0027t think that popups should be usable as a means to get around feature policy. This refactor made it clear that we weren\u0027t doing that currently, but I didn\u0027t want to make any behavioral changes in this CL.\n\nComment fixed. (And crbug issue filed and linked)",
+      "parentUuid": "a90328c4_8eef7742",
+      "range": {
+        "startLine": 699,
+        "startChar": 43,
+        "endLine": 699,
+        "endChar": 48
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a52eb2e_fdc3f3c8",
         "filename": "content/common/frame_replication_state.h",
         "patchSetId": 7
@@ -206,6 +398,30 @@
       "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dae934_75f7cf8e",
+        "filename": "content/common/frame_replication_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-13T19:13:53Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "1a52eb2e_fdc3f3c8",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 30
+      },
+      "revId": "b72e404b02fb86af4d7e0c2355719693de249e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
