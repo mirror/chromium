@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "764d3c72_c5a33afa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T17:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f9d9e5c_18bfb64e",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e83d1dd7_bf8a866b",
         "filename": "DEPS",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "61e0006d_2b15daf7",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T17:21:51Z",
+      "side": 1,
+      "message": "I did. The delta here is https://chromium.googlesource.com/chromium/deps/findbugs/+/57f05238d3ac77ea0a194813d3065dd780c6e566..4275d9ac8610db6b1bc9a5e887f97e41b33fac67",
+      "parentUuid": "e83d1dd7_bf8a866b",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24aaed26_c01d27ae",
         "filename": "components/web_restrictions/browser/junit/src/org/chromium/components/webrestrictions/browser/WebRestrictionsClientTest.java",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "b416a85264719fcf06de70f1a416aae73079656a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a12e4e_c12a143e",
+        "filename": "components/web_restrictions/browser/junit/src/org/chromium/components/webrestrictions/browser/WebRestrictionsClientTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T17:21:51Z",
+      "side": 1,
+      "message": "Yeah, w/ Mockito, that doesn\u0027t quite work. We need to create the instance outside of Robolectric. However, we can use a slightly less internal interface to do this.",
+      "parentUuid": "24aaed26_c01d27ae",
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "b416a85264719fcf06de70f1a416aae73079656a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97274f41_86bf3b0b",
+        "filename": "third_party/robolectric/local/robolectric/src/main/resources/robolectric-version.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T17:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80482448_f2942489",
+      "range": {
+        "startLine": 1,
+        "startChar": 20,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "b416a85264719fcf06de70f1a416aae73079656a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
