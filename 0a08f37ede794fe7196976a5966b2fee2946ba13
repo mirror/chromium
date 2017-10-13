@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7348570_9c581ae8",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T18:29:19Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a right way to do it. We state in our protocol [1] that coordinates are in DIP, and this violates it. Also, I don\u0027t get how the new mode affects input, isn\u0027t it for rendering only?\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/inspector/browser_protocol.json?rcl\u003d05d62532c8f1547464030cf32ba502e0f8429005\u0026l\u003d4304",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3545ee48_0ad8239c",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T18:29:19Z",
+      "side": 1,
+      "message": "Please help me understand this: is metadata.page_scale_factor bogus in the new mode? \nCould you provide example numbers of metadata fields and view size with/without this flag?\nBasically, I want to understand whether we should instead report different page scale factor to the client below.",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5b22e0_693ba5e1",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T18:29:19Z",
+      "side": 1,
+      "message": "Here is a page scale factor we send to the client. Does it differ with a flag? Should we instead send a different number here?",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
