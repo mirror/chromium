@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a74e3ae_d1295f33",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T18:54:24Z",
+      "side": 1,
+      "message": "Thanks for explanation. It would be nice to see this being cleaned up. I remember more changes like this one when it was introduced for ChromeOS, and this makes it really hard to reason about different scales anywhere, unfortunately. Are there any plans?\n\nMeanwhile, does it make sense to introduce helper methods on CompositorFrameMetadata and/or similar ones to not make every single client do a conditional conversion?",
+      "parentUuid": "8abf6c15_8ddfea2f",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be5b22e0_693ba5e1",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 5
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "\u003e Here is a page scale factor we send to the client. Does it differ with a flag? Should we instead send a different number here?\n\nHmm, you are right. This looks like everything is scaled to physical pixels.",
       "parentUuid": "be5b22e0_693ba5e1",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b53175_5ad0ee0b",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T18:54:24Z",
+      "side": 1,
+      "message": "Then we should adjust here and undo the input_handler change.",
+      "parentUuid": "4b3ca3ef_63958e15",
       "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
