@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "820e2262_0b2eaa91",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T17:08:56Z",
+      "side": 1,
+      "message": "That has \"https\" and \"://\" separately, which is not useful to us.",
+      "parentUuid": "fe8c8619_8691abfd",
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "419aa5ac_a32adcda",
         "filename": "components/payments/content/utility/payment_manifest_parser.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1addbefe_9ccf9be5",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T17:08:56Z",
+      "side": 1,
+      "message": "Nope. https://w3c.github.io/payment-method-manifest/#validate-and-parse-the-payment-method-manifest talks about \"https\" in lower case. If someone decided to use HTTPS:// for some reason, our error logs clearly explain why that would be rejected.",
+      "parentUuid": "419aa5ac_a32adcda",
+      "range": {
+        "startLine": 124,
+        "startChar": 65,
+        "endLine": 124,
+        "endChar": 74
+      },
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ccd230d_3254a35f",
         "filename": "components/payments/content/utility/payment_manifest_parser_unittest.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-13T15:58:16Z",
       "side": 1,
       "message": "should you split test cases? Feels like this one fails both for \"http\" and for the invalid char.",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "0386c3ae8d5977cf89b418098e527add20788f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c4f7ff_5aba2eb5",
+        "filename": "components/payments/content/utility/payment_manifest_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-13T17:08:56Z",
+      "side": 1,
+      "message": "Already have a test case for HTTPS. Adding a test case for unicode separately.",
+      "parentUuid": "5ccd230d_3254a35f",
       "range": {
         "startLine": 202,
         "startChar": 32,
