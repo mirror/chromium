@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "96bc19ab_5011ec92",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T18:56:44Z",
+      "side": 1,
+      "message": "\u003e Sounds like we should keep this PlzNavigate check.  Can you just update the comment to mention error pages for failed navigations?  (I want to distinguish between blocked navigations, which you handle elsewhere.)\n\nDone.",
+      "parentUuid": "18dab201_f19f1ca8",
+      "revId": "ce788a5c12d976753571015ec800db93eb28381e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecb7cfc6_3ae3b576",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 8
