@@ -2852,6 +2852,28 @@
             ]
         }
     ],
+    "SRTExperimentalEngineTrial": [
+        {
+            "platforms": [
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "NewCleaner_Launch",
+                    "params": {
+                        "download_group": "stable",
+                        "experiment_group_for_reporting": "Control",
+                        "tag": "control"
+                    },
+                    "enable_features": [
+                        "DownloadCleanupToolByBitness",
+                        "ExperimentalSwReporterEngine",
+                        "ExperimentalSwReporterEngineOnAllArchitectures"
+                    ]
+                }
+            ]
+        }
+    ],
     "SRTPromptFieldTrial": [
         {
             "platforms": [
