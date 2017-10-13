@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de6be113_2c674242",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:39:42Z",
+      "side": 1,
+      "message": "Comment is wrong, this is not related to shutdown.",
+      "revId": "f7fd05fe7cecee0aff19171299771258e9841de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d195fea_12c6bdb3",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:39:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is related to shutdown either.",
+      "revId": "f7fd05fe7cecee0aff19171299771258e9841de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc924efd_13156c71",
+        "filename": "components/arc/rotation_lock/arc_rotation_lock_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T22:39:42Z",
+      "side": 1,
+      "message": "I think you need to early-exit on ash::Shell::HasInstance() here.",
+      "revId": "f7fd05fe7cecee0aff19171299771258e9841de3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
