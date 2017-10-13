@@ -31,8 +31,7 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
   void SetUp() override {
     AnimationWorkletThread::CreateSharedBackingThreadForTest();
     reporting_proxy_ = WTF::MakeUnique<WorkerReportingProxy>();
-    security_origin_ =
-        SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
+    security_origin_ = SecurityOrigin::Create(KURL("http://fake.url/"));
   }
 
   void TearDown() override {
@@ -45,13 +44,12 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
 
     WorkerClients* clients = WorkerClients::Create();
 
-    thread->Start(
-        WTF::MakeUnique<GlobalScopeCreationParams>(
-            KURL(kParsedURLString, "http://fake.url/"), "fake user agent", "",
-            nullptr, kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
-            security_origin_.get(), clients, kWebAddressSpaceLocal, nullptr,
-            nullptr, kV8CacheOptionsDefault),
-        WTF::nullopt, ParentFrameTaskRunners::Create());
+    thread->Start(WTF::MakeUnique<GlobalScopeCreationParams>(
+                      KURL("http://fake.url/"), "fake user agent", "", nullptr,
+                      kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
+                      security_origin_.get(), clients, kWebAddressSpaceLocal,
+                      nullptr, nullptr, kV8CacheOptionsDefault),
+                  WTF::nullopt, ParentFrameTaskRunners::Create());
     return thread;
   }
 
