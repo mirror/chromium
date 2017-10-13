@@ -52,6 +52,24 @@
       "revId": "9a28d8183fa17c53cf1845df94aa4f70990097aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c314dd_65f80509",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-10-13T19:16:50Z",
+      "side": 1,
+      "message": "\"UI thread has been initialized\" means \"setUiThread\" has been called and \"mStarted \u003d\u003d true\"? Because that happens here [1] and here [2]. ensureChromiumStartedLocked is called at the start of getStatics.\n\n[1] https://cs.chromium.org/chromium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java?q\u003df:glue+case:yes+Statics\u0026sq\u003dpackage:chromium\u0026l\u003d519\n[2] https://cs.chromium.org/chromium/src/android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java?q\u003df:glue+case:yes+Statics\u0026sq\u003dpackage:chromium\u0026l\u003d446",
+      "parentUuid": "4cf0e281_1f2097d9",
+      "revId": "9a28d8183fa17c53cf1845df94aa4f70990097aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
