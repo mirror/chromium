@@ -182,6 +182,24 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab8684a_efd840e4",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-13T22:12:01Z",
+      "side": 1,
+      "message": "I can write \"page state serialization owners\" but this is a bit vague since the file doesn\u0027t have clear ownership more specific than the top-level OWNERS of content/. I could spell out usernames but people don\u0027t say on projects forever. WDYT?",
+      "parentUuid": "d5dbbf2c_556ca62a",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
