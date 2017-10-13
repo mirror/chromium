@@ -52,6 +52,41 @@
       "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8b0070_657316ec",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T20:19:20Z",
+      "side": 1,
+      "message": "hrm, ok. It\u0027d be great to get more info on why that\u0027s failing, but I don\u0027t consider that necessary for landing this.",
+      "parentUuid": "e08f807a_604dc23c",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f4819a8_f1c4ba4e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T20:19:20Z",
+      "side": 1,
+      "message": "One concern with this: we\u0027ll want to save it w/ a different link name here: https://codesearch.chromium.org/chromium/src/build/android/pylib/local/device/local_device_instrumentation_test_run.py?rcl\u003dac4d6f43ab804283d2420dd6c92862b325981d1e\u0026l\u003d730\n\notherwise it\u0027ll get overwritten if the test didn\u0027t pass or get skipped.",
+      "revId": "c2e15928c2f9966f3e78d7c57e574d04d2877223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
