@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f07229a_16bae7de",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a664df_f0851b14",
+      "revId": "0da695c7f599c932d7efe1292dd53d19d4470e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd081d7_867d9147",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0da695c7f599c932d7efe1292dd53d19d4470e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb665fed_f458d2b7",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-10-13T17:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd081d7_867d9147",
+      "revId": "0da695c7f599c932d7efe1292dd53d19d4470e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
