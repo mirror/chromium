@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87025690_17017ef1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-13T14:49:37Z",
+      "side": 1,
+      "message": "Can you link to these?\n\nOtherwise I don\u0027t know how to see them.\n\nFor example, https://chromium-review.googlesource.com/c/chromium/src/+/674935 is a 404.\n\nAlso, usually XML and code changes for a metric are committed within the same CL. What\u0027s the reason for splitting them? Do they span different repos?",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "2641026ddfbdf9dcda5176949388c03199a094a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e39fb8_8519b05a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17549,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-13T14:49:37Z",
+      "side": 1,
+      "message": "Add units\u003d attr",
+      "range": {
+        "startLine": 17549,
+        "startChar": 28,
+        "endLine": 17549,
+        "endChar": 46
+      },
+      "revId": "2641026ddfbdf9dcda5176949388c03199a094a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
