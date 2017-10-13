@@ -107,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "d853a777_83aa7b20",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3363,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-13T03:06:08Z",
+      "side": 1,
+      "message": "Think so, for example follow up commands might use entry-points that wouldn\u0027t be loaded otherwise.",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba6e35a_a06dbb2d",
         "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
         "patchSetId": 3
