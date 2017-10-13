@@ -1815,9 +1815,7 @@
   "One Buildbot Step Test Builder": {
     "swarm823-c4": {
       "benchmarks": [
-        "blink_perf.css",
-        "smoothness.maps",
-        "media.mse_cases"
+        "blink_perf.css"
       ]
     }
   },
