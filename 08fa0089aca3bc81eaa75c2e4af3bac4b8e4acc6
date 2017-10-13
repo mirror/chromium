@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3269ac6b_5e3a96ce",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-13T16:32:40Z",
+      "side": 1,
+      "message": "nit: would you mind putting the constructor args and the fields in the same order?",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2be5f8_399afcce",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-13T16:32:40Z",
+      "side": 1,
+      "message": "GetAsListValue() is used for two things: net-internals and persistence. They\u0027re slightly different formats, controlled by the include_staleness argument. For persistence, I want to keep the entries as small as possible, and the source won\u0027t be useful since the entries will always be from another network. For net-internals, you can include it in the \"if (include_staleness)\" section above if you want to add it to the host cache view, or leave it out of serialization entirely if you don\u0027t.",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d056e11_4d1ba5d6",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-13T16:32:40Z",
+      "side": 1,
+      "message": "If we don\u0027t persist the source (see above), these lines can be deleted.",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fe24d9_c947d9e0",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-13T16:32:40Z",
+      "side": 1,
+      "message": "Can you also add a check for SOURCE_HOSTS in ServeFromHosts?",
+      "revId": "08fa0089aca3bc81eaa75c2e4af3bac4b8e4acc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
