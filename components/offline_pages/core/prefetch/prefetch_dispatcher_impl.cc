@@ -21,6 +21,7 @@
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
 #include "components/offline_pages/core/prefetch/import_archives_task.h"
+#include "components/offline_pages/core/prefetch/import_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/import_completed_task.h"
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
 #include "components/offline_pages/core/prefetch/metrics_finalization_task.h"
@@ -165,6 +166,9 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
   // separate services which can start up on their own. The download cleanup
   // should only kick in when both services are ready.
   service_->GetPrefetchDownloader()->CleanupDownloadsWhenReady();
+
+  task_queue_.AddTask(base::MakeUnique<ImportCleanupTask>(
+      service_->GetPrefetchStore(), service_->GetPrefetchImporter()));
 
   // This task should be last, because it is least important for correct
   // operation of the system, and because any reconciliation tasks might
@@ -326,7 +330,7 @@ void PrefetchDispatcherImpl::DownloadCompleted(
       service_->GetPrefetchStore(), service_->GetPrefetchImporter()));
 }
 
-void PrefetchDispatcherImpl::ImportCompleted(int64_t offline_id, bool success) {
+void PrefetchDispatcherImpl::ArchiveImported(int64_t offline_id, bool success) {
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
 
@@ -338,7 +342,8 @@ void PrefetchDispatcherImpl::ImportCompleted(int64_t offline_id, bool success) {
     service_->GetOfflineMetricsCollector()->OnSuccessfulPagePrefetch();
 
   task_queue_.AddTask(base::MakeUnique<ImportCompletedTask>(
-      this, service_->GetPrefetchStore(), offline_id, success));
+      this, service_->GetPrefetchStore(), service_->GetPrefetchImporter(),
+      offline_id, success));
 }
 
 void PrefetchDispatcherImpl::LogRequestResult(
