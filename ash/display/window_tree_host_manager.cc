@@ -74,7 +74,7 @@ void SetDisplayPropertiesOnHost(AshWindowTreeHost* ash_host,
       CreateRootWindowTransformerForDisplay(host->window(), display));
   ash_host->SetRootWindowTransformer(std::move(transformer));
 
-  scoped_refptr<display::ManagedDisplayMode> mode =
+  const display::ManagedDisplayMode* mode =
       GetDisplayManager()->GetActiveModeForDisplayId(display.id());
   if (mode && mode->refresh_rate() > 0.0f) {
     host->compositor()->SetAuthoritativeVSyncInterval(

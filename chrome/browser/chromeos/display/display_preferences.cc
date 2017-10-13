@@ -398,7 +398,7 @@ void StoreCurrentDisplayProperties() {
     property_value->SetInteger(
         "ui-scale", static_cast<int>(info.configured_ui_scale() * 1000));
 
-    scoped_refptr<display::ManagedDisplayMode> mode =
+    const display::ManagedDisplayMode* mode =
         display_manager->GetSelectedModeForDisplayId(id);
     if (!display.IsInternal() && mode && !mode->native()) {
       property_value->SetInteger("width", mode->size().width());
