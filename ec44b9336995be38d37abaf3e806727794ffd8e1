@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96522461_08dd21d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/Snackbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T21:58:32Z",
+      "side": 1,
+      "message": "Does this need to return the Snackbar? I\u0027m not sure why setBackgroundColor() returns it... the return value doesn\u0027t appear to be used anywhere.",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 20
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a1330c_a0d257d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T21:58:32Z",
+      "side": 1,
+      "message": "nit: ResId",
+      "range": {
+        "startLine": 273,
+        "startChar": 30,
+        "endLine": 273,
+        "endChar": 35
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b009a4_94600df2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/snackbar/SnackbarView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T21:58:32Z",
+      "side": 1,
+      "message": "For completeness, we should have an else block to capture non-Chrome Home that uses R.style.WhiteBody as the default if textAppearanceResId \u003d\u003d 0.",
+      "range": {
+        "startLine": 278,
+        "startChar": 7,
+        "endLine": 278,
+        "endChar": 9
+      },
+      "revId": "ec44b9336995be38d37abaf3e806727794ffd8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
