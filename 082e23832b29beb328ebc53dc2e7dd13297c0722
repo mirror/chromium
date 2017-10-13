@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6589e968_888730e1",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_choose_mobile.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-10-13T00:58:51Z",
+      "side": 1,
+      "message": "I observed the following behavior on a LTE chromebook:\n\n- The SCAN button and the network pull-down list are initially disabled when the cellular is connected. The pull-down list shows \"No networks\".\n- When the cellular is disconnected, the SCAN button is re-enabled and the pull-down list remains disabled\n- After a scan, the pull-down list is enabled.\n- The pull-down list is enabled when a scan happens again --\u003e which should be disabled as we don\u0027t want to connect a specific network while scanning. We may as well disable the Connect button\n- The pull-down list is also enabled when the cellular is connected again --\u003e this one can confusing as it\u0027s not clear if select a network from the list will actually connect to that network.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "082e23832b29beb328ebc53dc2e7dd13297c0722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
