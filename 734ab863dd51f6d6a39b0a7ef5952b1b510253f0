@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f12f94e7_585d05f8",
+        "filename": "chrome/browser/resource_coordinator/browser_child_process_watcher.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-13T18:12:15Z",
+      "side": 1,
+      "message": "yes. This doesn\u0027t not seem to be a problem to me.\nWe are not reporting these metrics, but we are keeping track of their launch time.",
+      "parentUuid": "0ff22f6a_bd473168",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "734ab863dd51f6d6a39b0a7ef5952b1b510253f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d80f15dc_d75209de",
         "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "734ab863dd51f6d6a39b0a7ef5952b1b510253f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f805c62e_559bae59",
+        "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-13T18:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80f15dc_d75209de",
+      "revId": "734ab863dd51f6d6a39b0a7ef5952b1b510253f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
