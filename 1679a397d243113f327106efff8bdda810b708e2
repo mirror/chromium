@@ -22,6 +22,30 @@
       "revId": "1679a397d243113f327106efff8bdda810b708e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46b8a28_894112dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-13T23:33:34Z",
+      "side": 1,
+      "message": "We are relying on the VIEW intent to trigger creation through onNewIntentWithNative. I\u0027ll work out preserving the tab model and making this more robust in general for future cases (crbug.com/774730).\n\nI\u0027ve changed this logic to check the AsyncTabParamsManager in both places.",
+      "parentUuid": "96a20959_1d82b221",
+      "range": {
+        "startLine": 1096,
+        "startChar": 20,
+        "endLine": 1096,
+        "endChar": 41
+      },
+      "revId": "1679a397d243113f327106efff8bdda810b708e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
