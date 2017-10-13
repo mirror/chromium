@@ -30,7 +30,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
-#include "core/dom/BlinkMessagePortMessageStructTraits.h"
+#include "core/dom/BlinkTransferableMessageStructTraits.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -69,7 +69,7 @@ void MessagePort::postMessage(ScriptState* script_state,
   DCHECK(GetExecutionContext());
   DCHECK(!IsNeutered());
 
-  BlinkMessagePortMessage msg;
+  BlinkTransferableMessage msg;
   msg.message = message;
 
   // Make sure we aren't connected to any of the passed-in ports.
@@ -87,7 +87,7 @@ void MessagePort::postMessage(ScriptState* script_state,
     return;
 
   channel_.PostMojoMessage(
-      mojom::blink::MessagePortMessage::SerializeAsMessage(&msg));
+      mojom::blink::TransferableMessage::SerializeAsMessage(&msg));
 }
 
 MessagePortChannel MessagePort::Disentangle() {
@@ -154,7 +154,7 @@ const AtomicString& MessagePort::InterfaceName() const {
   return EventTargetNames::MessagePort;
 }
 
-bool MessagePort::TryGetMessage(BlinkMessagePortMessage& message) {
+bool MessagePort::TryGetMessage(BlinkTransferableMessage& message) {
   if (IsNeutered())
     return false;
 
@@ -162,7 +162,7 @@ bool MessagePort::TryGetMessage(BlinkMessagePortMessage& message) {
   if (!channel_.GetMojoMessage(&mojo_message))
     return false;
 
-  if (!mojom::blink::MessagePortMessage::DeserializeFromMessage(
+  if (!mojom::blink::TransferableMessage::DeserializeFromMessage(
           std::move(mojo_message), &message)) {
     return false;
   }
@@ -197,7 +197,7 @@ void MessagePort::DispatchMessages() {
       break;
     }
 
-    BlinkMessagePortMessage message;
+    BlinkTransferableMessage message;
     if (!TryGetMessage(message))
       break;
 
