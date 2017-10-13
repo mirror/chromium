@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ff12cac_0e82d53e",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-13T14:30:31Z",
+      "side": 1,
+      "message": "I think we want to blank lines between import os and def _CommonChecks",
+      "revId": "89ad60688bd41949f3b42b9bb9c2060a625960fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
