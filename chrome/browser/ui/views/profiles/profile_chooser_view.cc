@@ -748,8 +748,12 @@ void ProfileChooserView::ShowViewFromMode(profiles::BubbleViewMode mode) {
     // closes when it loses focus; however, on Windows, the signin modals do not
     // take away focus, thus we need to manually close the bubble.
     Hide();
-    browser_->signin_view_controller()->ShowModalSignin(mode, browser_,
-                                                        access_point_);
+    if (signin::IsAccountConsistencyDiceEnabled()) {
+      chrome::ShowBrowserSigninForDice(browser_);
+    } else {
+      browser_->signin_view_controller()->ShowModalSignin(mode, browser_,
+                                                          access_point_);
+    }
   } else {
     ShowView(mode, avatar_menu_.get());
   }

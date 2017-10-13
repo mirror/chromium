@@ -2520,8 +2520,12 @@ void BrowserView::ShowAvatarBubbleFromAvatarButton(
   profiles::BubbleViewMode bubble_view_mode;
   profiles::BubbleViewModeFromAvatarBubbleMode(mode, &bubble_view_mode);
   if (SigninViewController::ShouldShowModalSigninForMode(bubble_view_mode)) {
-    browser_->signin_view_controller()->ShowModalSignin(
-        bubble_view_mode, browser_.get(), access_point);
+    if (signin::IsAccountConsistencyDiceEnabled()) {
+      chrome::ShowBrowserSigninForDice(browser_.get());
+    } else {
+      browser_->signin_view_controller()->ShowModalSignin(
+          bubble_view_mode, browser_.get(), access_point);
+    }
   } else {
     ProfileChooserView::ShowBubble(bubble_view_mode, manage_accounts_params,
                                    access_point,
