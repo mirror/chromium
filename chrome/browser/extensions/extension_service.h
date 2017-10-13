@@ -451,11 +451,6 @@ class ExtensionService
   // Loads extensions specified via a command line flag/switch.
   void LoadExtensionsFromCommandLineFlag(const char* switch_name);
 
-  // Reloads the specified extension, sending the onLaunched() event to it if it
-  // currently has any window showing. |be_noisy| determines whether noisy
-  // failures are allowed for unpacked extension installs.
-  void ReloadExtensionImpl(const std::string& extension_id, bool be_noisy);
-
   // content::NotificationObserver implementation:
   void Observe(int type,
                const content::NotificationSource& source,
@@ -468,11 +463,16 @@ class ExtensionService
   void OnUpgradeRecommended() override;
 
   // extensions::ExtensionRegistrar::Delegate implementation.
+  void PreAddExtension(const extensions::Extension* extension,
+                       const extensions::Extension* old_extension) override;
   void PostActivateExtension(
       scoped_refptr<const extensions::Extension> extension,
       bool is_newly_added) override;
   void PostDeactivateExtension(
       scoped_refptr<const extensions::Extension> extension) override;
+  void LoadExtensionForReload(const extensions::ExtensionId& extension_id,
+                              const base::FilePath& path,
+                              bool fail_quietly) override;
   bool CanEnableExtension(const extensions::Extension* extension) override;
   bool CanDisableExtension(const extensions::Extension* extension) override;
   bool ShouldBlockExtension(const extensions::Extension* extension) override;
@@ -591,10 +591,6 @@ class ExtensionService
   // Uninstall extensions that have been migrated to component extensions.
   void UninstallMigratedExtensions();
 
-  // Updates reloading_extensions_ and unloaded_extension_paths_ before the
-  // extension is unloaded.
-  void UpdateForUnloadingExtension(const extensions::ExtensionId& extension_id);
-
   const base::CommandLine* command_line_ = nullptr;
 
   // The normal profile associated with this ExtensionService.
@@ -693,10 +689,6 @@ class ExtensionService
 
   // Set to true if extensions are all to be blocked.
   bool block_extensions_ = false;
-
-  // Store the ids of reloading extensions. We use this to re-enable extensions
-  // which were disabled for a reload.
-  std::set<std::string> reloading_extensions_;
 
   // The controller for the UI that alerts the user about any blacklisted
   // extensions.

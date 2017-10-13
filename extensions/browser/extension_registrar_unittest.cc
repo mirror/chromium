@@ -59,11 +59,16 @@ class TestExtensionRegistrarDelegate : public ExtensionRegistrar::Delegate {
   ~TestExtensionRegistrarDelegate() override = default;
 
   // ExtensionRegistrar::Delegate:
+  void PreAddExtension(const Extension* extension,
+                 const Extension* old_extension) override {}
   MOCK_METHOD2(PostActivateExtension,
                void(scoped_refptr<const Extension> extension,
                     bool is_newly_added));
   MOCK_METHOD1(PostDeactivateExtension,
                void(scoped_refptr<const Extension> extension));
+  void LoadExtensionForReload(const ExtensionId& extension_id,
+                                        const base::FilePath& path,
+                                        bool fail_quietly) override {}
   MOCK_METHOD1(CanEnableExtension, bool(const Extension* extension));
   MOCK_METHOD1(CanDisableExtension, bool(const Extension* extension));
   MOCK_METHOD1(ShouldBlockExtension, bool(const Extension* extension));

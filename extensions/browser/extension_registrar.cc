@@ -7,13 +7,16 @@
 #include "base/logging.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/app_sorting.h"
 #include "extensions/browser/extension_host.h"
+#include "extensions/browser/runtime_data.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/notification_types.h"
+#include "extensions/browser/process_manager.h"
 #include "extensions/browser/renderer_startup_helper.h"
 
 namespace extensions {
@@ -34,8 +37,54 @@ ExtensionRegistrar::~ExtensionRegistrar() = default;
 void ExtensionRegistrar::AddExtension(
     scoped_refptr<const Extension> extension) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  DCHECK_EQ(nullptr, registry_->GetInstalledExtension(extension->id()));
 
+  bool is_extension_upgrade = false;
+  bool is_extension_loaded = false;
+  const Extension* old = registry_->GetInstalledExtension(extension->id());
+  if (old) {
+    is_extension_loaded = true;
+    int version_compare_result =
+        extension->version()->CompareTo(*(old->version()));
+    is_extension_upgrade = version_compare_result > 0;
+    // Other than for unpacked extensions, we should not be downgrading.
+    if (!Manifest::IsUnpackedLocation(extension->location()))
+      CHECK_GE(version_compare_result, 0);
+  }
+
+  // If the extension was disabled for a reload, we will enable it.
+  // TODO remove fn
+  bool reloading = reloading_extensions_.count(extension->id()) > 0;
+
+  // Set the upgraded bit; we consider reloads upgrades.
+  extension_system_->runtime_data()->SetBeingUpgraded(extension->id(),
+                                            is_extension_upgrade || reloading);
+
+  // The extension is now loaded, remove its data from unloaded extension map.
+  unloaded_extension_paths_.erase(extension->id());
+
+  // If a terminated extension is loaded, remove it from the terminated list.
+  UntrackTerminatedExtension(extension->id());
+
+  // Notify the delegate we will add the extension.
+  delegate_->PreAddExtension(extension.get(), old);
+
+  if (reloading) {
+    ReplaceReloadedExtension(extension);
+  } else {
+    if (is_extension_loaded) {
+      // To upgrade an extension in place, remove the old one and then activate
+      // the new one. ReloadExtension disables the extension, which is
+      // sufficient.
+      RemoveExtension(extension->id(), UnloadedExtensionReason::UPDATE);
+    }
+    AddExtensionImpl(extension);
+  }
+
+  extension_system_->runtime_data()->SetBeingUpgraded(extension->id(), false);
+}
+
+void ExtensionRegistrar::AddExtensionImpl(
+    scoped_refptr<const Extension> extension) {
   if (extension_prefs_->IsExtensionBlacklisted(extension->id())) {
     // Only prefs is checked for the blacklist. We rely on callers to check the
     // blacklist before calling into here, e.g. CrxInstaller checks before
@@ -85,6 +134,13 @@ void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
     return;
   }
 
+  // Keep information about the extension so that we can reload it later
+  // even if it's not permanently installed.
+  unloaded_extension_paths_[extension->id()] = extension->path();
+
+  // Stop tracking whether the extension was meant to be enabled after a reload.
+  reloading_extensions_.erase(extension->id());
+
   if (registry_->disabled_extensions().Contains(extension_id)) {
     // The extension is already deactivated.
     registry_->RemoveDisabled(extension->id());
@@ -106,6 +162,11 @@ void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
 
 void ExtensionRegistrar::EnableExtension(const ExtensionId& extension_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // If the extension is currently reloading, it will be enabled once the reload
+  // is complete.
+  if (reloading_extensions_.count(extension_id) > 0)
+    return;
 
   // First, check that the extension can be enabled.
   if (IsExtensionEnabled(extension_id) ||
@@ -194,6 +255,68 @@ void ExtensionRegistrar::DisableExtension(const ExtensionId& extension_id,
   }
 }
 
+void ExtensionRegistrar::ReloadExtension(
+    const ExtensionId extension_id,  // Passed by value because reloading can
+                                     // invalidate a reference to the ID.
+    bool fail_quietly) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // If the extension is already reloading, don't reload again.
+  if (extension_prefs_->HasDisableReason(extension_id,
+                                         disable_reason::DISABLE_RELOAD)) {
+    return;
+  }
+
+  // Ignore attempts to reload a blacklisted or blocked extension. Sometimes
+  // this can happen in a convoluted reload sequence triggered by the
+  // termination of a blacklisted or blocked extension and a naive attempt to
+  // reload it. For an example see http://crbug.com/373842.
+  if (registry_->blacklisted_extensions().Contains(extension_id) ||
+      registry_->blocked_extensions().Contains(extension_id)) {
+    return;
+  }
+
+  base::FilePath path;
+
+  const Extension* current_extension = registry_->GetExtensionById(
+      extension_id, ExtensionRegistry::ENABLED);
+
+  // Disable the extension if it's loaded. It might not be loaded if it crashed.
+  if (current_extension) {
+    // If the extension has an inspector open for its background page, detach
+    // the inspector and hang onto a cookie for it, so that we can reattach
+    // later.
+    // TODO(yoz): this is not incognito-safe!
+    ProcessManager* manager = ProcessManager::Get(browser_context_);
+    ExtensionHost* host = manager->GetBackgroundHostForExtension(extension_id);
+    if (host && content::DevToolsAgentHost::HasFor(host->host_contents())) {
+      // Look for an open inspector for the background page.
+      scoped_refptr<content::DevToolsAgentHost> agent_host =
+          content::DevToolsAgentHost::GetOrCreateFor(host->host_contents());
+      agent_host->DisconnectWebContents();
+      // TODO
+      orphaned_dev_tools_[extension_id] = agent_host;
+    }
+
+    path = current_extension->path();
+    // BeingUpgraded is set back to false when the extension is added.
+    extension_system_->runtime_data()->SetBeingUpgraded(current_extension->id(),
+                                                        true);
+    DisableExtension(extension_id, disable_reason::DISABLE_RELOAD);
+    DCHECK(registry_->disabled_extensions().Contains(extension_id));
+    reloading_extensions_.insert(extension_id);
+  } else {
+    std::map<ExtensionId, base::FilePath>::const_iterator iter =
+        unloaded_extension_paths_.find(extension_id);
+    if (iter == unloaded_extension_paths_.end()) {
+      return;
+    }
+    path = unloaded_extension_paths_[extension_id];
+  }
+
+  delegate_->LoadExtensionForReload(extension_id, path, fail_quietly);
+}
+
 bool ExtensionRegistrar::ReplaceReloadedExtension(
     scoped_refptr<const Extension> extension) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -225,6 +348,15 @@ void ExtensionRegistrar::TerminateExtension(const ExtensionId& extension_id) {
       registry_->enabled_extensions().GetByID(extension_id);
   if (!extension)
     return;
+
+  // Keep information about the extension so that we can reload it later
+  // even if it's not permanently installed.
+  // TODO: How exactly do we reload a terminated extension? Why must we save the
+  // path here when we also add the extension reference to the terminated set?
+  unloaded_extension_paths_[extension->id()] = extension->path();
+
+  // Stop tracking whether the extension was meant to be enabled after a reload.
+  reloading_extensions_.erase(extension->id());
 
   registry_->AddTerminated(extension);
   registry_->RemoveEnabled(extension_id);
