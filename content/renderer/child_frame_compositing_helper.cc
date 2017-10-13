@@ -266,7 +266,6 @@ void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
   last_primary_surface_id_ = surface_info.id();
   float scale_factor = surface_info.device_scale_factor();
   // TODO(oshima): This is a stopgap fix so that the compositor does not
-  // scaledown the content when 2x frame data is added to 1x parent frame data.
   // Fix this in cc/.
   if (IsUseZoomForDSFEnabled())
     scale_factor = 1.0f;
