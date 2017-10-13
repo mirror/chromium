@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48904cb6_3967f76d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84220,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-13T17:50:42Z",
+      "side": 1,
+      "message": "equivalent",
+      "range": {
+        "startLine": 84220,
+        "startChar": 45,
+        "endLine": 84220,
+        "endChar": 50
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3b5114_dc50a672",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84222,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-13T17:50:42Z",
+      "side": 1,
+      "message": "recording window",
+      "range": {
+        "startLine": 84222,
+        "startChar": 70,
+        "endLine": 84222,
+        "endChar": 77
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d41c91_4cba979e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84239,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-13T17:50:42Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 84239,
+        "startChar": 36,
+        "endLine": 84239,
+        "endChar": 43
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b823754_1fa9be57",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84250,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-13T17:50:42Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 84250,
+        "startChar": 60,
+        "endLine": 84250,
+        "endChar": 67
+      },
+      "revId": "89d1193ff109455846efe1225aee03e9efa49546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
