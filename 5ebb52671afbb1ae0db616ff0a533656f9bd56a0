@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "495bb42f_ebb65a2e",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T06:17:48Z",
+      "side": 1,
+      "message": "I slightly prefer constexpr over const for non-member variable like this since that\u0027s the style guide recommendation for new code, but up to you.\n\nBTW, 1) could you remove line 50 since this is not a static member variable, and 2) please also move this line to L24 (inside the anonymous namespace) to avoid tainting arc:: namespace? Sorry I missed this in the first review.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "5ebb52671afbb1ae0db616ff0a533656f9bd56a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef66b37d_b7631634",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T06:17:48Z",
+      "side": 1,
+      "message": "nit: const GURL gurl(url);\n\nwould be simpler.",
+      "revId": "5ebb52671afbb1ae0db616ff0a533656f9bd56a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59498beb_50385834",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 7
