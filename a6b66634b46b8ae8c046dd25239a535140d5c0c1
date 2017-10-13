@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13330008_f8675dc8",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44e57d87_a42a3f9f",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec32bc74_b29b5395",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640ee884_85564923",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec32bc74_b29b5395",
+      "range": {
+        "startLine": 76,
+        "startChar": 30,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bcb79be0_19da77f0",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747311e3_956aeb24",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687e331c_02dae54e",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36377ba_225fb88f",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687e331c_02dae54e",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "df814f11_6daf69de",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc13e8b_985e5f09",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 64
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4582a9c8_d2522727",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "a998cf72_8c5ea55a",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4582a9c8_d2522727",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1588c09f_0fb4a06d",
         "filename": "base/win/core_winrt_util_unittest.cc",
         "patchSetId": 1
@@ -148,6 +286,24 @@
       "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e86af02_ad0dd99c",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1588c09f_0fb4a06d",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "7bdfc664_25e97204",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca283b7_437ea883",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca3c1c37_307466c4",
         "filename": "media/midi/midi_manager_winrt.cc",
         "patchSetId": 1
@@ -182,6 +356,24 @@
       "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76e8edd_0553d047",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-10-13T02:49:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca3c1c37_307466c4",
+      "revId": "a6b66634b46b8ae8c046dd25239a535140d5c0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
