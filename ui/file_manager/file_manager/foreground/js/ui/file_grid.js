@@ -242,8 +242,13 @@ FileGrid.prototype.mergeItems = function(beginIndex, endIndex) {
     if (!item)
       continue;
     var isSelected = this.selectionModel.getIndexSelected(i);
-    if (item.selected != isSelected)
+    if (item.selected != isSelected) {
       item.selected = isSelected;
+      var checkbox = item.querySelector('div.detail-checkmark');
+      if (checkbox) {
+        checkbox.setAttribute('aria-checked', isSelected);
+      }
+    }
   }
 
   // Keep these values to set range when a new list thumbnail loader is set.
@@ -576,6 +581,8 @@ FileGrid.prototype.decorateThumbnail_ = function(li, entry) {
   if (isDirectory) {
     var checkmark = li.ownerDocument.createElement('div');
     checkmark.className = 'detail-checkmark';
+    checkmark.setAttribute('role', 'checkbox');
+    checkmark.setAttribute('aria-checked', li.selected);
     detailIcon.appendChild(checkmark);
   }
   bottom.appendChild(detailIcon);
@@ -583,6 +590,26 @@ FileGrid.prototype.decorateThumbnail_ = function(li, entry) {
   frame.appendChild(bottom);
 
   this.updateSharedStatus_(li, entry);
+};
+
+/**
+ * Updates checkmark icons of directories based on the selection staus change.
+ *
+ * @param {!Event} ce Event with optional change info from the selection model.
+ */
+FileGrid.prototype.handleOnChange = function(ce) {
+  if (!ce.changes) {
+    return;
+  }
+  ce.changes.forEach(function(change) {
+    var listItem = this.getListItemByIndex(change.index);
+    if (!listItem)
+      return;
+    var checkmark = /** @type {!HTMLDivElement} */
+        (listItem.querySelector('.detail-checkmark'));
+    if (checkmark)
+      checkmark.setAttribute('aria-checked', change.selected);
+  }.bind(this));
 };
 
 /**

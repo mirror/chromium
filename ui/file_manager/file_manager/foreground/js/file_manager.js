@@ -1058,6 +1058,14 @@ FileManager.prototype = /** @struct */ {
         this.selectionHandler_.onFileSelectionChanged.bind(
             this.selectionHandler_));
 
+    var table = this.ui_.listContainer.table;
+    this.selectionHandler_.addEventListener(
+        FileSelectionHandler.EventType.CHANGE,
+        table.handleOnChange.bind(table));
+    var grid = this.ui_.listContainer.grid;
+    this.selectionHandler_.addEventListener(
+        FileSelectionHandler.EventType.CHANGE, grid.handleOnChange.bind(grid));
+
     // TODO(mtomasz, yoshiki): Create navigation list earlier, and here just
     // attach the directory model.
     this.initDirectoryTree_();
