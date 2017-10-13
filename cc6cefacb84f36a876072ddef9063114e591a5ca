@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c12d6f7_49f888fa",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-13T18:24:09Z",
+      "side": 1,
+      "message": "nit: suggest to undo the step in reverse order if only to avoid questions why not.",
+      "range": {
+        "startLine": 175,
+        "startChar": 14,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac55c09_4f148322",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-13T18:24:09Z",
+      "side": 1,
+      "message": "nit: Is the bug reference necessary (is there more work planned here so it is a TODO)?",
+      "range": {
+        "startLine": 224,
+        "startChar": 37,
+        "endLine": 224,
+        "endChar": 60
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf706a0_c5503fdc",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-13T18:24:09Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 482,
+        "startChar": 22,
+        "endLine": 482,
+        "endChar": 28
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
