@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2acbaa27_1c1140ab",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-13T05:59:41Z",
+      "side": 1,
+      "message": "It would be best if you also add \u0027Location\u0027.",
+      "range": {
+        "startLine": 242,
+        "startChar": 44,
+        "endLine": 242,
+        "endChar": 45
+      },
+      "revId": "b176e439639a91c9e9e1c01a1acb81d3345b7dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f883ecb_58387028",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-10-13T05:59:41Z",
+      "side": 1,
+      "message": "policy_options is no more required. You can delete this line.",
+      "range": {
+        "startLine": 245,
+        "startChar": 44,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "b176e439639a91c9e9e1c01a1acb81d3345b7dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
