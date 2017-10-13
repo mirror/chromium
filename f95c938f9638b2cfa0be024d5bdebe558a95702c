@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66b64a25_f214eca0",
+        "filename": "components/domain_reliability/service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "It makes the tests easier, since I have to manually run pending tasks on the TestSimpleTaskRunners, and it\u0027d be a hassle to PostTask just to call CreateMonitor.",
+      "parentUuid": "aa4636f4_92e3088c",
+      "range": {
+        "startLine": 60,
+        "startChar": 50,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46048062_fd22c39c",
         "filename": "components/domain_reliability/service_unittest.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-12T21:13:54Z",
       "side": 1,
       "message": "call this file domain_reliability_service_unittest?  Non-unique names confuse me, whether they\u0027re class names, file names, or people names (Too...many...Ryans...)",
+      "range": {
+        "startLine": 179,
+        "startChar": 7,
+        "endLine": 179,
+        "endChar": 35
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccdc18e_2719eebd",
+        "filename": "components/domain_reliability/service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "I would, but then it wouldn\u0027t match the rest of the directory.\n\nAnd same, which is why I\u0027m not named Elizabeth.",
+      "parentUuid": "46048062_fd22c39c",
       "range": {
         "startLine": 179,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cd4ff9ab_6dde1366",
+        "filename": "components/domain_reliability/service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b79eb3_63ff9194",
+      "range": {
+        "startLine": 200,
+        "startChar": 10,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5fc478_9213381a",
         "filename": "components/domain_reliability/uploader.h",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3069b2_ec846e12",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5fc478_9213381a",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,54 @@
       "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffff839_cbc5d86e",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "Done (and also set_discard_uploads).",
+      "parentUuid": "8f0069f6_eeabd5da",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e3b850d_94e159c2",
+        "filename": "components/domain_reliability/uploader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-10-13T14:24:34Z",
+      "side": 1,
+      "message": "Done (and also TestPermisisonManager::get_permission_status_count).",
+      "parentUuid": "b9428c1d_116cfc57",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 17
+      },
+      "revId": "f95c938f9638b2cfa0be024d5bdebe558a95702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
