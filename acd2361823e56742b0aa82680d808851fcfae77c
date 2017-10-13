@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7831b5db_0d843cf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "s/IPH/in-product help/g",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffc86d1_0f91ef84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "s/CS/contextual search/g",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881b38ba_c7001cbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "Here too. It\u0027s not that it\u0027s technically wrong to use abbreviations, but it\u0027s clearer for other readers if we\u0027re being explicit.",
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a19bb5_d48f5470",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActionModeCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "I\u0027m assuming it\u0027s guaranteed that native has loaded here?",
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3ba9a3_ed366782",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/EventConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "Nit: Missing period.",
+      "range": {
+        "startLine": 79,
+        "startChar": 94,
+        "endLine": 79,
+        "endChar": 98
+      },
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f6ef26_77846829",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/EventConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-13T18:16:32Z",
+      "side": 1,
+      "message": "I\u0027m not super excite about this name. That being said, I don\u0027t have a great suggestion and I can\u0027t really put a finger on what irks me about the current one either :-/\nYour event description in the comment above is super helpful though, so maybe grab something from that?",
+      "range": {
+        "startLine": 81,
+        "startChar": 60,
+        "endLine": 81,
+        "endChar": 85
+      },
+      "revId": "acd2361823e56742b0aa82680d808851fcfae77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
