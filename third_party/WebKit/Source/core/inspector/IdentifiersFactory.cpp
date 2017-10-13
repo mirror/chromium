@@ -56,15 +56,15 @@ String IdentifiersFactory::RequestId(unsigned long identifier) {
 // static
 String IdentifiersFactory::FrameId(LocalFrame* frame) {
   if (!frame || !frame->Client())
-    return String();
-  return frame->Client()->GetDevToolsFrameToken();
+    return "";
+  return frame->GetInstrumentationToken();
 }
 
 // static
 LocalFrame* IdentifiersFactory::FrameById(InspectedFrames* inspected_frames,
                                           const String& frame_id) {
   for (auto* frame : *inspected_frames) {
-    if (frame->Client() && frame->Client()->GetDevToolsFrameToken() == frame_id)
+    if (frame->Client() && frame->GetInstrumentationToken() == frame_id)
       return frame;
   }
   return nullptr;
