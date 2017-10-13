@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c91d47da_c48062ae",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "What will happen if GetGpuJpegDecodeAccelerator() is called before SetGpuJpegDecoderFactory()? Do we need to check against it?",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5dd254_66c3dedd",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32650a34_3730b71d",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "Let\u0027s also print the required I420 size in the error message.",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0711b487_403a3561",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "\"Initialize() failed\" or \"initialization failed\"",
+      "range": {
+        "startLine": 105,
+        "startChar": 37,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbafe50e_d9aecc14",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "Why do we need move() here?\ncallback.Run() doesn\u0027t work?",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 13
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf157ef4_9276854f",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_mojo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a62798b_1a372d68",
+        "filename": "media/gpu/mojo/jpeg_decoder.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-10-13T11:53:29Z",
+      "side": 1,
+      "message": "Remove duplicated \u0027|\u0027",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 47
+      },
+      "revId": "cec9d12cf55b6693d2e535e876695afa54d9eb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
