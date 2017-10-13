@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18598c60_31808a82",
+        "filename": "third_party/zlib/armv8_crc32.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-10-13T17:46:36Z",
+      "side": 1,
+      "message": "tabs.",
+      "revId": "71f59539f6b8d9b90518993decc5eaec972b040b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
