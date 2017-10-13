@@ -722,8 +722,23 @@ Sources.NavigatorView = class extends UI.VBox {
 
     contextMenu.appendSeparator();
     Sources.NavigatorView.appendAddFolderItem(contextMenu);
-    if (node instanceof Sources.NavigatorGroupTreeNode)
+    if (node instanceof Sources.NavigatorGroupTreeNode) {
+      var hasMapping = Persistence.networkPersistenceManager.projects().has(project);
+      if (hasMapping) {
+        var domainPath = Persistence.networkPersistenceManager.domainPathForProject(project);
+        contextMenu.appendItem(
+            Common.UIString('Remove mapping \'' + domainPath + '\''),
+            () => Persistence.networkPersistenceManager.removeFileSystemProject(project));
+      } else {
+        var parsedURL = new Common.ParsedURL(SDK.targetManager.mainTarget().inspectedURL());
+        if (parsedURL.isValid && (parsedURL.scheme === 'http' || parsedURL.scheme === 'https')) {
+          contextMenu.appendItem(
+              Common.UIString('Map to \'' + parsedURL.domain() + '\''),
+              () => Persistence.networkPersistenceManager.addFileSystemProject(parsedURL.domain() + '/', project));
+        }
+      }
       contextMenu.appendItem(Common.UIString('Remove folder from workspace'), removeFolder);
+    }
 
     contextMenu.show();
   }
@@ -757,40 +772,17 @@ Sources.NavigatorView = class extends UI.VBox {
    * @param {string} path
    * @param {!Workspace.UISourceCode=} uiSourceCodeToCopy
    */
-  create(project, path, uiSourceCodeToCopy) {
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?string} content
-     */
-    function contentLoaded(content) {
-      createFile.call(this, content || '');
-    }
-
+  async create(project, path, uiSourceCodeToCopy) {
+    var content = '';
     if (uiSourceCodeToCopy)
-      uiSourceCodeToCopy.requestContent().then(contentLoaded.bind(this));
-    else
-      createFile.call(this);
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {string=} content
-     */
-    function createFile(content) {
-      project.createFile(path, null, content || '', fileCreated.bind(this));
-    }
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?Workspace.UISourceCode} uiSourceCode
-     */
-    function fileCreated(uiSourceCode) {
-      if (!uiSourceCode)
-        return;
-      this._sourceSelected(uiSourceCode, false);
-      var node = this.revealUISourceCode(uiSourceCode, true);
-      if (node)
-        this.rename(node, true);
-    }
+      content = (await uiSourceCodeToCopy.requestContent()) || '';
+    var uiSourceCode = await project.createFile(path, null, content);
+    if (!uiSourceCode)
+      return;
+    this._sourceSelected(uiSourceCode, false);
+    var node = this.revealUISourceCode(uiSourceCode, true);
+    if (node)
+      this.rename(node, true);
   }
 
   _groupingChanged() {
@@ -985,6 +977,8 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
       var container = createElementWithClass('span', 'icon-stack');
       var icon = UI.Icon.create('largeicon-navigator-file-sync', 'icon');
       var badge = UI.Icon.create('badge-navigator-file-sync', 'icon-badge');
+      if (Persistence.networkPersistenceManager.projects().has(binding.fileSystem.project()))
+        badge.style.filter = 'hue-rotate(160deg)';
       container.appendChild(icon);
       container.appendChild(badge);
       container.title = Persistence.PersistenceUtils.tooltipForUISourceCode(this._uiSourceCode);
@@ -1601,6 +1595,13 @@ Sources.NavigatorGroupTreeNode = class extends Sources.NavigatorTreeNode {
     this._navigatorView = navigatorView;
     this._title = title;
     this.populate();
+  }
+
+  /**
+   * @return {!Workspace.Project} project
+   */
+  project() {
+    return this._project;
   }
 
   /**

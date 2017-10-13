@@ -22,6 +22,8 @@ Persistence.Automapping = class {
 
     /** @type {!Map<string, !Workspace.UISourceCode>} */
     this._fileSystemUISourceCodes = new Map();
+    /** @type {!Set<!Workspace.Project>} */
+    this._ignoredProjects = new Set();
     this._sweepThrottler = new Common.Throttler(100);
 
     var pathEncoder = new Persistence.Automapping.PathEncoder();
@@ -50,6 +52,24 @@ Persistence.Automapping = class {
       this._onProjectAdded(fileSystem);
     for (var uiSourceCode of workspace.uiSourceCodes())
       this._onUISourceCodeAdded(uiSourceCode);
+  }
+
+  /**
+   * @override
+   * @param {!Workspace.Project} project
+   */
+  ignoreProject(project) {
+    this._onProjectRemoved(project);
+    this._ignoredProjects.add(project);
+  }
+
+  /**
+   * @override
+   * @param {!Workspace.Project} project
+   */
+  removeIgnoredProject(project) {
+    this._ignoredProjects.delete(project);
+    this._onProjectAdded(project);
   }
 
   _scheduleRemap() {
@@ -83,6 +103,7 @@ Persistence.Automapping = class {
    * @param {!Workspace.Project} project
    */
   _onProjectRemoved(project) {
+    this._ignoredProjects.delete(project);
     for (var uiSourceCode of project.uiSourceCodes())
       this._onUISourceCodeRemoved(uiSourceCode);
     if (project.type() !== Workspace.projectTypes.FileSystem)
@@ -98,12 +119,13 @@ Persistence.Automapping = class {
    * @param {!Workspace.Project} project
    */
   _onProjectAdded(project) {
-    if (project.type() !== Workspace.projectTypes.FileSystem)
+    if (project.type() !== Workspace.projectTypes.FileSystem || this._ignoredProjects.has(project))
       return;
     var fileSystem = /** @type {!Persistence.FileSystemWorkspaceBinding.FileSystem} */ (project);
     for (var gitFolder of fileSystem.initialGitFolders())
       this._projectFoldersIndex.addFolder(gitFolder);
     this._projectFoldersIndex.addFolder(fileSystem.fileSystemPath());
+    project.uiSourceCodes().forEach(this._onUISourceCodeAdded.bind(this));
     this._scheduleRemap();
   }
 
@@ -111,6 +133,8 @@ Persistence.Automapping = class {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _onUISourceCodeAdded(uiSourceCode) {
+    if (this._ignoredProjects.has(uiSourceCode.project()))
+      return;
     if (uiSourceCode.project().type() === Workspace.projectTypes.FileSystem) {
       this._filesIndex.addPath(uiSourceCode.url());
       this._fileSystemUISourceCodes.set(uiSourceCode.url(), uiSourceCode);
@@ -156,6 +180,35 @@ Persistence.Automapping = class {
   }
 
   /**
+   * @override
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  removeBinding(binding) {
+    this._unbindNetwork(binding.network);
+  }
+
+  /**
+   * @override
+   * @param {!Persistence.PersistenceBinding} binding
+   */
+  addBinding(binding) {
+    console.assert(!binding.network[Persistence.Automapping._binding]);
+    binding.network[Persistence.Automapping._processingPromise] = null;
+    binding.fileSystem[Persistence.Automapping._processingPromise] = null;
+
+    this._bindings.add(binding);
+    binding.network[Persistence.Automapping._binding] = binding;
+    binding.fileSystem[Persistence.Automapping._binding] = binding;
+    if (binding.exactMatch) {
+      var projectFolder = this._projectFoldersIndex.closestParentFolder(binding.fileSystem.url());
+      var newFolderAdded = projectFolder ? this._activeFoldersIndex.addFolder(projectFolder) : false;
+      if (newFolderAdded)
+        this._scheduleSweep();
+    }
+    this._onBindingCreated.call(null, binding);
+  }
+
+  /**
    * @param {!Workspace.UISourceCode} networkSourceCode
    */
   _bindNetwork(networkSourceCode) {
@@ -181,16 +234,7 @@ Persistence.Automapping = class {
       if (binding.network[Persistence.Automapping._binding] || binding.fileSystem[Persistence.Automapping._binding])
         return;
 
-      this._bindings.add(binding);
-      binding.network[Persistence.Automapping._binding] = binding;
-      binding.fileSystem[Persistence.Automapping._binding] = binding;
-      if (binding.exactMatch) {
-        var projectFolder = this._projectFoldersIndex.closestParentFolder(binding.fileSystem.url());
-        var newFolderAdded = projectFolder ? this._activeFoldersIndex.addFolder(projectFolder) : false;
-        if (newFolderAdded)
-          this._scheduleSweep();
-      }
-      this._onBindingCreated.call(null, binding);
+      this.addBinding(binding);
     }
   }
 
