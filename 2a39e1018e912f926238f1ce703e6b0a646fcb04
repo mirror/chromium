@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c17b382c_798dc56d",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-13T03:10:09Z",
+      "side": 1,
+      "message": "Sorry, I should have been clearer. It\u0027s still a bit ambiguous as to _which_ frame you\u0027re referring to. I\u0027d say: \"|rect_to_scroll| is relative to this frame\u0027s origin\" here, and in the ScrollRectToVisible method on the parent, it would be \"|rect_to_scroll| is relative to the originating frame\u0027s origin\".",
+      "range": {
+        "startLine": 717,
+        "startChar": 40,
+        "endLine": 717,
+        "endChar": 47
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8c7b52_46a78c5c",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-13T03:10:09Z",
+      "side": 1,
+      "message": "Actually, before continuing, I\u0027m a little confused so I\u0027m probably misunderstanding something. Sorry if this seems basic but I don\u0027t have a good mental model of how site instance swork yet.\n\nSay we have two frames in seperate processes:\n\nA  (parent)\n|\nB  (child)\n\nAnd we kick of a ScrollIntoView from B. Eventually it calls ScrollRectToVisibleInParentFrame. At that point, we go to the browser process, get a Proxy to its _parent_, A, and call ScrollRectToVisible on it. This sends a message to \"the renderer\" to call this method, but which renderer does it send the message to? That is, at this point, are we in A\u0027s renderer or B\u0027s?\n\nAlso, doesn\u0027t frame_ here refer to A? If that\u0027s the case, owner_element is storing the owner of A, but we want the owner of B, right? That is, we want to scroll A so that the \u003ciframe\u003e containing B is in view.\n\nThis works in my head if we\u0027re in A\u0027s renderer, but this is a RemoteFrame for B. In that case, it\u0027s owner will be the local Element in A and all this works. But in RenderFrameHostImpl::OnScrollRectToVisibleInParentFrame we call GetProxyToParent() and call this on it which implies frame A to me. Is this a bug or am I missing something critical?",
+      "range": {
+        "startLine": 354,
+        "startChar": 2,
+        "endLine": 354,
+        "endChar": 58
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d061e3_e1b7e40e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4530,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-13T03:10:09Z",
+      "side": 1,
+      "message": "I meant to move the this check to the callsite at LayoutBox. (And DCHECK here that we\u0027re only ever called with these conditions).",
+      "range": {
+        "startLine": 4529,
+        "startChar": 2,
+        "endLine": 4530,
+        "endChar": 11
+      },
+      "revId": "2a39e1018e912f926238f1ce703e6b0a646fcb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
