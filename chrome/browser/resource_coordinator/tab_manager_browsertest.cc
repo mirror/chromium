@@ -656,14 +656,15 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest, UrgentFastShutdownSingleTabProcess) {
 
 IN_PROC_BROWSER_TEST_F(TabManagerTest, ProactiveFastShutdownSharedTabProcess) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
+  ASSERT_TRUE(embedded_test_server()->Start());
   // Set max renderers to 1 to force running out of processes
   // and for both these tabs to share a renderer.
   content::RenderProcessHost::SetMaxRendererProcessCount(1);
   // Disable the protection of recent tabs.
   tab_manager->set_minimum_protection_time_for_tests(
       base::TimeDelta::FromMinutes(0));
-  OpenTwoTabs(GURL(chrome::kChromeUIAboutURL),
-              GURL(chrome::kChromeUICreditsURL));
+  OpenTwoTabs(GURL(embedded_test_server()->GetURL("/title1.html")),
+              GURL(embedded_test_server()->GetURL("/title2.html")));
 
   // The Tab Manager will not be able to fast-kill either of the tabs since they
   // share the same process regardless of the condition. No unsafe attempts will
@@ -676,14 +677,15 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest, ProactiveFastShutdownSharedTabProcess) {
 
 IN_PROC_BROWSER_TEST_F(TabManagerTest, UrgentFastShutdownSharedTabProcess) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
+  ASSERT_TRUE(embedded_test_server()->Start());
   // Set max renderers to 1 to force running out of processes and for both these
   // tabs to share a renderer.
   content::RenderProcessHost::SetMaxRendererProcessCount(1);
   // Disable the protection of recent tabs.
   tab_manager->set_minimum_protection_time_for_tests(
       base::TimeDelta::FromMinutes(0));
-  OpenTwoTabs(GURL(chrome::kChromeUIAboutURL),
-              GURL(chrome::kChromeUICreditsURL));
+  OpenTwoTabs(GURL(embedded_test_server()->GetURL("/title1.html")),
+              GURL(embedded_test_server()->GetURL("/title2.html")));
 
   // The Tab Manager will not be able to fast-kill either of the tabs since they
   // share the same process regardless of the condition. An unsafe attempt will

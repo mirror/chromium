@@ -1,8 +1,5 @@
 # crbug.com/417518: Get tests working with --site-per-process
 -BrowserTest.OtherRedirectsDontForkProcess
--ChromeRenderProcessHostTest.ProcessOverflow
--ChromeRenderProcessHostTest.ProcessPerTab
--ChromeRenderProcessHostTestWithCommandLine.ProcessOverflowCommandLine
 -PrerenderBrowserTest.PrerenderLocationReplaceGWSHistograms
 -ProcessManagementTest.ExtensionProcessBalancing
 -ProcessManagementTest.ProcessOverflow
