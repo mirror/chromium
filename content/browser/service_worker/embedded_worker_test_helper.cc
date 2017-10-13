@@ -78,6 +78,7 @@ EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
     const EmbeddedWorkerStartParams& params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+    mojom::ControllerServiceWorkerRequest controller_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
@@ -92,9 +93,9 @@ void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
   ASSERT_TRUE(worker);
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
 
-  helper_->OnStartWorkerStub(params, std::move(dispatcher_request),
-                             std::move(instance_host),
-                             std::move(provider_info));
+  helper_->OnStartWorkerStub(
+      params, std::move(dispatcher_request), std::move(controller_request),
+      std::move(instance_host), std::move(provider_info));
 }
 
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StopWorker() {
@@ -503,14 +504,14 @@ void EmbeddedWorkerTestHelper::OnStartWorker(
     const GURL& scope,
     const GURL& script_url,
     bool pause_after_download,
-    mojom::ServiceWorkerEventDispatcherRequest request,
+    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+    mojom::ControllerServiceWorkerRequest controller_request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
   EmbeddedWorkerInstance* worker = registry()->GetWorker(embedded_worker_id);
   ASSERT_TRUE(worker);
   MockServiceWorkerEventDispatcher::Create(AsWeakPtr(), worker->thread_id(),
-                                           std::move(request));
-
+                                           std::move(dispatcher_request));
   embedded_worker_id_service_worker_version_id_map_[embedded_worker_id] =
       service_worker_version_id;
   embedded_worker_id_instance_host_ptr_map_[embedded_worker_id].Bind(
@@ -776,7 +777,8 @@ void EmbeddedWorkerTestHelper::SimulateSend(IPC::Message* message) {
 
 void EmbeddedWorkerTestHelper::OnStartWorkerStub(
     const EmbeddedWorkerStartParams& params,
-    mojom::ServiceWorkerEventDispatcherRequest request,
+    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+    mojom::ControllerServiceWorkerRequest controller_request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info) {
   EmbeddedWorkerInstance* worker =
@@ -785,12 +787,12 @@ void EmbeddedWorkerTestHelper::OnStartWorkerStub(
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::BindOnce(&EmbeddedWorkerTestHelper::OnStartWorker, AsWeakPtr(),
-                     params.embedded_worker_id,
-                     params.service_worker_version_id, params.scope,
-                     params.script_url, params.pause_after_download,
-                     base::Passed(&request), base::Passed(&instance_host),
-                     base::Passed(&provider_info)));
+      base::BindOnce(
+          &EmbeddedWorkerTestHelper::OnStartWorker, AsWeakPtr(),
+          params.embedded_worker_id, params.service_worker_version_id,
+          params.scope, params.script_url, params.pause_after_download,
+          std::move(dispatcher_request), std::move(controller_request),
+          std::move(instance_host), std::move(provider_info)));
 }
 
 void EmbeddedWorkerTestHelper::OnResumeAfterDownloadStub(

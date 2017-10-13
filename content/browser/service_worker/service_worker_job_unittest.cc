@@ -517,7 +517,8 @@ class FailToStartWorkerTestHelper : public EmbeddedWorkerTestHelper {
       const GURL& scope,
       const GURL& script_url,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest request,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
@@ -977,7 +978,8 @@ class UpdateJobTestHelper
       const GURL& scope,
       const GURL& script,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest request,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
@@ -1037,7 +1039,8 @@ class UpdateJobTestHelper
     started_workers_.insert(embedded_worker_id);
     EmbeddedWorkerTestHelper::OnStartWorker(
         embedded_worker_id, version_id, scope, script, pause_after_download,
-        std::move(request), std::move(instance_host), std::move(provider_info));
+        std::move(dispatcher_request), std::move(controller_request),
+        std::move(instance_host), std::move(provider_info));
   }
 
   void OnStopWorker(int embedded_worker_id) override {
@@ -1110,7 +1113,8 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
       const GURL& scope,
       const GURL& script,
       bool pause_after_download,
-      mojom::ServiceWorkerEventDispatcherRequest request,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info)
       override {
@@ -1127,7 +1131,8 @@ class EvictIncumbentVersionHelper : public UpdateJobTestHelper {
     }
     UpdateJobTestHelper::OnStartWorker(
         embedded_worker_id, version_id, scope, script, pause_after_download,
-        std::move(request), std::move(instance_host), std::move(provider_info));
+        std::move(dispatcher_request), std::move(controller_request),
+        std::move(instance_host), std::move(provider_info));
   }
 
   void OnRegistrationFailed(ServiceWorkerRegistration* registration) override {
@@ -1805,7 +1810,8 @@ class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
  protected:
   void StartWorker(
       const EmbeddedWorkerStartParams& params,
-      mojom::ServiceWorkerEventDispatcherRequest request,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      mojom::ControllerServiceWorkerRequest controller_request,
       mojom::ServiceWorkerInstalledScriptsInfoPtr scripts_info,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
       mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
@@ -1815,9 +1821,9 @@ class CheckPauseAfterDownloadEmbeddedWorkerInstanceClient
     EXPECT_EQ(next_pause_after_download_.value(), params.pause_after_download);
     num_of_startworker_++;
     EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
-        params, std::move(request), std::move(scripts_info),
-        std::move(instance_host), std::move(provider_info),
-        std::move(content_settings_proxy));
+        params, std::move(dispatcher_request), std::move(controller_request),
+        std::move(scripts_info), std::move(instance_host),
+        std::move(provider_info), std::move(content_settings_proxy));
   }
 
  private:
