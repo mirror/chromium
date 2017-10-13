@@ -75,6 +75,16 @@ PartitionAllocHooks::AllocationHook* PartitionAllocHooks::allocation_hook_ =
     nullptr;
 PartitionAllocHooks::FreeHook* PartitionAllocHooks::free_hook_ = nullptr;
 
+// Tries to find the best number of SystemPages to allocate at a time to
+// accomodate for |size|. Uses a heuristic that looks at number of bytes wasted
+// after the last slot, and accounting for the PTE usage for each SystemPage.
+//
+// TODO(ajwong): This seems to interact badly with
+// PartitionBucketPartitionPages() which rounds the value from this up to a
+// multiple of kNumSystemPagesPerPartitionPage (aka 4) anyways.
+//
+// TODO(ajwong): The waste calculation seems wrong. The PTE usage should cover
+// both used and unsed pages.
 static uint8_t PartitionBucketNumSystemPages(size_t size) {
   // This works out reasonably for the current bucket sizes of the generic
   // allocator, and the current values of partition page size and constants.
@@ -89,8 +99,12 @@ static uint8_t PartitionBucketNumSystemPages(size_t size) {
   double best_waste_ratio = 1.0f;
   uint16_t best_pages = 0;
   if (size > kMaxSystemPagesPerSlotSpan * kSystemPageSize) {
+    // TODO(ajwong): Why is there a dcheck here for this?
     DCHECK(!(size % kSystemPageSize));
     best_pages = static_cast<uint16_t>(size / kSystemPageSize);
+    // TODO(ajwong): Should this be checking against
+    // kMaxSystemPagesPerSlotSpan??
+    // Or at least against numeric_limits<uint8_t>::max?
     CHECK(best_pages < (1 << 8));
     return static_cast<uint8_t>(best_pages);
   }
@@ -102,6 +116,10 @@ static uint8_t PartitionBucketNumSystemPages(size_t size) {
     size_t waste = page_size - (num_slots * size);
     // Leaving a page unfaulted is not free; the page will occupy an empty page
     // table entry.  Make a simple attempt to account for that.
+    //
+    // TODO(ajwong): This looks wrong. PTEs are allocated for all pages
+    // regardless of whether or not they are wasted. It should really just
+    // be waste += i * sizeof(void*).
     size_t num_remainder_pages = i & (kNumSystemPagesPerPartitionPage - 1);
     size_t num_unfaulted_pages =
         num_remainder_pages
@@ -375,6 +393,9 @@ static ALWAYS_INLINE void* PartitionAllocPartitionPages(
     // In this case, we can still hand out pages from the current super page
     // allocation.
     char* ret = root->next_partition_page;
+    CHECK(SetSystemPagesAccess(ret,
+                               total_size,
+                               PageReadWrite));
     root->next_partition_page += total_size;
     PartitionIncreaseCommittedPages(root, total_size);
     return ret;
@@ -393,6 +414,7 @@ static ALWAYS_INLINE void* PartitionAllocPartitionPages(
   root->total_size_of_super_pages += kSuperPageSize;
   PartitionIncreaseCommittedPages(root, total_size);
 
+  // total_size MUST be less thatn kSuperPageSize - (kPartitionPageSize*2).
   root->next_super_page = super_page + kSuperPageSize;
   char* ret = super_page + kPartitionPageSize;
   root->next_partition_page = ret + total_size;
@@ -405,9 +427,12 @@ static ALWAYS_INLINE void* PartitionAllocPartitionPages(
   CHECK(SetSystemPagesAccess(super_page + (kSystemPageSize * 2),
                              kPartitionPageSize - (kSystemPageSize * 2),
                              PageInaccessible));
-  // Also make the last partition page a guard page.
-  CHECK(SetSystemPagesAccess(super_page + (kSuperPageSize - kPartitionPageSize),
-                             kPartitionPageSize, PageInaccessible));
+//  // Last page is a guard page.
+//  CHECK(SetSystemPagesAccess(super_page + (kSuperPageSize - kPartitionPageSize),
+//                             kPartitionPageSize, PageInaccessible));
+  CHECK(SetSystemPagesAccess(super_page + kPartitionPageSize + total_size,
+                             (kSuperPageSize - kPartitionPageSize - total_size),
+                             PageInaccessible));
 
   // If we were after a specific address, but didn't get it, assume that
   // the system chose a lousy address. Here most OS'es have a default
@@ -457,8 +482,11 @@ static ALWAYS_INLINE void* PartitionAllocPartitionPages(
   return ret;
 }
 
+// Returns the granularity of allcoation from the current
+// extent (aka SuperPage)
 static ALWAYS_INLINE uint16_t
 PartitionBucketPartitionPages(const PartitionBucket* bucket) {
+  // Rounds up to nearest multiple of kNumSystemPagesPerPartitionPage.
   return (bucket->num_system_pages_per_slot_span +
           (kNumSystemPagesPerPartitionPage - 1)) /
          kNumSystemPagesPerPartitionPage;
@@ -473,6 +501,14 @@ static ALWAYS_INLINE void PartitionPageReset(PartitionPage* page) {
   page->next_page = nullptr;
 }
 
+// Each bucket allocates PartitionPages in chunks of |num_partition_pages| which
+// is equal to PartitionBucketPartitionPages(bucket).
+//
+// This uses some subset of the SuperPage metadata area. The rest of the
+// SuperPages is actually left in the root to be used by other buckets.
+//
+// Only the firat PartitionPage in the |num_partition_pages| set is fully
+// initialized. The others are set to refer back to the first metadata area.
 static ALWAYS_INLINE void PartitionPageSetup(PartitionPage* page,
                                              PartitionBucket* bucket) {
   // The bucket never changes. We set it up once.
@@ -570,7 +606,7 @@ static ALWAYS_INLINE char* PartitionPageAllocAndFillFreelist(
 // active page.
 // When it finds a suitable new active page (one that has free slots and is not
 // empty), it is set as the new active page. If there is no suitable new
-// active page, the current active page is set to the seed page.
+// active page, the current active page is set to &g_sentinel_page.
 // As potential pages are scanned, they are tidied up according to their state.
 // Empty pages are swept on to the empty page list, decommitted pages on to the
 // decommitted page list and full pages are unlinked from any list.
@@ -754,6 +790,24 @@ static ALWAYS_INLINE void PartitionDirectUnmap(PartitionPage* page) {
   FreePages(ptr, unmap_size);
 }
 
+static ALWAYS_INLINE void PartitionDecommitPage(PartitionRootBase* root,
+                                                PartitionPage* page) {
+  DCHECK(PartitionPageStateIsEmpty(page));
+  DCHECK(!PartitionBucketIsDirectMapped(page->bucket));
+  void* addr = PartitionPageToPointer(page);
+  PartitionDecommitSystemPages(root, addr, PartitionBucketBytes(page->bucket));
+
+  // We actually leave the decommitted page in the active list. We'll sweep
+  // it on to the decommitted page list when we next walk the active page
+  // list.
+  // Pulling this trick enables us to use a singly-linked page list for all
+  // cases, which is critical in keeping the page metadata structure down to
+  // 32 bytes in size.
+  page->freelist_head = 0;
+  page->num_unprovisioned_slots = 0;
+  DCHECK(PartitionPageStateIsDecommitted(page));
+}
+
 void* PartitionAllocSlowPath(PartitionRootBase* root,
                              int flags,
                              size_t size,
@@ -782,6 +836,9 @@ void* PartitionAllocSlowPath(PartitionRootBase* root,
     // First, did we find an active page in the active pages list?
     new_page = bucket->active_pages_head;
     DCHECK(PartitionPageStateIsActive(new_page));
+
+    // This ordering matters. PartitionSetNewActivePage() sweeps the active page
+    // list and may move things into the empty or decommitted lists.
   } else if (LIKELY(bucket->empty_pages_head != nullptr) ||
              LIKELY(bucket->decommitted_pages_head != nullptr)) {
     // Second, look in our lists of empty and decommitted pages.
@@ -832,6 +889,7 @@ void* PartitionAllocSlowPath(PartitionRootBase* root,
     PartitionOutOfMemory(root);
   }
 
+  // TODO(ajwong): Why does this require resetting bucket???
   bucket = new_page->bucket;
   DCHECK(bucket != &g_sentinel_bucket);
   bucket->active_pages_head = new_page;
@@ -849,24 +907,6 @@ void* PartitionAllocSlowPath(PartitionRootBase* root,
   // Otherwise, we need to build the freelist.
   DCHECK(new_page->num_unprovisioned_slots);
   return PartitionPageAllocAndFillFreelist(new_page);
-}
-
-static ALWAYS_INLINE void PartitionDecommitPage(PartitionRootBase* root,
-                                                PartitionPage* page) {
-  DCHECK(PartitionPageStateIsEmpty(page));
-  DCHECK(!PartitionBucketIsDirectMapped(page->bucket));
-  void* addr = PartitionPageToPointer(page);
-  PartitionDecommitSystemPages(root, addr, PartitionBucketBytes(page->bucket));
-
-  // We actually leave the decommitted page in the active list. We'll sweep
-  // it on to the decommitted page list when we next walk the active page
-  // list.
-  // Pulling this trick enables us to use a singly-linked page list for all
-  // cases, which is critical in keeping the page metadata structure down to
-  // 32 bytes in size.
-  page->freelist_head = 0;
-  page->num_unprovisioned_slots = 0;
-  DCHECK(PartitionPageStateIsDecommitted(page));
 }
 
 static void PartitionDecommitPageIfPossible(PartitionRootBase* root,
