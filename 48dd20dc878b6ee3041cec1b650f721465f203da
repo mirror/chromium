@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6d4a6f2_f17f16d6",
+        "filename": "chrome/browser/feature_engagement/feature_promo_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "This is a pure interface and should never be instantiated. FeaturePromoBubbleView (Views implementation) is a subclass of FeaturePromoBubble and is also never explicitly instantiated. Only the subclasses of FeaturePromoBubbleView (NewTabPromoBubbleView, IncognitoWindowPromoBubbleView, and BookmarkPromoBubbleView) are instantiated. All subclasses are owned by its native widget. Thus, I kept the destructor private in all the subclasses of the FeaturePromoBubbleView. Is this okay?",
+      "parentUuid": "d4a3ba64_99298aff",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f3e84e_f812ed6d",
         "filename": "chrome/browser/feature_engagement/feature_promo_bubble.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db12d986_7c87dd54",
+        "filename": "chrome/browser/feature_engagement/feature_promo_bubble.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f3e84e_f812ed6d",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "e49a68f6_113af254",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad3d157_e60fe3e1",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c8a424_721e547a",
         "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
         "patchSetId": 8
@@ -114,6 +186,30 @@
       "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7b2b45_b4d1ee7a",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c8a424_721e547a",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "0e4ab96a_02cda879",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f439e483_1a11a34b",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6694085_1a35defb",
         "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.cc",
         "patchSetId": 8
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "9dfb6e73_65d0343e",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6694085_1a35defb",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24163a0_ef4815eb",
         "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h",
         "patchSetId": 8
@@ -183,6 +327,30 @@
       "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683cb830_3612292d",
+        "filename": "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-13T22:36:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24163a0_ef4815eb",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "48dd20dc878b6ee3041cec1b650f721465f203da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
