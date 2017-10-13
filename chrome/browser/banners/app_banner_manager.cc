@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include <base/debug/stack_trace.h>
+
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
@@ -81,6 +83,44 @@ std::string GetStatusParam(InstallableStatusCode code) {
   return std::string();
 }
 
+const char* codes[] = {
+    "NO_ERROR_DETECTED",
+    "RENDERER_EXITING",
+    "RENDERER_CANCELLED",
+    "USER_NAVIGATED",
+    "NOT_IN_MAIN_FRAME",
+    "NOT_FROM_SECURE_ORIGIN",
+    "NO_MANIFEST",
+    "MANIFEST_EMPTY",
+    "START_URL_NOT_VALID",
+    "MANIFEST_MISSING_NAME_OR_SHORT_NAME",
+    "MANIFEST_DISPLAY_NOT_SUPPORTED",
+    "MANIFEST_MISSING_SUITABLE_ICON",
+    "NO_MATCHING_SERVICE_WORKER",
+    "NO_ACCEPTABLE_ICON",
+    "CANNOT_DOWNLOAD_ICON",
+    "NO_ICON_AVAILABLE",
+    "PLATFORM_NOT_SUPPORTED_ON_ANDROID",
+    "NO_ID_SPECIFIED",
+    "IDS_DO_NOT_MATCH",
+    "ALREADY_INSTALLED",
+    "INSUFFICIENT_ENGAGEMENT",
+    "PACKAGE_NAME_OR_START_URL_EMPTY",
+    "PREVIOUSLY_BLOCKED",
+    "PREVIOUSLY_IGNORED",
+    "SHOWING_NATIVE_APP_BANNER",
+    "SHOWING_WEB_APP_BANNER",
+    "FAILED_TO_CREATE_BANNER",
+    "URL_NOT_SUPPORTED_FOR_WEBAPK",
+    "IN_INCOGNITO",
+    "NOT_OFFLINE_CAPABLE",
+    "WAITING_FOR_MANIFEST",
+    "WAITING_FOR_INSTALLABLE_CHECK",
+    "NO_GESTURE",
+    "WAITING_FOR_NATIVE_DATA",
+    "MAX_ERROR_CODE",
+};
+
 // Logs installable status codes to the console.
 class ConsoleStatusReporter : public banners::AppBannerManager::StatusReporter {
  public:
@@ -102,11 +142,11 @@ class TrackingStatusReporter
   // Records code via an UMA histogram.
   void ReportStatus(content::WebContents* web_contents,
                     InstallableStatusCode code) override {
-    // Ensure that we haven't yet logged a status code for this page.
-    DCHECK(!done_);
-
-    if (code != NO_ERROR_DETECTED)
+    // We only increment the histogram once per page load (if the banner
+    // pipeline is triggered).
+    if (!done_) {
       banners::TrackInstallableStatusCode(code);
+    }
 
     done_ = true;
   }
@@ -178,6 +218,11 @@ void AppBannerManager::SendBannerAccepted() {
 void AppBannerManager::SendBannerDismissed() {
   if (event_.is_bound())
     event_->BannerDismissed();
+
+  if (IsExperimentalAppBannersEnabled()) {
+    ResetBindings();
+    SendBannerPromptRequest();  // Reprompt.
+  }
 }
 
 base::WeakPtr<AppBannerManager> AppBannerManager::GetWeakPtr() {
@@ -317,7 +362,9 @@ void AppBannerManager::RecordDidShowBanner(const std::string& event_name) {
 void AppBannerManager::ReportStatus(content::WebContents* web_contents,
                                     InstallableStatusCode code) {
   DCHECK(status_reporter_);
-  status_reporter_->ReportStatus(web_contents, code);
+  if (code != NO_ERROR_DETECTED) {
+    status_reporter_->ReportStatus(web_contents, code);
+  }
 }
 
 void AppBannerManager::ResetCurrentPageData() {
@@ -604,8 +651,15 @@ void AppBannerManager::ShowBanner() {
         BEFORE_INSTALL_EVENT_PROMPT_CALLED_AFTER_PREVENT_DEFAULT);
   }
 
-  AppBannerSettingsHelper::RecordMinutesFromFirstVisitToShow(
-      web_contents(), validated_url_, GetAppIdentifier(), GetCurrentTime());
+  // If this is the first time that we are showing the banner for this site,
+  // record how long it's been since the first visit.
+  if (AppBannerSettingsHelper::GetSingleBannerEvent(
+          web_contents(), validated_url_, GetAppIdentifier(),
+          AppBannerSettingsHelper::APP_BANNER_EVENT_DID_SHOW)
+          .is_null())
+
+    AppBannerSettingsHelper::RecordMinutesFromFirstVisitToShow(
+        web_contents(), validated_url_, GetAppIdentifier(), GetCurrentTime());
 
   DCHECK(!manifest_url_.is_empty());
   DCHECK(!manifest_.IsEmpty());
