@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c86bb2_af0fae3c",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/module.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-13T06:00:08Z",
+      "side": 1,
+      "message": "This should be able to be simply compressors_.erase(compressor_id);",
+      "range": {
+        "startLine": 470,
+        "startChar": 4,
+        "endLine": 473,
+        "endChar": 35
+      },
+      "revId": "79907b7ec8914bb625c67766f1da7b55e8afa4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
