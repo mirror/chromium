@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa72daf_3cb3a693",
+        "filename": "ui/ozone/platform/drm/common/drm_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-13T01:12:18Z",
+      "side": 1,
+      "message": "nit: Maybe mention ColorSpace could be invalid if it can\u0027t be parsed from the edid?",
+      "revId": "9221c3088250c73ffe1a3daa197f832fcf3c6682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dae6ab_c0b8e57b",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-13T01:12:18Z",
+      "side": 1,
+      "message": "One is probably enough. Leave all of them if you prefer though.",
+      "revId": "9221c3088250c73ffe1a3daa197f832fcf3c6682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "490b0e6f_57e79f81",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-13T01:12:18Z",
+      "side": 1,
+      "message": "Should we test an invalid colorspace/gamma?",
+      "revId": "9221c3088250c73ffe1a3daa197f832fcf3c6682",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
