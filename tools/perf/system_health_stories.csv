@@ -74,7 +74,7 @@ browse:social:facebook,mobile,Load https://www.facebook.com/rihanna and navigate
 browse:social:facebook_infinite_scroll,desktop,Load https://www.facebook.com/shakira then make a very long scroll., 
 browse:social:facebook_infinite_scroll,mobile,Load https://m.facebook.com/shakira then make a very long scroll., 
 browse:social:instagram,mobile,Load https://www.instagram.com/badgalriri/ and navigate to some items/articles., 
-browse:social:pinterest_infinite_scroll,mobile,Load https://www.pinterest.com/all then make a very long scroll.,Android Webview
+browse:social:pinterest_infinite_scroll,mobile,Load https://www.pinterest.com/all then make a very long scroll., 
 browse:social:tumblr_infinite_scroll,all,Load http://techcrunch.tumblr.com/ then make a very long scroll., 
 browse:social:twitter,desktop,Load https://www.twitter.com/nasa and navigate to some items/articles., 
 browse:social:twitter,mobile,Load https://www.twitter.com/nasa and navigate to some items/articles., 
