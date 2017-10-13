@@ -16,6 +16,29 @@
       "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a65bb2_bbe925c5",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-13T16:55:51Z",
+      "side": 1,
+      "message": "Do we know why we cannot directly call updateScreenSize()?  We should comment the rationale so future us won\u0027t forget.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 50
+      },
+      "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
