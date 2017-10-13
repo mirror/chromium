@@ -13,11 +13,11 @@
 #include <vector>
 
 #include "base/location.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "content/child/child_process.h"
@@ -70,8 +70,8 @@ using testing::WithArg;
 
 namespace content {
 
-ACTION_P2(ExitMessageLoop, message_loop, quit_closure) {
-  message_loop->task_runner()->PostTask(FROM_HERE, quit_closure);
+ACTION_P(RunQuitClosure, quit_closure) {
+  quit_closure.Run();
 }
 
 // Action SaveArgPointeeMove<k>(pointer) saves the value pointed to by the k-th
@@ -263,7 +263,6 @@ class RTCPeerConnectionHandlerUnderTest : public RTCPeerConnectionHandler {
 class RTCPeerConnectionHandlerTest : public ::testing::Test {
  public:
   RTCPeerConnectionHandlerTest() : mock_peer_connection_(NULL) {
-    child_process_.reset(new ChildProcess());
   }
 
   void SetUp() override {
@@ -470,8 +469,8 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
   }
 
  public:
-  base::MessageLoop message_loop_;
-  std::unique_ptr<ChildProcess> child_process_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  ChildProcess child_process_;
   std::unique_ptr<MockWebRTCPeerConnectionHandlerClient> mock_client_;
   std::unique_ptr<MockPeerConnectionDependencyFactory> mock_dependency_factory_;
   std::unique_ptr<NiceMock<MockPeerConnectionTracker>> mock_tracker_;
@@ -1308,7 +1307,7 @@ TEST_F(RTCPeerConnectionHandlerTest, RemoveAndAddAudioTrackFromRemoteStream) {
           _))
       .WillOnce(DoAll(SaveArg<0>(&webkit_stream),
                       SaveArgPointeeMove<1>(&receivers),
-                      ExitMessageLoop(&message_loop_, run_loop.QuitClosure())));
+                      RunQuitClosure(run_loop.QuitClosure())));
   InvokeOnAddStream(remote_stream);
   EXPECT_TRUE(HasReceiverForEveryTrack(remote_stream, receivers));
   run_loop.Run();
@@ -1359,7 +1358,7 @@ TEST_F(RTCPeerConnectionHandlerTest, RemoveAndAddVideoTrackFromRemoteStream) {
           _))
       .WillOnce(DoAll(SaveArg<0>(&webkit_stream),
                       SaveArgPointeeMove<1>(&receivers),
-                      ExitMessageLoop(&message_loop_, run_loop.QuitClosure())));
+                      RunQuitClosure(run_loop.QuitClosure())));
 
   InvokeOnAddStream(remote_stream);
   EXPECT_TRUE(HasReceiverForEveryTrack(remote_stream, receivers));
@@ -1412,7 +1411,7 @@ TEST_F(RTCPeerConnectionHandlerTest, RemoveAndAddTracksFromRemoteStream) {
           _))
       .WillOnce(DoAll(SaveArg<0>(&webkit_stream),
                       SaveArgPointeeMove<1>(&receivers),
-                      ExitMessageLoop(&message_loop_, run_loop.QuitClosure())));
+                      RunQuitClosure(run_loop.QuitClosure())));
 
   InvokeOnAddStream(remote_stream);
   EXPECT_TRUE(HasReceiverForEveryTrack(remote_stream, receivers));
