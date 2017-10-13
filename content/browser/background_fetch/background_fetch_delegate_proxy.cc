@@ -40,7 +40,22 @@ class BackgroundFetchDelegateProxy::Core
     return weak_ptr_factory_.GetWeakPtr();
   }
 
-  void StartRequest(const std::string& guid,
+  void CreateDownloadJob(const std::string& jobId,
+                         const std::string& title,
+                         const url::Origin& origin,
+                         int completed_parts,
+                         int total_parts,
+                         const std::vector<std::string>& current_guids) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+    if (delegate_) {
+      delegate_->CreateDownloadJob(jobId, title, origin, completed_parts,
+                                   total_parts, current_guids);
+    }
+  }
+
+  void StartRequest(const std::string& jobId,
+                    const std::string& guid,
                     const url::Origin& origin,
                     scoped_refptr<BackgroundFetchRequestInfo> request) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -98,7 +113,7 @@ class BackgroundFetchDelegateProxy::Core
       headers.SetHeader("Origin", origin.Serialize());
     }
 
-    delegate_->DownloadUrl(guid, fetch_request.method, fetch_request.url,
+    delegate_->DownloadUrl(jobId, guid, fetch_request.method, fetch_request.url,
                            traffic_annotation, headers);
   }
 
@@ -108,8 +123,6 @@ class BackgroundFetchDelegateProxy::Core
   void OnDownloadComplete(
       const std::string& guid,
       std::unique_ptr<BackgroundFetchResult> result) override;
-  void OnDownloadFailed(const std::string& guid,
-                        BackgroundFetchDelegate::FailureReason reason) override;
   void OnDownloadStarted(
       const std::string& guid,
       std::unique_ptr<content::BackgroundFetchResponse> response) override;
@@ -148,12 +161,6 @@ void BackgroundFetchDelegateProxy::Core::OnDownloadComplete(
                      io_parent_, guid, std::move(result)));
 }
 
-void BackgroundFetchDelegateProxy::Core::OnDownloadFailed(
-    const std::string& guid,
-    BackgroundFetchDelegate::FailureReason reason) {
-  // TODO(delphick): do something with this
-}
-
 void BackgroundFetchDelegateProxy::Core::OnDownloadStarted(
     const std::string& guid,
     std::unique_ptr<content::BackgroundFetchResponse> response) {
@@ -188,7 +195,23 @@ BackgroundFetchDelegateProxy::~BackgroundFetchDelegateProxy() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
+void BackgroundFetchDelegateProxy::CreateDownloadJob(
+    const std::string& jobId,
+    const std::string& title,
+    const url::Origin& origin,
+    int completed_parts,
+    int total_parts,
+    const std::vector<std::string>& current_guids) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&Core::CreateDownloadJob, ui_core_ptr_, jobId, title,
+                     origin, completed_parts, total_parts, current_guids));
+}
+
 void BackgroundFetchDelegateProxy::StartRequest(
+    const std::string& jobId,
     base::WeakPtr<Controller> job_controller,
     const url::Origin& origin,
     scoped_refptr<BackgroundFetchRequestInfo> request) {
@@ -199,9 +222,9 @@ void BackgroundFetchDelegateProxy::StartRequest(
 
   controller_map_[guid] = std::make_pair(request, job_controller);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&Core::StartRequest, ui_core_ptr_, guid, origin, request));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(&Core::StartRequest, ui_core_ptr_,
+                                         jobId, guid, origin, request));
 }
 
 void BackgroundFetchDelegateProxy::UpdateUI(const std::string& title) {
@@ -220,7 +243,11 @@ void BackgroundFetchDelegateProxy::DidStartRequest(
     const std::string& guid,
     std::unique_ptr<BackgroundFetchResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK_EQ(controller_map_.count(guid), 1u);
+
+  // TODO(delphick): The controller may not exist as persistence is not yet
+  // implemented.
+  if (controller_map_.count(guid) == 0)
+    return;
 
   const scoped_refptr<BackgroundFetchRequestInfo>& request_info =
       controller_map_[guid].first;
@@ -236,7 +263,11 @@ void BackgroundFetchDelegateProxy::OnDownloadUpdated(
     const std::string& guid,
     uint64_t bytes_downloaded) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK_EQ(controller_map_.count(guid), 1u);
+
+  // TODO(delphick): The controller may not exist as persistence is not yet
+  // implemented.
+  if (controller_map_.count(guid) == 0)
+    return;
 
   const scoped_refptr<BackgroundFetchRequestInfo>& request_info =
       controller_map_[guid].first;
@@ -251,7 +282,11 @@ void BackgroundFetchDelegateProxy::OnDownloadComplete(
     const std::string& guid,
     std::unique_ptr<BackgroundFetchResult> result) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK_EQ(controller_map_.count(guid), 1u);
+
+  // TODO(delphick): The controller may not exist as persistence is not yet
+  // implemented.
+  if (controller_map_.count(guid) == 0)
+    return;
 
   const scoped_refptr<BackgroundFetchRequestInfo>& request_info =
       controller_map_[guid].first;

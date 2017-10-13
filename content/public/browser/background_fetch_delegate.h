@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/background_fetch_response.h"
 
 class GURL;
 
@@ -21,32 +22,18 @@ class HttpRequestHeaders;
 struct NetworkTrafficAnnotationTag;
 }  // namespace net
 
+namespace url {
+class Origin;
+}  // namespace url
+
 namespace content {
-struct BackgroundFetchResponse;
-struct BackgroundFetchResult;
 
 // Interface for launching background fetches. Implementing classes would
 // generally interface with the DownloadService or DownloadManager.
 // Must only be used on the UI thread and generally expected to be called by the
 // BackgroundFetchDelegateProxy.
-// TODO(delphick): Move this content/public/browser.
 class CONTENT_EXPORT BackgroundFetchDelegate {
  public:
-  // Failures that happen after the download has already started.
-  enum FailureReason {
-    // Used when the download has been aborted after reaching a threshold where
-    // it was decided it is not worth attempting to start again. This could be
-    // either due to a specific number of failed retry attempts or a specific
-    // number of wasted bytes due to the download restarting.
-    NETWORK,
-
-    // Used when the download was not completed before the timeout.
-    TIMEDOUT,
-
-    // Used when the failure reason is unknown.
-    UNKNOWN,
-  };
-
   // Client interface that a BackgroundFetchDelegate would use to signal the
   // progress of a background fetch.
   class Client {
@@ -70,9 +57,6 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
         const std::string& guid,
         std::unique_ptr<BackgroundFetchResult> result) = 0;
 
-    virtual void OnDownloadFailed(const std::string& guid,
-                                  FailureReason reason) = 0;
-
     // Called by the delegate when it's shutting down to signal that the
     // delegate is no longer valid.
     virtual void OnDelegateShutdown() = 0;
@@ -82,7 +66,24 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
 
   virtual ~BackgroundFetchDelegate();
 
+  // Creates a new download grouping identified by |jobId|. Further downloads
+  // started by DownloadUrl will also use this |jobId| so that a notification
+  // can be updated with the current status. If the download was already started
+  // in a previous browser session, then |current_guids| should contain the
+  // GUIDs of in progress downloads, while completed downloads are recorded in
+  // |completed_parts|.
+  virtual void CreateDownloadJob(
+      const std::string& jobId,
+      const std::string& title,
+      const url::Origin& origin,
+      int completed_parts,
+      int total_parts,
+      const std::vector<std::string>& current_guids) = 0;
+
+  // Creates a new download identified by |guid| in the download job identified
+  // by |jobId|.
   virtual void DownloadUrl(
+      const std::string& jobId,
       const std::string& guid,
       const std::string& method,
       const GURL& url,
