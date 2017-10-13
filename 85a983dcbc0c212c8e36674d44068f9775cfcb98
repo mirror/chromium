@@ -33,6 +33,24 @@
       "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0cceab_dbb836bb",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-13T15:08:55Z",
+      "side": 1,
+      "message": "My idea was that we add all the deps and code that is shared among the test targets. Could we let the testapp depend on this and remove the duplicate dependencies?",
+      "parentUuid": "ab5f2044_9f3a8d7b",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
