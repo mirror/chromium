@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7888502_b5f8fbc5",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T19:46:19Z",
+      "side": 1,
+      "message": "The style from the other sections is the stuff indented should be complete sentences with capitals and periods.",
+      "revId": "e3a0140c73d4e15444405c587d212e2d7f18cf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47506a2e_86c88093",
+        "filename": "tools/gn/command_desc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T19:46:19Z",
+      "side": 1,
+      "message": "Are you sure this is in the order applying and not alphabetically sorted order? (I\u0027m not 100% sure either way.)",
+      "revId": "e3a0140c73d4e15444405c587d212e2d7f18cf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fdd6dc_97ae5929",
+        "filename": "tools/gn/variables.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T19:46:19Z",
+      "side": 1,
+      "message": "I wouldn\u0027t put this here. This is for variables, and linked_deps isn\u0027t a variable, but a thing that the \"desc\" command knows how to compute (like runtime_deps). This only needs documentation in the \"desc\" command help.",
+      "revId": "e3a0140c73d4e15444405c587d212e2d7f18cf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
