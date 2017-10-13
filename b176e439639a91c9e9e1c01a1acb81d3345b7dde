@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52c19ecc_0bda96bc",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-10-13T06:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2acbaa27_1c1140ab",
+      "range": {
+        "startLine": 242,
+        "startChar": 44,
+        "endLine": 242,
+        "endChar": 45
+      },
+      "revId": "b176e439639a91c9e9e1c01a1acb81d3345b7dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f883ecb_58387028",
         "filename": "device/geolocation/network_location_provider.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b176e439639a91c9e9e1c01a1acb81d3345b7dde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d3f700_03ca290c",
+        "filename": "device/geolocation/network_location_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-10-13T06:11:05Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "3f883ecb_58387028",
+      "range": {
+        "startLine": 245,
+        "startChar": 44,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "b176e439639a91c9e9e1c01a1acb81d3345b7dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
