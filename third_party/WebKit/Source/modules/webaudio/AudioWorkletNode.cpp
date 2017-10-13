@@ -147,6 +147,7 @@ AudioWorkletNode::AudioWorkletNode(
                                                  param_info.DefaultValue(),
                                                  param_info.MinValue(),
                                                  param_info.MaxValue());
+    audio_param->Handler().SetWorkletAudioParamName(name, param_name);
     audio_param_map.Set(param_name, audio_param);
     param_handler_map.Set(param_name, WrapRefPtr(&audio_param->Handler()));
 

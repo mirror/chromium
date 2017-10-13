@@ -100,6 +100,9 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   void SetParamType(AudioParamType);
   // Return a nice name for the AudioParam.
   String GetParamName() const;
+  // Set the name of the AudioParam. This must be used only if the
+  // param type is worklet.
+  void SetWorkletAudioParamName(String worklet_name, String param_name);
 
   static const double kDefaultSmoothingConstant;
   static const double kSnapThreshold;
@@ -187,6 +190,9 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   // node it belongs to.  Mostly for informational purposes and doesn't affect
   // implementation.
   AudioParamType param_type_;
+  // When |param_type_| is an audio worket, this is the user-defined
+  // name of the AudioParam.
+  String worket_audioparam_name_;
 
   // Intrinsic value
   float intrinsic_value_;
