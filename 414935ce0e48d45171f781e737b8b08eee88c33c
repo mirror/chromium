@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eed45bb2_be9bab13",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-13T07:25:31Z",
+      "side": 1,
+      "message": "Aha. VC requires to have return \"\" here.",
+      "revId": "414935ce0e48d45171f781e737b8b08eee88c33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
