@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05864077_e4101758",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "Could we make this one and the other one in SWURLLoaderJob factor out and have the common code in service_worker_loader_helpers.h?",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f29882c_af6bae9f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "Is it possible to write a unittest for this case?",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc4d1b8_9c50f11b",
+        "filename": "net/url_request/redirect_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "Maybe setting *clear_body \u003d false here, and remove else clause below",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5bb238_bc1052ae",
+        "filename": "net/url_request/redirect_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "nit: while we\u0027re here can we fix this line-wrapping",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60905395_ca64b75f",
+        "filename": "net/url_request/redirect_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "nit: the redirection -\u003e a redirect\n\nAlso maybe renaming |clear_body| -\u003e |should_clear_upload| is a bit clearer?\n\n(The term request_body does not seem to be used in //net)",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68d7c70_2b465078",
+        "filename": "net/url_request/redirect_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "set true -\u003e set to true\n\nafter the redirection -\u003e during the redirect ..?",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d7d7e5_e059833b",
+        "filename": "net/url_request/redirect_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T16:11:25Z",
+      "side": 1,
+      "message": "ifshould -\u003e if should ? (or \u0027if the header should not exist\u0027 ?)",
+      "revId": "51175cc06a9b75ff4346e9637c83f7c82013fde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
