@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "224d7cbe_7f665d8e",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is needed? We should already be in the previous layout. Or has OnDisplayMetricsChanged been called?",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d30c62_024bc0a0",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "What\u0027s special about this case?",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d9c59b_f7e38355",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "Replace this entire section with\n\n  LayoutAuth(CurrentAuthUserView(), nullptr /*opt_to_hide*/,\n             true /*animate*/, true /*is_updating_virtual_keyboard*/);",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eed58b8_56fcfe15",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "Rename |is_updating_virtual_keyboard| to |is_display_size_changing|.\n\nA better name for |DoLayout| is |LayoutForDisplaySizeChange|, and a better name for this |LayoutAuth| is |LayoutForAuthChange|.\n\nI think we should try to merge |DoLayout| into this method, and call the new combined method |UpdateLayout| or something similar.",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c76327_80e4f1a2",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "Using a const pointer is not worth the extra typing/reading.",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d217ca4_c83d0d0f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "bool has_virtual_keyboard \u003d !keyboard_bounds_.IsEmpty();",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e56267_ec959e4b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "Remove this comment",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d71a9c_265b514b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "This should get a lot cleaner/simpler by inlining DoLayout",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a1fec3_bf138b04",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ecf3a1d_096dce1c",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "I suspect animating the root layer will cause a lot of overdraw, please check using --ui-show-paint-rects. We need to avoid overdraw to maintain good animation performance on low-end devices.",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d3ed19_f353403c",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-13T16:50:41Z",
+      "side": 1,
+      "message": "?",
+      "revId": "9451a0e8007bbe1a6246dbd0153622cb041162e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
