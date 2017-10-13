@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "174570a4_f278fca9",
+        "filename": "ui/aura/window_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-13T14:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0cbb38_a832f78c",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433aef31_5bcfe5f9",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4a112499_9d2fdcb2",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-13T14:42:18Z",
+      "side": 1,
+      "message": "Layer::opacity() returns the current opacity (updated at every frame during an animation) while Layer::GetTargetOpacity() returns the opacity at the end of the current animation.\n\nTo compute occlusion state, I believe we want the current opacity. Otherwise, a window receive an occlusion signal (and free resources) during an animation, before it is actually occluded.",
+      "parentUuid": "433aef31_5bcfe5f9",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b043819e_16bc1985",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4491476_44f3fc5b",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-13T14:42:18Z",
+      "side": 1,
+      "message": "find() could return end() when |root_window| is nullptr (tracked windows can be observed even when they have no root).\n\nI changed the code to check explicitly for root_window \u003d\u003d nullptr.",
+      "parentUuid": "b043819e_16bc1985",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
