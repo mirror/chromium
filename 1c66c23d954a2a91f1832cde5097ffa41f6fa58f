@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd48c10e_c808c8c8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4113,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:06:58Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 4113,
+        "startChar": 1,
+        "endLine": 4113,
+        "endChar": 6
+      },
+      "revId": "1c66c23d954a2a91f1832cde5097ffa41f6fa58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7baa7249_9d580ec1",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-13T17:06:58Z",
+      "side": 1,
+      "message": "#endif  // defined(OS_ANDROID)",
+      "range": {
+        "startLine": 141,
+        "startChar": 1,
+        "endLine": 141,
+        "endChar": 6
+      },
+      "revId": "1c66c23d954a2a91f1832cde5097ffa41f6fa58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
