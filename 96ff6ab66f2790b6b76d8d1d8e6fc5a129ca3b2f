@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00de50e_9df8c531",
+        "filename": "ash/note_taking_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T01:28:02Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the weak_factory_, because destroying |this| should destroy |client_|.",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9d961d_88b6a2b1",
+        "filename": "ash/shell.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T01:28:02Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9536de_048ffda0",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T01:28:02Z",
+      "side": 1,
+      "message": "nit: This might be clearer if you renamed |should_be_bound| to |has_app| and reversed the conditional here.\n\nAlternately, comment here that is_bound() on this line implies no apps available.",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f52b133_2fa883e7",
+        "filename": "chrome/browser/chromeos/note_taking_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T01:28:02Z",
+      "side": 1,
+      "message": "Aside: It\u0027s unfortunate that we have to duplicate this logic from PaletteDelegateChromeOS. Chrome\u0027s AccessibilityManager does something similar. I wish there was a way to consolidate this \"active user profile changed\" logic somewhere.",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625e8a60_f39db58c",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-13T01:28:02Z",
+      "side": 1,
+      "message": "Can this happen in the member initializer list?",
+      "revId": "96ff6ab66f2790b6b76d8d1d8e6fc5a129ca3b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
