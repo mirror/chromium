@@ -81,7 +81,9 @@ void BrowserURLLoaderThrottle::WillRedirectRequest(
                      base::Unretained(this)));
 }
 
-void BrowserURLLoaderThrottle::WillProcessResponse(bool* defer) {
+void BrowserURLLoaderThrottle::WillProcessResponse(
+    const content::ResourceResponseHead& response_head,
+    bool* defer) {
   if (blocked_) {
     // OnCheckUrlResult() has set |blocked_| to true and called
     // |delegate_->CancelWithError|, but this method is called before the
