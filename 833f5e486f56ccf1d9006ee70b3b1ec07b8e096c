@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "280e984e_d1959432",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-13T16:57:51Z",
+      "side": 1,
+      "message": "There is one more problem with this file to tackle:\n\nfunctions that are entry points on IO thread, should end with *Sync. (these are the ones that check for db pointer being nullptr. First arg to Execute).\n\nCould you fix that while you are at it?",
+      "revId": "833f5e486f56ccf1d9006ee70b3b1ec07b8e096c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
