@@ -48,8 +48,11 @@ ArcRotationLockBridge::ArcRotationLockBridge(content::BrowserContext* context,
                                              ArcBridgeService* bridge_service)
     : arc_bridge_service_(bridge_service) {
   arc_bridge_service_->rotation_lock()->AddObserver(this);
-  ash::Shell::Get()->screen_orientation_controller()->AddObserver(this);
-  ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  // TODO(mash): mash needs proper shutdown process.
+  if (ash::Shell::HasInstance()) {
+    ash::Shell::Get()->screen_orientation_controller()->AddObserver(this);
+    ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  }
 }
 
 ArcRotationLockBridge::~ArcRotationLockBridge() {
