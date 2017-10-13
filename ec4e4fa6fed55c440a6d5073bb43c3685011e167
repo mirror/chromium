@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1590b00_dde9dc47",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-and-stitch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T04:55:50Z",
+      "side": 1,
+      "message": "Could you use \u0027\u003cdiv id\u003d\"item1\"\u003e|foo\u003c/div\u003e\u0027 instead of selecting by\nscript?",
+      "revId": "ec4e4fa6fed55c440a6d5073bb43c3685011e167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
