@@ -52,9 +52,9 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   void OnPageEventReceived(const PageCoordinationUnitImpl* page_cu,
                            const mojom::Event event) override;
 
- private:
-  friend class MetricsCollectorTest;
+  void SetClockForTest(base::TickClock* test_clock);
 
+ private:
   struct MetricsReportRecord {
     MetricsReportRecord();
     MetricsReportRecord(const MetricsReportRecord& other);
