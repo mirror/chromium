@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d151417_9670bff4",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-13T11:57:41Z",
+      "side": 0,
+      "message": "This causes a subtle change in one circumstance:\n- If there was no AccessTokenStore or system provider, the call to LocationArbitrator::StartProvider() would previously return false. Now it will return true (assuming that |request_context_provider_| isn\u0027t null, which it won\u0027t be by construction I believe) and then simply short-circuit out in OnRequestContextResponse(). Did you check whether this change requires any changes to the caller(s) of LocationArbitrator::StartProvider()? IOW, what do those callers do with the return value of LocationArbitrator::StartProvider()?",
+      "revId": "3fdfa0098933a2a4a2015fa6bbf29412bc4e884b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
