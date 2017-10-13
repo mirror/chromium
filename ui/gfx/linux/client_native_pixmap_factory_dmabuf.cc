@@ -121,8 +121,7 @@ class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
       case gfx::BufferUsage::SCANOUT:
       case gfx::BufferUsage::SCANOUT_VDA_WRITE:
         // Close all the fds.
-        for (const auto& fd : handle.fds)
-          base::ScopedFD scoped_fd(fd.fd);
+        gfx::TakeFilesFromHandle(handle);
         return base::WrapUnique(new ClientNativePixmapOpaque);
     }
     NOTREACHED();
