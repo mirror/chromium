@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8250851e_493beb81",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:58:16Z",
+      "side": 1,
+      "message": "Is there a reason to have createShowAllButtonId() as a separate function anymore? It is only called here.",
+      "revId": "78349ea95d27dead07ca4f4c10c595f5d3bb3b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd6553e_182b2b63",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:58:16Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment adds much value. Consider removing.",
+      "revId": "78349ea95d27dead07ca4f4c10c595f5d3bb3b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3093533a_292b9192",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:58:16Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "78349ea95d27dead07ca4f4c10c595f5d3bb3b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d242a028_fd3dd55e",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:58:16Z",
+      "side": 1,
+      "message": "No need to use typeof. The triple equals operator can be used when no implicit boolean conversions are desired.\n\nif (value \u003d\u003d\u003d false \u0026\u0026 !this.showAll_)\n  return;",
+      "revId": "78349ea95d27dead07ca4f4c10c595f5d3bb3b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
