@@ -24,6 +24,7 @@ public final class TaskIds {
     public static final int DOWNLOAD_SERVICE_JOB_ID = 53;
     public static final int DOWNLOAD_CLEANUP_JOB_ID = 54;
     public static final int WEBVIEW_VARIATIONS_SEED_FETCH_JOB_ID = 83;
+    public static final int DOWNLOAD_RESUMPTION_JOB_ID = 55;
 
     private TaskIds() {}
 }
