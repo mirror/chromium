@@ -16,6 +16,24 @@
       "revId": "3738b4d7b1bc607b6992bf7f5244aeb19f10e504",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3729ff4d_4aff7a64",
+        "filename": "ash/wm/lock_action_handler_layout_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T16:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d3f701_12e63690",
+      "revId": "3738b4d7b1bc607b6992bf7f5244aeb19f10e504",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
