@@ -212,6 +212,25 @@ public class WebVrInputTest {
     }
 
     /**
+     * Verifies that pressing the Daydream controller's 'app' button does not cause the user to exit
+     * WebVR presentation when VR browsing is disabled.
+     */
+    @Test
+    @MediumTest
+    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
+    @CommandLineFlags.Add({"disable-features=" + ChromeFeatureList.VR_SHELL})
+    public void testAppButtonNoopsWhenBrowsingDisabled() throws InterruptedException {
+        mVrTestFramework.loadUrlAndAwaitInitialization(
+                VrTestFramework.getHtmlTestFile("generic_webvr_page"), PAGE_LOAD_TIMEOUT_S);
+        VrTransitionUtils.enterPresentationOrFail(mVrTestFramework.getFirstTabCvc());
+        EmulatedVrController controller = new EmulatedVrController(mVrTestRule.getActivity());
+        controller.pressReleaseAppButton();
+        Assert.assertFalse("App button exited WebVR presentation",
+                VrTestFramework.pollJavaScriptBoolean("!vrDisplay.isPresenting",
+                        POLL_TIMEOUT_SHORT_MS, mVrTestFramework.getFirstTabWebContents()));
+    }
+
+    /**
      * Tests that focus loss updates synchronously.
      */
     @Test
