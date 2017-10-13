@@ -17,7 +17,7 @@
 //                         iframe's fetch() vs. this page's fetch().
 // |options.expected_type|: The value of response.type
 // |options.expected_redirected|: The value of response.redirected
-// |options.expected_intercepted_urls|: The URL list of intercepted requests.
+// |options.expected_intercepted_urls|: The list of intercepted request URLs.
 function redirected_test(options) {
   return options.fetch_method.call(null, options.url, options.fetch_option).then(response => {
         let cloned_response = response.clone();
@@ -59,13 +59,13 @@ function take_intercepted_urls() {
 
 function check_intercepted_urls(expected_urls) {
   return take_intercepted_urls().then((urls) => {
-      assert_object_equals( urls, expected_urls, 'Intercepted URLs matching.');
+      assert_object_equals(urls, expected_urls, 'Intercepted URLs matching.');
     });
 }
 
 function setup_and_clean() {
-  // Take the intercepted URLs in the service worker not to be interfered by the
-  // previsous tests.
+  // To prevent interference from previous tests, take the intercepted URLs from
+  // the service worker.
   return setup.then(() => take_intercepted_urls());
 }
 
@@ -88,7 +88,7 @@ promise_test(t => {
     setup = service_worker_unregister_and_register(t, SCRIPT, SCOPE)
       .then(registration => {
           promise_test(
-              () =>  registration.unregister(),
+              () => registration.unregister(),
               'restore global state (service worker registration)');
           worker = registration.installing;
           return wait_for_state(t, registration.installing, 'activated');
@@ -104,8 +104,8 @@ promise_test(t => {
       .then(f => {
           frame = f;
           add_completion_callback(() => f.remove());
-            return check_intercepted_urls(
-            [host_info['HTTPS_ORIGIN'] + base_path() + SCOPE]);
+          return check_intercepted_urls(
+              [host_info['HTTPS_ORIGIN'] + base_path() + SCOPE]);
         });
       return setup;
   }, 'initialize global state (service worker registration and caches)');
@@ -306,6 +306,9 @@ promise_test(t => setup_and_clean()
 // =======================================================
 promise_test(t => setup_and_clean()
     .then(() => {
+      // The Fetch spec says: "If request’s redirect count is twenty, return a
+      // network error." https://fetch.spec.whatwg.org/#http-redirect-fetch
+      // So fetch can follow the redirect response 20 times.
       let urls = [TARGET_URL];
       for (let i = 0; i < 20; ++i) {
         urls.unshift(host_info['HTTPS_ORIGIN'] + '/dummy?sw=gen&url=' +
@@ -324,6 +327,9 @@ promise_test(t => setup_and_clean()
 promise_test(t => setup_and_clean()
     .then(() => {
       let urls = [TARGET_URL];
+      // The Fetch spec says: "If request’s redirect count is twenty, return a
+      // network error." https://fetch.spec.whatwg.org/#http-redirect-fetch
+      // So fetch can't follow the redirect response 21 times.
       for (let i = 0; i < 21; ++i) {
         urls.unshift(host_info['HTTPS_ORIGIN'] + '/dummy?sw=gen&url=' +
                     encodeURIComponent(urls[0]));
