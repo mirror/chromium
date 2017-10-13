@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2dc263a_b0c51eea",
+        "filename": "tools/perf/core/benchmark_sharding_map.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-13T23:10:18Z",
+      "side": 1,
+      "message": "Why reduce 3 benchmarks to 1? CL description doesn\u0027t mention this part of the change.",
+      "range": {
+        "startLine": 1818,
+        "startChar": 9,
+        "endLine": 1818,
+        "endChar": 19
+      },
+      "revId": "2c3e1ec6624fffbf9ab2eb661bbfd6f67c2b62f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
