@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71c44eca_978383cf",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-13T16:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107bd008_dedafea9",
+      "range": {
+        "startLine": 237,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "7802fd1077b1328169073783ce6273e716975b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b0e396d_abe835a3",
         "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7802fd1077b1328169073783ce6273e716975b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6045cac3_1c620b30",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-13T16:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b0e396d_abe835a3",
+      "range": {
+        "startLine": 269,
+        "startChar": 43,
+        "endLine": 269,
+        "endChar": 51
+      },
+      "revId": "7802fd1077b1328169073783ce6273e716975b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
