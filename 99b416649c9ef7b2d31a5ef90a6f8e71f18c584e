@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a2762c_26a894d7",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-13T17:36:11Z",
+      "side": 1,
+      "message": "Given that this first argument wants an entire path (and we give it a relative one, either \"test_artifacts\" before or the dirname after), WDYT about instead creating a separate temporary directory and putting the temporary zip file in there? You then wouldn\u0027t have to worry about the os.remove below, either. Something like:\n\n  with tempfile_ext.NamedTemporaryDirectory() as temp_zip_dir:\n    zip_base_name \u003d os.path.join(temp_zip_dir, \u0027test_artifacts\u0027)\n    test_artifacts_zip \u003d shutil.make_archive(zip_base_name, ...)\n    ...\n\n    # no os.remove call",
+      "revId": "99b416649c9ef7b2d31a5ef90a6f8e71f18c584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
