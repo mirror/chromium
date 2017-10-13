@@ -144,6 +144,52 @@
     },
     {
       "key": {
+        "uuid": "962877df_db4d1197",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Nit: class, since UpdateOfflineItem is not a setter/getter?",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 8
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93b4fc8_d22cd02b",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Nit: download_job_unique_id_map_? (also update the \"job ids\" in the comments above/below in case your find/replace for jobId doesn\u0027t catch them)",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 59
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d58501e7_8939208b",
         "filename": "content/browser/background_fetch/background_fetch_context.cc",
         "patchSetId": 10
@@ -155,6 +201,29 @@
       "writtenOn": "2017-10-13T15:55:21Z",
       "side": 1,
       "message": "Should we have a TODO somewhere for hooking this up with Abort()?",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30af2d3_88fbcb71",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Nit: Might be cleaner to move this to the JobController constructor or Start method? IIRC so far the JobController is the only thing that deals with the delegateproxy?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 35
+      },
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +264,144 @@
     },
     {
       "key": {
+        "uuid": "9adcb3e2_652b2c9a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Nit: a comment would be nice, even if just to say it calls the corresponding method on the Delegate",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 7
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc5caf5_a979fd79",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "1. wen -\u003e when\n2. \"completed. This includes failure cases\" -\u003e \"completed/failed/aborted\" might be more concise?",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451599fe_72eec476",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Why add this include? Forward declaring is fine for unique_ptr",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6b7113_4ab09af5",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Rename this to |registration_unique_id| (or just |unique_id|, though that\u0027s a little less clear out of context)",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8058bfd_ed311667",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "I guess a follow up patch will rework this to be byte-based (or perhaps we care about parts anyway, since if there are zero body responses, we still need to make sure they all complete before marking the notification as 100%?)",
+      "range": {
+        "startLine": 79,
+        "startChar": 10,
+        "endLine": 79,
+        "endChar": 25
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd61fb26_56466acc",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "OnDownloadComplete",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d744f0f1_1961dbb9",
         "filename": "content/public/browser/background_fetch_response.h",
         "patchSetId": 10
@@ -206,6 +413,29 @@
       "writtenOn": "2017-10-13T15:55:21Z",
       "side": 1,
       "message": "Prefer using an enum class. BackgroundFetchResult::NETWORK does not sound like a failure to me.",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4862d0_a41370b7",
+        "filename": "content/public/browser/background_fetch_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-13T16:06:51Z",
+      "side": 1,
+      "message": "Obsolete comment",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 40,
+        "endChar": 25
+      },
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
