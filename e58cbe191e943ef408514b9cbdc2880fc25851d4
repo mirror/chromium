@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "940cd30c_1cee429c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T05:11:32Z",
+      "side": 1,
+      "message": "Maybe reference 740556 here and in second CL?  Even though they\u0027re refactors, they still get us closer to get that fixed. :)",
+      "revId": "e58cbe191e943ef408514b9cbdc2880fc25851d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51526cd_8f406e12",
+        "filename": "content/browser/frame_host/frame_tree_node_blame_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T05:11:32Z",
+      "side": 1,
+      "message": "not needed anymore?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 58
+      },
+      "revId": "e58cbe191e943ef408514b9cbdc2880fc25851d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f522aec6_84e88d21",
+        "filename": "content/browser/frame_host/frame_tree_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T05:11:32Z",
+      "side": 1,
+      "message": "Is this still needed?  (might apply to other files as well)",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "e58cbe191e943ef408514b9cbdc2880fc25851d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a4a213_81854b63",
+        "filename": "content/common/frame_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T05:11:32Z",
+      "side": 1,
+      "message": "Maybe add a comment on how this struct is used, and how it\u0027s different from FrameOwnerProperties?",
+      "revId": "e58cbe191e943ef408514b9cbdc2880fc25851d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafee7d5_c2779f3f",
+        "filename": "content/common/frame_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T05:11:32Z",
+      "side": 1,
+      "message": "nit: blank line before this?",
+      "revId": "e58cbe191e943ef408514b9cbdc2880fc25851d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
