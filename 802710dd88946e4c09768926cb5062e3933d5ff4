@@ -52,6 +52,24 @@
       "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "134f08b3_01df3e9e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T02:38:21Z",
+      "side": 1,
+      "message": "We don\u0027t need to consider this use case because IdlenessDetector only engages upon dom content loaded. This is way beyond the provisional load commit. For the same reason, we should not pass fetcher here.",
+      "parentUuid": "cc0411a7_24a9d267",
+      "revId": "802710dd88946e4c09768926cb5062e3933d5ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
