@@ -74,8 +74,9 @@ QueueingTimeEstimator::QueueingTimeEstimator(const State& state)
     : client_(nullptr), state_(state) {}
 
 void QueueingTimeEstimator::OnTopLevelTaskStarted(
-    base::TimeTicks task_start_time) {
-  state_.OnTopLevelTaskStarted(client_, task_start_time);
+    base::TimeTicks task_start_time,
+    MainThreadTaskQueue* queue) {
+  state_.OnTopLevelTaskStarted(client_, task_start_time, queue);
 }
 
 void QueueingTimeEstimator::OnTopLevelTaskCompleted(
@@ -93,15 +94,91 @@ void QueueingTimeEstimator::OnRendererStateChanged(
   state_.OnRendererStateChanged(client_, backgrounded, transition_time);
 }
 
+QueueingTimeEstimator::SplitCalculator::SplitCalculator(int steps_per_window)
+    : steps_per_window_(steps_per_window),
+      split_queueing_times_(kEQTSplitBucketCount) {}
+
+void QueueingTimeEstimator::SplitCalculator::UpdateSplitIndex(
+    MainThreadTaskQueue* queue) {
+  splitter_idx_ = GetIndexFromTaskQueue(
+      queue ? queue->queue_type() : MainThreadTaskQueue::QueueType::COUNT);
+}
+
+void QueueingTimeEstimator::SplitCalculator::AddQueueingTime(
+    base::TimeDelta queueing_time) {
+  DCHECK(splitter_idx_ < kEQTSplitBucketCount);
+  split_queueing_times_[splitter_idx_] += queueing_time;
+}
+
+void QueueingTimeEstimator::SplitCalculator::ReportSplitExpectedQueueingTimes(
+    Client* client) {
+  for (size_t idx = 0; idx < kEQTSplitBucketCount; ++idx) {
+    client->OnReportSplitEQT(GetReportingMessageFromIndex(idx),
+                             split_queueing_times_[idx] / steps_per_window_);
+    split_queueing_times_[idx] = base::TimeDelta();
+  }
+}
+
+size_t QueueingTimeEstimator::SplitCalculator::GetIndexFromTaskQueue(
+    MainThreadTaskQueue::QueueType queue_type) {
+  switch (queue_type) {
+    case MainThreadTaskQueue::QueueType::DEFAULT:
+      return kDefaultTaskQueueType;
+    case MainThreadTaskQueue::QueueType::DEFAULT_LOADING:
+      return kDefaultLoadingTaskQueueType;
+    case MainThreadTaskQueue::QueueType::FRAME_LOADING:
+      return kFrameLoadingTaskQueueType;
+    case MainThreadTaskQueue::QueueType::FRAME_THROTTLEABLE:
+      return kFrameThrottleableTaskQueueType;
+    case MainThreadTaskQueue::QueueType::FRAME_PAUSABLE:
+      return kFramePausableTaskQueueType;
+    case MainThreadTaskQueue::QueueType::UNTHROTTLED:
+      return kUnthrottledTaskQueueType;
+    case MainThreadTaskQueue::QueueType::COMPOSITOR:
+      return kCompositorTaskQueueType;
+    default:
+      return kOtherTaskQueueType;
+  }
+}
+
+const char*
+QueueingTimeEstimator::SplitCalculator::GetReportingMessageFromIndex(
+    size_t idx) {
+  switch (idx) {
+    case kDefaultTaskQueueType:
+      return kDefaultString;
+    case kDefaultLoadingTaskQueueType:
+      return kDefaultLoadingString;
+    case kFrameLoadingTaskQueueType:
+      return kFrameLoadingString;
+    case kFrameThrottleableTaskQueueType:
+      return kFrameThrottleableString;
+    case kFramePausableTaskQueueType:
+      return kFramePausableString;
+    case kUnthrottledTaskQueueType:
+      return kUnthrottledString;
+    case kCompositorTaskQueueType:
+      return kCompositorString;
+    case kOtherTaskQueueType:
+      return kOtherString;
+    default:
+      NOTREACHED();
+      return "";
+  }
+}
+
 QueueingTimeEstimator::State::State(int steps_per_window)
-    : step_queueing_times(steps_per_window) {}
+    : step_queueing_times(steps_per_window),
+      split_calculator_(steps_per_window) {}
 
 void QueueingTimeEstimator::State::OnTopLevelTaskStarted(
     QueueingTimeEstimator::Client* client,
-    base::TimeTicks task_start_time) {
+    base::TimeTicks task_start_time,
+    MainThreadTaskQueue* queue) {
   AdvanceTime(client, task_start_time);
   current_task_start_time = task_start_time;
   processing_task = true;
+  split_calculator_.UpdateSplitIndex(queue);
 }
 
 void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
@@ -154,10 +231,12 @@ void QueueingTimeEstimator::State::AdvanceTime(
   }
   while (TimePastStepEnd(current_time)) {
     if (processing_task) {
-      // Include the current task in this window.
-      step_expected_queueing_time += ExpectedQueueingTimeFromTask(
+      base::TimeDelta queueing_time = ExpectedQueueingTimeFromTask(
           current_task_start_time, current_time, step_start_time,
           step_start_time + window_step_width);
+      // Include the current task in this window.
+      step_expected_queueing_time += queueing_time;
+      split_calculator_.AddQueueingTime(queueing_time);
     }
     step_queueing_times.Add(step_expected_queueing_time);
 
@@ -169,13 +248,18 @@ void QueueingTimeEstimator::State::AdvanceTime(
     // Report:                          |-------window EQT------|
     client->OnQueueingTimeForWindowEstimated(step_queueing_times.GetAverage(),
                                              step_queueing_times.IndexIsZero());
+    if (step_queueing_times.IndexIsZero())
+      split_calculator_.ReportSplitExpectedQueueingTimes(client);
+
     step_start_time += window_step_width;
     step_expected_queueing_time = base::TimeDelta();
   }
   if (processing_task) {
-    step_expected_queueing_time += ExpectedQueueingTimeFromTask(
+    base::TimeDelta queueing_time = ExpectedQueueingTimeFromTask(
         current_task_start_time, current_time, step_start_time,
         step_start_time + window_step_width);
+    step_expected_queueing_time += queueing_time;
+    split_calculator_.AddQueueingTime(queueing_time);
   }
 }
 
@@ -216,6 +300,9 @@ class RecordQueueingTimeClient : public QueueingTimeEstimator::Client {
     queueing_time_ = queueing_time;
   }
 
+  void OnReportSplitEQT(const std::string& split_description,
+                        base::TimeDelta queueing_time) override {}
+
   base::TimeDelta queueing_time() { return queueing_time_; }
 
   RecordQueueingTimeClient() {}
@@ -240,7 +327,7 @@ base::TimeDelta QueueingTimeEstimator::EstimateQueueingTimeIncludingCurrentTask(
   if (temporary_queueing_time_estimator_state.current_task_start_time
           .is_null()) {
     temporary_queueing_time_estimator_state.OnTopLevelTaskStarted(
-        &record_queueing_time_client, now);
+        &record_queueing_time_client, now, nullptr);
   }
   temporary_queueing_time_estimator_state.OnTopLevelTaskCompleted(
       &record_queueing_time_client, now);

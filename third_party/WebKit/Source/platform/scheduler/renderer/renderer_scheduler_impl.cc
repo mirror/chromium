@@ -1927,7 +1927,7 @@ void RendererSchedulerImpl::OnTaskStarted(MainThreadTaskQueue* queue,
                                           base::TimeTicks start) {
   main_thread_only().current_task_start_time = start;
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
-  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start);
+  seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start, queue);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 }
 
@@ -2006,6 +2006,14 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
             kExpectedTaskQueueingDuration,
         queueing_time.InMilliseconds());
   }
+}
+
+void RendererSchedulerImpl::OnReportSplitEQT(
+    const std::string& split_description,
+    base::TimeDelta queueing_time) {
+  UMA_HISTOGRAM_TIMES(
+      "RendererScheduler.ExpectedQueuingTime." + split_description,
+      queueing_time);
 }
 
 AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {
