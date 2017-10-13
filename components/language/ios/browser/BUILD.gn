@@ -1,0 +1,63 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//ios/web/js_compile.gni")
+
+source_set("browser") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "ios_language_detection_client.h",
+    "ios_language_detection_client.mm",
+    "ios_language_detection_driver.h",
+    "js_language_detection_manager.h",
+    "js_language_detection_manager.mm",
+    "language_detection_controller.h",
+    "language_detection_controller.mm",
+    "string_clipping_util.cc",
+    "string_clipping_util.h",
+  ]
+
+  deps = [
+    ":injected_js",
+    "//base",
+    "//components/language/core/browser",
+    "//components/translate/core/browser",
+    "//components/translate/core/common",
+    "//components/translate/core/language_detection",
+    "//components/translate/ios/browser",
+    "//ios/web",
+    "//net",
+    "//url",
+  ]
+}
+
+js_compile_checked("injected_js") {
+  visibility = [ ":browser" ]
+  sources = [
+    "resources/language_detection.js",
+  ]
+}
+
+source_set("unit_tests") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  testonly = true
+  sources = [
+    "language_detection_controller_unittest.mm",
+    "string_clipping_util_unittest.cc",
+  ]
+
+  deps = [
+    ":browser",
+    "//base",
+    "//base/test:test_support",
+    "//components/language/core/browser",
+    "//components/resources",
+    "//components/translate/core/common",
+    "//ios/web/public/test",
+    "//ios/web/public/test/fakes",
+    "//net",
+    "//testing/gtest",
+    "//third_party/ocmock",
+  ]
+}

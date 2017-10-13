@@ -56,8 +56,7 @@ WebViewTranslateClient::WebViewTranslateClient(web::WebState* web_state)
           prefs::kAcceptLanguages)),
       translate_driver_(web_state,
                         web_state->GetNavigationManager(),
-                        translate_manager_.get(),
-                        nullptr /* language_histogram */) {}
+                        translate_manager_.get()) {}
 
 WebViewTranslateClient::~WebViewTranslateClient() = default;
 
@@ -82,7 +81,7 @@ void WebViewTranslateClient::ShowTranslateUI(
                              triggeredFromMenu:triggered_from_menu];
 }
 
-translate::TranslateDriver* WebViewTranslateClient::GetTranslateDriver() {
+translate::IOSTranslateDriver* WebViewTranslateClient::GetTranslateDriver() {
   return &translate_driver_;
 }
 

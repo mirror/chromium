@@ -9,9 +9,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/language/ios/browser/language_detection_controller.h"
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/translate/core/browser/translate_manager.h"
 #import "ios/web_view/internal/cwv_web_view_configuration_internal.h"
+#import "ios/web_view/internal/language/web_view_language_detection_driver.h"
 #import "ios/web_view/internal/translate/cwv_translation_language_internal.h"
 #import "ios/web_view/internal/translate/web_view_translate_client.h"
 #import "ios/web_view/public/cwv_translation_controller_delegate.h"
@@ -71,13 +73,14 @@ const NSInteger CWVTranslationErrorScriptLoadError =
 - (void)setWebState:(web::WebState*)webState {
   _webState = webState;
 
+  language::LanguageDetectionController::CreateForWebState(_webState);
+  ios_web_view::CreateWebViewLanguageDetectionClient(_webState);
   ios_web_view::WebViewTranslateClient::CreateForWebState(_webState);
+
   _translateClient =
       ios_web_view::WebViewTranslateClient::FromWebState(_webState);
   _translateClient->set_translation_controller(self);
-  _translatePrefs = _translateClient->translate_manager()
-                        ->translate_client()
-                        ->GetTranslatePrefs();
+  _translatePrefs = _translateClient->GetTranslatePrefs();
 }
 
 - (void)updateTranslateStep:(translate::TranslateStep)step
