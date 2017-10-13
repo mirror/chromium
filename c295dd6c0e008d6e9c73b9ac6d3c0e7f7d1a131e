@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "e6fe5360_32e75fe5",
+        "filename": "base/memory/protected_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-13T17:11:10Z",
+      "side": 1,
+      "message": "It\u0027s not allowed because it would register an exit time destructor.",
+      "parentUuid": "1e52c5cf_fd9d65b6",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a57235_de22f736",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 2
@@ -104,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "5ab1d883_2fa476ca",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-13T17:11:10Z",
+      "side": 1,
+      "message": "No, I meant to describe the situation where an attacker has (1) arbitrary RW and (2) can invoke some code that causes protected memory to be set RW and then RO. If \u0027writers\u0027 is stored in writable memory, then the attacker could set writers to some value like 100, then invoke the code that sets protected memory RW and RO and afterwards the protected memory section won\u0027t be set back RO. This would defeat protected memory (at least for the pages holding variables that the attacker can toggle RO/RW.)\n\nI\u0027ll make the description clearer to explain why writers needs to also be stored in the protected memory section.",
+      "parentUuid": "b2548137_3297c4f8",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a4573d6_9d08f20d",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 2
@@ -132,6 +168,24 @@
       "writtenOn": "2017-10-09T23:55:39Z",
       "side": 1,
       "message": "A number of things like this function use two underscores at the beginning. Is this some built-in Clang-CFI thing? If it is, can you explain this explicitly in a comment for each one? If not, we shouldn\u0027t be using the compiler-reserved prefix on our symbols.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e70479_b0373d74",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-13T17:11:10Z",
+      "side": 1,
+      "message": "Peter: So the problem is this won\u0027t work well with the follow-up ProtectedArray implementation. ProtectedArray stores a pointer to an array in the protected memory section, the array itself can\u0027t be stored there to avoid static initializers/initializers running on RO mem. There could be a separate implementation for ProtectedArray(Member|Fn)Call that does use macros while this one doesn\u0027t, but that seems less consistent. What do you think the best approach here is?",
+      "parentUuid": "4a4573d6_9d08f20d",
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
