@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e98b8c_df6bf3b3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 24276,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-13T05:52:23Z",
+      "side": 0,
+      "message": "We don\u0027t remove an element from enums.xml.",
+      "revId": "0fc5451ac52eac5f141b72af906cb794baa1699b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

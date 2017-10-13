@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d8e0f34_ae0fc7cf",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-13T05:52:23Z",
+      "side": 1,
+      "message": "comment: This is not directly related to this CL, but I don\u0027t think zip archiver works on MTP volume as we don\u0027t support partial write operation on MTP volume.",
+      "range": {
+        "startLine": 1338,
+        "startChar": 12,
+        "endLine": 1338,
+        "endChar": 49
+      },
+      "revId": "958aa788d0920bbd7a744184a7fb1ae138d04544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0488291d_eade6d9d",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-13T05:52:23Z",
+      "side": 1,
+      "message": "How about to initialize promise here as we always need to check the flag?",
+      "range": {
+        "startLine": 143,
+        "startChar": 47,
+        "endLine": 143,
+        "endChar": 51
+      },
+      "revId": "958aa788d0920bbd7a744184a7fb1ae138d04544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
