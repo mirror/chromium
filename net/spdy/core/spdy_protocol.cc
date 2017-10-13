@@ -421,12 +421,12 @@ int SpdyUnknownIR::flow_control_window_consumed() const {
 }
 
 // Wire size of pad length field.
-const size_t kPadLengthFieldSize = 1;
+const size_t kPadLengthFieldSize2 = 1;
 
 size_t GetHeaderFrameSizeSansBlock(const SpdyHeadersIR& header_ir) {
   size_t min_size = kFrameHeaderSize;
   if (header_ir.padded()) {
-    min_size += kPadLengthFieldSize;
+    min_size += kPadLengthFieldSize2;
     min_size += header_ir.padding_payload_len();
   }
   if (header_ir.has_priority()) {
@@ -439,7 +439,7 @@ size_t GetPushPromiseFrameSizeSansBlock(
     const SpdyPushPromiseIR& push_promise_ir) {
   size_t min_size = kPushPromiseFrameMinimumSize;
   if (push_promise_ir.padded()) {
-    min_size += kPadLengthFieldSize;
+    min_size += kPadLengthFieldSize2;
     min_size += push_promise_ir.padding_payload_len();
   }
   return min_size;

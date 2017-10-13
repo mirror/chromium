@@ -37,15 +37,14 @@
 #include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
-#include "storage/browser/quota/special_storage_policy.h"
 
 namespace content {
 
 // Hard coded default when not using quota management.
 static const int kDefaultQuota = 5 * 1024 * 1024;
 
-static const int kMaxDiskCacheSize = 250 * 1024 * 1024;
-static const int kMaxMemDiskCacheSize = 10 * 1024 * 1024;
+static const int kAppCacheMaxDiskCacheSize = 250 * 1024 * 1024;
+static const int kAppCacheMaxMemDiskCacheSize = 10 * 1024 * 1024;
 static const base::FilePath::CharType kDiskCacheDirectoryName[] =
     FILE_PATH_LITERAL("Cache");
 
@@ -75,9 +74,11 @@ bool DeleteGroupAndRelatedRecords(
   return success;
 }
 
+}  // namespace
+
 // Destroys |database|. If there is appcache data to be deleted
 // (|force_keep_session_state| is false), deletes session-only appcache data.
-void ClearSessionOnlyOrigins(
+void AppCacheStorageImpl::ClearSessionOnlyOrigins(
     AppCacheDatabase* database,
     scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy,
     bool force_keep_session_state) {
@@ -132,8 +133,6 @@ void ClearSessionOnlyOrigins(
     }  // for each group
   }  // for each origin
 }
-
-}  // namespace
 
 // DatabaseTask -----------------------------------------
 
@@ -1888,13 +1887,14 @@ AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {
     disk_cache_.reset(new AppCacheDiskCache);
     if (is_incognito_) {
       rv = disk_cache_->InitWithMemBackend(
-          kMaxMemDiskCacheSize,
+          kAppCacheMaxMemDiskCacheSize,
           base::Bind(&AppCacheStorageImpl::OnDiskCacheInitialized,
                      base::Unretained(this)));
     } else {
       expecting_cleanup_complete_on_disable_ = true;
       rv = disk_cache_->InitWithDiskBackend(
-          cache_directory_.Append(kDiskCacheDirectoryName), kMaxDiskCacheSize,
+          cache_directory_.Append(kDiskCacheDirectoryName),
+          kAppCacheMaxDiskCacheSize,
           false,
           base::BindOnce(&AppCacheStorageImpl::OnDiskCacheCleanupComplete,
                          weak_factory_.GetWeakPtr()),

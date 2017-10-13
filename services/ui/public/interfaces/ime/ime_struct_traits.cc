@@ -195,6 +195,9 @@ bool EnumTraits<ui::mojom::TextInputMode, ui::TextInputMode>::FromMojom(
 ui::mojom::TextInputType
 EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::ToMojom(
     ui::TextInputType text_input_type) {
+#define UI_TO_MOJO_TYPE_CASE(name) \
+  case ui::TEXT_INPUT_TYPE_##name: \
+    return ui::mojom::TextInputType::name
   switch (text_input_type) {
     UI_TO_MOJO_TYPE_CASE(NONE);
     UI_TO_MOJO_TYPE_CASE(TEXT);
@@ -214,6 +217,7 @@ EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::ToMojom(
     UI_TO_MOJO_TYPE_CASE(CONTENT_EDITABLE);
     UI_TO_MOJO_TYPE_CASE(DATE_TIME_FIELD);
   }
+#undef UI_TO_MOJO_TYPE_CASE
   NOTREACHED();
   return ui::mojom::TextInputType::NONE;
 }
@@ -229,6 +233,10 @@ EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::ToMojom(
 bool EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::FromMojom(
     ui::mojom::TextInputType input,
     ui::TextInputType* out) {
+#define MOJO_TO_UI_TYPE_CASE(name)     \
+  case ui::mojom::TextInputType::name: \
+    *out = ui::TEXT_INPUT_TYPE_##name; \
+    return true;
   switch (input) {
     MOJO_TO_UI_TYPE_CASE(NONE);
     MOJO_TO_UI_TYPE_CASE(TEXT);

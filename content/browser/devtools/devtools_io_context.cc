@@ -43,7 +43,6 @@ base::SequencedTaskRunner* impl_task_runner() {
 }
 
 using storage::BlobReader;
-
 unsigned s_last_stream_handle = 0;
 
 class TempFileStream : public DevToolsIOContext::RWStream {

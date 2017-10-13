@@ -4,6 +4,7 @@
 
 assert(!is_ios)
 
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 import("//third_party/WebKit/Source/config.gni")
 
@@ -41,7 +42,7 @@ config("wtf_config") {
   }
 }
 
-component("wtf") {
+jumbo_component("wtf") {  # Saves about 1 CPU minute
   sources = [
     "ASCIICType.cpp",
     "ASCIICType.h",
@@ -324,9 +325,16 @@ component("wtf") {
   }
 }
 
-test("wtf_unittests") {
+test("wtf_unittests") {  # Saves about 1 CPU minute
+  deps = [
+    ":wtf_unittests_sources",
+  ]
+}
+
+jumbo_source_set("wtf_unittests_sources") {  # Saves about 1 CPU minute
   visibility = []  # Allow re-assignment of list.
   visibility = [ "*" ]
+  testonly = true
 
   sources = [
     "ASCIICTypeTest.cpp",

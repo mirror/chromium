@@ -41,9 +41,9 @@ namespace {
 base::LazyInstance<ThreadLocalPointer<void>>::Leaky g_dispatcher_tls =
     LAZY_INSTANCE_INITIALIZER;
 
-void* const kHasBeenDeleted = reinterpret_cast<void*>(0x1);
+void* const kSWDispatcherHasBeenDeleted = reinterpret_cast<void*>(0x1);
 
-int CurrentWorkerId() {
+int ServiceWorkerCurrentWorkerId() {
   return WorkerThread::GetCurrentId();
 }
 
@@ -58,7 +58,7 @@ ServiceWorkerDispatcher::ServiceWorkerDispatcher(
 }
 
 ServiceWorkerDispatcher::~ServiceWorkerDispatcher() {
-  g_dispatcher_tls.Pointer()->Set(kHasBeenDeleted);
+  g_dispatcher_tls.Pointer()->Set(kSWDispatcherHasBeenDeleted);
 }
 
 void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
@@ -108,7 +108,7 @@ void ServiceWorkerDispatcher::UpdateServiceWorker(
   DCHECK(callbacks);
   int request_id = pending_update_callbacks_.Add(std::move(callbacks));
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_UpdateServiceWorker(
-      CurrentWorkerId(), request_id, provider_id, registration_id));
+      ServiceWorkerCurrentWorkerId(), request_id, provider_id, registration_id));
 }
 
 void ServiceWorkerDispatcher::UnregisterServiceWorker(
@@ -121,7 +121,7 @@ void ServiceWorkerDispatcher::UnregisterServiceWorker(
                            "ServiceWorkerDispatcher::UnregisterServiceWorker",
                            request_id, "Registration ID", registration_id);
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_UnregisterServiceWorker(
-      CurrentWorkerId(), request_id, provider_id, registration_id));
+      ServiceWorkerCurrentWorkerId(), request_id, provider_id, registration_id));
 }
 
 void ServiceWorkerDispatcher::EnableNavigationPreload(
@@ -133,7 +133,7 @@ void ServiceWorkerDispatcher::EnableNavigationPreload(
   int request_id =
       enable_navigation_preload_callbacks_.Add(std::move(callbacks));
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_EnableNavigationPreload(
-      CurrentWorkerId(), request_id, provider_id, registration_id, enable));
+      ServiceWorkerCurrentWorkerId(), request_id, provider_id, registration_id, enable));
 }
 
 void ServiceWorkerDispatcher::GetNavigationPreloadState(
@@ -144,7 +144,7 @@ void ServiceWorkerDispatcher::GetNavigationPreloadState(
   int request_id =
       get_navigation_preload_state_callbacks_.Add(std::move(callbacks));
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_GetNavigationPreloadState(
-      CurrentWorkerId(), request_id, provider_id, registration_id));
+      ServiceWorkerCurrentWorkerId(), request_id, provider_id, registration_id));
 }
 
 void ServiceWorkerDispatcher::SetNavigationPreloadHeader(
@@ -156,7 +156,7 @@ void ServiceWorkerDispatcher::SetNavigationPreloadHeader(
   int request_id =
       set_navigation_preload_header_callbacks_.Add(std::move(callbacks));
   thread_safe_sender_->Send(new ServiceWorkerHostMsg_SetNavigationPreloadHeader(
-      CurrentWorkerId(), request_id, provider_id, registration_id, value));
+      ServiceWorkerCurrentWorkerId(), request_id, provider_id, registration_id, value));
 }
 
 void ServiceWorkerDispatcher::AddProviderContext(
@@ -202,7 +202,7 @@ ServiceWorkerDispatcher*
 ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
     ThreadSafeSender* thread_safe_sender,
     base::SingleThreadTaskRunner* main_thread_task_runner) {
-  if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted) {
+  if (g_dispatcher_tls.Pointer()->Get() == kSWDispatcherHasBeenDeleted) {
     NOTREACHED() << "Re-instantiating TLS ServiceWorkerDispatcher.";
     g_dispatcher_tls.Pointer()->Set(NULL);
   }
@@ -218,7 +218,7 @@ ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
 }
 
 ServiceWorkerDispatcher* ServiceWorkerDispatcher::GetThreadSpecificInstance() {
-  if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted)
+  if (g_dispatcher_tls.Pointer()->Get() == kSWDispatcherHasBeenDeleted)
     return NULL;
   return static_cast<ServiceWorkerDispatcher*>(
       g_dispatcher_tls.Pointer()->Get());

@@ -2492,6 +2492,7 @@ void QuicConnection::CheckIfApplicationLimited() {
     sent_packet_manager_.OnApplicationLimited();
   }
 }
+#undef ENDPOINT
 
 void QuicConnection::SetStreamNotifier(
     StreamNotifierInterface* stream_notifier) {

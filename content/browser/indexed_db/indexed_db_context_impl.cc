@@ -81,8 +81,10 @@ void GetAllOriginsAndPaths(const base::FilePath& indexeddb_path,
   }
 }
 
+}  // namespace
+
 // This will be called after the IndexedDBContext is destroyed.
-void ClearSessionOnlyOrigins(
+void IndexedDBClearSessionOnlyOrigins(
     const base::FilePath& indexeddb_path,
     scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy) {
   // TODO(jsbell): DCHECK that this is running on an IndexedDB sequence,
@@ -102,8 +104,6 @@ void ClearSessionOnlyOrigins(
     base::DeleteFile(*file_path, true);
   }
 }
-
-}  // namespace
 
 IndexedDBContextImpl::IndexedDBContextImpl(
     const base::FilePath& data_path,
@@ -522,7 +522,7 @@ IndexedDBContextImpl::~IndexedDBContextImpl() {
     return;
 
   TaskRunner()->PostTask(FROM_HERE,
-                         base::BindOnce(&ClearSessionOnlyOrigins, data_path_,
+                         base::BindOnce(&IndexedDBClearSessionOnlyOrigins, data_path_,
                                         special_storage_policy_));
 }
 

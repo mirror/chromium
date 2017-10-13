@@ -5,6 +5,7 @@
 import("//build/config/features.gni")
 import("//media/media_options.gni")
 import("//ppapi/features/features.gni")
+import("//content/content.gni")
 
 # See //content/BUILD.gn for how this works.
 group("renderer") {
@@ -19,12 +20,7 @@ group("renderer") {
   }
 }
 
-if (is_component_build) {
-  link_target_type = "source_set"
-} else {
-  link_target_type = "static_library"
-}
-target(link_target_type, "renderer_sources") {
+content_component("renderer_sources") {
   # External code should depend on via ":renderer" above.
   visibility = [ "//content/*" ]
 

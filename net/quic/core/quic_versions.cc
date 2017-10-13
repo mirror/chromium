@@ -190,6 +190,8 @@ string QuicVersionToString(QuicTransportVersion transport_version) {
   }
 }
 
+#undef RETURN_STRING_LITERAL
+
 string QuicTransportVersionVectorToString(
     const QuicTransportVersionVector& versions) {
   string result = "";

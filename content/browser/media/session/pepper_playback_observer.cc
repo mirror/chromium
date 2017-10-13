@@ -17,7 +17,7 @@ namespace content {
 
 namespace {
 
-bool ShouldDuckFlash() {
+bool ShouldDuckFlashFoo() {
   return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
              switches::kEnableAudioFocus) ==
          switches::kEnableAudioFocusDuckFlash;
@@ -85,7 +85,7 @@ void PepperPlaybackObserver::PepperStartsPlayback(
 
   MediaSessionImpl::Get(contents_)->AddPlayer(
       players_map_[id].get(), PepperPlayerDelegate::kPlayerId,
-      ShouldDuckFlash() ? media::MediaContentType::Pepper
+      ShouldDuckFlashFoo() ? media::MediaContentType::Pepper
                         : media::MediaContentType::OneShot);
 }
 

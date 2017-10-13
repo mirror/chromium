@@ -25,18 +25,18 @@ namespace content {
 
 namespace {
 
-class HandleImpl : public blink::WebServiceWorker::Handle {
+class SWHandleImpl : public blink::WebServiceWorker::Handle {
  public:
-  explicit HandleImpl(const scoped_refptr<WebServiceWorkerImpl>& worker)
+  explicit SWHandleImpl(const scoped_refptr<WebServiceWorkerImpl>& worker)
       : worker_(worker) {}
-  ~HandleImpl() override {}
+  ~SWHandleImpl() override {}
 
   blink::WebServiceWorker* ServiceWorker() override { return worker_.get(); }
 
  private:
   scoped_refptr<WebServiceWorkerImpl> worker_;
 
-  DISALLOW_COPY_AND_ASSIGN(HandleImpl);
+  DISALLOW_COPY_AND_ASSIGN(SWHandleImpl);
 };
 
 }  // namespace
@@ -103,7 +103,7 @@ WebServiceWorkerImpl::CreateHandle(
     const scoped_refptr<WebServiceWorkerImpl>& worker) {
   if (!worker)
     return nullptr;
-  return base::MakeUnique<HandleImpl>(worker);
+  return base::MakeUnique<SWHandleImpl>(worker);
 }
 
 WebServiceWorkerImpl::~WebServiceWorkerImpl() {
