@@ -104,6 +104,24 @@
       "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b731d2f6_ffff8961",
+        "filename": "components/domain_reliability/service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-13T18:39:36Z",
+      "side": 1,
+      "message": "NM. I was looking at the wrong PermissionManager :-P",
+      "parentUuid": "92b3feef_ccf95af0",
+      "revId": "1ccea4c951471063f852191dae97cd2b339fe55d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
