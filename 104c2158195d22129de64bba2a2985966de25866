@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61320030_b12b1c6e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T23:17:00Z",
+      "side": 1,
+      "message": "You would typically have these parameters swapped.",
+      "revId": "104c2158195d22129de64bba2a2985966de25866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ac69d1_0a7e632e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-13T23:17:00Z",
+      "side": 1,
+      "message": "This all makes me want to make interceptor interface return patterns.",
+      "revId": "104c2158195d22129de64bba2a2985966de25866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
