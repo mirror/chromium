@@ -16,6 +16,24 @@
       "revId": "8e8c1cbc035cdff0c2e5bac10559dbfea7660e66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3396a4da_5b4539a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-13T09:58:40Z",
+      "side": 1,
+      "message": "This performs an action on the Activity - in this case the FullscreenActivity that the Tab is about to leave and will then be closed. I don\u0027t think this will have any effect on the Tab or any of it\u0027s contents, it is purely to unlock the FullscreenActivity so we don\u0027t trigger two orientation changes when we get back to the CTA.",
+      "parentUuid": "88249267_be50eae3",
+      "revId": "8e8c1cbc035cdff0c2e5bac10559dbfea7660e66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
