@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f4d835_e54da150",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-13T19:04:08Z",
+      "side": 1,
+      "message": "Can we word this more clearly. E.g. I think some users may wonder, \"restart\" what? Should I restart the browser, or OS, or printer -- or restart the add printer steps?",
+      "revId": "38c9457989a22c686d2848c5c40f74457a8c7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
