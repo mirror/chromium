@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aa521ed_7573b6b5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/restore-locations-for-breakpoint-with-broken-source-map.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-13T00:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba0b657_ab724f84",
+      "revId": "1ef7825c122aa53dc0446e33a275914063596dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfccb19b_fd9f8a49",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/restore-locations-for-breakpoint-with-broken-source-map.js",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ed9cf3ac_e93b7331",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/restore-locations-for-breakpoint-with-broken-source-map.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-13T00:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfccb19b_fd9f8a49",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "1ef7825c122aa53dc0446e33a275914063596dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62844a0f_1787c28a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/restore-locations-for-breakpoint-with-broken-source-map.js",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "1ef7825c122aa53dc0446e33a275914063596dd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa184e13_a7c66638",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-breakpoints/restore-locations-for-breakpoint-with-broken-source-map.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-13T00:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62844a0f_1787c28a",
+      "revId": "1ef7825c122aa53dc0446e33a275914063596dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
