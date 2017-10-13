@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a0f17e2_8adf8db0",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115885
+      },
+      "writtenOn": "2017-10-13T19:21:59Z",
+      "side": 1,
+      "message": "this looks it will cause problems. If you release and in fact is the last reference then it is possible (even likely) for another one to be allocated with that same address and inserted in the set before ln63 gets executed.",
+      "revId": "98798d86613bf56e80fd419b2f1a5c7894f2f9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "561822e9_2217bedc",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 2
