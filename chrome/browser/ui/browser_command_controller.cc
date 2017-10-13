@@ -8,6 +8,8 @@
 
 #include <string>
 
+#include "chrome/services/chrome_file_util/public/cpp/zip_file_creator.h"
+
 #include "base/command_line.h"
 #include "base/debug/debugging_flags.h"
 #include "base/debug/profiler.h"
@@ -258,6 +260,11 @@ void BrowserCommandController::ExtensionStateChanged() {
   UpdateCommandsForBookmarkEditing();
 }
 
+void ZipCallback(base::TimeTicks start_time, bool success) {
+  LOG(ERROR) << "** JAY** Zipping done, success=" << success << " took "
+             << (base::TimeTicks::Now() - start_time).InMilliseconds() << "ms";
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserCommandController, CommandUpdaterDelegate implementation:
 
@@ -295,9 +302,21 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       window()->HideNewBackShortcutBubble();
       GoForward(browser_, disposition);
       break;
-    case IDC_RELOAD:
-      Reload(browser_, disposition);
-      break;
+    case IDC_RELOAD: {
+      // Reload(browser_, disposition);
+      LOG(ERROR) << "** JAY ** ZIPPING WebKit...";
+      std::vector<base::FilePath> files;
+
+      base::FilePath webkit_layout_zip("/tmp/webkit_layout.zip");
+      scoped_refptr<chrome::ZipFileCreator> zip_creator =
+          new chrome::ZipFileCreator(
+              base::Bind(&ZipCallback, base::TimeTicks::Now()),
+              base::FilePath("/usr/local/google/home/jcivelli/chromium/src/"
+                             "third_party/WebKit/LayoutTests"),
+              files, webkit_layout_zip);
+      zip_creator->Start(
+          content::ServiceManagerConnection::GetForProcess()->GetConnector());
+    } break;
     case IDC_RELOAD_CLEARING_CACHE:
       ClearCache(browser_);
       // FALL THROUGH
