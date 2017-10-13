@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12afbec8_d739c363",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T03:26:53Z",
+      "side": 1,
+      "message": "nit: prefer braces here since the if() spans multiple lines",
+      "revId": "123580d81feb16244185d134e3bcec50e5aab038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
