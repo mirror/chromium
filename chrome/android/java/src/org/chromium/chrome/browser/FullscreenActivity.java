@@ -7,6 +7,7 @@ package org.chromium.chrome.browser;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.provider.Browser;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,11 +18,9 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
-import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
-import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.widget.ControlContainer;
+import org.chromium.content.browser.ScreenOrientationProvider;
 import org.chromium.content_public.browser.WebContentsObserver;
 
 /**
@@ -31,7 +30,9 @@ import org.chromium.content_public.browser.WebContentsObserver;
  * When FullScreenActivity was renamed to SingleTabActivity, this was changed to FullscreenActivity.
  */
 public class FullscreenActivity extends SingleTabActivity {
-    private static final String TAG = "FullWebConActivity";
+    private static final String TAG = "FullscreenActivity";
+
+    private static final SparseArray<Tab> sTabsToSteal = new SparseArray<>();
 
     private WebContentsObserver mWebContentsObserver;
 
@@ -39,20 +40,14 @@ public class FullscreenActivity extends SingleTabActivity {
     protected Tab createTab() {
         assert getIntent().hasExtra(IntentHandler.EXTRA_TAB_ID);
 
-        int tabId = IntentUtils.safeGetIntExtra(
-                getIntent(), IntentHandler.EXTRA_TAB_ID, Tab.INVALID_TAB_ID);
-        TabReparentingParams params = (TabReparentingParams) AsyncTabParamsManager.remove(tabId);
+        final Tab tab = getTabToSteal(IntentUtils.safeGetIntExtra(
+                getIntent(), IntentHandler.EXTRA_TAB_ID, Tab.INVALID_TAB_ID));
 
-        final Tab tab;
-        if (params != null) {
-            tab = params.getTabToReparent();
-            tab.attachAndFinishReparenting(this, createTabDelegateFactory(), params);
-        } else {
-            // TODO(peconn): Figure out how this arises - https://crbug.com/729094:37
-            tab = new Tab(Tab.INVALID_TAB_ID, Tab.INVALID_TAB_ID, false, getWindowAndroid(),
-                    TabLaunchType.FROM_CHROME_UI, null, null);
-            tab.initialize(null, getTabContentManager(), createTabDelegateFactory(), false, false);
-        }
+        tab.reparent(this, createTabDelegateFactory());
+
+        tab.getFullscreenManager().setTab(tab);
+        tab.toggleFullscreenMode(true);
+
         mWebContentsObserver = new WebContentsObserver(tab.getWebContents()) {
             @Override
             public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
@@ -111,59 +106,83 @@ public class FullscreenActivity extends SingleTabActivity {
             tab.getFullscreenManager().setTab(null);
         }
 
+        if (enableFullscreen) {
+            launchFullscreenActivityThenStealTab(tab);
+        } else {
+            reparentTabToOriginalOwner(tab);
+        }
+    }
+
+    private static void reparentTabToOriginalOwner(final Tab tab) {
         ChromeActivity activity = tab.getActivity();
 
-        if (!enableFullscreen) {
-            activity.exitFullscreenIfShowing();
-        }
+        // On Android O, if you return to a portrait Activity from one locked in landscape, the
+        // Activity gets config changes signalling it has been changed to landscape and back again.
+        // I believe this is a bug. Since the FullscreenActivity may have had its orientation locked
+        // to landscape for the video, we unlock it so it doesn't trigger an erroneous config change
+        // in the receiving Activity.
+        ScreenOrientationProvider.unlockOrientation(activity.getWindowAndroid());
 
-        Runnable setFullscreen = () -> {
+        // If reparenting is triggered by the back button, this has already been called. If not we
+        // must call it to restore everything to a good state before sending the Tab back.
+        activity.exitFullscreenIfShowing();
+
+        Runnable exitFullscreen = () -> {
             // The Tab's FullscreenManager changes when it is moved.
             tab.getFullscreenManager().setTab(tab);
-            tab.toggleFullscreenMode(enableFullscreen);
+            tab.toggleFullscreenMode(false);
         };
 
         Intent intent = new Intent();
 
-        if (enableFullscreen) {
-            // Send to the FullscreenActivity.
-            intent.setClass(tab.getActivity(), FullscreenActivity.class);
+        // Send back to the Activity it came from.
+        ComponentName parent = IntentUtils.safeGetParcelableExtra(
+                activity.getIntent(), IntentHandler.EXTRA_PARENT_COMPONENT);
 
-            intent.putExtra(IntentHandler.EXTRA_PARENT_COMPONENT, activity.getComponentName());
-            // In multiwindow mode we want both activities to be able to launch independent
-            // FullscreenActivity's.
-            intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        // By default Intents from Chrome open in the current tab. We add this extra to prevent
+        // clobbering the top tab.
+        intent.putExtra(Browser.EXTRA_CREATE_NEW_TAB, true);
+
+        if (parent != null) {
+            intent.setComponent(parent);
         } else {
-            // Send back to the Activity it came from.
-            ComponentName parent = IntentUtils.safeGetParcelableExtra(
-                    activity.getIntent(), IntentHandler.EXTRA_PARENT_COMPONENT);
-
-            // By default Intents from Chrome open in the current tab. We add this extra to prevent
-            // clobbering the top tab.
-            intent.putExtra(Browser.EXTRA_CREATE_NEW_TAB, true);
-
-            if (parent != null) {
-                intent.setComponent(parent);
-            } else {
-                Log.d(TAG, "Cannot return fullscreen tab to parent Activity.");
-                // Tab.detachAndStartReparenting will give the intent a default component if it
-                // has none.
-            }
-
-            ChromeActivity tabActivity = tab.getActivity();
-            if (tabActivity instanceof FullscreenActivity) {
-                FullscreenActivity fullscreenActivity = (FullscreenActivity) tabActivity;
-                if (fullscreenActivity.mWebContentsObserver != null) {
-                    fullscreenActivity.mWebContentsObserver.destroy();
-                    fullscreenActivity.mWebContentsObserver = null;
-                }
-            }
-
-            // TODO(peconn): Deal with tricky multiwindow scenarios.
+            Log.d(TAG, "Cannot return fullscreen tab to parent Activity.");
+            // Tab.detachAndStartReparenting will give the intent a default component if it
+            // has none.
         }
+
+        ChromeActivity tabActivity = tab.getActivity();
+        if (tabActivity instanceof FullscreenActivity) {
+            FullscreenActivity fullscreenActivity = (FullscreenActivity) tabActivity;
+            if (fullscreenActivity.mWebContentsObserver != null) {
+                fullscreenActivity.mWebContentsObserver.destroy();
+                fullscreenActivity.mWebContentsObserver = null;
+            }
+        }
+
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, activity.getPackageName());
 
-        tab.detachAndStartReparenting(intent, null, setFullscreen);
+        tab.detachAndStartReparenting(intent, null, exitFullscreen);
+    }
+
+    private static void launchFullscreenActivityThenStealTab(Tab tab) {
+        sTabsToSteal.put(tab.getId(), tab);
+
+        ChromeActivity activity = tab.getActivity();
+        Intent intent = new Intent();
+
+        intent.putExtra(IntentHandler.EXTRA_TAB_ID, tab.getId());
+
+        // Send to the FullscreenActivity.
+        intent.setClass(activity, FullscreenActivity.class);
+
+        intent.putExtra(IntentHandler.EXTRA_PARENT_COMPONENT, activity.getComponentName());
+        // In multiwindow mode we want both activities to be able to launch independent
+        // FullscreenActivity's.
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, activity.getPackageName());
+
+        activity.startActivity(intent);
     }
 
     public static boolean shouldUseFullscreenActivity(Tab tab) {
@@ -176,5 +195,13 @@ public class FullscreenActivity extends SingleTabActivity {
         // Activity is not in the foreground we don't want to do this (as it would re-launch
         // Chrome).
         return ApplicationStatus.getStateForActivity(activity) == ActivityState.RESUMED;
+    }
+
+    private static Tab getTabToSteal(int id) {
+        Tab tab = sTabsToSteal.get(id);
+        assert tab != null;
+
+        sTabsToSteal.remove(id);
+        return tab;
     }
 }
