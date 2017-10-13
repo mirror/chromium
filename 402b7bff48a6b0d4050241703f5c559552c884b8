@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b85bc3_dced34d7",
+        "filename": "chrome/browser/resources/interventions_internals/index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-13T22:30:47Z",
+      "side": 1,
+      "message": "nit: 4-space indent, don\u0027t align (also fix line 20 while you\u0027re here so the whole file is correct)",
+      "revId": "402b7bff48a6b0d4050241703f5c559552c884b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4067f3_b6284507",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-13T22:30:47Z",
+      "side": 1,
+      "message": "nit: let \u003d\u003e const",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 3
+      },
+      "revId": "402b7bff48a6b0d4050241703f5c559552c884b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e6f091_bb0891f8",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-13T22:30:47Z",
+      "side": 1,
+      "message": "Let\u0027s clarify the sentence structure a bit to make this more understandable, e.g. \"Searching will hide any rows that don\u0027t contain the keyword in the search bar.\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 72,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "402b7bff48a6b0d4050241703f5c559552c884b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6129fab_8a114241",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-13T22:30:47Z",
+      "side": 1,
+      "message": "prefer .includes(keyword) over indexOf() since we don\u0027t care about the actual index",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "402b7bff48a6b0d4050241703f5c559552c884b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d50000_c47ce221",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-13T22:30:47Z",
+      "side": 1,
+      "message": "We should stop iterating when we find any match. There is a function like forEach that does that, it\u0027s called some():\n\n  let found \u003d KEY_COLUMNS.some((column) \u003d\u003e {\n    return row.blah.contains(keyword);\n  });",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "402b7bff48a6b0d4050241703f5c559552c884b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
