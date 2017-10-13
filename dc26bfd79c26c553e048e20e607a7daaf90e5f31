@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27cc359e_f529611f",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T17:57:36Z",
+      "side": 1,
+      "message": "Just use CheckAdd() here with normal integers as I described in my comment on the previous CL.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 60
+      },
+      "revId": "dc26bfd79c26c553e048e20e607a7daaf90e5f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca91a68_e4ce2702",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T17:57:36Z",
+      "side": 1,
+      "message": "Ditto on just using CheckAdd here.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 38
+      },
+      "revId": "dc26bfd79c26c553e048e20e607a7daaf90e5f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f1e1eb_05cff67e",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T17:57:36Z",
+      "side": 1,
+      "message": "Sorry, I think I misunderstood your question earlier, because you should absoultely keep these as plain ints. If you make them CheckedNumeric you\u0027ll incur the storage cost of the tracking overflow state and the cost of checking that state every time you read or manipulate the variable.\n\nReally, you almost never want to have a CheckedNumeric member in an object, because you generally just care about the state while performing arithmetic operations.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "dc26bfd79c26c553e048e20e607a7daaf90e5f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dc8818_cc2df7e6",
+        "filename": "third_party/WebKit/Source/core/style/CounterDirectives.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T17:57:36Z",
+      "side": 1,
+      "message": "Ditto on CheckAdd here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "dc26bfd79c26c553e048e20e607a7daaf90e5f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a9d56c_2def2087",
+        "filename": "third_party/WebKit/Source/core/style/CounterDirectives.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-13T17:57:36Z",
+      "side": 1,
+      "message": "Ditto on making this a normal int.",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 34
+      },
+      "revId": "dc26bfd79c26c553e048e20e607a7daaf90e5f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
