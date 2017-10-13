@@ -164,6 +164,24 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dbbf2c_556ca62a",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T21:55:04Z",
+      "side": 1,
+      "message": "\"I am happy to do #1. I\u0027ve added my first attempt at such a comment to the relevant files, but I\u0027m not sure what action I should recommend to future authors who want to make a backwards-incompatible change.\"\n\nWe probably should figure out the action now instead of then. :)\nCould it be \"talk to the page state serialization owners, and help/let them duplicate the type in their code before you make the backward-incompat change\"?",
+      "parentUuid": "a54c5845_26aea19c",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
