@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9fbe81_a29a99fc",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "\"audio\" might be better, since these are only used on audio devices",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 18
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5733c826_bc54d572",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "why does this need to be a separate source_set? Why not just move the contents into cast_backend_unittests?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 26
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7673210_b36d08f3",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "cast_audio_backend_unittests",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 28
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fc9db6_937fe5f8",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "please remove",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 1
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3104a4_6e4a7f89",
+        "filename": "chromecast/media/cma/backend/alsa/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "AudioDecoder should be moved out as well, and also MediaPipelineBackendAlsa",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ab7316_2a4ca023",
+        "filename": "chromecast/media/cma/backend/alsa/audio_decoder_alsa.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "Fix include guards everywhere",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 63
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18d38bc_b1db462a",
+        "filename": "chromecast/media/cma/backend/stream_mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-10-13T05:47:14Z",
+      "side": 1,
+      "message": "copyright date should not be updated",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "8a95b5d9e92972a35fddf7165055e9683d400757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
