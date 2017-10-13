@@ -334,6 +334,7 @@ void CommandLine::AppendSwitchPath(const std::string& switch_string,
 
 void CommandLine::AppendSwitchNative(const std::string& switch_string,
                                      const CommandLine::StringType& value) {
+  DCHECK(!readonly_);
 #if defined(OS_WIN)
   const std::string switch_key = ToLowerASCII(switch_string);
   StringType combined_switch_string(ASCIIToUTF16(switch_key));
@@ -490,6 +491,7 @@ CommandLine::StringType CommandLine::GetArgumentsStringInternal(
 }
 
 void CommandLine::ResetStringPieces() {
+  DCHECK(!readonly_);
   switches_by_stringpiece_.clear();
   for (const auto& entry : switches_)
     switches_by_stringpiece_[entry.first] = &(entry.second);

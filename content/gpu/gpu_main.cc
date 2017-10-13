@@ -278,6 +278,7 @@ int GpuMain(const MainFunctionParams& parameters) {
   const bool init_success = gpu_init->InitializeAndStartSandbox(
       const_cast<base::CommandLine*>(&command_line));
   const bool dead_on_arrival = !init_success;
+  base::CommandLine::ForCurrentProcess()->mark_readonly();
 
   logging::SetLogMessageHandler(NULL);
   GetContentClient()->SetGpuInfo(gpu_init->gpu_info());

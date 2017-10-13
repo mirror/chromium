@@ -214,6 +214,8 @@ class BASE_EXPORT CommandLine {
   void ParseFromString(const string16& command_line);
 #endif
 
+  void mark_readonly() { readonly_ = true; }
+
  private:
   // Disallow default constructor; a program name must be explicitly specified.
   CommandLine();
@@ -252,6 +254,8 @@ class BASE_EXPORT CommandLine {
 
   // The index after the program and switches, any arguments start here.
   size_t begin_args_;
+
+  bool readonly_ = false;
 };
 
 }  // namespace base
