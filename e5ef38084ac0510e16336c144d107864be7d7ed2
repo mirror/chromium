@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e11dbaa8_f8e8f639",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-13T06:03:50Z",
+      "side": 1,
+      "message": "removed this.showAllBtn_.",
+      "parentUuid": "66f83c3f_598cfe36",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fc87388_332a3636",
         "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
         "patchSetId": 12
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "How can this.info not be set yet? Isn\u0027t it used multiple times in this function before this line? For example line 147 is using this.info.id already.\n\nAlso isn\u0027t |propertiesBtn| the same object as |this.showAllBtn_|? If yes, then how can $(this.createShowAllButtonId()) return null, if |propertiesBtn| is already added to the DOM? Sorry for the repeated questions, I am probably missing something.\n\nThe only explanation I can find is that |this.expandedContent_| element has maybe not been added to the DOM yet (I haven\u0027t looked at the superclass). Either way, I don\u0027t find the need for setupShowAllButton() to do any DOM querying. You can do any of the following\n\n 1) Vincent\u0027s proposal\n 2) See comment at line 182\n 3) Modify setupShowAllButton() to take |propertiesBtn| as a parameter\n 4) Modify setupShowAllButton() to query |this.expandedContent_| instead of querying |document|.",
       "parentUuid": "1656f919_8ee852c5",
+      "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae95c5b8_1febbf36",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1244172
+      },
+      "writtenOn": "2017-10-13T06:03:50Z",
+      "side": 1,
+      "message": "Applied latest review suggestion for this part of code.\n\n@Vincent/dpapad,\npropertiesBtn.textContent \u003d \u0027Show All\u0027;\n      // don\u0027t set an .id\nWith just class(.show-all-properties), margin style is not getting applied.\n\nSo, to apply margin, we have two approaches\n1) To increase the specificity, we need to add Id with the class.\nSo In bluetooth_internals.css, we need to add as \nbutton[id^\u003d\u0027show-all-properties-\u0027].show-all-properties.\nTo differentiate button id, we can keep id as \u0027show-all-properties-\u0027 + this.info.id.\n\n2) We can just add propertiesBtn.id \u003d \u0027show-all-properties\u0027;\nand in bluetooth_internals.css #show-all-properties { margin: 10px;}. \nBut in this case, all different button\u0027s will have same id.\n\nplease give your opinion on this. Based on this, we can take a call to remove createShowAllButtonId().",
+      "parentUuid": "94aaf643_0b1a896e",
       "revId": "e5ef38084ac0510e16336c144d107864be7d7ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
