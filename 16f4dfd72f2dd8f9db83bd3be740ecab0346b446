@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3bac251_de17de2a",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-13T19:48:24Z",
+      "side": 1,
+      "message": "...and this is still blocked on the base class lookup thing that rnk\u0027s looking at, right?",
+      "revId": "16f4dfd72f2dd8f9db83bd3be740ecab0346b446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db1dff21_0b8adaca",
         "filename": "build/win/message_compiler.py",
         "patchSetId": 5
