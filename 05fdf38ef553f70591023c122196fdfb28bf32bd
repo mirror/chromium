@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b96851f_16e3117b",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T19:57:28Z",
+      "side": 1,
+      "message": "Hm I think this function should be moved to PMD::GetDumpID(name). But then PMD is the only place using this function. Maybe we should get rid of this and move this logic to PMD itself and pass the GUID to MAD constructor here and also remove the constructor without guid.",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031eb383_2862c02f",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T19:57:28Z",
+      "side": 1,
+      "message": "process",
+      "range": {
+        "startLine": 291,
+        "startChar": 29,
+        "endLine": 291,
+        "endChar": 46
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543744d9_193235fa",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T19:57:28Z",
+      "side": 1,
+      "message": "Why do we have this constructor? I don\u0027t think we should use different IDs across multiple dumps in same process.",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1ea375_9a554352",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-13T19:57:28Z",
+      "side": 1,
+      "message": "nit: Create extra pmd with same token and check if id is equal.",
+      "revId": "05fdf38ef553f70591023c122196fdfb28bf32bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
