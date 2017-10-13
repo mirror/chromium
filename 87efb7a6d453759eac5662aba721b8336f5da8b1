@@ -473,6 +473,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0f2929_0a612a89",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-13T16:45:49Z",
+      "side": 1,
+      "message": "Can we address this comment before sending this to the CQ?",
+      "parentUuid": "73c41c5a_91264b77",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
