@@ -16,6 +16,24 @@
       "revId": "e574a3d4a739f61e5a42d84f0ba028baca43576d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2842dc5_0a083fc2",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-13T23:43:39Z",
+      "side": 1,
+      "message": "UpdateOpacity is called when the AppListView is dragged, this should prevent flickering and un-updated app icons during the \"sync while dragging\" scenario.\n\nUpdateOpacity should also update the apps as the AppListView animates.\n\nI agree, OnListItemAdded is a better solution, I\u0027ll upload a new patch.",
+      "parentUuid": "ad6c36c8_5e6c1c2a",
+      "revId": "e574a3d4a739f61e5a42d84f0ba028baca43576d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
