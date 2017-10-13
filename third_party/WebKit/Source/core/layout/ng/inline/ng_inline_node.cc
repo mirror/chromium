@@ -33,6 +33,7 @@
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/layout/ng/ng_positioned_float.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
@@ -113,6 +114,9 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
     } else {
       DCHECK_EQ(child->Type(), NGPhysicalFragment::kFragmentBox);
       const auto& physical_fragment = ToNGPhysicalBoxFragment(*child);
+
+      if (physical_fragment.GetLayoutObject()->IsFloating())
+        continue;
 
       NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
       NGLogicalOffset child_offset = fragment.Offset() + parent_offset;
@@ -542,11 +546,11 @@ RefPtr<NGLayoutResult> NGInlineNode::Layout(
                                     ToNGInlineBreakToken(break_token));
   RefPtr<NGLayoutResult> result = algorithm.Layout();
 
-  if (result->Status() == NGLayoutResult::kSuccess &&
+  /*if (result->Status() == NGLayoutResult::kSuccess &&
       result->UnpositionedFloats().IsEmpty() &&
       !RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     CopyFragmentDataToLayoutBox(constraint_space, result.get());
-  }
+  }*/
 
   return result;
 }
@@ -564,8 +568,8 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
           .SetAvailableSize({available_inline_size, NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);
 
-  NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
-                                      TextDirection::kLtr);
+  NGLineBoxFragmentBuilder container_builder(
+      node, &node.Style(), space->WritingMode(), TextDirection::kLtr);
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
@@ -581,7 +585,7 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
                                &line_info))
       break;
 
-    break_token = line_breaker.CreateBreakToken();
+    break_token = line_breaker.CreateBreakToken(nullptr);
     LayoutUnit inline_size = line_info.TextIndent();
     for (const NGInlineItemResult item_result : line_info.Results())
       inline_size += item_result.inline_size;
@@ -628,7 +632,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
-    NGLayoutResult* layout_result) {
+    const NGLayoutResult& layout_result) {
   LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
 
   // If we have a flow thread, that's where to put the line boxes.
@@ -641,8 +645,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   Vector<unsigned, 32> text_offsets(items.size());
   GetLayoutTextOffsets(&text_offsets);
 
-  NGBoxStrut border_padding = ComputeBorders(constraint_space, Style()) +
-                              ComputePadding(constraint_space, Style());
+  NGBoxStrut border_padding; /* = ComputeBorders(constraint_space, Style()) +
+                               ComputePadding(constraint_space, Style());*/
 
   FontBaseline baseline_type =
       IsHorizontalWritingMode(constraint_space.WritingMode())
@@ -654,7 +658,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   BidiRunList<BidiRun> bidi_runs;
   LineInfo line_info;
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().get());
+      ToNGPhysicalBoxFragment(layout_result.PhysicalFragment().get());
   for (const auto& container_child : box_fragment->Children()) {
     // Skip any float children we might have, these are handled by the wrapping
     // parent NGBlockNode.
@@ -751,6 +755,13 @@ void NGInlineNode::GetLayoutTextOffsets(
     current_text->SetTextInternal(
         Text(current_offset, Data().text_content_.length()).ToString().Impl());
   }
+}
+
+bool NGInlineNode::IsEmptyInline() {
+  // TODO(kojii): Invalidate PrepareLayout() more efficiently.
+  InvalidatePrepareLayout();
+  PrepareLayout();
+  return Data().is_empty_inline_;
 }
 
 void NGInlineNode::CheckConsistency() const {

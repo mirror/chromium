@@ -10,6 +10,7 @@
 #include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/layout/ng/ng_positioned_float.h"
 
 namespace blink {
 
@@ -231,17 +232,20 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
           children_, baselines_, border_edges_.ToPhysical(WritingMode()),
           std::move(break_token)));
 
+  Vector<NGPositionedFloat> positioned_floats;
   return WTF::AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
-      std::move(exclusion_space_), bfc_offset_, end_margin_strut_,
-      intrinsic_block_size_, NGLayoutResult::kSuccess));
+      positioned_floats, std::move(exclusion_space_), bfc_offset_,
+      end_margin_strut_, intrinsic_block_size_, NGLayoutResult::kSuccess));
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
     NGLayoutResult::NGLayoutResultStatus status) {
-  return WTF::AdoptRef(new NGLayoutResult(
-      nullptr, Vector<NGOutOfFlowPositionedDescendant>(), unpositioned_floats_,
-      nullptr, bfc_offset_, end_margin_strut_, LayoutUnit(), status));
+  Vector<NGPositionedFloat> positioned_floats;
+  return WTF::AdoptRef(
+      new NGLayoutResult(nullptr, Vector<NGOutOfFlowPositionedDescendant>(),
+                         unpositioned_floats_, positioned_floats, nullptr,
+                         bfc_offset_, end_margin_strut_, LayoutUnit(), status));
 }
 
 }  // namespace blink
