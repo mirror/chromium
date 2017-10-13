@@ -104,6 +104,7 @@ import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabStateBrowserControlsVisibilityDelegate;
+import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
 import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -1091,13 +1092,18 @@ public class ChromeTabbedActivity
             }
             mMainIntentMetrics.setIgnoreEvents(false);
 
+            boolean hasTabWaitingForReparenting =
+                    AsyncTabParamsManager.hasParamsWithTabToReparent();
+
             // Only create an initial tab if no tabs were restored and no intent was handled.
             // Also, check whether the active tab was supposed to be restored and that the total
             // tab count is now non zero.  If this is not the case, tab restore failed and we need
             // to create a new tab as well.
-            if (!mCreatedTabOnStartup
-                    || (activeTabBeingRestored && getTabModelSelector().getTotalTabCount() == 0
-                               && mDelayedInitialTabBehaviorDuringUiInit == null)) {
+            if (!hasTabWaitingForReparenting
+                    && (!mCreatedTabOnStartup
+                               || (activeTabBeingRestored
+                                          && getTabModelSelector().getTotalTabCount() == 0
+                                          && mDelayedInitialTabBehaviorDuringUiInit == null))) {
                 // If homepage URI is not determined, due to PartnerBrowserCustomizations provider
                 // async reading, then create a tab at the async reading finished. If it takes
                 // too long, just create NTP.

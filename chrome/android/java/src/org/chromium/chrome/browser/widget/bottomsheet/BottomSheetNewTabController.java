@@ -10,6 +10,7 @@ import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.tabmodel.AsyncTabParamsManager;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -118,6 +119,9 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      * @param actionId The action id of the bottom sheet content to be displayed.
      */
     public void displayNewTabUi(boolean isIncognito, int actionId) {
+        // If there is a tab being reparented from the promo dialog, do not show the new tab UI.
+        if (AsyncTabParamsManager.hasParamsWithTabToReparent()) return;
+
         mIsShowingNewTabUi = true;
         mHideOverviewOnClose = !mLayoutManager.overviewVisible();
         mSelectIncognitoModelOnClose = mTabModelSelector.isIncognitoSelected()
