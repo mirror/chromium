@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ba39cd_d3f8f7d1",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:53:10Z",
+      "side": 1,
+      "message": "Nit: Can fit in previous line?",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6225ea69_6f06247f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:53:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523996b5_2d3df8c1",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:53:10Z",
+      "side": 1,
+      "message": "A bit surprised that this works with \"\u003d\", but not with \"$\u003d\".",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527aca2d_7423eeda",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:53:10Z",
+      "side": 1,
+      "message": "Nit(optional): Should we rename this to \"Permission\"?",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2a56b3_64081bf5",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-13T17:53:10Z",
+      "side": 1,
+      "message": "Had not realized that we publicly document our private APIs. Interesting.",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
