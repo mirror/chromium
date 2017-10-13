@@ -434,8 +434,10 @@ public class PaymentRequestUI implements DialogInterface.OnDismissListener, View
         bottomSheetParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
         mFullContainer.addView(mRequestView, bottomSheetParams);
 
-        mEditorDialog = new EditorDialog(activity, sObserverForTest);
-        mCardEditorDialog = new EditorDialog(activity, sObserverForTest);
+        mEditorDialog = new EditorDialog(activity, sObserverForTest,
+                /*deleteRunnable =*/null);
+        mCardEditorDialog = new EditorDialog(activity, sObserverForTest,
+                /*deleteRunnable =*/null);
 
         // Allow screenshots of the credit card number in Canary, Dev, and developer builds.
         if (ChromeVersionInfo.isBetaBuild() || ChromeVersionInfo.isStableBuild()) {
