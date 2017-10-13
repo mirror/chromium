@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a215d7c9_ab086abd",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee63ef1_1a54a3c1",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "454e2626_f271a3f1",
         "filename": "ash/system/power/power_button_screenshot_controller.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T22:09:02Z",
       "side": 1,
       "message": "I think it would be clearer to set |consume_volume_down_| true here, rather than in the utility function.",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e36500d_8f5a29d0",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "test cases catch the problem.\n\nWe could have volume down pressed first and power button pressed taking a screenshot. That means power button pressed triggered InterceptScreenshotChord() returns true.\n\nHow about what I did in my new patch?",
+      "parentUuid": "454e2626_f271a3f1",
       "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e54105c_49f6e161",
+        "filename": "ash/system/power/power_button_screenshot_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "hmm, I think you mean volume down kept pressed and pressing volume up key?\n\nLogically, it can happen, if volume down pressed and then volume up pressed and they are all within 150ms. However, this doesn\u0027t hurt UX much considering 150ms is very short. If you think we need to do, I can add volume up key condition to if-condition and add test coverage.",
+      "parentUuid": "7e6d556b_63df6aed",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21c1fc8a_11b3d971",
         "filename": "ash/system/power/power_button_screenshot_controller_test_api.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d5e2df04_a7dd50cb",
+        "filename": "ash/system/power/power_button_screenshot_controller_test_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c1fc8a_11b3d971",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84dd03c0_7a12017d",
         "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-13T22:09:02Z",
       "side": 1,
       "message": "nit: no blank line",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be116600_d7f58ef7",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "oops, it doesn\u0027t need this. It is just an include for testing.",
+      "parentUuid": "84dd03c0_7a12017d",
       "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "8f10f76f_75ea37ba",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e01e4b1c_b89a8946",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a8a455_1a1105b9",
         "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
         "patchSetId": 9
@@ -132,6 +240,24 @@
       "writtenOn": "2017-10-13T22:09:02Z",
       "side": 1,
       "message": "alternately, can this just be ui::KeyEvent and not a unique_ptr\u003c\u003e?",
+      "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3387c582_a9df0395",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T22:57:04Z",
+      "side": 1,
+      "message": "hmm... if ui::KeyEvent, how would we initialize it by using which ctor?",
+      "parentUuid": "44a8a455_1a1105b9",
       "revId": "ef3612dba472c97c90d5a34033de9def996b9f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
