@@ -72,7 +72,7 @@ public class EditorDialog
     private static final int DIALOG_EXIT_ANIMATION_MS = 195;
 
     private final Context mContext;
-    private final PaymentRequestObserverForTest mObserverForTest;
+    private PaymentRequestObserverForTest mObserverForTest;
     private final Handler mHandler;
     private final TextView.OnEditorActionListener mEditorActionListener;
     private final int mHalfRowMargin;
@@ -96,14 +96,17 @@ public class EditorDialog
     private TextView mPhoneInput;
 
     private Animator mDialogInOutAnimator;
-
+    @Nullable
+    private Runnable mDeleteRunnable;
     /**
      * Builds the editor dialog.
      *
      * @param activity        The activity on top of which the UI should be displayed.
      * @param observerForTest Optional event observer for testing.
+     * @param deleteRunnable  The runnable that when called will delete the profile.
      */
-    public EditorDialog(Activity activity, PaymentRequestObserverForTest observerForTest) {
+    public EditorDialog(Activity activity, PaymentRequestObserverForTest observerForTest,
+            Runnable deleteRunnable) {
         super(activity, R.style.FullscreenWhite);
         // Sets transparent background for animating content view.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -154,6 +157,11 @@ public class EditorDialog
         };
 
         mCardNumberFormatter = new CreditCardNumberFormattingTextWatcher();
+        mDeleteRunnable = deleteRunnable;
+    }
+
+    public PaymentRequestObserverForTest getObserverForTest() {
+        return mObserverForTest;
     }
 
     /** Prevents screenshots of this editor. */
@@ -180,13 +188,21 @@ public class EditorDialog
         EditorDialogToolbar toolbar = (EditorDialogToolbar) mLayout.findViewById(R.id.action_bar);
         toolbar.setTitle(mEditorModel.getTitle());
         toolbar.setTitleTextColor(Color.WHITE);
-        toolbar.setShowDeleteMenuItem(false);
+        toolbar.setShowDeleteMenuItem(mDeleteRunnable != null);
 
-        // Show the help article when the user asks.
+        // Show the help article when the help icon is clicked on, or delete
+        // the profile and go back when the delete icon is clicked on.
         toolbar.setOnMenuItemClickListener(new OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                launchAutofillHelpPage(mContext);
+                if (item.getItemId() == R.id.delete_menu_id) {
+                    if (mDeleteRunnable != null) {
+                        mDeleteRunnable.run();
+                        animateOutDialog();
+                    }
+                } else if (item.getItemId() == R.id.help_menu_id) {
+                    launchAutofillHelpPage(mContext);
+                }
                 return true;
             }
         });
@@ -270,7 +286,6 @@ public class EditorDialog
                 animateOutDialog();
                 return;
             }
-
             if (mObserverForTest != null) mObserverForTest.onPaymentRequestEditorValidationError();
         } else if (view.getId() == R.id.payments_edit_cancel_button) {
             animateOutDialog();
@@ -447,7 +462,6 @@ public class EditorDialog
                 assert mPhoneFormatter != null;
                 formatter = mPhoneFormatter;
             }
-
             EditorTextField inputLayout = new EditorTextField(mContext, fieldModel,
                     mEditorActionListener, filter, formatter, mObserverForTest);
             mFieldViews.add(inputLayout);
@@ -501,7 +515,8 @@ public class EditorDialog
 
     @Override
     public void onShow(DialogInterface dialog) {
-        assert mDialogInOutAnimator == null;
+        // assert mDialogInOutAnimator == null;
+        if (mDialogInOutAnimator == null) return;
 
         // Hide keyboard and disable EditText views for animation efficiency.
         if (getCurrentFocus() != null) UiUtils.hideKeyboard(getCurrentFocus());
@@ -516,7 +531,6 @@ public class EditorDialog
         Animator fadeIn = ObjectAnimator.ofFloat(mLayout, View.ALPHA, 0f, 1f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(popUp, fadeIn);
-
         mDialogInOutAnimator = animatorSet;
         mDialogInOutAnimator.setDuration(DIALOG_ENTER_ANIMATION_MS);
         mDialogInOutAnimator.setInterpolator(new LinearOutSlowInInterpolator());
