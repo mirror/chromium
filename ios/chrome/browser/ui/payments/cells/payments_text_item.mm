@@ -21,7 +21,7 @@ const CGFloat kHorizontalPadding = 16;
 // Padding of the top and bottom edges of the cell.
 const CGFloat kVerticalPadding = 16;
 
-// Spacing between the leadingImage and the text labels.
+// Spacing between the images and the text labels.
 const CGFloat kHorizontalSpacingBetweenImageAndLabels = 8;
 
 // Spacing between the labels.
