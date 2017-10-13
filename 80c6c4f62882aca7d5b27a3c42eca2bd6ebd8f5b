@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "5377bece_93f1fea3",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-13T16:42:06Z",
+      "side": 1,
+      "message": "I tried parsing the Display Descriptor 0xFB (\"3.10.3.5 Color Point \nDescriptor Definition\") and none of the EDID examples in \nedid_parser_unittest [1] have it. The patch is in \nhttps://paste.googleplex.com/4615811360620544\nif you want to take a peek.\n\nI could either add a TODO() to ParseGammaValue() (similar to [2])\nbut it might be hard to test since we have to edid from the\nfield having such extra coordinates :-/\n\n[1] https://cs.chromium.org/chromium/src/ui/display/util/edid_parser_unittest.cc?q\u003dedid_parser_unittest\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d27\n[2] https://cs.chromium.org/chromium/src/ui/display/util/edid_parser.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d331",
+      "parentUuid": "2ed6a53b_46b23938",
+      "revId": "80c6c4f62882aca7d5b27a3c42eca2bd6ebd8f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97607c1_10f3a855",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 7
