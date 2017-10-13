@@ -11,7 +11,6 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "mojo/public/cpp/system/message_pipe.h"
@@ -73,8 +72,6 @@ void RunStandaloneService(const StandaloneServiceCallback& callback) {
   if (command_line.HasSwitch(switches::kEnableSandbox))
     sandbox = InitializeSandbox();
 #endif
-
-  mojo::edk::Init();
 
   base::TaskScheduler::CreateAndStartWithDefaultParams("StandaloneService");
   base::Thread io_thread("io_thread");
