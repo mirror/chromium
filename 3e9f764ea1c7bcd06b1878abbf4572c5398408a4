@@ -70,6 +70,24 @@
       "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36455a00_87bdc2ec",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-13T04:18:03Z",
+      "side": 1,
+      "message": "At what point does the security_details_label_ get text? Do you get different results if you initialize it with text?",
+      "parentUuid": "852841c5_f24750ea",
+      "revId": "3e9f764ea1c7bcd06b1878abbf4572c5398408a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
