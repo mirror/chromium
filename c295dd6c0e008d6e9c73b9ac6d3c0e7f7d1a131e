@@ -246,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "dc140543_fb3526ff",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T20:05:46Z",
+      "side": 1,
+      "message": "\u003e If we implement it this way we would allow users to store ProtectedPtrs in long-lived structures. Since the pointers are stored in mutable memory an attacker could overwrite them.\n\nYeah, that\u0027s one downside. I suppose that one solution would be to move ProtectedPtr into an internal namespace. Then it would be an error for code to mention ProtectedPtr outside of the macro and the Protected{Memory,Array} implementation, effectively preventing you from storing it. (You could get around that with tricks like creative use of auto, but we probably don\u0027t need to be 100% perfect here.)\n\n\u003e If the issue is having function calls look natural, we could do what you\u0027re saying but have the macros construct a ProtectedPtr object only used for that single function call. In that case, we still have several macros, but the calls look natural.\n\nCan you give an example of what you mean?",
+      "parentUuid": "c3a697ca_b00d9825",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
