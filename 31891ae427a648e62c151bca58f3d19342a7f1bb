@@ -34,6 +34,24 @@
       "revId": "31891ae427a648e62c151bca58f3d19342a7f1bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b31f262_35ae3888",
+        "filename": "ash/wm/ash_focus_rules_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-13T18:21:16Z",
+      "side": 1,
+      "message": "Just to confirm before I send it to cq...\nAre you OK with keeping this as it is now? I can try to reshuffle code a little if you think that aura::client::ParentWindowWithContext would be better to use.\n\n(I think LockContainer is the only one that ParentWindowWithContext would not be able to properly handle).",
+      "parentUuid": "8745e58d_ec255b06",
+      "revId": "31891ae427a648e62c151bca58f3d19342a7f1bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
