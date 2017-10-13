@@ -182,3 +182,14 @@ source_set("struct_traits") {
     "//mojo/public/cpp/bindings:bindings",
   ]
 }
+
+source_set("gpu_preferences_util") {
+  sources = [
+    "gpu_preferences_util.cc",
+    "gpu_preferences_util.h",
+  ]
+  deps = [
+    ":interfaces",
+    "//gpu/command_buffer/service:service_sources",
+  ]
+}

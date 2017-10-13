@@ -160,7 +160,10 @@ target(link_target_type, "service_sources") {
   ]
 
   # Prefer mesa GL headers to system headers, which cause problems on Win.
-  include_dirs = [ "//third_party/mesa/src/include" ]
+  include_dirs = [
+    "//third_party/mesa/src/include",
+    "//gpu/ipc/common",
+  ]
 
   public_deps = [
     "//gpu/command_buffer/common:common_sources",
