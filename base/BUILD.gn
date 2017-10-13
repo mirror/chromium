@@ -1366,6 +1366,9 @@ component("base") {
   # Windows.
   if (is_win) {
     sources += [
+      "memory/swap_thrashing_monitor.cc",
+      "memory/swap_thrashing_monitor.h",
+      "memory/swap_thrashing_monitor_win.cc",
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
