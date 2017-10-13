@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "c3e3cf76_86e966e1",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-13T02:29:45Z",
+      "side": 1,
+      "message": "It\u0027s practically impossible to have two origins with exactly the same score, and the list ordering inside the content settings store isn\u0027t significant. :)",
+      "parentUuid": "5b33522f_882243ed",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ab865e_fee13dc8",
         "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
         "patchSetId": 5
