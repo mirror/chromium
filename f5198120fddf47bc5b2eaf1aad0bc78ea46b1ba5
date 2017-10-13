@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176ba613_ff98ae38",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "nit: check this in OnFileOpened() and set state to kError if file is invalid?",
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2f9b4e_59e58174",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "optional nit: else if?",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 4
+      },
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6b1d6f_1bf91f6c",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "Add a comment why we are not setting kError state, e.g. allow write.",
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fbab7c_d423de4d",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "optional nit: else if?",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 4
+      },
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a80887b_8c3b36e5",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 25
+      },
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd294f3_429b0bc9",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "At least in the case of write failure, we should not SetLength(0) to delete the file. How about we don\u0027t SetLength() in all failure cases, but return error to the client. Then we should add UMA here to see how often this happens. (Add a TODO here; UMA in a separate CL.)\n\nThen, you can just call PostWriteResult() here and return.",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d858157f_dcadfa32",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-13T00:09:15Z",
+      "side": 1,
+      "message": "Similarly, to be consistent, call PostWriteResult() here and return. Then you don\u0027t need |status|.",
+      "revId": "f5198120fddf47bc5b2eaf1aad0bc78ea46b1ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
