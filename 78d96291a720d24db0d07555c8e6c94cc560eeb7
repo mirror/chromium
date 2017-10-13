@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e20d3b20_9e2c56af",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-13T21:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d4ca51_3925faaa",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa9f71d_bdc1a0dc",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfff1fa_39fe50bc",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-13T21:26:09Z",
+      "side": 1,
+      "message": "Turns out I don\u0027t need it.",
+      "parentUuid": "baa9f71d_bdc1a0dc",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "998b7858_c43921b7",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-13T21:26:09Z",
+      "side": 1,
+      "message": "In your previous comment, you were concerned that the promise for getCupsPrinterModelList would run after the test had completed.  Is this the wrong way to do that?",
+      "parentUuid": "f8fc6612_7ad479a1",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69d057fc_63969d9f",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a334544_ac647a93",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-13T21:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d057fc_63969d9f",
+      "revId": "78d96291a720d24db0d07555c8e6c94cc560eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
