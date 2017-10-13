@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f99887_64abbcc6",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-13T20:25:37Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ (OTOH, I guess this doesn\u0027t matter much here, because the page state is rather opaque + I am not even sure if it would work here, because PageState doesn\u0027t seem to have a well-defined string representation).",
+      "range": {
+        "startLine": 950,
+        "startChar": 4,
+        "endLine": 950,
+        "endChar": 10
+      },
+      "revId": "80736c00df1b2d69491d8921bc0a45b58e2c4d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
