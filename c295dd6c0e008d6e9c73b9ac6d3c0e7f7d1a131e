@@ -140,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "705a8e64_f0cc9623",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T18:28:09Z",
+      "side": 1,
+      "message": "Thanks, I see what you are saying. My comment resulted from misunderstanding your parenthetical to pertain to the verb \"placed\" rather than \"overwritten\", so perhaps that could be less ambiguous.",
+      "parentUuid": "5ab1d883_2fa476ca",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a4573d6_9d08f20d",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 2
@@ -186,6 +204,24 @@
       "side": 1,
       "message": "Peter: So the problem is this won\u0027t work well with the follow-up ProtectedArray implementation. ProtectedArray stores a pointer to an array in the protected memory section, the array itself can\u0027t be stored there to avoid static initializers/initializers running on RO mem. There could be a separate implementation for ProtectedArray(Member|Fn)Call that does use macros while this one doesn\u0027t, but that seems less consistent. What do you think the best approach here is?",
       "parentUuid": "4a4573d6_9d08f20d",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f03b52b_148f2f5d",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-13T18:28:09Z",
+      "side": 1,
+      "message": "I see. After thinking about it for a while, I came up with this approach:\n\n1) define a ProtectedPtr template class, which would be a sort of smart pointer with an operator() that allows you to call the ProtectedPtr if it contains a function pointer. This operator() would replace the Protected*Call functions. Indexing into a ProtectedArray would return a ProtectedPtr, and ProtectedMemory would be implicitly convertible to ProtectedPtr.\n2) define a macro ProtectedMember that takes a ProtectedPtr to a struct and returns a ProtectedPtr to a given member of that struct. The macro definition would look like this:\n\n#define ProtectedMember(obj, mem) ProtectedPtr::internal_from_ptr(ProtectedPtr::internal_to_ptr(obj)-\u003emem)\n\nThis way, you only need one macro, and calls would look relatively natural. WDYT?",
+      "parentUuid": "99e70479_b0373d74",
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
