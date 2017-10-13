@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "0b99acdc_46fb3272",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "Set *out \u003d nullptr as the first line of this function.",
+      "range": {
+        "startLine": 63,
+        "startChar": 58,
+        "endLine": 63,
+        "endChar": 61
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5123ca55_3787ea5f",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "Nit: No linebreak above this line.",
+      "range": {
+        "startLine": 64,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "091c722b_e8ce3a7e",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 5
@@ -41,6 +87,99 @@
         "startChar": 1,
         "endLine": 75,
         "endChar": 14
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3e378e_79583c73",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "Just return the hr in this case.\nor\nreturn buffer_byte_access-\u003eBuffer(out)",
+      "parentUuid": "091c722b_e8ce3a7e",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 14
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f628304_568d7af7",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "S_FALSE should not be used as a failure code. This breaks the pattern for checking SUCCEEDED(hr) or FAILED(hr) from the caller.\n\nPropagate the error from WrlStaticsFactory.",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aada4d7_713772b0",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "This initialization is not necessary. COM functions are expected to initialize this to nullptr or the result.",
+      "range": {
+        "startLine": 95,
+        "startChar": 24,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee4861a_c22cc7a3",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "The helpers below should go in their own files.\n\ncore_winrt_util.h is intended to hold the Ro* family of functions. The WrlStaticsFactory can stay though.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 36
       },
       "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -117,6 +256,75 @@
     },
     {
       "key": {
+        "uuid": "e0819176_98cebbc2",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "Similarly to follow the COM parameter pattern, this should be \"IBuffer* buffer\".",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb31f37d_c5546a20",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "Maybe GetActivationFactory?",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 45
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581ea797_9a7b55bb",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "This should propagate the HRESULT of RoGetActivationFactory. Have this return be an outparam.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f86875c7_0787829e",
         "filename": "base/win/core_winrt_util.h",
         "patchSetId": 5
@@ -128,6 +336,30 @@
       "writtenOn": "2017-10-13T16:57:24Z",
       "side": 1,
       "message": "return FAILED(HR)? nullptr : com_ptr;\n\n?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "34f6040652d3a6a6997a5a14e6d3f53d938ba5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be560814_8b94fb07",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-13T17:29:23Z",
+      "side": 1,
+      "message": "or even clearer\nreturn SUCCEEDED(hr) ? com_ptr : nullptr",
+      "parentUuid": "f86875c7_0787829e",
       "range": {
         "startLine": 58,
         "startChar": 0,
