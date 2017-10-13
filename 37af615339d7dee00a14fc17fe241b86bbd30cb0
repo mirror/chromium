@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c854b4a_8d04c642",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4622,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-13T21:45:33Z",
+      "side": 1,
+      "message": "I\u0027d like creis@ to review this part. Enabling test bindings when WEB_UI is present seems very unusual to me.\n\nIf there\u0027s something test-only, could it be pushed into a test-only Observer? Ideally we wouldn\u0027t compile test-only logic into chrome_child.dll.",
+      "revId": "37af615339d7dee00a14fc17fe241b86bbd30cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
