@@ -46,6 +46,30 @@
       "revId": "24e5c55ff1e1ffa02ccbcd9dc4fcc014d0f32a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f5fa05_78c87c0b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-13T00:45:49Z",
+      "side": 1,
+      "message": "Let\u0027s just do:\n\nfor (const uint32_t : used_features())\n  if (feature \u003c kNumberOfFeatures)\n\n(This is what Tom suggested, but with if() instead of CHECK as it\u0027s possible feature was saved from by another Chrome installation)",
+      "parentUuid": "94b1912e_8cc0e536",
+      "range": {
+        "startLine": 890,
+        "startChar": 10,
+        "endLine": 890,
+        "endChar": 22
+      },
+      "revId": "24e5c55ff1e1ffa02ccbcd9dc4fcc014d0f32a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
