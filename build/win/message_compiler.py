@@ -46,6 +46,8 @@ def main():
   if sys.platform != 'win32':
     return
 
+  # NOP change to trigger re-running of build steps.
+
   # On Windows, run mc.exe on the input and check that its outputs are
   # identical to the checked-in outputs.
 
