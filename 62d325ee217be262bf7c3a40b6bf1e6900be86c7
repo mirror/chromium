@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d2934fa_fe0f3b16",
+        "filename": "chrome/browser/android/digital_asset_links/digital_asset_links_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-13T16:39:22Z",
+      "side": 1,
+      "message": "+1 to helpful comments!",
+      "range": {
+        "startLine": 74,
+        "startChar": 31,
+        "endLine": 74,
+        "endChar": 64
+      },
+      "revId": "62d325ee217be262bf7c3a40b6bf1e6900be86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
