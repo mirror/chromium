@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25185b0f_0336efd2",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-13T16:39:53Z",
+      "side": 1,
+      "message": "This is probably not the best place for the code block because the screen layout is not changed directly here. IMHO, we should move it to setMDMode_ where layout change happens.",
+      "revId": "41ccf9f2bd8a3ebc9afe59f38ab8de23c4d2529e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
