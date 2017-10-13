@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89a6290b_5d1ba323",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-13T19:21:06Z",
+      "side": 1,
+      "message": "aw can refactor this to get scroll directly from scroll manager, or from its compositor stuff. there is no need to expose this through content",
+      "revId": "aa61bbf4c8b302739f5272a36ce5dab929b938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dca8451_d42ad132",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-13T19:21:06Z",
+      "side": 1,
+      "message": "it should be fine to save this from the current WindowAndroid",
+      "revId": "aa61bbf4c8b302739f5272a36ce5dab929b938c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
