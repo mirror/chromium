@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5516310d_ee0fde87",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "Not used. Can be removed.",
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc9898f3_bc85495a",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 9
@@ -19,6 +36,23 @@
         "endLine": 25,
         "endChar": 23
       },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b421fecc_49ad8a58",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "It is called EXTERNAL_SIZE but actually is used to generate content for the local server. Maybe we should rename it to DOWNLOAD_SIZE.",
       "revId": "9f98033645a61e042c6716803cece13094da74e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +151,29 @@
     },
     {
       "key": {
+        "uuid": "1c72d98e_a8a5c99c",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "These strings look very similar. Can we generate an NSString once and convert it to C-string for LOG(INFO)?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "051572b6_50a97061",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 9
@@ -163,6 +220,52 @@
     },
     {
       "key": {
+        "uuid": "1632c087_47d70841",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "If we know the size in advance, we should test that it is equal to the size received; otherwise, it can become very misleading if the size changes in the future. I would suggest not to make the assumption about the response size but instead print the actual size once.",
+      "range": {
+        "startLine": 165,
+        "startChar": 33,
+        "endLine": 165,
+        "endChar": 37
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765a359b_bab24e1f",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "Looks like duplication of code in StartDataTaskAndWaitForCompletion(task). Maybe we can add an overloaded method that allows to specify the whether to crash on failure and allows passing the timeout. I think we should specify a reasonable timeout.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 28
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9359e4ed_96816982",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 9
@@ -179,6 +282,29 @@
         "startChar": 7,
         "endLine": 194,
         "endChar": 16
+      },
+      "revId": "9f98033645a61e042c6716803cece13094da74e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da947560_f2cff574",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-13T21:21:54Z",
+      "side": 1,
+      "message": "Should we mark the test as failed (i.e. not to terminate it) if a request has failed? Maybe if we connect to an internal server, we should not tolerate any failures. For the external server we can fail the test if half of the request failed.",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 25
       },
       "revId": "9f98033645a61e042c6716803cece13094da74e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
