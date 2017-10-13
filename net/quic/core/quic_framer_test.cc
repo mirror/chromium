@@ -5650,10 +5650,8 @@ TEST_P(QuicFramerTest, FramerFuzzTest) {
 }
 
 TEST_P(QuicFramerTest, StartsWithChlo) {
-  EXPECT_FALSE(framer_.HasDataProducer());
   SimpleDataProducer producer;
   framer_.set_data_producer(&producer);
-  EXPECT_TRUE(framer_.HasDataProducer());
   QuicStringPiece data("CHLOCHLO");
   struct iovec iovec;
   iovec.iov_base = const_cast<char*>(data.data());

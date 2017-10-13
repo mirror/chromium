@@ -315,14 +315,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   // to ciphertext no larger than |ciphertext_size|.
   size_t GetMaxPlaintextSize(size_t ciphertext_size);
 
-  // Let data_producer_ save |data_length| data starts at |iov_offset| in |iov|.
-  // TODO(fayang): Remove this method when data is saved before it is consumed.
-  void SaveStreamData(QuicStreamId id,
-                      QuicIOVector iov,
-                      size_t iov_offset,
-                      QuicStreamOffset offset,
-                      QuicByteCount data_length);
-
   const std::string& detailed_error() { return detailed_error_; }
 
   // The minimum packet number length required to represent |packet_number|.
@@ -335,9 +327,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
     supported_versions_ = versions;
     transport_version_ = versions[0];
   }
-
-  // Returns true if data_producer_ is not null.
-  bool HasDataProducer() const { return data_producer_ != nullptr; }
 
   // Returns true if data with |offset| of stream |id| starts with 'CHLO'.
   bool StartsWithChlo(QuicStreamId id, QuicStreamOffset offset) const;
@@ -558,7 +547,7 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   DiversificationNonce last_nonce_;
 
   // If not null, framer asks data_producer_ to write stream frame data. Not
-  // owned.
+  // owned. TODO(fayang): Consider add data producer to framer's constructor.
   QuicStreamFrameDataProducer* data_producer_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicFramer);

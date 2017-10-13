@@ -119,10 +119,8 @@ class StatelessConnectionTerminator {
   }
 
   ~StatelessConnectionTerminator() {
-    if (framer_->HasDataProducer()) {
-      // Clear framer's producer.
-      framer_->set_data_producer(nullptr);
-    }
+    // Clear framer's producer.
+    framer_->set_data_producer(nullptr);
   }
 
   // Generates a packet containing a CONNECTION_CLOSE frame specifying
@@ -153,9 +151,7 @@ class StatelessConnectionTerminator {
     iovec.iov_len = reject.length();
     QuicIOVector iov(&iovec, 1, iovec.iov_len);
     QuicStreamOffset offset = 0;
-    if (framer_->HasDataProducer()) {
-      collector_.SaveStatelessRejectFrameData(iov, 0, reject.length());
-    }
+    collector_.SaveStatelessRejectFrameData(iov, 0, reject.length());
     while (offset < iovec.iov_len) {
       QuicFrame frame;
       UniqueStreamBuffer data;
