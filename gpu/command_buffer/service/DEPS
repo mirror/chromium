@@ -1,5 +1,6 @@
 include_rules = [
   "+cc/paint",
+  "+gpu/ipc/common/gpu_preferences_struct_straits.h",
   "+media/media_features.h",
   "+third_party/skia",
 ]
