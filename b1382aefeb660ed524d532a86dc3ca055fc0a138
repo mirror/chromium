@@ -46,6 +46,30 @@
       "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312da8ec_1841c8eb",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-13T22:52:01Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be possible for the value of GetExecutionContext() to change while ComputeTrackedIntersectionObservations is running.  That would be exceedingly strange, and I wouldn\u0027t want to paper over it with an early return.\n\nThe existing early return at the top of ComputeTrackedIntersectionObservations should be sufficient; anything else should be CHECK (if you are actively debugging a crash) or DCHECK (for paranoia).",
+      "parentUuid": "ac77b591_e92e70e2",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 26
+      },
+      "revId": "b1382aefeb660ed524d532a86dc3ca055fc0a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
