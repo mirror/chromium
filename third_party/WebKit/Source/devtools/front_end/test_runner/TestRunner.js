@@ -506,13 +506,15 @@ TestRunner.addStylesheetTag = function(path) {
 
 /**
  * @param {string} path
+ * @param {!Object=} options
  * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
-TestRunner.addIframe = function(path) {
+TestRunner.addIframe = function(path, options = {}) {
   return TestRunner.evaluateInPageAsync(`
     (function(){
       var iframe = document.createElement('iframe');
       iframe.src = '${path}';
+      iframe.name = '${options.name}';
       document.body.appendChild(iframe);
       return new Promise(f => iframe.onload = f);
     })();
@@ -1045,7 +1047,8 @@ TestRunner.MockSetting = class {
  * @return {!Array<!Runtime.Module>}
  */
 TestRunner.loadedModules = function() {
-  return self.runtime._modules.filter(module => module._loadedForTest);
+  return self.runtime._modules.filter(module => module._loadedForTest)
+      .filter(module => module.name().indexOf('test_runner') === -1);
 };
 
 /**
@@ -1167,6 +1170,24 @@ TestRunner.dumpSyntaxHighlight = function(str, mimeType) {
 
     TestRunner.addResult(str + ': ' + node_parts.join(', '));
   }
+};
+
+/**
+ * @param {string} messageType
+ */
+TestRunner._consoleOutputHook = function(messageType) {
+  TestRunner.addResult(messageType + ': ' + Array.prototype.slice.call(arguments, 1));
+};
+
+/**
+ * This monkey patches console functions in DevTools context so the console
+ * messages are shown in the right places, instead of having all of the console
+ * messages printed at the top of the test expectation file (default behavior).
+ */
+TestRunner.printDevToolsConsole = function() {
+  console.log = TestRunner._consoleOutputHook.bind(TestRunner, 'log');
+  console.error = TestRunner._consoleOutputHook.bind(TestRunner, 'error');
+  console.info = TestRunner._consoleOutputHook.bind(TestRunner, 'info');
 };
 
 /** @type {boolean} */
