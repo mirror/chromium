@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "05a47a3e_571ac3f6",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "I believe this addresses the first part of this TODO.",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083cce18_4a6232ae",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "before this, add:\ninfo-\u003epermissions.reserve(messages.size());",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b86e735_69554e52",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "permission_message.submessages.reserve(message.submessages());",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971f68b9_8b7dbd4b",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "this makes a copy of each submessage - prefer const auto\u0026",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b910f6_1f17617e",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "We could actually avoid this move by constructing the PermissionMessage in place at be beginning of the loop.\ninfo-\u003epermissions.push_back(developer::PermissionMessage());\ndeveloper::PermissionMessage\u0026 permission_message \u003d info-\u003epermissions.back();",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ba39cd_d3f8f7d1",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -70,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "b960d562_1b5a1536",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "Permission sgtm, too - especially because it has subfields with \"message\" in the name.",
+      "parentUuid": "527aca2d_7423eeda",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc2a56b3_64081bf5",
         "filename": "third_party/closure_compiler/externs/developer_private.js",
         "patchSetId": 2
@@ -81,6 +184,24 @@
       "writtenOn": "2017-10-13T17:53:10Z",
       "side": 1,
       "message": "Had not realized that we publicly document our private APIs. Interesting.",
+      "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "322ac785_653f9da1",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T18:01:58Z",
+      "side": 1,
+      "message": "It depends on the private API.  This one we happen to.  Regardless, we actually generate @see links for all of them, because the extern generator doesn\u0027t know which are documented and which aren\u0027t.",
+      "parentUuid": "bc2a56b3_64081bf5",
       "revId": "e66f62b67511f13d59f69c57b536618ea61eecec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
