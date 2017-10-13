@@ -2852,6 +2852,18 @@
             ]
         }
     ],
+    "SRTExperimentalEngineTrial": [
+        {
+            "platforms": [
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "NewCleaner_Launch"
+                }
+            ]
+        }
+    ],
     "SRTPromptFieldTrial": [
         {
             "platforms": [
