@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "85a26903_0db5ce03",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:29:01Z",
+      "side": 1,
+      "message": "See above comment on MPR being a WCO",
+      "parentUuid": "399c7198_13c817a9",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36ea9fe2_cc5afca4",
         "filename": "content/browser/media/android/media_player_renderer.cc",
         "patchSetId": 6
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-13T22:21:39Z",
       "side": 1,
       "message": "1. Should the player be muted if there is no WebContents instance?\n\n2. Is it possible for |web_contents| to ever be null? If not, just put this in the initializer list and remove the guards. Maybe add a DCHECK(web_contents) as a statement of this assumption.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131a6d8f_e97d89a4",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:29:01Z",
+      "side": 1,
+      "message": "1. Good question, not really sure what we should do in that case\n\n2. This was discussed in a previous patch, and we decided that it could happen and there wasn\u0027t much harm in leaving the guard either way",
+      "parentUuid": "36ea9fe2_cc5afca4",
       "range": {
         "startLine": 44,
         "startChar": 2,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ec624d16_bd1acacf",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:29:01Z",
+      "side": 1,
+      "message": "Whatever we decide to do for your question 1 above, we should likely do here as well",
+      "parentUuid": "888a79bb_c829c90a",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 35
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdbf27c0_7ae80352",
         "filename": "content/browser/media/android/media_player_renderer.h",
         "patchSetId": 6
@@ -105,6 +177,30 @@
       "writtenOn": "2017-10-13T22:21:39Z",
       "side": 1,
       "message": "Suggest making this subclass WebContentsObserver instead of having the separate observer class. See other comments for more discussion.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 75
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e55eafa_45fd0cf6",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:29:01Z",
+      "side": 1,
+      "message": "I had experimented with this here: crrev.com/c/713758, but after some discussion it was determined that we don\u0027t want to create n WCOs for n MPRs",
+      "parentUuid": "cdbf27c0_7ae80352",
       "range": {
         "startLine": 41,
         "startChar": 0,
@@ -137,6 +233,30 @@
       "revId": "9a478029ba99c25840fb6dde05428983de921b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f960dc_c7cdd34b",
+        "filename": "content/browser/media/android/media_player_renderer_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-13T22:29:01Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "33b35bdf_8263ce55",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 74
+      },
+      "revId": "9a478029ba99c25840fb6dde05428983de921b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
