@@ -11567,8 +11567,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="389" label="DeviceNativePrintersWhitelist"/>
   <int value="390" label="TPMFirmwareUpdateSettings"/>
   <int value="391" label="RunAllFlashInAllowMode"/>
-  <int value="392" label="AutoFillCreditCardEnabled"/>
-  <int value="393" label="AllowUserAvatarVideos"/>
+  <int value="392" label="AutofillCreditCardEnabled"/>
+  <int value="393" label="DeviceUserAvatarSettings"/>
+  <int value="394" label="MinimumAllowedChromeVersion"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
