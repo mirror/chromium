@@ -24,6 +24,7 @@ class GaiaAuthFetcher;
 class GoogleServiceAuthError;
 class SigninClient;
 class SigninManager;
+class PrefService;
 class ProfileOAuth2TokenService;
 class Profile;
 
@@ -55,7 +56,8 @@ class DiceResponseHandler : public KeyedService {
                       SigninManager* signin_manager,
                       ProfileOAuth2TokenService* profile_oauth2_token_service,
                       AccountTrackerService* account_tracker_service,
-                      AccountReconcilor* account_reconcilor);
+                      AccountReconcilor* account_reconcilor,
+                      PrefService* profile_prefs);
   ~DiceResponseHandler() override;
 
   // Must be called when receiving a Dice response header.
@@ -142,6 +144,7 @@ class DiceResponseHandler : public KeyedService {
   ProfileOAuth2TokenService* token_service_;
   AccountTrackerService* account_tracker_service_;
   AccountReconcilor* account_reconcilor_;
+  PrefService* profile_prefs_;
   std::vector<std::unique_ptr<DiceTokenFetcher>> token_fetchers_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceResponseHandler);

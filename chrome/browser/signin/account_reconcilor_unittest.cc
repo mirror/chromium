@@ -57,7 +57,8 @@ class MockAccountReconcilor : public testing::StrictMock<AccountReconcilor> {
   MockAccountReconcilor(ProfileOAuth2TokenService* token_service,
                         SigninManagerBase* signin_manager,
                         SigninClient* client,
-                        GaiaCookieManagerService* cookie_manager_service);
+                        GaiaCookieManagerService* cookie_manager_service,
+                        PrefService* profile_prefs);
   ~MockAccountReconcilor() override {}
 
   MOCK_METHOD1(PerformMergeAction, void(const std::string& account_id));
@@ -72,7 +73,8 @@ std::unique_ptr<KeyedService> MockAccountReconcilor::Build(
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       SigninManagerFactory::GetForProfile(profile),
       ChromeSigninClientFactory::GetForProfile(profile),
-      GaiaCookieManagerServiceFactory::GetForProfile(profile)));
+      GaiaCookieManagerServiceFactory::GetForProfile(profile),
+      profile->GetPrefs()));
   reconcilor->Initialize(false /* start_reconcile_if_tokens_available */);
   return std::move(reconcilor);
 }
@@ -81,11 +83,13 @@ MockAccountReconcilor::MockAccountReconcilor(
     ProfileOAuth2TokenService* token_service,
     SigninManagerBase* signin_manager,
     SigninClient* client,
-    GaiaCookieManagerService* cookie_manager_service)
+    GaiaCookieManagerService* cookie_manager_service,
+    PrefService* profile_prefs)
     : testing::StrictMock<AccountReconcilor>(token_service,
                                              signin_manager,
                                              client,
-                                             cookie_manager_service) {}
+                                             cookie_manager_service,
+                                             profile_prefs) {}
 
 }  // namespace
 
@@ -666,7 +670,7 @@ INSTANTIATE_TEST_CASE_P(DiceTable,
 // Tests that the AccountReconcilor is enabled when Dice is enabled.
 TEST_F(AccountReconcilorTest, EnabledWithDice) {
   signin::ScopedAccountConsistencyDice scoped_dice;
-  ASSERT_TRUE(signin::IsAccountConsistencyDiceEnabled());
+  ASSERT_TRUE(signin::IsAccountConsistencyDiceAvailable());
   AccountReconcilor* reconcilor =
       AccountReconcilorFactory::GetForProfile(profile());
   ASSERT_TRUE(reconcilor);

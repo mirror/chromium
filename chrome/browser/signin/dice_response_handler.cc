@@ -20,6 +20,7 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
+#include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_client.h"
@@ -106,7 +107,7 @@ class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
         SigninManagerFactory::GetForProfile(profile),
         ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
         AccountTrackerServiceFactory::GetForProfile(profile),
-        AccountReconcilorFactory::GetForProfile(profile));
+        AccountReconcilorFactory::GetForProfile(profile), profile->GetPrefs());
   }
 };
 
@@ -146,7 +147,7 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
           base::Bind(&DiceResponseHandler::DiceTokenFetcher::OnTimeout,
                      base::Unretained(this))) {
   DCHECK(dice_response_handler_);
-  if (signin::IsAccountConsistencyDiceEnabled()) {
+  if (signin::IsAccountConsistencyDiceAvailable()) {
     account_reconcilor_lock_ =
         base::MakeUnique<AccountReconcilor::Lock>(account_reconcilor);
   }
@@ -204,17 +205,20 @@ DiceResponseHandler::DiceResponseHandler(
     SigninManager* signin_manager,
     ProfileOAuth2TokenService* profile_oauth2_token_service,
     AccountTrackerService* account_tracker_service,
-    AccountReconcilor* account_reconcilor)
+    AccountReconcilor* account_reconcilor,
+    PrefService* profile_prefs)
     : signin_manager_(signin_manager),
       signin_client_(signin_client),
       token_service_(profile_oauth2_token_service),
       account_tracker_service_(account_tracker_service),
-      account_reconcilor_(account_reconcilor) {
+      account_reconcilor_(account_reconcilor),
+      profile_prefs_(profile_prefs) {
   DCHECK(signin_client_);
   DCHECK(signin_manager_);
   DCHECK(token_service_);
   DCHECK(account_tracker_service_);
   DCHECK(account_reconcilor_);
+  DCHECK(profile_prefs_);
 }
 
 DiceResponseHandler::~DiceResponseHandler() {}
@@ -252,7 +256,7 @@ size_t DiceResponseHandler::GetPendingDiceTokenFetchersCountForTesting() const {
 
 bool DiceResponseHandler::CanGetTokenForAccount(const std::string& gaia_id,
                                                 const std::string& email) {
-  if (signin::IsAccountConsistencyDiceEnabled())
+  if (signin::IsAccountConsistencyDiceAvailable())
     return true;
 
   // When using kDiceFixAuthErrors, only get a token if the account matches
@@ -302,7 +306,7 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
     const std::vector<std::string>& emails) {
   DCHECK_EQ(gaia_ids.size(), emails.size());
   VLOG(1) << "Start processing Dice signout response";
-  if (!signin::IsAccountConsistencyDiceEnabled()) {
+  if (!signin::IsAccountConsistencyDiceAvailable()) {
     // Ignore signout responses when using kDiceFixAuthErrors.
     DCHECK_EQ(signin::AccountConsistencyMethod::kDiceFixAuthErrors,
               signin::GetAccountConsistencyMethod());
@@ -318,6 +322,11 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
         account_tracker_service_->PickAccountIdForAccount(gaia_ids[i],
                                                           emails[i]);
     if (signed_out_account == current_account) {
+      // If Dice is available but not enabled, the token for the main account
+      // may not be deleted when signing out of the web.
+      if (!signin::IsAccountConsistencyDiceEnabledForProfile(profile_prefs_))
+        continue;
+
       VLOG(1) << "[Dice] Signing out all accounts.";
       RecordDiceResponseHeader(kSignoutPrimary);
       signin_manager_->SignOutAndRemoveAllAccounts(

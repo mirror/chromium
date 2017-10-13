@@ -10,8 +10,16 @@
 #include "base/logging.h"
 #include "base/metrics/field_trial_params.h"
 #include "build/build_config.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
 #include "components/signin/core/common/signin_features.h"
 #include "components/signin/core/common/signin_switches.h"
+
+namespace {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+const char kDiceEnabledPref[] = "signin.DiceEnabled";
+#endif
+}
 
 namespace signin {
 
@@ -22,7 +30,15 @@ const char kAccountConsistencyFeatureMethodParameter[] = "method";
 const char kAccountConsistencyFeatureMethodMirror[] = "mirror";
 const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[] =
     "dice_fix_auth_errors";
+const char kAccountConsistencyFeatureMethodDiceAvailable[] = "dice_available";
 const char kAccountConsistencyFeatureMethodDice[] = "dice";
+
+void RegisterAccountConsistentyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+  registry->RegisterBooleanPref(kDiceEnabledPref, false);
+#endif
+}
 
 AccountConsistencyMethod GetAccountConsistencyMethod() {
 #if BUILDFLAG(ENABLE_MIRROR)
@@ -40,6 +56,8 @@ AccountConsistencyMethod GetAccountConsistencyMethod() {
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   else if (method_value == kAccountConsistencyFeatureMethodDiceFixAuthErrors)
     return AccountConsistencyMethod::kDiceFixAuthErrors;
+  else if (method_value == kAccountConsistencyFeatureMethodDiceAvailable)
+    return AccountConsistencyMethod::kDiceAvailable;
   else if (method_value == kAccountConsistencyFeatureMethodDice)
     return AccountConsistencyMethod::kDice;
 #endif
@@ -52,13 +70,27 @@ bool IsAccountConsistencyMirrorEnabled() {
   return GetAccountConsistencyMethod() == AccountConsistencyMethod::kMirror;
 }
 
-bool IsAccountConsistencyDiceEnabled() {
-  return (GetAccountConsistencyMethod() == AccountConsistencyMethod::kDice);
+bool IsAccountConsistencyDiceAvailable() {
+  return (GetAccountConsistencyMethod() ==
+          AccountConsistencyMethod::kDiceAvailable) ||
+         (GetAccountConsistencyMethod() == AccountConsistencyMethod::kDice);
+}
+
+bool IsAccountConsistencyDiceEnabledForProfile(PrefService* profile_prefs) {
+  DCHECK(profile_prefs);
+  return IsAccountConsistencyDiceAvailable() &&
+         profile_prefs->GetBoolean(kDiceEnabledPref);
+}
+
+void EnableAccountConsistencyDiceForProfile(PrefService* profile_prefs) {
+  DCHECK(IsAccountConsistencyDiceAvailable());
+  profile_prefs->SetBoolean(kDiceEnabledPref, true);
 }
 
 bool IsDiceFixAuthErrorsEnabled() {
   AccountConsistencyMethod method = GetAccountConsistencyMethod();
   return (method == AccountConsistencyMethod::kDiceFixAuthErrors) ||
+         (method == AccountConsistencyMethod::kDiceAvailable) ||
          (method == AccountConsistencyMethod::kDice);
 }
 

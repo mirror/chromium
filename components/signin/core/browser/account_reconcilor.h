@@ -29,6 +29,7 @@
 #include "google_apis/gaia/google_service_auth_error.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 
+class PrefService;
 class ProfileOAuth2TokenService;
 class SigninClient;
 
@@ -77,7 +78,8 @@ class AccountReconcilor : public KeyedService,
   AccountReconcilor(ProfileOAuth2TokenService* token_service,
                     SigninManagerBase* signin_manager,
                     SigninClient* client,
-                    GaiaCookieManagerService* cookie_manager_service);
+                    GaiaCookieManagerService* cookie_manager_service,
+                    PrefService* profile_prefs);
   ~AccountReconcilor() override;
 
   void Initialize(bool start_reconcile_if_tokens_available);
@@ -240,6 +242,8 @@ class AccountReconcilor : public KeyedService,
   // The GaiaCookieManagerService associated with this reconcilor.
   GaiaCookieManagerService* cookie_manager_service_;
 
+  PrefService* profile_prefs_;
+
   bool registered_with_token_service_;
   bool registered_with_cookie_manager_service_;
   bool registered_with_content_settings_;
@@ -254,6 +258,8 @@ class AccountReconcilor : public KeyedService,
 
   // True iff an error occured during the last attempt to reconcile.
   bool error_during_last_reconcile_;
+
+  bool reconcile_is_noop_;
 
   // Used during reconcile action.
   // These members are used to validate the gaia cookie.  |gaia_accounts_|
