@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997b402d_ee54d731",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "stops",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448430c2_fec5be38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "whitespaces",
+      "range": {
+        "startLine": 20,
+        "startChar": 47,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c3ed21_7b97de44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "recognize",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8954ad54_b671eb5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcbcfbe_fc7ad8d8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "|DCHECK(layout_object-\u003eCanBeSelectionLeaf())| is better.",
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90038714_0ba04c3e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 2101,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T09:11:06Z",
+      "side": 1,
+      "message": "Note: CanBeSelectionLeafInternal() is used as whitelist. Classes overrides\nthis member can be selection leaf.\n\nSummary:\nLayoutButton - text content of BUTTON are selection leaf but BUTTON itself isn\u0027t selection leaf\nLayoutCounter - should not be selection leaf since it is generate content\nLayoutEmbeddedContent - ?\nLayoutImage - should be selection leaf\nLayoutListMarker - should not be selection leaf since it is generate content\nLayoutReplaced - default to false\nLayoutText - can be selection leaf\nLayoutSVGRoot - default to false",
+      "revId": "0907fe5b08034c80434c0652bec8ec268e46ed32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
