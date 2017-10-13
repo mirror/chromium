@@ -132,6 +132,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/WebKit/public/platform/WebSecurityStyle.h"
+#include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/accessibility/ax_tree_combiner.h"
@@ -700,6 +701,15 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     }
   }
 
+  // Apply required sanbox flags if creating a presentation.
+  if (params.is_presentation_receiver ||
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForcePresentationReceiverForTesting)) {
+    new_root->SetPendingSandboxFlags(new_root->pending_sandbox_flags() |
+                                     blink::kPresentationReceiverSandboxFlags);
+    new_root->CommitPendingFramePolicy();
+  }
+
   // This may be true even when opener is null, such as when opening blocked
   // popups.
   if (params.created_with_opener)
@@ -713,6 +723,7 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     // bit to true.
     new_contents->is_subframe_ = true;
   }
+
   new_contents->Init(params);
   return new_contents;
 }
