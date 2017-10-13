@@ -143,4 +143,11 @@ void WaylandPointer::Axis(void* data,
   pointer->callback_.Run(&event);
 }
 
+void WaylandPointer::OnModifiersUpdated(uint8_t modifiers) {
+  // Remove old modifiers from flags and then update them with new modifiers.
+  flags_ &= ~modifiers_;
+  modifiers_ = modifiers;
+  flags_ |= modifiers_;
+}
+
 }  // namespace ui
