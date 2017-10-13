@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882c6fe4_f0aa0d5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T08:49:59Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 12
+      },
+      "revId": "0751560bc867f06e34a35b7cf2829bce9ce076d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb7dbb1_3b784c5b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T08:49:59Z",
+      "side": 1,
+      "message": "Is this only used to shorten the output message? Then I would maybe just inline it on line 199. You don\u0027t need the check at line 188, that\u0027s done automatically in substr().",
+      "range": {
+        "startLine": 189,
+        "startChar": 44,
+        "endLine": 189,
+        "endChar": 60
+      },
+      "revId": "0751560bc867f06e34a35b7cf2829bce9ce076d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e85f2c_d7bf34d6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T08:49:59Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 192,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 26
+      },
+      "revId": "0751560bc867f06e34a35b7cf2829bce9ce076d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
