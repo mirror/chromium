@@ -619,15 +619,9 @@ static inline void SetLogicalWidthForTextRun(
 
   // Negative word-spacing and/or letter-spacing may cause some glyphs to
   // overflow the left boundary and result negative measured width. Reset
-  // measured width to 0 and adjust glyph bounds accordingly to cover the
-  // overflow.
-  if (measured_width < 0) {
-    if (measured_width < glyph_bounds.X()) {
-      glyph_bounds.Expand(glyph_bounds.X() - measured_width, 0);
-      glyph_bounds.SetX(measured_width);
-    }
+  // measured width to 0.
+  if (measured_width < 0)
     measured_width = 0;
-  }
 
   glyph_overflow.SetFromBounds(glyph_bounds, font, measured_width);
 
