@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ae43c69_713be3a9",
+        "filename": "components/arc/arc_instance_mode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "nit/optional: calling another overloaded operator from here may be a bit confusing. Can we have a separate printer function and have the two operator\u003c\u003c()s call into it? If you think that doesn\u0027t improve the clarity of the code, the current code is also fine.",
+      "range": {
+        "startLine": 30,
+        "startChar": 29,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dee016_a4086434",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "nit: redundant",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f7611dd_d34a9a56",
         "filename": "components/arc/arc_session.cc",
         "patchSetId": 1
@@ -13,6 +59,92 @@
       "writtenOn": "2017-10-13T08:05:37Z",
       "side": 1,
       "message": "Note: I\u0027m thinking to refactor here in a following CL, so please let me keep this minimum change.",
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606fae7f_7a8a04c1",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "Using both |target_mode| and |target_mode_| seems confusing. Can you pick a better name for this?\n\n|original_target_mode| with a clarifying comment, or |target_mode_sent_to_session_manager|, or ...",
+      "range": {
+        "startLine": 392,
+        "startChar": 55,
+        "endLine": 392,
+        "endChar": 66
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff54f82_5817c014",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "As before, this function crashes with DCHECK if e.g. you call Start(MINI) while a FULL instance is already running, right? How about this:\n\n1) Move IsRequestAllowed() from ASR to AS as a public (and maybe static) member function.\n2) Here, just say that you can call the function when IsRequestAllowed() returns true for the |request_mode|.",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2eca72_9d43d4a0",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "Can you mention what base::nullopt return means?",
+      "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b0c659_d2de4b65",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-13T18:04:17Z",
+      "side": 1,
+      "message": "Can you add ShouldNotifyObservers() function and use switch-case in the function for extra safety? \u0027\u003d\u003d FULL\u0027 will be irrelevant once we add more INSTANCE (like the one for enterprise.)",
+      "range": {
+        "startLine": 228,
+        "startChar": 36,
+        "endLine": 228,
+        "endChar": 69
+      },
       "revId": "20b3e4136a48109db3f42f255d57bdbfa4ec242d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
