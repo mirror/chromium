@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eb69458_421fc2c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T04:53:12Z",
+      "side": 1,
+      "message": "Could you mention ::first-letter in description since \"remaining text\" is\nnot popular term other than context of ::first-letter.",
+      "revId": "95bb5393172ccfb921bf80e17bfeba6e5bf4bb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815a3bc0_8191bd52",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-13T04:53:12Z",
+      "side": 1,
+      "message": "How about using |std::max(0, current_pos.OffsetInLeafNode() - 1)| instead\nof adding additional parameter?",
+      "revId": "95bb5393172ccfb921bf80e17bfeba6e5bf4bb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
