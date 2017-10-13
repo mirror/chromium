@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af93db98_b6661e91",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T18:09:09Z",
+      "side": 1,
+      "message": "Do you know when Query.currentPromise might be rejected? Should there be some logging or something here?",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd714f5b_ac358ebe",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T18:09:09Z",
+      "side": 1,
+      "message": "Possible change:\n`line.indexOf(textFilter) !\u003d -1` could be replaced with line.includes(textFilter)",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da767e1_695df7be",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-13T18:09:09Z",
+      "side": 1,
+      "message": "Note, just looking at the docs for setTimeout, if the delay parameter is omitted, it\u0027s 0 by default, so the 0 could optionally be omitted here.",
+      "revId": "a87ae06a2bd92b44a41d5e88f6d5ff2a1a8ef498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
