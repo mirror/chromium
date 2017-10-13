@@ -22,6 +22,30 @@
       "revId": "3952e04943ce33b699b2987d4019ed11513a7969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7342006e_b9520634",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-13T20:05:45Z",
+      "side": 1,
+      "message": "The only case I can think of is translate, and they have their own custom logic.",
+      "parentUuid": "b98e2364_a9fea0dd",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "3952e04943ce33b699b2987d4019ed11513a7969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
