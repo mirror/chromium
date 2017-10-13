@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d2dac37b_81f61c78",
+        "filename": "ash/system/power/power_button_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T18:55:37Z",
+      "side": 1,
+      "message": "Correctness: \"Lock button only exists on convertible devices that can enter tablet mode, with exception like eve.\"",
+      "parentUuid": "c64c05fe_a3096025",
+      "revId": "f0059ee217addb78954949b54e1eab0e7751dd50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9e82c28_9f39dca6",
         "filename": "ash/system/power/power_button_controller.h",
         "patchSetId": 7
