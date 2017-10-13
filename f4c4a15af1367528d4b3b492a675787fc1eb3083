@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2211e70a_63d03e6d",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-13T21:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf9fb6d_303836cc",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f801f77_e06945ab",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df022759_320477c6",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-13T21:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f801f77_e06945ab",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +125,24 @@
       "side": 1,
       "message": "If we are going to use types outside of this file, it would be nice to:\n1) Add comments at the definitions of those types, saying that non-backward-compat changes to those types will require forking them, and pointing people to here.\n\n2) For each of those types, have a separate unittest to deserialize (from stored bytes) and verify all fields have expected values.\n\nUsing a \"fork-on-write\" approach slows down people touching those types, but at least with (1)\u0026(2) we are less likely to have compatibility issues in the field.\n\nWDYT? Thanks!",
       "parentUuid": "0375db7b_995642f2",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e623a7_ba1b843e",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-13T21:21:19Z",
+      "side": 1,
+      "message": "Daniel, I drew the line at native vs not native, which is why I retained string16 and Url but not Time. This seemed like the most obvious line to draw at the time based on what Yuzhu said about these structs likely being converted in the near future. \n\nWRT 2), the PageStateSerializationTest.BackwardsCompat_V26 already deserializes every field from stored bytes and verifies values. I can add a test that does this separately for fields with an external definition, but I\u0027m not sure how much extra value that adds over the existing test.\n\nI am happy to do #1. I\u0027ve added my first attempt at such a comment to the relevant files, but I\u0027m not sure what action I should recommend to future authors who want to make a backwards-incompatible change.",
+      "parentUuid": "83f3cb7a_b5ece079",
       "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
