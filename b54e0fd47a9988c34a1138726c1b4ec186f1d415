@@ -16,6 +16,24 @@
       "revId": "b54e0fd47a9988c34a1138726c1b4ec186f1d415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cc414d_07d4ce47",
+        "filename": "third_party/WebKit/Source/platform/wtf/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-13T12:30:19Z",
+      "side": 1,
+      "message": "I will take a look. It looked very hard when I first looked at it, but when I check the source again I don\u0027t really understand how it works so I need to look more at it. \n\nI also aim for no excluded_sources at all. If there is one, it becomes an easy place to add more and that would suck. And every file not included in a jumbo unit slows down the compilation.",
+      "parentUuid": "51e11aac_fc37051a",
+      "revId": "b54e0fd47a9988c34a1138726c1b4ec186f1d415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
