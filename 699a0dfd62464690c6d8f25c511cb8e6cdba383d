@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86feb9d_ebb8a497",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-13T12:24:35Z",
+      "side": 1,
+      "message": "Why create this here instead of in viewDidLoad?",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cef0e6e_56c3946f",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-13T12:24:35Z",
+      "side": 1,
+      "message": "Does this need to come after the app bar for some reason?  If so, please add a comment.",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1594e6dc_cf0f2187",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-13T12:24:35Z",
+      "side": 1,
+      "message": "I don\u0027t remember how the appbar works.  Are we doing something to increase the size of the header bar, or are we just positioning the label to fill some existing empty space?",
+      "revId": "699a0dfd62464690c6d8f25c511cb8e6cdba383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
