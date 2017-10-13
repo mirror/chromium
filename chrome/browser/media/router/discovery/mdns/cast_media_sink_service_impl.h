@@ -8,6 +8,7 @@
 #include <memory>
 #include <set>
 
+#include "base/containers/small_map.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -61,7 +62,7 @@ class CastMediaSinkServiceImpl
   void RecordDeviceCounts() override;
 
   // Opens cast channels on the IO thread.
-  virtual void OpenChannels(std::vector<MediaSinkInternal> cast_sinks,
+  virtual void OpenChannels(const std::vector<MediaSinkInternal>& cast_sinks,
                             SinkSource sink_source);
 
   void OnDialSinkAdded(const MediaSinkInternal& sink);
@@ -185,7 +186,12 @@ class CastMediaSinkServiceImpl
   // Invoked when opening cast channel on IO thread fails after all retry
   // attempts.
   // |ip_endpoint|: ip endpoint of cast channel failing to connect to.
-  void OnChannelOpenFailed(const net::IPEndPoint& ip_endpoint);
+  // |sink_source|: Method of sink discovery.
+  void OnChannelOpenFailed(const net::IPEndPoint& ip_endpoint,
+                           SinkSource sink_source);
+
+  // TODO: comments
+  bool IsProbablyNonCastDevice(const MediaSinkInternal& sink) const;
 
   // Holds Finch field trial parameters controlling Cast channel retry strategy.
   struct RetryParams {
@@ -269,6 +275,9 @@ class CastMediaSinkServiceImpl
   // failure counts for each IP endpoint. Used to dynamically adjust timeout
   // values. If a Cast channel opens successfully, it is removed from the map.
   std::map<net::IPEndPoint, int> failure_count_map_;
+
+  // TODO: comments
+  base::small_map<std::map<net::IPAddress, int>> dial_sink_failure_count_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 

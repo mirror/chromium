@@ -46,8 +46,12 @@ void MediaRouterDesktop::OnUserGesture() {
   // Allow MRPM to intelligently update sinks and observers by passing in a
   // media source.
   UpdateMediaSinks(MediaSourceForDesktop().id());
+
+  if (dial_media_sink_service_proxy_)
+    dial_media_sink_service_proxy_->OnUserGesture();
+
   if (cast_media_sink_service_)
-    cast_media_sink_service_->ForceDiscovery();
+    cast_media_sink_service_->OnUserGesture();
 
 #if defined(OS_WIN)
   EnsureMdnsDiscoveryEnabled();
