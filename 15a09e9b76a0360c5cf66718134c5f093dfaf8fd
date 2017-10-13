@@ -51,6 +51,24 @@
       "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3287b19d_17948d68",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T00:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4de1809_f3e3959d",
+      "revId": "15a09e9b76a0360c5cf66718134c5f093dfaf8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
