@@ -41,7 +41,7 @@ class MainThreadWorkletReportingProxyForTest final
 class MainThreadWorkletTest : public ::testing::Test {
  public:
   void SetUp() override {
-    KURL url(kParsedURLString, "https://example.com/");
+    KURL url("https://example.com/");
     page_ = DummyPageHolder::Create();
     security_origin_ = SecurityOrigin::Create(url);
     reporting_proxy_ = WTF::MakeUnique<MainThreadWorkletReportingProxyForTest>(
