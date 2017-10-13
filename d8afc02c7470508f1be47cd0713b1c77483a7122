@@ -16,6 +16,24 @@
       "revId": "d8afc02c7470508f1be47cd0713b1c77483a7122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a2783_c9aad3e2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23791,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-13T10:32:12Z",
+      "side": 1,
+      "message": "Yup, AFAIK these values just stay forever.",
+      "parentUuid": "0c40aa40_9ab09adb",
+      "revId": "d8afc02c7470508f1be47cd0713b1c77483a7122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
