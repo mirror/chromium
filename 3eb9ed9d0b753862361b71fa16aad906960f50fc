@@ -16,6 +16,24 @@
       "revId": "3eb9ed9d0b753862361b71fa16aad906960f50fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876e615e_5e9f8991",
+        "filename": "mojo/public/cpp/system/platform_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-13T17:03:10Z",
+      "side": 1,
+      "message": "Unwrapping a null port should merely produce a MACH_PORT typed handle with a null value field; shouldn\u0027t need to expect INVALID here. And this should be a DCHECK imho.",
+      "parentUuid": "6fa53645_e819f10f",
+      "revId": "3eb9ed9d0b753862361b71fa16aad906960f50fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
