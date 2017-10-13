@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe45df6f_256c0951",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-13T23:53:51Z",
+      "side": 1,
+      "message": "Is it necessary for this test to involve SSRCs? It would be ideal if it used the \"a\u003dmsid\" style of signaling (which we do support parsing, we just don\u0027t generate it yet).",
+      "revId": "addc88df6ec55cc3f1c81d9105d00ffa582d3ccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ae03ad_92ed26d2",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-13T23:53:51Z",
+      "side": 1,
+      "message": "Test may be more readable if ordered as:\n\n1. 1st setRemoteDescription\n2. 1st ontrack\n3. 2nd setRemoteDescription\n4. 2nd ontrack\n\nWhich should work since the \"track\" event is guaranteed to fire asynchronously.",
+      "revId": "addc88df6ec55cc3f1c81d9105d00ffa582d3ccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d62b61_1f2ca71a",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-10-13T23:53:51Z",
+      "side": 1,
+      "message": "So when we fix this, we\u0027ll have to disable the test, make the webrtc change, then fix the test and re-enable it? Seems reasonable, just confirming.",
+      "revId": "addc88df6ec55cc3f1c81d9105d00ffa582d3ccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
