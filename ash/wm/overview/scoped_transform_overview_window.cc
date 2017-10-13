@@ -191,6 +191,23 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
   BeginScopedAnimation(OverviewAnimationType::OVERVIEW_ANIMATION_RESTORE_WINDOW,
                        &animation_settings_list);
   SetTransform(window()->GetRootWindow(), original_transform_);
+
+  // Remove the requests to cache render surface and perform trilinear
+  // filtering for entering animation and the whole time during overview mode.
+  // http://crbug.com/756696.
+  for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
+    ui::Layer* layer = window->layer();
+    layer->RemoveCacheRenderSurfaceRequest();
+    layer->RemoveTrilinearFilteringRequest();
+  }
+  // Add requests to cache render surface and perform trilinear filtering for
+  // the exiting animation of overview mode. The requests will be removed when
+  // the exiting animation finishes. http://crbug.com/756696.
+  for (auto& settings : animation_settings_list) {
+    settings->CacheRenderSurface();
+    settings->TrilinearFiltering();
+  }
+
   ScopedOverviewAnimationSettings animation_settings(
       OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS,
       window_);
@@ -438,6 +455,16 @@ void ScopedTransformOverviewWindow::PrepareForOverview() {
   if (window_->GetProperty(aura::client::kShowStateKey) ==
       ui::SHOW_STATE_MINIMIZED) {
     CreateMirrorWindowForMinimizedState();
+  }
+  // Add requests to cache render surface and perform trilinear filtering. The
+  // requests will be removed in RestoreWindow(). So the requests will be valid
+  // during the entering animation and the whole time during overview mode. For
+  // the exiting animation of overview mode, we need to add those requests
+  // again. http://crbug.com/756696.
+  for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
+    ui::Layer* layer = window->layer();
+    layer->AddCacheRenderSurfaceRequest();
+    layer->AddTrilinearFilteringRequest();
   }
 }
 
