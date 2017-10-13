@@ -469,8 +469,18 @@ class JPEGImageReader final {
           JOCTET* profile = nullptr;
           unsigned profile_length = 0;
           if (read_icc_profile(Info(), &profile, &profile_length)) {
+            SkColorSpace::ICCTypeFlag icc_type = SkColorSpace::kRGB_ICCTypeFlag;
+
+            // Update ICC type to CMYK JPEG image
+            if (info_.out_color_space == JCS_CMYK ||
+                info_.out_color_space == JCS_YCCK) {
+              icc_type = SkColorSpace::kCMYK_ICCTypeFlag;
+            } else if (info_.out_color_space == JCS_GRAYSCALE) {
+              icc_type = SkColorSpace::kGray_ICCTypeFlag;
+            }
+
             Decoder()->SetEmbeddedColorProfile(reinterpret_cast<char*>(profile),
-                                               profile_length);
+                                               profile_length, icc_type);
             free(profile);
           }
           if (Decoder()->ColorTransform()) {
@@ -881,7 +891,7 @@ bool OutputRows(JPEGImageReader* reader, ImageFrame& buffer) {
       SetPixel<colorSpace>(pixel, samples, x);
 
     SkColorSpaceXform* xform = reader->Decoder()->ColorTransform();
-    if (JCS_RGB == colorSpace && xform) {
+    if (xform) {
       ImageFrame::PixelData* row = buffer.GetAddr(0, y);
       xform->apply(XformColorFormat(), row, XformColorFormat(), row, width,
                    kOpaque_SkAlphaType);

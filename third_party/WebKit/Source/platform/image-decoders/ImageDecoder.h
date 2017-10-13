@@ -226,7 +226,9 @@ class PLATFORM_EXPORT ImageDecoder {
   bool HasEmbeddedColorSpace() const { return embedded_color_space_.get(); }
 
   // Set the embedded color space directly or via ICC profile.
-  void SetEmbeddedColorProfile(const char* icc_data, unsigned icc_length);
+  void SetEmbeddedColorProfile(const char* icc_data,
+                               unsigned icc_length,
+                               SkColorSpace::ICCTypeFlag);
   void SetEmbeddedColorSpace(sk_sp<SkColorSpace> src_space);
 
   // Transformation from embedded color space to target color space.
