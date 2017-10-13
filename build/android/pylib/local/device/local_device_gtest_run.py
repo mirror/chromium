@@ -410,8 +410,8 @@ class LocalDeviceGtestRun(local_device_test_run.LocalDeviceTestRun):
     if test_artifacts_dir:
       with tempfile_ext.NamedTemporaryDirectory() as test_artifacts_host_dir:
         device.PullFile(test_artifacts_dir.name, test_artifacts_host_dir)
-        test_artifacts_zip = shutil.make_archive('test_artifacts', 'zip',
-                                                 test_artifacts_host_dir)
+        test_artifacts_zip = shutil.make_archive(
+            test_artifacts_host_dir, 'zip', test_artifacts_host_dir)
         link = google_storage_helper.upload(
             google_storage_helper.unique_name(
                 'test_artifacts', device=device),
