@@ -260,8 +260,11 @@ void HTMLImageElement::ParseAttribute(
       if (text && text->textContent() != params.new_value)
         text->setTextContent(AltText());
     }
-  } else if (name == srcAttr || name == srcsetAttr || name == sizesAttr) {
+  } else if (name == srcAttr || name == sizesAttr) {
     SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
+  } else if (name == srcsetAttr) {
+    if (params.old_value != params.new_value)
+      SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
   } else if (name == usemapAttr) {
     SetIsLink(!params.new_value.IsNull());
   } else if (name == referrerpolicyAttr) {
