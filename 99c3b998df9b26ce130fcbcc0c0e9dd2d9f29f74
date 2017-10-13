@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ecd6b94_c1c38561",
+        "filename": "content/common/sandbox_init_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:07:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3594f6f5_259b0201",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 53
+      },
+      "revId": "99c3b998df9b26ce130fcbcc0c0e9dd2d9f29f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5281641f_306a9398",
         "filename": "content/common/sandbox_init_win.cc",
         "patchSetId": 31
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f184cc7d_c1f5d2ec",
+        "filename": "content/common/sandbox_init_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:07:45Z",
+      "side": 1,
+      "message": "We\u0027re not actually deferring anything here, just cobbling it together so it can pass to lower layers -- so we should be safe.  The caller will still own the delegate.",
+      "parentUuid": "5281641f_306a9398",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "99c3b998df9b26ce130fcbcc0c0e9dd2d9f29f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57e2007_4cf8e36a",
         "filename": "content/common/sandbox_win.cc",
         "patchSetId": 31
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-13T16:43:25Z",
       "side": 1,
       "message": "the docs for callback\n\nhttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md\n\nsay\n\nbase::OnceCallback\u003c\u003e and base::RepeatingCallback\u003c\u003e are next gen callback classes, which are under development.\n\nI presume it\u0027s okay to use these now, or that doc needs updating?",
+      "range": {
+        "startLine": 730,
+        "startChar": 4,
+        "endLine": 730,
+        "endChar": 22
+      },
+      "revId": "99c3b998df9b26ce130fcbcc0c0e9dd2d9f29f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e494e6fc_c00905bd",
+        "filename": "content/common/sandbox_win.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-13T18:07:45Z",
+      "side": 1,
+      "message": "Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d774587 to update doc.\n\nSee https://bugs.chromium.org/p/chromium/issues/detail?id\u003d714018 for status of migration which is in full flight.",
+      "parentUuid": "d57e2007_4cf8e36a",
       "range": {
         "startLine": 730,
         "startChar": 4,
