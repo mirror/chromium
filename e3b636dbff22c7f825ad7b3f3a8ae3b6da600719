@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431ad254_a3b0cffc",
+        "filename": "sandbox/win/src/sid.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-13T14:51:13Z",
+      "side": 1,
+      "message": "is it worth having a NOTREACHED here in case this is used incorrectly?\n\nedit: hmm looks like this would break your tests, so up to you.",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 11
+      },
+      "revId": "e3b636dbff22c7f825ad7b3f3a8ae3b6da600719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
