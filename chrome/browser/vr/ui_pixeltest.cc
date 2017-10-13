@@ -31,7 +31,7 @@ TEST_F(UiPixelTest, DrawVrBrowsingMode) {
   // Draw UI.
   DrawUi(gfx::Vector3dF(0.0f, 0.0f, -1.0f), gfx::Point3F(0.5f, -0.5f, 0.0f),
          UiInputManager::ButtonState::UP, 1.0f, kIdentity, kIdentity,
-         kProjMatrix);
+         kPixelDaydreamProjMatrix);
 
   // Read pixels into SkBitmap.
   auto bitmap = SaveCurrentFrameBufferToSkBitmap();
