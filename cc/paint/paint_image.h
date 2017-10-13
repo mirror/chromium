@@ -46,6 +46,8 @@ class CC_PAINT_EXPORT PaintImage {
   // images, this would imply the first frame of the animation.
   static const size_t kDefaultFrameIndex;
 
+  static const Id kInvalidId;
+
   class CC_PAINT_EXPORT FrameKey {
    public:
     FrameKey(ContentId content_id, size_t frame_index, gfx::Rect subset_rect);
@@ -73,7 +75,21 @@ class CC_PAINT_EXPORT PaintImage {
 
   enum class AnimationType { ANIMATED, VIDEO, STATIC };
   enum class CompletionState { DONE, PARTIALLY_DONE };
-  enum class DecodingMode { kUnspecified, kSync, kAsync };
+  enum class DecodingMode {
+    // Use heuristics to decide whether the image is decoded asynchronously.
+    kUnspecified,
+
+    // The image may potentially replace content provided in a previous update.
+    // Ensure that the heuristics used avoid asynchronous decoding if it could
+    // result in content flickering.
+    kContentTransitionSync,
+
+    // Always decode synchronously, ignoring any heuristics.
+    kSync,
+
+    // Always be decoded asynchronously, ignoring any heuristics.
+    kAsync
+  };
 
   static Id GetNextId();
   static ContentId GetNextContentId();

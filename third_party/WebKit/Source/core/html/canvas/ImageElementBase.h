@@ -58,8 +58,16 @@ class CORE_EXPORT ImageElementBase : public CanvasImageSource,
 
   ImageResourceContent* CachedImage() const;
 
+  Image::ImageDecodingMode GetDecodingMode(PaintImage::Id);
+
+ protected:
+  Image::ImageDecodingMode decoding_mode_ =
+      Image::ImageDecodingMode::kUnspecifiedDecode;
+
  private:
   const Element& GetElement() const;
+
+  PaintImage::Id last_painted_image_id_ = PaintImage::kInvalidId;
 };
 
 }  // namespace blink

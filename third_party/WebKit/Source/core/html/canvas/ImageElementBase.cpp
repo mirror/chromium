@@ -193,4 +193,17 @@ ScriptPromise ImageElementBase::CreateImageBitmap(
                         event_target.ToLocalDOMWindow()->document(), options));
 }
 
+Image::ImageDecodingMode ImageElementBase::GetDecodingMode(
+    PaintImage::Id new_id) {
+  const bool content_transitioned =
+      last_painted_image_id_ != PaintImage::kInvalidId &&
+      new_id != PaintImage::kInvalidId && last_painted_image_id_ != new_id;
+  last_painted_image_id_ = new_id;
+
+  if (content_transitioned &&
+      decoding_mode_ == Image::ImageDecodingMode::kUnspecifiedDecode)
+    return Image::ImageDecodingMode::kContentTransitionSyncDecode;
+  return decoding_mode_;
+}
+
 }  // namespace blink

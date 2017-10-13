@@ -66,6 +66,9 @@ void SVGImagePainter::PaintForeground(const PaintInfo& paint_info) {
     return;
 
   RefPtr<Image> image = image_resource->GetImage(image_viewport_size);
+  if (!image)
+    return;
+
   FloatRect dest_rect = layout_svg_image_.ObjectBoundingBox();
   FloatRect src_rect(0, 0, image->width(), image->height());
 
@@ -78,7 +81,8 @@ void SVGImagePainter::PaintForeground(const PaintInfo& paint_info) {
   InterpolationQuality previous_interpolation_quality =
       paint_info.context.ImageInterpolationQuality();
   paint_info.context.SetImageInterpolationQuality(interpolation_quality);
-  Image::ImageDecodingMode decode_mode = image_element->GetDecodingMode();
+  Image::ImageDecodingMode decode_mode =
+      image_element->GetDecodingMode(image->paint_image_id());
   paint_info.context.DrawImage(image.get(), decode_mode, dest_rect, &src_rect);
   paint_info.context.SetImageInterpolationQuality(
       previous_interpolation_quality);
