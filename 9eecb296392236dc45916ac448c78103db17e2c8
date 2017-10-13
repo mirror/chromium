@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ea1281_f23a89f2",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-13T00:17:10Z",
+      "side": 0,
+      "message": "These files are not deleted by the cl??",
+      "revId": "9eecb296392236dc45916ac448c78103db17e2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
