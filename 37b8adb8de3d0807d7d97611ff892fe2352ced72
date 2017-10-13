@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1904a85f_b7d83dc8",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T08:44:58Z",
+      "side": 1,
+      "message": "Can a service worker provider host be reused for a version with a completely different origin script url?\n\nIt does seem like it\u0027d be nice to avoid creating an origin object for each request.",
+      "revId": "37b8adb8de3d0807d7d97611ff892fe2352ced72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b3c412_80ca0079",
         "filename": "content/browser/service_worker/service_worker_provider_host.h",
         "patchSetId": 10
