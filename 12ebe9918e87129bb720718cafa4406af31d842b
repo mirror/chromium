@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3967ff6_0788d9e0",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-13T07:12:26Z",
+      "side": 1,
+      "message": "SelectionHandler depends on ListContainer as it takes that to its constructor. So I don\u0027t think we can do that due to cyclic dependency.\nInstead, changed it to register callback inside SelectionHandler.",
+      "parentUuid": "3dc16002_4b0786d3",
+      "revId": "12ebe9918e87129bb720718cafa4406af31d842b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8edea53_1140a463",
         "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T11:06:38Z",
       "side": 1,
       "message": "Shouldn\u0027t do the same treatment for grid view?",
+      "revId": "12ebe9918e87129bb720718cafa4406af31d842b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd01213_2c9245da",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-13T07:12:26Z",
+      "side": 1,
+      "message": "Done for the folder items in the grid view.\nThe checkmarks on thumbnail boxes (files) will be done by https://chromium-review.googlesource.com/c/chromium/src/+/718157.",
+      "parentUuid": "d8edea53_1140a463",
       "revId": "12ebe9918e87129bb720718cafa4406af31d842b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
