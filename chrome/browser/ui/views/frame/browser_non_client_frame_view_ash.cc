@@ -341,6 +341,7 @@ void BrowserNonClientFrameViewAsh::OnTabletModeToggled(bool enabled) {
     // visible but not activated due to something transparent and/or not
     // fullscreen (ie. fullscreen launcher).
     if (TabletModeClient::Get()->auto_hide_title_bars() &&
+        browser_view()->immersive_mode_controller()->IsInitialized() &&
         !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal() &&
         !frame()->IsMinimized()) {
       browser_view()->immersive_mode_controller()->SetEnabled(true);
@@ -350,6 +351,7 @@ void BrowserNonClientFrameViewAsh::OnTabletModeToggled(bool enabled) {
     // Exit immersive mode if the feature is enabled and the widget is not in
     // fullscreen mode.
     if (TabletModeClient::Get()->auto_hide_title_bars() &&
+        browser_view()->immersive_mode_controller()->IsInitialized() &&
         !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal()) {
       browser_view()->immersive_mode_controller()->SetEnabled(false);
       return;

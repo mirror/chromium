@@ -69,6 +69,7 @@ class ImmersiveModeController {
 
   // Must initialize after browser view has a Widget and native window.
   virtual void Init(BrowserView* browser_view) = 0;
+  virtual bool IsInitialized() const = 0;
 
   // Enables or disables immersive mode.
   virtual void SetEnabled(bool enabled) = 0;
