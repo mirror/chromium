@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "9dd8cc4e_7b104dd1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-13T21:46:57Z",
+      "side": 1,
+      "message": "I believe the only one we need here is the context/attrs constructor. That\u0027s the one I see most often used if the view is inflated in xml. Otherwsie the context-only constructor is used.",
+      "parentUuid": "c5eaf4b9_fa795899",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 53
+      },
+      "revId": "80c2813f446c3699a379d7b04cd6cddc0c6ab0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12064090_690fd76c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigationItemView.java",
         "patchSetId": 3
