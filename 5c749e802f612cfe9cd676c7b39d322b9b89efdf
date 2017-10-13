@@ -34,6 +34,24 @@
       "revId": "5c749e802f612cfe9cd676c7b39d322b9b89efdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefa91a5_cce7e6b6",
+        "filename": "ash/wm/lock_state_controller_test_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-13T21:46:00Z",
+      "side": 1,
+      "message": "OK thanks! I have the preferred style in mind. Probably would cleanup style under ash/system/power in a later time.",
+      "parentUuid": "88047b81_0bede5c3",
+      "revId": "5c749e802f612cfe9cd676c7b39d322b9b89efdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
