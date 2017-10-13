@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd19c11_b4c478e6",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-13T10:29:21Z",
+      "side": 1,
+      "message": "Here nullptr was expected before, it\u0027s not expecting that ServiceWorkerProviderHost::CompleteCrossSiteTransfer() should have set provisional_host-\u003edispatcher_host() to nullptr, it\u0027s just because |provider_host| was created with a nullptr dispatcher host from the beginning.\nNow we changed to create |provider_host| with a non-null dispatcher host, which has been passed into |provisional_host| by ServiceWorkerProviderHost::PrepareForCrossSiteTransfer(), also, ServiceWorkerProviderHost::CompleteCrossSiteTransfer() does not change value of |provisional_host-\u003edispatcher_host|.(https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_provider_host.cc?rcl\u003d7b7a56ee1058e5de89756d9a526ddb2a4326b135\u0026l\u003d597)\nSo now we should expect |provisional_host-\u003edispatcher_host| to be the original |dispatcher_host| instead.",
+      "range": {
+        "startLine": 471,
+        "startChar": 12,
+        "endLine": 471,
+        "endChar": 27
+      },
+      "revId": "2872e68f5905c6b89187e6cebabcf4ea17a754a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
