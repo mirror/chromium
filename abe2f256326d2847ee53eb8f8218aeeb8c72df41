@@ -22,6 +22,30 @@
       "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2d6ad9_2540bcc8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T17:00:29Z",
+      "side": 1,
+      "message": "getInstance() is a pattern for retrieving Singletons. There is precedence for Class#getInstance()#someMethod() e.g. ChromePreferenceManager#setX().\n\nThat said SurveyController#clearCache() can, and probably should be, a static method since it doesn\u0027t need any state to clear the cache.",
+      "parentUuid": "9928c1af_3feb5f09",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

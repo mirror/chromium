@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bb3b835e_76734e84",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T17:00:29Z",
+      "side": 1,
+      "message": "Based on my quick code search, #isUsageAndCrashReportingPermittedByUser() is used more often on the Java-side, so let\u0027s go with that.",
+      "parentUuid": "3399dd88_a376708e",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "684b497e_c1857ae6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 1
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "I\u0027d prefer for it to be cleared immediately; don\u0027t know how much complexity it adds. On Android, restarting a browser is actually a somewhat rare action... On the other hand, you should also not be chosen for a survey two times in a short time interval, so that shouldn\u0027t be a big deal either. I guess I\u0027d just prefer not to have to think about corner cases.",
       "parentUuid": "7c04d2ad_2a0a7a83",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dd4806_4824ca87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-13T17:00:29Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be hard to clear immediately. Daniel, take a look at UsageAndCrashReportsPreferenceFragment:\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/UsageAndCrashReportsPreferenceFragment.java?sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "parentUuid": "7a782a0e_ea8af52a",
       "range": {
         "startLine": 134,
         "startChar": 12,
