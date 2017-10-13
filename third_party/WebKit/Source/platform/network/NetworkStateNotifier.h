@@ -76,6 +76,14 @@ class PLATFORM_EXPORT NetworkStateNotifier {
     virtual void OnLineStateChange(bool on_line) {}
   };
 
+  class NetworkStateObserverHandle {
+   public:
+    virtual ~NetworkStateObserverHandle();
+
+   protected:
+    NetworkStateObserverHandle() {}
+  };
+
   NetworkStateNotifier() : has_override_(false) {}
 
   // Can be called on any thread.
@@ -186,10 +194,15 @@ class PLATFORM_EXPORT NetworkStateNotifier {
   // before the observer or its execution context goes away. It's possible for
   // an observer to be called twice for the same event if it is first removed
   // and then added during notification.
-  void AddConnectionObserver(NetworkStateObserver*, RefPtr<WebTaskRunner>);
-  void AddOnLineObserver(NetworkStateObserver*, RefPtr<WebTaskRunner>);
-  void RemoveConnectionObserver(NetworkStateObserver*, RefPtr<WebTaskRunner>);
-  void RemoveOnLineObserver(NetworkStateObserver*, RefPtr<WebTaskRunner>);
+  std::unique_ptr<NetworkStateObserverHandle> AddConnectionObserver(
+      NetworkStateObserver*,
+      RefPtr<WebTaskRunner>);
+  std::unique_ptr<NetworkStateObserverHandle> AddOnLineObserver(
+      NetworkStateObserver*,
+      RefPtr<WebTaskRunner>);
+  // void RemoveConnectionObserver(NetworkStateObserver*,
+  // RefPtr<WebTaskRunner>);  void RemoveOnLineObserver(NetworkStateObserver*,
+  // RefPtr<WebTaskRunner>);
 
   // Returns the randomization salt (weak and insecure) that should be used when
   // adding noise to the network quality metrics. This is known only to the
@@ -220,8 +233,23 @@ class PLATFORM_EXPORT NetworkStateNotifier {
   };
 
   enum class ObserverType {
-    ONLINE_STATE,
-    CONNECTION_TYPE,
+    kOnLineState,
+    kConnectionType,
+  };
+
+  class NetworkStateObserverHandleImpl : public NetworkStateObserverHandle {
+   public:
+    NetworkStateObserverHandleImpl(NetworkStateNotifier*,
+                                   ObserverType,
+                                   NetworkStateObserver*,
+                                   RefPtr<WebTaskRunner>);
+    ~NetworkStateObserverHandleImpl();
+
+   private:
+    NetworkStateNotifier* notifier_;
+    ObserverType type_;
+    NetworkStateObserver* observer_;
+    RefPtr<WebTaskRunner> task_runner_;
   };
 
   // The ObserverListMap is cross-thread accessed, adding/removing Observers

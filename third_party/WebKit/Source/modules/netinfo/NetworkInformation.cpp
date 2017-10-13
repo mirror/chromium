@@ -119,6 +119,9 @@ void NetworkInformation::ConnectionChange(
     const Optional<TimeDelta>& http_rtt,
     const Optional<TimeDelta>& transport_rtt,
     const Optional<double>& downlink_mbps) {
+  if (!GetExecutionContext())
+    return;
+
   DCHECK(GetExecutionContext()->IsContextThread());
 
   unsigned long new_http_rtt_msec = RoundRtt(http_rtt);
@@ -201,18 +204,19 @@ void NetworkInformation::ContextDestroyed(ExecutionContext*) {
 void NetworkInformation::StartObserving() {
   if (!observing_ && !context_stopped_) {
     type_ = GetNetworkStateNotifier().ConnectionType();
-    GetNetworkStateNotifier().AddConnectionObserver(
-        this,
-        TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
+    DCHECK(!connection_observer_handle_.get());
+    connection_observer_handle_ =
+        GetNetworkStateNotifier().AddConnectionObserver(
+            this, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                        GetExecutionContext()));
     observing_ = true;
   }
 }
 
 void NetworkInformation::StopObserving() {
   if (observing_) {
-    GetNetworkStateNotifier().RemoveConnectionObserver(
-        this,
-        TaskRunnerHelper::Get(TaskType::kNetworking, GetExecutionContext()));
+    DCHECK(connection_observer_handle_.get());
+    connection_observer_handle_.reset();
     observing_ = false;
   }
 }

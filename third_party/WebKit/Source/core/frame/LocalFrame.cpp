@@ -1088,7 +1088,7 @@ void LocalFrame::MaybeAllowImagePlaceholder(FetchParameters& params) const {
 
 std::unique_ptr<WebURLLoader> LocalFrame::CreateURLLoader(
     const ResourceRequest& request,
-    WebTaskRunner* task_runner) {
+    RefPtr<WebTaskRunner> task_runner) {
   return Client()->CreateURLLoader(request, task_runner);
 }
 
