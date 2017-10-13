@@ -20,6 +20,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "base/win/scoped_bstr.h"
+#include "base/win/scoped_com_initializer.h"
 #include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 #include "content/browser/accessibility/accessibility_tree_formatter_utils_win.h"
@@ -28,6 +29,24 @@
 #include "third_party/iaccessible2/ia2_api_all.h"
 #include "ui/base/win/atl_module.h"
 
+namespace {
+HWND hwnd_;
+
+BOOL CALLBACK EnumWindowsProcPid(HWND hwnd, LPARAM lParam) {
+  DWORD process_id;
+  GetWindowThreadProcessId(hwnd, &process_id);
+  if (process_id == static_cast<DWORD>(lParam)) {
+    hwnd_ = hwnd;
+    return FALSE;
+  }
+  return TRUE;
+}
+
+HWND GetHwndForProcess(base::ProcessId pid) {
+  EnumWindows(&EnumWindowsProcPid, pid);
+  return hwnd_;
+}
+}  // namespace
 
 namespace content {
 
@@ -38,6 +57,10 @@ class AccessibilityTreeFormatterWin : public AccessibilityTreeFormatter {
 
   std::unique_ptr<base::DictionaryValue> BuildAccessibilityTree(
       BrowserAccessibility* start) override;
+  std::unique_ptr<base::DictionaryValue> BuildAccessibilityTreeForWindow(
+      gfx::AcceleratedWidget hwnd) override;
+  std::unique_ptr<base::DictionaryValue> BuildAccessibilityTreeForProcess(
+      base::ProcessId pid) override;
   std::unique_ptr<base::DictionaryValue> BuildAccessibilityTree(
       base::win::ScopedComPtr<IAccessible> start,
       LONG window_x = 0,
@@ -76,7 +99,12 @@ class AccessibilityTreeFormatterWin : public AccessibilityTreeFormatter {
                              base::DictionaryValue* dict);
   void AddIA2ValueProperties(const base::win::ScopedComPtr<IAccessible>,
                              base::DictionaryValue* dict);
-  base::string16 ToString(const base::DictionaryValue& node) override;
+  base::string16 ProcessTreeForOutput(
+      const base::DictionaryValue& node,
+      base::DictionaryValue* filtered_dict_result = nullptr) override;
+
+  // This magic is required for ax_dump_tree tool to work.
+  base::win::ScopedCOMInitializer com_initializer;
 };
 
 // static
@@ -177,9 +205,7 @@ AccessibilityTreeFormatterWin::BuildAccessibilityTree(
     BrowserAccessibility* start_node) {
   DCHECK(start_node);
 
-  VARIANT variant_self;
-  variant_self.vt = VT_I4;
-  variant_self.lVal = CHILDID_SELF;
+  base::win::ScopedVariant variant_self(CHILDID_SELF);
   LONG root_x, root_y, root_width, root_height;
   BrowserAccessibility* root =
       start_node->manager()->GetRootManager()->GetRoot();
@@ -206,6 +232,34 @@ AccessibilityTreeFormatterWin::BuildAccessibilityTree(
   return dict;
 }
 
+std::unique_ptr<base::DictionaryValue>
+AccessibilityTreeFormatterWin::BuildAccessibilityTreeForWindow(
+    gfx::AcceleratedWidget hwnd) {
+  if (!hwnd)
+    return nullptr;
+
+  // Get IAccessible* for window
+  base::win::ScopedComPtr<IAccessible> start;
+  HRESULT hr = ::AccessibleObjectFromWindow(
+      hwnd, static_cast<DWORD>(OBJID_CLIENT), IID_IAccessible,
+      reinterpret_cast<void**>(start.GetAddressOf()));
+  if (FAILED(hr))
+    return nullptr;
+
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
+  RecursiveBuildAccessibilityTree(start, dict.get(), 0, 0);
+
+  return dict;
+}
+
+std::unique_ptr<base::DictionaryValue>
+AccessibilityTreeFormatterWin::BuildAccessibilityTreeForProcess(
+    base::ProcessId pid) {
+  // Get HWND for process id.
+  HWND hwnd = GetHwndForProcess(pid);
+  return BuildAccessibilityTreeForWindow(hwnd);
+}
+
 void AccessibilityTreeFormatterWin::RecursiveBuildAccessibilityTree(
     const base::win::ScopedComPtr<IAccessible> node,
     base::DictionaryValue* dict,
@@ -219,19 +273,57 @@ void AccessibilityTreeFormatterWin::RecursiveBuildAccessibilityTree(
   if (S_OK != node->get_accChildCount(&child_count))
     return;
 
-  for (int index = 1; index <= child_count; ++index) {
-    base::win::ScopedVariant childid_index(index);
-    base::win::ScopedComPtr<IDispatch> child_dispatch;
-    base::win::ScopedComPtr<IAccessible> child_accessible;
-    if (S_OK ==
-            node->get_accChild(childid_index, child_dispatch.GetAddressOf()) &&
-        S_OK == child_dispatch.CopyTo(child_accessible.GetAddressOf())) {
-      std::unique_ptr<base::DictionaryValue> child_dict(
-          new base::DictionaryValue);
-      RecursiveBuildAccessibilityTree(child_accessible, child_dict.get(),
-                                      root_x, root_y);
-      children->Append(std::move(child_dict));
+  std::unique_ptr<VARIANT[]> children_array(new VARIANT[child_count]);
+  LONG obtained_count = 0;
+  HRESULT hr = AccessibleChildren(node.Get(), 0, child_count,
+                                  children_array.get(), &obtained_count);
+  if (hr != S_OK)
+    return;
+
+  for (LONG index = 0; index < obtained_count; index++) {
+    base::win::ScopedVariant child_variant;
+    child_variant.Reset(
+        children_array[index]);  // Sets without adding another reference.
+    std::unique_ptr<base::DictionaryValue> child_dict(
+        new base::DictionaryValue);
+    base::win::ScopedComPtr<IDispatch> dispatch;
+    if (child_variant.type() == VT_DISPATCH) {
+      dispatch = V_DISPATCH(child_variant.ptr());
+    } else if (child_variant.type() == VT_I4) {
+      HRESULT hr = node->get_accChild(child_variant, dispatch.GetAddressOf());
+      if (FAILED(hr)) {
+        child_dict->SetString("error",
+                              base::ASCIIToUTF16("[Error retrieving child]"));
+      } else if (!*(dispatch.GetAddressOf())) {
+        // Partial child does not have its own object.
+        // Add minimal info -- role and name.
+        base::win::ScopedVariant role_variant;
+        if (SUCCEEDED(
+                node->get_accRole(child_variant, role_variant.Receive()))) {
+          if (role_variant.type() == VT_I4) {
+            child_dict->SetString("role",
+                                  base::ASCIIToUTF16(" [partial child]"));
+          }
+        }
+        base::win::ScopedBstr temp_bstr;
+        if (S_OK == node->get_accName(child_variant, temp_bstr.Receive())) {
+          base::string16 name = base::string16(temp_bstr, temp_bstr.Length());
+          child_dict->SetString("name", name);
+        }
+      }
+    } else {
+      child_dict->SetString("error",
+                            base::ASCIIToUTF16("[Unknown child type]"));
     }
+    if (*(dispatch.GetAddressOf())) {
+      // QueryInterface is not necessary since IAccessible extends IDispatch.
+      IAccessible* accessible =
+          static_cast<IAccessible*>(*(dispatch.GetAddressOf()));
+      if (accessible)
+        RecursiveBuildAccessibilityTree(accessible, child_dict.get(), root_x,
+                                        root_y);
+    }
+    children->Append(std::move(child_dict));
   }
   dict->Set(kChildrenDictAttr, std::move(children));
 }
@@ -286,26 +378,26 @@ void AccessibilityTreeFormatterWin::AddProperties(
   }
 }
 
+base::string16 RoleVariantToString(const base::win::ScopedVariant& role) {
+  if (role.type() == VT_I4) {
+    return IAccessible2RoleToString(V_I4(role.ptr()));
+  } else if (role.type() == VT_BSTR) {
+    return base::string16(V_BSTR(role.ptr()), SysStringLen(V_BSTR(role.ptr())));
+  }
+  return base::string16();
+}
+
 void AccessibilityTreeFormatterWin::AddMSAAProperties(
     const base::win::ScopedComPtr<IAccessible> node,
     base::DictionaryValue* dict,
     LONG root_x,
     LONG root_y) {
-  VARIANT variant_self;
-  variant_self.vt = VT_I4;
-  variant_self.lVal = CHILDID_SELF;
-
+  base::win::ScopedVariant variant_self(CHILDID_SELF);
   base::win::ScopedBstr temp_bstr;
-
+  base::win::ScopedVariant ia_role_variant;
   LONG ia_role = 0;
-  VARIANT ia_role_variant;
-  if (SUCCEEDED(node->get_accRole(variant_self, &ia_role_variant))) {
-    if (ia_role_variant.vt == VT_I4) {
-      ia_role = ia_role_variant.lVal;
-      dict->SetString("role", IAccessible2RoleToString(ia_role));
-    } else if (ia_role_variant.vt == VT_BSTR) {
-      dict->SetString("role", base::string16(ia_role_variant.bstrVal));
-    }
+  if (SUCCEEDED(node->get_accRole(variant_self, ia_role_variant.Receive()))) {
+    dict->SetString("role", RoleVariantToString(ia_role_variant));
   }
 
   // If S_FALSE it means there is no name
@@ -323,22 +415,10 @@ void AccessibilityTreeFormatterWin::AddMSAAProperties(
   temp_bstr.Reset();
 
   int32_t ia_state = 0;
-  VARIANT ia_state_variant;
-  if (node->get_accState(variant_self, &ia_state_variant) == S_OK &&
-      ia_state_variant.vt == VT_I4) {
-    ia_state = ia_state_variant.intVal;
-
-    if (true /* reduced_flakiness_mode_ */) {  // TODO
-      // Avoid flakiness: these states depend on whether the window is focused
-      // and the position of the mouse cursor.
-      ia_state &= ~STATE_SYSTEM_HOTTRACKED;
-      ia_state &= ~STATE_SYSTEM_OFFSCREEN;
-
-      // For testing, having the focused state may also cause flakiness if the
-      // window isn't in the foreground.
-      ia_state &= ~STATE_SYSTEM_FOCUSED;
-    }
-
+  base::win::ScopedVariant ia_state_variant;
+  if (node->get_accState(variant_self, ia_state_variant.Receive()) == S_OK &&
+      ia_state_variant.type() == VT_I4) {
+    ia_state = ia_state_variant.ptr()->intVal;
     std::vector<base::string16> state_strings;
     IAccessibleStateToStringVector(ia_state, &state_strings);
     std::unique_ptr<base::ListValue> states(new base::ListValue());
@@ -412,7 +492,9 @@ bool AccessibilityTreeFormatterWin::AddIA2Properties(
 
   LONG ia2_role = 0;
   if (SUCCEEDED(ia2->role(&ia2_role))) {
-    dict->SetKey("msaa_legacy_role", dict->Clone());
+    std::string legacy_role;
+    dict->GetString("role", &legacy_role);
+    dict->SetString("msaa_legacy_role", legacy_role);
     // Overwrite MSAA role which is more limited.
     dict->SetString("role", IAccessible2RoleToString(ia2_role));
   }
@@ -644,26 +726,30 @@ void AccessibilityTreeFormatterWin::AddIA2ValueProperties(
   if (S_OK != QueryIAccessibleValue(node.Get(), ia2value.GetAddressOf()))
     return;  // No IA2Value, we are finished with this node.
 
-  VARIANT currentValue;
-  if (ia2value->get_currentValue(&currentValue) == S_OK)
-    dict->SetDouble("currentValue", V_R8(&currentValue));
+  base::win::ScopedVariant currentValue;
+  if (ia2value->get_currentValue(currentValue.Receive()) == S_OK)
+    dict->SetDouble("currentValue", V_R8(currentValue.ptr()));
 
-  VARIANT minimumValue;
-  if (ia2value->get_minimumValue(&minimumValue) == S_OK)
-    dict->SetDouble("minimumValue", V_R8(&minimumValue));
+  base::win::ScopedVariant minimumValue;
+  if (ia2value->get_minimumValue(minimumValue.Receive()) == S_OK)
+    dict->SetDouble("minimumValue", V_R8(minimumValue.ptr()));
 
-  VARIANT maximumValue;
-  if (ia2value->get_maximumValue(&maximumValue) == S_OK)
-    dict->SetDouble("maximumValue", V_R8(&maximumValue));
+  base::win::ScopedVariant maximumValue;
+  if (ia2value->get_maximumValue(maximumValue.Receive()) == S_OK)
+    dict->SetDouble("maximumValue", V_R8(maximumValue.ptr()));
 }
 
-base::string16 AccessibilityTreeFormatterWin::ToString(
-    const base::DictionaryValue& dict) {
+base::string16 AccessibilityTreeFormatterWin::ProcessTreeForOutput(
+    const base::DictionaryValue& dict,
+    base::DictionaryValue* filtered_dict_result) {
   base::string16 line;
 
+  // Always show role, and show it first.
   base::string16 role_value;
   dict.GetString("role", &role_value);
   WriteAttribute(true, base::UTF16ToUTF8(role_value), &line);
+  if (filtered_dict_result)
+    filtered_dict_result->SetString("role", role_value);
 
   for (const char* attribute_name : ALL_ATTRIBUTES) {
     const base::Value* value;
@@ -674,33 +760,40 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
       case base::Value::Type::STRING: {
         base::string16 string_value;
         value->GetAsString(&string_value);
-        WriteAttribute(false,
-                       base::StringPrintf(L"%ls='%ls'",
-                                    base::UTF8ToUTF16(attribute_name).c_str(),
-                                    string_value.c_str()),
-                       &line);
+        bool did_pass_filters = WriteAttribute(
+            false,
+            base::StringPrintf(L"%ls='%ls'",
+                               base::UTF8ToUTF16(attribute_name).c_str(),
+                               string_value.c_str()),
+            &line);
+        if (filtered_dict_result && did_pass_filters)
+          filtered_dict_result->SetString(attribute_name, string_value);
         break;
       }
       case base::Value::Type::INTEGER: {
         int int_value = 0;
         value->GetAsInteger(&int_value);
-        WriteAttribute(false,
-                       base::StringPrintf(L"%ls=%d",
-                                          base::UTF8ToUTF16(
-                                              attribute_name).c_str(),
-                                          int_value),
-                       &line);
+        bool did_pass_filters = WriteAttribute(
+            false,
+            base::StringPrintf(L"%ls=%d",
+                               base::UTF8ToUTF16(attribute_name).c_str(),
+                               int_value),
+            &line);
+        if (filtered_dict_result && did_pass_filters)
+          filtered_dict_result->SetInteger(attribute_name, int_value);
         break;
       }
       case base::Value::Type::DOUBLE: {
         double double_value = 0.0;
         value->GetAsDouble(&double_value);
-        WriteAttribute(false,
-                       base::StringPrintf(L"%ls=%.2f",
-                                          base::UTF8ToUTF16(
-                                              attribute_name).c_str(),
-                                          double_value),
-                       &line);
+        bool did_pass_filters = WriteAttribute(
+            false,
+            base::StringPrintf(L"%ls=%.2f",
+                               base::UTF8ToUTF16(attribute_name).c_str(),
+                               double_value),
+            &line);
+        if (filtered_dict_result && did_pass_filters)
+          filtered_dict_result->SetDouble(attribute_name, double_value);
         break;
       }
       case base::Value::Type::LIST: {
@@ -708,13 +801,18 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
         // attribute names.
         const base::ListValue* list_value;
         value->GetAsList(&list_value);
+        std::unique_ptr<base::ListValue> filtered_list(new base::ListValue());
+
         for (base::ListValue::const_iterator it = list_value->begin();
              it != list_value->end();
              ++it) {
           base::string16 string_value;
           if (it->GetAsString(&string_value))
-            WriteAttribute(false, string_value, &line);
+            if (WriteAttribute(false, string_value, &line))
+              filtered_list->AppendString(string_value);
         }
+        if (filtered_dict_result && !filtered_list->empty())
+          filtered_dict_result->Set(attribute_name, std::move(filtered_list));
         break;
       }
       case base::Value::Type::DICTIONARY: {
@@ -722,16 +820,18 @@ base::string16 AccessibilityTreeFormatterWin::ToString(
         // Revisit this if that changes.
         const base::DictionaryValue* dict_value;
         value->GetAsDictionary(&dict_value);
+        bool did_pass_filters = false;
         if (strcmp(attribute_name, "size") == 0) {
-          WriteAttribute(false,
-                         FormatCoordinates("size", "width", "height",
-                                           *dict_value),
-                         &line);
+          did_pass_filters = WriteAttribute(
+              false, FormatCoordinates("size", "width", "height", *dict_value),
+              &line);
         } else if (strcmp(attribute_name, "location") == 0) {
-          WriteAttribute(false,
-                         FormatCoordinates("location", "x", "y", *dict_value),
-                         &line);
+          did_pass_filters = WriteAttribute(
+              false, FormatCoordinates("location", "x", "y", *dict_value),
+              &line);
         }
+        if (filtered_dict_result && did_pass_filters)
+          filtered_dict_result->SetKey(attribute_name, dict_value->Clone());
         break;
       }
       default:

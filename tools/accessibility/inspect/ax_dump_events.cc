@@ -11,6 +11,13 @@
 
 char kPidSwitch[] = "pid";
 
+// Convert whether in 0x hex format or decimal.
+bool StringToInt(std::string str, int* result) {
+  bool is_hex = str[0] == '0' && str[1] == 'x';
+  return is_hex ? base::HexStringToInt(str, result)
+                : base::StringToInt(str, result);
+}
+
 int main(int argc, char** argv) {
   base::AtExitManager at_exit_manager;
   // TODO(aleventhal) Want callback after Ctrl+C or some global keystroke:
@@ -19,11 +26,13 @@ int main(int argc, char** argv) {
   base::CommandLine::Init(argc, argv);
   std::string pid_str =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(kPidSwitch);
-  int pid = 0;
-  if (!pid_str.empty())
-    base::StringToInt(pid_str, &pid);
+  int pid;
+  if (!pid_str.empty()) {
+    if (StringToInt(pid_str, &pid)) {
+      std::unique_ptr<content::AXEventServer> server(
+          new content::AXEventServer(pid));
+    }
+  }
 
-  std::unique_ptr<content::AXEventServer> server(
-      new content::AXEventServer(pid));
   return 0;
 }
