@@ -38,9 +38,24 @@ base::string16 GetShippingAddressSelectorInfoMessage(
 base::string16 GetShippingAddressSectionString(
     PaymentShippingType shipping_type);
 
+// Gets the appropriate display string for the Choose Shipping Address string
+// for the given PaymentShippingType.
+base::string16 GetChooseShippingAddressButtonString(
+    PaymentShippingType shipping_type);
+
+// Gets the appropriate display string for the Add Shipping Address string
+// for the given PaymentShippingType.
+base::string16 GetAddShippingAddressButtonString(
+    PaymentShippingType shipping_type);
+
 // Gets the appropriate display string for the Shipping Option string for the
 // given PaymentShippingType.
 base::string16 GetShippingOptionSectionString(
+    PaymentShippingType shipping_type);
+
+// Gets the appropriate display string for the Choose Shipping Option string for
+// the given PaymentShippingType.
+base::string16 GetChooseShippingOptionButtonString(
     PaymentShippingType shipping_type);
 
 // Returns the label "Accepted cards" that is customized based on the

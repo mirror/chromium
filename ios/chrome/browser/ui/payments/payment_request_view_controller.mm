@@ -18,6 +18,7 @@
 #import "ios/chrome/browser/ui/payments/cells/page_info_item.h"
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
 #import "ios/chrome/browser/ui/payments/cells/price_item.h"
+#import "ios/chrome/browser/ui/payments/payment_request_collection_view_detail_item.h"
 #import "ios/chrome/browser/ui/payments/payment_request_view_controller_actions.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -330,6 +331,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   NSInteger itemType =
       [self.collectionViewModel itemTypeForIndexPath:indexPath];
+  CollectionViewItem* item =
+      [self.collectionViewModel itemAtIndexPath:indexPath];
   switch (itemType) {
     case ItemTypeShippingAddress:
     case ItemTypePaymentMethod:
@@ -341,6 +344,17 @@ typedef NS_ENUM(NSInteger, ItemType) {
         detailCell.detailTextLabel.font = [MDCTypography body2Font];
         detailCell.detailTextLabel.textColor =
             [[MDCPalette cr_bluePalette] tint500];
+
+        if ([item
+                isKindOfClass:[PaymentRequestCollectionViewDetailItem class]]) {
+          PaymentRequestCollectionViewDetailItem* detailItem =
+              base::mac::ObjCCastStrict<PaymentRequestCollectionViewDetailItem>(
+                  item);
+          if (detailItem.isCallToAction) {
+            detailCell.textLabel.textColor =
+                [[MDCPalette cr_bluePalette] tint500];
+          }
+        }
       }
       break;
     }
