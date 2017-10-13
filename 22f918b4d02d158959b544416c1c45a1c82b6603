@@ -16,6 +16,24 @@
       "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bbfc40_f4a24ae1",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T00:11:22Z",
+      "side": 1,
+      "message": "Correct, there should always be a RFH for the main frame.",
+      "parentUuid": "95d591c5_6fd39c9f",
+      "revId": "22f918b4d02d158959b544416c1c45a1c82b6603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

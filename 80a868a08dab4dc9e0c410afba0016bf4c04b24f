@@ -16,6 +16,24 @@
       "revId": "80a868a08dab4dc9e0c410afba0016bf4c04b24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7bcdc8_8b7835fd",
+        "filename": "extensions/renderer/api/automation/automation_api_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-13T00:11:22Z",
+      "side": 0,
+      "message": "Yup, I think that makes sense!  I\u0027m guessing previously we might\u0027ve gotten the message for a swapped-out RenderView with no MainFrame(), but that shouldn\u0027t be possible now.",
+      "parentUuid": "03649204_d1fabfc8",
+      "revId": "80a868a08dab4dc9e0c410afba0016bf4c04b24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
