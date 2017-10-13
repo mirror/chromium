@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "354afeb4_faf87fa8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:44:18Z",
+      "side": 1,
+      "message": "Rename this to clear.",
+      "revId": "c02c7abf03420f439844301cf9aaf986b399a711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbed8b4_d6cbe0dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterSuggestionBuilder.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-13T23:44:18Z",
+      "side": 1,
+      "message": "Why don\u0027t we call this method in NetworkLogView?",
+      "revId": "c02c7abf03420f439844301cf9aaf986b399a711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
