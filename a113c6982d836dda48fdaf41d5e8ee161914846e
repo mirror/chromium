@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474218d0_7d7195e5",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T07:05:01Z",
+      "side": 1,
+      "message": "Add a comment and mention why we need this.",
+      "revId": "a113c6982d836dda48fdaf41d5e8ee161914846e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
