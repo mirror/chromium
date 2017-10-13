@@ -26,6 +26,9 @@ bool OffHoursInterval::Contains(const WeeklyTime& w) const {
   if (w.GetDurationTo(end_).is_zero())
     return false;
   base::TimeDelta interval_duration = start_.GetDurationTo(end_);
+  LOG(ERROR) << start_.GetDurationTo(w) << " " << w.GetDurationTo(end_) << " "
+             << interval_duration;
+  LOG(ERROR) << start_.day_of_week() << end_.day_of_week() << w.day_of_week();
   return start_.GetDurationTo(w) + w.GetDurationTo(end_) == interval_duration;
 }
 
