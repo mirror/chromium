@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bfd3f0c_026e3328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-13T04:00:27Z",
+      "side": 1,
+      "message": "It\u0027s a physical key in headphone jack.. Hopefully this doc could give a bit more background: go/cros-headphone-assistant-key \n\nI feel the key event flows like evdev-\u003edomcode-\u003eposix key-\u003eVKEY. Is there an alternative path? If there is, I\u0027d be happy to take it.",
+      "parentUuid": "14913c26_5b9d036b",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f13e5b42_1b28895b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -76,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "1a6927b1_438ef0cd",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-13T04:00:27Z",
+      "side": 1,
+      "message": "VOICE_INTERACTION refers to ASSISTANT for historical reason. Start voice interaction mean \"start assistant (in typing mode)\".. START_VOICE_INTERACTION_VOICE_COMMAND means \"start assistant in voice command mode\".",
+      "parentUuid": "8ab9a428_e26c14d9",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e36535b_f36a4cdb",
         "filename": "ui/events/keycodes/dom/dom_key_data.inc",
         "patchSetId": 3
@@ -87,6 +123,24 @@
       "writtenOn": "2017-10-12T22:59:13Z",
       "side": 1,
       "message": "Who is driving the standardization effort for LaunchAssistant, LaunchControlPanel, and this new assignment?\n\nWhy do we need an explicit LaunchAssistantVoiceCommand, rather than just using the LaunchAssistant value? Don\u0027t they trigger the same basic action?",
+      "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0359d379_171a7a28",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-13T04:00:27Z",
+      "side": 1,
+      "message": "I believe these keys are chrome specific (more likely specific to ChromeOS and not going to be part of any standard).\n\nThese 2 actions launch assistant in different mode as described before.",
+      "parentUuid": "4e36535b_f36a4cdb",
       "revId": "166e7b40e3545e6a68fce4e3e1e6029ec3568ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
