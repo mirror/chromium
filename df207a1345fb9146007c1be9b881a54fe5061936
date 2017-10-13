@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afdb0c14_3ae46156",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T19:23:57Z",
+      "side": 1,
+      "message": "Be explicit about the tests that were copied and where they were copied from.",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b788c66_6457b2f8",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T19:23:57Z",
+      "side": 1,
+      "message": "nit: Change to private registry.",
+      "range": {
+        "startLine": 860,
+        "startChar": 30,
+        "endLine": 860,
+        "endChar": 57
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea01203c_1d536218",
+        "filename": "content/network/cookie_manager_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T19:23:57Z",
+      "side": 1,
+      "message": "nit (but how did this pass?): //",
+      "range": {
+        "startLine": 968,
+        "startChar": 15,
+        "endLine": 968,
+        "endChar": 19
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30a04c0_a4dadb2c",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T19:23:57Z",
+      "side": 1,
+      "message": "Wording is off here.  REgistries are ETLDs and the effective domain is ETLD+1.",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0637d4a3_cb2449e2",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-13T19:23:57Z",
+      "side": 1,
+      "message": "Think about phrasing here.  Maybe \"The IP address or private hostname is used.\"",
+      "range": {
+        "startLine": 103,
+        "startChar": 42,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "df207a1345fb9146007c1be9b881a54fe5061936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
