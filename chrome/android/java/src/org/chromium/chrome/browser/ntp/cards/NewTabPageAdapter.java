@@ -264,8 +264,8 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         boolean allDismissed = hasAllBeenDismissed() && !areArticlesLoading();
 
         mAllDismissed.setVisible(areRemoteSuggestionsEnabled && allDismissed);
-        mFooter.setVisible(!SuggestionsConfig.scrollToLoad() && areRemoteSuggestionsEnabled
-                && !allDismissed);
+        mFooter.setVisible(
+                !SuggestionsConfig.scrollToLoad() && areRemoteSuggestionsEnabled && !allDismissed);
 
         if (mBottomSpacer != null) {
             mBottomSpacer.setVisible(areRemoteSuggestionsEnabled || !allDismissed);

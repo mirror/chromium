@@ -11,7 +11,8 @@ namespace scheduler {
 
 namespace {
 
-struct {} g_object;
+struct {
+} g_object;
 
 const char* SignOfInt(int value) {
   if (value > 0) {
@@ -28,10 +29,10 @@ const char* SignOfInt(int value) {
 // TODO(kraynov): Tracing tests.
 
 TEST(TracingHelperTest, Operators) {
-  TraceableState<int, kTracingCategoryNameDebug> x(
-      -1, "X", &g_object, SignOfInt);
-  TraceableState<int, kTracingCategoryNameDebug> y(
-      1, "Y", &g_object, SignOfInt);
+  TraceableState<int, kTracingCategoryNameDebug> x(-1, "X", &g_object,
+                                                   SignOfInt);
+  TraceableState<int, kTracingCategoryNameDebug> y(1, "Y", &g_object,
+                                                   SignOfInt);
   EXPECT_EQ(0, x + y);
   EXPECT_FALSE(x == y);
   EXPECT_TRUE(x != y);

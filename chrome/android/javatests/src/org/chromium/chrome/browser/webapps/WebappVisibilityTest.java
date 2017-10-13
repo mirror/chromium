@@ -85,12 +85,12 @@ public class WebappVisibilityTest {
 
         // For WebAPKs but not Webapps show browser controls for subdomains and private
         // registries that are secure.
-        Assert.assertEquals(scopePolicy == WebappScopePolicy.WEBAPK
-                        || displayMode == WebDisplayMode.MINIMAL_UI,
+        Assert.assertEquals(
+                scopePolicy == WebappScopePolicy.WEBAPK || displayMode == WebDisplayMode.MINIMAL_UI,
                 shouldShowBrowserControls(WEBAPP_URL, "http://sub.originalwebsite.com",
                         ConnectionSecurityLevel.NONE, scopePolicy, displayMode));
-        Assert.assertEquals(scopePolicy == WebappScopePolicy.WEBAPK
-                        || displayMode == WebDisplayMode.MINIMAL_UI,
+        Assert.assertEquals(
+                scopePolicy == WebappScopePolicy.WEBAPK || displayMode == WebDisplayMode.MINIMAL_UI,
                 shouldShowBrowserControls(WEBAPP_URL, "http://thing.originalwebsite.com",
                         ConnectionSecurityLevel.NONE, scopePolicy, displayMode));
 

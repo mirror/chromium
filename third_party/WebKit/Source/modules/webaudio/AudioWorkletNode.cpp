@@ -32,10 +32,8 @@ AudioWorkletHandler::AudioWorkletHandler(
   DCHECK(IsMainThread());
 
   for (const auto& param_name : param_handler_map_.Keys()) {
-    param_value_map_.Set(
-        param_name,
-        std::make_unique<AudioFloatArray>(
-            AudioUtilities::kRenderQuantumFrames));
+    param_value_map_.Set(param_name, std::make_unique<AudioFloatArray>(
+                                         AudioUtilities::kRenderQuantumFrames));
   }
 
   for (unsigned i = 0; i < options.numberOfInputs(); ++i) {
@@ -44,9 +42,8 @@ AudioWorkletHandler::AudioWorkletHandler(
 
   // If |options.outputChannelCount| unspecified, all outputs are mono.
   for (unsigned i = 0; i < options.numberOfOutputs(); ++i) {
-    unsigned long channel_count = options.hasOutputChannelCount()
-        ? options.outputChannelCount()[i]
-        : 1;
+    unsigned long channel_count =
+        options.hasOutputChannelCount() ? options.outputChannelCount()[i] : 1;
     AddOutput(channel_count);
   }
 
@@ -63,8 +60,8 @@ RefPtr<AudioWorkletHandler> AudioWorkletHandler::Create(
     String name,
     HashMap<String, RefPtr<AudioParamHandler>> param_handler_map,
     const AudioWorkletNodeOptions& options) {
-  return WTF::AdoptRef(new AudioWorkletHandler(
-      node, sample_rate, name, param_handler_map, options));
+  return WTF::AdoptRef(new AudioWorkletHandler(node, sample_rate, name,
+                                               param_handler_map, options));
 }
 
 void AudioWorkletHandler::Process(size_t frames_to_process) {
@@ -91,11 +88,10 @@ void AudioWorkletHandler::Process(size_t frames_to_process) {
     const auto param_handler = param_handler_map_.at(param_name);
     AudioFloatArray* param_values = param_value_map_.at(param_name);
     if (param_handler->HasSampleAccurateValues()) {
-      param_handler->CalculateSampleAccurateValues(
-          param_values->Data(), frames_to_process);
+      param_handler->CalculateSampleAccurateValues(param_values->Data(),
+                                                   frames_to_process);
     } else {
-      std::fill(param_values->Data(),
-                param_values->Data() + frames_to_process,
+      std::fill(param_values->Data(), param_values->Data() + frames_to_process,
                 param_handler->Value());
     }
   }
@@ -142,11 +138,9 @@ AudioWorkletNode::AudioWorkletNode(
   HashMap<String, RefPtr<AudioParamHandler>> param_handler_map;
   for (const auto& param_info : param_info_list) {
     String param_name = param_info.Name().IsolatedCopy();
-    AudioParam* audio_param = AudioParam::Create(context,
-                                                 kParamTypeAudioWorklet,
-                                                 param_info.DefaultValue(),
-                                                 param_info.MinValue(),
-                                                 param_info.MaxValue());
+    AudioParam* audio_param = AudioParam::Create(
+        context, kParamTypeAudioWorklet, param_info.DefaultValue(),
+        param_info.MinValue(), param_info.MaxValue());
     audio_param_map.Set(param_name, audio_param);
     param_handler_map.Set(param_name, WrapRefPtr(&audio_param->Handler()));
 
@@ -159,11 +153,8 @@ AudioWorkletNode::AudioWorkletNode(
   }
   parameter_map_ = new AudioParamMap(audio_param_map);
 
-  SetHandler(AudioWorkletHandler::Create(*this,
-                                         context.sampleRate(),
-                                         name,
-                                         param_handler_map,
-                                         options));
+  SetHandler(AudioWorkletHandler::Create(*this, context.sampleRate(), name,
+                                         param_handler_map, options));
 }
 
 AudioWorkletNode* AudioWorkletNode::Create(
@@ -182,7 +173,7 @@ AudioWorkletNode* AudioWorkletNode::Create(
     exception_state.ThrowDOMException(
         kNotSupportedError,
         "AudioWorkletNode cannot be created: Number of inputs and number of "
-            "outputs cannot be both zero.");
+        "outputs cannot be both zero.");
     return nullptr;
   }
 
@@ -191,7 +182,7 @@ AudioWorkletNode* AudioWorkletNode::Create(
       exception_state.ThrowDOMException(
           kIndexSizeError,
           "AudioWorkletNode cannot be created: Length of specified "
-              "'outputChannelCount' (" +
+          "'outputChannelCount' (" +
               String::Number(options.outputChannelCount().size()) +
               ") does not match the given number of outputs (" +
               String::Number(options.numberOfOutputs()) + ").");
@@ -204,8 +195,7 @@ AudioWorkletNode* AudioWorkletNode::Create(
         exception_state.ThrowDOMException(
             kNotSupportedError,
             ExceptionMessages::IndexOutsideRange<unsigned long>(
-                "channel count", channel_count,
-                1,
+                "channel count", channel_count, 1,
                 ExceptionMessages::kInclusiveBound,
                 BaseAudioContext::MaxNumberOfChannels(),
                 ExceptionMessages::kInclusiveBound));
@@ -218,8 +208,8 @@ AudioWorkletNode* AudioWorkletNode::Create(
     exception_state.ThrowDOMException(
         kInvalidStateError,
         "AudioWorkletNode cannot be created: AudioWorklet does not have a "
-            "valid AudioWorkletGlobalScope. Load a script via "
-            "audioWorklet.addModule() first.");
+        "valid AudioWorkletGlobalScope. Load a script via "
+        "audioWorklet.addModule() first.");
     return nullptr;
   }
 
@@ -237,9 +227,8 @@ AudioWorkletNode* AudioWorkletNode::Create(
       *context, name, options, proxy->GetParamInfoListForProcessor(name));
 
   if (!node) {
-    exception_state.ThrowDOMException(
-        kInvalidStateError,
-        "AudioWorkletNode cannot be created.");
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "AudioWorkletNode cannot be created.");
     return nullptr;
   }
 

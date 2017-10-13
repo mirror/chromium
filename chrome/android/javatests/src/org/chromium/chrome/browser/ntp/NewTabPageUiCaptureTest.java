@@ -71,11 +71,13 @@ public class NewTabPageUiCaptureTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage", "UiCatalogue"})
-    @CommandLineFlags.Add({
-        "disable-features=" + ChromeFeatureList.CHROME_HOME_PROMO,
-    })
-    @ScreenShooter.Directory("New Tab Page")
-    public void testCaptureNewTabPage() {
+    @CommandLineFlags
+            .Add({
+                    "disable-features=" + ChromeFeatureList.CHROME_HOME_PROMO,
+            })
+            @ScreenShooter.Directory("New Tab Page")
+            public void
+            testCaptureNewTabPage() {
         mScreenShooter.shoot("New Tab Page");
         // Scroll to search bar
         final NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
@@ -112,11 +114,13 @@ public class NewTabPageUiCaptureTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage", "UiCatalogue"})
-    @CommandLineFlags.Add({
-        "enable-features=" + ChromeFeatureList.CHROME_HOME_PROMO,
-    })
-    @ScreenShooter.Directory("New Tab Page")
-    public void testCaptureNewTabPageWithChromeHomePromo() {
+    @CommandLineFlags
+            .Add({
+                    "enable-features=" + ChromeFeatureList.CHROME_HOME_PROMO,
+            })
+            @ScreenShooter.Directory("New Tab Page")
+            public void
+            testCaptureNewTabPageWithChromeHomePromo() {
         Assert.assertTrue(ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO));
         mScreenShooter.shoot("New Tab Page with Chrome Home Promo");
     }

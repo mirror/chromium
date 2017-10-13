@@ -280,7 +280,7 @@ class MediaCodecUtil {
      * @return CodecCreationInfo object
      */
     static CodecCreationInfo createDecoder(String mime, int codecType) {
-        return createDecoder(mime,codecType,null);
+        return createDecoder(mime, codecType, null);
     }
 
     /**

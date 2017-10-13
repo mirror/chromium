@@ -11,13 +11,13 @@
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "bindings/modules/v8/V8AudioParamDescriptor.h"
-#include "core/typed_arrays/DOMTypedArray.h"
 #include "core/dom/ExceptionCode.h"
-#include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
+#include "core/typed_arrays/DOMTypedArray.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioParamDescriptor.h"
 #include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
+#include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
 #include "platform/audio/AudioBus.h"
 #include "platform/audio/AudioUtilities.h"
 #include "platform/bindings/V8BindingMacros.h"
@@ -212,8 +212,7 @@ bool AudioWorkletGlobalScope::Process(
   for (const auto input_bus : *input_buses) {
     HeapVector<Member<DOMFloat32Array>> input;
     for (unsigned channel_index = 0;
-         channel_index < input_bus->NumberOfChannels();
-         ++channel_index) {
+         channel_index < input_bus->NumberOfChannels(); ++channel_index) {
       DOMFloat32Array* channel_data_array =
           DOMFloat32Array::Create(input_bus->length());
       memcpy(channel_data_array->Data(),
@@ -227,10 +226,8 @@ bool AudioWorkletGlobalScope::Process(
   for (const auto output_bus : *output_buses) {
     HeapVector<Member<DOMFloat32Array>> output;
     for (unsigned channel_index = 0;
-         channel_index < output_bus->NumberOfChannels();
-         ++channel_index) {
-      output.push_back(
-          DOMFloat32Array::Create(output_bus->length()));
+         channel_index < output_bus->NumberOfChannels(); ++channel_index) {
+      output.push_back(DOMFloat32Array::Create(output_bus->length()));
     }
     outputs.push_back(output);
   }
@@ -240,8 +237,7 @@ bool AudioWorkletGlobalScope::Process(
     const AudioFloatArray* source_param_array = param_value_map->at(param_name);
     DOMFloat32Array* param_array =
         DOMFloat32Array::Create(source_param_array->size());
-    memcpy(param_array->Data(),
-           source_param_array->Data(),
+    memcpy(param_array->Data(), source_param_array->Data(),
            sizeof(float) * source_param_array->size());
     param_values.Add(
         StringView(param_name.IsolatedCopy()),
@@ -249,10 +245,9 @@ bool AudioWorkletGlobalScope::Process(
   }
 
   v8::Local<v8::Value> argv[] = {
-    ToV8(inputs, script_state->GetContext()->Global(), isolate),
-    ToV8(outputs, script_state->GetContext()->Global(), isolate),
-    param_values.V8Value()
-  };
+      ToV8(inputs, script_state->GetContext()->Global(), isolate),
+      ToV8(outputs, script_state->GetContext()->Global(), isolate),
+      param_values.V8Value()};
 
   // TODO(hongchan): Catch exceptions thrown in the process method. The verbose
   // options forces the TryCatch object to save the exception location. The
@@ -267,9 +262,8 @@ bool AudioWorkletGlobalScope::Process(
   if (!V8ScriptRunner::CallFunction(definition->ProcessLocal(isolate),
                                     ExecutionContext::From(script_state),
                                     processor->InstanceLocal(isolate),
-                                    WTF_ARRAY_LENGTH(argv),
-                                    argv,
-                                    isolate).ToLocal(&local_result)) {
+                                    WTF_ARRAY_LENGTH(argv), argv, isolate)
+           .ToLocal(&local_result)) {
     return false;
   }
 
@@ -278,8 +272,7 @@ bool AudioWorkletGlobalScope::Process(
 
   // Copy |sequence<sequence<Float32Array>>| back to the original
   // |Vector<AudioBus*>|.
-  for (unsigned output_index = 0;
-       output_index < output_buses->size();
+  for (unsigned output_index = 0; output_index < output_buses->size();
        ++output_index) {
     HeapVector<Member<DOMFloat32Array>> output = outputs.at(output_index);
     AudioBus* original_output_bus = output_buses->at(output_index);
