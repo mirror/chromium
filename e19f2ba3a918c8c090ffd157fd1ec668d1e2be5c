@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ad3a795_ffe5d19e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-13T21:15:33Z",
+      "side": 1,
+      "message": "Description needs updating as well.",
+      "range": {
+        "startLine": 7,
+        "startChar": 20,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "e19f2ba3a918c8c090ffd157fd1ec668d1e2be5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328c1c35_0523f26d",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-13T21:15:33Z",
+      "side": 1,
+      "message": "Since we\u0027re promoting Mac to enabled-by-default we actually should remove this now.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 6
+      },
+      "revId": "e19f2ba3a918c8c090ffd157fd1ec668d1e2be5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b20fc1e_c0982bd3",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-13T21:15:33Z",
+      "side": 1,
+      "message": "... and this.",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 6
+      },
+      "revId": "e19f2ba3a918c8c090ffd157fd1ec668d1e2be5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
