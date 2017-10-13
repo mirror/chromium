@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95198695_994d85fe",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-13T19:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8224d6c1_a8f9d9a1",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2aa6fcf_e69f9fd3",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 5
@@ -51,6 +69,24 @@
       "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4526582_8e04829e",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-13T19:54:06Z",
+      "side": 1,
+      "message": "I\u0027ll leave it for now. Maybe we find the problem sometime in the future.",
+      "parentUuid": "2ed45063_57635486",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +140,24 @@
       "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0843c1_abb4ddc8",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-13T19:54:06Z",
+      "side": 1,
+      "message": "Ok, added vr_test_support as a dependency to the vr_testapp and removed duplicates.",
+      "parentUuid": "273f08be_7e5d8c7b",
+      "revId": "85a983dcbc0c212c8e36674d44068f9775cfcb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
