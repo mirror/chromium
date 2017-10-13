@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cae0d64c_a614af9d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841b6002_f3819316",
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ecbbda2_0fffa0c4",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-13T01:24:05Z",
       "side": 1,
       "message": "Haha yea... we better add a blocking bug so we don\u0027t forget to do this.\n\nBy the way, I\u0027m leaning toward having the renderer responsible for timeout on idle (briefly mentioned in https://chromium-review.googlesource.com/#/c/640652/11/content/child/service_worker/controller_service_worker_connector.cc@42).",
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a5adde_9529417f",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Yep. Done reg: filing a bug.",
+      "parentUuid": "9ecbbda2_0fffa0c4",
       "revId": "ec9cead86a6f830deabb340085973471862eaa18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f1202e4d_6e6cab92",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Hm, HasWork() || S13nEnabled() maybe? Updated the logic anyways, let me know if my understanding\u0027s wrong..",
+      "parentUuid": "4982b479_6adb7a7a",
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1bfb4ad_ef692473",
         "filename": "content/common/service_worker/controller_service_worker.mojom",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ec9cead86a6f830deabb340085973471862eaa18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13277152_8f482171",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1bfb4ad_ef692473",
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "ec9cead86a6f830deabb340085973471862eaa18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df50c4e5_b4ffb320",
+        "filename": "content/renderer/service_worker/controller_service_worker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f14c55_5b3c6c9e",
+      "range": {
+        "startLine": 21,
+        "startChar": 52,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "35348e63_030fa566",
+        "filename": "content/renderer/service_worker/controller_service_worker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Now fetch_request_id is gone!",
+      "parentUuid": "ef354ab4_e591c1ca",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec41e4f1_397ff1f1",
         "filename": "content/renderer/service_worker/controller_service_worker_impl.h",
         "patchSetId": 4
@@ -192,6 +312,30 @@
       "writtenOn": "2017-10-13T00:17:10Z",
       "side": 1,
       "message": "and watchdog timer?\n\nI think we need a watchdog timer in the browser process to detect deadlocks in SW thread.",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "ec9cead86a6f830deabb340085973471862eaa18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ebff43_a5aaf93c",
+        "filename": "content/renderer/service_worker/controller_service_worker_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Yes, I agree that watchdog needs to be in the browser process. (That\u0027s why I didn\u0027t mention it here)",
+      "parentUuid": "ec41e4f1_397ff1f1",
       "range": {
         "startLine": 27,
         "startChar": 27,

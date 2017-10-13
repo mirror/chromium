@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c010898e_c3befc65",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-13T09:59:52Z",
+      "side": 1,
+      "message": "Moved here to make sure we always run these before the callbacks are destructed",
+      "revId": "7253377a43d31f7ad2cf497f39fd34b7d8720880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
