@@ -16,6 +16,24 @@
       "revId": "6eaa3493363719b6800136e754ece3a2fb35fd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559b13b1_6307cdbd",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-13T01:31:00Z",
+      "side": 1,
+      "message": "I think putting thins in UA stylesheet instead of putting everything in SelectAutoCursor is clearer, and easier to find out what\u0027s the cursor for each element.  \nI\u0027m fine with using stylesheet as long as it can cover all the case. Although we might need a LayoutTest to test the cursor behavior.",
+      "parentUuid": "a7a76797_4c19978d",
+      "revId": "6eaa3493363719b6800136e754ece3a2fb35fd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
