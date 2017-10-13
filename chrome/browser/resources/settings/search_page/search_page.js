@@ -112,7 +112,10 @@ Polymer({
   /** @private */
   onGoogleAssistantTap_: function() {
     assert(this.voiceInteractionFeatureEnabled_);
-    settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
+    if (this.prefs && this.prefs.arc.enabled.value &&
+        this.prefs.arc.voice_interaction_value_prop.accepted.value) {
+      settings.navigateTo(settings.routes.GOOGLE_ASSISTANT);
+    }
   },
   // </if>
 
@@ -191,14 +194,18 @@ Polymer({
   },
 
   /**
-   * @param {boolean} featureAvailable
    * @param {boolean} arcEnabled
+   * @param {boolean} valuePropAccepted
    * @return {boolean}
    * @private
    */
-  showAssistantSection_: function(
-      featureAvailable, arcEnabled, valuePropAccepted) {
-    return featureAvailable && arcEnabled && valuePropAccepted;
+  isAssistantTurnedOn_: function(arcEnabled, valuePropAccepted) {
+    return arcEnabled && valuePropAccepted;
+  },
+
+  /** @private */
+  onAssistantTurnOnTap_: function(event) {
+    this.browserProxy_.turnOnGoogleAssistant();
   },
   // </if>
 
