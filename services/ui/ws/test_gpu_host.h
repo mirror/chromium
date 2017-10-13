@@ -21,6 +21,7 @@ class TestGpuHost : public GpuHost {
   void Add(mojom::GpuRequest request) override {}
   void OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) override {}
   void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) override {}
+  scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() override;
   void CreateFrameSinkManager(
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;

@@ -2675,6 +2675,7 @@ split_static_library("browser") {
       "//components/vector_icons",
       "//components/web_modal",
       "//components/zoom",
+      "//media/gpu:gpu",
       "//net:net",
     ]
   }
