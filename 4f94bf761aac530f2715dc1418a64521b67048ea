@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4368c4d0_b94d7188",
+        "filename": "build/config/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-13T02:17:15Z",
+      "side": 1,
+      "message": "We try to avoid global flags where at all possible, and it seems to me like this flag will likely only be needed in a few places. That\u0027s why I suggested the separate config in the email; we\u0027d only apply it to the targets that need it.",
+      "revId": "4f94bf761aac530f2715dc1418a64521b67048ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
