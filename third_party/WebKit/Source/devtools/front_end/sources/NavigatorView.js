@@ -397,13 +397,7 @@ Sources.NavigatorView = class extends UI.VBox {
     if (!path.length) {
       if (target)
         return this._domainNode(uiSourceCode, project, target, frame, projectOrigin);
-      var fileSystemNode = this._rootNode.child(project.id());
-      if (!fileSystemNode) {
-        fileSystemNode = new Sources.NavigatorGroupTreeNode(
-            this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
-        this._rootNode.appendChild(fileSystemNode);
-      }
-      return fileSystemNode;
+      return this.fileSystemRootFolder(project);
     }
 
     var parentNode =
@@ -417,6 +411,21 @@ Sources.NavigatorView = class extends UI.VBox {
     this._subfolderNodes.set(folderId, folderNode);
     parentNode.appendChild(folderNode);
     return folderNode;
+  }
+
+  /**
+   * @param {!Workspace.Project} project
+   * @protected
+   * @return {!Sources.NavigatorTreeNode}
+   */
+  fileSystemRootFolder(project) {
+    var fileSystemNode = this._rootNode.child(project.id());
+    if (!fileSystemNode) {
+      fileSystemNode = new Sources.NavigatorGroupTreeNode(
+          this, project, project.id(), Sources.NavigatorView.Types.FileSystem, project.displayName());
+      this._rootNode.appendChild(fileSystemNode);
+    }
+    return fileSystemNode;
   }
 
   /**
@@ -586,6 +595,10 @@ Sources.NavigatorView = class extends UI.VBox {
       parentNode = node.parent;
       if (!parentNode || !node.isEmpty())
         break;
+      var fileSystemProjectExists =
+          project.type() === Workspace.projectTypes.FileSystem && this._workspace.project(project.id());
+      if (parentNode === this._rootNode && fileSystemProjectExists)
+        break;
       if (!(node instanceof Sources.NavigatorGroupTreeNode || node instanceof Sources.NavigatorFolderTreeNode))
         break;
       if (node._type === Sources.NavigatorView.Types.Frame) {
@@ -744,40 +757,17 @@ Sources.NavigatorView = class extends UI.VBox {
    * @param {string} path
    * @param {!Workspace.UISourceCode=} uiSourceCodeToCopy
    */
-  create(project, path, uiSourceCodeToCopy) {
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?string} content
-     */
-    function contentLoaded(content) {
-      createFile.call(this, content || '');
-    }
-
+  async create(project, path, uiSourceCodeToCopy) {
+    var content = '';
     if (uiSourceCodeToCopy)
-      uiSourceCodeToCopy.requestContent().then(contentLoaded.bind(this));
-    else
-      createFile.call(this);
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {string=} content
-     */
-    function createFile(content) {
-      project.createFile(path, null, content || '', fileCreated.bind(this));
-    }
-
-    /**
-     * @this {Sources.NavigatorView}
-     * @param {?Workspace.UISourceCode} uiSourceCode
-     */
-    function fileCreated(uiSourceCode) {
-      if (!uiSourceCode)
-        return;
-      this._sourceSelected(uiSourceCode, false);
-      var node = this.revealUISourceCode(uiSourceCode, true);
-      if (node)
-        this.rename(node, true);
-    }
+      content = (await uiSourceCodeToCopy.requestContent()) || '';
+    var uiSourceCode = await project.createFile(path, null, content);
+    if (!uiSourceCode)
+      return;
+    this._sourceSelected(uiSourceCode, false);
+    var node = this.revealUISourceCode(uiSourceCode, true);
+    if (node)
+      this.rename(node, true);
   }
 
   _groupingChanged() {
