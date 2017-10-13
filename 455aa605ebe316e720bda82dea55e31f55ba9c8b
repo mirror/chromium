@@ -46,6 +46,30 @@
       "revId": "455aa605ebe316e720bda82dea55e31f55ba9c8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749ba937_bad31792",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-13T18:21:34Z",
+      "side": 0,
+      "message": "OK.",
+      "parentUuid": "12650297_21ca5245",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "455aa605ebe316e720bda82dea55e31f55ba9c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
