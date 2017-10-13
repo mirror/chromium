@@ -173,12 +173,12 @@ BrowserAccessibilityManager::~BrowserAccessibilityManager() {
 void BrowserAccessibilityManager::Initialize(
     const ui::AXTreeUpdate& initial_tree) {
   if (!tree_->Unserialize(initial_tree)) {
-    if (delegate_) {
-      LOG(ERROR) << tree_->error();
-      delegate_->AccessibilityFatalError();
-    } else {
-      LOG(FATAL) << tree_->error();
-    }
+    // TODO(dmazzoni): Add some data to crash reporting so we can
+    // learn what causes these errors.
+    LOG(ERROR) << tree_->error();
+    tree_->SetDelegate(nullptr);
+    tree_.reset(new ui::AXSerializableTree());
+    tree_->SetDelegate(this);
   }
 }
 
