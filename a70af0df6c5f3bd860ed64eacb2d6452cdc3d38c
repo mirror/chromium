@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e047b94_be34e967",
+        "filename": "media/base/output_with_release_mailbox_cb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "This output path will be redundant once my CL lands; I\u0027d rather avoid making it more official in the meantime.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b4d165_798a706a",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "D:",
+      "range": {
+        "startLine": 179,
+        "startChar": 25,
+        "endLine": 179,
+        "endChar": 49
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f5184e_52441545",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "Is there any path to sharing code with H264Decoder?",
+      "range": {
+        "startLine": 212,
+        "startChar": 44,
+        "endLine": 212,
+        "endChar": 53
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "febda5a2_8496b422",
+        "filename": "media/gpu/d3d11_h264_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "Perhaps I should be reading the DXVA guide, but I\u0027m dubious that this should be constant. My understanding of the spec is that this flag should be set for level \u003e\u003d 3.1. (That is, enforcing this restriction could break lower-level streams.)",
+      "range": {
+        "startLine": 270,
+        "startChar": 12,
+        "endLine": 270,
+        "endChar": 36
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5469202b_6bcedef1",
+        "filename": "media/gpu/d3d11_h264_accelerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "It should probably be commented that this means that destruction must occur on the GPU main thread.",
+      "range": {
+        "startLine": 71,
+        "startChar": 53,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58aecd7_e8c1bb09",
+        "filename": "media/gpu/windows/d3d11_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-13T18:25:44Z",
+      "side": 1,
+      "message": "Not really sure what this is trying to say.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "a70af0df6c5f3bd860ed64eacb2d6452cdc3d38c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
