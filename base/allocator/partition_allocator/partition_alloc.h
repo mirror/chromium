@@ -280,8 +280,11 @@ struct PartitionBucket {
 };
 
 // An "extent" is a span of consecutive superpages. We link to the partition's
-// next extent (if there is one) at the very start of a superpage's metadata
+// next extent (if there is one) to the very start of a superpage's metadata
 // area.
+//
+// This must be the same size as the PartitionPage struct to make
+// PartitionPageToPointer implementation fast.
 struct PartitionSuperPageExtentEntry {
   PartitionRootBase* root;
   char* super_page_base;
@@ -308,9 +311,14 @@ struct BASE_EXPORT PartitionRootBase {
   unsigned num_buckets = 0;
   unsigned max_allocation = 0;
   bool initialized = false;
+
+  // Pointers into values within the current extent.
+  // TODO(ajwong): ^^ verify the above statement.
   char* next_super_page = nullptr;
   char* next_partition_page = nullptr;
   char* next_partition_page_end = nullptr;
+
+  // Tracks list of super pages.
   PartitionSuperPageExtentEntry* current_extent = nullptr;
   PartitionSuperPageExtentEntry* first_extent = nullptr;
   PartitionDirectMapExtent* direct_map_list = nullptr;
@@ -327,6 +335,10 @@ struct BASE_EXPORT PartitionRoot : public PartitionRootBase {
   PartitionRoot();
   ~PartitionRoot() override;
   // The PartitionAlloc templated class ensures the following is correct.
+  //
+  // This references the buckets OFF the edge of this struct. All uses of
+  // PartitionRoot must have the bucket array come right after.
+  // This should have been a flexible array member. grumble. grumble.
   ALWAYS_INLINE PartitionBucket* buckets() {
     return reinterpret_cast<PartitionBucket*>(this + 1);
   }
@@ -589,8 +601,11 @@ ALWAYS_INLINE PartitionPage* PartitionPointerToPageNoAlignmentCheck(void* ptr) {
 
 ALWAYS_INLINE void* PartitionPageToPointer(const PartitionPage* page) {
   uintptr_t pointer_as_uint = reinterpret_cast<uintptr_t>(page);
+
+  // Finds offset from start of SuperPage which is 2MB.
   uintptr_t super_page_offset = (pointer_as_uint & kSuperPageOffsetMask);
-  DCHECK(super_page_offset > kSystemPageSize);
+  DCHECK(super_page_offset > kSystemPageSize);  // Must be past guard page.
+  // Must be less than total metadata region.
   DCHECK(super_page_offset < kSystemPageSize + (kNumPartitionPagesPerSuperPage *
                                                 kPageMetadataSize));
   uintptr_t partition_page_index =
@@ -701,8 +716,11 @@ ALWAYS_INLINE void* PartitionBucketAlloc(PartitionRootBase* root,
   char* char_ret = static_cast<char*>(ret);
   // The value given to the application is actually just after the cookie.
   ret = char_ret + kCookieSize;
-  memset(ret, kUninitializedByte, no_cookie_size);
+
+  // Fill the allocted region with kUninitializedByte and surrond it with 2
+  // cookies.
   PartitionCookieWriteValue(char_ret);
+  memset(ret, kUninitializedByte, no_cookie_size);
   PartitionCookieWriteValue(char_ret + kCookieSize + no_cookie_size);
 #endif
   return ret;
@@ -805,6 +823,7 @@ ALWAYS_INLINE void* PartitionAllocGenericFlags(PartitionRootGeneric* root,
   return result;
 #else
   DCHECK(root->initialized);
+  // Round size to account for PA cookies. Mmmm... Deadbeef.
   size_t requested_size = size;
   size = PartitionCookieSizeAdjustAdd(size);
   PartitionBucket* bucket = PartitionGenericSizeToBucket(root, size);
@@ -909,7 +928,7 @@ class SizeSpecificPartitionAllocator {
 
  private:
   PartitionRoot partition_root_;
-  PartitionBucket actual_buckets_[kNumBuckets];
+  PartitionBucket actual_buckets_[kNumBuckets];  // TODO(ajwong): Is this field even used?
 };
 
 class BASE_EXPORT PartitionAllocatorGeneric {

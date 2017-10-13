@@ -47,6 +47,7 @@ For an example of how to use partitions to get good performance and good safety,
 see Blink's usage, as described in `wtf/allocator/Allocator.md`.
 
 Large allocations (> 1 MB) are realized by direct memory mmapping.
+THIS IS A LIE. It's actually 0xf0000 = 983040.
 
 `PartitionAllocGeneric` acquires a lock for thread safety. (The current
 implementation uses a spin lock on the assumption that thread contention will be
