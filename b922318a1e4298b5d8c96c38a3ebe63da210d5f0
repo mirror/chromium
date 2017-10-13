@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b234b0d_cbe5ef7a",
+        "filename": "extensions/renderer/runtime_hooks_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T00:15:26Z",
+      "side": 1,
+      "message": "Good idea!  Done.",
+      "parentUuid": "f1714e63_921b5fd5",
+      "range": {
+        "startLine": 222,
+        "startChar": 30,
+        "endLine": 222,
+        "endChar": 47
+      },
+      "revId": "b922318a1e4298b5d8c96c38a3ebe63da210d5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f943717c_e9772f88",
         "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "b922318a1e4298b5d8c96c38a3ebe63da210d5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902a82b0_36de2e9d",
+        "filename": "extensions/renderer/runtime_hooks_delegate_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-13T00:15:26Z",
+      "side": 1,
+      "message": "It\u0027s used to make sure that we send only the messages we expect from the IPC sender.  We check these in any of the messaging-related tests (SendMessage, Connect, etc), and need to validate that we aren\u0027t sending extraneous messages.  We probably don\u0027t strictly need it in e.g. the GetURL tests, but it doesn\u0027t hurt at all (and if it were to fail, it would indeed be a failure).",
+      "parentUuid": "f943717c_e9772f88",
+      "revId": "b922318a1e4298b5d8c96c38a3ebe63da210d5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
