@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338cae81_d5d58393",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-10-13T20:18:23Z",
+      "side": 1,
+      "message": "If I\u0027m correct the logic is reversed here, right?",
+      "range": {
+        "startLine": 944,
+        "startChar": 20,
+        "endLine": 944,
+        "endChar": 48
+      },
+      "revId": "d11a9feb7fc5e84ffba760d636ad8648f28f0a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
