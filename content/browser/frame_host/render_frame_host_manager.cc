@@ -544,8 +544,8 @@ void RenderFrameHostManager::CommitPendingFramePolicy() {
   if (!frame_tree_node_->CommitPendingFramePolicy())
     return;
 
-  // Policy updates can only happen when the frame has a parent.
-  CHECK(frame_tree_node_->parent());
+  if (!frame_tree_node_->parent())
+    return;
 
   // Notify all of the frame's proxies about updated policies, excluding
   // the parent process since it already knows the latest state.

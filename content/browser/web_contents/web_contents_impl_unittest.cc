@@ -57,6 +57,7 @@
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/web/WebSandboxFlags.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "url/url_constants.h"
 
@@ -3616,6 +3617,18 @@ TEST_F(WebContentsImplTest, ResetJavaScriptDialogOnUserNavigate) {
   EXPECT_EQ(1u, dialog_manager.reset_count());
 
   contents()->SetJavaScriptDialogManagerForTesting(nullptr);
+}
+
+TEST_F(WebContentsImplTest, CreatePresentationReceiver) {
+  WebContents::CreateParams params(browser_context());
+  params.is_presentation_receiver = true;
+  WebContentsImpl* new_contents =
+      WebContentsImpl::CreateWithOpener(params, nullptr);
+  FrameTreeNode* root = new_contents->GetFrameTree()->root();
+  blink::WebSandboxFlags pending_flags = root->pending_sandbox_flags();
+  EXPECT_EQ(pending_flags, blink::WebSandboxFlags::kPopups |
+                               blink::WebSandboxFlags::kModals |
+                               blink::WebSandboxFlags::kTopNavigation);
 }
 
 }  // namespace content
