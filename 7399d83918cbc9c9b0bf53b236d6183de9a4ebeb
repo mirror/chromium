@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "809f2d11_97b35feb",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T07:47:31Z",
+      "side": 1,
+      "message": "Should this be added as well for now?\n\n(I have no idea in what stage of development Fuchsia is, and how the UI currently looks like, i.e. if we have a UI pasted from mobile, desktop, or nothing at all).",
+      "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094014a7_d41103a8",
+        "filename": "components/content_settings/core/browser/website_settings_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T07:47:31Z",
+      "side": 1,
+      "message": "Fuchsia is supposed to be both a desktop and mobile platform, right? Then it should go here as well?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74973112_c42fda2f",
         "filename": "components/content_settings/core/browser/website_settings_registry.h",
         "patchSetId": 2
@@ -31,6 +71,24 @@
       "side": 1,
       "message": "Sorry, I don\u0027t follow. Why would this restrict the number of website settings? It seems like this is an additive change?",
       "parentUuid": "74973112_c42fda2f",
+      "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc38ecc4_0d5a7f2c",
+        "filename": "components/content_settings/core/browser/website_settings_registry.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T07:47:31Z",
+      "side": 1,
+      "message": "On iOS, we only support two content settings - cookies and popups. Therefore, those two are the only two defined with ALL_PLATFORMS.\n\nSee also my related comment above.",
+      "parentUuid": "e94f136c_dfbafca3",
       "revId": "7399d83918cbc9c9b0bf53b236d6183de9a4ebeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
