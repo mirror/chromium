@@ -112,7 +112,6 @@ class StatelessConnectionTerminator {
         collector_(helper->GetStreamSendBufferAllocator()),
         creator_(connection_id,
                  framer,
-                 helper->GetStreamFrameBufferAllocator(),
                  &collector_),
         time_wait_list_manager_(time_wait_list_manager) {
     framer_->set_data_producer(&collector_);

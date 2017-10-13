@@ -233,10 +233,6 @@ class TestConnectionHelper : public QuicConnectionHelperInterface {
 
   QuicRandom* GetRandomGenerator() override { return random_generator_; }
 
-  QuicBufferAllocator* GetStreamFrameBufferAllocator() override {
-    return &buffer_allocator_;
-  }
-
   QuicBufferAllocator* GetStreamSendBufferAllocator() override {
     return &buffer_allocator_;
   }
@@ -729,7 +725,6 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
                      Perspective::IS_SERVER),
         peer_creator_(connection_id_,
                       &peer_framer_,
-                      &buffer_allocator_,
                       /*delegate=*/nullptr),
         writer_(new TestPacketWriter(transport_version(), &clock_)),
         connection_(connection_id_,

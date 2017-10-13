@@ -107,13 +107,11 @@ class TestPacketGenerator : public QuicPacketGenerator {
   TestPacketGenerator(QuicConnectionId connection_id,
                       QuicFramer* framer,
                       QuicRandom* random_generator,
-                      QuicBufferAllocator* buffer_allocator,
                       DelegateInterface* delegate,
                       SimpleDataProducer* producer)
       : QuicPacketGenerator(connection_id,
                             framer,
                             random_generator,
-                            buffer_allocator,
                             delegate),
         producer_(producer) {}
 
@@ -157,7 +155,6 @@ class QuicPacketGeneratorTest : public QuicTest {
         generator_(42,
                    &framer_,
                    &random_generator_,
-                   &buffer_allocator_,
                    &delegate_,
                    &producer_),
         creator_(QuicPacketGeneratorPeer::GetPacketCreator(&generator_)) {
@@ -266,7 +263,6 @@ class QuicPacketGeneratorTest : public QuicTest {
 
   QuicFramer framer_;
   MockRandom random_generator_;
-  SimpleBufferAllocator buffer_allocator_;
   StrictMock<MockDelegate> delegate_;
   TestPacketGenerator generator_;
   QuicPacketCreator* creator_;

@@ -81,10 +81,9 @@ class TestPacketCreator : public QuicPacketCreator {
  public:
   TestPacketCreator(QuicConnectionId connection_id,
                     QuicFramer* framer,
-                    QuicBufferAllocator* buffer_allocator,
                     DelegateInterface* delegate,
                     SimpleDataProducer* producer)
-      : QuicPacketCreator(connection_id, framer, buffer_allocator, delegate),
+      : QuicPacketCreator(connection_id, framer, delegate),
         producer_(producer) {}
 
   bool ConsumeData(QuicStreamId id,
@@ -143,7 +142,6 @@ class QuicPacketCreatorTest : public QuicTestWithParam<TestParams> {
         data_("foo"),
         creator_(connection_id_,
                  &client_framer_,
-                 &buffer_allocator_,
                  &delegate_,
                  &producer_),
         serialized_packet_(creator_.NoPacket()) {
@@ -245,7 +243,6 @@ class QuicPacketCreatorTest : public QuicTestWithParam<TestParams> {
   QuicConnectionId connection_id_;
   string data_;
   struct iovec iov_;
-  SimpleBufferAllocator buffer_allocator_;
   TestPacketCreator creator_;
   SerializedPacket serialized_packet_;
   SimpleDataProducer producer_;
