@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10369254_82dbcc67",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-13T20:27:33Z",
+      "side": 1,
+      "message": "set_should_show_palette was needed before because test_palette_delegate defaulted it to false, and PaletteTray::OnStylusModeChanged (whatever it\u0027s called) uses test_palette_delegate. Since should show palette and should auto open are both defaulted to true now, so this is fine.",
+      "revId": "c5c3bece113b8c09674212b324bc63c9840ad319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92da01f7_f8297b92",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-13T20:27:33Z",
+      "side": 1,
+      "message": "nit: s/EXPECT_TRUE/ASSERT_TRUE\nThe rest of this test won\u0027t be useful if this condition breaks.",
+      "revId": "c5c3bece113b8c09674212b324bc63c9840ad319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
