@@ -115,6 +115,13 @@ NET_EXPORT extern const CertErrorId kEkuLacksServerAuthButHasGatedCrypto;
 // The certificate has been revoked.
 NET_EXPORT extern const CertErrorId kCertificateRevoked;
 
+// The certificate lacks a recognized revocation mechanism (i.e. OCSP/CRL).
+// Emitted as an error when revocation checking expects certificates to have
+// such info.
+NET_EXPORT extern const CertErrorId kNoRevocationMechanism;
+
+NET_EXPORT extern const CertErrorId kUnableToCheckRevocation;
+
 }  // namespace cert_errors
 
 }  // namespace net
