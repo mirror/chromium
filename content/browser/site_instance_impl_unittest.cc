@@ -617,7 +617,8 @@ TEST_F(SiteInstanceTest, ProcessSharingByType) {
   EXPECT_EQ(extension1_instance->GetProcess(),
             extension2_instance->GetProcess());
 
-  // Create some WebUI instances and make sure they share a process.
+  // Create some WebUI instances and make sure they do not share a process,
+  // because they are configured to require dedicated processes.
   scoped_refptr<SiteInstanceImpl> webui1_instance(CreateSiteInstance(
       browser_context.get(), GURL(kChromeUIScheme + std::string("://gpu"))));
   policy->GrantWebUIBindings(webui1_instance->GetProcess()->GetID());
@@ -626,15 +627,18 @@ TEST_F(SiteInstanceTest, ProcessSharingByType) {
       browser_context.get(),
       GURL(kChromeUIScheme + std::string("://media-internals"))));
 
-  std::unique_ptr<RenderProcessHost> dom_host(webui1_instance->GetProcess());
-  EXPECT_EQ(webui1_instance->GetProcess(), webui2_instance->GetProcess());
+  std::unique_ptr<RenderProcessHost> webui1_host(webui1_instance->GetProcess());
+  std::unique_ptr<RenderProcessHost> webui2_host(webui2_instance->GetProcess());
+  EXPECT_NE(webui1_instance->GetProcess(), webui2_instance->GetProcess());
 
   // Make sure none of differing privilege processes are mixed.
   EXPECT_NE(extension1_instance->GetProcess(), webui1_instance->GetProcess());
+  EXPECT_NE(extension1_instance->GetProcess(), webui2_instance->GetProcess());
 
   for (size_t i = 0; i < kMaxRendererProcessCount; ++i) {
     EXPECT_NE(extension1_instance->GetProcess(), hosts[i].get());
     EXPECT_NE(webui1_instance->GetProcess(), hosts[i].get());
+    EXPECT_NE(webui2_instance->GetProcess(), hosts[i].get());
   }
 
   DrainMessageLoop();

@@ -421,6 +421,10 @@ bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
   if (policy->IsIsolatedOrigin(url::Origin(site_url)))
     return true;
 
+  // Always require a dedicated process for chrome:// URLs.
+  if (site_url.SchemeIs(content::kChromeUIScheme))
+    return true;
+
   // Let the content embedder enable site isolation for specific URLs. Use the
   // canonical site url for this check, so that schemes with nested origins
   // (blob and filesystem) work properly.
@@ -451,12 +455,6 @@ bool SiteInstanceImpl::ShouldLockToOrigin(BrowserContext* browser_context,
   // TODO(ncarter): Remove this exclusion once we can make origin lock per
   // RenderFrame routing id.
   if (site_url.SchemeIs(content::kGuestScheme))
-    return false;
-
-  // TODO(creis, nick) https://crbug.com/510588 Chrome UI pages use the same
-  // site (chrome://chrome), so they can't be locked because the site being
-  // loaded doesn't match the SiteInstance.
-  if (site_url.SchemeIs(content::kChromeUIScheme))
     return false;
 
   // TODO(creis, nick): Until we can handle sites with effective URLs at the
