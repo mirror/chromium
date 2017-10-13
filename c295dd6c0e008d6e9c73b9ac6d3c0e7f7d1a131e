@@ -228,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "c3a697ca_b00d9825",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-10-13T19:46:10Z",
+      "side": 1,
+      "message": "If we implement it this way we would allow users to store ProtectedPtrs in long-lived structures. Since the pointers are stored in mutable memory an attacker could overwrite them. For the ProtectedMemory case we could CHECK() that the pointer to the fn ptr resides in ProtectedMemory. However, for ProtectedArray we would also need to store a array_pointer that points to the array and CHECK() that array_pointer is in ProtectedMemory and that ptr_to_fn_ptr is in the array_pointer bounds. The problem is by adding this additional level of indirection any pointer in protected memory could potentially be used to craft \u0027fake\u0027 Arrays with attacker-controlled entries.\n\nIf the issue is having function calls look natural, we could do what you\u0027re saying but have the macros construct a ProtectedPtr object only used for that single function call. In that case, we still have several macros, but the calls look natural. This also has the benefit of ProtectedPtr being a CFI-specific wrapper separate from ProtectedMemory/ProtectedArray implementations.",
+      "parentUuid": "9f03b52b_148f2f5d",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5969fb01_9a355eea",
         "filename": "build/config/sanitizers/BUILD.gn",
         "patchSetId": 2
