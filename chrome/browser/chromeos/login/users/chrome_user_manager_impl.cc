@@ -134,7 +134,11 @@ void OnRemoveUserComplete(const AccountId& account_id,
 // Runs on SequencedWorkerPool thread. Passes resolved locale to UI thread.
 void ResolveLocale(const std::string& raw_locale,
                    std::string* resolved_locale) {
-  ignore_result(l10n_util::CheckAndResolveLocale(raw_locale, resolved_locale));
+  // TODO(jshin): Add support for locale variants (e.g. en-AU, fr-CA). They're
+  // mapped to a locale with translated strings, but need not be for anything
+  // other than UI string resource bundles.
+  ignore_result(
+      l10n_util::CheckAndResolveLocale(raw_locale, resolved_locale, nullptr));
 }
 
 bool GetUserLockAttributes(const user_manager::User* user,
