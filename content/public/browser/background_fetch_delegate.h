@@ -21,6 +21,10 @@ class HttpRequestHeaders;
 struct NetworkTrafficAnnotationTag;
 }  // namespace net
 
+namespace url {
+class Origin;
+}  // namespace url
+
 namespace content {
 struct BackgroundFetchResponse;
 struct BackgroundFetchResult;
@@ -82,7 +86,24 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
 
   virtual ~BackgroundFetchDelegate();
 
+  // Creates a new download grouping identified by |jobId|. Further downloads
+  // started by DownloadUrl will also use this |jobId| so that a notification
+  // can be updated with the current status. If the download was already started
+  // in a previous browser session, then |current_guids| should contain the
+  // GUIDs of in progress downloads, while completed downloads are recorded in
+  // |completed_parts|.
+  virtual void CreateDownloadJob(
+      const std::string& jobId,
+      const std::string& title,
+      const url::Origin& origin,
+      int completed_parts,
+      int total_parts,
+      const std::vector<std::string>& current_guids) = 0;
+
+  // Creates a new download identified by |guid| in the download job identified
+  // by |jobId|.
   virtual void DownloadUrl(
+      const std::string& jobId,
       const std::string& guid,
       const std::string& method,
       const GURL& url,

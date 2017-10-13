@@ -55,7 +55,16 @@ MockBackgroundFetchDelegate::MockBackgroundFetchDelegate() {}
 
 MockBackgroundFetchDelegate::~MockBackgroundFetchDelegate() {}
 
+void MockBackgroundFetchDelegate::CreateDownloadJob(
+    const std::string& jobId,
+    const std::string& title,
+    const url::Origin& origin,
+    int completed_parts,
+    int total_parts,
+    const std::vector<std::string>& current_guids) {}
+
 void MockBackgroundFetchDelegate::DownloadUrl(
+    const std::string& jobId,
     const std::string& guid,
     const std::string& method,
     const GURL& url,
