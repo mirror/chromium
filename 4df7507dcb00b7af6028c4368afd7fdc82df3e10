@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b215a63f_975b4b4d",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-13T00:08:03Z",
+      "side": 1,
+      "message": "super nit: maybe link to the part of the spec where it says we should only have 6 d.p.?",
+      "revId": "4df7507dcb00b7af6028c4368afd7fdc82df3e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e9a739_b0d6b942",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-13T00:08:03Z",
+      "side": 1,
+      "message": "nit: actually we don\u0027t even need \u0027j \u003e i\u0027, since we\u0027re guaranteed that buffer[i] !\u003d \u00270\u0027.",
+      "revId": "4df7507dcb00b7af6028c4368afd7fdc82df3e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4dbaf1a_844c044c",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-13T00:08:03Z",
+      "side": 1,
+      "message": "oops, I think buffer[i] \u003d\u003d \u0027.\u0027 is not needed since it\u0027s guaranteed to be the decimal point. So the logic here is that, after trimming the zeros, if the DP is last character then we change the DP to \\0.",
+      "revId": "4df7507dcb00b7af6028c4368afd7fdc82df3e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
