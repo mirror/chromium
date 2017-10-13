@@ -122,13 +122,17 @@ class URLRequestResourceBundleJob : public net::URLRequestSimpleJob {
 namespace extensions {
 namespace chrome_url_request_util {
 
-bool AllowCrossRendererResourceLoad(net::URLRequest* request,
+bool AllowCrossRendererResourceLoad(const GURL& url,
+                                    content::ResourceType resource_type,
+                                    ui::PageTransition page_transition,
+                                    int child_id,
                                     bool is_incognito,
                                     const Extension* extension,
                                     InfoMap* extension_info_map,
                                     bool* allowed) {
   if (url_request_util::AllowCrossRendererResourceLoad(
-          request, is_incognito, extension, extension_info_map, allowed)) {
+          url, resource_type, page_transition, child_id, is_incognito,
+          extension, extension_info_map, allowed)) {
     return true;
   }
 
