@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311b969e_8141fe71",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T08:30:15Z",
+      "side": 1,
+      "message": "There is code that already does this, so I went ahead and added this.",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6846f2e9_0cfd3ee5",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T08:30:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure about these, since they\u0027re just inherited from the existing presubmit.",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f83230_f2969bd5",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T08:30:15Z",
+      "side": 1,
+      "message": "This is actually used outside webgl as well, so maybe this should just be a global exception? It seems OK to allow this one generically anyway.",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
