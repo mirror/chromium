@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f35fe591_8e00ab3b",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-13T19:31:31Z",
+      "side": 1,
+      "message": "It\u0027s needed later for restarting the GPU.",
+      "parentUuid": "19af972f_4b85394a",
+      "revId": "a34ab4c32dd58ec666c8b2b5b2310a3bab87f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbae35e6_8391c5c6",
         "filename": "content/browser/compositor/viz_process_transport_factory.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-12T16:16:22Z",
       "side": 1,
       "message": "nit: if you make this SequencedTaskRunner you reduce the dependencies on thread affinity",
+      "revId": "a34ab4c32dd58ec666c8b2b5b2310a3bab87f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c249e74_ea01a7ed",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-13T19:31:31Z",
+      "side": 1,
+      "message": "Mojo has a requirement on thread affinity :(",
+      "parentUuid": "dbae35e6_8391c5c6",
       "revId": "a34ab4c32dd58ec666c8b2b5b2310a3bab87f6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
