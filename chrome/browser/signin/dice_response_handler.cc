@@ -146,7 +146,7 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
           base::Bind(&DiceResponseHandler::DiceTokenFetcher::OnTimeout,
                      base::Unretained(this))) {
   DCHECK(dice_response_handler_);
-  if (signin::IsAccountConsistencyDiceEnabled()) {
+  if (signin::IsAccountConsistencyDiceAvailable()) {
     account_reconcilor_lock_ =
         base::MakeUnique<AccountReconcilor::Lock>(account_reconcilor);
   }
@@ -252,7 +252,7 @@ size_t DiceResponseHandler::GetPendingDiceTokenFetchersCountForTesting() const {
 
 bool DiceResponseHandler::CanGetTokenForAccount(const std::string& gaia_id,
                                                 const std::string& email) {
-  if (signin::IsAccountConsistencyDiceEnabled())
+  if (signin::IsAccountConsistencyDiceAvailable())
     return true;
 
   // When using kDiceFixAuthErrors, only get a token if the account matches
@@ -302,7 +302,7 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
     const std::vector<std::string>& emails) {
   DCHECK_EQ(gaia_ids.size(), emails.size());
   VLOG(1) << "Start processing Dice signout response";
-  if (!signin::IsAccountConsistencyDiceEnabled()) {
+  if (!signin::IsAccountConsistencyDiceAvailable()) {
     // Ignore signout responses when using kDiceFixAuthErrors.
     DCHECK_EQ(signin::AccountConsistencyMethod::kDiceFixAuthErrors,
               signin::GetAccountConsistencyMethod());
@@ -318,6 +318,13 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
         account_tracker_service_->PickAccountIdForAccount(gaia_ids[i],
                                                           emails[i]);
     if (signed_out_account == current_account) {
+      // If Dice is available but not enabled, the token for the main account
+      // may not be deleted when signing out of the web.
+      if (!signin::IsAccountConsistencyDiceEnabledForProfile(
+              signin_client_->GetPrefs())) {
+        continue;
+      }
+
       VLOG(1) << "[Dice] Signing out all accounts.";
       RecordDiceResponseHeader(kSignoutPrimary);
       signin_manager_->SignOutAndRemoveAllAccounts(

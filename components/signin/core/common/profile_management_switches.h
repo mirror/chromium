@@ -11,6 +11,12 @@
 
 #include "base/feature_list.h"
 
+class PrefService;
+
+namespace user_prefs {
+class PrefRegistrySyncable;
+}
+
 namespace signin {
 
 // Account consistency feature. Only used on platforms where Mirror is not
@@ -23,6 +29,7 @@ extern const char kAccountConsistencyFeatureMethodParameter[];
 // Account consistency method values.
 extern const char kAccountConsistencyFeatureMethodMirror[];
 extern const char kAccountConsistencyFeatureMethodDiceFixAuthErrors[];
+extern const char kAccountConsistencyFeatureMethodDiceAvailable[];
 extern const char kAccountConsistencyFeatureMethodDice[];
 
 enum class AccountConsistencyMethod {
@@ -30,8 +37,12 @@ enum class AccountConsistencyMethod {
   kMirror,             // Account management UI in the avatar bubble.
   kDiceFixAuthErrors,  // No account consistency, but Dice fixes authentication
                        // errors.
-  kDice                // Account management UI on Gaia webpages.
+  kDiceAvailable,      // Account management UI on Gaia webpages is available.
+  kDice                // Account management UI on Gaia webpages is enabled.
 };
+
+void RegisterAccountConsistentyProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry);
 
 // Returns the account consistency method.
 AccountConsistencyMethod GetAccountConsistencyMethod();
@@ -40,14 +51,19 @@ AccountConsistencyMethod GetAccountConsistencyMethod();
 // management UI is available in the avatar bubble.
 bool IsAccountConsistencyMirrorEnabled();
 
-// Checks whether Dice account consistency is enabled. If enabled, then account
+// Checks whether Dice account consistency is available. If true, then account
 // management UI is available on the Gaia webpages.
 // Returns true when the account consistency method is kDice.
 // WARNING: returns false when the method is kDiceFixAuthErrors.
-bool IsAccountConsistencyDiceEnabled();
+// WARNING: Dice might be available but not enabled. To check if Dice is
+// enabled, use IsAccountConsistencyDiceEnabledForProfile().
+bool IsAccountConsistencyDiceAvailable();
+
+bool IsAccountConsistencyDiceEnabledForProfile(PrefService* profile_prefs);
+void EnableAccountConsistencyDiceForProfile(PrefService* profile_prefs);
 
 // Returns true if the account consistency method is kDiceFixAuthErrors or
-// kDice.
+// kDiceAvailable or kDice.
 bool IsDiceFixAuthErrorsEnabled();
 
 // Whether the chrome.identity API should be multi-account.

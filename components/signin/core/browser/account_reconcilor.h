@@ -255,6 +255,8 @@ class AccountReconcilor : public KeyedService,
   // True iff an error occured during the last attempt to reconcile.
   bool error_during_last_reconcile_;
 
+  bool reconcile_is_noop_;
+
   // Used during reconcile action.
   // These members are used to validate the gaia cookie.  |gaia_accounts_|
   // holds the state of google accounts in the gaia cookie.  Each element is
