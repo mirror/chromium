@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67b27107_f0da8210",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "FYI crbug.com/757232",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a37a571_9e43f0d3",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "Is this right? \n\nLet\u0027s say rotation is pi/3. This would rotate from pi/3 by -(-(pi + pi/3)) \u003d -(-4pi/3) \u003d 4pi/3\nso the end rotation is 5pi/3 instead of 0 (6pi/3) like we want? Or am I missing something?",
+      "range": {
+        "startLine": 309,
+        "startChar": 51,
+        "endLine": 309,
+        "endChar": 69
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705f273c_e44f4d17",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "nit: consider typedefing this or using dispatch_block_t for readability",
+      "range": {
+        "startLine": 331,
+        "startChar": 3,
+        "endLine": 331,
+        "endChar": 13
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0ada73_3f5434ae",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "What prevents the race condition?",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 44
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517febcd_b05dbd0d",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "enqueueAnimation:withExtra:? (https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html)",
+      "range": {
+        "startLine": 370,
+        "startChar": 38,
+        "endLine": 370,
+        "endChar": 42
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f1ff4b_016cc287",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "+1 Reads much nicer :)",
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4516bf77_c43d9db6",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-13T15:22:26Z",
+      "side": 1,
+      "message": "Is it not possible for state and progress to change at the same time? If yes, is this missing that case? If not, why a single method to change both?",
+      "range": {
+        "startLine": 392,
+        "startChar": 2,
+        "endLine": 392,
+        "endChar": 43
+      },
+      "revId": "f563ee0959fe86c03c6f241bdaa5d4f236a7121d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
