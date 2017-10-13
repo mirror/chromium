@@ -16,6 +16,24 @@
       "revId": "7f1cf81096f71aef91954ac55caddba959106b15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8a2c0c_1a414e35",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-13T06:09:21Z",
+      "side": 1,
+      "message": "I copied the code from below where this as false. I did notice it though and I thought it made sense since the manifest is for a regular hosted app not a bookmark app (a bookmark app wouldn\u0027t have \"urls\"). The behavior should be the same regardless of the type of hosted app.",
+      "parentUuid": "ffee1ad7_e09c6750",
+      "revId": "7f1cf81096f71aef91954ac55caddba959106b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
