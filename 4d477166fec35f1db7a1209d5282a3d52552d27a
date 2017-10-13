@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64696a1_e89090a2",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T17:40:26Z",
+      "side": 1,
+      "message": "A comment that explains what this class does would be useful.  Perhaps here or perhaps  by the single public operator.  Labelling something as \"helper class\" that \"helps in comparing\" doesn\u0027t tell me much.  For example, does it check whether the two containers are identical?  Check whether individual items in the same positions are identical?  Individual items appear in a different list, even if they\u0027re not at the same position?  etc.",
+      "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b12925_b4b8205b",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-13T17:40:26Z",
+      "side": 1,
+      "message": "Looking at the implementation of STLSetIntersection and EraseIf, I would think the former would be faster.  Are you sure this change is an improvement?  If so, can you please explain it to me (perhaps in a comment).\n// Use base::EraseIf instead of base::STLSetIntersection because ...\n\nand if it\u0027s an improvement in general, why don\u0027t you simply change the implementation of base::STLSetIntersection to use this technique?  That could have a much larger impact on Chrome.",
+      "revId": "4d477166fec35f1db7a1209d5282a3d52552d27a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
