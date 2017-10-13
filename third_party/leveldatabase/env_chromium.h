@@ -12,6 +12,7 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
+#include "base/containers/flat_map.h"
 #include "base/containers/linked_list.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
@@ -260,6 +261,9 @@ class DBTracker {
    public:
     // Name that OpenDatabase() was called with.
     virtual const std::string& name() const = 0;
+
+    // Options used when opening the database.
+    virtual const leveldb::Options& options() const = 0;
   };
 
   // Opens a database and starts tracking it. As long as the opened database
@@ -279,14 +283,10 @@ class DBTracker {
 
   friend class ChromiumEnvDBTrackerTest;
   FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, IsTrackedDB);
-  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, GetOrCreateAllocatorDump);
+  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, MemoryDumpCreation);
 
   DBTracker();
   ~DBTracker();
-
-  static base::trace_event::MemoryAllocatorDump* GetOrCreateAllocatorDump(
-      base::trace_event::ProcessMemoryDump* pmd,
-      TrackedDB* db);
 
   // Calls |visitor| for each live database. The database is live from the
   // point it was returned from OpenDatabase() and up until its instance is
