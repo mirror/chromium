@@ -1229,7 +1229,7 @@ int WebContentsViewAura::OnDragUpdated(const ui::DropTargetEvent& event) {
   if (!IsValidDragTarget(target_rwh))
     return ui::DragDropTypes::DRAG_NONE;
 
-  gfx::Point screen_pt = event.root_location();
+  gfx::Point screen_pt = display::Screen::GetScreen()->GetCursorScreenPoint();
   if (target_rwh != current_rwh_for_drag_.get()) {
     if (current_rwh_for_drag_) {
       gfx::Point transformed_leave_point = event.location();
