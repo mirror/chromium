@@ -6,7 +6,6 @@
 
 #include <vector>
 #include "base/synchronization/waitable_event.h"
-#include "platform/heap/SafePoint.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
