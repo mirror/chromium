@@ -5,6 +5,8 @@
 source_set("language") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "chrome_ios_language_detection_driver.h",
+    "chrome_ios_language_detection_driver.mm",
     "language_model_factory.cc",
     "language_model_factory.h",
     "url_language_histogram_factory.cc",
@@ -15,9 +17,13 @@ source_set("language") {
     "//components/keyed_service/core",
     "//components/keyed_service/ios",
     "//components/language/core/browser",
+    "//components/language/ios/browser",
     "//components/prefs",
+    "//components/translate/ios/browser",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/translate",
+    "//ios/web",
   ]
 }
 
@@ -25,6 +31,7 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "js_language_detection_manager_unittest.mm",
     "language_model_factory_unittest.cc",
     "url_language_histogram_factory_unittest.cc",
   ]
@@ -33,13 +40,16 @@ source_set("unit_tests") {
     "//base",
     "//base/test:test_support",
     "//components/language/core/browser",
+    "//components/language/ios/browser",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/web:test_support",
+    "//ios/chrome/common:common",
     "//ios/public/provider/chrome/browser:test_support",
     "//ios/web",
     "//ios/web/public/test",
     "//testing/gmock:gmock",
     "//testing/gtest",
+    "//url",
   ]
 }

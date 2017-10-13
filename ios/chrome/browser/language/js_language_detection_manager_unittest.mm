@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "components/translate/ios/browser/js_language_detection_manager.h"
+#import "components/language/ios/browser/js_language_detection_manager.h"
 
 #include <string.h>
 
@@ -114,14 +114,16 @@ TEST_F(JsLanguageDetectionManagerTest, IsTranslationAllowed) {
   LoadHtmlAndInject(@"<html></html>");
   ExpectTranslationAllowed(YES);
 
-  LoadHtmlAndInject(@"<html><head>"
-                     "<meta name='google' content='notranslate'>"
-                     "</head></html>");
+  LoadHtmlAndInject(
+      @"<html><head>"
+       "<meta name='google' content='notranslate'>"
+       "</head></html>");
   ExpectTranslationAllowed(NO);
 
-  LoadHtmlAndInject(@"<html><head>"
-                     "<meta name='google' value='notranslate'>"
-                     "</head></html>");
+  LoadHtmlAndInject(
+      @"<html><head>"
+       "<meta name='google' value='notranslate'>"
+       "</head></html>");
   ExpectTranslationAllowed(NO);
 }
 
@@ -173,12 +175,13 @@ TEST_F(JsLanguageDetectionManagerTest, HttpContentLanguage) {
 
 // Tests |__gCrWeb.languageDetection.getTextContent| JS call.
 TEST_F(JsLanguageDetectionManagerTest, ExtractTextContent) {
-  LoadHtmlAndInject(@"<html><body>"
-                     "<script>var text = 'No scripts!'</script>"
-                     "<p style='display: none;'>Not displayed!</p>"
-                     "<p style='visibility: hidden;'>Hidden!</p>"
-                     "<div>Some <span>text here <b>and</b></span> there.</div>"
-                     "</body></html>");
+  LoadHtmlAndInject(
+      @"<html><body>"
+       "<script>var text = 'No scripts!'</script>"
+       "<p style='display: none;'>Not displayed!</p>"
+       "<p style='visibility: hidden;'>Hidden!</p>"
+       "<div>Some <span>text here <b>and</b></span> there.</div>"
+       "</body></html>");
 
   ExpectTextContent(@"\nSome text here and there.");
 }
@@ -186,12 +189,13 @@ TEST_F(JsLanguageDetectionManagerTest, ExtractTextContent) {
 // Tests that |__gCrWeb.languageDetection.getTextContent| correctly truncates
 // text.
 TEST_F(JsLanguageDetectionManagerTest, Truncation) {
-  LoadHtmlAndInject(@"<html><body>"
-                     "<script>var text = 'No scripts!'</script>"
-                     "<p style='display: none;'>Not displayed!</p>"
-                     "<p style='visibility: hidden;'>Hidden!</p>"
-                     "<div>Some <span>text here <b>and</b></span> there.</div>"
-                     "</body></html>");
+  LoadHtmlAndInject(
+      @"<html><body>"
+       "<script>var text = 'No scripts!'</script>"
+       "<p style='display: none;'>Not displayed!</p>"
+       "<p style='visibility: hidden;'>Hidden!</p>"
+       "<div>Some <span>text here <b>and</b></span> there.</div>"
+       "</body></html>");
   NSString* const kTextContentJS =
       @"__gCrWeb.languageDetection.getTextContent(document.body, 13)";
   InjectJsAndVerify(kTextContentJS, @"\nSome text he");
@@ -201,9 +205,10 @@ TEST_F(JsLanguageDetectionManagerTest, Truncation) {
 TEST_F(JsLanguageDetectionManagerTest, ExtractWhitespace) {
   // |b| and |span| do not break lines.
   // |br| and |div| do.
-  LoadHtmlAndInject(@"<html><body>"
-                     "O<b>n</b>e<br>Two\tT<span>hr</span>ee<div>Four</div>"
-                     "</body></html>");
+  LoadHtmlAndInject(
+      @"<html><body>"
+       "O<b>n</b>e<br>Two\tT<span>hr</span>ee<div>Four</div>"
+       "</body></html>");
   ExpectTextContent(@"One\nTwo\tThree\nFour");
 
   // |a| does not break lines.
@@ -321,9 +326,10 @@ TEST_F(JsLanguageDetectionManagerDetectLanguageTest,
 TEST_F(JsLanguageDetectionManagerDetectLanguageTest,
        DetectLanguageTranslationAllowed) {
   // A simple page that allows translation.
-  NSString* html = @"<html><head>"
-                   @"<meta http-equiv='content-language' content='en'>"
-                   @"</head></html>";
+  NSString* html =
+      @"<html><head>"
+      @"<meta http-equiv='content-language' content='en'>"
+      @"</head></html>";
   LoadHtmlAndInject(html);
   [manager_ startLanguageDetection];
   // Wait until the original injection has received a command.
