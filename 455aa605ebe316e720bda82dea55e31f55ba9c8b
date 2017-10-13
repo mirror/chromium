@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523785b8_889d969a",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-13T00:43:45Z",
+      "side": 0,
+      "message": "Are the driver versions for Win7 and Win10 guaranteed to be the same? If not then I think it makes sense to keep these variables separate.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "455aa605ebe316e720bda82dea55e31f55ba9c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
