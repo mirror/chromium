@@ -176,6 +176,24 @@
       "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0db51b9_5aa61efd",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-13T23:18:48Z",
+      "side": 1,
+      "message": "Won\u0027t this patch as written fall back to line 173 when there\u0027s no audio playing?",
+      "parentUuid": "94c3e9bf_47e00c5b",
+      "revId": "dbde4e0d73f6d63ea6db6f5732c2c2d8cb93b394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
