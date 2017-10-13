@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "955d4f1e_00201deb",
+        "filename": "third_party/WebKit/non_blink_scanner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-13T13:33:28Z",
+      "side": 1,
+      "message": "I\u0027m okay with allowing this. It should be better to improve the clang plugin.",
+      "parentUuid": "311b969e_8141fe71",
+      "revId": "0692b16f253cc49932f7aeba87db1f836d7fd901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6846f2e9_0cfd3ee5",
         "filename": "third_party/WebKit/non_blink_scanner.py",
         "patchSetId": 1
