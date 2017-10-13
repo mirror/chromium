@@ -20,12 +20,14 @@ class PLATFORM_EXPORT CompositorMutatorClient
   explicit CompositorMutatorClient(CompositorMutator*);
   virtual ~CompositorMutatorClient();
 
+  void SetMutationUpdate(std::unique_ptr<cc::MutatorOutputState>);
   // TODO(petermayo): Remove this.  Without CompositorWorker, it becomes
   // unnecessary.  crbug.com/746212
   void SetNeedsMutate();
 
   // cc::LayerTreeMutator
-  bool Mutate(base::TimeTicks monotonic_time) override;
+  void Mutate(base::TimeTicks monotonic_time,
+              std::unique_ptr<cc::MutatorInputState>) override;
   void SetClient(cc::LayerTreeMutatorClient*) override;
 
   CompositorMutator* Mutator() { return mutator_.Get(); }
