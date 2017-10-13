@@ -13,6 +13,7 @@
 #include "base/strings/string16.h"
 #include "device/geolocation/geolocation_export.h"
 #include "device/geolocation/wifi_data_provider.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
@@ -46,7 +47,10 @@ class NetworkLocationRequest : private net::URLFetcherDelegate {
 
   // Makes a new request. Returns true if the new request was successfully
   // started. In all cases, any currently pending request will be canceled.
-  bool MakeRequest(const WifiData& wifi_data, const base::Time& wifi_timestamp);
+  bool MakeRequest(
+      const WifiData& wifi_data,
+      const base::Time& wifi_timestamp,
+      const net::PartialNetworkTrafficAnnotationTag& partial_traffic_annoation);
 
   bool is_request_pending() const { return url_fetcher_ != NULL; }
 
