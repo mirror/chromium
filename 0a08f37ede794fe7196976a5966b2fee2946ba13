@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f1edf2fe_9acc646c",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-13T19:15:31Z",
+      "side": 1,
+      "message": "\u003e Thanks for explanation. It would be nice to see this being cleaned up. I remember more changes like this one when it was introduced for ChromeOS, and this makes it really hard to reason about different scales anywhere, unfortunately. Are there any plans?\n\nThis is that chrome os feature. I *think* it\u0027s enabled on desktop already, or at least behind experiments, but not enabled on android yet. This is just trying to turn it on for android as well, so fixing android-only things that are broken.\n\n\u003e Meanwhile, does it make sense to introduce helper methods on CompositorFrameMetadata and/or similar ones to not make every single client do a conditional conversion?\n\nI don\u0027t know if there\u0027s any plan to convert the remaining bits of \"page scale\". Ideally I would like to see at least everything content and below converted, and just get rid of the DIP concept entirely, but not sure that actually works with all features, and if it\u0027s worth the effort..\n\nRegarding helper methods on Metadata. grepping around for existing IsUseZoomForDSFEnabled uses, there aren\u0027t that many that actually applies to Metadata. A lot of it has to do with scroll and whatnot. So that doesn\u0027t actually help much with anything",
+      "parentUuid": "1a74e3ae_d1295f33",
+      "revId": "0a08f37ede794fe7196976a5966b2fee2946ba13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be5b22e0_693ba5e1",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 5
