@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "fdc9af1c_776cf216",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "what if a user touched different touch device? should we ignore it?",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b997c3ce_c7c6b3dd",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "nit: touch_device",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92638e02_6d4b98b5",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "don\u0027t we have to delete the instance upon completion?",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88119237_a3169706",
         "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
         "patchSetId": 17
@@ -30,6 +81,23 @@
       "writtenOn": "2017-10-12T22:29:10Z",
       "side": 1,
       "message": "Please follow \"\u003d\u003e Matched\" pattern as established in other Associate functions.",
+      "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b17868d_f427feb7",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "optional: Maybe you should just apply the change (add/remove) then\ncall Update if the updated display is active?",
       "revId": "51354069a8c7641fc6c6767de29eb951a84a0c09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

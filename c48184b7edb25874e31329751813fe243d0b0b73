@@ -306,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "64498da4_33790c49",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "ManagedDisplayInfo in |displays| will be updated...",
+      "parentUuid": "c5fda9f5_93deedd2",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c2f9075_d1627c2e",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 11
@@ -452,6 +476,24 @@
       "side": 1,
       "message": "ditto",
       "parentUuid": "a9dc486a_eb0fc1ad",
+      "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9e09aee_4834a7ad",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-13T00:25:41Z",
+      "side": 1,
+      "message": "actually, shouldn\u0027t we clear the map?",
+      "parentUuid": "34a55507_582baf10",
       "revId": "c48184b7edb25874e31329751813fe243d0b0b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
