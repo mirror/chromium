@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e839b94_da9aff37",
+        "filename": "gpu/command_buffer/service/context_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T00:04:22Z",
+      "side": 1,
+      "message": "This class uses the decoder to check for loss, is that right?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc3e723_38b2d980",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3637,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T00:04:22Z",
+      "side": 1,
+      "message": "In GLES2DecoderImpl we call CheckResetStatus right?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af4aac5_2ab270dd",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T00:04:22Z",
+      "side": 1,
+      "message": "same idea different function in GLES2DecoderPassthroughImpl()?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba6e35a_a06dbb2d",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-13T00:04:22Z",
+      "side": 1,
+      "message": "and in GpuCommandBufferStub we CheckContextLost() ?",
+      "revId": "d37c13ebb2401b138746c965bc90dedfe6eb9700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
