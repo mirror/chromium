@@ -78,6 +78,9 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   bool InProgress() const override;
   void WasPaused() override;
 
+  // Inject errors into all the streams for testing purpose.
+  void InjectErrorForTest(int64_t offset, int64_t length);
+
  protected:
   // For test class overrides.
   // Write data from the offset to the file.
@@ -157,6 +160,9 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
       COMPLETE,
     };
     StreamState Read(scoped_refptr<net::IOBuffer>* data, size_t* length);
+
+    void SetCompletionStatusForTesting(
+        DownloadInterruptReason completion_status);
 
     int64_t offset() const { return offset_; }
     int64_t length() const { return length_; }
@@ -347,6 +353,11 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   base::TimeDelta download_time_without_parallel_streams_;
 
   std::vector<DownloadItem::ReceivedSlice> received_slices_;
+
+  // For test for inject errors. TODO(qinmin): support injecting errors to
+  // parallel requests.
+  int64_t injected_error_offset_;
+  int64_t injected_error_length_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
