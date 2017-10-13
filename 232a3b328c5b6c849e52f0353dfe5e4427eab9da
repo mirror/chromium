@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "52b2809d_163e1dc5",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e5d7fd_42d0cfd7",
+      "range": {
+        "startLine": 71,
+        "startChar": 25,
+        "endLine": 71,
+        "endChar": 53
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837570f3_7c35d6f8",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -115,6 +139,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6beaeca1_069ab823",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Not actually sure what this string is for. Perhaps it populates a11y string?\n\nI\u0027ll remove it for now and replace with TODO.",
+      "parentUuid": "837570f3_7c35d6f8",
+      "range": {
+        "startLine": 74,
+        "startChar": 54,
+        "endLine": 74,
+        "endChar": 72
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "5522021b_4ed08be7",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edba8a01_7e8d69fe",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 76
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cf039d0_02d5888d",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -266,6 +338,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638ecfff_8c86b308",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO for now since I\u0027m not sure what we\u0027re going to do long-term on a TIMEDOUT event coming from a single download. I think we should probably abort the entire fetch in that case rather than just moving onto the next file.",
+      "parentUuid": "2cf039d0_02d5888d",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "daaecd09_b4646a86",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "An oversight. Done.\n\nThe cancel button does go away once succeeded.",
+      "parentUuid": "3c9fce37_a456046d",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 30
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5eec5e8_04391e73",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -312,6 +432,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5355ace6_e686b3fa",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "From the comments on the method in the interface I think, it actually means is the OfflineContentProvider ready. It\u0027s supposed to be so you can indicate that you\u0027re not ready as you haven\u0027t initialised your database yet.\n\nSo when your persistence work is wired through to this, then this will become variable. Until now, it initializes to empty and is ever ready.",
+      "parentUuid": "a5eec5e8_04391e73",
+      "range": {
+        "startLine": 246,
+        "startChar": 9,
+        "endLine": 246,
+        "endChar": 13
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -385,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "49deacdb_2397f3e6",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f91051ca_0ad1b031",
+      "range": {
+        "startLine": 261,
+        "startChar": 21,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba07b4a_8fb52e9e",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -438,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "2c6ad6f9_a2419f08",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "I got the concept, but missed the entry.second possibility. Not keen on the second one though since it only skips a single statement (albeit multi-line).",
+      "parentUuid": "1ac5a85e_effdd7ff",
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ea953ed_ffc21a35",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -458,6 +644,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ee1080_c06d3a2f",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea953ed_ffc21a35",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 61
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -484,6 +694,30 @@
     },
     {
       "key": {
+        "uuid": "5c3986da_dfb603ff",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "It might not be incorrect. They could redundantly call AddObserver multiple times...\n\nBut yeah I agree.",
+      "parentUuid": "9427b45e_b0f3eb41",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 30
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f31893_f43b3b92",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -507,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "ad00ade6_64a82821",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f31893_f43b3b92",
+      "range": {
+        "startLine": 332,
+        "startChar": 6,
+        "endLine": 332,
+        "endChar": 32
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d79a761_c11b423e",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 10
@@ -527,6 +785,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a2979e_7388f749",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d79a761_c11b423e",
+      "range": {
+        "startLine": 337,
+        "startChar": 20,
+        "endLine": 337,
+        "endChar": 24
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -858,6 +1140,30 @@
     },
     {
       "key": {
+        "uuid": "89cb7ab9_7b64e955",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adcb3e2_652b2c9a",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 7
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc5caf5_a979fd79",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 10
@@ -878,6 +1184,30 @@
       "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c337b4_4d36cc67",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-10-13T19:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc5caf5_a979fd79",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "232a3b328c5b6c849e52f0353dfe5e4427eab9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
