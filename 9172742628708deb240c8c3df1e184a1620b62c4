@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf8334b4_9698834a",
+        "filename": "build/toolchain/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-13T21:50:26Z",
+      "side": 1,
+      "message": "This is now always true for android I think. Want to make a cleanup CL to remove this? (In a separate CL.) I can do it too.",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "9172742628708deb240c8c3df1e184a1620b62c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
