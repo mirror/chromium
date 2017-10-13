@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "de5178de_d6d173fb",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-13T04:21:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eecf7ea9_4b351a95",
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d5ab39e_08e5afc8",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-13T04:21:10Z",
+      "side": 1,
+      "message": "Done\n(Although this file is inconsistent, since some stuff like g_ev_root_ca_metadata is static, and mac code is anonymous namespace)",
+      "parentUuid": "5c073ba5_8680636e",
+      "range": {
+        "startLine": 733,
+        "startChar": 7,
+        "endLine": 733,
+        "endChar": 11
+      },
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffc58ab_3dc2f417",
         "filename": "net/cert/ev_root_ca_metadata.cc",
         "patchSetId": 3
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "572ee356_5477990a",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-13T04:21:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ffc58ab_3dc2f417",
+      "range": {
+        "startLine": 832,
+        "startChar": 12,
+        "endLine": 832,
+        "endChar": 33
+      },
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b11e3cd_f8aa7b67",
         "filename": "net/cert/ev_root_ca_metadata.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-13T03:40:47Z",
       "side": 1,
       "message": "I think this will include a null char in the string data? I guess it doesn\u0027t matter since the PolicyOID is a char* on win, so double nulls wouldn\u0027t change anything..",
+      "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00ab7cd_e7f09de6",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-13T04:21:10Z",
+      "side": 1,
+      "message": "Yes, I believe that is correct.\nDouble null shouldn\u0027t matter here.",
+      "parentUuid": "5b11e3cd_f8aa7b67",
       "revId": "89035fe64f5572578ecd47c2c3ac391a01167e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
