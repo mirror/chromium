@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86c64b7b_e3572f72",
+        "filename": "tools/perf/PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-10-13T14:06:32Z",
+      "side": 1,
+      "message": "could we replace this with a call to _RunArgs?\ndiff_text \u003d _RunArgs(cmd, input_api)[0]",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "b87a1072b1005527cd23f5025c6388c013399255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
