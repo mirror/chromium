@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0fa8820_fe926c39",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "In an earlier comment, I suggested encapsulating the construction of the validator in a factory method. The idea was to simplify the usage across the various clients. The proposal was to add TrialPolicyImpl::ValidatorForPolicy().  I think that would be good to implement.",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 22
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886087f3_40abfdad",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "This should be changed to a forward declaration, like TrialPolicy?",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f69f6e8_fd1b228c",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "This forward declare is no longer needed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97366b89_2d0a62ea",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "This forward declaration is no longer needed, given the include above.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8289ca_d1110214",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "Nit: convention in this file seems to be return nullptr. Is there a reason for the difference here?",
+      "range": {
+        "startLine": 287,
+        "startChar": 14,
+        "endLine": 287,
+        "endChar": 24
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b8105f_8681afd6",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "From Ian: Is !policy_ possible/expected anymore? I\u0027m wondering if we should DCHECK instead",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edf12f4_f6c8922c",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "Nit: As you\u0027re changing what is exposed, it would be nice to correct the comment to \"Origin Trials\". Obviously missed this in the great rename from \"Experimental Framework\".",
+      "range": {
+        "startLine": 683,
+        "startChar": 18,
+        "endLine": 683,
+        "endChar": 27
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045ced1e_e1690625",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "Nit: Add a TODO that this is to be removed. The earlier comment was marked as done, but I\u0027m not seeing the TODO in the code.",
+      "range": {
+        "startLine": 685,
+        "startChar": 26,
+        "endLine": 685,
+        "endChar": 48
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e46507_b581e7dc",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-10-13T18:02:36Z",
+      "side": 1,
+      "message": "This should probably be called CreateOriginTrialPolicy(), as it creates a new instance each time.",
+      "range": {
+        "startLine": 686,
+        "startChar": 26,
+        "endLine": 686,
+        "endChar": 37
+      },
+      "revId": "db4232d04f791905c88919cf9b845137cf65b125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
