@@ -22,13 +22,61 @@ class MockWidgetInputHandler : public mojom::WidgetInputHandler {
                          mojom::WidgetInputHandlerHostPtr host);
   ~MockWidgetInputHandler() override;
 
-  class DispatchedEvent {
-   public:
-    DispatchedEvent(DispatchedEvent&& other);
+  class DispatchedEditCommandMessage;
+  class DispatchedEventMessage;
+  class DispatchedIMEMessage;
 
-    DispatchedEvent(std::unique_ptr<content::InputEvent> event,
-                    DispatchEventCallback callback);
-    ~DispatchedEvent();
+  class DispatchedMessage {
+   public:
+    DispatchedMessage(const std::string& name);
+    virtual ~DispatchedMessage();
+
+    virtual DispatchedEditCommandMessage* ToEditCommand();
+    virtual DispatchedEventMessage* ToEvent();
+    virtual DispatchedIMEMessage* ToIME();
+
+    std::string name_;
+  };
+
+  class DispatchedIMEMessage : public DispatchedMessage {
+   public:
+    DispatchedIMEMessage(const std::string& name,
+                         const base::string16& text,
+                         const std::vector<ui::ImeTextSpan>& ime_text_spans,
+                         const gfx::Range& range,
+                         int32_t start,
+                         int32_t end);
+    ~DispatchedIMEMessage() override;
+
+    DispatchedIMEMessage* ToIME() override;
+
+    base::string16 text_;
+    std::vector<ui::ImeTextSpan> text_spans_;
+    gfx::Range range_;
+    int32_t start_;
+    int32_t end_;
+  };
+
+  class DispatchedEditCommandMessage : public DispatchedMessage {
+   public:
+    DispatchedEditCommandMessage(
+        const std::vector<content::EditCommand>& commands);
+    ~DispatchedEditCommandMessage() override;
+
+    DispatchedEditCommandMessage* ToEditCommand() override;
+
+    std::vector<content::EditCommand> commands_;
+  };
+
+  class DispatchedEventMessage : public DispatchedMessage {
+   public:
+    DispatchedEventMessage(std::unique_ptr<content::InputEvent> event,
+                           DispatchEventCallback callback);
+    ~DispatchedEventMessage() override;
+
+    DispatchedEventMessage* ToEvent() override;
+    void CallCallback(InputEventAckState state);
+
     std::unique_ptr<content::InputEvent> event_;
     DispatchEventCallback callback_;
   };
@@ -58,14 +106,13 @@ class MockWidgetInputHandler : public mojom::WidgetInputHandler {
   void DispatchNonBlockingEvent(
       std::unique_ptr<content::InputEvent> event) override;
 
-  std::vector<DispatchedEvent> GetAndResetDispatchedEvents();
-  std::vector<content::EditCommand> GetAndResetEditCommands();
+  using MessageVector = std::vector<std::unique_ptr<DispatchedMessage>>;
+  MessageVector GetAndResetDispatchedMessages();
 
  private:
   mojo::Binding<mojom::WidgetInputHandler> binding_;
   mojom::WidgetInputHandlerHostPtr host_;
-  std::vector<DispatchedEvent> dispatched_events_;
-  std::vector<content::EditCommand> edit_commands_;
+  MessageVector dispatched_messages_;
 };
 
 }  // namespace content
