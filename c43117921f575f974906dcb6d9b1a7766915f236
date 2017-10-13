@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb2a1547_9bd24784",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "can you just include this file instead?",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1adeb319_5ceeda65",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "nit: this can be a const ref instead of a copied vector.",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134fede2_7c680e0e",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "Do you want to check that the length of one of these vectors is correct?",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa80bf9_dd6b8849",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "check length maybe",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259987a8_539c1c65",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "I think maybe 25 would be better here, so the user can see the last ~5 navigations.",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0436144e_3e23e6ac",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "Comment about merging the list together into chronological order.",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d71a48_2ee5e4fe",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-13T19:34:42Z",
+      "side": 1,
+      "message": "If this isn\u0027t exposed to any production code, can you drop these methods and just verify the observer gets the correct notifications in the unittests?",
+      "revId": "c43117921f575f974906dcb6d9b1a7766915f236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
