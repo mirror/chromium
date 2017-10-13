@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2826b4c_a6bfe364",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-13T16:04:29Z",
+      "side": 1,
+      "message": "I think you can remove the declaration at the top of this file now.",
+      "range": {
+        "startLine": 277,
+        "startChar": 8,
+        "endLine": 277,
+        "endChar": 22
+      },
+      "revId": "197499eec605cfa03f05cdabdc7c04da975e0d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
