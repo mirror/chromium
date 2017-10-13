@@ -350,6 +350,13 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       override;
   base::FilePath GetLoggingFileName(
       const base::CommandLine& command_line) override;
+  void GetURLLoaderFactoryOverrideForRequest(
+      content::ResourceContext* resource_context,
+      const content::ResourceRequest& request,
+      const content::NavigationUIData* navigation_ui_data,
+      bool is_main_frame,
+      int child_id,
+      content::mojom::URLLoaderFactoryPtrInfo* factory_override) override;
   std::vector<std::unique_ptr<content::URLLoaderThrottle>>
   CreateURLLoaderThrottles(
       const base::Callback<content::WebContents*()>& wc_getter) override;

@@ -354,6 +354,7 @@
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager.h"
 #include "extensions/browser/extension_navigation_throttle.h"
+#include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
@@ -3538,6 +3539,25 @@ ChromeContentBrowserClient::GetTaskSchedulerInitParams() {
 base::FilePath ChromeContentBrowserClient::GetLoggingFileName(
     const base::CommandLine& command_line) {
   return logging::GetLogFileName(command_line);
+}
+
+void ChromeContentBrowserClient::GetURLLoaderFactoryOverrideForRequest(
+    content::ResourceContext* resource_context,
+    const content::ResourceRequest& request,
+    const content::NavigationUIData* navigation_ui_data,
+    bool is_main_frame,
+    int child_id,
+    content::mojom::URLLoaderFactoryPtrInfo* factory_override) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (request.url.SchemeIs(extensions::kExtensionScheme)) {
+    *factory_override = extensions::CreateExtensionURLLoaderFactory(
+        resource_context, request, navigation_ui_data, child_id,
+        ProfileIOData::FromResourceContext(resource_context)->profile_type() ==
+            Profile::INCOGNITO_PROFILE);
+  }
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 }
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>

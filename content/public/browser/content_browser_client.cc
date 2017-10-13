@@ -508,6 +508,14 @@ ContentBrowserClient::GetTaskSchedulerInitParams() {
   return nullptr;
 }
 
+void ContentBrowserClient::GetURLLoaderFactoryOverrideForRequest(
+    ResourceContext* resource_context,
+    const ResourceRequest& request,
+    const NavigationUIData* navigation_ui_data,
+    bool is_main_frame,
+    int child_id,
+    mojom::URLLoaderFactoryPtrInfo* factory_override) {}
+
 std::vector<std::unique_ptr<URLLoaderThrottle>>
 ContentBrowserClient::CreateURLLoaderThrottles(
     const base::Callback<WebContents*()>& wc_getter) {

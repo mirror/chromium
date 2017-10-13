@@ -136,7 +136,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core,
       AppCacheNavigationHandleCore* appcache_handle_core,
       std::unique_ptr<NavigationRequestInfo> request_info,
-      mojom::URLLoaderFactoryPtrInfo factory_for_webui,
+      mojom::URLLoaderFactoryPtrInfo factory_override,
       const base::Callback<WebContents*(void)>& web_contents_getter,
       std::unique_ptr<service_manager::Connector> connector) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -152,12 +152,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
                              resource_context_, &blob_handles_);
     }
 
-    // Requests to WebUI scheme won't get redirected to/from other schemes
-    // or be intercepted, so we just let it go here.
-    if (factory_for_webui.is_valid()) {
-      webui_factory_ptr_.Bind(std::move(factory_for_webui));
+    // URLLoaderFactory overrides are used in cases which don't require
+    // interception or cross-scheme redirection.
+    if (factory_override.is_valid()) {
+      factory_override_.Bind(std::move(factory_override));
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
-          webui_factory_ptr_.get(),
+          factory_override_.get(),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
           0 /* routing_id? */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
@@ -469,7 +469,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   ResourceContext* resource_context_;
   base::Callback<WebContents*()> web_contents_getter_;
   scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
-  mojom::URLLoaderFactoryPtr webui_factory_ptr_;
+  mojom::URLLoaderFactoryPtr factory_override_;
   std::unique_ptr<ThrottlingURLLoader> url_loader_;
   BlobHandles blob_handles_;
 
@@ -562,16 +562,26 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
   new_request->fetch_credentials_mode = FETCH_CREDENTIALS_MODE_INCLUDE;
   new_request->fetch_redirect_mode = FetchRedirectMode::MANUAL_MODE;
 
-  int frame_tree_node_id = request_info->frame_tree_node_id;
+  new_request->transition_type = request_info->common_params.transition;
 
-  // Check if a web UI scheme wants to handle this request.
-  mojom::URLLoaderFactoryPtrInfo factory_for_webui;
-  const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
-  if (std::find(schemes.begin(), schemes.end(), new_request->url.scheme()) !=
-      schemes.end()) {
-    FrameTreeNode* frame_tree_node =
-        FrameTreeNode::GloballyFindByID(frame_tree_node_id);
-    factory_for_webui = CreateWebUIURLLoader(frame_tree_node).PassInterface();
+  int frame_tree_node_id = request_info->frame_tree_node_id;
+  FrameTreeNode* frame_tree_node =
+      FrameTreeNode::GloballyFindByID(frame_tree_node_id);
+  int child_id = frame_tree_node->current_frame_host()->GetProcess()->GetID();
+
+  LOG(ERROR) << "YOU KNOW IT BROOOOO " << new_request->url.spec();
+
+  mojom::URLLoaderFactoryPtrInfo factory_override;
+  GetContentClient()->browser()->GetURLLoaderFactoryOverrideForRequest(
+      resource_context, *new_request, navigation_ui_data.get(),
+      request_info->is_main_frame, child_id, &factory_override);
+  if (!factory_override.is_valid()) {
+    // Check if a web UI scheme wants to handle this request.
+    const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
+    if (std::find(schemes.begin(), schemes.end(), new_request->url.scheme()) !=
+        schemes.end()) {
+      factory_override = CreateWebUIURLLoader(frame_tree_node).PassInterface();
+    }
   }
 
   g_next_request_id--;
@@ -592,7 +602,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
               : nullptr,
           appcache_handle ? appcache_handle->core() : nullptr,
           base::Passed(std::move(request_info)),
-          base::Passed(std::move(factory_for_webui)),
+          base::Passed(std::move(factory_override)),
           base::Bind(&GetWebContentsFromFrameTreeNodeID, frame_tree_node_id),
           base::Passed(ServiceManagerConnection::GetForProcess()
                            ->GetConnector()

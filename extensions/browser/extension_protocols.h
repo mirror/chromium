@@ -9,12 +9,20 @@
 #include <string>
 
 #include "base/callback.h"
+#include "base/memory/ref_counted.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "net/url_request/url_request_job_factory.h"
 
 namespace base {
 class FilePath;
 class Time;
 }
+
+namespace content {
+class NavigationUIData;
+class ResourceContext;
+struct ResourceRequest;
+}  // namespace content
 
 namespace net {
 class URLRequest;
@@ -32,7 +40,7 @@ using ExtensionProtocolTestHandler =
 
 // Builds HTTP headers for an extension request. Hashes the time to avoid
 // exposing the exact user installation time of the extension.
-net::HttpResponseHeaders* BuildHttpHeaders(
+scoped_refptr<net::HttpResponseHeaders> BuildHttpHeaders(
     const std::string& content_security_policy,
     bool send_cors_header,
     const base::Time& last_modified_time);
@@ -47,6 +55,16 @@ CreateExtensionProtocolHandler(bool is_incognito, InfoMap* extension_info_map);
 // that this goes through all the normal security checks; it's essentially a
 // way to map extra resources to be included in extensions.
 void SetExtensionProtocolTestHandler(ExtensionProtocolTestHandler* handler);
+
+// Returns a URLLoaderFactory interface appropriate for a given extensions
+// resource request. This is used in lieu of the above ProtocolHandler whenever
+// the Network Service is enabled.
+content::mojom::URLLoaderFactoryPtrInfo CreateExtensionURLLoaderFactory(
+    content::ResourceContext* resource_context,
+    const content::ResourceRequest& request,
+    const content::NavigationUIData* navigation_ui_data,
+    int child_id,
+    bool is_incognito);
 
 }  // namespace extensions
 

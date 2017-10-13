@@ -145,6 +145,7 @@ class WebContentsViewDelegate;
 struct MainFunctionParams;
 struct OpenURLParams;
 struct Referrer;
+struct ResourceRequest;
 struct WebPreferences;
 
 namespace mojom {
@@ -860,6 +861,17 @@ class CONTENT_EXPORT ContentBrowserClient {
   // params are used if this returns nullptr.
   virtual std::unique_ptr<base::TaskScheduler::InitParams>
   GetTaskSchedulerInitParams();
+
+  // Allows the embedder to provide a URLLoaderFactory client handle which
+  // should be used to service |request| instead of the default loading path.
+  // If |*factory_override| is left in an invalid state, no override is used.
+  virtual void GetURLLoaderFactoryOverrideForRequest(
+      ResourceContext* resource_context,
+      const ResourceRequest& request,
+      const NavigationUIData* navigation_ui_data,
+      bool is_main_frame,
+      int child_id,
+      mojom::URLLoaderFactoryPtrInfo* factory_override);
 
   // Allows the embedder to register one or more URLLoaderThrottles for a
   // URL request. This is used only when --enable-network-service is in effect.

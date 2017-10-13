@@ -54,7 +54,7 @@ WebRequestData::WebRequestData(net::URLRequest* request, RequestStage stage)
 WebRequestData::WebRequestData(
     net::URLRequest* request,
     RequestStage stage,
-    ExtensionNavigationUIData* navigation_ui_data,
+    const ExtensionNavigationUIData* navigation_ui_data,
     const net::HttpResponseHeaders* original_response_headers)
     : request(request),
       stage(stage),
