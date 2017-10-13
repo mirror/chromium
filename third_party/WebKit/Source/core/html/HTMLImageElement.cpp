@@ -35,6 +35,7 @@
 #include "core/dom/SyncReattachContext.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/html/CrossOriginAttribute.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageFallbackHelper.h"
 #include "core/html/HTMLPictureElement.h"
@@ -262,6 +263,13 @@ void HTMLImageElement::ParseAttribute(
     }
   } else if (name == srcAttr || name == srcsetAttr || name == sizesAttr) {
     SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
+  } else if (name == crossoriginAttr) {
+    // https://html.spec.whatwg.org/multipage/images.html#relevant-mutations
+    // The element's crossorigin attribute's state is changed.
+    if (GetCrossOriginAttributeValue(params.old_value) !=
+        GetCrossOriginAttributeValue(params.new_value)) {
+      SelectSourceURL(ImageLoader::kUpdateIgnorePreviousError);
+    }
   } else if (name == usemapAttr) {
     SetIsLink(!params.new_value.IsNull());
   } else if (name == referrerpolicyAttr) {
