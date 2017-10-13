@@ -122,34 +122,48 @@ Polymer({
    * this permission's setting. Currently, this only gets called when
    * |this.site| is updated.
    * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @param {!settings.ContentSetting} setting The permission setting.
+   * @return {boolean} Whether the permission will have a source string to
+   *     display.
    * @private
    */
-  hasPermissionSourceString_: function(source) {
-    return (
-        source != settings.SiteSettingSource.DEFAULT &&
-        source != settings.SiteSettingSource.PREFERENCE);
+  hasPermissionSourceString_: function(source, category, setting) {
+    return (source != settings.SiteSettingSource.DEFAULT &&
+            source != settings.SiteSettingSource.PREFERENCE) ||
+        this.isBlockedAds_(category, setting);
   },
 
   /**
    * Checks if there's a permission source string to display, and returns the
    * class name to apply to permissions if so.
+   * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @param {!settings.ContentSetting} setting The permission setting.
    * @return {string} CSS class applied when there is an additional description
    *     string.
    * @private
    */
-  permissionSourceStringClass_: function(source) {
-    return this.hasPermissionSourceString_(source) ? 'two-line' : '';
+  permissionSourceStringClass_: function(source, category, setting) {
+    return this.hasPermissionSourceString_(source, category, setting) ?
+        'two-line' :
+        '';
   },
 
   /**
    * Returns true if this permission's source is controlled by the user.
+   * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @param {!settings.ContentSetting} setting The permission setting.
    * @return {boolean}
    * @private
    */
-  isPermissionUserControlled_: function(source) {
-    // Users are able override embargo.
-    return !this.hasPermissionSourceString_(source) ||
-        source == settings.SiteSettingSource.EMBARGO;
+  isPermissionUserControlled_: function(source, category, setting) {
+    // Users are able override embargo and ads blacklisting.
+    return !this.hasPermissionSourceString_(source, category, setting) ||
+        source == settings.SiteSettingSource.EMBARGO ||
+        source == settings.SiteSettingSource.SUBRESOURCE_FILTER_BLACKLIST ||
+        this.isBlockedAds_(category, setting);
   },
 
   /**
@@ -173,9 +187,38 @@ Polymer({
   },
 
   /**
+   * Returns true if this permission is the Ads permission.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @return {boolean}
+   * @private
+   */
+  isAdsCategory_: function(category) {
+    return category == settings.ContentSettingsTypes.ADS;
+  },
+
+  /**
+   * Returns true if this permission is the Ads permission and it is set to
+   * block.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @param {!settings.ContentSetting} setting The permission setting.
+   * @return {boolean}
+   * @private
+   */
+  isBlockedAds_: function(category, setting) {
+    return this.isAdsCategory_(category) &&
+        setting == settings.ContentSetting.BLOCK;
+  },
+
+  /**
    * Updates the string used to describe the source of this permission setting.
    * Currently, this only gets called when |this.site| is updated.
    * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @param {!settings.ContentSettingsTypes} category The permission type.
+   * @param {!settings.ContentSetting} setting The permission setting.
+   * @param {!string} adsBlacklistString The string to show if the site is
+   *     blacklisted for showing bad ads.
+   * @param {!string} adsBlockString The string to show if ads are blocked, but
+   *     the site is not blacklisted.
    * @param {!string} embargoString
    * @param {!string} insecureOriginString
    * @param {!string} killSwitchString
@@ -188,7 +231,8 @@ Polymer({
    * @private
    */
   permissionSourceString_: function(
-      source, embargoString, insecureOriginString, killSwitchString,
+      source, category, setting, adsBlacklistString, adsBlockString,
+      embargoString, insecureOriginString, killSwitchString,
       extensionAllowString, extensionBlockString, extensionAskString,
       policyAllowString, policyBlockString, policyAskString) {
 
@@ -204,12 +248,19 @@ Polymer({
     policyStrings[settings.ContentSetting.BLOCK] = policyBlockString;
     policyStrings[settings.ContentSetting.ASK] = policyAskString;
 
-    if (source == settings.SiteSettingSource.DRM_DISABLED) {
+    if (source == settings.SiteSettingSource.SUBRESOURCE_FILTER_BLACKLIST) {
       assert(
-          settings.ContentSetting.BLOCK == this.site.setting,
+          settings.ContentSettingsTypes.ADS == category,
+          'The subresource filter blacklist only applies to Ads.');
+      return adsBlacklistString;
+    } else if (this.isBlockedAds_(category, setting)) {
+      return adsBlockString;
+    } else if (source == settings.SiteSettingSource.DRM_DISABLED) {
+      assert(
+          settings.ContentSetting.BLOCK == setting,
           'If DRM is disabled, Protected Content must be blocked.');
       assert(
-          settings.ContentSettingsTypes.PROTECTED_CONTENT == this.category,
+          settings.ContentSettingsTypes.PROTECTED_CONTENT == category,
           'The DRM disabled source only applies to Protected Content.');
       return this.i18nAdvanced('siteSettingsSourceDrmDisabled', {
         substitutions:
@@ -217,29 +268,28 @@ Polymer({
       });
     } else if (source == settings.SiteSettingSource.EMBARGO) {
       assert(
-          settings.ContentSetting.BLOCK == this.site.setting,
+          settings.ContentSetting.BLOCK == setting,
           'Embargo is only used to block permissions.');
       return embargoString;
     } else if (source == settings.SiteSettingSource.EXTENSION) {
-      return extensionStrings[this.site.setting];
+      return extensionStrings[setting];
     } else if (source == settings.SiteSettingSource.INSECURE_ORIGIN) {
       assert(
-          settings.ContentSetting.BLOCK == this.site.setting,
+          settings.ContentSetting.BLOCK == setting,
           'Permissions can only be blocked due to insecure origins.');
       return insecureOriginString;
     } else if (source == settings.SiteSettingSource.KILL_SWITCH) {
       assert(
-          settings.ContentSetting.BLOCK == this.site.setting,
+          settings.ContentSetting.BLOCK == setting,
           'The permissions kill switch can only be used to block permissions.');
       return killSwitchString;
     } else if (source == settings.SiteSettingSource.POLICY) {
-      return policyStrings[this.site.setting];
+      return policyStrings[setting];
     } else if (
         source == settings.SiteSettingSource.DEFAULT ||
         source == settings.SiteSettingSource.PREFERENCE) {
       return '';
     }
-    assertNotReached(
-        `No string for ${this.category} setting source '${source}'`);
+    assertNotReached(`No string for ${category} setting source '${source}'`);
   },
 });
