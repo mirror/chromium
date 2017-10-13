@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3399dd88_a376708e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T14:56:15Z",
+      "side": 1,
+      "message": "It looks like isMetricsReportingEnabled() reads the preference directly from the PrefService on C++ side, while isUsageAndCrashReportingPermittedByUser() reads a cached value in SharedPreferences on the Java side.\n\nI don\u0027t have a strong opinion - changing the pref in the UI is on the UI thread, the PrefService also lives on the UI thread, they should be in sync. But I don\u0027t know this code that well, so I\u0027ll go with Theresa\u0027s judgement.",
+      "parentUuid": "38a0a76d_a0583efc",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "684b497e_c1857ae6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 1
@@ -117,6 +141,30 @@
       "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a782a0e_ea8af52a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T14:56:15Z",
+      "side": 1,
+      "message": "I\u0027d prefer for it to be cleared immediately; don\u0027t know how much complexity it adds. On Android, restarting a browser is actually a somewhat rare action... On the other hand, you should also not be chosen for a survey two times in a short time interval, so that shouldn\u0027t be a big deal either. I guess I\u0027d just prefer not to have to think about corner cases.",
+      "parentUuid": "7c04d2ad_2a0a7a83",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "0b5d9f6286ada908c860c9aacae12abeeb2f6500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

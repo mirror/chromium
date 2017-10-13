@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9928c1af_3feb5f09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-13T14:56:15Z",
+      "side": 1,
+      "message": "nit: Not my codebase, but it seems unusual that a getter function has side-effects like this.",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "abe2f256326d2847ee53eb8f8218aeeb8c72df41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
