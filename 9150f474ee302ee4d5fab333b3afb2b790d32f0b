@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "230301be_0e2a61ce",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T17:17:26Z",
+      "side": 1,
+      "message": "Can you put a comment here defining what \"CFI\" is?",
+      "revId": "9150f474ee302ee4d5fab333b3afb2b790d32f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491f0df6_cdff0cf0",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-13T17:17:26Z",
+      "side": 1,
+      "message": "This should go in it\u0027s normal place sorted below. If \"stack_trace.h\" needs the flag, it should include cfi_flags itself.",
+      "revId": "9150f474ee302ee4d5fab333b3afb2b790d32f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
