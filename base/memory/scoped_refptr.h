@@ -174,12 +174,16 @@ class scoped_refptr {
   T* get() const { return ptr_; }
 
   T& operator*() const {
+#if DCHECK_IS_ON()
     DCHECK(ptr_);
+#endif
     return *ptr_;
   }
 
   T* operator->() const {
+#if DCHECK_IS_ON()
     DCHECK(ptr_);
+#endif
     return ptr_;
   }
 
