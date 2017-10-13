@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6458b834_a61c8632",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-13T12:22:21Z",
+      "side": 1,
+      "message": "Nit: This should be indented two more spaces, as technically it\u0027s part of the middle block. Maybe it would be easier to `continue` at the end of each block so you can remove the `else`, so the comment can be at the same level of indentation as the if-statement.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 8
+      },
+      "revId": "0b94812ce293d87df15dd8b83c0e01edac4e42b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
