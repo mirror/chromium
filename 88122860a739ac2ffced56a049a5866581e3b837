@@ -16,6 +16,24 @@
       "revId": "88122860a739ac2ffced56a049a5866581e3b837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c44c11a_5e6a4185",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-10-13T20:53:25Z",
+      "side": 1,
+      "message": "There\u0027s a bug filed at https://b.corp.google.com/issues/66127360\n\nCancelled pending intent makes it so the recipient can\u0027t actually send the encompassed intent (will throw error).  A pending intent offers additional verification of sender origin for recipient that normal intents do not.",
+      "parentUuid": "0c37bf05_2fa36bdf",
+      "revId": "88122860a739ac2ffced56a049a5866581e3b837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
