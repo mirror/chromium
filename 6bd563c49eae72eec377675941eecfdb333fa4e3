@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c88a0ecc_903119d6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18010,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-13T18:27:55Z",
+      "side": 1,
+      "message": "Is this specific to Chrome OS and related platforms? If so, please mention it in the description.",
+      "range": {
+        "startLine": 18010,
+        "startChar": 50,
+        "endLine": 18010,
+        "endChar": 0
+      },
+      "revId": "6bd563c49eae72eec377675941eecfdb333fa4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
