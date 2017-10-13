@@ -1143,9 +1143,6 @@ void ProfileIOData::Init(
   InitializeInternal(builder.get(), profile_params_.get(), protocol_handlers,
                      std::move(request_interceptors));
 
-  builder->SetCreateHttpTransactionFactoryCallback(
-      base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
-
   main_network_context_ =
       io_thread_globals->network_service->CreateNetworkContextWithBuilder(
           std::move(profile_params_->main_network_context_request),
