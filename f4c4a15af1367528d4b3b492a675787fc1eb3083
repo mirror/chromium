@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf9fb6d_303836cc",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T18:22:59Z",
+      "side": 1,
+      "message": "refer \u003d\u003e prefer",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f801f77_e06945ab",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T18:22:59Z",
+      "side": 1,
+      "message": "Sorry I think there was some miscommunication. ARC++ puts the next ordinal above each interface / union / struct with ordinals, and then has a global next MinVersion (like what we currently have at line 30)",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0375db7b_995642f2",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-13T18:22:59Z",
+      "side": 1,
+      "message": "FWIW, I think using mojo.common.mojom.Time (and String16) is OK (especially given that we still use url.mojom.Url).\n\nIdeally the serialization test we have below will catch instances where the internal serialization changes... at that point we can decide to fork custom versions of those structs for serialization purposes or figure something else out...\n\nyzshen, what do you think?",
+      "revId": "f4c4a15af1367528d4b3b492a675787fc1eb3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
