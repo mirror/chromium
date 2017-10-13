@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5b2f09_53f44c17",
+        "filename": "chrome/browser/browsing_data/browsing_data_remover_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-13T13:34:51Z",
+      "side": 1,
+      "message": "Is the salt random? If so, how many bits is the salt? That is, how often could we expect this test to flakily fail because the value was reset to the same value?",
+      "revId": "c98e5718480aa96aa97580edbe69947f38216328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
