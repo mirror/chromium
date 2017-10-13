@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35ad092d_31c2b346",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-13T19:18:42Z",
+      "side": 1,
+      "message": "optional: it looks like error_path, error are unused(?). If that\u0027s true, consider adding an  \"// Unused.\" comment.",
+      "revId": "05a904fcee022c0a2c624d2d923afd6966a7046f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ee3257_3d7a9208",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-13T19:18:42Z",
+      "side": 1,
+      "message": "Is this commented out code a whoops?",
+      "revId": "05a904fcee022c0a2c624d2d923afd6966a7046f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0912eb_c0bcf6ef",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-13T19:18:42Z",
+      "side": 1,
+      "message": "It\u0027s common to add a blank line between the prior member declaration and the comment for the following member. \nnit: please add blanks at 61, 64, 69, 71.",
+      "revId": "05a904fcee022c0a2c624d2d923afd6966a7046f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
