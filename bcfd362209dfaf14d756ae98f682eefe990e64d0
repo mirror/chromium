@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb270eb8_3d484091",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-13T02:26:14Z",
+      "side": 1,
+      "message": "css_context (or parser_context?)",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ae01f8_bea99399",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-13T02:26:14Z",
+      "side": 1,
+      "message": "Ideally, you should propagate the value from Settings to WorkerSettings and use it here.\n(No need to do it now, just leave a TODO instead.)",
+      "range": {
+        "startLine": 674,
+        "startChar": 9,
+        "endLine": 674,
+        "endChar": 13
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7cd27d_4fbad459",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-13T02:26:14Z",
+      "side": 1,
+      "message": "Remove this TODO",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2295a93e_b427cf4c",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-13T02:26:14Z",
+      "side": 1,
+      "message": "Please expose it on worker behind a runtime-enabled-feature flag, until you get LGTMs for your intent-to-ship.",
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f67188b_f8ce27d3",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-13T02:26:14Z",
+      "side": 1,
+      "message": "Please undo this line-swap",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "bcfd362209dfaf14d756ae98f682eefe990e64d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
