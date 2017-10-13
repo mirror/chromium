@@ -1663,8 +1663,9 @@ void LayerTreeHostImpl::OnCanDrawStateChangedForTree() {
 viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata()
     const {
   viz::CompositorFrameMetadata metadata;
-  metadata.device_scale_factor = active_tree_->painted_device_scale_factor() *
-                                 active_tree_->device_scale_factor();
+  metadata
+      .device_scale_factor =  // active_tree_->painted_device_scale_factor();
+      active_tree_->device_scale_factor();
 
   metadata.page_scale_factor = active_tree_->current_page_scale_factor();
   metadata.scrollable_viewport_size = active_tree_->ScrollableViewportSize();

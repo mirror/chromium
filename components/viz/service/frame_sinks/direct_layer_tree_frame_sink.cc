@@ -107,8 +107,9 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
     last_swap_frame_size_ = frame.size_in_pixels();
     device_scale_factor_ = frame.device_scale_factor();
-    display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor_);
+    display_->SetLocalSurfaceId(local_surface_id_, 1);
   }
+  frame.metadata.device_scale_factor = 2;
 
   bool result =
       support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
