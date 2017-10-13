@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "2db88c48_52af4cf3",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "Hmm, this is no longer sufficient right? Writers might be empty but still be writing to the cache.",
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc48156_b5e21d52",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "nit: I\u0027d rather see this implementation detail as a comment in the cc file.",
+      "range": {
+        "startLine": 434,
+        "startChar": 37,
+        "endLine": 441,
+        "endChar": 13
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9bbb2c_a69c23a6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "Why doesn\u0027t StopCaching just call ContinueInNetworkReadOnlyMode? What needs to be different about it? I\u0027m wondering if we could have a single function, StopCaching, just like we do now in HC::W.",
+      "range": {
+        "startLine": 433,
+        "startChar": 29,
+        "endLine": 433,
+        "endChar": 40
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5eed4f2_ae5974c9",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "s/will be communicated here/must be stored/.",
+      "range": {
+        "startLine": 651,
+        "startChar": 49,
+        "endLine": 651,
+        "endChar": 74
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95df7046_61510e3d",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "if (InitiateTruncateEntry()) {\n  // comment here\n  return;\n}",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 27
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7b23c8_7895b572",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 60
@@ -18,6 +127,237 @@
         "startChar": 2,
         "endLine": 420,
         "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9918cfb8_5fa2de96",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "I was the one that pushed for it to happen in InitiateTruncateEntry, and still much prefer it. This function is much cleaner now, and the caller doesn\u0027t have to remember to call a DoLoop in one weird case. \n\nWe just need a comment on InitiateTruncateEntry which states that if it returns true then you shouldn\u0027t touch any member variables as |this| may have been destroyed.\n\nI don\u0027t think we should be touching active_transaction_ here.",
+      "parentUuid": "7b7b23c8_7895b572",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a2c078_19bb5021",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "Can active_transaction_ be nullptr? The comment above makes it sound like it can. I don\u0027t see any checks for it \u003d\u003d all_writers_.end().",
+      "range": {
+        "startLine": 513,
+        "startChar": 30,
+        "endLine": 513,
+        "endChar": 49
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6668cb86_f27f861f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "I believe this is the only caller of the function. Perhaps just inline it here instead of making a new function?",
+      "range": {
+        "startLine": 545,
+        "startChar": 34,
+        "endLine": 545,
+        "endChar": 66
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d250e1_e825f1c9",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "RemoveTransactionsFromAllWriters already does this. All the more reason to just inline it.",
+      "range": {
+        "startLine": 546,
+        "startChar": 4,
+        "endLine": 546,
+        "endChar": 25
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d249398_a4ab1492",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "Should we be DCHECKING that cache_callback_ is empty before we set it each time?",
+      "range": {
+        "startLine": 547,
+        "startChar": 4,
+        "endLine": 547,
+        "endChar": 19
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca8a347_8f5148f3",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "Personally I\u0027d prefer to just pass the parameters separately and then create the private struct inside of AddTransaction. But that\u0027s a nit. This should be const ref though.",
+      "range": {
+        "startLine": 91,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93f90f5_c9a13123",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "why const? I don\u0027t see any callers in http_cache or http_cache_transaction that have const transaction*",
+      "range": {
+        "startLine": 107,
+        "startChar": 22,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0753d47b_bee77835",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 115,
+        "startChar": 20,
+        "endLine": 115,
+        "endChar": 21
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfef997_2b957eff",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 124,
+        "startChar": 26,
+        "endLine": 124,
+        "endChar": 27
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca329b7_0835175d",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 60
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "when an attempt",
+      "range": {
+        "startLine": 157,
+        "startChar": 30,
+        "endLine": 157,
+        "endChar": 31
       },
       "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -87,6 +427,52 @@
         "startChar": 59,
         "endLine": 503,
         "endChar": 63
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86f7542_7811ae1f",
+        "filename": "net/http/mock_http_cache.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "return entry \u0026\u0026 entry-\u003ewriters \u0026\u0026 !entry-\u003ewriters-\u003eIsEmpty();",
+      "range": {
+        "startLine": 728,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 15
+      },
+      "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21063c6f_add78e58",
+        "filename": "net/http/mock_http_cache.cc",
+        "patchSetId": 60
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-13T18:34:09Z",
+      "side": 1,
+      "message": "return entry \u0026\u0026 entry-\u003eheaders_transaction;",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 737,
+        "endChar": 15
       },
       "revId": "528db1eb5df85d7275056eafd43bdfc1f69f247c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
