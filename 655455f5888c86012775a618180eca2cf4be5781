@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f26dc97f_bcc9b283",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-13T01:56:14Z",
+      "side": 1,
+      "message": "Oh, rather I found neither base::Optional nor base::make_optional is needed. Removed it.",
+      "parentUuid": "898dfa5f_cb53f6e7",
+      "revId": "655455f5888c86012775a618180eca2cf4be5781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0576d8c3_96f779cd",
         "filename": "components/arc/common/voice_interaction_arc_home.mojom",
         "patchSetId": 2
