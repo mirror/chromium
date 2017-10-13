@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dea0b13_5fc1bb1a",
+        "filename": "content/browser/download/mhtml_extra_parts_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-10-13T07:57:08Z",
+      "side": 1,
+      "message": "Done.\nI also had to add assignment operators to make it work.",
+      "parentUuid": "bc1acca0_c9f716b7",
+      "revId": "a63fe0151144da5fd1bcfb92daced7ca3c1d7c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b6718e_96a31835",
         "filename": "content/browser/download/mhtml_extra_parts_impl.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a63fe0151144da5fd1bcfb92daced7ca3c1d7c4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d52908_f54695e2",
+        "filename": "content/browser/download/mhtml_extra_parts_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-10-13T07:57:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "76b6718e_96a31835",
+      "revId": "a63fe0151144da5fd1bcfb92daced7ca3c1d7c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +192,24 @@
       "revId": "a63fe0151144da5fd1bcfb92daced7ca3c1d7c4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6691fef7_8878b24c",
+        "filename": "content/browser/download/mhtml_generation_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-10-13T07:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cde79cf_d3bffcf9",
+      "revId": "a63fe0151144da5fd1bcfb92daced7ca3c1d7c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
