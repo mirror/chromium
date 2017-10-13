@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b834ee5f_4349c3d1",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T15:40:02Z",
+      "side": 1,
+      "message": "Can we solve this by simply defining the type CBORValue::MapValue with the appropriate comparison predicate?",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b57a13_e05ff9ca",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T15:40:02Z",
+      "side": 1,
+      "message": "nit: period.",
+      "range": {
+        "startLine": 89,
+        "startChar": 71,
+        "endLine": 89,
+        "endChar": 78
+      },
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4063660e_ec8d39e0",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T15:40:02Z",
+      "side": 1,
+      "message": "Can we make this more compact? How about something like:\n\nsize_t a_size \u003d a.size();\nsize_t b_size \u003d b.size();\nreturn std::tie(a_size, a) \u003c std::tie(b_size, b);\n\nAlthough I can imagine an argument being made that it is not obvious that tie does lexicographical compare.",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c333e6b3_489ee0c0",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T15:40:02Z",
+      "side": 1,
+      "message": "nit: To make this more readable, could you please indicate the string literals in this blob, like so:\n\n0x41 /* A */",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10ff10e_e418f357",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-10-13T15:40:02Z",
+      "side": 1,
+      "message": "Let\u0027s extend this test a bit more, to make sure it answers the following questions:\n -- What\u0027s the sorting requirement for strings of same lengths?\n -- If the empty string is a legitimate key, how is it sorted?\n -- Does the order of map[..] \u003d .. calls matter? (Scramble the calls a bit more if it doesn\u0027t).",
+      "revId": "fb5bc268ac836cb045b15e5b6175f2a45f69869c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
