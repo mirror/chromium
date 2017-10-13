@@ -151,6 +151,7 @@ SecurityOrigin::SecurityOrigin()
     : protocol_(g_empty_string),
       host_(g_empty_string),
       domain_(g_empty_string),
+      unique_id_(base::UnguessableToken::Create()),
       port_(kInvalidPort),
       effective_port_(kInvalidPort),
       is_unique_(true),
@@ -165,6 +166,7 @@ SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
       host_(other->host_.IsolatedCopy()),
       domain_(other->domain_.IsolatedCopy()),
       suborigin_(other->suborigin_),
+      unique_id_(other->unique_id_),
       port_(other->port_),
       effective_port_(other->effective_port_),
       is_unique_(other->is_unique_),
@@ -237,8 +239,10 @@ bool SecurityOrigin::CanAccess(const SecurityOrigin* other) const {
   if (this == other)
     return true;
 
-  if (IsUnique() || other->IsUnique())
-    return false;
+  if (IsUnique() || other->IsUnique()) {
+    return IsUnique() && other->IsUnique() ? unique_id_ == other->unique_id_
+                                           : false;
+  }
 
   if (!HasSameSuboriginAs(other))
     return false;
