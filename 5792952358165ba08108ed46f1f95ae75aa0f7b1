@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "5b0a8842_eba5f0cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-10-13T19:12:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "102b4f8f_11ad6877",
+      "revId": "5792952358165ba08108ed46f1f95ae75aa0f7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc88dc7_b3807442",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
         "patchSetId": 3
