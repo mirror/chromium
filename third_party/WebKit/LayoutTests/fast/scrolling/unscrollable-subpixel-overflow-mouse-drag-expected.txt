@@ -1,6 +1,6 @@
 PASS successfullyParsed is true
 
 TEST COMPLETE
-PASS container.scrollTop is 0
+FAIL container.scrollTop should be 0. Was 0.5714285969734192.
 Tests scroll behavior when an unscrollable scrollbar thumb is dragged by mouse. Passes if neither the thumb or the content changes.
 
