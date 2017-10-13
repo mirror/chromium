@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "d162f239_32ac37e5",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T15:18:33Z",
+      "side": 1,
+      "message": "or preferably move to ios/chrome/payments/(ui)",
+      "parentUuid": "c7c89eab_ca25a50d",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3fb68a_01970adf",
+        "filename": "components/payments/core/strings_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T15:18:33Z",
+      "side": 1,
+      "message": "nit: String/Label?",
+      "range": {
+        "startLine": 43,
+        "startChar": 45,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f880dec3_bc27f437",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 2
@@ -30,6 +71,24 @@
       "writtenOn": "2017-10-13T15:07:23Z",
       "side": 1,
       "message": "I\u0027m not sure which of Title-Case/Sentence-Case is for iOS, but we should only keep the ones that apply to iOS for now and guard them with an \"\u003cif expr\u003d\"is_ios\"\u003e\" block",
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d063c47_6a3834bf",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T15:18:33Z",
+      "side": 1,
+      "message": "I agree, and since they all seem to be full sentences, they should only be sentence-cased only.",
+      "parentUuid": "f880dec3_bc27f437",
       "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -52,6 +111,29 @@
         "startChar": 135,
         "endLine": 18,
         "endChar": 164
+      },
+      "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cbc752_91902e98",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_collection_view_detail_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-13T15:18:33Z",
+      "side": 1,
+      "message": "Inheritance is frowned upon when it comes to Cells and Items in Bling. Please avoid this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 49
       },
       "revId": "31e59156a7e94dd207f81a7808f270f6acecc8c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
