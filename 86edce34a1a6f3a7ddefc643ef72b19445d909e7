@@ -16,6 +16,24 @@
       "revId": "86edce34a1a6f3a7ddefc643ef72b19445d909e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fff546_1a63cae8",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-13T16:50:43Z",
+      "side": 1,
+      "message": "BaseResourceThrottle::CancelResourceLoad() is simply \"Cancel()\", so it could be left unchanged. But I think it is good to match the class below (line 125) and call the base implementation. Making BaseResourceThrottle::CancelResourceLoad() no-op will probably make things more confusing, because compiler won\u0027t force subclasses to override it and no-op will break things silently. It might be a good idea to refactor the code to make it pure virtual, but that is less  consistent with the class below (see the next paragraph for why).\n\nFor the line 125\u0027s case, BaseParallelResourceThrottle::CancelResourceLoad() cannot be pure-virtual, because it maintains some internal state. All subclasses (chrome side and android webview side) must call into that base class implementation.",
+      "parentUuid": "2cf22bcb_38bb4120",
+      "revId": "86edce34a1a6f3a7ddefc643ef72b19445d909e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
