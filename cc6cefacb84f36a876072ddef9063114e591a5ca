@@ -68,6 +68,29 @@
       "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320f94a9_698871f0",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-13T18:56:58Z",
+      "side": 1,
+      "message": "nit: move this out of anonymous namespace. it\u0027s confusing to forward declare something in that namespace. or maybe you can store ui::LayerObserver pointers in the vector below so you don\u0027t need this forward declare here",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "cc6cefacb84f36a876072ddef9063114e591a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
