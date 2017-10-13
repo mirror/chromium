@@ -117,6 +117,12 @@ void Node::InsertChild(base::StringPiece name, Node* node) {
   children_.emplace(name.as_string(), node);
 }
 
+Node* Node::CreateChild(base::StringPiece name) {
+  Node* new_child = dump_graph_->global_graph()->CreateNode(dump_graph_, this);
+  InsertChild(name, new_child);
+  return new_child;
+}
+
 void Node::AddOwnedByEdge(Edge* edge) {
   owned_by_edges_.push_back(edge);
 }
