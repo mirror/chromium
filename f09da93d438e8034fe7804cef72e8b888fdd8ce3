@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e45f1458_9f6af4c4",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T07:19:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be an inner class of NotificationViewMD. How about moving this to the anonymous namespace above?",
+      "range": {
+        "startLine": 323,
+        "startChar": 6,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce39ff61_61c87d0c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T07:19:55Z",
+      "side": 1,
+      "message": "I know the name comes from ArcNotificationContentView. But here this is only for activate. How about change the name? (eg. ClickActivator, ActivatorByClick or something like that)",
+      "range": {
+        "startLine": 323,
+        "startChar": 26,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4aa918_40ddee9c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T07:19:55Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 337,
+        "startChar": 21,
+        "endLine": 337,
+        "endChar": 22
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16d31f0_48366ce1",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T07:19:55Z",
+      "side": 1,
+      "message": "nit: Please add DISALLOW_COPY_AND_ASSIGN;",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 1
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b20de75_5a190321",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-13T07:19:55Z",
+      "side": 1,
+      "message": "For non-arc notifiation, this doesn\u0027t need to be a pretarget handler. A normal handler should be enough.\n\n1) If you want to mimic the code from ArcNotificationContentView, could you comment that?\n\n2) If not, could you remove the a pretarget handler and activate the message center in OnMousePressed handler?",
+      "range": {
+        "startLine": 440,
+        "startChar": 2,
+        "endLine": 440,
+        "endChar": 21
+      },
+      "revId": "f09da93d438e8034fe7804cef72e8b888fdd8ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
